@@ -3,6 +3,7 @@ import { Outlet, useRouteLoaderData } from '@remix-run/react'
 import Footer from '#app/components/footer.js'
 import NavigationBar from '#app/components/navigation-bar.js'
 import { type loader as rootLoader } from '#app/root'
+import { ThemeSwitch } from './resources+/theme-switch'
 
 export default function HomePageLayout() {
 	const data = useRouteLoaderData<typeof rootLoader>('root')
@@ -17,9 +18,9 @@ export default function HomePageLayout() {
 			</div>
 
 			<Footer />
-			{/* <div className="container flex justify-between py-10"> */}
-			{/* 	<ThemeSwitch userPreference={data.requestInfo.userPrefs.theme} /> */}
-			{/* </div> */}
+			<div className="container flex justify-between py-10">
+				<ThemeSwitch userPreference={data.requestInfo.userPrefs.theme} />
+			</div>
 		</div>
 	)
 }

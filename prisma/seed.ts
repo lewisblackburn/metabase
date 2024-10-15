@@ -44,8 +44,7 @@ async function seed() {
 
 async function cleanUpDatabase() {
 	console.time('🧹 Cleaned up the database...')
-	// @ts-expect-error - prisma has the wrong types due to extensions
-	await cleanupDb(prisma)
+	await cleanupDb()
 	console.timeEnd('🧹 Cleaned up the database...')
 }
 
@@ -96,6 +95,8 @@ async function createRole(
 }
 
 async function createUsers() {
+=======
+>>>>>>> upstream/main
 	const totalUsers = 5
 	console.time(`👤 Created ${totalUsers} users...`)
 

@@ -4,12 +4,7 @@ import { cn } from '#app/utils/misc.js'
 export function Logo({ className }: { className?: string }) {
 	return (
 		<Link to="/">
-			<img
-				src="/logo.png"
-				alt="Metabase"
-				className={cn('w-48', className)}
-				fetchPriority="high"
-			/>
+			<img src="/logo.png" alt="Metabase" className={cn('w-48', className)} />
 		</Link>
 	)
 }
@@ -17,12 +12,7 @@ export function Logo({ className }: { className?: string }) {
 export function IconLogo({ className }: { className?: string }) {
 	return (
 		<Link to="/">
-			<img
-				src="/icon.svg"
-				alt="Metabase"
-				className={cn('w-8', className)}
-				fetchPriority="high"
-			/>
+			<img src="/icon.svg" alt="Metabase" className={cn('w-8', className)} />
 		</Link>
 	)
 }
