@@ -35,47 +35,47 @@ const sidebarLinks: {
 	href: string
 	icon: IconName
 }[] = [
-		{
-			name: 'Dashboard',
-			href: '/dashboard',
-			icon: 'home',
-		},
-		{
-			name: 'Films',
-			href: '/dashboard/films',
-			icon: 'video',
-		},
-		{
-			name: 'TV Shows',
-			href: '/dashboard/series',
-			icon: 'tv',
-		},
-		{
-			name: 'People',
-			href: '/dashboard/people',
-			icon: 'users',
-		},
-		{
-			name: 'Books',
-			href: 'dashboard/books',
-			icon: 'book-open',
-		},
-		{
-			name: 'Music',
-			href: '/dashboard/music',
-			icon: 'audio-lines',
-		},
-		{
-			name: 'Games',
-			href: '/dashboard/games',
-			icon: 'gamepad',
-		},
-		{
-			name: 'Changes',
-			href: '/dashboard/changes',
-			icon: 'clock',
-		},
-	]
+	{
+		name: 'Dashboard',
+		href: '/dashboard',
+		icon: 'home',
+	},
+	{
+		name: 'Films',
+		href: '/dashboard/films',
+		icon: 'video',
+	},
+	{
+		name: 'TV Shows',
+		href: '/dashboard/series',
+		icon: 'tv',
+	},
+	{
+		name: 'People',
+		href: '/dashboard/people',
+		icon: 'users',
+	},
+	{
+		name: 'Books',
+		href: 'dashboard/books',
+		icon: 'book-open',
+	},
+	{
+		name: 'Music',
+		href: '/dashboard/music',
+		icon: 'audio-lines',
+	},
+	{
+		name: 'Games',
+		href: '/dashboard/games',
+		icon: 'gamepad',
+	},
+	{
+		name: 'Changes',
+		href: '/dashboard/changes',
+		icon: 'clock',
+	},
+]
 
 const dropdownLinks = [
 	{

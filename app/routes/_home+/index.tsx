@@ -105,7 +105,7 @@ function LogoCloud() {
 				<Carousel
 					opts={{
 						align: 'center',
-						watchDrag: () => { }, // Disable drag
+						watchDrag: () => {}, // Disable drag
 						loop: true,
 					}}
 					plugins={[Autoscroll({ startDelay: 0 })]}
