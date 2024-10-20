@@ -23,10 +23,6 @@ async function seed() {
 
 	await cleanUpDatabase()
 
-	await createPermissions()
-
-	await createRoles()
-
 	await createUsers()
 
 	await createAdminUser()
@@ -46,52 +42,6 @@ async function cleanUpDatabase() {
 	console.time('🧹 Cleaned up the database...')
 	await cleanupDb()
 	console.timeEnd('🧹 Cleaned up the database...')
-}
-
-async function createPermissions() {
-	console.time('🔑 Created permissions...')
-	const permissionsToCreate = createPermissionsData()
-	await prisma.permission.createMany({ data: permissionsToCreate })
-	console.timeEnd('🔑 Created permissions...')
-}
-
-function createPermissionsData(): Prisma.PermissionCreateManyInput[] {
-	const entities = ['user', 'note', 'film']
-	const actions = ['create', 'read', 'update', 'delete']
-	const accesses = ['own', 'any'] as const
-
-	return entities.flatMap((entity) =>
-		actions.flatMap((action) =>
-			accesses.map((access) => ({ entity, action, access })),
-		),
-	)
-}
-
-async function createRoles() {
-	console.time('👑 Created roles...')
-	await Promise.all([
-		createRole('admin', { access: 'any' }),
-		createRole('user', { access: 'own' }),
-	])
-	console.timeEnd('👑 Created roles...')
-}
-
-async function createRole(
-	name: string,
-	permissionFilter: Prisma.PermissionWhereInput,
-) {
-	const permissions = await prisma.permission.findMany({
-		select: { id: true },
-		where: permissionFilter,
-	})
-	await prisma.role.create({
-		data: {
-			name,
-			permissions: {
-				connect: permissions.map((permission) => ({ id: permission.id })),
-			},
-		},
-	})
 }
 
 async function createUsers() {
