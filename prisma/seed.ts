@@ -95,8 +95,10 @@ async function createRole(
 }
 
 async function createUsers() {
-=======
->>>>>>> upstream/main
+	console.time('🧹 Cleaned up the database...')
+	await cleanupDb()
+	console.timeEnd('🧹 Cleaned up the database...')
+
 	const totalUsers = 5
 	console.time(`👤 Created ${totalUsers} users...`)
 
