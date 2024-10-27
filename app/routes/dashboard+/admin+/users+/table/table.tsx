@@ -1,76 +1,75 @@
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
+	type SortingState,
+	type VisibilityState,
 	flexRender,
 	getCoreRowModel,
+	getFacetedRowModel,
+	getFacetedUniqueValues,
 	getFilteredRowModel,
 	getPaginationRowModel,
-	getSortedRowModel,
-	type SortingState,
 	useReactTable,
-	type VisibilityState,
+	getSortedRowModel,
 } from '@tanstack/react-table'
 import React from 'react'
-import { DataTablePagination } from '#app/components/table/data-table-pagination.js'
-import { DataTableViewOptions } from '#app/components/table/data-table-view-options.js'
-import { Input } from '#app/components/ui/input.js'
+
+import { DataTablePagination } from '#app/components/table/data-table-pagination.tsx'
 import {
 	Table,
-	TableHeader,
-	TableRow,
-	TableHead,
 	TableBody,
 	TableCell,
-} from '#app/components/ui/table.js'
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '#app/components/ui/table.tsx'
+import { Toolbar } from './toolbar'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
 	data: TData[]
 }
 
-export function ChangesTable<TData, TValue>({
+export function UserTable<TData, TValue>({
 	columns,
 	data,
 }: DataTableProps<TData, TValue>) {
-	const [sorting, setSorting] = React.useState<SortingState>([])
+	const [rowSelection, setRowSelection] = React.useState({})
+	const [columnVisibility, setColumnVisibility] =
+		React.useState<VisibilityState>({})
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
 		[],
 	)
-	const [columnVisibility, setColumnVisibility] =
-		React.useState<VisibilityState>({})
-	const [rowSelection, setRowSelection] = React.useState({})
+	const [sorting, setSorting] = React.useState<SortingState>([])
+	const [globalFilter, setGlobalFilter] = React.useState('')
 
 	const table = useReactTable({
 		data,
 		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		onSortingChange: setSorting,
-		getSortedRowModel: getSortedRowModel(),
-		onColumnFiltersChange: setColumnFilters,
-		getFilteredRowModel: getFilteredRowModel(),
-		onColumnVisibilityChange: setColumnVisibility,
-		onRowSelectionChange: setRowSelection,
 		state: {
 			sorting,
-			columnFilters,
 			columnVisibility,
 			rowSelection,
+			columnFilters,
+			globalFilter,
 		},
+		enableRowSelection: true,
+		onRowSelectionChange: setRowSelection,
+		onSortingChange: setSorting,
+		onColumnFiltersChange: setColumnFilters,
+		onColumnVisibilityChange: setColumnVisibility,
+		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		onGlobalFilterChange: setGlobalFilter,
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		getFacetedRowModel: getFacetedRowModel(),
+		getFacetedUniqueValues: getFacetedUniqueValues(),
 	})
 
 	return (
-		<div>
-			<div className="flex items-center gap-5 pb-4">
-				<Input
-					placeholder="Filter emails..."
-					value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-					onChange={(event) =>
-						table.getColumn('email')?.setFilterValue(event.target.value)
-					}
-				/>
-				<DataTableViewOptions table={table} />
-			</div>
+		<div className="space-y-4">
+			<Toolbar table={table} />
 			<div className="rounded-md border">
 				<Table>
 					<TableHeader>
@@ -121,9 +120,7 @@ export function ChangesTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			<div className="mt-4">
-				<DataTablePagination table={table} />
-			</div>
+			<DataTablePagination table={table} />
 		</div>
 	)
 }

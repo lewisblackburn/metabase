@@ -26,7 +26,7 @@ import { TMDBFilmImporter } from '#app/utils/services/tmdb/film.js'
 import { tmdb } from '#app/utils/services/tmdb/index.js'
 import { createToastHeaders } from '#app/utils/toast.server.js'
 import { columns } from './table/import/columns'
-import { ImportFilmTable } from './table/import/data-table'
+import { ImportFilmTable } from './table/import/table'
 
 export const ImportFilmSchema = z.object({
 	tmdbIds: z.string(),
@@ -40,7 +40,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const search = getSearchParams(request)
 
 	const tmdbFilms = await tmdb.search<TMDBSearchResponse>(
-		search || 'about',
+		search || 'about time',
 		pageIndex,
 		'movie',
 	)

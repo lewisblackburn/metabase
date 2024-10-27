@@ -20,7 +20,7 @@ interface DataTableImportTMDBFilms<TData> {
 	table: Table<TData>
 }
 
-export function DataTableImport<TData>({
+export function ImportDialog<TData>({
 	table,
 }: DataTableImportTMDBFilms<TData>) {
 	const { filmId } = useParams()
@@ -58,7 +58,7 @@ export function DataTableImport<TData>({
 						<DialogTitle>Import Films</DialogTitle>
 						<DialogDescription>Import films from TMDB.</DialogDescription>
 					</DialogHeader>
-					<div className="grid py-4">
+					<div className="grid pb-4">
 						<input
 							name="tmdbIds"
 							type="hidden"

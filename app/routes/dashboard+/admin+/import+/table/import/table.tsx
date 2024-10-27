@@ -24,7 +24,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '#app/components/ui/table.tsx'
-import { DataTableToolbar } from './data-table-toolbar'
+import { Toolbar } from './toolbar'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -80,7 +80,7 @@ export function ImportFilmTable<TData, TValue>({
 
 	return (
 		<div className="space-y-4">
-			<DataTableToolbar table={table} />
+			<Toolbar table={table} />
 			<div className="rounded-md border">
 				<Table>
 					<TableHeader>

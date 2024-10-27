@@ -28,7 +28,7 @@ const test = base.extend<{
 		password: string
 	}
 }>({
-	getOnboardingData: async ({}, use) => {
+	getOnboardingData: async ({ }, use) => {
 		const userData = createUser()
 		await use(() => {
 			const onboardingData = {
@@ -102,19 +102,23 @@ test('onboarding with link', async ({ page, getOnboardingData }) => {
 	await expect(page).toHaveURL(`/dashboard`)
 
 	await page
-		.getByRole('link', { name: onboardingData.name ?? onboardingData.username })
+		.getByRole('button', {
+			name: onboardingData.name ?? onboardingData.username,
+		})
 		.click()
 
-	await page.getByRole('menuitem', { name: /profile/i }).click()
+	await page.getByRole('menuitem', { name: /account/i }).click()
 
 	await expect(page).toHaveURL(`/dashboard/settings/profile`)
 
 	await page.waitForTimeout(1000)
 
 	await page
-		.getByRole('link', { name: onboardingData.name ?? onboardingData.username })
+		.getByRole('button', {
+			name: onboardingData.name ?? onboardingData.username,
+		})
 		.click()
-	await page.getByRole('menuitem', { name: /logout/i }).click()
+	await page.getByRole('menuitem', { name: /log out/i }).click()
 	await expect(page).toHaveURL(`/`)
 })
 
@@ -346,7 +350,7 @@ test('login as existing user', async ({ page, insertNewUser }) => {
 	await page.getByRole('button', { name: /log in/i }).click()
 	await expect(page).toHaveURL(`/dashboard`)
 
-	await expect(page.getByRole('link', { name: user.name })).toBeVisible()
+	await expect(page.getByRole('button', { name: user.name })).toBeVisible()
 })
 
 test('reset password with a link', async ({ page, insertNewUser }) => {
@@ -406,7 +410,7 @@ test('reset password with a link', async ({ page, insertNewUser }) => {
 
 	await expect(page).toHaveURL(`/dashboard`)
 
-	await expect(page.getByRole('link', { name: user.name })).toBeVisible()
+	await expect(page.getByRole('button', { name: user.name })).toBeVisible()
 })
 
 test('reset password with a short code', async ({ page, insertNewUser }) => {
