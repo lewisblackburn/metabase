@@ -11,7 +11,7 @@ export class TMDB {
 	private readonly TMDB_PROFILE_URL =
 		'https://media.themoviedb.org/t/p/w300_and_h450_bestv2'
 
-	constructor(public language: string = 'en-GB') {}
+	constructor(public language: string = 'en-GB') { }
 
 	private TMDB_ENTITY_URL(type: string, id: string, appendToResponse?: string) {
 		return `${this.TMDB_URL_V3}/${type}/${id}?append_to_response=${appendToResponse}&language=${this.language}`
@@ -87,7 +87,7 @@ export class TMDB {
 									this.push(value)
 								}
 							})
-							.catch((err) => this.destroy(err))
+							.catch((err: Error) => this.destroy(err))
 					},
 				})
 
