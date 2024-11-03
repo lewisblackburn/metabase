@@ -6,7 +6,6 @@ import { GENRES, METABASE_BOT_ID } from '#app/utils/constants.js'
 import { prisma } from '#app/utils/db.server.ts'
 import { MOCK_CODE_GITHUB } from '#app/utils/providers/constants'
 import {
-	cleanupDb,
 	createFilm,
 	createPassword,
 	createPerson,
@@ -20,8 +19,6 @@ import { insertGitHubUser } from '#tests/mocks/github.ts'
 async function seed() {
 	console.log('🌱 Seeding...')
 	console.time(`🌱 Database has been seeded`)
-
-	await cleanUpDatabase()
 
 	await createUsers()
 
@@ -38,11 +35,6 @@ async function seed() {
 	console.timeEnd(`🌱 Database has been seeded`)
 }
 
-async function cleanUpDatabase() {
-	console.time('🧹 Cleaned up the database...')
-	await cleanupDb()
-	console.timeEnd('🧹 Cleaned up the database...')
-}
 
 async function createUsers() {
 	const totalUsers = 5
