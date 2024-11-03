@@ -35,7 +35,6 @@ async function seed() {
 	console.timeEnd(`🌱 Database has been seeded`)
 }
 
-
 async function createUsers() {
 	const totalUsers = 5
 	console.time(`👤 Created ${totalUsers} users...`)
