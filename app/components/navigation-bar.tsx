@@ -21,9 +21,9 @@ import { type IconName } from '@/icon-name'
 type NavigationLink =
 	| { name: string; href: string }
 	| {
-			name: string
-			items: { icon: IconName; colour: string; name: string; href: string }[]
-	  }
+		name: string
+		items: { icon: IconName; colour: string; name: string; href: string }[]
+	}
 
 const NavigationLinks: NavigationLink[] = [
 	{
@@ -162,7 +162,7 @@ export default function NavigationBar() {
 	invariant(data?.requestInfo, 'No requestInfo found in root loader')
 
 	return (
-		<div className="sticky bottom-0 left-0 right-0 top-0 z-[60]">
+		<nav className="sticky bottom-0 left-0 right-0 top-0 z-[60]">
 			<div className="border-stone-150 relative w-full border-b bg-white py-1 transition duration-200 ease-out dark:border-gray-700 dark:bg-black">
 				<nav className="item relative z-50 mx-auto flex w-full max-w-6xl items-center p-0 px-3 md:px-8 lg:px-16">
 					<div className="flex w-full flex-nowrap items-center py-2 text-stone-800 transition-colors duration-150 ease-out dark:text-white">
@@ -238,7 +238,7 @@ export default function NavigationBar() {
 					</div>
 				</nav>
 			</div>
-		</div>
+		</nav>
 	)
 }
 
