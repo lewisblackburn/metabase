@@ -27,7 +27,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from '#app/components/ui/sidebar'
-import { IconLogo } from './logo'
+import { IconLogo, IconWithTextLogo } from './logo'
 import { NavMedia } from './nav-media'
 
 const data = {
