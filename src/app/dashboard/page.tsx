@@ -1,57 +1,134 @@
-import { AppSidebar } from "@/components/app-sidebar"
+'use client';
+
+import { Fragment, useState } from 'react';
+
+import { cn, isLastIndex } from '@/lib/utils';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
+import { Button } from '@/registry/new-york-v4/ui/button';
+import { Separator } from '@/registry/new-york-v4/ui/separator';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/registry/new-york-v4/ui/breadcrumb"
-import { Separator } from "@/registry/new-york-v4/ui/separator"
+    Sidebar,
+    SidebarContent,
+    SidebarInset,
+    SidebarMenu,
+    SidebarProvider,
+    useSidebar
+} from '@/registry/new-york-v4/ui/sidebar';
+
 import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/registry/new-york-v4/ui/sidebar"
+    ArrowRight,
+    Calendar,
+    ChevronLeft,
+    ChevronRight,
+    CreditCard,
+    Info,
+    Tags,
+    Timer,
+    TrendingUp,
+    User
+} from 'lucide-react';
+
+const Information = [
+    {
+        icon: <Calendar size='1em' />,
+        badge: '4 September 2013',
+        children: 'Release Date'
+    },
+    {
+        icon: <Tags size='1em' />,
+        badge: 'Romance, Comedy, Drama',
+        children: 'Genre'
+    },
+    {
+        icon: <Timer size='1em' />,
+        badge: '2h 3m',
+        children: 'Duration'
+    },
+    {
+        icon: <Info size='1em' />,
+        badge: 'Released',
+        children: 'Status'
+    },
+    {
+        icon: <User size='1em' />,
+        badge: 'Richard Curtis',
+        children: 'Director'
+    },
+    {
+        icon: <TrendingUp size='1em' />,
+        badge: '$87.1 million',
+        children: 'Revenue'
+    },
+    {
+        icon: <CreditCard size='1em' />,
+        badge: '$12 million',
+        children: 'Budget'
+    }
+];
+
+const InformationItem = ({
+    icon,
+    children,
+    badge
+}: Readonly<{ icon: React.ReactNode; children: React.ReactNode; badge: string }>) => {
+    return (
+        <div className='flex flex-col gap-2'>
+            <div className='flex items-center gap-2 text-sm'>
+                {icon}
+                <span>{children}</span>
+            </div>
+            <Badge variant='outline'>{badge}</Badge>
+        </div>
+    );
+};
+
+function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
+    const { open, toggleSidebar } = useSidebar();
+
+    return (
+        <Button
+            data-sidebar='trigger'
+            data-slot='sidebar-trigger'
+            variant='ghost'
+            size='icon'
+            className={cn('text-muted-foreground h-7 w-7 cursor-pointer', className)}
+            onClick={(event) => {
+                onClick?.(event);
+                toggleSidebar();
+            }}
+            {...props}>
+            {open ? <ChevronLeft /> : <ChevronRight />}
+            <span className='sr-only'>Toggle Sidebar</span>
+        </Button>
+    );
+}
 
 export default function Page() {
-  return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "350px",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar />
-      <SidebarInset>
-        <header className="bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator
-            orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
-          />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">All Inboxes</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Inbox</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          {Array.from({ length: 24 }).map((_, index) => (
-            <div
-              key={index}
-              className="bg-muted/50 aspect-video h-12 w-full rounded-lg"
-            />
-          ))}
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
-  )
+    const [open, setOpen] = useState(true);
+
+    return (
+        <SidebarProvider
+            style={
+                {
+                    '--sidebar-width': '300px'
+                } as React.CSSProperties
+            }
+            className='relative z-0 p-2'
+            open={open}>
+            <Sidebar className='absolute'>
+                <SidebarContent className='bg-white p-5'>
+                    <SidebarMenu className='flex flex-col gap-5'>
+                        {Information.map((item, index) => (
+                            <Fragment key={index}>
+                                <InformationItem key={index} {...item} />
+                                {isLastIndex(index, Information) ? null : <Separator />}
+                            </Fragment>
+                        ))}
+                    </SidebarMenu>
+                </SidebarContent>
+            </Sidebar>
+            <SidebarTrigger onClick={() => setOpen((prev) => !prev)} />
+            <main>content</main>
+        </SidebarProvider>
+    );
 }
