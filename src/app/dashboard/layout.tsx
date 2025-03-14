@@ -12,7 +12,7 @@ import {
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/registry/new-york-v4/ui/sidebar';
 
-const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
+const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     return (
         <SidebarProvider
             style={
@@ -23,7 +23,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
             <AppSidebar />
             <SidebarInset>
                 <header className='bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4'>
-                    <SidebarTrigger className='-ml-1' />
+                    <SidebarTrigger className='-ml-1 cursor-pointer' />
                     <Separator orientation='vertical' className='mr-2 data-[orientation=vertical]:h-4' />
                     <Breadcrumb>
                         <BreadcrumbList>
@@ -37,10 +37,10 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                         </BreadcrumbList>
                     </Breadcrumb>
                 </header>
-                <div className='h-full'>{children}</div>
+                <div>{children}</div>
             </SidebarInset>
         </SidebarProvider>
     );
 };
 
-export default Layout;
+export default DashboardLayout;
