@@ -95,7 +95,7 @@ const FilmLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                     '--sidebar-width': '300px'
                 } as React.CSSProperties
             }
-            className='relative z-0 p-2'
+            className='relative z-0 !h-[calc(100vh-4rem)] !min-h-0 overflow-hidden p-2'
             open={open}>
             <Sidebar className='absolute'>
                 <SidebarContent className='bg-white p-5'>
