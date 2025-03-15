@@ -2,6 +2,7 @@ import pluginJs from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 
 import eslintConfigPrettier from 'eslint-config-prettier';
+import eslintPluginBoundaries from 'eslint-plugin-boundaries';
 import importPlugin from 'eslint-plugin-import';
 import pluginPromise from 'eslint-plugin-promise';
 import pluginReact from 'eslint-plugin-react';
@@ -32,6 +33,8 @@ export default [
     pluginReact.configs.flat.recommended, // ? https://github.com/jsx-eslint/eslint-plugin-react
     pluginReact.configs.flat['jsx-runtime'], // ? https://github.com/jsx-eslint/eslint-plugin-react
     eslintConfigPrettier, // ? https://github.com/prettier/eslint-config-prettier
+    // TODO: Setup properly: https://www.youtube.com/watch?v=xyxrB2Aa7KE&t=495s
+    // eslintPluginBoundaries.configs.recommended, // ? https://github.com/javierbrea/eslint-plugin-boundaries
     {
         rules: {
             'no-unused-vars': 'off',

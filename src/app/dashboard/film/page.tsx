@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 
-import { CustomBadge } from '@/components/custom-badge';
+import { CustomBadge } from '@/components/ui/custom-badge';
 
 import { FILM_DATA } from './layout';
-import { FileStack, Layers, Layers2, SquareStack, Video } from 'lucide-react';
+import { Layers2, Video } from 'lucide-react';
 
 export default function FilmPage() {
     return (

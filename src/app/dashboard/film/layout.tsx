@@ -2,12 +2,13 @@
 
 import { Fragment, ReactNode, useState } from 'react';
 
-import { Container } from '@/components/container';
-import { cn, isLastIndex } from '@/lib/utils';
+import { Container } from '@/components/ui/container';
+import { cn } from '@/lib/utils';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
+import isLastIndex from '@/utils/isLastIndex';
 
 import { Calendar, ChevronLeft, ChevronRight, CreditCard, Info, Tags, Timer, TrendingUp, User } from 'lucide-react';
 
