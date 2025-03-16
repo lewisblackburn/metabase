@@ -28,19 +28,14 @@ export default function CommandDialog({
                                 <div className='text-primary flex items-center'>
                                     {item.keys.map((key, keyIndex) => {
                                         if (typeof key === 'string') {
-                                            return (
-                                                <span key={keyIndex} className='font-semibold'>
-                                                    {key}
-                                                </span>
-                                            );
+                                            return <span key={keyIndex}>{key}</span>;
                                         }
 
                                         // if it is an icon, render it
                                         if (typeof key === 'object') {
-                                            const KeyComponent = key;
+                                            const KeyComponent = key as React.ElementType;
 
-                                            // BUG: Fix the TypeScript error
-                                            return <KeyComponent key={keyIndex} className='!size-2.5' />;
+                                            return <KeyComponent key={keyIndex} className='!mt-0.5 !size-2.5' />;
                                         }
                                     })}
                                 </div>
