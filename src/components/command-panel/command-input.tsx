@@ -1,8 +1,12 @@
+import Link from 'next/link';
+
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 import { Command as CommandPrimitive } from 'cmdk';
-import { SearchIcon } from 'lucide-react';
+import { ArrowBigUp, Expand, Fullscreen, Info, Maximize, Maximize2, SearchIcon } from 'lucide-react';
 
 export default function CommandInput({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Input>) {
     return (
@@ -19,6 +23,41 @@ export default function CommandInput({ className, ...props }: React.ComponentPro
                 )}
                 {...props}
             />
+            <div className='flex items-center gap-2'>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Link href='#'>
+                                <Button variant='ghost' size='icon' className='h-7 w-7'>
+                                    <Info />
+                                </Button>
+                                <span className='sr-only'>Information</span>
+                            </Link>
+                        </TooltipTrigger>
+                        <TooltipContent side='top'>Learn more</TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Link href='#'>
+                                <Button variant='ghost' size='icon' className='h-7 w-7'>
+                                    <Maximize />
+                                </Button>
+                                <span className='sr-only'>Extended Search</span>
+                            </Link>
+                        </TooltipTrigger>
+                        <TooltipContent side='top'>
+                            <p>Open extended search</p>
+                            <p className='flex items-center justify-center'>
+                                <span>CTRL</span>
+                                <ArrowBigUp className='!h-3.5 !w-3.5' />
+                                <span>P</span>
+                            </p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            </div>
         </div>
     );
 }

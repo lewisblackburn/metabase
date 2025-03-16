@@ -12,7 +12,7 @@ import isLastIndex from '@/utils/isLastIndex';
 
 import { Calendar, ChevronLeft, ChevronRight, CreditCard, Info, Tags, Timer, TrendingUp, User } from 'lucide-react';
 
-export const FILM_DATA = {
+export const MOVIE_DATA = {
     title: 'About Time',
     year: 2013,
     releaseDate: '8 August 2013',
@@ -95,37 +95,37 @@ export const FILM_DATA = {
 const Information = [
     {
         icon: <Calendar size='1em' />,
-        badge: FILM_DATA.releaseDate,
+        badge: MOVIE_DATA.releaseDate,
         children: 'Release Date'
     },
     {
         icon: <Tags size='1em' />,
-        badge: FILM_DATA.genre.join(', '),
+        badge: MOVIE_DATA.genre.join(', '),
         children: 'Genre'
     },
     {
         icon: <Timer size='1em' />,
-        badge: FILM_DATA.duration,
+        badge: MOVIE_DATA.duration,
         children: 'Duration'
     },
     {
         icon: <Info size='1em' />,
-        badge: FILM_DATA.status,
+        badge: MOVIE_DATA.status,
         children: 'Status'
     },
     {
         icon: <User size='1em' />,
-        badge: FILM_DATA.director,
+        badge: MOVIE_DATA.director,
         children: 'Director'
     },
     {
         icon: <TrendingUp size='1em' />,
-        badge: FILM_DATA.revenue,
+        badge: MOVIE_DATA.revenue,
         children: 'Revenue'
     },
     {
         icon: <CreditCard size='1em' />,
-        badge: FILM_DATA.budget,
+        badge: MOVIE_DATA.budget,
         children: 'Budget'
     }
 ];
