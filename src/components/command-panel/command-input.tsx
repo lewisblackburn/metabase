@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
-import { Button } from '@/registry/new-york-v4/ui/button';
+import { Button, buttonVariants } from '@/registry/new-york-v4/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 
@@ -24,26 +24,24 @@ export default function CommandInput({ className, ...props }: React.ComponentPro
                 {...props}
             />
             <div className='flex items-center gap-2'>
+                <Tooltip>
+                    <TooltipTrigger>
+                        <Link href='#'>
+                            <div className={cn(buttonVariants({ size: 'icon', variant: 'ghost' }), 'h-7 w-7')}>
+                                <Info />
+                            </div>
+                            <span className='sr-only'>Information</span>
+                        </Link>
+                    </TooltipTrigger>
+                    <TooltipContent side='top'>Learn more</TooltipContent>
+                </Tooltip>
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger>
                             <Link href='#'>
-                                <Button variant='ghost' size='icon' className='h-7 w-7'>
-                                    <Info />
-                                </Button>
-                                <span className='sr-only'>Information</span>
-                            </Link>
-                        </TooltipTrigger>
-                        <TooltipContent side='top'>Learn more</TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <Link href='#'>
-                                <Button variant='ghost' size='icon' className='h-7 w-7'>
+                                <div className={cn(buttonVariants({ size: 'icon', variant: 'ghost' }), 'h-7 w-7')}>
                                     <Maximize />
-                                </Button>
+                                </div>
                                 <span className='sr-only'>Extended Search</span>
                             </Link>
                         </TooltipTrigger>
