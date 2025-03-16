@@ -150,8 +150,8 @@ export default function CommandPanel() {
                 <CommandGroup heading='Recently opened'>
                     {RECENTLY_OPENED.map((item, index) => (
                         <CommandItem key={index} className='text-xs'>
-                            <div className={cn(item.type.background, 'p-1.5')}>
-                                <item.type.icon className={cn(item.type.foreground, '!h-3 !w-3')} />
+                            <div className={cn(item.type.background, 'p-1')}>
+                                <item.type.icon className={cn(item.type.foreground, '!size-3')} />
                             </div>
                             <span>{item.title}</span>
                             <Badge
@@ -159,10 +159,10 @@ export default function CommandPanel() {
                                     item.type.background,
                                     item.type.foreground,
                                     item.type.border,
-                                    'ml-auto rounded-sm'
+                                    'ml-auto flex items-center rounded-sm'
                                 )}>
-                                <item.type.icon className={cn(item.type.foreground, '!h-3 !w-3')} />
-                                {item.type.name}
+                                <item.type.icon className={cn(item.type.foreground, '!mt-0.5 !size-2.5')} />
+                                <span>{item.type.name}</span>
                             </Badge>
                         </CommandItem>
                     ))}
@@ -172,7 +172,7 @@ export default function CommandPanel() {
                     {ALL_ACTIONS.map((item, index) => (
                         <CommandItem key={index} className='text-xs'>
                             <div className={cn(item.background, 'p-1')}>
-                                <item.icon className={cn(item.foreground, '!h-2.5 !w-2.5')} />
+                                <item.icon className={cn(item.foreground, '!size-3')} />
                             </div>
                             <span>{item.title}</span>
                             {item.shortcut && <CommandShortcut>{item.shortcut}</CommandShortcut>}

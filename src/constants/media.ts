@@ -1,4 +1,4 @@
-import { Book, Briefcase, Film, Gamepad, Layers, Tv, User, Video } from 'lucide-react';
+import { Book, Briefcase, Gamepad, Layers, Tv, User, Video } from 'lucide-react';
 
 export const MEDIA_TYPE = {
     MOVIE: {

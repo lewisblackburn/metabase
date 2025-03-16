@@ -1,3 +1,4 @@
+import { SHORTCUTS } from '@/constants/shortcuts';
 import { Command } from '@/registry/new-york-v4/ui/command';
 import { Dialog, DialogDescription, DialogHeader, DialogTitle } from '@/registry/new-york-v4/ui/dialog';
 
@@ -21,6 +22,32 @@ export default function CommandDialog({
             <DialogContent className='overflow-hidden p-0'>
                 <Command className='[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5'>
                     {children}
+                    <div className='border-border flex items-center gap-5 border-t px-2 py-1'>
+                        {SHORTCUTS.COMMAND_PANEL.map((item, index) => (
+                            <div key={index} className='text-muted-foreground flex items-center gap-2 text-xs'>
+                                <div className='text-primary flex items-center'>
+                                    {item.keys.map((key, keyIndex) => {
+                                        if (typeof key === 'string') {
+                                            return (
+                                                <span key={keyIndex} className='font-semibold'>
+                                                    {key}
+                                                </span>
+                                            );
+                                        }
+
+                                        // if it is an icon, render it
+                                        if (typeof key === 'object') {
+                                            const KeyComponent = key;
+
+                                            // BUG: Fix the TypeScript error
+                                            return <KeyComponent key={keyIndex} className='!size-2.5' />;
+                                        }
+                                    })}
+                                </div>
+                                <span>{item.short}</span>
+                            </div>
+                        ))}
+                    </div>
                 </Command>
             </DialogContent>
         </Dialog>

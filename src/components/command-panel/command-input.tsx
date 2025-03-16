@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 import { Command as CommandPrimitive } from 'cmdk';
-import { ArrowBigUp, Expand, Fullscreen, Info, Maximize, Maximize2, SearchIcon } from 'lucide-react';
+import { ArrowBigUp, Info, Maximize, SearchIcon } from 'lucide-react';
 
 export default function CommandInput({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Input>) {
     return (
@@ -49,7 +49,7 @@ export default function CommandInput({ className, ...props }: React.ComponentPro
                             <p>Open extended search</p>
                             <p className='flex items-center justify-center'>
                                 <span>CTRL</span>
-                                <ArrowBigUp className='!h-3.5 !w-3.5' />
+                                <ArrowBigUp className='!size-3.5' />
                                 <span>P</span>
                             </p>
                         </TooltipContent>
