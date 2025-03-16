@@ -24,19 +24,20 @@ export default function CommandDialog({
                     {children}
                     <div className='border-border flex items-center gap-5 border-t px-2 py-1'>
                         {SHORTCUTS.COMMAND_PANEL.map((item, index) => (
-                            <div key={index} className='text-muted-foreground flex items-center gap-2 text-xs'>
+                            <div key={index} className='text-muted-foreground flex items-center gap-1 text-xs'>
                                 <div className='text-primary flex items-center'>
                                     {item.keys.map((key, keyIndex) => {
                                         if (typeof key === 'string') {
                                             return <span key={keyIndex}>{key}</span>;
                                         }
 
-                                        // if it is an icon, render it
                                         if (typeof key === 'object') {
                                             const KeyComponent = key as React.ElementType;
 
                                             return <KeyComponent key={keyIndex} className='!mt-0.5 !size-2.5' />;
                                         }
+
+                                        return null;
                                     })}
                                 </div>
                                 <span>{item.short}</span>
