@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { CustomBadge } from '@/components/ui/custom-badge';
@@ -18,7 +19,7 @@ export default function MoviePage() {
                         background={MEDIA_TYPE.MOVIE.background}
                         foreground={MEDIA_TYPE.MOVIE.foreground}
                         border={MEDIA_TYPE.MOVIE.border}>
-                        Film
+                        Movie
                     </CustomBadge>
                     <Link href=''>
                         <CustomBadge icon={Layers2}>Collections</CustomBadge>

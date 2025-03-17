@@ -2,7 +2,10 @@
 
 import { Fragment, ReactNode, useState } from 'react';
 
+import Image from 'next/image';
+
 import { Container } from '@/components/ui/container';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -23,9 +26,9 @@ export const MOVIE_DATA = {
     revenue: '$87.1 million',
     budget: '$12 million',
     overview: `At the age of 21, Tim discovers he can travel in time and change what happens and has happened in his own life. His decision to make his world a better place by getting a girlfriend turns out not to be as easy as you might think.`,
-    tagline: `A new funny FILM_DATA.about love. With a bit of time travel.`,
-    backdrop: 'https://image.tmdb.org/t/p/original/4n8QNNdk4BOX9Dslfbz5Dy6j1HK.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/4n8QNNdk4BOX9Dslfbz5Dy6j1HK.jpg',
+    tagline: `A new funny film about love. With a bit of time travel.`,
+    poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ls6zswrOZVhCXQBh96DlbnLBajM.jpg',
+    backdrop: 'https://image.tmdb.org/t/p/original/ppWSi3evUtz9YGNcmsnjmH3FARy.jpg',
     cast: [
         {
             name: 'Domhnall Gleeson',
@@ -148,6 +151,7 @@ const InformationItem = ({
 
 function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
     const { open, toggleSidebar } = useSidebar();
+    const isMobile = useIsMobile();
 
     return (
         <Button
@@ -161,7 +165,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
                 toggleSidebar();
             }}
             {...props}>
-            {open ? <ChevronLeft /> : <ChevronRight />}
+            {!isMobile ? open ? <ChevronLeft /> : <ChevronRight /> : <Info />}
             <span className='sr-only'>Toggle Sidebar</span>
         </Button>
     );
@@ -177,11 +181,19 @@ const FilmLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                     '--sidebar-width': '300px'
                 } as React.CSSProperties
             }
-            className='relative z-0 !h-[calc(100vh-4rem)] !min-h-0 overflow-hidden p-2'
+            className='relative z-0 !h-[calc(100vh-4rem)] !min-h-0 overflow-hidden'
             open={open}>
             <Sidebar className='absolute'>
                 <SidebarContent className='bg-white p-5'>
                     <SidebarMenu className='flex flex-col gap-5'>
+                        <Image
+                            src={MOVIE_DATA.poster}
+                            alt={MOVIE_DATA.title}
+                            width={200}
+                            height={300}
+                            className='mb-5 size-full rounded'
+                            quality={100}
+                        />
                         {Information.map((item, index) => (
                             <Fragment key={index}>
                                 <InformationItem key={index} {...item} />
@@ -191,8 +203,17 @@ const FilmLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                     </SidebarMenu>
                 </SidebarContent>
             </Sidebar>
-            <SidebarTrigger onClick={() => setOpen((prev) => !prev)} />
             <main className='w-full'>
+                <SidebarTrigger onClick={() => setOpen((prev) => !prev)} className='absolute m-2 bg-white' />
+                <Image
+                    src={MOVIE_DATA.backdrop}
+                    alt={MOVIE_DATA.title}
+                    layout='responsive'
+                    width={1920}
+                    height={1080}
+                    quality={100}
+                    className='!h-1/5 object-cover object-top'
+                />
                 <Container>{children}</Container>
             </main>
         </SidebarProvider>

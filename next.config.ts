@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     output: 'standalone',
     experimental: {
         turbo: {}
+    },
+    images: {
+        domains: ['image.tmdb.org', 'www.themoviedb.org', 'media.themoviedb.org']
     }
 };
 
