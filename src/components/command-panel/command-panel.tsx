@@ -4,12 +4,11 @@ import * as React from 'react';
 
 import { ALL_ACTIONS } from '@/constants/actions';
 import { MEDIA_TYPE } from '@/constants/media';
-import { CommandEmpty, CommandGroup, CommandList, CommandSeparator } from '@/registry/new-york-v4/ui/command';
+import { Command, CommandEmpty, CommandGroup, CommandList, CommandSeparator } from '@/registry/new-york-v4/ui/command';
 
 import CommandDialog from './command-dialog';
 import CommandInput from './command-input';
 import Item, { ItemType } from './item';
-import { CommandLoading } from 'cmdk';
 
 const ALL_ITEMS: ItemType[] = [
     {
@@ -114,23 +113,24 @@ const ALL_ITEMS: ItemType[] = [
 
 export default function CommandPanel() {
     const [open, setOpen] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
     const [query, setQuery] = React.useState('');
-    const [items, setItems] = React.useState<ItemType[]>([]);
     const isSearching = query.length > 0;
 
-    React.useEffect(() => {
-        setLoading(true);
-        const filteredItems: ItemType[] = ALL_ITEMS.filter((item) => {
-            if (isSearching) {
-                return item.title.toLowerCase().includes(query.toLowerCase());
-            }
+    const filteredItems = React.useMemo(() => {
+        if (!isSearching) return [];
 
-            return true;
+        const items = ALL_ITEMS.concat(ALL_ACTIONS);
+
+        return items.filter((item) => {
+            return item.title.toLowerCase().includes(query.toLowerCase());
         });
-        if (isSearching) setItems(filteredItems);
-        setLoading(false);
-    }, [query]);
+    }, [isSearching, query]);
+
+    const recentItems = React.useMemo(() => {
+        return ALL_ITEMS.filter((item) => {
+            return item.lastOpened && new Date(item.lastOpened) > new Date('2023-01-01'); // More robust date comparison
+        });
+    }, []);
 
     React.useEffect(() => {
         const down = (e: KeyboardEvent) => {
@@ -147,25 +147,38 @@ export default function CommandPanel() {
 
     return (
         <CommandDialog open={open} onOpenChange={setOpen}>
-            <CommandInput
-                placeholder='Search for content and actions, or paste from clipboard'
-                onValueChange={setQuery}
-            />
-            <CommandList>
-                <CommandEmpty>No results found.</CommandEmpty>
-                {loading && <CommandLoading>loading...</CommandLoading>}
-                <CommandGroup heading='All items'>
-                    {items.map((item) => (
-                        <Item key={item.id} item={item} />
-                    ))}
-                </CommandGroup>
-                <CommandSeparator />
-                <CommandGroup heading='All actions'>
-                    {ALL_ACTIONS.map((item, index) => (
-                        <Item key={index} item={item} />
-                    ))}
-                </CommandGroup>
-            </CommandList>
+            <Command shouldFilter={false}>
+                <CommandInput
+                    placeholder='Search for content and actions, or paste from clipboard'
+                    onValueChange={setQuery}
+                />
+                <CommandList>
+                    <CommandEmpty>No results found.</CommandEmpty>
+                    {isSearching && filteredItems.length > 0 && (
+                        <CommandGroup heading='Search results'>
+                            {filteredItems.map((item) => (
+                                <Item key={`search-${item.id}`} item={item} />
+                            ))}
+                        </CommandGroup>
+                    )}
+                    {/* NOTE: Only show when not searching */}
+                    {!isSearching && (
+                        <CommandGroup heading='Recently opened'>
+                            {recentItems.map((item) => (
+                                <Item key={`recent-${item.id}`} item={item} />
+                            ))}
+                        </CommandGroup>
+                    )}
+                    <CommandSeparator />
+                    {!isSearching && (
+                        <CommandGroup heading='All actions'>
+                            {ALL_ACTIONS.map((item, index) => (
+                                <Item key={index} item={item} />
+                            ))}
+                        </CommandGroup>
+                    )}
+                </CommandList>
+            </Command>
         </CommandDialog>
     );
 }
