@@ -6,7 +6,6 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
-import CommandPanel from '@/components/command-panel/command-panel';
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -30,10 +29,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
         <html suppressHydrationWarning lang='en'>
             <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
-                <ThemeProvider attribute='class'>
-                    <CommandPanel />
-                    {children}
-                </ThemeProvider>
+                <ThemeProvider attribute='class'>{children}</ThemeProvider>
             </body>
         </html>
     );

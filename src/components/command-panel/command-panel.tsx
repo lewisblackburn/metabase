@@ -2,132 +2,135 @@
 
 import * as React from 'react';
 
-import { ACTION_TYPE } from '@/constants/actions';
+import { ALL_ACTIONS } from '@/constants/actions';
 import { MEDIA_TYPE } from '@/constants/media';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
-import {
-    CommandEmpty,
-    CommandGroup,
-    CommandItem,
-    CommandList,
-    CommandSeparator,
-    CommandShortcut
-} from '@/registry/new-york-v4/ui/command';
+import { CommandEmpty, CommandGroup, CommandList, CommandSeparator } from '@/registry/new-york-v4/ui/command';
 
 import CommandDialog from './command-dialog';
 import CommandInput from './command-input';
-import { Hand, Inbox, LibraryBig, Settings } from 'lucide-react';
+import Item, { ItemType } from './item';
+import { CommandLoading } from 'cmdk';
 
-const RECENTLY_OPENED = [
+const ALL_ITEMS: ItemType[] = [
     {
+        id: '1',
         title: 'About Time',
-        type: MEDIA_TYPE.MOVIE
+        description: 'A new funny film about love. With a bit of time travel.',
+        type: MEDIA_TYPE.MOVIE,
+        lastOpened: '2025-02-01'
     },
     {
+        id: '2',
+        title: 'Mid Air',
+        description: 'Paul Buchanan',
+        type: MEDIA_TYPE.SONG,
+        lastOpened: '2024-02-01'
+    },
+    {
+        id: '3',
         title: 'The Office',
-        type: MEDIA_TYPE.TV
+        description: '',
+        type: MEDIA_TYPE.TV,
+        lastOpened: '2023-02-01'
     },
     {
+        id: '4',
         title: 'The Social Network',
-        type: MEDIA_TYPE.MOVIE
+        description: '',
+        type: MEDIA_TYPE.MOVIE,
+        lastOpened: '2022-02-01'
     },
     {
+        id: '5',
         title: "The Queen's Gambit",
-        type: MEDIA_TYPE.TV
+        description: '',
+        type: MEDIA_TYPE.TV,
+        lastOpened: '2021-02-01'
     },
     {
+        id: '6',
         title: 'The Dark Knight',
-        type: MEDIA_TYPE.MOVIE
+        description: '',
+        type: MEDIA_TYPE.MOVIE,
+        lastOpened: '2020-02-01'
     },
     {
+        id: '7',
+        title: "Harry Potter and the Philosopher's Stone",
+        description: '',
+        type: MEDIA_TYPE.MOVIE,
+        lastOpened: '2019-02-01'
+    },
+    {
+        id: '8',
         title: 'Grand Theft Auto V',
-        type: MEDIA_TYPE.GAME
-    }
-];
-const ALL_ACTIONS = [
-    {
-        title: 'Create new "Movie"',
-        type: ACTION_TYPE.CREATE,
-        icon: MEDIA_TYPE.MOVIE.icon,
-        background: MEDIA_TYPE.MOVIE.background,
-        foreground: MEDIA_TYPE.MOVIE.foreground
+        description: '',
+        type: MEDIA_TYPE.GAME,
+        lastOpened: '2018-02-01'
     },
     {
-        title: 'Create new "TV Show"',
-        type: ACTION_TYPE.CREATE,
-        icon: MEDIA_TYPE.TV.icon,
-        background: MEDIA_TYPE.TV.background,
-        foreground: MEDIA_TYPE.TV.foreground
+        id: '9',
+        title: 'About Time',
+        description: '',
+        type: MEDIA_TYPE.SOUNDTRACK,
+        lastOpened: '2017-02-01'
     },
     {
-        title: 'Create new "Person"',
-        type: ACTION_TYPE.CREATE,
-        icon: MEDIA_TYPE.PERSON.icon,
-        background: MEDIA_TYPE.PERSON.background,
-        foreground: MEDIA_TYPE.PERSON.foreground
+        id: '10',
+        title: 'Rachel McAdams',
+        description: '',
+        type: MEDIA_TYPE.PERSON,
+        lastOpened: '2016-02-01'
     },
     {
-        title: 'Create new "Book"',
-        type: ACTION_TYPE.CREATE,
-        icon: MEDIA_TYPE.BOOK.icon,
-        background: MEDIA_TYPE.BOOK.background,
-        foreground: MEDIA_TYPE.BOOK.foreground
+        id: '11',
+        title: 'Domhnall Gleeson',
+        description: '',
+        type: MEDIA_TYPE.PERSON,
+        lastOpened: '2015-02-01'
     },
     {
-        title: 'Create new "Game"',
-        type: ACTION_TYPE.CREATE,
-        icon: MEDIA_TYPE.GAME.icon,
-        background: MEDIA_TYPE.GAME.background,
-        foreground: MEDIA_TYPE.GAME.foreground
+        id: '12',
+        title: 'Warner Bros. Pictures',
+        description: '',
+        type: MEDIA_TYPE.COMPANY,
+        lastOpened: '2014-02-01'
     },
     {
-        title: 'Create new "Collection"',
-        type: ACTION_TYPE.CREATE,
-        icon: MEDIA_TYPE.COLLECTION.icon,
-        background: MEDIA_TYPE.COLLECTION.background,
-        foreground: MEDIA_TYPE.COLLECTION.foreground
+        id: '13',
+        title: 'Harry Potter',
+        description: '',
+        type: MEDIA_TYPE.COLLECTION,
+        lastOpened: '2013-02-01'
     },
     {
-        title: 'Create new "Company"',
-        type: ACTION_TYPE.CREATE,
-        icon: MEDIA_TYPE.COMPANY.icon,
-        foreground: MEDIA_TYPE.COMPANY.foreground,
-        background: MEDIA_TYPE.COMPANY.background
-    },
-    {
-        title: 'Open Settings',
-        type: ACTION_TYPE.OPEN.type,
-        icon: Settings,
-        background: 'bg-gray-300/20',
-        foreground: 'text-gray-800',
-        shortcut: 'Ctrl ,'
-    },
-    {
-        title: 'Help: Open Metabase documentation',
-        type: ACTION_TYPE.OPEN.type,
-        icon: LibraryBig,
-        background: 'bg-yellow-300/20',
-        foreground: 'text-yellow-800'
-    },
-    {
-        title: 'Send feedback or share a bug',
-        type: ACTION_TYPE.OPEN.type,
-        icon: Inbox,
-        background: 'bg-blue-300/20',
-        foreground: 'text-blue-800'
-    },
-    {
-        title: 'Questions: Open our Discord community',
-        type: ACTION_TYPE.OPEN.type,
-        icon: Hand,
-        background: 'bg-purple-300/20',
-        foreground: 'text-purple-800'
+        id: '14',
+        title: 'The Call of the Wild',
+        description: '',
+        type: MEDIA_TYPE.BOOK,
+        lastOpened: '2012-02-01'
     }
 ];
 
 export default function CommandPanel() {
     const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [query, setQuery] = React.useState('');
+    const [items, setItems] = React.useState<ItemType[]>([]);
+    const isSearching = query.length > 0;
+
+    React.useEffect(() => {
+        setLoading(true);
+        const filteredItems: ItemType[] = ALL_ITEMS.filter((item) => {
+            if (isSearching) {
+                return item.title.toLowerCase().includes(query.toLowerCase());
+            }
+
+            return true;
+        });
+        if (isSearching) setItems(filteredItems);
+        setLoading(false);
+    }, [query]);
 
     React.useEffect(() => {
         const down = (e: KeyboardEvent) => {
@@ -144,39 +147,22 @@ export default function CommandPanel() {
 
     return (
         <CommandDialog open={open} onOpenChange={setOpen}>
-            <CommandInput placeholder='Search for content and actions, or paste from clipboard' />
+            <CommandInput
+                placeholder='Search for content and actions, or paste from clipboard'
+                onValueChange={setQuery}
+            />
             <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup heading='Recently opened'>
-                    {RECENTLY_OPENED.map((item, index) => (
-                        <CommandItem key={index} className='text-xs'>
-                            <div className={cn(item.type.background, 'p-1')}>
-                                <item.type.icon className={cn(item.type.foreground, '!size-3')} />
-                            </div>
-                            <span>{item.title}</span>
-                            <Badge
-                                className={cn(
-                                    item.type.background,
-                                    item.type.foreground,
-                                    item.type.border,
-                                    'ml-auto flex items-center rounded-sm'
-                                )}>
-                                <item.type.icon className={cn(item.type.foreground, '!mt-0.5 !size-2.5')} />
-                                <span>{item.type.name}</span>
-                            </Badge>
-                        </CommandItem>
+                {loading && <CommandLoading>loading...</CommandLoading>}
+                <CommandGroup heading='All items'>
+                    {items.map((item) => (
+                        <Item key={item.id} item={item} />
                     ))}
                 </CommandGroup>
                 <CommandSeparator />
                 <CommandGroup heading='All actions'>
                     {ALL_ACTIONS.map((item, index) => (
-                        <CommandItem key={index} className='text-xs'>
-                            <div className={cn(item.background, 'p-1')}>
-                                <item.icon className={cn(item.foreground, '!size-3')} />
-                            </div>
-                            <span>{item.title}</span>
-                            {item.shortcut && <CommandShortcut>{item.shortcut}</CommandShortcut>}
-                        </CommandItem>
+                        <Item key={index} item={item} />
                     ))}
                 </CommandGroup>
             </CommandList>

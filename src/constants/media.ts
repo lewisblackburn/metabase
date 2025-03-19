@@ -1,4 +1,4 @@
-import { Book, Briefcase, Gamepad, Layers, Tv, User, Video } from 'lucide-react';
+import { Book, Briefcase, Gamepad, Headphones, Layers, Music, Tv, User, Video } from 'lucide-react';
 
 export const MEDIA_TYPE = {
     MOVIE: {
@@ -24,6 +24,22 @@ export const MEDIA_TYPE = {
         foreground: 'text-purple-800',
         border: 'border-purple-400/60',
         icon: User
+    },
+    SONG: {
+        type: 'song',
+        name: 'Song',
+        background: 'bg-teal-300/20',
+        foreground: 'text-teal-800',
+        border: 'border-teal-400/60',
+        icon: Headphones
+    },
+    SOUNDTRACK: {
+        type: 'soundtrack',
+        name: 'Sountrack',
+        background: 'bg-pink-300/20',
+        foreground: 'text-pink-800',
+        border: 'border-pink-400/60',
+        icon: Music
     },
     BOOK: {
         type: 'book',
