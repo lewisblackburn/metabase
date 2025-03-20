@@ -187,7 +187,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarGroupContent>
                             {mails.map((mail) => (
                                 <a
-                                    href='#'
+                                    href={mail.id}
                                     key={mail.id}
                                     className='hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0'>
                                     <div className='flex w-full items-center justify-between'>

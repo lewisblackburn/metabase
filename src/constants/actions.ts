@@ -1,6 +1,6 @@
 import { ItemType } from '@/components/command-panel/item';
 
-import { MEDIA_TYPE } from './media';
+import { OBJECT_TYPE } from './media';
 import { Edit, ExternalLink, Hand, Inbox, LibraryBig, Plus, Settings, Trash } from 'lucide-react';
 
 export const ACTION_TYPE = {
@@ -28,11 +28,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "Movie"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.MOVIE.name,
-            background: MEDIA_TYPE.MOVIE.background,
-            foreground: MEDIA_TYPE.MOVIE.foreground,
-            border: MEDIA_TYPE.MOVIE.border,
-            icon: MEDIA_TYPE.MOVIE.icon
+            name: OBJECT_TYPE.MOVIE.name,
+            background: OBJECT_TYPE.MOVIE.background,
+            foreground: OBJECT_TYPE.MOVIE.foreground,
+            border: OBJECT_TYPE.MOVIE.border,
+            icon: OBJECT_TYPE.MOVIE.icon
         }
     },
     {
@@ -40,11 +40,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "TV Show"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.TV.name,
-            background: MEDIA_TYPE.TV.background,
-            foreground: MEDIA_TYPE.TV.foreground,
-            border: MEDIA_TYPE.TV.border,
-            icon: MEDIA_TYPE.TV.icon
+            name: OBJECT_TYPE.TV.name,
+            background: OBJECT_TYPE.TV.background,
+            foreground: OBJECT_TYPE.TV.foreground,
+            border: OBJECT_TYPE.TV.border,
+            icon: OBJECT_TYPE.TV.icon
         }
     },
     {
@@ -52,11 +52,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "Person"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.PERSON.name,
-            background: MEDIA_TYPE.PERSON.background,
-            foreground: MEDIA_TYPE.PERSON.foreground,
-            border: MEDIA_TYPE.PERSON.border,
-            icon: MEDIA_TYPE.PERSON.icon
+            name: OBJECT_TYPE.PERSON.name,
+            background: OBJECT_TYPE.PERSON.background,
+            foreground: OBJECT_TYPE.PERSON.foreground,
+            border: OBJECT_TYPE.PERSON.border,
+            icon: OBJECT_TYPE.PERSON.icon
         }
     },
     {
@@ -64,11 +64,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "Song"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.SONG.name,
-            background: MEDIA_TYPE.SONG.background,
-            foreground: MEDIA_TYPE.SONG.foreground,
-            border: MEDIA_TYPE.SONG.border,
-            icon: MEDIA_TYPE.SONG.icon
+            name: OBJECT_TYPE.SONG.name,
+            background: OBJECT_TYPE.SONG.background,
+            foreground: OBJECT_TYPE.SONG.foreground,
+            border: OBJECT_TYPE.SONG.border,
+            icon: OBJECT_TYPE.SONG.icon
         }
     },
     {
@@ -76,11 +76,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "Book"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.BOOK.name,
-            background: MEDIA_TYPE.BOOK.background,
-            foreground: MEDIA_TYPE.BOOK.foreground,
-            border: MEDIA_TYPE.BOOK.border,
-            icon: MEDIA_TYPE.BOOK.icon
+            name: OBJECT_TYPE.BOOK.name,
+            background: OBJECT_TYPE.BOOK.background,
+            foreground: OBJECT_TYPE.BOOK.foreground,
+            border: OBJECT_TYPE.BOOK.border,
+            icon: OBJECT_TYPE.BOOK.icon
         }
     },
     {
@@ -88,11 +88,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "Game"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.GAME.name,
-            background: MEDIA_TYPE.GAME.background,
-            foreground: MEDIA_TYPE.GAME.foreground,
-            border: MEDIA_TYPE.GAME.border,
-            icon: MEDIA_TYPE.GAME.icon
+            name: OBJECT_TYPE.GAME.name,
+            background: OBJECT_TYPE.GAME.background,
+            foreground: OBJECT_TYPE.GAME.foreground,
+            border: OBJECT_TYPE.GAME.border,
+            icon: OBJECT_TYPE.GAME.icon
         }
     },
     {
@@ -100,11 +100,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "Collection"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.COLLECTION.name,
-            background: MEDIA_TYPE.COLLECTION.background,
-            foreground: MEDIA_TYPE.COLLECTION.foreground,
-            border: MEDIA_TYPE.COLLECTION.border,
-            icon: MEDIA_TYPE.COLLECTION.icon
+            name: OBJECT_TYPE.COLLECTION.name,
+            background: OBJECT_TYPE.COLLECTION.background,
+            foreground: OBJECT_TYPE.COLLECTION.foreground,
+            border: OBJECT_TYPE.COLLECTION.border,
+            icon: OBJECT_TYPE.COLLECTION.icon
         }
     },
     {
@@ -112,11 +112,11 @@ export const ALL_ACTIONS: ItemType[] = [
         title: 'Create new "Company"',
         type: {
             type: ACTION_TYPE.CREATE.type,
-            name: MEDIA_TYPE.COMPANY.name,
-            background: MEDIA_TYPE.COMPANY.background,
-            foreground: MEDIA_TYPE.COMPANY.foreground,
-            border: MEDIA_TYPE.COMPANY.border,
-            icon: MEDIA_TYPE.COMPANY.icon
+            name: OBJECT_TYPE.COMPANY.name,
+            background: OBJECT_TYPE.COMPANY.background,
+            foreground: OBJECT_TYPE.COMPANY.foreground,
+            border: OBJECT_TYPE.COMPANY.border,
+            icon: OBJECT_TYPE.COMPANY.icon
         }
     },
     {
