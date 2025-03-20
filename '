@@ -59,36 +59,6 @@ export const MOVIE_DATA = {
             name: 'Lindsay Duncan',
             character: 'Mum',
             headshot: 'https://media.themoviedb.org/t/p/w300_and_h450_bestv2/sgyf4vOUs5KlRmp4Uuw7UXKjU2b.jpg'
-        },
-        {
-            id: 'cast-6',
-            name: 'Tom Hollander',
-            character: 'Harry',
-            headshot: 'https://media.themoviedb.org/t/p/w300_and_h450_bestv2/cqZiJsImFZ6TaeShRRg49AZ9TyT.jpg'
-        },
-        {
-            id: 'cast-7',
-            name: 'Margot Robbie',
-            character: 'Charlotte',
-            headshot: 'https://media.themoviedb.org/t/p/w300_and_h450_bestv2/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg'
-        },
-        {
-            id: 'cast-8',
-            name: 'Joshua McGuire',
-            character: 'Rory',
-            headshot: 'https://media.themoviedb.org/t/p/w300_and_h450_bestv2/Oo8nFjGGqXPCHDXlTeiAwX0z7b.jpg'
-        },
-        {
-            id: 'cast-9',
-            name: 'Richard Cordery',
-            character: 'Uncle D',
-            headshot: 'https://media.themoviedb.org/t/p/w300_and_h450_bestv2/dQXORgAzgjVXl9SXQBgsjflHZoP.jpg'
-        },
-        {
-            id: 'cast-10',
-            name: 'Tom Hughes',
-            character: 'Jimmy Kincade',
-            headshot: 'https://media.themoviedb.org/t/p/w300_and_h450_bestv2/ykxpfnJ5Fm0Zrx3MbE7yjRzF0b4.jpg'
         }
     ],
     crew: [
