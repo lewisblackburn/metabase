@@ -2,7 +2,6 @@ import pluginJs from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 
 import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginBoundaries from 'eslint-plugin-boundaries';
 import importPlugin from 'eslint-plugin-import';
 import pluginPromise from 'eslint-plugin-promise';
 import pluginReact from 'eslint-plugin-react';

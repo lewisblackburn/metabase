@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Container } from '@/components/ui/container';
+import { VoteStatus } from '@/features/reviews/components/VoteButtons';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
@@ -139,21 +140,16 @@ export const MOVIE_DATA = {
     rating: 7.9,
     reviews: [
         {
-            content: `About Time is a sweet FILM_DATA.that's nice to look at and easy to watch. It's a film that's easy to enjoy, but it's also a film that's easy to forget. It's a film that's easy to enjoy, but it's also a film that's easy to forget.`,
-            rating: 3.5,
             user: {
-                name: 'John Doe',
-                avatar: 'https://randomuser.me/api/portraits'
+                name: 'Lewis Blackburn',
+                initials: 'LB',
+                avatar: 'https://github.com/shadcn.png'
             },
-            date: '8 August 2013'
-        },
-        {
-            content: `You can't help but be charmed by About Time. It's a FILM_DATA.that's easy to enjoy, but it's also a film that's easy to forget. It's a film that's easy to enjoy, but it's also a film that's easy to forget.`,
-            rating: 4.5,
-            user: {
-                name: 'Jane Doe',
-                avatar: 'https://randomuser.me/api/portraits'
-            }
+            rating: 7,
+            createdAt: new Date(),
+            content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis excepturi deleniti minima aspernatur debitis itaque a sunt magnam nulla voluptatem libero tempora provident voluptate in hic enim aliquid, maiores nam? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa omnis porro architecto tenetur, nihil quae inventore incidunt repudiandae quis maxime, cupiditate, veniam praesentium facilis adipisci placeat consectetur aliquam? Facilis, unde? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos esse perspiciatis corrupti at quaerat aliquid culpa eos unde exercitationem veritatis libero eligendi autem soluta officia, illum expedita impedit dolor id.`,
+            votes: 5,
+            voteStatus: VoteStatus.upvoted
         }
     ],
     soundtrack: [

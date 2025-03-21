@@ -6,6 +6,7 @@ import ImageSlider from '@/components/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { OBJECT_TYPE } from '@/constants/media';
 import SoundtrackTable from '@/features/movies/components/SoundtrackTable';
+import Review from '@/features/reviews/components/Review';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
 import { MOVIE_DATA } from './layout';
@@ -54,6 +55,8 @@ export default function MoviePage() {
         }
     ];
 
+    const MOST_POPULAR_REVIEW = MOVIE_DATA.reviews[0];
+
     return (
         <div>
             <div className='flex flex-col gap-5'>
@@ -77,7 +80,7 @@ export default function MoviePage() {
                 <div className='flex flex-col gap-10 py-5'>
                     <Separator />
                     <div className='flex flex-col gap-2'>
-                        <Link href=''>
+                        <Link href='' className='w-fit'>
                             <CustomBadge
                                 icon={OBJECT_TYPE.CAST.icon}
                                 background={OBJECT_TYPE.CAST.background}
@@ -101,7 +104,7 @@ export default function MoviePage() {
                     </div>
                     <Separator />
                     <div className='flex flex-col gap-2'>
-                        <Link href=''>
+                        <Link href='' className='w-fit'>
                             <CustomBadge
                                 icon={OBJECT_TYPE.REVIEW.icon}
                                 background={OBJECT_TYPE.REVIEW.background}
@@ -110,6 +113,15 @@ export default function MoviePage() {
                                 {OBJECT_TYPE.REVIEW.plural}
                             </CustomBadge>
                         </Link>
+                        <Review
+                            id='review-1'
+                            user={MOST_POPULAR_REVIEW.user}
+                            content={MOST_POPULAR_REVIEW.content}
+                            votes={MOST_POPULAR_REVIEW.votes}
+                            voteStatus={MOST_POPULAR_REVIEW.voteStatus}
+                            rating={MOST_POPULAR_REVIEW.rating}
+                            createdAt={MOST_POPULAR_REVIEW.createdAt}
+                        />
                     </div>
                     <Separator />
                     {/* <div className='flex flex-col gap-2'> */}
