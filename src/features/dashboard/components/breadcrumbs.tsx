@@ -1,5 +1,7 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import { usePathname } from 'next/navigation';
 
 import {
@@ -28,7 +30,7 @@ export default function Breadcrumbs() {
         return breadcrumbs;
     }
 
-    const breadcrumbs = generateBreadcrumbs();
+    const breadcrumbs = useMemo(() => generateBreadcrumbs(), [pathname]);
 
     return (
         <Breadcrumb>
