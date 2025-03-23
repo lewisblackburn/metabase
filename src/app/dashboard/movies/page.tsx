@@ -1,8 +1,12 @@
+import { Fragment } from 'react';
+
 import Link from 'next/link';
 
 import Grid from '@/components/grid';
 import Poster from '@/components/poster';
 import { Container } from '@/components/ui/container';
+import MovieSidebar from '@/features/movies/components/MovieSidebar';
+import { Sidebar, SidebarContent, SidebarProvider, SidebarTrigger } from '@/registry/new-york-v4/ui/sidebar';
 
 const MOVIES_DATA = [
     {
@@ -114,14 +118,16 @@ const MOVIES_DATA = [
 
 export default function MoviePage() {
     return (
-        <Container size='full'>
-            <Grid>
-                {MOVIES_DATA.map((movie) => (
-                    <Link key={movie.id} href={`movies/${movie.id}`}>
-                        <Poster title={movie.title} image={movie.poster} />
-                    </Link>
-                ))}
-            </Grid>
-        </Container>
+        <MovieSidebar>
+            <Container size='full'>
+                <Grid>
+                    {MOVIES_DATA.map((movie) => (
+                        <Link key={movie.id} href={`movies/${movie.id}`}>
+                            <Poster title={movie.title} image={movie.poster} />
+                        </Link>
+                    ))}
+                </Grid>
+            </Container>
+        </MovieSidebar>
     );
 }
