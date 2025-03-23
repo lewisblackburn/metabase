@@ -4,9 +4,19 @@ import * as React from 'react';
 
 import { NavUser } from '@/components/nav-user';
 import { cn } from '@/lib/utils';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
+import { Card } from '@/registry/new-york-v4/ui/card';
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList
+} from '@/registry/new-york-v4/ui/command';
 import { Input } from '@/registry/new-york-v4/ui/input';
-import { Label } from '@/registry/new-york-v4/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 import {
     Sidebar,
     SidebarContent,
@@ -20,7 +30,7 @@ import {
     useSidebar
 } from '@/registry/new-york-v4/ui/sidebar';
 
-import { Book, Command, Filter, Music3, Tv, User, Video } from 'lucide-react';
+import { ArrowDown, ArrowUp, Book, Calendar, Flame, LucideIcon, Music3, Star, Tv, User, Video } from 'lucide-react';
 
 function SidebarInput({ className, ...props }: React.ComponentProps<typeof Input>) {
     return (
@@ -30,6 +40,92 @@ function SidebarInput({ className, ...props }: React.ComponentProps<typeof Input
             className={cn('bg-background h-8 w-full shadow-none', className)}
             {...props}
         />
+    );
+}
+
+type OrderBy = {
+    value: string;
+    label: string;
+    icon: LucideIcon;
+};
+
+const orderBys: OrderBy[] = [
+    {
+        value: 'popularity',
+        label: 'Popularity',
+        icon: Flame
+    },
+    {
+        value: 'release-date',
+        label: 'Release Date',
+        icon: Calendar
+    },
+    {
+        value: 'rating',
+        label: 'Rating',
+        icon: Star
+    }
+];
+
+export function OrderByPopover() {
+    const [open, setOpen] = React.useState(false);
+    const [selectedOrderBy, setSelectedOrderBy] = React.useState<OrderBy | null>(orderBys[0]);
+    const [selectedOrder, setSelectedOrder] = React.useState('asc');
+
+    const handleOrderChange = () => setSelectedOrder(selectedOrder === 'asc' ? 'desc' : 'asc');
+
+    return (
+        <div className='flex items-center space-x-4'>
+            <p className='text-muted-foreground text-sm'>Order by</p>
+            <Popover open={open} onOpenChange={setOpen}>
+                <div className='flex items-center gap-2'>
+                    <PopoverTrigger asChild>
+                        <Button variant='outline' className='w-[150px] justify-start'>
+                            {selectedOrderBy ? (
+                                <>
+                                    <selectedOrderBy.icon className='mr-2 h-4 w-4 shrink-0' />
+                                    {selectedOrderBy.label}
+                                </>
+                            ) : (
+                                <>+ Set Order</>
+                            )}
+                        </Button>
+                    </PopoverTrigger>
+                    <Button variant='outline' size='icon' onClick={handleOrderChange}>
+                        {selectedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />}
+                    </Button>
+                </div>
+                <PopoverContent className='p-0' side='right' align='start'>
+                    <Command>
+                        <CommandInput placeholder='Change order by...' />
+                        <CommandList>
+                            <CommandEmpty>No results found.</CommandEmpty>
+                            <CommandGroup>
+                                {orderBys.map((orderBy) => (
+                                    <CommandItem
+                                        key={orderBy.value}
+                                        value={orderBy.value}
+                                        onSelect={(value) => {
+                                            setSelectedOrderBy(
+                                                orderBys.find((priority) => priority.value === value) || null
+                                            );
+                                            setOpen(false);
+                                        }}>
+                                        <orderBy.icon
+                                            className={cn(
+                                                'mr-2 h-4 w-4',
+                                                orderBy.value === selectedOrderBy?.value ? 'opacity-100' : 'opacity-40'
+                                            )}
+                                        />
+                                        <span>{orderBy.label}</span>
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
+                </PopoverContent>
+            </Popover>
+        </div>
     );
 }
 
@@ -70,53 +166,12 @@ const data = {
             icon: User,
             isActive: false
         }
-    ],
-    mails: [
-        {
-            id: '1',
-            title: 'About Time',
-            release_date: '4 September 2013',
-            tagline: 'What if every moment in life came with a second chance?'
-        },
-        {
-            id: '2',
-            title: 'The Shawshank Redemption',
-            release_date: '14 October 1994',
-            tagline: 'Fear can hold you prisoner. Hope can set you free.'
-        },
-        {
-            id: '3',
-            title: 'The Godfather',
-            release_date: '24 March 1972',
-            tagline: "An offer you can't refuse."
-        },
-        {
-            id: '4',
-            title: 'The Dark Knight',
-            release_date: '18 July 2008',
-            tagline: 'Why So Serious?'
-        },
-        {
-            id: '5',
-            title: 'The Godfather: Part II',
-            release_date: '20 December 1974',
-            tagline: 'I know it was you, Fredo. You broke my heart.'
-        }
     ]
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
-    const [mails, setMails] = React.useState(data.mails);
     const { setOpen } = useSidebar();
-
-    const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value.toLowerCase();
-        const filteredMails = data.mails.filter((mail) => {
-            return mail.title.toLowerCase().includes(value) || mail.tagline.toLowerCase().includes(value);
-        });
-        setMails(filteredMails);
-    };
 
     return (
         <Sidebar collapsible='icon' className='overflow-hidden *:data-[sidebar=sidebar]:flex-row' {...props}>
@@ -170,38 +225,42 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </Sidebar>
 
             <Sidebar collapsible='none' className='hidden flex-1 md:flex'>
-                <SidebarHeader className='gap-3.5 border-b p-4'>
-                    <div className='flex w-full items-center justify-between'>
-                        <div className='text-foreground text-base font-medium'>{activeItem?.title}</div>
-                        <Label className='flex items-center gap-2 text-sm'>
-                            <Button size='sm' variant='outline' className='text-xs'>
-                                <Filter className='h-3.5! w-3.5!' />
-                                Filter
-                            </Button>
-                        </Label>
-                    </div>
-                    <SidebarInput placeholder='Type to search...' onInput={handleInput} />
+                <SidebarHeader className='border-b p-3.5'>
+                    <SidebarInput placeholder='Type to search...' />
                 </SidebarHeader>
-                <SidebarContent>
-                    <SidebarGroup className='p-0'>
-                        <SidebarGroupContent>
-                            {mails.map((mail) => (
-                                <a
-                                    href={mail.id}
-                                    key={mail.id}
-                                    className='hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0'>
-                                    <div className='flex w-full items-center justify-between'>
-                                        <span>{mail.title}</span> <span className='text-xs'>{mail.release_date}</span>
-                                    </div>
-                                    <span className='line-clamp-2 w-[260px] text-xs whitespace-break-spaces'>
-                                        {mail.tagline}
-                                    </span>
-                                </a>
-                            ))}
+                <SidebarContent className='mx-auto'>
+                    <SidebarGroup>
+                        <SidebarGroupContent className='flex flex-col gap-5'>
+                            <OrderByPopover />
+                            <Accordion type='multiple' className='flex flex-col gap-5'>
+                                <CustomAccordionItem id='where-to-watch' title='Where to Watch'>
+                                    content
+                                </CustomAccordionItem>
+                                <CustomAccordionItem id='filters' title='Filters'>
+                                    content
+                                </CustomAccordionItem>
+                            </Accordion>
                         </SidebarGroupContent>
                     </SidebarGroup>
                 </SidebarContent>
             </Sidebar>
         </Sidebar>
+    );
+}
+
+type AccordionItemProps = {
+    id: string;
+    title: string;
+    children: React.ReactNode;
+};
+
+function CustomAccordionItem({ id, title, children }: AccordionItemProps) {
+    return (
+        <Card className='p-0'>
+            <AccordionItem value={id}>
+                <AccordionTrigger>{title}</AccordionTrigger>
+                <AccordionContent>{children}</AccordionContent>
+            </AccordionItem>
+        </Card>
     );
 }
