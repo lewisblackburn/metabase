@@ -5,8 +5,8 @@ import Link from 'next/link';
 import ImageSlider from '@/components/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { OBJECT_TYPE } from '@/constants/media';
-import SoundtrackTable from '@/features/movies/components/SoundtrackTable';
-import Review from '@/features/reviews/components/Review';
+import SoundtrackTable from '@/features/movies/components/soundtrack-table';
+import Review from '@/features/reviews/components/review';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
 import { MOVIE_DATA } from './layout';

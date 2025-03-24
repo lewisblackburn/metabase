@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Container } from '@/components/ui/container';
-import { VoteStatus } from '@/features/reviews/components/VoteButtons';
+import { VoteStatus } from '@/features/reviews/components/vote-buttons';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/registry/new-york-v4/ui/badge';

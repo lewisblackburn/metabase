@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/registry/new-york-v4/ui/card';
 
-import Rating from './Rating';
-import { VoteButtons, type VoteStatus } from './VoteButtons';
+import Rating from './rating';
+import { VoteButtons, type VoteStatus } from './vote-buttons';
 import dayjs from 'dayjs';
 
 export type ReviewProps = {

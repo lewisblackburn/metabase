@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Grid from '@/components/grid';
 import Poster from '@/components/poster';
 import { Container } from '@/components/ui/container';
-import MovieSidebar from '@/features/movies/components/MovieSidebar';
+import MovieSidebar from '@/features/movies/components/movie-sidebar';
 import { Sidebar, SidebarContent, SidebarProvider, SidebarTrigger } from '@/registry/new-york-v4/ui/sidebar';
 
 const MOVIES_DATA = [
