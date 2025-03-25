@@ -2,6 +2,7 @@ import {
     Book,
     Briefcase,
     Camera,
+    Flag,
     Gamepad,
     Headphones,
     Layers,
@@ -125,9 +126,18 @@ export const OBJECT_TYPE = {
         type: 'medium',
         name: 'Medium',
         plural: 'Media',
+        background: 'bg-blue-300/20',
+        foreground: 'text-blue-800',
+        border: 'border-blue-400/60',
+        icon: Camera
+    },
+    REPORT: {
+        type: 'report',
+        name: 'Report',
+        plural: 'Reports',
         background: 'bg-red-300/20',
         foreground: 'text-red-800',
         border: 'border-red-400/60',
-        icon: Camera
+        icon: Flag
     }
 };

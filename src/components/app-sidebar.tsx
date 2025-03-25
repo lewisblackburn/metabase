@@ -16,7 +16,7 @@ import {
     useSidebar
 } from '@/registry/new-york-v4/ui/sidebar';
 
-import { Book, Command, Music3, Tv, User, Video } from 'lucide-react';
+import { Book, Command, Flag, Music3, Tv, User, Video } from 'lucide-react';
 
 const data = {
     user: {

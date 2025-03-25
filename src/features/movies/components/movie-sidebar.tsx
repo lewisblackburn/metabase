@@ -2,19 +2,25 @@
 
 import React from 'react';
 
+import DateRangePicker from '@/components/form/date-range-picker';
 import LanguageSelect from '@/components/form/language-select';
 import { TooltipSlider } from '@/components/form/tooltip-slider';
 import SidebarAccordionItem from '@/components/sidebar-accordian-item';
 import { cn } from '@/lib/utils';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
+import { Calendar } from '@/registry/new-york-v4/ui/calendar';
 import { Input } from '@/registry/new-york-v4/ui/input';
+import { Label } from '@/registry/new-york-v4/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
+import { RadioGroup, RadioGroupItem } from '@/registry/new-york-v4/ui/radio-group';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarProvider, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
-import { Slider } from '@/registry/new-york-v4/ui/slider';
 
 import { OrderByPopover } from './order-by-popover';
-import { Filter } from 'lucide-react';
+import { addDays, format } from 'date-fns';
+import { CalendarIcon, Filter } from 'lucide-react';
+import { DateRange } from 'react-day-picker';
 
 function SidebarInput({ className, ...props }: React.ComponentProps<typeof Input>) {
     return (
@@ -82,6 +88,20 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                             <div className='mt-5 flex flex-col gap-5'>
                                 <div className='px-5'>
                                     <h6>Show Me</h6>
+                                    <RadioGroup defaultValue='everything' className='mt-5'>
+                                        <div className='flex items-center space-x-2'>
+                                            <RadioGroupItem value='everything' id='everything' />
+                                            <Label htmlFor='everything'>Everything</Label>
+                                        </div>
+                                        <div className='flex items-center space-x-2'>
+                                            <RadioGroupItem value='not-seen' id='not-seen' />
+                                            <Label htmlFor='not-seen'>Movies I Haven't Seen</Label>
+                                        </div>
+                                        <div className='flex items-center space-x-2'>
+                                            <RadioGroupItem value='seen' id='seen' />
+                                            <Label htmlFor='seen'>Movies I Have Seen</Label>
+                                        </div>
+                                    </RadioGroup>
                                 </div>
                                 <Separator />
                                 <div className='px-5'>
