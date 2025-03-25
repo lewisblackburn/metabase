@@ -41,7 +41,7 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                 <PopoverTrigger asChild>
                     <Button variant='outline' role='combobox' aria-expanded={open} className='w-full justify-between'>
                         {currentValue
-                            ? languageList.find((language) => language.iso2 === currentValue)?.label
+                            ? languageList.find((language) => language.code === currentValue)?.label
                             : 'Select a language...'}
                         <ChevronsUpDown className='ml-2 h-4 w-4 opacity-50' />
                     </Button>
@@ -49,7 +49,7 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                 <PopoverContent className='w-[200px] p-0'>
                     <Command
                         filter={(value, search) => {
-                            const language = languageList.find((lang) => lang.iso2 === value);
+                            const language = languageList.find((lang) => lang.code === value);
                             if (!language) return 0;
 
                             const nativeMatch = language.label.toLowerCase().includes(search.toLowerCase());
@@ -63,10 +63,10 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                             <CommandGroup>
                                 {languageList.map((language) => (
                                     <CommandItem
-                                        key={language.iso2}
-                                        value={language.iso2}
+                                        key={language.code}
+                                        value={language.code}
                                         onSelect={() => {
-                                            handleValueChange(language.iso2);
+                                            handleValueChange(language.code);
                                             setOpen(false);
                                         }}>
                                         <span className='flex flex-col'>
@@ -78,7 +78,7 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                                         <Check
                                             className={cn(
                                                 'ml-auto',
-                                                currentValue === language.iso2 ? 'opacity-100' : 'opacity-0'
+                                                currentValue === language.code ? 'opacity-100' : 'opacity-0'
                                             )}
                                         />
                                     </CommandItem>
