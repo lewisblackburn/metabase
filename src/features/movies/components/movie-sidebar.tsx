@@ -2,8 +2,9 @@
 
 import React from 'react';
 
+import LanguageSelect from '@/components/form/language-select';
+import { TooltipSlider } from '@/components/form/tooltip-slider';
 import SidebarAccordionItem from '@/components/sidebar-accordian-item';
-import { TooltipSlider } from '@/components/tooltip-slider';
 import { cn } from '@/lib/utils';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -101,6 +102,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                 <Separator />
                                 <div className='px-5'>
                                     <h6>Lanugage</h6>
+                                    <LanguageSelect className='mt-5' />
                                 </div>
                                 <Separator />
                                 <div className='px-5'>
