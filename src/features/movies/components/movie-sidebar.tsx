@@ -2,14 +2,16 @@
 
 import React from 'react';
 
-import DateRangePicker from '@/components/form/date-range-picker';
 import LanguageSelect from '@/components/form/language-select';
 import { TooltipSlider } from '@/components/form/tooltip-slider';
 import SidebarAccordionItem from '@/components/sidebar-accordian-item';
+import { CERTIFICATIONS } from '@/constants/certifications';
+import { GENRES } from '@/constants/genres';
 import { cn } from '@/lib/utils';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Calendar } from '@/registry/new-york-v4/ui/calendar';
+import { Checkbox } from '@/registry/new-york-v4/ui/checkbox';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { Label } from '@/registry/new-york-v4/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
@@ -59,6 +61,11 @@ type MovieSidebarProps = {
 };
 
 export default function MovieSidebar({ children }: MovieSidebarProps) {
+    const [date, setDate] = React.useState<DateRange | undefined>({
+        from: new Date(2022, 0, 20),
+        to: addDays(new Date(2022, 0, 20), 20)
+    });
+
     return (
         <SidebarProvider
             style={
@@ -110,14 +117,79 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                 <Separator />
                                 <div className='px-5'>
                                     <h6>Release Dates</h6>
+                                    <div className='mt-5'>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <Button
+                                                    id='date'
+                                                    variant={'outline'}
+                                                    className={cn(
+                                                        'w-full justify-start text-left font-normal',
+                                                        !date && 'text-muted-foreground'
+                                                    )}>
+                                                    <CalendarIcon />
+                                                    {date?.from ? (
+                                                        date.to ? (
+                                                            <>
+                                                                {format(date.from, 'LLL dd, y')} -{' '}
+                                                                {format(date.to, 'LLL dd, y')}
+                                                            </>
+                                                        ) : (
+                                                            format(date.from, 'LLL dd, y')
+                                                        )
+                                                    ) : (
+                                                        <span>Pick a date</span>
+                                                    )}
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent className='w-auto p-0' align='start'>
+                                                <Calendar
+                                                    initialFocus
+                                                    mode='range'
+                                                    defaultMonth={date?.from}
+                                                    selected={date}
+                                                    onSelect={setDate}
+                                                    numberOfMonths={2}
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
+                                    </div>
                                 </div>
                                 <Separator />
                                 <div className='px-5'>
                                     <h6>Genres</h6>
+                                    <div className='grid grid-cols-2'>
+                                        {GENRES.common.map((genre) => (
+                                            <div key={genre} className='mt-5 flex items-center space-x-2'>
+                                                <Checkbox id={genre} />
+                                                <Label htmlFor={genre}>{genre}</Label>
+                                            </div>
+                                        ))}
+                                        {GENRES.films.map((genre) => (
+                                            <div key={genre} className='mt-5 flex items-center space-x-2'>
+                                                <Checkbox id={genre} />
+                                                <Label htmlFor={genre}>{genre}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                                 <Separator />
                                 <div className='px-5'>
                                     <h6>Certification</h6>
+                                    <div className='grid grid-cols-2'>
+                                        {CERTIFICATIONS.common.map((cert) => (
+                                            <div key={cert} className='mt-5 flex items-center space-x-2'>
+                                                <Checkbox id={cert} />
+                                                <Label htmlFor={cert}>{cert}</Label>
+                                            </div>
+                                        ))}
+                                        {CERTIFICATIONS.films.map((cert) => (
+                                            <div key={cert} className='mt-5 flex items-center space-x-2'>
+                                                <Checkbox id={cert} />
+                                                <Label htmlFor={cert}>{cert}</Label>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                                 <Separator />
                                 <div className='px-5'>

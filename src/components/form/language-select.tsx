@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { languageList } from '@/constants/languages';
+import { LANGUAGES } from '@/constants/languages';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
@@ -41,15 +41,15 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                 <PopoverTrigger asChild>
                     <Button variant='outline' role='combobox' aria-expanded={open} className='w-full justify-between'>
                         {currentValue
-                            ? languageList.find((language) => language.code === currentValue)?.label
+                            ? LANGUAGES.find((language) => language.code === currentValue)?.label
                             : 'Select a language...'}
                         <ChevronsUpDown className='ml-2 h-4 w-4 opacity-50' />
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className='w-[200px] p-0'>
+                <PopoverContent className='popover-content-width-full p-0'>
                     <Command
                         filter={(value, search) => {
-                            const language = languageList.find((lang) => lang.code === value);
+                            const language = LANGUAGES.find((lang) => lang.code === value);
                             if (!language) return 0;
 
                             const nativeMatch = language.label.toLowerCase().includes(search.toLowerCase());
@@ -61,7 +61,7 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                         <CommandList>
                             <CommandEmpty>No language found.</CommandEmpty>
                             <CommandGroup>
-                                {languageList.map((language) => (
+                                {LANGUAGES.map((language) => (
                                     <CommandItem
                                         key={language.code}
                                         value={language.code}
