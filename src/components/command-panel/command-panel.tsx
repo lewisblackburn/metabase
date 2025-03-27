@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 
-import { ALL_ACTIONS } from '@/constants/actions';
-import { OBJECT_TYPE } from '@/constants/objects';
+import { ALL_ACTIONS } from '@/constants/actions.constant';
+import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { Command, CommandEmpty, CommandGroup, CommandList, CommandSeparator } from '@/registry/new-york-v4/ui/command';
 
 import CommandDialog from './command-dialog';

@@ -1,6 +1,6 @@
 import { ItemType } from '@/components/command-panel/item';
 
-import { OBJECT_TYPE } from './objects';
+import { OBJECT_TYPE } from './objects.constant';
 import { Edit, ExternalLink, Hand, Inbox, LibraryBig, Plus, Settings, Trash } from 'lucide-react';
 
 export const ACTION_TYPE = {

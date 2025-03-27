@@ -1,4 +1,4 @@
-import { ACTION_TYPE } from '@/constants/actions';
+import { ACTION_TYPE } from '@/constants/actions.constant';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { CommandItem, CommandShortcut } from '@/registry/new-york-v4/ui/command';

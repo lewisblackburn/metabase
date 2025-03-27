@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import ImageSlider from '@/components/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
-import { OBJECT_TYPE } from '@/constants/objects';
+import { OBJECT_TYPE } from '@/constants/objects.constant';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
 import { Separator } from '@/registry/new-york-v4/ui/separator';

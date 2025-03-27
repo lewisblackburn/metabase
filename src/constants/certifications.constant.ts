@@ -1,20 +1,6 @@
 export const CERTIFICATIONS = {
-    common: [
-        'G', // General
-        'PG', // Parental Guidance
-        'PG-13',
-        'R',
-        'NC-17'
-    ],
-    films: [
-        'U', // UK equivalent of G
-        '12A', // UK
-        '15', // UK
-        '18', // UK
-        'Unrated',
-        'NR', // Not Rated
-        'TV-G' // Sometimes used for streaming
-    ],
+    common: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
+    films: ['U', '12A', '15', '18', 'Unrated', 'NR', 'TV-G'],
     tvShows: ['TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA'],
     songs: ['Explicit', 'Clean'],
     books: ['Children', 'Middle Grade', 'Young Adult', 'Adult', 'Mature'],

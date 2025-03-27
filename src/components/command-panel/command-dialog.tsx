@@ -1,4 +1,4 @@
-import { SHORTCUTS } from '@/constants/shortcuts';
+import { SHORTCUTS } from '@/constants/shortcuts.constant';
 import { Command } from '@/registry/new-york-v4/ui/command';
 import { Dialog, DialogDescription, DialogHeader, DialogTitle } from '@/registry/new-york-v4/ui/dialog';
 
