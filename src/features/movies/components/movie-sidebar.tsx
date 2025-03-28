@@ -57,6 +57,10 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
     const form = useForm<z.infer<typeof movieFilterSchema>>({
         resolver: zodResolver(movieFilterSchema),
         defaultValues: {
+            orderBy: {
+                orderBy: 'popularity',
+                order: 'asc'
+            },
             search: '',
             showMe: 'everything',
             availabilities: [],
@@ -110,7 +114,18 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                             </div>
                             <Separator />
                             <div className='flex min-w-full justify-center px-5'>
-                                <OrderByPopover />
+                                <FormField
+                                    control={form.control}
+                                    name='orderBy'
+                                    render={({ field }) => (
+                                        <FormItem className='flex flex-col'>
+                                            <FormControl>
+                                                <OrderByPopover value={field.value} onChange={field.onChange} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             </div>
                             <Separator />
                             <Accordion
@@ -197,14 +212,14 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                                                                             field.value || [];
                                                                                         const newValue = checked
                                                                                             ? [
-                                                                                                ...currentValue,
-                                                                                                availability
-                                                                                            ]
+                                                                                                  ...currentValue,
+                                                                                                  availability
+                                                                                              ]
                                                                                             : currentValue.filter(
-                                                                                                (val: string) =>
-                                                                                                    val !==
-                                                                                                    availability
-                                                                                            );
+                                                                                                  (val: string) =>
+                                                                                                      val !==
+                                                                                                      availability
+                                                                                              );
                                                                                         field.onChange(newValue);
                                                                                     }}
                                                                                 />
@@ -270,9 +285,9 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                                                                     const newValue = checked
                                                                                         ? [...currentValue, genre]
                                                                                         : currentValue.filter(
-                                                                                            (val: string) =>
-                                                                                                val !== genre
-                                                                                        );
+                                                                                              (val: string) =>
+                                                                                                  val !== genre
+                                                                                          );
                                                                                     field.onChange(newValue);
                                                                                 }}
                                                                             />
@@ -317,14 +332,14 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                                                                             field.value || [];
                                                                                         const newValue = checked
                                                                                             ? [
-                                                                                                ...currentValue,
-                                                                                                certification
-                                                                                            ]
+                                                                                                  ...currentValue,
+                                                                                                  certification
+                                                                                              ]
                                                                                             : currentValue.filter(
-                                                                                                (val: string) =>
-                                                                                                    val !==
-                                                                                                    certification
-                                                                                            );
+                                                                                                  (val: string) =>
+                                                                                                      val !==
+                                                                                                      certification
+                                                                                              );
                                                                                         field.onChange(newValue);
                                                                                     }}
                                                                                 />
@@ -343,23 +358,90 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                         </div>
                                         <Separator />
                                         <div className='px-5'>
-                                            <h6>Lanugage</h6>
-                                            <LanguageSelect className='mt-5' />
+                                            <FormField
+                                                control={form.control}
+                                                name='language'
+                                                render={({ field }) => (
+                                                    <FormItem className='flex flex-col'>
+                                                        <FormLabel>
+                                                            <h6>Language</h6>
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <LanguageSelect {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
                                         </div>
                                         <Separator />
                                         <div className='px-5'>
-                                            <h6>User Score</h6>
-                                            <TooltipSlider defaultValue={[0, 10]} min={0} max={10} className='mt-5' />
+                                            <FormField
+                                                control={form.control}
+                                                name='userScore'
+                                                render={({ field }) => (
+                                                    <FormItem className='flex flex-col'>
+                                                        <FormLabel>
+                                                            <h6>User Score</h6>
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <TooltipSlider
+                                                                defaultValue={[0, 10]}
+                                                                min={0}
+                                                                max={10}
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
                                         </div>
                                         <Separator />
                                         <div className='px-5'>
-                                            <h6>Minimum User Votes</h6>
-                                            <TooltipSlider defaultValue={[0]} min={0} max={500} className='mt-5' />
+                                            <FormField
+                                                control={form.control}
+                                                name='minVotes'
+                                                render={({ field }) => (
+                                                    <FormItem className='flex flex-col'>
+                                                        <FormLabel>
+                                                            <h6>Minimum User Votes</h6>
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <TooltipSlider
+                                                                defaultValue={[0]}
+                                                                min={0}
+                                                                max={500}
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
                                         </div>
                                         <Separator />
                                         <div className='px-5'>
-                                            <h6>Runtime</h6>
-                                            <TooltipSlider defaultValue={[0, 400]} min={0} max={400} className='mt-5' />
+                                            <FormField
+                                                control={form.control}
+                                                name='runtime'
+                                                render={({ field }) => (
+                                                    <FormItem className='flex flex-col'>
+                                                        <FormLabel>
+                                                            <h6>Runtime</h6>
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <TooltipSlider
+                                                                defaultValue={[0, 400]}
+                                                                min={0}
+                                                                max={400}
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
                                         </div>
                                         <Separator />
                                         <div className='px-5'>
@@ -383,7 +465,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                 </SidebarAccordionItem>
                             </Accordion>
                             <div className='mb-15 w-full px-5'>
-                                <Button className='w-full' size='lg' onClick={() => console.log(form.formState.errors)}>
+                                <Button className='w-full' size='lg'>
                                     Search
                                 </Button>
                             </div>

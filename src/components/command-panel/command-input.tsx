@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/registry/new-york-v4/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
-import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 import { Command as CommandPrimitive } from 'cmdk';
 import { ArrowBigUp, Info, Maximize, SearchIcon } from 'lucide-react';
@@ -35,26 +34,24 @@ export default function CommandInput({ className, ...props }: React.ComponentPro
                     </TooltipTrigger>
                     <TooltipContent side='top'>Learn more</TooltipContent>
                 </Tooltip>
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <Link href='#'>
-                                <div className={cn(buttonVariants({ size: 'icon', variant: 'ghost' }), 'h-7 w-7')}>
-                                    <Maximize />
-                                </div>
-                                <span className='sr-only'>Extended Search</span>
-                            </Link>
-                        </TooltipTrigger>
-                        <TooltipContent side='top'>
-                            <p>Open extended search</p>
-                            <p className='flex items-center justify-center'>
-                                <span>CTRL</span>
-                                <ArrowBigUp className='!size-3.5' />
-                                <span>P</span>
-                            </p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger>
+                        <Link href='#'>
+                            <div className={cn(buttonVariants({ size: 'icon', variant: 'ghost' }), 'h-7 w-7')}>
+                                <Maximize />
+                            </div>
+                            <span className='sr-only'>Extended Search</span>
+                        </Link>
+                    </TooltipTrigger>
+                    <TooltipContent side='top'>
+                        <p>Open extended search</p>
+                        <p className='flex items-center justify-center'>
+                            <span>CTRL</span>
+                            <ArrowBigUp className='!size-3.5' />
+                            <span>P</span>
+                        </p>
+                    </TooltipContent>
+                </Tooltip>
             </div>
         </div>
     );

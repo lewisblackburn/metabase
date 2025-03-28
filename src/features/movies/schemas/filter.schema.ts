@@ -9,6 +9,10 @@ const genresArray = GENRES.common.concat(GENRES.films);
 const certificationArray = CERTIFICATIONS.common.concat(CERTIFICATIONS.films);
 
 export const movieFilterSchema = z.object({
+    orderBy: z.object({
+        orderBy: z.enum(['popularity', 'release-date', 'rating']),
+        order: z.enum(['asc', 'desc'])
+    }),
     search: z.string().optional(),
     showMe: z.enum(['everything', 'not-seen', 'seen'], {
         required_error: 'Please select a view preference'

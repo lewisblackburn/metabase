@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -14,56 +14,59 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/
 
 import { ArrowDown, ArrowUp, Calendar, Flame, LucideIcon, Star } from 'lucide-react';
 
+type OrderValue = {
+    orderBy: string;
+    order: 'asc' | 'desc';
+};
+
 type OrderBy = {
     value: string;
     label: string;
     icon: LucideIcon;
 };
 
-const orderBys: OrderBy[] = [
-    {
-        value: 'popularity',
-        label: 'Popularity',
-        icon: Flame
-    },
-    {
-        value: 'release-date',
-        label: 'Release Date',
-        icon: Calendar
-    },
-    {
-        value: 'rating',
-        label: 'Rating',
-        icon: Star
-    }
+const ORDER_BYS: OrderBy[] = [
+    { value: 'popularity', label: 'Popularity', icon: Flame },
+    { value: 'release-date', label: 'Release Date', icon: Calendar },
+    { value: 'rating', label: 'Rating', icon: Star }
 ];
 
-export function OrderByPopover() {
-    const [open, setOpen] = React.useState(false);
-    const [selectedOrderBy, setSelectedOrderBy] = React.useState<OrderBy | null>(orderBys[0]);
-    const [selectedOrder, setSelectedOrder] = React.useState('asc');
+interface OrderByPopoverProps {
+    value: OrderValue;
+    onChange: (value: OrderValue) => void;
+    className?: string;
+}
 
-    const handleOrderChange = () => setSelectedOrder(selectedOrder === 'asc' ? 'desc' : 'asc');
+export function OrderByPopover({ value, onChange, className }: OrderByPopoverProps) {
+    const [open, setOpen] = useState(false);
+
+    const current = ORDER_BYS.find((o) => o.value === value.orderBy) ?? ORDER_BYS[0];
+
+    const toggleOrder = () => {
+        const nextOrder = value.order === 'asc' ? 'desc' : 'asc';
+        onChange({ orderBy: current.value, order: nextOrder });
+    };
+
+    const selectOrderBy = (orderBy: string) => {
+        if (orderBy !== current.value) {
+            onChange({ orderBy, order: value.order });
+        }
+        setOpen(false);
+    };
 
     return (
-        <div className='flex items-center space-x-4'>
+        <div className={cn('flex items-center space-x-4', className)}>
             <p className='text-muted-foreground text-sm'>Order by</p>
             <Popover open={open} onOpenChange={setOpen}>
                 <div className='flex items-center gap-2'>
                     <PopoverTrigger asChild>
-                        <Button variant='outline' className='w-[150px] justify-start'>
-                            {selectedOrderBy ? (
-                                <>
-                                    <selectedOrderBy.icon className='mr-2 h-4 w-4 shrink-0' />
-                                    {selectedOrderBy.label}
-                                </>
-                            ) : (
-                                <>+ Set Order</>
-                            )}
+                        <Button type='button' variant='outline' className='w-[150px] justify-start'>
+                            <current.icon className='mr-2 h-4 w-4 shrink-0' />
+                            {current.label}
                         </Button>
                     </PopoverTrigger>
-                    <Button variant='outline' size='icon' onClick={handleOrderChange}>
-                        {selectedOrder === 'asc' ? <ArrowUp /> : <ArrowDown />}
+                    <Button type='button' variant='outline' size='icon' onClick={toggleOrder}>
+                        {value.order === 'asc' ? <ArrowUp /> : <ArrowDown />}
                     </Button>
                 </div>
                 <PopoverContent className='p-0' side='right' align='start'>
@@ -72,20 +75,12 @@ export function OrderByPopover() {
                         <CommandList>
                             <CommandEmpty>No results found.</CommandEmpty>
                             <CommandGroup>
-                                {orderBys.map((orderBy) => (
-                                    <CommandItem
-                                        key={orderBy.value}
-                                        value={orderBy.value}
-                                        onSelect={(value) => {
-                                            setSelectedOrderBy(
-                                                orderBys.find((priority) => priority.value === value) || null
-                                            );
-                                            setOpen(false);
-                                        }}>
+                                {ORDER_BYS.map((orderBy) => (
+                                    <CommandItem key={orderBy.value} value={orderBy.value} onSelect={selectOrderBy}>
                                         <orderBy.icon
                                             className={cn(
                                                 'mr-2 h-4 w-4',
-                                                orderBy.value === selectedOrderBy?.value ? 'opacity-100' : 'opacity-40'
+                                                orderBy.value === current.value ? 'opacity-100' : 'opacity-40'
                                             )}
                                         />
                                         <span>{orderBy.label}</span>

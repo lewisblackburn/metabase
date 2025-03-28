@@ -14,35 +14,34 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
 import { Check, ChevronsUpDown } from 'lucide-react';
+import { ControllerRenderProps } from 'react-hook-form';
 
 type LanguageSelectProps = {
     className?: string;
-    value?: string;
-    onValueChange?: (value: string) => void;
-};
+} & Partial<ControllerRenderProps>;
 
-export default function LanguageSelect({ className, value: controlledValue, onValueChange }: LanguageSelectProps) {
+export default function LanguageSelect({ className, value, onChange, onBlur }: LanguageSelectProps) {
     const [open, setOpen] = React.useState(false);
-    const [internalValue, setInternalValue] = React.useState(controlledValue || '');
 
     const handleValueChange = (newValue: string) => {
-        const finalValue = newValue === internalValue ? '' : newValue;
-        if (controlledValue === undefined) {
-            setInternalValue(finalValue);
-        }
-        onValueChange?.(finalValue);
+        onChange?.({
+            target: { value: newValue },
+            type: 'change'
+        } as React.ChangeEvent<HTMLInputElement>);
+        setOpen(false);
     };
-
-    const currentValue = controlledValue !== undefined ? controlledValue : internalValue;
 
     return (
         <div className={className}>
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
-                    <Button variant='outline' role='combobox' aria-expanded={open} className='w-full justify-between'>
-                        {currentValue
-                            ? LANGUAGES.find((language) => language.code === currentValue)?.label
-                            : 'Select a language...'}
+                    <Button
+                        variant='outline'
+                        role='combobox'
+                        aria-expanded={open}
+                        className='w-full justify-between'
+                        onBlur={onBlur}>
+                        {value ? LANGUAGES.find((language) => language.code === value)?.label : 'Select a language...'}
                         <ChevronsUpDown className='ml-2 h-4 w-4 opacity-50' />
                     </Button>
                 </PopoverTrigger>
@@ -65,10 +64,7 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                                     <CommandItem
                                         key={language.code}
                                         value={language.code}
-                                        onSelect={() => {
-                                            handleValueChange(language.code);
-                                            setOpen(false);
-                                        }}>
+                                        onSelect={() => handleValueChange(language.code)}>
                                         <span className='flex flex-col'>
                                             <span>{language.label}</span>
                                             <span className='text-muted-foreground text-xs'>
@@ -78,7 +74,7 @@ export default function LanguageSelect({ className, value: controlledValue, onVa
                                         <Check
                                             className={cn(
                                                 'ml-auto',
-                                                currentValue === language.code ? 'opacity-100' : 'opacity-0'
+                                                value === language.code ? 'opacity-100' : 'opacity-0'
                                             )}
                                         />
                                     </CommandItem>

@@ -3,31 +3,46 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 
-interface TooltipSliderProps extends React.ComponentProps<typeof SliderPrimitive.Root> {
-    onValueChange?: (values: number[]) => void;
+interface TooltipSliderProps extends Omit<React.ComponentProps<typeof SliderPrimitive.Root>, 'onChange'> {
+    onChange?: (value: number[]) => void;
+    onBlur?: () => void;
+    value?: number[];
 }
 
 function TooltipSlider({
     className,
     defaultValue,
-    value,
+    value: controlledValue,
+    onChange,
+    onBlur,
     min = 0,
-    max = 100,
-    onValueChange,
+    max = 10,
     ...props
 }: TooltipSliderProps) {
-    const [localValue, setLocalValue] = React.useState(value ?? defaultValue ?? [min, max]);
+    const [localValue, setLocalValue] = React.useState(controlledValue ?? defaultValue ?? [min, max]);
     const [isDragging, setIsDragging] = React.useState(Array(localValue.length).fill(false));
+
+    // Sync with controlled value if provided
+    React.useEffect(() => {
+        if (controlledValue !== undefined) {
+            setLocalValue(controlledValue);
+        }
+    }, [controlledValue]);
 
     const handleValueChange = React.useCallback(
         (newValues: number[]) => {
-            setLocalValue(newValues);
-            onValueChange?.(newValues);
+            // Update local state if not controlled
+            if (controlledValue === undefined) {
+                setLocalValue(newValues);
+            }
+
+            // Call onChange if provided
+            onChange?.(newValues);
         },
-        [onValueChange]
+        [onChange, controlledValue]
     );
 
     const handleDragStart = (index: number) => {
@@ -40,13 +55,16 @@ function TooltipSlider({
         const newIsDragging = [...isDragging];
         newIsDragging[index] = false;
         setIsDragging(newIsDragging);
+
+        // Trigger onBlur if provided
+        onBlur?.();
     };
 
     return (
         <SliderPrimitive.Root
             data-slot='slider'
             defaultValue={defaultValue}
-            value={value}
+            value={localValue}
             onValueChange={handleValueChange}
             min={min}
             max={max}
@@ -67,23 +85,21 @@ function TooltipSlider({
                     )}
                 />
             </SliderPrimitive.Track>
-            <TooltipProvider delayDuration={0} skipDelayDuration={0}>
-                {localValue.map((thumbValue, index) => (
-                    <Tooltip key={index} open={isDragging[index]}>
-                        <TooltipTrigger
-                            asChild
-                            onPointerDown={() => handleDragStart(index)}
-                            onPointerUp={() => handleDragEnd(index)}
-                            onPointerLeave={() => handleDragEnd(index)}>
-                            <SliderPrimitive.Thumb
-                                data-slot='slider-thumb'
-                                className='border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50'
-                            />
-                        </TooltipTrigger>
-                        <TooltipContent>{thumbValue}</TooltipContent>
-                    </Tooltip>
-                ))}
-            </TooltipProvider>
+            {localValue.map((thumbValue, index) => (
+                <Tooltip key={index} open={isDragging[index]}>
+                    <TooltipTrigger
+                        asChild
+                        onPointerDown={() => handleDragStart(index)}
+                        onPointerUp={() => handleDragEnd(index)}
+                        onPointerLeave={() => handleDragEnd(index)}>
+                        <SliderPrimitive.Thumb
+                            data-slot='slider-thumb'
+                            className='border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50'
+                        />
+                    </TooltipTrigger>
+                    <TooltipContent>{thumbValue}</TooltipContent>
+                </Tooltip>
+            ))}
         </SliderPrimitive.Root>
     );
 }
