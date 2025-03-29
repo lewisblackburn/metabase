@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Switch } from '@/registry/new-york-v4/ui/switch';
 
 import BaseFormLayout from './base-form-layout';
@@ -53,11 +53,8 @@ const SwitchFormField = <
             render={({ field }) => (
                 <FormItem className={cn('flex items-center justify-between', className)}>
                     <BaseFormLayout label={label} description={description}>
-                        <FormControl>
-                            <SwitchComponent checked={field.value} onChange={field.onChange} disabled={disabled} />
-                        </FormControl>
+                        <SwitchComponent checked={field.value} onChange={field.onChange} disabled={disabled} />
                     </BaseFormLayout>
-                    <FormMessage />
                 </FormItem>
             )}
         />

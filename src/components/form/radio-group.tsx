@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { FormField, FormItem, FormLabel } from '@/registry/new-york-v4/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/registry/new-york-v4/ui/radio-group';
 
 import BaseFormLayout from './base-form-layout';
@@ -75,16 +75,13 @@ const RadioGroupFormField = <
             render={({ field }) => (
                 <FormItem className={cn('w-full', className)}>
                     <BaseFormLayout label={label} description={description}>
-                        <FormControl>
-                            <RadioGroupComponent
-                                value={field.value}
-                                onChange={field.onChange}
-                                options={options}
-                                disabled={disabled}
-                            />
-                        </FormControl>
+                        <RadioGroupComponent
+                            value={field.value}
+                            onChange={field.onChange}
+                            options={options}
+                            disabled={disabled}
+                        />
                     </BaseFormLayout>
-                    <FormMessage />
                 </FormItem>
             )}
         />

@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 import { Checkbox } from '@/registry/new-york-v4/ui/checkbox';
-import { FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Label } from '@/registry/new-york-v4/ui/label';
 
 import BaseFormLayout from './base-form-layout';
@@ -75,16 +75,13 @@ const CheckboxGroupFormField = <
             render={({ field }) => (
                 <FormItem className={cn('w-full', className)}>
                     <BaseFormLayout label={label} description={description}>
-                        <FormControl>
-                            <CheckboxGroup
-                                options={options}
-                                value={field.value || []}
-                                onChange={field.onChange}
-                                disabled={disabled}
-                            />
-                        </FormControl>
+                        <CheckboxGroup
+                            options={options}
+                            value={field.value || []}
+                            onChange={field.onChange}
+                            disabled={disabled}
+                        />
                     </BaseFormLayout>
-                    <FormMessage />
                 </FormItem>
             )}
         />

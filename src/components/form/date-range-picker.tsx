@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Calendar } from '@/registry/new-york-v4/ui/calendar';
-import { FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
 import BaseFormLayout from './base-form-layout';
@@ -118,16 +118,13 @@ const DateRangePickerFormField = <
             render={({ field }) => (
                 <FormItem className={cn('w-full', className)}>
                     <BaseFormLayout label={label} description={description}>
-                        <FormControl>
-                            <DateRangePicker
-                                value={field.value}
-                                onChange={field.onChange}
-                                placeholder={placeholder}
-                                disabled={disabled}
-                            />
-                        </FormControl>
+                        <DateRangePicker
+                            value={field.value}
+                            onChange={field.onChange}
+                            placeholder={placeholder}
+                            disabled={disabled}
+                        />
                     </BaseFormLayout>
-                    <FormMessage />
                 </FormItem>
             )}
         />

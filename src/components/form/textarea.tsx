@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Textarea } from '@/registry/new-york-v4/ui/textarea';
 
 import BaseFormLayout from './base-form-layout';
@@ -55,11 +55,8 @@ const TextareaFormField = <
             render={({ field }) => (
                 <FormItem className={cn('w-full', className)}>
                     <BaseFormLayout label={label} description={description}>
-                        <FormControl>
-                            <TextareaComponent {...field} placeholder={placeholder} disabled={disabled} rows={rows} />
-                        </FormControl>
+                        <TextareaComponent {...field} placeholder={placeholder} disabled={disabled} rows={rows} />
                     </BaseFormLayout>
-                    <FormMessage />
                 </FormItem>
             )}
         />

@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 
@@ -125,7 +125,6 @@ function SliderFormField<
                             disabled={field.disabled}
                         />
                     </BaseFormLayout>
-                    <FormMessage />
                 </FormItem>
             )}
         />

@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/registry/new-york-v4/ui/select';
 
 import BaseFormLayout from './base-form-layout';
@@ -86,17 +86,14 @@ const SelectFormField = <
             render={({ field }) => (
                 <FormItem className={className}>
                     <BaseFormLayout label={label} description={description}>
-                        <FormControl>
-                            <SelectComponent
-                                value={field.value}
-                                onChange={field.onChange}
-                                options={options}
-                                placeholder={placeholder}
-                                disabled={disabled}
-                            />
-                        </FormControl>
+                        <SelectComponent
+                            value={field.value}
+                            onChange={field.onChange}
+                            options={options}
+                            placeholder={placeholder}
+                            disabled={disabled}
+                        />
                     </BaseFormLayout>
-                    <FormMessage />
                 </FormItem>
             )}
         />
