@@ -33,7 +33,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
 
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
-            <Card className='overflow-hidden'>
+            <Card className='overflow-hidden p-0'>
                 <CardContent className='grid p-0 md:grid-cols-2'>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className='p-6 md:p-8'>
@@ -101,7 +101,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
 
                     <div className='bg-muted relative hidden md:block'>
                         <img
-                            src='/placeholder.svg'
+                            src='/images/login-form-photo.jpg'
                             alt='Image'
                             className='absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale'
                         />
