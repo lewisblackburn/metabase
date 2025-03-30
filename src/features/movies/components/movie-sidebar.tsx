@@ -2,13 +2,14 @@
 
 import React from 'react';
 
-import { CheckboxGroupFormField } from '@/components/form/checkbox-group';
-import { DateRangePickerFormField } from '@/components/form/date-range-picker';
-import { InputFormField } from '@/components/form/input';
-import { LanguageFormField } from '@/components/form/language-select';
-import { OrderSelectFormField } from '@/components/form/order-select';
-import { RadioGroupFormField } from '@/components/form/radio-group';
-import { SliderFormField } from '@/components/form/tooltip-slider';
+import BaseFormLayout from '@/components/form/base-form-layout';
+import CheckboxGroupField from '@/components/form/checkbox-group';
+import DateRangePickerField from '@/components/form/date-range-picker';
+import InputField from '@/components/form/input';
+import LanguageSelectField from '@/components/form/language-select';
+import OrderSelectField from '@/components/form/order-select';
+import RadioGroupField from '@/components/form/radio-group';
+import TooltipSliderField from '@/components/form/tooltip-slider';
 import SidebarAccordionItem from '@/components/sidebar-accordian-item';
 import { AVAILABILITIES } from '@/constants/availabilities.constant';
 import { CERTIFICATIONS } from '@/constants/certifications.constant';
@@ -95,15 +96,26 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                             </div>
                             <Separator />
                             <div className='flex min-w-full justify-center px-5'>
-                                <OrderSelectFormField
-                                    control={form.control}
+                                <FormField
                                     name='orderBy'
-                                    label='Order By'
-                                    options={[
-                                        { value: 'popularity', label: 'Popularity', icon: Flame },
-                                        { value: 'release-date', label: 'Release Date', icon: Calendar },
-                                        { value: 'rating', label: 'Rating', icon: Star }
-                                    ]}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <BaseFormLayout>
+                                                <OrderSelectField
+                                                    options={[
+                                                        { value: 'popularity', label: 'Popularity', icon: Flame },
+                                                        {
+                                                            value: 'release-date',
+                                                            label: 'Release Date',
+                                                            icon: Calendar
+                                                        },
+                                                        { value: 'rating', label: 'Rating', icon: Star }
+                                                    ]}
+                                                    {...field}
+                                                />
+                                            </BaseFormLayout>
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
                             <Separator />
@@ -117,107 +129,164 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                 <SidebarAccordionItem id='filters' title='Filters'>
                                     <div className='mt-5 flex flex-col gap-5'>
                                         <FilterSection>
-                                            <RadioGroupFormField
-                                                control={form.control}
+                                            <FormField
                                                 name='showMe'
-                                                label='Show Me'
-                                                options={[
-                                                    { value: 'everything', label: 'Everything' },
-                                                    { value: 'not-seen', label: "Movies I Haven't Seen" },
-                                                    { value: 'seen', label: 'Movies I Have Seen' }
-                                                ]}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Show Me'>
+                                                            <RadioGroupField
+                                                                options={[
+                                                                    { value: 'everything', label: 'Everything' },
+                                                                    {
+                                                                        value: 'not-seen',
+                                                                        label: "Movies I Haven't Seen"
+                                                                    },
+                                                                    { value: 'seen', label: 'Movies I Have Seen' }
+                                                                ]}
+                                                                {...field}
+                                                            />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection>
-                                            <CheckboxGroupFormField
+                                            <FormField
                                                 name='availabilities'
-                                                label='Availabilities'
-                                                options={AVAILABILITIES.common.concat(AVAILABILITIES.films)}
-                                                control={form.control}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Availabilities'>
+                                                            <CheckboxGroupField
+                                                                options={AVAILABILITIES.common.concat(
+                                                                    AVAILABILITIES.films
+                                                                )}
+                                                                {...field}
+                                                            />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection>
-                                            <DateRangePickerFormField
-                                                control={form.control}
+                                            <FormField
                                                 name='releaseDates'
-                                                label='Release Dates'
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Release Dates'>
+                                                            <DateRangePickerField
+                                                                placeholder='Pick a date'
+                                                                {...field}
+                                                            />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection>
-                                            <CheckboxGroupFormField
+                                            <FormField
                                                 name='genres'
-                                                label='Genres'
-                                                options={GENRES.common.concat(GENRES.films)}
-                                                control={form.control}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Genres'>
+                                                            <CheckboxGroupField
+                                                                options={GENRES.common.concat(GENRES.films)}
+                                                                {...field}
+                                                            />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection>
-                                            <CheckboxGroupFormField
+                                            <FormField
                                                 name='certifications'
-                                                label='Certifications'
-                                                options={CERTIFICATIONS.common.concat(CERTIFICATIONS.films)}
-                                                control={form.control}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Certifications'>
+                                                            <CheckboxGroupField
+                                                                options={CERTIFICATIONS.common.concat(
+                                                                    CERTIFICATIONS.films
+                                                                )}
+                                                                {...field}
+                                                            />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection>
-                                            <LanguageFormField
-                                                control={form.control}
+                                            <FormField
                                                 name='language'
-                                                label='Language'
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Language'>
+                                                            <LanguageSelectField {...field} />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection>
-                                            <SliderFormField
+                                            <FormField
                                                 name='userScore'
-                                                label='User Score'
-                                                defaultValue={[0, 10]}
-                                                min={0}
-                                                max={10}
-                                                control={form.control}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='User Score'>
+                                                            <TooltipSliderField min={0} max={10} {...field} />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection>
-                                            <SliderFormField
+                                            <FormField
                                                 name='minVotes'
-                                                label='Minimum User Votes'
-                                                defaultValue={[0]}
-                                                min={0}
-                                                max={500}
-                                                control={form.control}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Minimum User Votes'>
+                                                            <TooltipSliderField min={0} max={500} {...field} />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
-
                                         <FilterSection>
-                                            <SliderFormField
+                                            <FormField
                                                 name='runtime'
-                                                label='Runtime'
-                                                defaultValue={[0, 400]}
-                                                min={0}
-                                                max={400}
-                                                control={form.control}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Runtime'>
+                                                            <TooltipSliderField min={0} max={400} {...field} />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
 
                                         <FilterSection isLast>
-                                            <InputFormField
-                                                control={form.control}
+                                            <FormField
                                                 name='keywords'
-                                                label='Keywords'
-                                                placeholder='Enter keywords...'
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Keywords'>
+                                                            <InputField {...field} placeholder='Enter keywords...' />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
                                             />
                                         </FilterSection>
                                     </div>
                                 </SidebarAccordionItem>
                             </Accordion>
                             <div className='mb-15 w-full px-5'>
-                                <Button className='w-full' size='lg' onClick={() => console.log(form.formState.errors)}>
+                                <Button className='w-full' size='lg'>
                                     Search
                                 </Button>
                             </div>

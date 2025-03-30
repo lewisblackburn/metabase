@@ -6,16 +6,13 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Calendar } from '@/registry/new-york-v4/ui/calendar';
-import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
-import BaseFormLayout from './base-form-layout';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
-import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
-interface DateRangePickerProps {
+interface DateRangePickerFieldProps {
     value?: DateRange | { from?: Date; to?: Date };
     onChange?: (date: DateRange | undefined) => void;
     placeholder?: string;
@@ -23,13 +20,13 @@ interface DateRangePickerProps {
     disabled?: boolean;
 }
 
-const DateRangePicker = ({
+const DateRangePickerField = ({
     value,
     onChange,
     placeholder = 'Pick a date range',
     className,
     disabled = false
-}: DateRangePickerProps) => {
+}: DateRangePickerFieldProps) => {
     const convertToDayPickerRange = (input?: DateRange | { from?: Date; to?: Date }): DateRange | undefined => {
         if (!input) return undefined;
 
@@ -84,51 +81,6 @@ const DateRangePicker = ({
     );
 };
 
-DateRangePicker.displayName = 'DateRangePicker';
+DateRangePickerField.displayName = 'DateRangePickerField';
 
-interface DateRangePickerFormFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> {
-    control: Control<TFieldValues>;
-    name: TName;
-    label?: string;
-    description?: React.ReactNode;
-    placeholder?: string;
-    className?: string;
-    disabled?: boolean;
-}
-
-const DateRangePickerFormField = <
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-    control,
-    name,
-    label,
-    description,
-    placeholder = 'Pick a date range',
-    className,
-    disabled = false
-}: DateRangePickerFormFieldProps<TFieldValues, TName>) => {
-    return (
-        <FormField
-            control={control}
-            name={name}
-            render={({ field }) => (
-                <FormItem className={cn('w-full', className)}>
-                    <BaseFormLayout label={label} description={description}>
-                        <DateRangePicker
-                            value={field.value}
-                            onChange={field.onChange}
-                            placeholder={placeholder}
-                            disabled={disabled}
-                        />
-                    </BaseFormLayout>
-                </FormItem>
-            )}
-        />
-    );
-};
-
-export { DateRangePicker, DateRangePickerFormField };
+export default DateRangePickerField;

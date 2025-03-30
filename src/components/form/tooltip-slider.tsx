@@ -3,23 +3,31 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 
-import BaseFormLayout from './base-form-layout';
-import { Control, FieldPath, FieldValues } from 'react-hook-form';
+type OriginalSliderProps = React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>;
+type SliderPropsWithoutOnChange = Omit<OriginalSliderProps, 'onChange' | 'value'>;
 
-interface TooltipSliderProps extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
+interface TooltipSliderFieldProps extends SliderPropsWithoutOnChange {
     min?: number;
     max?: number;
+    value?: number[];
+    onChange?: (value: number[]) => void;
+    name?: string;
 }
 
-const TooltipSlider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, TooltipSliderProps>(
-    ({ className, min = 0, max = 10, ...props }, ref) => {
+const TooltipSliderField = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, TooltipSliderFieldProps>(
+    ({ className, min = 0, max = 10, value, onChange, ...props }, ref) => {
         const [isDragging, setIsDragging] = React.useState<boolean[]>(
-            Array(((props.value as number[]) || (props.defaultValue as number[]) || [min, max]).length).fill(false)
+            Array(((value as number[]) || (props.defaultValue as number[]) || [min, max]).length).fill(false)
         );
+
+        const [localValue, setLocalValue] = React.useState<number[]>(
+            (value as number[]) || (props.defaultValue as number[]) || [min, max]
+        );
+
+        const currentValue = (value as number[]) || localValue;
 
         const handleDragStart = (index: number) => {
             const newIsDragging = [...isDragging];
@@ -33,102 +41,51 @@ const TooltipSlider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.R
             setIsDragging(newIsDragging);
         };
 
+        const handleValueChange = (newValue: number[]) => {
+            setLocalValue(newValue);
+            if (onChange) {
+                onChange(newValue);
+            }
+        };
+
         return (
-            <SliderPrimitive.Root
-                ref={ref}
-                data-slot='slider'
-                min={min}
-                max={max}
-                className={cn(
-                    'relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col',
-                    className
-                )}
-                {...props}>
-                <SliderPrimitive.Track
-                    data-slot='slider-track'
-                    className={cn(
-                        'bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5'
-                    )}>
-                    <SliderPrimitive.Range
-                        data-slot='slider-range'
-                        className={cn(
-                            'bg-primary absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full'
-                        )}
-                    />
-                </SliderPrimitive.Track>
-                {((props.value as number[]) || (props.defaultValue as number[]) || [min, max]).map(
-                    (thumbValue, index) => (
+            <TooltipProvider>
+                <SliderPrimitive.Root
+                    ref={ref}
+                    data-slot='slider'
+                    min={min}
+                    max={max}
+                    step={1}
+                    value={currentValue}
+                    onValueChange={handleValueChange}
+                    className={cn('relative flex w-full touch-none items-center select-none', className)}
+                    {...props}>
+                    <SliderPrimitive.Track
+                        data-slot='slider-track'
+                        className='bg-muted relative h-1.5 w-full grow rounded-full'>
+                        <SliderPrimitive.Range data-slot='slider-range' className='bg-primary absolute h-full' />
+                    </SliderPrimitive.Track>
+
+                    {currentValue.map((thumbValue, index) => (
                         <Tooltip key={index} open={isDragging[index]}>
-                            <TooltipTrigger
-                                asChild
-                                onPointerDown={() => handleDragStart(index)}
-                                onPointerUp={() => handleDragEnd(index)}
-                                onPointerLeave={() => handleDragEnd(index)}>
+                            <TooltipTrigger asChild>
                                 <SliderPrimitive.Thumb
                                     data-slot='slider-thumb'
-                                    className='border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50'
+                                    className='border-primary bg-background ring-ring/50 block h-4 w-4 cursor-grab rounded-full border shadow-sm transition-all focus-visible:ring-4 focus-visible:outline-none active:cursor-grabbing disabled:pointer-events-none disabled:opacity-50'
+                                    onPointerDown={() => handleDragStart(index)}
+                                    onPointerUp={() => handleDragEnd(index)}
+                                    onPointerLeave={() => handleDragEnd(index)}
                                 />
                             </TooltipTrigger>
                             <TooltipContent>{thumbValue}</TooltipContent>
                         </Tooltip>
-                    )
-                )}
-            </SliderPrimitive.Root>
+                    ))}
+                </SliderPrimitive.Root>
+            </TooltipProvider>
         );
     }
 );
-TooltipSlider.displayName = 'TooltipSlider';
 
-interface SliderFormFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> {
-    control: Control<TFieldValues>;
-    name: TName;
-    label?: string;
-    defaultValue?: number[];
-    min?: number;
-    max?: number;
-    className?: string;
-    description?: React.ReactNode;
-}
+TooltipSliderField.displayName = 'TooltipSliderField';
 
-function SliderFormField<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-    control,
-    name,
-    label,
-    defaultValue = [0, 10],
-    min = 0,
-    max = 10,
-    className,
-    description
-}: SliderFormFieldProps<TFieldValues, TName>) {
-    return (
-        <FormField
-            control={control}
-            name={name}
-            defaultValue={defaultValue as any}
-            render={({ field }) => (
-                <FormItem className={cn('w-full', className)}>
-                    <BaseFormLayout label={label} description={description}>
-                        <TooltipSlider
-                            min={min}
-                            max={max}
-                            onValueChange={field.onChange}
-                            value={field.value}
-                            onBlur={field.onBlur}
-                            defaultValue={defaultValue}
-                            id={field.name}
-                            disabled={field.disabled}
-                        />
-                    </BaseFormLayout>
-                </FormItem>
-            )}
-        />
-    );
-}
-
-export { TooltipSlider, SliderFormField };
+export default TooltipSliderField;

@@ -12,12 +12,9 @@ import {
     CommandItem,
     CommandList
 } from '@/registry/new-york-v4/ui/command';
-import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
-import BaseFormLayout from './base-form-layout';
 import { ArrowDown, ArrowUp, LucideIcon } from 'lucide-react';
-import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
 export type OrderOption = {
     value: string;
@@ -25,14 +22,14 @@ export type OrderOption = {
     icon?: LucideIcon;
 };
 
-interface OrderSelectProps {
+interface OrderSelectFieldProps {
     options: OrderOption[];
     value: { orderBy: string; order: 'asc' | 'desc' };
     onChange: (value: { orderBy: string; order: 'asc' | 'desc' }) => void;
     className?: string;
 }
 
-const OrderSelect = ({ options, value, onChange, className }: OrderSelectProps) => {
+const OrderSelectField = ({ options, value, onChange, className }: OrderSelectFieldProps) => {
     const [open, setOpen] = React.useState(false);
 
     const current = options.find((opt) => opt.value === value.orderBy) ?? options[0];
@@ -91,50 +88,6 @@ const OrderSelect = ({ options, value, onChange, className }: OrderSelectProps) 
     );
 };
 
-OrderSelect.displayName = 'OrderSelect';
+OrderSelectField.displayName = 'OrderSelectField';
 
-interface OrderSelectFormFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> {
-    control: Control<TFieldValues>;
-    name: TName;
-    options: OrderOption[];
-    className?: string;
-    label?: string;
-    description?: React.ReactNode;
-}
-
-const OrderSelectFormField = <
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-    control,
-    name,
-    options,
-    className,
-    description
-}: OrderSelectFormFieldProps<TFieldValues, TName>) => {
-    const defaultOption = options[0];
-
-    return (
-        <FormField
-            control={control}
-            name={name}
-            defaultValue={{ orderBy: defaultOption.value, order: 'desc' } as any}
-            render={({ field }) => (
-                <FormItem className={className}>
-                    <BaseFormLayout description={description}>
-                        <OrderSelect
-                            options={options}
-                            value={field.value ?? { orderBy: defaultOption.value, order: 'desc' }}
-                            onChange={field.onChange}
-                        />
-                    </BaseFormLayout>
-                </FormItem>
-            )}
-        />
-    );
-};
-
-export { OrderSelect, OrderSelectFormField };
+export default OrderSelectField;

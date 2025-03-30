@@ -13,15 +13,11 @@ import {
     CommandItem,
     CommandList
 } from '@/registry/new-york-v4/ui/command';
-import { FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
-import BaseFormLayout from './base-form-layout';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
-// The base LanguageSelect component
-interface LanguageSelectProps {
+interface LanguageSelectFieldProps {
     value?: string;
     onChange?: (value: string) => void;
     onBlur?: () => void;
@@ -30,7 +26,7 @@ interface LanguageSelectProps {
     className?: string;
 }
 
-const LanguageSelect = React.forwardRef<HTMLButtonElement, LanguageSelectProps>(
+const LanguageSelectField = React.forwardRef<HTMLButtonElement, LanguageSelectFieldProps>(
     ({ value, onChange, onBlur, disabled, placeholder = 'Select a language...', className }, ref) => {
         const [open, setOpen] = React.useState(false);
 
@@ -96,43 +92,6 @@ const LanguageSelect = React.forwardRef<HTMLButtonElement, LanguageSelectProps>(
         );
     }
 );
-LanguageSelect.displayName = 'LanguageSelect';
+LanguageSelectField.displayName = 'LanguageSelectField';
 
-interface LanguageFormFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> {
-    control: Control<TFieldValues>;
-    name: TName;
-    label?: string;
-    placeholder?: string;
-    description?: React.ReactNode;
-    className?: string;
-}
-
-function LanguageFormField<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({ control, name, label, placeholder, description, className }: LanguageFormFieldProps<TFieldValues, TName>) {
-    return (
-        <FormField
-            control={control}
-            name={name}
-            render={({ field }) => (
-                <FormItem className={className}>
-                    <BaseFormLayout label={label} description={description}>
-                        <LanguageSelect
-                            value={field.value}
-                            onChange={field.onChange}
-                            onBlur={field.onBlur}
-                            disabled={field.disabled}
-                            placeholder={placeholder}
-                        />
-                    </BaseFormLayout>
-                </FormItem>
-            )}
-        />
-    );
-}
-
-export { LanguageSelect, LanguageFormField };
+export default LanguageSelectField;

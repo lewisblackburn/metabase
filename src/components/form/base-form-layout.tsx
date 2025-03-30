@@ -10,13 +10,9 @@ const BaseFormLayout = ({
     children: React.ReactNode;
 }) => (
     <>
-        {label && (
-            <FormLabel className='mb-2'>
-                <h6>{label}</h6>
-            </FormLabel>
-        )}
-        {description && <div className='text-muted-foreground text-sm'>{description}</div>}
-        <FormControl>{children}</FormControl>
+        {label && <FormLabel className='font-semibold'>{label}</FormLabel>}
+        {description && <div className='text-muted-foreground text-xs'>{description}</div>}
+        <FormControl className='mt-2'>{children}</FormControl>
         <FormMessage />
     </>
 );
