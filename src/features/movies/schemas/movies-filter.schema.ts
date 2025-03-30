@@ -8,7 +8,7 @@ const availabilityArray = AVAILABILITIES.common.concat(AVAILABILITIES.films);
 const genresArray = GENRES.common.concat(GENRES.films);
 const certificationArray = CERTIFICATIONS.common.concat(CERTIFICATIONS.films);
 
-export const movieFilterSchema = z.object({
+export const moviesFilterSchema = z.object({
     orderBy: z.object({
         orderBy: z.enum(['popularity', 'release-date', 'rating']),
         order: z.enum(['asc', 'desc'])

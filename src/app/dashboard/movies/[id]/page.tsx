@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import ImageSlider from '@/components/image-slider';
+import ImageSlider from '@/components/shared/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';

@@ -5,8 +5,8 @@ import { Fragment, ReactNode, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import InformationItem from '@/components/information-item';
-import { InnerSidebarTrigger } from '@/components/inner-sidebar-trigger';
+import InformationItem from '@/components/shared/information-item';
+import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -54,7 +54,7 @@ const Information = [
     }
 ];
 
-const MovieLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
+const MovieLayout = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(true);
 
     return (
@@ -64,7 +64,7 @@ const MovieLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                     '--sidebar-width': '300px'
                 } as React.CSSProperties
             }
-            className='relative z-0 !h-[calc(100vh-4rem)] !min-h-0 overflow-hidden'
+            className='relative z-0 h-[calc(100vh-4rem)] min-h-0 overflow-hidden'
             open={open}>
             <Sidebar className='absolute'>
                 <SidebarContent className='bg-white p-5'>
@@ -77,9 +77,8 @@ const MovieLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                             className='size-full rounded'
                             quality={100}
                         />
-                        {/* BUG: Can't see the cursor icon */}
                         <Link href={MOVIE_DATA.trailer}>
-                            <Button variant='secondary' className='w-full'>
+                            <Button variant='secondary' className='w-full cursor-pointer'>
                                 <Play />
                                 Play Trailer
                             </Button>
@@ -97,7 +96,10 @@ const MovieLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                 </SidebarContent>
             </Sidebar>
             <main className='h-[calc(100vh-4rem)] w-full overflow-auto'>
-                <InnerSidebarTrigger onClick={() => setOpen((prev) => !prev)} className='absolute m-2 bg-white' />
+                <InnerSidebarTrigger
+                    onClick={() => setOpen((prev) => !prev)}
+                    className='absolute m-2 cursor-pointer bg-white'
+                />
                 <Image
                     src={MOVIE_DATA.backdrop}
                     alt={MOVIE_DATA.title}

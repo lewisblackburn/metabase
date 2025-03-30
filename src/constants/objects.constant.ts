@@ -1,4 +1,5 @@
 import {
+    Award,
     Book,
     Briefcase,
     Camera,
@@ -139,5 +140,14 @@ export const OBJECT_TYPE = {
         foreground: 'text-red-800',
         border: 'border-red-400/60',
         icon: Flag
+    },
+    AWARD: {
+        type: 'award',
+        name: 'Award',
+        plural: 'Awards',
+        background: 'bg-yellow-300/20',
+        foreground: 'text-yellow-800',
+        border: 'border-yellow-400/60',
+        icon: Award
     }
 };

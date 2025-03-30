@@ -10,40 +10,32 @@ import LanguageSelectField from '@/components/form/language-select';
 import OrderSelectField from '@/components/form/order-select';
 import RadioGroupField from '@/components/form/radio-group';
 import TooltipSliderField from '@/components/form/tooltip-slider';
-import SidebarAccordionItem from '@/components/sidebar-accordian-item';
+import FilterSection from '@/components/shared/filter-section';
+import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
+import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
 import { AVAILABILITIES } from '@/constants/availabilities.constant';
 import { CERTIFICATIONS } from '@/constants/certifications.constant';
 import { GENRES } from '@/constants/genres.constant';
-import { cn } from '@/lib/utils';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
-import { Sidebar, SidebarContent, SidebarInput, SidebarProvider, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarInput, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { movieFilterSchema } from '../schemas/filter.schema';
-import { Calendar, Filter, Flame, Star } from 'lucide-react';
+import { moviesFilterSchema } from '../schemas/movies-filter.schema';
+import { Calendar, Flame, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-type MovieSidebarProps = {
+type MoviesSidebarProps = {
     children: React.ReactNode;
 };
 
-function FilterSection({ children, isLast }: { children: React.ReactNode; isLast?: boolean }) {
-    return (
-        <>
-            <div className='px-5'>{children}</div>
-            {!isLast && <Separator />}
-        </>
-    );
-}
-
-export default function MovieSidebar({ children }: MovieSidebarProps) {
-    const form = useForm<z.infer<typeof movieFilterSchema>>({
-        resolver: zodResolver(movieFilterSchema),
+export default function MoviesSidebar({ children }: MoviesSidebarProps) {
+    const form = useForm<z.infer<typeof moviesFilterSchema>>({
+        resolver: zodResolver(moviesFilterSchema),
         defaultValues: {
             orderBy: {
                 orderBy: 'popularity',
@@ -63,7 +55,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
         }
     });
 
-    function onSubmit(values: z.infer<typeof movieFilterSchema>) {
+    function onSubmit(values: z.infer<typeof moviesFilterSchema>) {
         toast.success('Filters Applied', {
             description: JSON.stringify(values, null, 2),
             duration: 5000
@@ -97,6 +89,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                             <Separator />
                             <div className='flex min-w-full justify-center px-5'>
                                 <FormField
+                                    control={form.control}
                                     name='orderBy'
                                     render={({ field }) => (
                                         <FormItem>
@@ -130,6 +123,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                     <div className='mt-5 flex flex-col gap-5'>
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='showMe'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -153,6 +147,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='availabilities'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -171,6 +166,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='releaseDates'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -187,6 +183,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='genres'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -203,6 +200,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='certifications'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -221,6 +219,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='language'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -234,6 +233,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='userScore'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -247,6 +247,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='minVotes'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -259,6 +260,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
                                         </FilterSection>
                                         <FilterSection>
                                             <FormField
+                                                control={form.control}
                                                 name='runtime'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -272,6 +274,7 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
 
                                         <FilterSection isLast>
                                             <FormField
+                                                control={form.control}
                                                 name='keywords'
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -296,31 +299,10 @@ export default function MovieSidebar({ children }: MovieSidebarProps) {
             </Sidebar>
             <main className='h-[calc(100vh-4rem)] w-full overflow-auto'>
                 <div className='mx-auto max-w-full border-b px-5 py-5 sm:px-10'>
-                    <MovieSidebarTrigger className='justify-end' />
+                    <FilterSidebarTrigger className='justify-end' />
                 </div>
                 {children}
             </main>
         </SidebarProvider>
-    );
-}
-
-function MovieSidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
-    const { toggleSidebar } = useSidebar();
-
-    return (
-        <Button
-            data-sidebar='trigger'
-            data-slot='sidebar-trigger'
-            variant='ghost'
-            className={cn('text-muted-foreground cursor-pointer', className)}
-            onClick={(event) => {
-                onClick?.(event);
-                toggleSidebar();
-            }}
-            {...props}>
-            <Filter />
-            Filters
-            <span className='sr-only'>Toggle Sidebar</span>
-        </Button>
     );
 }
