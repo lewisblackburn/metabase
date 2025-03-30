@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { MOVIE_DATA } from '@/app/dashboard/movies/[id]/layout';
+import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/registry/new-york-v4/ui/table';
 
 import { Music } from 'lucide-react';

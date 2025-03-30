@@ -4,12 +4,12 @@ import Link from 'next/link';
 
 import ImageSlider from '@/components/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
+import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
-import { MOVIE_DATA } from './layout';
 import { Layers2, Lightbulb } from 'lucide-react';
 
 export default function MoviePage() {
