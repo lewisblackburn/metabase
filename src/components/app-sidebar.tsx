@@ -2,7 +2,11 @@
 
 import * as React from 'react';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
 import { NavUser } from '@/components/nav-user';
+import { OBJECT_TYPE } from '@/constants/objects.constant';
 import {
     Sidebar,
     SidebarContent,
@@ -12,11 +16,10 @@ import {
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem,
-    useSidebar
+    SidebarMenuItem
 } from '@/registry/new-york-v4/ui/sidebar';
 
-import { Book, Command, Flag, Music3, Tv, User, Video } from 'lucide-react';
+import { Book, Command, Music3, Tv, User, Video } from 'lucide-react';
 
 const data = {
     user: {
@@ -26,41 +29,36 @@ const data = {
     },
     navMain: [
         {
-            title: 'Movies',
-            url: '#',
-            icon: Video,
-            isActive: true
+            title: OBJECT_TYPE.MOVIE.plural,
+            url: '/dashboard/movies',
+            icon: Video
         },
         {
-            title: 'TV Shows',
-            url: '#',
-            icon: Tv,
-            isActive: false
+            title: OBJECT_TYPE.TV.plural,
+            url: '/dashboard/series',
+            icon: Tv
         },
         {
             title: 'Music',
-            url: '#',
-            icon: Music3,
-            isActive: false
+            url: '/dashboard/songs',
+            icon: Music3
         },
         {
             title: 'Books',
-            url: '#',
-            icon: Book,
-            isActive: false
+            url: '/dashboard/books',
+            icon: Book
         },
         {
             title: 'People',
-            url: '#',
-            icon: User,
-            isActive: false
+            url: '/dashboard/people',
+            icon: User
         }
     ]
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
-    const { setOpen } = useSidebar();
+    const pathname = usePathname();
+    const isActive = (url: string) => pathname === url;
 
     return (
         <Sidebar collapsible='icon' className='overflow-hidden *:data-[sidebar=sidebar]:flex-row' {...props}>
@@ -69,7 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarMenu>
                         <SidebarMenuItem>
                             <SidebarMenuButton size='lg' asChild className='md:h-8 md:p-0'>
-                                <a href='#'>
+                                <a href='/dashboard'>
                                     <div className='bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
                                         <Command className='size-4' />
                                     </div>
@@ -88,20 +86,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             <SidebarMenu>
                                 {data.navMain.map((item) => (
                                     <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton
-                                            tooltip={{
-                                                children: item.title,
-                                                hidden: false
-                                            }}
-                                            onClick={() => {
-                                                setActiveItem(item);
-                                                setOpen(true);
-                                            }}
-                                            isActive={activeItem?.title === item.title}
-                                            className='cursor-pointer px-2.5 md:px-2'>
-                                            <item.icon />
-                                            <span>{item.title}</span>
-                                        </SidebarMenuButton>
+                                        <Link href={item.url}>
+                                            <SidebarMenuButton
+                                                tooltip={{
+                                                    children: item.title,
+                                                    hidden: false
+                                                }}
+                                                isActive={isActive(item.url)}
+                                                className='cursor-pointer px-2.5 md:px-2'>
+                                                <item.icon />
+                                                <span>{item.title}</span>
+                                            </SidebarMenuButton>
+                                        </Link>
                                     </SidebarMenuItem>
                                 ))}
                             </SidebarMenu>
