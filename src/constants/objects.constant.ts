@@ -149,5 +149,41 @@ export const OBJECT_TYPE = {
         foreground: 'text-yellow-800',
         border: 'border-yellow-400/60',
         icon: Award
+    },
+    ACTOR: {
+        type: 'actor',
+        name: 'Actor',
+        plural: 'Actors',
+        background: 'bg-blue-300/20',
+        foreground: 'text-blue-800',
+        border: 'border-blue-400/60',
+        icon: User
+    },
+    ACTRESS: {
+        type: 'actress',
+        name: 'Actress',
+        plural: 'Actresses',
+        background: 'bg-pink-300/20',
+        foreground: 'text-pink-800',
+        border: 'border-pink-400/60',
+        icon: User
+    },
+    DIRECTOR: {
+        type: 'director',
+        name: 'Director',
+        plural: 'Directors',
+        background: 'bg-teal-300/20',
+        foreground: 'text-teal-800',
+        border: 'border-teal-400/60',
+        icon: User
+    },
+    AUTHOR: {
+        type: 'author',
+        name: 'Author',
+        plural: 'Authors',
+        background: 'bg-indigo-300/20',
+        foreground: 'text-indigo-800',
+        border: 'border-indigo-400/60',
+        icon: User
     }
 };

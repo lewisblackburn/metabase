@@ -154,7 +154,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                         <BaseFormLayout label='Availabilities'>
                                                             <CheckboxGroupField
                                                                 options={AVAILABILITIES.common.concat(
-                                                                    AVAILABILITIES.films
+                                                                    AVAILABILITIES.movies
                                                                 )}
                                                                 {...field}
                                                             />

@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 import Link from 'next/link';
 
 import Grid from '@/components/shared/grid';

@@ -1,5 +1,7 @@
 import { VoteStatus } from '@/features/reviews/components/vote-buttons';
 
+import { OBJECT_TYPE } from './objects.constant';
+
 export const MOVIES_DATA = [
     {
         id: 'movie-1',
@@ -338,54 +340,38 @@ export const PEOPLE_DATA = [
 export const PERSON_DATA = {
     id: 'person-1',
     name: 'Domhnall Gleeson',
-    role: 'Actor',
     headshot: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uDbwncuKlqL0fAuucXSvgakJDrc.jpg',
-    bio: `Domhnall Gleeson is an Irish actor, director, and writer. He is the son of actor Brendan Gleeson, alongside whom he has appeared in several films and theatre projects. He received a Bachelor of Arts in Media Arts from Dublin Institute of Technology.`,
+    biography: `Domhnall Gleeson is an Irish actor, director, and writer. He is the son of actor Brendan Gleeson, alongside whom he has appeared in several films and theatre projects. He received a Bachelor of Arts in Media Arts from Dublin Institute of Technology.`,
     birthdate: '12 May 1983',
     birthplace: 'Dublin, Ireland',
-    knownFor: 'Ex Machina, About Time, Star Wars: The Force Awakens',
-    filmography: [
+    gender: 'Male',
+    deathdate: null,
+    contentScore: 0.67,
+    knownFor: 'Acting',
+    knownForTitles: [
         {
-            id: 'filmography-1',
-            title: 'About Time',
-            role: 'Tim Lake',
-            year: 2013,
-            poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ls6zswrOZVhCXQBh96DlbnLBajM.jpg'
-        },
-        {
-            id: 'filmography-2',
+            id: 'known-for-1',
             title: 'Ex Machina',
-            role: 'Caleb Smith',
-            year: 2015,
-            poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/btbTzQ8W6x6V9v3dZ60Q8Y0U6m8.jpg'
+            poster: 'https://www.themoviedb.org/t/p/w1280/dmJW8IAKHKxFNiUnoDR7JfsK7Rp.jpg',
+            type: OBJECT_TYPE.MOVIE
         },
         {
-            id: 'filmography-3',
+            id: 'known-for-2',
+            title: 'About Time',
+            poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ls6zswrOZVhCXQBh96DlbnLBajM.jpg',
+            type: OBJECT_TYPE.MOVIE
+        },
+        {
+            id: 'known-for-3',
             title: 'Star Wars: The Force Awakens',
-            role: 'General Hux',
-            year: 2015,
-            poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wqnLJZdQdRZK2zHkM7ZQYrYbVl.jpg'
+            poster: 'https://www.themoviedb.org/t/p/w1280/wqnLdwVXoBjKibFRR5U3y0aDUhs.jpg',
+            type: OBJECT_TYPE.MOVIE
         },
         {
-            id: 'filmography-4',
-            title: 'The Revenant',
-            role: 'Captain Andrew Henry',
-            year: 2015,
-            poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/vg9LmN0XpJG4yPv2Rf8XHYUQz7.jpg'
-        },
-        {
-            id: 'filmography-5',
-            title: 'Brooklyn',
-            role: 'Jim Farrell',
-            year: 2015,
-            poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6v9KZ5DEwT1cJU8lXJbZ9Yh5y1V.jpg'
-        },
-        {
-            id: 'filmography-6',
-            title: 'The Little Stranger',
-            role: 'Dr. Faraday',
-            year: 2018,
-            poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6v9KZ5DE'
+            id: 'known-for-4',
+            title: 'Black Mirror',
+            poster: 'https://www.themoviedb.org/t/p/w1280/5UaYsGZOFhjFDwQh6GuLjjA1WlF.jpg',
+            type: OBJECT_TYPE.TV
         }
     ],
     social: {
@@ -396,24 +382,27 @@ export const PERSON_DATA = {
     awards: [
         {
             id: 'award-1',
-            title: 'Best Actor',
+            award: 'Best Actor',
+            title: 'Frank',
             year: 2015,
             event: 'Irish Film and Television Awards',
-            film: 'Ex Machina'
+            type: OBJECT_TYPE.MOVIE
         },
         {
             id: 'award-2',
-            title: 'Best Actor',
+            award: 'Best Actor',
             year: 2015,
             event: 'Irish Film and Television Awards',
-            film: 'Brooklyn'
+            title: 'Ex Machina',
+            type: OBJECT_TYPE.MOVIE
         },
         {
             id: 'award-3',
-            title: 'Best Actor',
+            title: 'About Time',
             year: 2015,
             event: 'Irish Film and Television Awards',
-            film: 'About Time'
+            award: 'Best Actor',
+            type: OBJECT_TYPE.MOVIE
         }
     ]
 };

@@ -72,9 +72,9 @@ export default function MoviePage() {
                 </Link>
             </div>
             <div className='flex flex-col gap-2'>
-                <h2 className=''>{MOVIE_DATA.title}</h2>
+                <h2>{MOVIE_DATA.title}</h2>
                 <p className='text-muted-foreground'>{MOVIE_DATA.tagline}</p>
-                <p className=''>{MOVIE_DATA.overview}</p>
+                <p>{MOVIE_DATA.overview}</p>
             </div>
             <div className='flex flex-col gap-10 py-5'>
                 <Separator />

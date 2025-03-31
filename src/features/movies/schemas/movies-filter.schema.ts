@@ -4,7 +4,7 @@ import { GENRES } from '@/constants/genres.constant';
 
 import * as z from 'zod';
 
-const availabilityArray = AVAILABILITIES.common.concat(AVAILABILITIES.films);
+const availabilityArray = AVAILABILITIES.common.concat(AVAILABILITIES.movies);
 const genresArray = GENRES.common.concat(GENRES.films);
 const certificationArray = CERTIFICATIONS.common.concat(CERTIFICATIONS.films);
 

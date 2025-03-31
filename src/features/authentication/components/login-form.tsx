@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 
-import { InputFormField } from '@/components/form/input';
 import AppleIcon from '@/components/icons/apple.icon';
 import GoogleIcon from '@/components/icons/google.icon';
 import MetaIcon from '@/components/icons/meta.icon';
@@ -43,21 +42,21 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                                     <p className='text-muted-foreground text-balance'>Login to your Metabase account</p>
                                 </div>
 
-                                <InputFormField
-                                    control={form.control}
-                                    name='email'
-                                    label='Email'
-                                    placeholder='m@example.com'
-                                    type='email'
-                                />
-
-                                <InputFormField
-                                    control={form.control}
-                                    name='password'
-                                    label='Password'
-                                    placeholder='••••••••'
-                                    type='password'
-                                />
+                                {/* <InputField */}
+                                {/*     control={form.control} */}
+                                {/*     name='email' */}
+                                {/*     label='Email' */}
+                                {/*     placeholder='m@example.com' */}
+                                {/*     type='email' */}
+                                {/* /> */}
+                                {/**/}
+                                {/* <InputField */}
+                                {/*     control={form.control} */}
+                                {/*     name='password' */}
+                                {/*     label='Password' */}
+                                {/*     placeholder='••••••••' */}
+                                {/*     type='password' */}
+                                {/* /> */}
 
                                 <div className='flex justify-end'>
                                     <a href='#' className='text-sm underline-offset-2 hover:underline'>

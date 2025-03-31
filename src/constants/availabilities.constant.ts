@@ -1,6 +1,6 @@
 export const AVAILABILITIES = {
     common: ['Free', 'Ads', 'Rent', 'Buy', 'Subscription', 'Stream', 'Offline', 'Limited Time'],
-    films: ['In Cinemas', 'DVD', 'Blu-ray', 'Digital'],
+    movies: ['In Cinemas', 'DVD', 'Blu-ray', 'Digital'],
     tvShows: ['Live TV', 'Catch-Up', 'Box Set'],
     songs: ['Streaming', 'Download', 'Vinyl', 'CD', 'Radio'],
     books: ['Ebook', 'Audiobook', 'Print', 'Library'],
