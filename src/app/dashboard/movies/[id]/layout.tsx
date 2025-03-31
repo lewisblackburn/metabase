@@ -9,7 +9,9 @@ import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
+import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
 import isLastIndex from '@/utils/isLastIndex';
@@ -91,6 +93,19 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
                                     {isLastIndex(index, Information) ? null : <Separator />}
                                 </Fragment>
                             ))}
+                        </div>
+                        <Separator />
+                        <div className='flex flex-col gap-2'>
+                            <div className='flex items-center gap-2 text-sm'>
+                                <TrendingUp size='1em' />
+                                <span>Content Score</span>
+                            </div>
+                            <Badge variant='outline' className='w-full'>
+                                <div className='flex w-full items-center gap-2'>
+                                    <Progress value={Math.floor(MOVIE_DATA.contentScore * 100)} className='min-w-24' />
+                                    <span>{Math.floor(MOVIE_DATA.contentScore * 100)}%</span>
+                                </div>
+                            </Badge>
                         </div>
                     </SidebarMenu>
                 </SidebarContent>

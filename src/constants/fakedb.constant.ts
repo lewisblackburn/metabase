@@ -125,6 +125,7 @@ export const MOVIE_DATA = {
     tagline: `A new funny film about love. With a bit of time travel.`,
     poster: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ls6zswrOZVhCXQBh96DlbnLBajM.jpg',
     backdrop: 'https://image.tmdb.org/t/p/original/ppWSi3evUtz9YGNcmsnjmH3FARy.jpg',
+    contentScore: 0.8,
     cast: [
         {
             id: 'cast-1',
@@ -342,7 +343,7 @@ export const PERSON_DATA = {
     name: 'Domhnall Gleeson',
     headshot: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uDbwncuKlqL0fAuucXSvgakJDrc.jpg',
     biography: `Domhnall Gleeson is an Irish actor, director, and writer. He is the son of actor Brendan Gleeson, alongside whom he has appeared in several films and theatre projects. He received a Bachelor of Arts in Media Arts from Dublin Institute of Technology.`,
-    birthdate: '12 May 1983',
+    birthdate: new Date('1983-05-12'),
     birthplace: 'Dublin, Ireland',
     gender: 'Male',
     deathdate: null,
