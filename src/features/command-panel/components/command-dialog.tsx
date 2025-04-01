@@ -1,8 +1,7 @@
+import DialogContentNoClose from '@/components/shared/dialog-content-no-close';
 import { SHORTCUTS } from '@/constants/shortcuts.constant';
 import { Command } from '@/registry/new-york-v4/ui/command';
 import { Dialog, DialogDescription, DialogHeader, DialogTitle } from '@/registry/new-york-v4/ui/dialog';
-
-import DialogContent from './dialog-content';
 
 export default function CommandDialog({
     title = 'Command Palette',
@@ -19,7 +18,7 @@ export default function CommandDialog({
                 <DialogTitle>{title}</DialogTitle>
                 <DialogDescription>{description}</DialogDescription>
             </DialogHeader>
-            <DialogContent className='overflow-hidden p-0'>
+            <DialogContentNoClose className='overflow-hidden p-0'>
                 <Command className='[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5'>
                     {children}
                     <div className='border-border flex items-center gap-5 border-t px-2 py-1'>
@@ -45,7 +44,7 @@ export default function CommandDialog({
                         ))}
                     </div>
                 </Command>
-            </DialogContent>
+            </DialogContentNoClose>
         </Dialog>
     );
 }

@@ -6,8 +6,10 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
+import ShortcutManager from '@/features/shortcuts/components/shortcut-manager';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
 import { TooltipProvider } from '@/registry/new-york-v4/ui/tooltip';
+import { StoreProvider } from '@/store/store-provider';
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -31,12 +33,15 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
         <html suppressHydrationWarning lang='en'>
             <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
-                <ThemeProvider attribute='class'>
-                    <TooltipProvider>
-                        {children}
-                        <Toaster />
-                    </TooltipProvider>
-                </ThemeProvider>
+                <StoreProvider>
+                    <ShortcutManager />
+                    <ThemeProvider attribute='class'>
+                        <TooltipProvider>
+                            {children}
+                            <Toaster />
+                        </TooltipProvider>
+                    </ThemeProvider>
+                </StoreProvider>
             </body>
         </html>
     );

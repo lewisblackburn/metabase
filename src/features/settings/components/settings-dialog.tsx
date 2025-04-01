@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 
+import DialogContentNoClose from '@/components/shared/dialog-content-no-close';
 import { Button } from '@/registry/new-york-v4/ui/button';
-import { Dialog, DialogContent } from '@/registry/new-york-v4/ui/dialog';
+import { Dialog, DialogTitle } from '@/registry/new-york-v4/ui/dialog';
 import {
     Sidebar,
     SidebarContent,
@@ -14,47 +15,58 @@ import {
     SidebarMenuItem,
     SidebarProvider
 } from '@/registry/new-york-v4/ui/sidebar';
+import { RootState } from '@/store/store';
 
+import { toggleSettingsDialogOpenState } from '../store/settings.slice';
 import {
     Bell,
-    Check,
-    Globe,
-    Home,
-    Keyboard,
-    Link,
+    Code,
+    CreditCard,
+    HardDrive,
+    LanguagesIcon,
     Lock,
-    Menu,
-    MessageCircle,
     Paintbrush,
+    Plug,
     Settings,
-    Video,
+    User,
     X
 } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 
+// TODO: Move this logic to redux store
 const data = {
     nav: [
-        { name: 'Notifications', icon: Bell },
-        { name: 'Navigation', icon: Menu },
-        { name: 'Home', icon: Home },
-        { name: 'Appearance', icon: Paintbrush },
-        { name: 'Messages & media', icon: MessageCircle },
-        { name: 'Language & region', icon: Globe },
-        { name: 'Accessibility', icon: Keyboard },
-        { name: 'Mark as read', icon: Check },
-        { name: 'Audio & video', icon: Video },
-        { name: 'Connected accounts', icon: Link },
-        { name: 'Privacy & visibility', icon: Lock },
-        { name: 'Advanced', icon: Settings }
+        { name: 'Account', icon: User },
+        {
+            name: 'Notifications',
+            icon: Bell
+        },
+        { name: 'Language', icon: LanguagesIcon },
+        { name: 'Password & Authentication', icon: Lock },
+        { name: 'Subscription & Billing', icon: CreditCard },
+        { name: 'Backup', icon: HardDrive },
+        { name: 'Metabase API', icon: Code },
+        {
+            name: 'Appearance',
+            icon: Paintbrush
+        },
+        {
+            name: 'Integrations',
+            icon: Plug
+        }
     ]
 };
 
 export function SettingsDialog() {
-    const [open, setOpen] = React.useState(true);
-    const [activeItem, setActiveItem] = React.useState('Messages & media');
+    const isOpen = useSelector((state: RootState) => state.settings.settingsDialogOpen);
+    const dispatch = useDispatch();
+    // TODO: Move this logic to redux store
+    const [activeItem, setActiveItem] = React.useState('Account');
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className='overflow-hidden p-0 md:max-h-[650px] md:max-w-[700px] lg:max-w-[800px]'>
+        <Dialog open={isOpen} onOpenChange={() => dispatch(toggleSettingsDialogOpenState())}>
+            <DialogTitle className='sr-only'>Settings</DialogTitle>
+            <DialogContentNoClose className='overflow-hidden p-0 md:max-h-[650px] md:max-w-[700px] lg:max-w-[800px]'>
                 <SidebarProvider>
                     <Sidebar collapsible='none' className='border-border hidden w-64 border-r md:flex md:min-h-[600px]'>
                         <SidebarContent>
@@ -87,12 +99,22 @@ export function SettingsDialog() {
                     </Sidebar>
                     <div className='w-full'>
                         <header className='border-border flex h-14 items-center gap-2 border-b p-3 text-sm font-semibold'>
-                            <span>{activeItem}</span>
+                            <div>
+                                {/* TODO: Icon here matching that of view */}
+                                <span>{activeItem}</span>
+                            </div>
+                            <Button
+                                variant='outline'
+                                size='icon'
+                                className='ml-auto h-8 w-8'
+                                onClick={() => dispatch(toggleSettingsDialogOpenState())}>
+                                <X />
+                            </Button>
                         </header>
                         <main className='p-5'>content</main>
                     </div>
                 </SidebarProvider>
-            </DialogContent>
+            </DialogContentNoClose>
         </Dialog>
     );
 }

@@ -4,11 +4,14 @@ import * as React from 'react';
 
 import { ALL_ACTIONS } from '@/constants/actions.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
+import { setQuery, toggleCommandPanelOpenState } from '@/features/command-panel/store/command-panel.slice';
 import { Command, CommandEmpty, CommandGroup, CommandList, CommandSeparator } from '@/registry/new-york-v4/ui/command';
+import { RootState } from '@/store/store';
 
 import CommandDialog from './command-dialog';
 import CommandInput from './command-input';
 import Item, { ItemType } from './item';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ALL_ITEMS: ItemType[] = [
     {
@@ -112,9 +115,9 @@ const ALL_ITEMS: ItemType[] = [
 ];
 
 export default function CommandPanel() {
-    const [open, setOpen] = React.useState(false);
-    const [query, setQuery] = React.useState('');
-    const isSearching = query.length > 0;
+    const commandPanelState = useSelector((state: RootState) => state.commandPanel);
+    const dispatch = useDispatch();
+    const isSearching = commandPanelState.query.length > 0;
 
     const filteredItems = React.useMemo(() => {
         if (!isSearching) return [];
@@ -122,9 +125,9 @@ export default function CommandPanel() {
         const items = ALL_ITEMS.concat(ALL_ACTIONS);
 
         return items.filter((item) => {
-            return item.title.toLowerCase().includes(query.toLowerCase());
+            return item.title.toLowerCase().includes(commandPanelState.query.toLowerCase());
         });
-    }, [isSearching, query]);
+    }, [isSearching, commandPanelState.query]);
 
     const recentItems = React.useMemo(() => {
         return ALL_ITEMS.filter((item) => {
@@ -132,30 +135,14 @@ export default function CommandPanel() {
         });
     }, []);
 
-    React.useEffect(() => {
-        const down = (e: KeyboardEvent) => {
-            if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-                e.preventDefault();
-                setOpen((open) => !open);
-
-                // NOTE: Reset query when closing
-                setTimeout(() => {
-                    if (!open) setQuery('');
-                }, 100);
-            }
-        };
-
-        document.addEventListener('keydown', down);
-
-        return () => document.removeEventListener('keydown', down);
-    }, []);
-
     return (
-        <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandDialog
+            open={commandPanelState.commandPanelOpen}
+            onOpenChange={() => dispatch(toggleCommandPanelOpenState())}>
             <Command shouldFilter={false}>
                 <CommandInput
                     placeholder='Search for content and actions, or paste from clipboard'
-                    onValueChange={setQuery}
+                    onValueChange={(value) => dispatch(setQuery(value))}
                 />
                 <CommandList>
                     <CommandEmpty>No results found.</CommandEmpty>

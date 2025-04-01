@@ -1,9 +1,9 @@
 import { Fragment, ReactNode } from 'react';
 
 import { AppSidebar } from '@/components/app-sidebar';
-import CommandPanel from '@/components/command-panel/command-panel';
-import { SettingsDialog } from '@/components/settings-dialog/settings-dialog';
+import CommandPanel from '@/features/command-panel/components/command-panel';
 import Breadcrumbs from '@/features/dashboard/components/breadcrumbs';
+import { SettingsDialog } from '@/features/settings/components/settings-dialog';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/registry/new-york-v4/ui/sidebar';
 
@@ -11,9 +11,9 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     return (
         <Fragment>
             <CommandPanel />
+            <SettingsDialog />
             <SidebarProvider>
                 <AppSidebar />
-                <SettingsDialog />
                 <SidebarInset>
                     <header className='bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4'>
                         <SidebarTrigger className='-ml-1 cursor-pointer' />
