@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { AwardCard } from '@/components/shared/award-card';
 import ImageSlider from '@/components/shared/image-slider';
+import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { PERSON_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
@@ -66,7 +67,7 @@ export default function PersonPage() {
                         </p>
                         <p>{PERSON_DATA.biography}</p>
                     </div>
-                    <div className='flex gap-2'>
+                    <div className='flex flex-wrap gap-2'>
                         {PERSON_DATA.birthdate && (
                             <CustomBadge icon={Calendar}>
                                 {dayjs(PERSON_DATA.birthdate).format('MMMM Do, YYYY')}
@@ -75,13 +76,9 @@ export default function PersonPage() {
                         {PERSON_DATA.birthplace && <CustomBadge icon={MapPin}>{PERSON_DATA.birthplace}</CustomBadge>}
                         {PERSON_DATA.gender && <CustomBadge icon={VenusAndMars}>{PERSON_DATA.gender}</CustomBadge>}
                         {PERSON_DATA.deathdate && <CustomBadge icon={Skull}>{PERSON_DATA.deathdate}</CustomBadge>}
-                        <Badge variant='outline' className=''>
-                            <div className='flex w-full items-center gap-2'>
-                                <span className='font-semibold'>Content Score</span>
-                                <Progress value={Math.floor(PERSON_DATA.contentScore * 100)} className='min-w-24' />
-                                <span>{Math.floor(PERSON_DATA.contentScore * 100)}%</span>
-                            </div>
-                        </Badge>
+                        <div>
+                            <ProgressItem label='Content Score' score={PERSON_DATA.contentScore} variant='labelled' />
+                        </div>
                     </div>
                 </div>
             </div>

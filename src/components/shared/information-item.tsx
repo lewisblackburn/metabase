@@ -1,23 +1,29 @@
+import React from 'react';
+
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 
-const InformationItem = ({
-    icon,
-    children,
-    badge
-}: Readonly<{ icon: React.ReactNode; children: React.ReactNode; badge: string | string[] }>) => {
+import { LucideIcon } from 'lucide-react';
+
+type InformationItemProps = {
+    icon?: LucideIcon;
+    label: string;
+    badges: string | string[];
+};
+
+const InformationItem: React.FC<InformationItemProps> = ({ icon: Icon, label, badges }) => {
     return (
         <div className='flex flex-col gap-2'>
             <div className='flex items-center gap-2 text-sm'>
-                {icon}
-                <span>{children}</span>
+                {Icon && <Icon size='1em' />}
+                <span>{label}</span>
             </div>
             <div className='flex items-center gap-2'>
-                {typeof badge === 'string' ? (
-                    <Badge variant='outline'>{badge}</Badge>
+                {typeof badges === 'string' ? (
+                    <Badge variant='outline'>{badges}</Badge>
                 ) : (
-                    (badge as string[]).map((b) => (
-                        <Badge key={b} variant='outline'>
-                            {b}
+                    badges.map((badge) => (
+                        <Badge key={badge} variant='outline'>
+                            {badge}
                         </Badge>
                     ))
                 )}

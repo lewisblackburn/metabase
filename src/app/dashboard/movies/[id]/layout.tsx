@@ -7,11 +7,10 @@ import Link from 'next/link';
 
 import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
+import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
-import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
 import isLastIndex from '@/utils/isLastIndex';
@@ -20,39 +19,39 @@ import { Calendar, CreditCard, Info, Play, Tags, Timer, TrendingUp, User } from 
 
 const Information = [
     {
-        icon: <Calendar size='1em' />,
-        badge: MOVIE_DATA.releaseDate,
-        children: 'Release Date'
+        icon: Calendar,
+        badges: MOVIE_DATA.releaseDate,
+        label: 'Release Date'
     },
     {
-        icon: <Tags size='1em' />,
-        badge: MOVIE_DATA.genre,
-        children: 'Genre'
+        icon: Tags,
+        badges: MOVIE_DATA.genre,
+        label: 'Genre'
     },
     {
-        icon: <Timer size='1em' />,
-        badge: MOVIE_DATA.duration,
-        children: 'Duration'
+        icon: Timer,
+        badges: MOVIE_DATA.duration,
+        label: 'Duration'
     },
     {
-        icon: <Info size='1em' />,
-        badge: MOVIE_DATA.status,
-        children: 'Status'
+        icon: Info,
+        badges: MOVIE_DATA.status,
+        label: 'Status'
     },
     {
-        icon: <User size='1em' />,
-        badge: MOVIE_DATA.director,
-        children: 'Director'
+        icon: User,
+        badges: MOVIE_DATA.director,
+        label: 'Director'
     },
     {
-        icon: <TrendingUp size='1em' />,
-        badge: MOVIE_DATA.revenue,
-        children: 'Revenue'
+        icon: TrendingUp,
+        badges: MOVIE_DATA.revenue,
+        label: 'Revenue'
     },
     {
-        icon: <CreditCard size='1em' />,
-        badge: MOVIE_DATA.budget,
-        children: 'Budget'
+        icon: CreditCard,
+        badges: MOVIE_DATA.budget,
+        label: 'Budget'
     }
 ];
 
@@ -95,18 +94,7 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
                             ))}
                         </div>
                         <Separator />
-                        <div className='flex flex-col gap-2'>
-                            <div className='flex items-center gap-2 text-sm'>
-                                <TrendingUp size='1em' />
-                                <span>Content Score</span>
-                            </div>
-                            <Badge variant='outline' className='w-full'>
-                                <div className='flex w-full items-center gap-2'>
-                                    <Progress value={Math.floor(MOVIE_DATA.contentScore * 100)} className='min-w-24' />
-                                    <span>{Math.floor(MOVIE_DATA.contentScore * 100)}%</span>
-                                </div>
-                            </Badge>
-                        </div>
+                        <ProgressItem icon={TrendingUp} label='Content Score' score={MOVIE_DATA.contentScore} />
                     </SidebarMenu>
                 </SidebarContent>
             </Sidebar>
