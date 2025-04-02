@@ -15,9 +15,7 @@ import {
     SidebarMenuItem,
     SidebarProvider
 } from '@/registry/new-york-v4/ui/sidebar';
-import { RootState } from '@/store/store';
 
-import { toggleSettingsDialogOpenState } from '../store/settings.slice';
 import {
     Bell,
     Code,
@@ -26,12 +24,11 @@ import {
     LanguagesIcon,
     Lock,
     Paintbrush,
+    Pencil,
     Plug,
-    Settings,
     User,
     X
 } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
 
 // TODO: Move this logic to redux store
 const data = {
@@ -57,25 +54,29 @@ const data = {
     ]
 };
 
-export function SettingsDialog() {
-    const isOpen = useSelector((state: RootState) => state.settings.settingsDialogOpen);
-    const dispatch = useDispatch();
+interface MovieEditDialogProps {
+    id: string;
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+export function MovieEditDialog({ id, isOpen, onClose }: MovieEditDialogProps) {
     // TODO: Move this logic to redux store
     const [activeItem, setActiveItem] = React.useState('Account');
 
     return (
-        <Dialog open={isOpen} onOpenChange={() => dispatch(toggleSettingsDialogOpenState())}>
-            <DialogTitle className='sr-only'>Settings</DialogTitle>
-            <DialogDescription className='sr-only'>Configure your settings here.</DialogDescription>
+        <Dialog open={isOpen} onOpenChange={onClose}>
+            <DialogTitle className='sr-only'>Edit Movie</DialogTitle>
+            <DialogDescription className='sr-only'>Edit the movie details</DialogDescription>
             <DialogContentNoClose className='overflow-hidden p-0 md:max-h-[650px] md:max-w-[700px] lg:max-w-[800px]'>
                 <SidebarProvider>
                     <Sidebar collapsible='none' className='border-border hidden w-64 border-r md:flex md:min-h-[600px]'>
                         <SidebarContent>
                             <div className='border-border flex h-14 items-center gap-2 border-b p-3 text-sm font-semibold'>
                                 <Button variant='outline' size='icon' className='h-8 w-8'>
-                                    <Settings />
+                                    <Pencil />
                                 </Button>
-                                <span>Settings</span>
+                                <span>Edit Movie</span>
                             </div>
                             <SidebarGroup>
                                 <SidebarGroupContent>
@@ -104,11 +105,7 @@ export function SettingsDialog() {
                                 {/* TODO: Icon here matching that of view */}
                                 <span>{activeItem}</span>
                             </div>
-                            <Button
-                                variant='outline'
-                                size='icon'
-                                className='ml-auto h-8 w-8'
-                                onClick={() => dispatch(toggleSettingsDialogOpenState())}>
+                            <Button variant='outline' size='icon' className='ml-auto h-8 w-8' onClick={onClose}>
                                 <X />
                             </Button>
                         </header>

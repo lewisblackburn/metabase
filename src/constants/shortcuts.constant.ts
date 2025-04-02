@@ -1,38 +1,56 @@
-import { ArrowDown, ArrowUp, Command, CornerDownLeft } from 'lucide-react';
+export type Shortcut = {
+    id: string;
+    key: string;
+    title: string;
+    description: string;
+    enabled: boolean;
+    global: boolean;
+    scope?: string;
+};
 
 export const SHORTCUTS = {
-    COMMAND_PANEL: [
-        // {
-        //     action: 'open',
-        //     title: 'Open Command Panel',
-        //     shortcut: 'Ctrl + K',
-        //     description: 'Open the command panel to search for commands',
-        //     short: 'to open',
-        //     keys: [Command, 'K']
-        // },
-        {
-            action: 'navigate',
-            title: 'Navigate Command Panel',
-            shortcut: 'Arrow Up/Down',
-            description: 'Navigate through the command panel',
-            short: 'to navigate',
-            keys: [ArrowUp, ArrowDown]
-        },
-        {
-            action: 'select',
-            title: 'Select Command',
-            shortcut: 'Enter',
-            description: 'Select the highlighted command',
-            short: 'to select',
-            keys: [CornerDownLeft]
-        }
-        // {
-        //     action: 'close',
-        //     title: 'Close Command Panel',
-        //     shortcut: 'Escape',
-        //     description: 'Close the command panel',
-        //     short: 'to close',
-        //     keys: ['Esc']
-        // }
-    ]
+    openCommandPanel: {
+        id: 'openCommandPanel',
+        key: 'ctrl+k',
+        title: 'Open Command Panel',
+        description: 'Open the command panel to search for objects',
+        enabled: true,
+        global: true
+    },
+    toggleSettings: {
+        id: 'toggleSettings',
+        key: 'ctrl+,',
+        title: 'Open Settings',
+        description: 'Open the settings dialog',
+        enabled: true,
+        global: true
+    },
+    navigateUp: {
+        id: 'navigateUp',
+        key: 'up',
+        title: 'Navigate Up',
+        description: 'Navigate up in the list',
+        // NOTE: This is automatic and does not need to be set
+        enabled: false,
+        global: false,
+        scope: 'modal'
+    },
+    navigateDown: {
+        id: 'navigateDown',
+        key: 'down',
+        title: 'Navigate Down',
+        description: 'Navigate down in the list',
+        enabled: false,
+        global: false,
+        scope: 'modal'
+    },
+    toggleEditDialog: {
+        id: 'toggleEditDialog',
+        key: 'ctrl+e',
+        title: 'Toggle Edit Dialog',
+        description: 'Toggle the edit dialog for the selected item',
+        enabled: true,
+        global: false,
+        scope: 'object'
+    }
 };

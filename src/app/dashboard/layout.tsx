@@ -3,6 +3,7 @@ import { Fragment, ReactNode } from 'react';
 import { AppSidebar } from '@/components/app-sidebar';
 import CommandPanel from '@/features/command-panel/components/command-panel';
 import Breadcrumbs from '@/features/dashboard/components/breadcrumbs';
+import EditDialogManager from '@/features/edit-dailog/components/edit-dialog-manager';
 import { SettingsDialog } from '@/features/settings/components/settings-dialog';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/registry/new-york-v4/ui/sidebar';
@@ -10,6 +11,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/registry/new-yo
 const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     return (
         <Fragment>
+            <EditDialogManager />
             <CommandPanel />
             <SettingsDialog />
             <SidebarProvider>

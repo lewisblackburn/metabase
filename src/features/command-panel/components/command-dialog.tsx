@@ -1,10 +1,11 @@
 import DialogContentNoClose from '@/components/shared/dialog-content-no-close';
-import { SHORTCUTS } from '@/constants/shortcuts.constant';
+import { ShortcutDisplay } from '@/features/shortcuts/components/shortcut-display';
+import { useShortcut } from '@/features/shortcuts/hooks/useShortcut';
 import { Command } from '@/registry/new-york-v4/ui/command';
 import { Dialog, DialogDescription, DialogHeader, DialogTitle } from '@/registry/new-york-v4/ui/dialog';
 
 export default function CommandDialog({
-    title = 'Command Palette',
+    title = 'Command Panel',
     description = 'Search for a command to run...',
     children,
     ...props
@@ -12,6 +13,12 @@ export default function CommandDialog({
     title?: string;
     description?: string;
 }) {
+    const openCommandPanel = useShortcut('openCommandPanel');
+    const navigateUp = useShortcut('navigateUp');
+    const navigateDown = useShortcut('navigateDown');
+
+    const shortcuts = [openCommandPanel, navigateUp, navigateDown];
+
     return (
         <Dialog {...props}>
             <DialogHeader className='sr-only'>
@@ -21,25 +28,11 @@ export default function CommandDialog({
             <DialogContentNoClose className='overflow-hidden p-0'>
                 <Command className='[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5'>
                     {children}
-                    <div className='border-border flex items-center gap-5 border-t px-2 py-1'>
-                        {SHORTCUTS.COMMAND_PANEL.map((item, index) => (
-                            <div key={index} className='text-muted-foreground flex items-center gap-1 text-xs'>
-                                <div className='text-primary flex items-center'>
-                                    {item.keys.map((key, keyIndex) => {
-                                        if (typeof key === 'string') {
-                                            return <span key={keyIndex}>{key}</span>;
-                                        }
-
-                                        if (typeof key === 'object') {
-                                            const KeyComponent = key as React.ElementType;
-
-                                            return <KeyComponent key={keyIndex} className='!mt-0.5 !size-2.5' />;
-                                        }
-
-                                        return null;
-                                    })}
-                                </div>
-                                <span>{item.short}</span>
+                    <div className='border-border flex items-center gap-5 border-t p-2'>
+                        {shortcuts.map((shortcut, index) => (
+                            <div key={index} className='flex items-center gap-2 text-xs'>
+                                <ShortcutDisplay combo={shortcut.key} />
+                                <span className='text-muted-foreground'>{shortcut.title}</span>
                             </div>
                         ))}
                     </div>

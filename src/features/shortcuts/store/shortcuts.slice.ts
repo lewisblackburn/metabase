@@ -1,37 +1,12 @@
+import { SHORTCUTS, Shortcut } from '@/constants/shortcuts.constant';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
-type Shortcut = {
-    id: string;
-    key: string;
-    title: string;
-    description: string;
-    enabled: boolean;
-    global: boolean;
-};
 
 type ShortcutsState = {
     shortcuts: Record<string, Shortcut>;
 };
 
 const initialState: ShortcutsState = {
-    shortcuts: {
-        openCommandPanel: {
-            id: 'openCommandPanel',
-            key: 'ctrl+k',
-            title: 'Open Command Panel',
-            description: 'Open the command panel to search for objects',
-            enabled: true,
-            global: true
-        },
-        openSettings: {
-            id: 'openSettings',
-            key: 'ctrl+,',
-            title: 'Open Settings',
-            description: 'Open the settings dialog',
-            enabled: true,
-            global: true
-        }
-    }
+    shortcuts: SHORTCUTS
 };
 
 const shortcutsSlice = createSlice({

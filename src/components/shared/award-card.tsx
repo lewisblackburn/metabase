@@ -1,4 +1,4 @@
-import { OBJECT_TYPE } from '@/constants/objects.constant';
+import { OBJECT_TYPE, ObjectType } from '@/constants/objects.constant';
 import { Card, CardContent, CardHeader, CardTitle } from '@/registry/new-york-v4/ui/card';
 
 import { Award, Calendar, Hash, Star, Tag } from 'lucide-react';
@@ -10,7 +10,7 @@ type Award = {
     award: string;
     year: number;
     event: string;
-    type: (typeof OBJECT_TYPE)[keyof typeof OBJECT_TYPE];
+    type: ObjectType;
 };
 
 interface AwardCardProps {

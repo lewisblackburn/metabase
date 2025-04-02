@@ -28,7 +28,7 @@ export function NavUser({
     };
 }) {
     const dispatch = useDispatch();
-    const openSettings = useShortcut('openSettings');
+    const toggleSettings = useShortcut('toggleSettings');
     const { isMobile } = useSidebar();
 
     return (
@@ -92,7 +92,7 @@ export function NavUser({
                                 <Settings />
                                 <span>Settings</span>
                                 <div className='ml-auto'>
-                                    {openSettings && <ShortcutDisplay combo={openSettings.key} />}
+                                    {toggleSettings && <ShortcutDisplay combo={toggleSettings.key} />}
                                 </div>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>

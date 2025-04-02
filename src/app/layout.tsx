@@ -6,6 +6,7 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
+import HotkeyScopeManager from '@/features/shortcuts/components/hotkey-scope-manager';
 import ShortcutManager from '@/features/shortcuts/components/shortcut-manager';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
 import { TooltipProvider } from '@/registry/new-york-v4/ui/tooltip';
@@ -34,6 +35,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         <html suppressHydrationWarning lang='en'>
             <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
                 <StoreProvider>
+                    <HotkeyScopeManager />
                     <ShortcutManager />
                     <ThemeProvider attribute='class'>
                         <TooltipProvider>
