@@ -3,7 +3,7 @@
 import { MovieEditDialog } from '@/features/movies/components/movie-edit-dialog';
 import { RootState } from '@/store/store';
 
-import { closeEditDialog } from '../store/edit-dialog.slice';
+import { setEditDialogOpenState } from '../store/edit-dialog.slice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function EditDialogManager() {
@@ -16,7 +16,7 @@ export default function EditDialogManager() {
     const commonProps = {
         id: objectId,
         isOpen,
-        onClose: () => dispatch(closeEditDialog())
+        onOpenChange: () => dispatch(setEditDialogOpenState(!isOpen))
     };
 
     switch (objectType) {

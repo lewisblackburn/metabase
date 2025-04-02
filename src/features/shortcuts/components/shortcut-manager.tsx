@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 
 import { OBJECT_TYPE, ObjectTypeKey } from '@/constants/objects.constant';
 import { toggleCommandPanelOpenState } from '@/features/command-panel/store/command-panel.slice';
-import { toggleEditDialog } from '@/features/edit-dailog/store/edit-dialog.slice';
+import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import { toggleSettingsDialogOpenState } from '@/features/settings/store/settings.slice';
 import { RootState } from '@/store/store';
 
@@ -19,20 +19,14 @@ export default function ShortcutManager() {
     const pathname = usePathname();
 
     useEffect(() => {
-        const segments = pathname.split('/').filter(Boolean);
-
-        const matchedEntry = Object.entries(OBJECT_TYPE).find(([_, obj]) => {
-            const idx = segments.indexOf(obj.path);
-
-            return idx !== -1 && segments.length > idx + 1;
-        });
+        const registeredKeys: string[] = [];
 
         Object.values(shortcuts).forEach((shortcut) => {
-            if (!shortcut.enabled) return;
+            if (!shortcut.enabled || !shortcut.key) return;
 
             const scope = shortcut.global ? 'all' : shortcut.scope || 'default';
 
-            hotkeys(shortcut.key, { scope }, (e) => {
+            const handler = (e: KeyboardEvent) => {
                 e.preventDefault();
 
                 switch (shortcut.id) {
@@ -45,36 +39,52 @@ export default function ShortcutManager() {
                         break;
 
                     case 'navigateUp':
-                        // Add navigation logic
                         break;
 
                     case 'navigateDown':
-                        // Add navigation logic
                         break;
 
                     case 'toggleEditDialog': {
-                        console.log('running');
-                        if (!matchedEntry) return;
+                        const segments = pathname.split('/').filter(Boolean);
+                        const matchedEntry = Object.entries(OBJECT_TYPE).find(([_, obj]) => {
+                            const idx = segments.indexOf(obj.path);
 
+                            return idx !== -1 && segments.length > idx + 1;
+                        });
+
+                        if (!matchedEntry) return;
                         const [key, object] = matchedEntry;
                         const objectId = segments[segments.indexOf(object.path) + 1];
 
-                        dispatch(
-                            toggleEditDialog({
-                                objectType: key as ObjectTypeKey,
-                                objectId
-                            })
-                        );
+                        dispatch(toggleEditDialogOpenState({ objectType: key as ObjectTypeKey, objectId }));
                         break;
                     }
                 }
-            });
+            };
+
+            hotkeys(shortcut.key, { scope }, handler);
+            registeredKeys.push(shortcut.key);
         });
 
         return () => {
-            Object.values(shortcuts).forEach((s) => hotkeys.unbind(s.key));
+            registeredKeys.forEach((key) => {
+                hotkeys.unbind(key);
+            });
         };
-    }, []);
+    }, [shortcuts, dispatch]);
+
+    useEffect(() => {
+        const segments = pathname.split('/').filter(Boolean);
+
+        const isObjectPage = Object.values(OBJECT_TYPE).some((obj) => {
+            const idx = segments.indexOf(obj.path);
+
+            return idx !== -1 && segments.length > idx + 1;
+        });
+
+        const newScope = isObjectPage ? 'object' : 'default';
+        hotkeys.setScope(newScope);
+    }, [pathname]);
 
     return null;
 }

@@ -1,11 +1,32 @@
+import { IconType } from '@/constants/icons.constant';
 import { createSlice } from '@reduxjs/toolkit';
 
+// In settings.slice.ts
+
 export interface SettingsState {
-    settingsDialogOpen: boolean;
+    isOpen: boolean;
+    items: {
+        id: string;
+        name: string;
+        icon: IconType;
+    }[];
+    activeItemId: string;
 }
 
 const initialState: SettingsState = {
-    settingsDialogOpen: false
+    isOpen: false,
+    items: [
+        { id: 'account', name: 'Account', icon: 'User' },
+        { id: 'notifications', name: 'Notifications', icon: 'Bell' },
+        { id: 'language', name: 'Language', icon: 'LanguagesIcon' },
+        { id: 'password_authentication', name: 'Password & Authentication', icon: 'Lock' },
+        { id: 'billing_subscription', name: 'Subscription & Billing', icon: 'CreditCard' },
+        { id: 'backup', name: 'Backup', icon: 'HardDrive' },
+        { id: 'api', name: 'Metabase API', icon: 'Code' },
+        { id: 'appearance', name: 'Appearance', icon: 'Paintbrush' },
+        { id: 'integrations', name: 'Integrations', icon: 'Plug' }
+    ],
+    activeItemId: 'account'
 };
 
 export const settingsSlice = createSlice({
@@ -13,14 +34,17 @@ export const settingsSlice = createSlice({
     initialState,
     reducers: {
         setSettingsDialogOpenState: (state, action) => {
-            state.settingsDialogOpen = action.payload;
+            state.isOpen = action.payload;
         },
         toggleSettingsDialogOpenState: (state) => {
-            state.settingsDialogOpen = !state.settingsDialogOpen;
+            state.isOpen = !state.isOpen;
+        },
+        setActiveItemId: (state, action) => {
+            state.activeItemId = action.payload;
         }
     }
 });
 
-export const { setSettingsDialogOpenState, toggleSettingsDialogOpenState } = settingsSlice.actions;
+export const { setSettingsDialogOpenState, toggleSettingsDialogOpenState, setActiveItemId } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

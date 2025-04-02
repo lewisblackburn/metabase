@@ -17,17 +17,10 @@ export const editDialogSlice = createSlice({
     name: 'editDialog',
     initialState,
     reducers: {
-        openEditDialog: (state, action: PayloadAction<{ objectType: ObjectTypeKey; objectId: string }>) => {
-            state.isOpen = true;
-            state.objectType = action.payload.objectType;
-            state.objectId = action.payload.objectId;
+        setEditDialogOpenState: (state, action: PayloadAction<boolean>) => {
+            state.isOpen = action.payload;
         },
-        closeEditDialog: (state) => {
-            state.isOpen = false;
-            state.objectType = null;
-            state.objectId = null;
-        },
-        toggleEditDialog: (state, action: PayloadAction<{ objectType: ObjectTypeKey; objectId: string }>) => {
+        toggleEditDialogOpenState: (state, action: PayloadAction<{ objectType: ObjectTypeKey; objectId: string }>) => {
             const { objectType, objectId } = action.payload;
 
             const isSameDialog = state.isOpen && state.objectType === objectType && state.objectId === objectId;
@@ -45,5 +38,5 @@ export const editDialogSlice = createSlice({
     }
 });
 
-export const { openEditDialog, closeEditDialog, toggleEditDialog } = editDialogSlice.actions;
+export const { setEditDialogOpenState, toggleEditDialogOpenState } = editDialogSlice.actions;
 export default editDialogSlice.reducer;

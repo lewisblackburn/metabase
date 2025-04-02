@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface CommandPanelState {
     query: string;
-    commandPanelOpen: boolean;
+    isOpen: boolean;
 }
 
 const initialState: CommandPanelState = {
     query: '',
-    commandPanelOpen: false
+    isOpen: false
 };
 
 export const commandPanelSlice = createSlice({
@@ -15,14 +15,14 @@ export const commandPanelSlice = createSlice({
     initialState,
     reducers: {
         setCommandPanelOpenState: (state, action) => {
-            state.commandPanelOpen = action.payload;
+            state.isOpen = action.payload;
             if (!action.payload) {
                 state.query = '';
             }
         },
         toggleCommandPanelOpenState: (state) => {
-            state.commandPanelOpen = !state.commandPanelOpen;
-            if (state.commandPanelOpen) {
+            state.isOpen = !state.isOpen;
+            if (state.isOpen) {
                 state.query = '';
             }
         },

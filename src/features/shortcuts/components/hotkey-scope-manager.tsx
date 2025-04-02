@@ -13,17 +13,18 @@ export default function HotkeyScopeManager() {
 
     useEffect(() => {
         const objectPaths = Object.values(OBJECT_TYPE).map((obj) => obj.path);
-
-        const segments = pathname.split('/').filter(Boolean); // Remove empty segments
+        const segments = pathname.split('/').filter(Boolean);
 
         const isObjectPage = objectPaths.some((objectPath) => {
             const index = segments.indexOf(objectPath);
 
-            // NOTE: Match only if it's like /.../movies/[slug] — i.e., object path followed by one slug
-            return index !== -1 && segments.length > index + 1 && !segments[index + 1].startsWith('edit'); // Optionally skip edit pages
+            return (
+                index !== -1 && segments.length > index + 1 && !segments[index + 1].startsWith('edit') // skip e.g., /movies/edit/[slug]
+            );
         });
 
-        hotkeys.setScope(isObjectPage ? 'object' : 'default');
+        const newScope = isObjectPage ? 'object' : 'default';
+        hotkeys.setScope(newScope);
     }, [pathname]);
 
     return null;
