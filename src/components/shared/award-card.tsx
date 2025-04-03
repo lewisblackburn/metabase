@@ -1,49 +1,33 @@
-import { OBJECT_TYPE, ObjectType } from '@/constants/objects.constant';
-import { Card, CardContent, CardHeader, CardTitle } from '@/registry/new-york-v4/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/registry/new-york-v4/ui/table';
+import { AwardType } from '@/types/award.type';
 
-import { Award, Calendar, Hash, Star, Tag } from 'lucide-react';
-
-// NOTE: This will be fetched from a generated GraphQL type in the future
-type Award = {
-    id: string;
-    title: string;
-    award: string;
-    year: number;
-    event: string;
-    type: ObjectType;
-};
-
-interface AwardCardProps {
-    award: Award;
+interface AwardTableProps {
+    awards: AwardType[];
 }
 
-export function AwardCard({ award }: AwardCardProps) {
+export default function AwardTable({ awards }: AwardTableProps) {
     return (
-        <Card className='rounded-md'>
-            <CardHeader>
-                <CardTitle className='flex items-center gap-2'>
-                    <Award className='h-5 w-5 text-yellow-500' />
-                    {award.title}
-                </CardTitle>
-            </CardHeader>
-            <CardContent className='text-muted-foreground space-y-1'>
-                <div className='flex items-center gap-2'>
-                    <Star className='h-4 w-4' />
-                    <span className='text-foreground'>{award.award}</span>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <Calendar className='h-4 w-4' />
-                    <span>{award.year}</span>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <Hash className='h-4 w-4' />
-                    <span>{award.event}</span>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <Tag className='h-4 w-4' />
-                    <span className='capitalize'>{award.type.name}</span>
-                </div>
-            </CardContent>
-        </Card>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Award</TableHead>
+                    <TableHead>Year</TableHead>
+                    <TableHead>Event</TableHead>
+                    <TableHead>Type</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {awards.map((award) => (
+                    <TableRow key={award.id}>
+                        <TableCell className='font-medium'>{award.title}</TableCell>
+                        <TableCell>{award.award}</TableCell>
+                        <TableCell>{award.year}</TableCell>
+                        <TableCell>{award.event}</TableCell>
+                        <TableCell>{award.type.name}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
     );
 }

@@ -2,15 +2,12 @@
 
 import Image from 'next/image';
 
-import { AwardCard } from '@/components/shared/award-card';
+import AwardTable from '@/components/shared/award-card';
 import ImageSlider from '@/components/shared/image-slider';
 import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { PERSON_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/registry/new-york-v4/ui/card';
-import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
 import dayjs from 'dayjs';
@@ -105,9 +102,7 @@ export default function PersonPage() {
                     </CustomBadge>
 
                     <div className='flex flex-wrap gap-5'>
-                        {PERSON_DATA.awards.map((item, index) => (
-                            <AwardCard key={index} award={item} />
-                        ))}
+                        <AwardTable awards={PERSON_DATA.awards} />
                     </div>
                 </div>
             </div>
