@@ -1,15 +1,24 @@
 import {
     Bell,
     CircleHelp,
+    Clapperboard,
     Code,
     CreditCard,
+    FileText,
     HardDrive,
+    Hash,
+    Image,
+    Languages,
     LanguagesIcon,
     Lock,
     LucideIcon,
+    Music,
     Paintbrush,
     Plug,
-    User
+    Tags,
+    User,
+    UserCog,
+    Users
 } from 'lucide-react';
 
 export const ICONS = {
@@ -22,7 +31,16 @@ export const ICONS = {
     Lock,
     Paintbrush,
     Plug,
-    User
+    User,
+    Image,
+    FileText,
+    Languages,
+    Users,
+    UserCog,
+    Music,
+    Tags,
+    Hash,
+    Clapperboard
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconType = keyof typeof ICONS;

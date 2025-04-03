@@ -5,5 +5,5 @@ interface AccountProps {
 }
 
 export default function Account({ item }: AccountProps) {
-    return <div>account</div>;
+    return <div>{item.name}</div>;
 }

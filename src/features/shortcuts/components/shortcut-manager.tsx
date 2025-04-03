@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { usePathname } from 'next/navigation';
 
@@ -17,8 +17,20 @@ export default function ShortcutManager() {
     const dispatch = useDispatch();
     const shortcuts = useSelector((state: RootState) => state.shortcuts.shortcuts);
     const pathname = usePathname();
+    const pathnameRef = useRef(pathname);
 
     useEffect(() => {
+        pathnameRef.current = pathname;
+
+        // NOTE: Update hotkeys scope based on current path
+        const segments = pathnameRef.current.split('/').filter(Boolean);
+        const isObjectPage = Object.values(OBJECT_TYPE).some((obj) => {
+            const idx = segments.indexOf(obj.path);
+
+            return idx !== -1 && segments.length > idx + 1;
+        });
+        hotkeys.setScope(isObjectPage ? 'object' : 'default');
+
         const registeredKeys: string[] = [];
 
         Object.values(shortcuts).forEach((shortcut) => {
@@ -45,7 +57,6 @@ export default function ShortcutManager() {
                         break;
 
                     case 'toggleEditDialog': {
-                        const segments = pathname.split('/').filter(Boolean);
                         const matchedEntry = Object.entries(OBJECT_TYPE).find(([_, obj]) => {
                             const idx = segments.indexOf(obj.path);
 
@@ -57,7 +68,6 @@ export default function ShortcutManager() {
                         const objectId = segments[segments.indexOf(object.path) + 1];
 
                         dispatch(toggleEditDialogOpenState({ objectType: key as ObjectTypeKey, objectId }));
-                        console.log(key, objectId);
                         break;
                     }
                 }
@@ -72,20 +82,7 @@ export default function ShortcutManager() {
                 hotkeys.unbind(key);
             });
         };
-    }, [shortcuts, dispatch]);
-
-    useEffect(() => {
-        const segments = pathname.split('/').filter(Boolean);
-
-        const isObjectPage = Object.values(OBJECT_TYPE).some((obj) => {
-            const idx = segments.indexOf(obj.path);
-
-            return idx !== -1 && segments.length > idx + 1;
-        });
-
-        const newScope = isObjectPage ? 'object' : 'default';
-        hotkeys.setScope(newScope);
-    }, [pathname]);
+    }, [shortcuts, dispatch, pathname]);
 
     return null;
 }
