@@ -115,9 +115,9 @@ const ALL_ITEMS: ItemType[] = [
 ];
 
 export default function CommandPanel() {
-    const commandPanelState = useSelector((state: RootState) => state.commandPanel);
+    const { isOpen, query } = useSelector((state: RootState) => state.commandPanel);
     const dispatch = useDispatch();
-    const isSearching = commandPanelState.query.length > 0;
+    const isSearching = query.length > 0;
 
     const filteredItems = React.useMemo(() => {
         if (!isSearching) return [];
@@ -125,9 +125,9 @@ export default function CommandPanel() {
         const items = ALL_ITEMS.concat(ALL_ACTIONS);
 
         return items.filter((item) => {
-            return item.title.toLowerCase().includes(commandPanelState.query.toLowerCase());
+            return item.title.toLowerCase().includes(query.toLowerCase());
         });
-    }, [isSearching, commandPanelState.query]);
+    }, [isSearching, query]);
 
     const recentItems = React.useMemo(() => {
         return ALL_ITEMS.filter((item) => {
@@ -136,9 +136,7 @@ export default function CommandPanel() {
     }, []);
 
     return (
-        <CommandDialog
-            open={commandPanelState.commandPanelOpen}
-            onOpenChange={() => dispatch(toggleCommandPanelOpenState())}>
+        <CommandDialog open={isOpen} onOpenChange={() => dispatch(toggleCommandPanelOpenState())}>
             <Command shouldFilter={false}>
                 <CommandInput
                     placeholder='Search for content and actions, or paste from clipboard'

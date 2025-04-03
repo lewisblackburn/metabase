@@ -28,7 +28,7 @@ export default function ImageSlider({ images, width = 100, height = 200, imageCl
                                 alt={`Photo by ${image.alt}`}
                                 className={cn('aspect-[3/4] h-fit w-fit object-cover', imageClassName)}
                                 width={width}
-                                height={height}
+                                height={Math.round(width * (4 / 3))}
                             />
                         </div>
                         <figcaption className='text-muted-foreground pt-2 text-xs text-wrap break-words'>

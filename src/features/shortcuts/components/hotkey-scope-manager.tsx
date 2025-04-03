@@ -19,7 +19,8 @@ export default function HotkeyScopeManager() {
             const index = segments.indexOf(objectPath);
 
             return (
-                index !== -1 && segments.length > index + 1 && !segments[index + 1].startsWith('edit') // skip e.g., /movies/edit/[slug]
+                // skip e.g., /movies/edit/[slug]
+                (index !== -1 && segments.length > index + 1 && !segments[index + 1].startsWith('edit'))
             );
         });
 

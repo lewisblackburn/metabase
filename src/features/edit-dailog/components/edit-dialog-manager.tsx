@@ -14,11 +14,11 @@ export default function EditDialogManager() {
     if (!isOpen || !objectType || !objectId) return null;
 
     const commonProps = {
-        id: objectId,
         isOpen,
         onOpenChange: () => dispatch(setEditDialogOpenState(!isOpen))
     };
 
+    // TODO: This is opening MOVIE even on the edit person page
     switch (objectType) {
         case 'MOVIE':
             return <MovieEditDialog {...commonProps} />;

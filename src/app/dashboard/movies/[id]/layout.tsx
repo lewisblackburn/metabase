@@ -106,7 +106,6 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
                 <Image
                     src={MOVIE_DATA.backdrop}
                     alt={MOVIE_DATA.title}
-                    layout='responsive'
                     width={1920}
                     height={1080}
                     quality={100}

@@ -57,6 +57,7 @@ export default function ShortcutManager() {
                         const objectId = segments[segments.indexOf(object.path) + 1];
 
                         dispatch(toggleEditDialogOpenState({ objectType: key as ObjectTypeKey, objectId }));
+                        console.log(key, objectId);
                         break;
                     }
                 }
