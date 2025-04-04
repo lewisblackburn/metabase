@@ -62,7 +62,7 @@ export function SidebarDialog<T extends SidebarItem>({
             <DialogTitle className='sr-only'>{title}</DialogTitle>
             <DialogDescription className='sr-only'>{description}</DialogDescription>
             <DialogContentNoClose
-                className={cn('overflow-hidden p-0 md:max-h-[650px] md:max-w-[700px] lg:max-w-[800px]', className)}>
+                className={cn('overflow-hidden p-0 md:max-h-[650px] md:max-w-[700px] lg:max-w-[1000px]', className)}>
                 <SidebarProvider>
                     <Sidebar collapsible='none' className='border-border hidden w-64 border-r md:flex md:min-h-[600px]'>
                         <SidebarContent>
