@@ -15,6 +15,7 @@ import {
     OnChangeFn,
     RowSelectionState,
     SortingState,
+    VisibilityState,
     flexRender,
     getCoreRowModel,
     useReactTable
@@ -22,26 +23,27 @@ import {
 
 import { GripVertical, Loader2 } from 'lucide-react';
 
-// Define the prop types for DataTable. It is generic over the data type (TData).
 interface DataTableProps<TData extends { id: string }> {
-    columns: ColumnDef<TData, any>[]; // column definitions for TanStack Table
-    data: TData[]; // current page of data to display
-    pageIndex: number; // current page index (0-based)
-    pageSize: number; // current page size
-    totalRows: number; // total number of rows (for pagination info)
-    sorting: SortingState; // current sorting state (array of sort descriptors)
-    rowSelection?: RowSelectionState; // current row selection state (if selection is enabled)
-    isLoading?: boolean; // whether data is currently loading
-    onSortingChange: OnChangeFn<SortingState>; // callback when sort is changed
-    onPageChange: (pageIndex: number) => void; // callback when page index is changed
-    onPageSizeChange: (pageSize: number) => void; // callback when page size is changed
-    onRowSelectionChange?: OnChangeFn<RowSelectionState>; // callback when row selection changes
-    onRowOrderChange?: (newData: TData[]) => void; // callback when rows are reordered via drag-and-drop
-    renderRowActions?: (row: TData) => React.ReactNode; // optional render prop for row action buttons
-    selectionMode?: 'single' | 'multiple'; // "single" or "multiple" selection (default multiple)
+    columns: ColumnDef<TData, any>[];
+    data: TData[];
+    pageIndex: number;
+    pageSize: number;
+    totalRows: number;
+    sorting: SortingState;
+    rowSelection?: RowSelectionState;
+    columnVisibility?: VisibilityState;
+    isLoading?: boolean;
+    onSortingChange: OnChangeFn<SortingState>;
+    onPageChange: (pageIndex: number) => void;
+    onPageSizeChange: (pageSize: number) => void;
+    onRowSelectionChange?: OnChangeFn<RowSelectionState>;
+    onRowOrderChange?: (newData: TData[]) => void;
+    onColumnVisibilityChange?: OnChangeFn<VisibilityState>;
+    renderRowActions?: (row: TData) => React.ReactNode;
+    selectionMode?: 'single' | 'multiple';
 }
 
-function DraggableTableRow<TData extends { id: string }>({ row, itemId }: { row: any; itemId: string }) {
+function DraggableTableRow({ row, itemId }: { row: any; itemId: string }) {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: itemId
     });
@@ -86,19 +88,21 @@ export function DataTable<TData extends { id: string }>({
     totalRows,
     sorting,
     rowSelection,
+    columnVisibility,
     isLoading = false,
     onSortingChange,
     onPageChange,
     onPageSizeChange,
     onRowSelectionChange,
     onRowOrderChange,
+    onColumnVisibilityChange,
     renderRowActions,
     selectionMode = 'multiple'
 }: DataTableProps<TData>) {
-    // Determine if certain features are enabled based on props
     const enableRowSelection = !!onRowSelectionChange;
     const enableRowOrdering = !!onRowOrderChange;
     const enableRowActions = !!renderRowActions;
+    const enableVisibilityChange = !!onColumnVisibilityChange;
 
     // If row selection is enabled, prepare a selection column for checkboxes
     const selectionColumn: ColumnDef<TData, any> = {
@@ -145,19 +149,17 @@ export function DataTable<TData extends { id: string }>({
         finalColumns = [...finalColumns, actionsColumn]; // actions as last column
     }
 
-    // Initialize TanStack Table instance with manual control options
     const table = useReactTable({
         data,
         columns: finalColumns,
-        // Tell TanStack Table that we are handling sorting, pagination, selection manually
         manualSorting: true,
         manualPagination: true,
-        // Provide total row count for pagination (to calculate page count)
         pageCount: Math.ceil(totalRows / pageSize),
         state: {
             sorting: sorting,
             pagination: { pageIndex, pageSize },
-            rowSelection: rowSelection ?? {} // if selection not enabled, this will be an empty object
+            rowSelection: rowSelection ?? {}, // if selection not enabled, this will be an empty object
+            columnVisibility: columnVisibility
         },
         onSortingChange: onSortingChange,
         onPaginationChange: (updater) => {
@@ -172,11 +174,11 @@ export function DataTable<TData extends { id: string }>({
             }
         },
         onRowSelectionChange: onRowSelectionChange,
+        onColumnVisibilityChange: onColumnVisibilityChange,
         getCoreRowModel: getCoreRowModel(),
-        // Use getRowId to identify rows by their unique id
         getRowId: (row) => row.id,
-        // Disable multi-sorting if single-column sorting is desired (optional)
-        enableMultiSort: true // allow multi-column sort (set to false to disable multi-sorting)
+        enableMultiSort: true,
+        enableHiding: enableVisibilityChange
     });
 
     // Handle drag-and-drop row reordering
@@ -267,7 +269,6 @@ export function DataTable<TData extends { id: string }>({
                     </TableBody>
                 </Table>
             </div>
-            {/* Pagination and page controls */}
             <div className='mt-4 flex items-center justify-between px-2 text-sm'>
                 <div className='flex flex-col items-center gap-2 md:flex-row'>
                     <span className='text-muted-foreground'>Rows per page:</span>

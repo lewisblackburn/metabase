@@ -12,6 +12,9 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
+    const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({
+        title: awards.some((award) => award.title)
+    });
 
     // Sort data based on sorting state
     const sortedData = useMemo(() => {
@@ -22,7 +25,7 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
                 const column = sort.id;
                 const direction = sort.desc ? -1 : 1;
 
-                if (column === 'title') {
+                if (column === 'title' && a.title && b.title) {
                     return direction * a.title.localeCompare(b.title);
                 } else if (column === 'award') {
                     return direction * a.award.localeCompare(b.award);
@@ -153,12 +156,14 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
             pageSize={pageSize}
             totalRows={awards.length}
             sorting={sorting}
+            columnVisibility={columnVisibility}
             onSortingChange={setSorting}
             onPageChange={setPageIndex}
             onPageSizeChange={(newSize) => {
                 setPageIndex(0);
                 setPageSize(newSize);
             }}
+            onColumnVisibilityChange={setColumnVisibility}
         />
     );
 }

@@ -238,7 +238,6 @@ export const MOVIE_DATA = {
     awards: [
         {
             id: 'award-1',
-            title: 'About Time',
             award: 'Best Picture',
             year: 2013,
             event: 'Academy Awards',
