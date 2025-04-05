@@ -12,8 +12,8 @@ import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
-import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
-import isLastIndex from '@/utils/isLastIndex';
+import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
+import isLastIndex from '@/utils/is-last-index';
 
 import { Calendar, CreditCard, Info, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
 

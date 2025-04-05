@@ -5,8 +5,8 @@ import { GENRES } from '@/constants/genres.constant';
 import * as z from 'zod';
 
 const availabilityArray = AVAILABILITIES.common.concat(AVAILABILITIES.movies);
-const genresArray = GENRES.common.concat(GENRES.films);
-const certificationArray = CERTIFICATIONS.common.concat(CERTIFICATIONS.films);
+const genresArray = GENRES.common.concat(GENRES.movies);
+const certificationArray = CERTIFICATIONS.common.concat(CERTIFICATIONS.movies);
 
 export const moviesFilterSchema = z.object({
     orderBy: z.object({
@@ -33,3 +33,5 @@ export const moviesFilterSchema = z.object({
     runtime: z.tuple([z.number(), z.number()]).optional(),
     keywords: z.string().optional()
 });
+
+export type MoviesFilter = z.infer<typeof moviesFilterSchema>;

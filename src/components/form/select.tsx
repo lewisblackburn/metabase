@@ -11,7 +11,7 @@ export type SelectOption = {
 };
 
 interface SelectFieldProps {
-    value?: string;
+    value?: string | null;
     onChange: (value: string) => void;
     options: SelectOption[];
     placeholder?: string;

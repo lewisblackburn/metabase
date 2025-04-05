@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Calendar } from '@/registry/new-york-v4/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
+import { Portal } from '@radix-ui/react-portal';
 
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
@@ -18,6 +19,7 @@ interface DateRangePickerFieldProps {
     placeholder?: string;
     className?: string;
     disabled?: boolean;
+    modal?: boolean;
 }
 
 const DateRangePickerField = ({
@@ -25,7 +27,8 @@ const DateRangePickerField = ({
     onChange,
     placeholder = 'Pick a date range',
     className,
-    disabled = false
+    disabled = false,
+    modal = false
 }: DateRangePickerFieldProps) => {
     const convertToDayPickerRange = (input?: DateRange | { from?: Date; to?: Date }): DateRange | undefined => {
         if (!input) return undefined;
@@ -43,7 +46,7 @@ const DateRangePickerField = ({
     const currentDate = convertToDayPickerRange(value) ?? internalDate;
 
     return (
-        <Popover>
+        <Popover modal={modal}>
             <PopoverTrigger asChild>
                 <Button
                     variant='outline'
@@ -67,7 +70,8 @@ const DateRangePickerField = ({
                     )}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className='w-auto p-0' align='start'>
+
+            <PopoverContent className='w-auto p-0' align='start' style={{ zIndex: '1000 !important' }}>
                 <Calendar
                     initialFocus
                     mode='range'

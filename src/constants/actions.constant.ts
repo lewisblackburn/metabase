@@ -1,6 +1,7 @@
-import { ItemType } from '@/components/command-panel/item';
+import { ItemType } from '@/features/command-panel/components/item';
 
 import { OBJECT_TYPE } from './objects.constant';
+import { SHORTCUTS } from './shortcuts.constant';
 import { Edit, ExternalLink, Hand, Inbox, LibraryBig, Plus, Settings, Trash } from 'lucide-react';
 
 export const ACTION_TYPE = {
@@ -130,7 +131,7 @@ export const ALL_ACTIONS: ItemType[] = [
             border: 'border-gray-400/60',
             icon: Settings
         },
-        shortcut: 'Ctrl ,'
+        shortcut: SHORTCUTS.toggleSettings.key
     },
     {
         id: 'open-documentation',

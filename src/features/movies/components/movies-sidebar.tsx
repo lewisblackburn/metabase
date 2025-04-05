@@ -23,18 +23,17 @@ import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarInput, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { moviesFilterSchema } from '../schemas/movies-filter.schema';
+import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
 import { Calendar, Flame, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
 type MoviesSidebarProps = {
     children: React.ReactNode;
 };
 
 export default function MoviesSidebar({ children }: MoviesSidebarProps) {
-    const form = useForm<z.infer<typeof moviesFilterSchema>>({
+    const form = useForm<MoviesFilter>({
         resolver: zodResolver(moviesFilterSchema),
         defaultValues: {
             orderBy: {
@@ -55,7 +54,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
         }
     });
 
-    function onSubmit(values: z.infer<typeof moviesFilterSchema>) {
+    function onSubmit(values: MoviesFilter) {
         toast.success('Filters Applied', {
             description: JSON.stringify(values, null, 2),
             duration: 5000
@@ -189,7 +188,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                     <FormItem>
                                                         <BaseFormLayout label='Genres'>
                                                             <CheckboxGroupField
-                                                                options={GENRES.common.concat(GENRES.films)}
+                                                                options={GENRES.common.concat(GENRES.movies)}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
@@ -207,7 +206,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                         <BaseFormLayout label='Certifications'>
                                                             <CheckboxGroupField
                                                                 options={CERTIFICATIONS.common.concat(
-                                                                    CERTIFICATIONS.films
+                                                                    CERTIFICATIONS.movies
                                                                 )}
                                                                 {...field}
                                                             />

@@ -1,3 +1,5 @@
+import { generateOptions, mergeCommonInAll } from '@/utils/generate-options';
+
 export const GENRES = {
     common: [
         'Action',
@@ -28,7 +30,7 @@ export const GENRES = {
         'K-Pop',
         'Indie'
     ],
-    films: ['Animation', 'Documentary', 'Family', 'Musical', 'War', 'Western', 'Historical', 'Superhero'],
+    movies: ['Animation', 'Documentary', 'Family', 'Musical', 'War', 'Western', 'Historical', 'Superhero'],
     tvShows: ['Reality', 'Talk Show', 'News', 'Soap', 'Sitcom', 'Game Show', 'Teen', 'Anthology'],
     books: [
         'Biography',
@@ -57,3 +59,15 @@ export const GENRES = {
         'Rhythm'
     ]
 };
+
+const mergedGenres = mergeCommonInAll(GENRES);
+const options = generateOptions(mergedGenres);
+
+export const {
+    common: GENRE_OPTIONS,
+    songs: SONG_GENRE_OPTIONS,
+    movies: MOVIE_GENRE_OPTIONS,
+    tvShows: TV_SHOW_GENRE_OPTIONS,
+    books: BOOK_GENRE_OPTIONS,
+    games: GAME_GENRE_OPTIONS
+} = options;

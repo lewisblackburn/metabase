@@ -125,7 +125,13 @@ const MultiSelectField = ({
                     variant='outline'
                     role='combobox'
                     aria-expanded={open}
-                    className={cn('w-full justify-between', className)}
+                    className={cn(
+                        'w-full justify-between',
+                        {
+                            'text-muted-foreground': value.length === 0
+                        },
+                        className
+                    )}
                     disabled={disabled}
                     onClick={() => !disabled && setOpen(!open)}>
                     <span className='truncate'>{displaySelectedValues()}</span>
@@ -134,12 +140,7 @@ const MultiSelectField = ({
             </PopoverTrigger>
             <PopoverContent className='w-[var(--radix-popover-trigger-width)] p-0'>
                 <Command>
-                    <CommandInput
-                        placeholder={searchPlaceholder}
-                        value={inputValue}
-                        onValueValue={setInputValue}
-                        onValueChange={setInputValue}
-                    />
+                    <CommandInput placeholder={searchPlaceholder} value={inputValue} onValueChange={setInputValue} />
                     <CommandGroup>
                         {/* Selected items rendered in a fixed section at the top */}
                         {selectedOptions.length > 0 && (

@@ -119,7 +119,7 @@ export function SidebarDialog<T extends SidebarItem>({
                                 )}
                             </div>
                         </div>
-                        <main className='p-5'>{content}</main>
+                        <main className='max-h-[650px] overflow-y-auto p-5 pb-48'>{content}</main>
                     </div>
                 </SidebarProvider>
             </DialogContentNoClose>
