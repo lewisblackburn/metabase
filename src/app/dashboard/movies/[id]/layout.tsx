@@ -109,7 +109,7 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
                     width={1920}
                     height={1080}
                     quality={100}
-                    className='!h-1/5 object-cover object-top'
+                    className='!h-1/5 w-full object-cover object-top'
                 />
                 <Container>{children}</Container>
             </main>

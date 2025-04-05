@@ -41,17 +41,7 @@ interface DataTableProps<TData extends { id: string }> {
     selectionMode?: 'single' | 'multiple'; // "single" or "multiple" selection (default multiple)
 }
 
-// Add this component after the interface definitions
-function DraggableTableRow<TData extends { id: string }>({
-    row,
-    itemId,
-    renderRowActions
-}: {
-    row: any;
-    itemId: string;
-    renderRowActions?: (row: TData) => React.ReactNode;
-}) {
-    // Move the hook call to the top level of this component
+function DraggableTableRow<TData extends { id: string }>({ row, itemId }: { row: any; itemId: string }) {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: itemId
     });
@@ -74,7 +64,7 @@ function DraggableTableRow<TData extends { id: string }>({
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
             ))}
-            <TableCell className='w-8 p-0 text-center align-middle'>
+            <TableCell className='w-24 p-0 text-center align-middle'>
                 <Button
                     variant='ghost'
                     size='icon'
@@ -211,7 +201,6 @@ export function DataTable<TData extends { id: string }>({
 
     return (
         <div className='w-full'>
-            {/* Table container */}
             <div className='relative overflow-hidden rounded-md border'>
                 {isLoading && (
                     <div className='bg-background/80 absolute inset-0 z-10 flex items-center justify-center backdrop-blur-[1px]'>
@@ -219,7 +208,6 @@ export function DataTable<TData extends { id: string }>({
                     </div>
                 )}
                 <Table className='relative'>
-                    {/* Table Header */}
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -237,7 +225,6 @@ export function DataTable<TData extends { id: string }>({
                             </TableRow>
                         ))}
                     </TableHeader>
-                    {/* Table Body (with optional drag-and-drop context) */}
                     <TableBody>
                         {data.length ? (
                             enableRowOrdering ? (
@@ -260,7 +247,7 @@ export function DataTable<TData extends { id: string }>({
                                     </SortableContext>
                                 </DndContext>
                             ) : (
-                                // No drag-and-drop: simple static rows
+                                // No drag-and-drop on simple static rows
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}
@@ -289,8 +276,7 @@ export function DataTable<TData extends { id: string }>({
             </div>
             {/* Pagination and page controls */}
             <div className='mt-4 flex items-center justify-between px-2 text-sm'>
-                {/* Page size selector */}
-                <div className='flex items-center gap-2'>
+                <div className='flex flex-col items-center gap-2 md:flex-row'>
                     <span className='text-muted-foreground'>Rows per page:</span>
                     <Select value={String(pageSize)} onValueChange={(value) => onPageSizeChange(Number(value))}>
                         <SelectTrigger className='h-8 w-[80px]'>
@@ -305,8 +291,7 @@ export function DataTable<TData extends { id: string }>({
                         </SelectContent>
                     </Select>
                 </div>
-                {/* Page navigation and info */}
-                <div className='flex items-center gap-6'>
+                <div className='flex flex-col items-center gap-6 md:flex-row'>
                     <span className='text-muted-foreground'>
                         {isLoading ? (
                             <span className='animate-pulse'>Loading...</span>
