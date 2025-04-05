@@ -235,14 +235,7 @@ export function DataTable<TData extends { id: string }>({
                                         {table.getRowModel().rows.map((row) => {
                                             const itemId = (row.original as TData).id;
 
-                                            return (
-                                                <DraggableTableRow
-                                                    key={row.id}
-                                                    row={row}
-                                                    itemId={itemId}
-                                                    renderRowActions={renderRowActions}
-                                                />
-                                            );
+                                            return <DraggableTableRow key={row.id} row={row} itemId={itemId} />;
                                         })}
                                     </SortableContext>
                                 </DndContext>

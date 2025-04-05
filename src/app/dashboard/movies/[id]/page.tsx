@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 
+import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
-import { MOVIE_DATA } from '@/constants/fakedb.constant';
+import { MOVIES_DATA, MOVIE_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
@@ -122,7 +123,6 @@ export default function MoviePage() {
                         createdAt={MOST_POPULAR_REVIEW.createdAt}
                     />
                 </div>
-                <Separator />
                 {/* <div className='flex flex-col gap-2'> */}
                 {/*     <CustomBadge */}
                 {/*         icon={OBJECT_TYPE.MEDIUM.icon} */}
@@ -133,6 +133,18 @@ export default function MoviePage() {
                 {/*     </CustomBadge> */}
                 {/* </div> */}
                 {/* <Separator /> */}
+                <Separator />
+                <div className='flex flex-col gap-2'>
+                    <CustomBadge
+                        icon={OBJECT_TYPE.AWARD.icon}
+                        background={OBJECT_TYPE.AWARD.background}
+                        foreground={OBJECT_TYPE.AWARD.foreground}
+                        border={OBJECT_TYPE.AWARD.border}>
+                        {OBJECT_TYPE.AWARD.plural}
+                    </CustomBadge>
+                    <AwardTable awards={MOVIE_DATA.awards} />
+                </div>
+                <Separator />
                 <div className='flex flex-col gap-2'>
                     <CustomBadge
                         icon={Lightbulb}

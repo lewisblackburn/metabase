@@ -93,9 +93,9 @@ export const OBJECT_TYPE = {
         name: 'Review',
         plural: 'Reviews',
         path: 'reviews',
-        background: 'bg-yellow-300/20',
-        foreground: 'text-yellow-800',
-        border: 'border-yellow-400/60',
+        background: 'bg-orange-300/20',
+        foreground: 'text-orange-800',
+        border: 'border-orange-400/60',
         icon: MessagesSquare
     },
     CAST: {

@@ -235,6 +235,16 @@ export const MOVIE_DATA = {
             voteStatus: VoteStatus.upvoted
         }
     ],
+    awards: [
+        {
+            id: 'award-1',
+            title: 'About Time',
+            award: 'Best Picture',
+            year: 2013,
+            event: 'Academy Awards',
+            type: OBJECT_TYPE.MOVIE
+        }
+    ],
     soundtrack: [
         {
             id: 'soundtrack-1',

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import AwardTable from '@/components/shared/award-card';
+import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
 import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
@@ -100,10 +100,7 @@ export default function PersonPage() {
                         border={OBJECT_TYPE.AWARD.border}>
                         {OBJECT_TYPE.AWARD.plural}
                     </CustomBadge>
-
-                    <div className='flex flex-wrap gap-5'>
-                        <AwardTable awards={PERSON_DATA.awards} />
-                    </div>
+                    <AwardTable awards={PERSON_DATA.awards} />
                 </div>
             </div>
         </div>

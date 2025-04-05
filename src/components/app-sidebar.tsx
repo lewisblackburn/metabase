@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { NavUser } from '@/components/nav-user';
+import { DASHBOARD_NAVIGATION } from '@/constants/dashboard-navigation.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import {
     Sidebar,
@@ -19,41 +20,14 @@ import {
     SidebarMenuItem
 } from '@/registry/new-york-v4/ui/sidebar';
 
-import { Book, Command, Music3, Tv, User, Video } from 'lucide-react';
+import { Book, Command, Lock, Music3, Tv, User, Video } from 'lucide-react';
 
 const data = {
     user: {
         name: 'shadcn',
         email: 'm@example.com',
         avatar: 'https://github.com/shadcn.png'
-    },
-    navMain: [
-        {
-            title: OBJECT_TYPE.MOVIE.plural,
-            url: '/dashboard/movies',
-            icon: Video
-        },
-        {
-            title: OBJECT_TYPE.TV.plural,
-            url: '/dashboard/series',
-            icon: Tv
-        },
-        {
-            title: 'Music',
-            url: '/dashboard/songs',
-            icon: Music3
-        },
-        {
-            title: 'Books',
-            url: '/dashboard/books',
-            icon: Book
-        },
-        {
-            title: 'People',
-            url: '/dashboard/people',
-            icon: User
-        }
-    ]
+    }
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -84,18 +58,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarGroup>
                         <SidebarGroupContent className='px-1.5 md:px-0'>
                             <SidebarMenu>
-                                {data.navMain.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <Link href={item.url}>
+                                {DASHBOARD_NAVIGATION.map(({ id, type, disabled }) => (
+                                    <SidebarMenuItem key={id}>
+                                        <Link href={disabled ? '#' : `/dashboard/${type.path}`}>
                                             <SidebarMenuButton
                                                 tooltip={{
-                                                    children: item.title,
+                                                    children: type.plural,
                                                     hidden: false
                                                 }}
-                                                isActive={isActive(item.url)}
-                                                className='cursor-pointer px-2.5 md:px-2'>
-                                                <item.icon />
-                                                <span>{item.title}</span>
+                                                isActive={isActive(`/dashboard/${type.path}`)}
+                                                className='cursor-pointer px-2.5 md:px-2'
+                                                disabled={disabled}>
+                                                <type.icon />
+                                                <span>{type.plural}</span>
                                             </SidebarMenuButton>
                                         </Link>
                                     </SidebarMenuItem>
