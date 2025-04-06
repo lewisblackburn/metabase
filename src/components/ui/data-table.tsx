@@ -30,6 +30,7 @@ interface DataTableProps<TData extends { id: string }> {
     pageSize: number;
     totalRows: number;
     sorting: SortingState;
+    pageSizeOptions?: number[];
     rowSelection?: RowSelectionState;
     columnVisibility?: VisibilityState;
     isLoading?: boolean;
@@ -40,7 +41,6 @@ interface DataTableProps<TData extends { id: string }> {
     onRowOrderChange?: (newData: TData[]) => void;
     onColumnVisibilityChange?: OnChangeFn<VisibilityState>;
     renderRowActions?: (row: TData) => React.ReactNode;
-    selectionMode?: 'single' | 'multiple';
 }
 
 function DraggableTableRow({ row, itemId }: { row: any; itemId: string }) {
@@ -89,6 +89,7 @@ export function DataTable<TData extends { id: string }>({
     sorting,
     rowSelection,
     columnVisibility,
+    pageSizeOptions = [5, 10, 20, 50],
     isLoading = false,
     onSortingChange,
     onPageChange,
@@ -96,15 +97,14 @@ export function DataTable<TData extends { id: string }>({
     onRowSelectionChange,
     onRowOrderChange,
     onColumnVisibilityChange,
-    renderRowActions,
-    selectionMode = 'multiple'
+    renderRowActions
 }: DataTableProps<TData>) {
     const enableRowSelection = !!onRowSelectionChange;
     const enableRowOrdering = !!onRowOrderChange;
     const enableRowActions = !!renderRowActions;
     const enableVisibilityChange = !!onColumnVisibilityChange;
 
-    // If row selection is enabled, prepare a selection column for checkboxes
+    // NOTE: If row selection is enabled, prepare a selection column for checkboxes
     const selectionColumn: ColumnDef<TData, any> = {
         id: 'select',
         header: ({ table }) => (
@@ -123,13 +123,13 @@ export function DataTable<TData extends { id: string }>({
                 className='ml-1'
             />
         ),
-        // Disable sorting and hiding for selection column
+        // NOTE: Disable sorting and hiding for selection column
         enableSorting: false,
         enableHiding: false,
         size: 40
     };
 
-    // If row actions are enabled, prepare an actions column
+    // NOTE: If row actions are enabled, prepare an actions column
     const actionsColumn: ColumnDef<TData, any> = {
         id: 'actions',
         header: () => <span className='font-medium'>Actions</span>,
@@ -140,13 +140,13 @@ export function DataTable<TData extends { id: string }>({
         enableHiding: false
     };
 
-    // Compose the final columns list to pass to TanStack Table
+    // NOTE: Combine all the columns into a single array
     let finalColumns = [...columns];
     if (enableRowSelection) {
-        finalColumns = [selectionColumn, ...finalColumns]; // selection checkbox as first column
+        finalColumns = [selectionColumn, ...finalColumns]; // NOTE: set selection checkbox as first column
     }
     if (enableRowActions) {
-        finalColumns = [...finalColumns, actionsColumn]; // actions as last column
+        finalColumns = [...finalColumns, actionsColumn]; // NOTE: set actions column as last column
     }
 
     const table = useReactTable({
@@ -158,13 +158,13 @@ export function DataTable<TData extends { id: string }>({
         state: {
             sorting: sorting,
             pagination: { pageIndex, pageSize },
-            rowSelection: rowSelection ?? {}, // if selection not enabled, this will be an empty object
+            rowSelection: rowSelection ?? {}, // NOTE: if selection not enabled, this will be an empty object
             columnVisibility: columnVisibility
         },
         onSortingChange: onSortingChange,
         onPaginationChange: (updater) => {
-            // TanStack may call this when pageIndex/pageSize state changes internally.
-            // We intercept and call our callbacks if present.
+            /* NOTE: TanStack may call this when pageIndex/pageSize state changes internally.
+            We intercept and call our callbacks if present. */
             const newState = typeof updater === 'function' ? updater({ pageIndex, pageSize }) : updater;
             if (newState.pageIndex !== pageIndex) {
                 onPageChange(newState.pageIndex);
@@ -181,22 +181,21 @@ export function DataTable<TData extends { id: string }>({
         enableHiding: enableVisibilityChange
     });
 
-    // Handle drag-and-drop row reordering
+    // NOTE: Handle drag-and-drop row reordering
     const handleDragEnd = (event: DragEndEvent) => {
         if (!enableRowOrdering) return;
         const { active, over } = event;
         if (active.id !== over?.id && over?.id) {
-            // Find the indices of the active and over ids in the current data array
+            // NOTE: Get the indices of the item to be moved and the item it is being moved over
             const oldIndex = data.findIndex((item) => item.id === active.id);
             const newIndex = data.findIndex((item) => item.id === over.id);
             if (oldIndex >= 0 && newIndex >= 0) {
-                const newData = arrayMove(data, oldIndex, newIndex); // reorder the data array
+                const newData = arrayMove(data, oldIndex, newIndex);
                 onRowOrderChange?.(newData);
             }
         }
     };
 
-    // Calculate pagination info for display
     const totalPages = totalRows > 0 ? Math.ceil(totalRows / pageSize) : 1;
     const startIndex = totalRows === 0 ? 0 : pageIndex * pageSize + 1;
     const endIndex = pageIndex * pageSize + data.length;
@@ -222,7 +221,7 @@ export function DataTable<TData extends { id: string }>({
                                             : flexRender(header.column.columnDef.header, header.getContext())}
                                     </TableHead>
                                 ))}
-                                {/* If row ordering is enabled, add a header cell for the drag handle column at the end */}
+                                {/* NOTE: If row ordering is enabled, add a header cell for the drag handle column at the end */}
                                 {enableRowOrdering && <TableHead className='w-4 p-0'></TableHead>}
                             </TableRow>
                         ))}
@@ -242,7 +241,7 @@ export function DataTable<TData extends { id: string }>({
                                     </SortableContext>
                                 </DndContext>
                             ) : (
-                                // No drag-and-drop on simple static rows
+                                // NOTE: No drag-and-drop on simple static rows
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}
@@ -257,7 +256,6 @@ export function DataTable<TData extends { id: string }>({
                                 ))
                             )
                         ) : (
-                            // No data to display
                             <TableRow>
                                 <TableCell
                                     colSpan={finalColumns.length + (enableRowOrdering ? 1 : 0)}
@@ -277,7 +275,7 @@ export function DataTable<TData extends { id: string }>({
                             <SelectValue placeholder={String(pageSize)} />
                         </SelectTrigger>
                         <SelectContent side='top'>
-                            {[5, 10, 20, 50].map((size) => (
+                            {pageSizeOptions.map((size) => (
                                 <SelectItem key={size} value={String(size)}>
                                     {size}
                                 </SelectItem>

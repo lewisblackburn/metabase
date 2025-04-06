@@ -62,7 +62,7 @@ export function SidebarDialog<T extends SidebarItem>({
             <DialogTitle className='sr-only'>{title}</DialogTitle>
             <DialogDescription className='sr-only'>{description}</DialogDescription>
             <DialogContentNoClose
-                className={cn('overflow-hidden p-0 md:max-h-[650px] md:max-w-[700px] lg:max-w-[1000px]', className)}>
+                className={cn('overflow-hidden p-0 md:max-h-[1000px] md:max-w-[700px] lg:max-w-[1500px]', className)}>
                 <SidebarProvider>
                     <Sidebar collapsible='none' className='border-border hidden w-64 border-r md:flex md:min-h-[600px]'>
                         <SidebarContent>
@@ -119,7 +119,7 @@ export function SidebarDialog<T extends SidebarItem>({
                                 )}
                             </div>
                         </div>
-                        <main className='max-h-[650px] overflow-y-auto p-5 pb-48'>{content}</main>
+                        <main className='max-h-[1000px] overflow-y-auto p-5 pb-48'>{content}</main>
                     </div>
                 </SidebarProvider>
             </DialogContentNoClose>
