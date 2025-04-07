@@ -157,7 +157,6 @@ export default function EditMovieCast() {
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
                     }}
-                    disabled={isLoading}
                 />
                 {searchQuery && (
                     <Button variant='outline' size='sm' onClick={() => setSearchQuery('')}>

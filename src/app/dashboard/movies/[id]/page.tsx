@@ -144,7 +144,8 @@ export default function MoviePage() {
                     </CustomBadge>
                     <AwardTable awards={MOVIE_DATA.awards} />
                 </div>
-                <Separator />
+                {/* TODO: This should be on the profile page */}
+                {/* <Separator /> 
                 <div className='flex flex-col gap-2'>
                     <CustomBadge
                         icon={Lightbulb}
@@ -153,8 +154,8 @@ export default function MoviePage() {
                         border='border-blue-400/60'>
                         Recommendations
                     </CustomBadge>
-                    <ImageSlider images={recommendations} width={150} height={250} />
-                </div>
+                    <ImageSlider images={recommendations} width={150} height={250} /> 
+                </div> */}
             </div>
         </div>
     );

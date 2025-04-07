@@ -5,22 +5,29 @@ import { Fragment, ReactNode, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import FavouriteButton from '@/components/shared/action-button';
+import ActionButton from '@/components/shared/action-button';
 import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
 import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
+import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
 import isLastIndex from '@/utils/is-last-index';
 
-import { Calendar, CreditCard, Info, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { Bookmark, Calendar, Clock, CreditCard, Heart, Info, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
 
-const Information = [
+dayjs.extend(advancedFormat);
+
+const INFORMATION = [
     {
         icon: Calendar,
-        badges: MOVIE_DATA.releaseDate,
+        badges: dayjs(MOVIE_DATA.releaseDate).format('MMMM Do, YYYY'),
         label: 'Release Date'
     },
     {
@@ -57,6 +64,8 @@ const Information = [
 
 const MovieLayout = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(true);
+    const [isFavourite, setIsFavourite] = useState(false);
+    const [isWatchLater, setIsWatchLater] = useState(false);
 
     return (
         <SidebarProvider
@@ -86,15 +95,30 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
                         </Link>
 
                         <div className='mt-5 flex flex-col gap-5'>
-                            {Information.map((item, index) => (
+                            {INFORMATION.map((item, index) => (
                                 <Fragment key={index}>
                                     <InformationItem key={index} {...item} />
-                                    {isLastIndex(index, Information) ? null : <Separator />}
+                                    {isLastIndex(index, INFORMATION) ? null : <Separator />}
                                 </Fragment>
                             ))}
                         </div>
                         <Separator />
                         <ProgressItem icon={TrendingUp} label='Content Score' score={MOVIE_DATA.contentScore} />
+                        <Separator />
+                        <div className='grid grid-cols-2 gap-2'>
+                            <ActionButton
+                                icon={Heart}
+                                label='Favourite'
+                                iconClassName={cn({ 'fill-red-500 text-red-500': isFavourite })}
+                                onClick={() => setIsFavourite((prev) => !prev)}
+                            />
+                            <ActionButton
+                                icon={Bookmark}
+                                label='Watch Later'
+                                iconClassName={cn({ 'fill-blue-500 text-blue-500': isWatchLater })}
+                                onClick={() => setIsWatchLater((prev) => !prev)}
+                            />
+                        </div>
                     </SidebarMenu>
                 </SidebarContent>
             </Sidebar>
