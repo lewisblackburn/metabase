@@ -115,7 +115,8 @@ export const MOVIE_DATA = {
     year: 2013,
     releaseDate: '8 August 2013',
     genre: ['Romance', 'Comedy', 'Drama'],
-    duration: '2h 3m',
+    duration: 123,
+    formattedDuration: '2h 3m',
     status: 'Released',
     director: 'Richard Curtis',
     revenue: '$87.1 million',
@@ -421,18 +422,19 @@ export const SONGS_DATA = [
     {
         id: 'song-1',
         title: 'All the Things She Said',
-        image: 'https://i.scdn.co/image/ab67616d00001e023b27e1cd8a6bc6804c2e5fd2'
+        artwork: 'https://i.scdn.co/image/ab67616d00001e023b27e1cd8a6bc6804c2e5fd2'
     }
 ];
 
 export const SONG_DATA = {
     id: 'song-1',
     title: 'All the Things She Said',
-    image: 'https://i.scdn.co/image/ab67616d0000b2732e4c76318f463f3f06d528cc',
+    artwork: 'https://i.scdn.co/image/ab67616d00001e023b27e1cd8a6bc6804c2e5fd2',
     artists: ['t.A.T.u.'],
     album: '200 km/h in the Wrong Lane',
     releaseDate: new Date('2002-01-01'),
     duration: 201,
+    formattedDuration: '3:21',
     genres: ['Pop', 'Dance-pop'],
     awards: [
         {
@@ -443,5 +445,6 @@ export const SONG_DATA = {
             type: OBJECT_TYPE.SONG
         }
     ],
-    description: `“All the Things She Said” is a breakthrough pop hit by the Russian duo t.A.T.u. Known for its catchy hook, innovative production, and provocative music video, the song gained global popularity and remains an iconic track of the early 2000s. Its success helped redefine pop music and opened doors for more daring artistic expressions in mainstream media.`
+    description: `“All the Things She Said” is a breakthrough pop hit by the Russian duo t.A.T.u. Known for its catchy hook, innovative production, and provocative music video, the song gained global popularity and remains an iconic track of the early 2000s. Its success helped redefine pop music and opened doors for more daring artistic expressions in mainstream media.`,
+    contentScore: 0.8
 };

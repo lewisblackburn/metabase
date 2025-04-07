@@ -13,7 +13,7 @@ export default function SongsPage() {
                 <Grid>
                     {SONGS_DATA.map((song) => (
                         <Link key={song.id} href={`songs/${song.id}`}>
-                            <Artwork title={song.title} image={song.image} />
+                            <Artwork title={song.title} image={song.artwork} />
                         </Link>
                     ))}
                 </Grid>

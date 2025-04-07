@@ -207,5 +207,15 @@ export const OBJECT_TYPE = {
         foreground: 'text-indigo-800',
         border: 'border-indigo-400/60',
         icon: User
+    },
+    ALBUM: {
+        type: 'album',
+        name: 'Album',
+        plural: 'Albums',
+        path: 'albums',
+        background: 'bg-red-300/20',
+        foreground: 'text-red-800',
+        border: 'border-red-400/60',
+        icon: Music
     }
 };

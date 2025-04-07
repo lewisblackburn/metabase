@@ -9,6 +9,7 @@ import FavouriteButton from '@/components/shared/action-button';
 import ActionButton from '@/components/shared/action-button';
 import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
+import Poster from '@/components/shared/poster';
 import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
@@ -37,7 +38,7 @@ const INFORMATION = [
     },
     {
         icon: Timer,
-        badges: MOVIE_DATA.duration,
+        badges: MOVIE_DATA.formattedDuration,
         label: 'Duration'
     },
     {
@@ -79,14 +80,7 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
             <Sidebar className='absolute'>
                 <SidebarContent className='bg-white p-5'>
                     <SidebarMenu className='flex flex-col gap-5'>
-                        <Image
-                            src={MOVIE_DATA.poster}
-                            alt={MOVIE_DATA.title}
-                            width={200}
-                            height={300}
-                            className='size-full rounded'
-                            quality={100}
-                        />
+                        <Poster title={MOVIE_DATA.title} image={MOVIE_DATA.poster} />
                         <Link href={MOVIE_DATA.trailer}>
                             <Button variant='secondary' className='w-full cursor-pointer'>
                                 <Play />

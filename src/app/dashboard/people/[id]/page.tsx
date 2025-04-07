@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
+import Poster from '@/components/shared/poster';
 import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { PERSON_DATA } from '@/constants/fakedb.constant';
@@ -44,14 +45,7 @@ export default function PersonPage() {
             </div>
             <div className='grid grid-cols-1 gap-5 md:grid-cols-[250px_1fr]'>
                 <div className='flex flex-col gap-5'>
-                    <Image
-                        src={PERSON_DATA.headshot}
-                        alt={PERSON_DATA.name}
-                        width={250}
-                        height={350}
-                        className='max-h-[350px] min-w-[250px] rounded'
-                        quality={100}
-                    />
+                    <Poster title={PERSON_DATA.name} image={PERSON_DATA.headshot} />
                 </div>
                 <div className='flex flex-col gap-5'>
                     <div className='flex flex-col gap-2'>
