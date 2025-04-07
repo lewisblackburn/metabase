@@ -13,8 +13,7 @@ export const DASHBOARD_NAVIGATION = [
     },
     {
         id: 'songs',
-        type: OBJECT_TYPE.SONG,
-        disabled: true
+        type: OBJECT_TYPE.SONG
     },
     {
         id: 'books',

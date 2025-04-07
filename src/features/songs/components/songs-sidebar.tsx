@@ -3,11 +3,13 @@
 import React from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
+import CheckboxGroupField from '@/components/form/checkbox-group';
 import OrderSelectField from '@/components/form/order-select';
 import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
+import { GENRES } from '@/constants/genres.constant';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
@@ -15,32 +17,33 @@ import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarInput, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { PeopleFilter, peopleFilterSchema } from '../schemas/people-filter.schema';
-import { Flame, Text, Timer } from 'lucide-react';
+import { SongsFilter, songsFilterSchema } from '../schemas/songs-filter.schema';
+import { Calendar, Flame, Timer } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-type PeopleSidebarProps = {
+type SongsSidebarProps = {
     children: React.ReactNode;
 };
 
-export default function PeopleSidebar({ children }: PeopleSidebarProps) {
-    const form = useForm<PeopleFilter>({
-        resolver: zodResolver(peopleFilterSchema),
+export default function SongsSidebar({ children }: SongsSidebarProps) {
+    const form = useForm<SongsFilter>({
+        resolver: zodResolver(songsFilterSchema),
         defaultValues: {
             orderBy: {
                 orderBy: 'popularity',
                 order: 'asc'
             },
             search: '',
-            age: [0, 120]
+            duration: [0, 10000],
+            genres: [],
+            releaseDates: undefined
         }
     });
 
-    function onSubmit(values: PeopleFilter) {
+    function onSubmit(values: SongsFilter) {
         toast.success('Filters Applied', {
-            description: JSON.stringify(values, null, 2),
-            duration: 5000
+            description: JSON.stringify(values, null, 2)
         });
     }
 
@@ -61,7 +64,7 @@ export default function PeopleSidebar({ children }: PeopleSidebarProps) {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormControl>
-                                                <SidebarInput placeholder='Search people...' {...field} />
+                                                <SidebarInput placeholder='Search songs...' {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -80,11 +83,15 @@ export default function PeopleSidebar({ children }: PeopleSidebarProps) {
                                                     options={[
                                                         { value: 'popularity', label: 'Popularity', icon: Flame },
                                                         {
-                                                            value: 'name',
-                                                            label: 'Name',
-                                                            icon: Text
+                                                            value: 'release-date',
+                                                            label: 'Release Date',
+                                                            icon: Calendar
                                                         },
-                                                        { value: 'age', label: 'Age', icon: Timer }
+                                                        {
+                                                            value: 'duration',
+                                                            label: 'Duration',
+                                                            icon: Timer
+                                                        }
                                                     ]}
                                                     {...field}
                                                 />
@@ -103,11 +110,29 @@ export default function PeopleSidebar({ children }: PeopleSidebarProps) {
                                         <FilterSection isLast>
                                             <FormField
                                                 control={form.control}
-                                                name='age'
+                                                name='duration'
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <BaseFormLayout label='Age'>
-                                                            <TooltipSliderField min={0} max={120} {...field} />
+                                                        <BaseFormLayout
+                                                            label='Duration'
+                                                            description='Measured in seconds'>
+                                                            <TooltipSliderField min={0} max={10000} {...field} />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </FilterSection>
+                                        <FilterSection isLast>
+                                            <FormField
+                                                control={form.control}
+                                                name='genres'
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Genres'>
+                                                            <CheckboxGroupField
+                                                                options={GENRES.common.concat(GENRES.songs)}
+                                                                {...field}
+                                                            />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}

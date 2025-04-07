@@ -416,3 +416,32 @@ export const PERSON_DATA = {
         }
     ]
 };
+
+export const SONGS_DATA = [
+    {
+        id: 'song-1',
+        title: 'All the Things She Said',
+        image: 'https://i.scdn.co/image/ab67616d00001e023b27e1cd8a6bc6804c2e5fd2'
+    }
+];
+
+export const SONG_DATA = {
+    id: 'song-1',
+    title: 'All the Things She Said',
+    image: 'https://i.scdn.co/image/ab67616d0000b2732e4c76318f463f3f06d528cc',
+    artists: ['t.A.T.u.'],
+    album: '200 km/h in the Wrong Lane',
+    releaseDate: new Date('2002-01-01'),
+    duration: 201,
+    genres: ['Pop', 'Dance-pop'],
+    awards: [
+        {
+            id: 'award-1',
+            award: 'MTV Video Music Award',
+            year: 2002,
+            event: 'MTV Video Music Awards',
+            type: OBJECT_TYPE.SONG
+        }
+    ],
+    description: `“All the Things She Said” is a breakthrough pop hit by the Russian duo t.A.T.u. Known for its catchy hook, innovative production, and provocative music video, the song gained global popularity and remains an iconic track of the early 2000s. Its success helped redefine pop music and opened doors for more daring artistic expressions in mainstream media.`
+};

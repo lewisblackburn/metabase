@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
         turbo: {}
     },
     images: {
-        domains: ['image.tmdb.org', 'www.themoviedb.org', 'media.themoviedb.org']
+        domains: ['image.tmdb.org', 'www.themoviedb.org', 'media.themoviedb.org', 'i.scdn.co']
     }
 };
 

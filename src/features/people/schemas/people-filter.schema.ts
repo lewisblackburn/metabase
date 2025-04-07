@@ -8,3 +8,5 @@ export const peopleFilterSchema = z.object({
     search: z.string().optional(),
     age: z.tuple([z.number(), z.number()]).optional()
 });
+
+export type PeopleFilter = z.infer<typeof peopleFilterSchema>;
