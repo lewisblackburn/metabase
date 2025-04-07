@@ -1,22 +1,42 @@
 'use client';
 
+import { useState } from 'react';
+
 import Image from 'next/image';
 
+import ActionButton from '@/components/shared/action-button';
 import Artwork from '@/components/shared/artwork';
 import AwardTable from '@/components/shared/award-table';
 import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { SONG_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
+import { cn } from '@/lib/utils';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { Calendar, MapPin, Music, Skull, Star, Timer, TrendingUp, VenusAndMars } from 'lucide-react';
+import {
+    Bookmark,
+    Calendar,
+    Heart,
+    MapPin,
+    Music,
+    Play,
+    Skull,
+    Star,
+    Timer,
+    TrendingUp,
+    Users,
+    VenusAndMars
+} from 'lucide-react';
 
 dayjs.extend(advancedFormat);
 
 export default function SongPage() {
+    const [isFavourite, setIsFavourite] = useState(false);
+    const [isListenLater, setIsListenLater] = useState(false);
+
     return (
         <div className='flex flex-col gap-5'>
             <div className='flex items-center gap-2'>
@@ -45,6 +65,7 @@ export default function SongPage() {
                         <p>{SONG_DATA.description}</p>
                     </div>
                     <div className='flex flex-wrap gap-2'>
+                        <CustomBadge icon={Users}>{SONG_DATA.artists.join(', ')}</CustomBadge>
                         {SONG_DATA.releaseDate && (
                             <CustomBadge icon={Calendar}>
                                 {dayjs(SONG_DATA.releaseDate).format('MMMM Do, YYYY')}
@@ -56,6 +77,23 @@ export default function SongPage() {
                         {SONG_DATA.genres && <CustomBadge icon={Music}>{SONG_DATA.genres.join(', ')}</CustomBadge>}
                         <div>
                             <ProgressItem label='Content Score' score={SONG_DATA.contentScore} variant='labelled' />
+                        </div>
+                    </div>
+                    <Separator />
+                    <div className='flex flex-wrap'>
+                        <div className='grid grid-cols-2 gap-2'>
+                            <ActionButton
+                                icon={Heart}
+                                label='Favourite'
+                                iconClassName={cn({ 'fill-red-500 text-red-500': isFavourite })}
+                                onClick={() => setIsFavourite((prev) => !prev)}
+                            />
+                            <ActionButton
+                                icon={Bookmark}
+                                label='Listen Later'
+                                iconClassName={cn({ 'fill-blue-500 text-blue-500': isListenLater })}
+                                onClick={() => setIsListenLater((prev) => !prev)}
+                            />
                         </div>
                     </div>
                 </div>

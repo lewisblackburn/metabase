@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 
 import SpotifyIcon from '@/components/icons/spotify.icon';
+import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
@@ -59,15 +60,7 @@ export default function SoundtrackTable() {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Track
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             ),
             cell: ({ row }) => (
@@ -84,15 +77,7 @@ export default function SoundtrackTable() {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Description
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             )
         },
@@ -103,15 +88,7 @@ export default function SoundtrackTable() {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Timestamp
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             ),
             cell: ({ row }) => row.original.timestamps.join(', ')

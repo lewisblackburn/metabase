@@ -133,9 +133,7 @@ export function DataTable<TData extends { id: string }>({
     const actionsColumn: ColumnDef<TData, any> = {
         id: 'actions',
         header: () => <span className='font-medium'>Actions</span>,
-        cell: ({ row }) =>
-            // Render custom action buttons for each row
-            renderRowActions ? renderRowActions(row.original) : null,
+        cell: ({ row }) => (renderRowActions ? renderRowActions(row.original) : null),
         enableSorting: false,
         enableHiding: false
     };
@@ -143,10 +141,10 @@ export function DataTable<TData extends { id: string }>({
     // NOTE: Combine all the columns into a single array
     let finalColumns = [...columns];
     if (enableRowSelection) {
-        finalColumns = [selectionColumn, ...finalColumns]; // NOTE: set selection checkbox as first column
+        finalColumns = [selectionColumn, ...finalColumns]; // Set selection checkbox as first column
     }
     if (enableRowActions) {
-        finalColumns = [...finalColumns, actionsColumn]; // NOTE: set actions column as last column
+        finalColumns = [...finalColumns, actionsColumn]; // Set actions column as last column
     }
 
     const table = useReactTable({
@@ -158,13 +156,13 @@ export function DataTable<TData extends { id: string }>({
         state: {
             sorting: sorting,
             pagination: { pageIndex, pageSize },
-            rowSelection: rowSelection ?? {}, // NOTE: if selection not enabled, this will be an empty object
+            rowSelection: rowSelection ?? {},
             columnVisibility: columnVisibility
         },
         onSortingChange: onSortingChange,
         onPaginationChange: (updater) => {
             /* NOTE: TanStack may call this when pageIndex/pageSize state changes internally.
-            We intercept and call our callbacks if present. */
+      We intercept and call our callbacks if present. */
             const newState = typeof updater === 'function' ? updater({ pageIndex, pageSize }) : updater;
             if (newState.pageIndex !== pageIndex) {
                 onPageChange(newState.pageIndex);
@@ -200,73 +198,72 @@ export function DataTable<TData extends { id: string }>({
     const startIndex = totalRows === 0 ? 0 : pageIndex * pageSize + 1;
     const endIndex = pageIndex * pageSize + data.length;
 
+    // Build the table content without drag-and-drop wrappers.
+    const tableContent = (
+        <Table className='relative'>
+            <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => (
+                            <TableHead key={header.id} className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
+                                {header.isPlaceholder
+                                    ? null
+                                    : flexRender(header.column.columnDef.header, header.getContext())}
+                            </TableHead>
+                        ))}
+                        {/* NOTE: If row ordering is enabled, add a header cell for the drag handle column at the end */}
+                        {enableRowOrdering && <TableHead className='w-4 p-0'></TableHead>}
+                    </TableRow>
+                ))}
+            </TableHeader>
+            <TableBody>
+                {data.length ? (
+                    table.getRowModel().rows.map((row) => {
+                        if (enableRowOrdering) {
+                            const itemId = (row.original as TData).id;
+
+                            return <DraggableTableRow key={row.id} row={row} itemId={itemId} />;
+                        } else {
+                            // NOTE: No drag-and-drop on simple static rows
+                            return (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && 'selected'}
+                                    className='hover:bg-muted/20 transition-colors'>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id} className='px-4 py-4'>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            );
+                        }
+                    })
+                ) : (
+                    <TableRow>
+                        <TableCell
+                            colSpan={finalColumns.length + (enableRowOrdering ? 1 : 0)}
+                            className='text-muted-foreground h-24 text-center'>
+                            No results.
+                        </TableCell>
+                    </TableRow>
+                )}
+            </TableBody>
+        </Table>
+    );
+
     return (
         <div className='w-full'>
-            <div className='relative overflow-hidden rounded-md border'>
-                {isLoading && (
-                    <div className='bg-background/80 absolute inset-0 z-10 flex items-center justify-center backdrop-blur-[1px]'>
-                        <Loader2 className='text-primary h-8 w-8 animate-spin' />
-                    </div>
-                )}
-                <Table className='relative'>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => (
-                                    <TableHead
-                                        key={header.id}
-                                        className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(header.column.columnDef.header, header.getContext())}
-                                    </TableHead>
-                                ))}
-                                {/* NOTE: If row ordering is enabled, add a header cell for the drag handle column at the end */}
-                                {enableRowOrdering && <TableHead className='w-4 p-0'></TableHead>}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {data.length ? (
-                            enableRowOrdering ? (
-                                <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
-                                    <SortableContext
-                                        items={data.map((item) => item.id)}
-                                        strategy={verticalListSortingStrategy}>
-                                        {table.getRowModel().rows.map((row) => {
-                                            const itemId = (row.original as TData).id;
-
-                                            return <DraggableTableRow key={row.id} row={row} itemId={itemId} />;
-                                        })}
-                                    </SortableContext>
-                                </DndContext>
-                            ) : (
-                                // NOTE: No drag-and-drop on simple static rows
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        data-state={row.getIsSelected() && 'selected'}
-                                        className='hover:bg-muted/20 transition-colors'>
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id} className='px-4 py-4'>
-                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            )
-                        ) : (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={finalColumns.length + (enableRowOrdering ? 1 : 0)}
-                                    className='text-muted-foreground h-24 text-center'>
-                                    No results.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
+            {/* Wrap tableContent in an extra styled div to preserve the original styling */}
+            {enableRowOrdering ? (
+                <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
+                    <SortableContext items={data.map((item) => item.id)} strategy={verticalListSortingStrategy}>
+                        <div className='relative overflow-hidden rounded-md border shadow-sm'>{tableContent}</div>
+                    </SortableContext>
+                </DndContext>
+            ) : (
+                <div className='relative overflow-hidden rounded-md border shadow-sm'>{tableContent}</div>
+            )}
             <div className='mt-4 flex items-center justify-between px-2 text-sm'>
                 <div className='flex flex-col items-center gap-2 md:flex-row'>
                     <span className='text-muted-foreground'>Rows per page:</span>

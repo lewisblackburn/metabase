@@ -5,7 +5,6 @@ import { Fragment, ReactNode, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import FavouriteButton from '@/components/shared/action-button';
 import ActionButton from '@/components/shared/action-button';
 import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';

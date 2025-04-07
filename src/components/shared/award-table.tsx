@@ -6,7 +6,7 @@ import { DataTable } from '@/components/ui/data-table';
 import { AwardType } from '@/types/award.type';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
+import SortingArrows from './sorting-arrows';
 
 export default function AwardTable({ awards }: { awards: AwardType[] }) {
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -57,15 +57,7 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Title
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             )
         },
@@ -76,15 +68,7 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Award
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             )
         },
@@ -95,15 +79,7 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Year
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             )
         },
@@ -114,15 +90,7 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Event
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             )
         },
@@ -133,15 +101,7 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
                     Type
-                    <span className='ml-1'>
-                        {column.getIsSorted() === 'asc' ? (
-                            <ArrowUp className='h-4 w-4' />
-                        ) : column.getIsSorted() === 'desc' ? (
-                            <ArrowDown className='h-4 w-4' />
-                        ) : (
-                            <ArrowUpDown className='h-4 w-4 opacity-50' />
-                        )}
-                    </span>
+                    <SortingArrows column={column} />
                 </button>
             ),
             cell: ({ row }) => row.original.type.name

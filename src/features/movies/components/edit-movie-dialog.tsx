@@ -8,6 +8,7 @@ import { RootState } from '@/store/store';
 
 import { setActiveItemId } from '../store/movie-edit.slice';
 import EditMovieCast from './edit-movie-cast';
+import EditMovieCrew from './edit-movie-crew';
 import EditMovieDetails from './edit-movie-details';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -24,7 +25,7 @@ export function EditMovieDialog({ id, isOpen, onOpenChange }: EditMovieDialogPro
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
         details: (item) => <EditMovieDetails movieId={id} />,
         cast: (item) => <EditMovieCast />,
-        crew: (item) => <div>crew</div>,
+        crew: (item) => <EditMovieCrew />,
         soundtrack: (item) => <div>soundtrack</div>,
         genres: (item) => <div>genres</div>,
         keywords: (item) => <div>keywords</div>,

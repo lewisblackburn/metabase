@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
+import JobSelectField from '@/components/form/job-select';
+import RoleSelectField from '@/components/form/role-select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
-import { CastMember } from '@/lib/data';
+import { CrewMember, Job } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -23,15 +25,16 @@ import {
 } from '@/registry/new-york-v4/ui/dropdown-menu';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Input } from '@/registry/new-york-v4/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/registry/new-york-v4/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import { AddCastMemberSchema, addCastMemberSchema } from '../schemas/add-cast-member.schema';
+import { AddCrewMemberSchema, addCrewMemberSchema } from '../schemas/add-crew-member.schema';
 import { Eye, MoreHorizontal, Pencil, Plus, Trash, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
-export default function EditMovieCast() {
-    const [data, setData] = React.useState<CastMember[]>([]);
+export default function EditMovieCrew() {
+    const [data, setData] = React.useState<CrewMember[]>([]);
     const [totalRows, setTotalRows] = React.useState(0);
     const [pageIndex, setPageIndex] = React.useState(0); // 0-based page index
     const [pageSize, setPageSize] = React.useState(5);
@@ -47,7 +50,7 @@ export default function EditMovieCast() {
         setPageIndex(0);
     }, [debouncedSearchQuery]);
 
-    const columns = React.useMemo<ColumnDef<CastMember, any>[]>(
+    const columns = React.useMemo<ColumnDef<CrewMember, any>[]>(
         () => [
             {
                 accessorKey: 'name',
@@ -62,12 +65,24 @@ export default function EditMovieCast() {
                 cell: (info) => info.getValue<string>()
             },
             {
-                accessorKey: 'character',
+                accessorKey: 'job',
                 header: ({ column }) => (
                     <button
                         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                         className='inline-flex cursor-pointer items-center font-medium'>
-                        Character
+                        Job
+                        <SortingArrows column={column} />
+                    </button>
+                ),
+                cell: (info) => info.getValue<string>()
+            },
+            {
+                accessorKey: 'role',
+                header: ({ column }) => (
+                    <button
+                        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                        className='inline-flex cursor-pointer items-center font-medium'>
+                        Role
                         <SortingArrows column={column} />
                     </button>
                 ),
@@ -92,7 +107,7 @@ export default function EditMovieCast() {
                     sortDesc: String(sortDesc),
                     query: query
                 });
-                const res = await fetch(`/api/cast-members?${params.toString()}`);
+                const res = await fetch(`/api/crew-members?${params.toString()}`);
                 const result = await res.json();
                 setData(result.data);
                 setTotalRows(result.total);
@@ -105,7 +120,7 @@ export default function EditMovieCast() {
         fetchData();
     }, [pageIndex, pageSize, sorting, debouncedSearchQuery]);
 
-    const renderRowActions = React.useCallback((castMember: CastMember) => {
+    const renderRowActions = React.useCallback((crewMember: CrewMember) => {
         return (
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -115,11 +130,11 @@ export default function EditMovieCast() {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
-                    <DropdownMenuItem onClick={() => console.log(`Viewing ${castMember.name}`)}>
+                    <DropdownMenuItem onClick={() => console.log(`Viewing ${crewMember.name}`)}>
                         <Eye className='mr-2 h-4 w-4' />
                         View
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => console.log(`Editing ${castMember.name}`)}>
+                    <DropdownMenuItem onClick={() => console.log(`Editing ${crewMember.name}`)}>
                         <Pencil className='mr-2 h-4 w-4' />
                         Edit
                     </DropdownMenuItem>
@@ -128,7 +143,7 @@ export default function EditMovieCast() {
         );
     }, []);
 
-    const handleRowOrderChange = (newData: CastMember[]) => {
+    const handleRowOrderChange = (newData: CrewMember[]) => {
         setData(newData);
         console.log(
             'New row order:',
@@ -163,7 +178,7 @@ export default function EditMovieCast() {
                         Reset
                     </Button>
                 )}
-                <AddCastMemberDialog />
+                <AddCrewMemberDialog />
                 {Object.keys(rowSelection).length > 0 && (
                     <Button variant='destructive' size='sm' onClick={handleDelete}>
                         <Trash className='size-4' />
@@ -192,14 +207,14 @@ export default function EditMovieCast() {
     );
 }
 
-const AddCastMemberDialog = () => {
+const AddCrewMemberDialog = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
-    const form = useForm<AddCastMemberSchema>({
-        resolver: zodResolver(addCastMemberSchema)
+    const form = useForm<AddCrewMemberSchema>({
+        resolver: zodResolver(addCrewMemberSchema)
     });
 
-    const onSubmit = async (data: AddCastMemberSchema) => {
+    const onSubmit = async (data: AddCrewMemberSchema) => {
         console.log(data);
     };
 
@@ -217,9 +232,9 @@ const AddCastMemberDialog = () => {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add Cast Member</DialogTitle>
+                    <DialogTitle>Add Crew Member</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Add a new cast member to the movie.</DialogDescription>
+                <DialogDescription>Add a new crew member to the movie.</DialogDescription>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
@@ -235,11 +250,22 @@ const AddCastMemberDialog = () => {
                         />
                         <FormField
                             control={form.control}
-                            name='character'
+                            name='job'
                             render={({ field }) => (
                                 <FormItem>
-                                    <BaseFormLayout label='Character'>
-                                        <InputField {...field} />
+                                    <BaseFormLayout label='Job'>
+                                        <JobSelectField {...field} />
+                                    </BaseFormLayout>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='role'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <BaseFormLayout label='Role'>
+                                        <RoleSelectField {...field} />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}
@@ -248,7 +274,7 @@ const AddCastMemberDialog = () => {
                             <Button variant='outline' type='button' className='mr-2' onClick={handleCancel}>
                                 Cancel
                             </Button>
-                            <Button type='submit'>Add Cast Member</Button>
+                            <Button type='submit'>Add Crew Member</Button>
                         </div>
                     </form>
                 </Form>

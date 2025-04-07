@@ -1,4 +1,5 @@
 import {
+    Album,
     Award,
     Book,
     Briefcase,
@@ -216,6 +217,6 @@ export const OBJECT_TYPE = {
         background: 'bg-red-300/20',
         foreground: 'text-red-800',
         border: 'border-red-400/60',
-        icon: Music
+        icon: Album
     }
 };
