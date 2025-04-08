@@ -1,9 +1,8 @@
 import React from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
-import CreatableSelectField from '@/components/form/createable-select';
 import InputField from '@/components/form/input';
-import SelectField, { SelectOption } from '@/components/form/select';
+import SelectField from '@/components/form/select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
@@ -231,7 +230,20 @@ const AddCastMemberDialog = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Person'>
-                                        <SelectField options={[]} placeholder='Select a person...' {...field} />
+                                        <SelectField
+                                            options={[
+                                                {
+                                                    value: '123e4567-e89b-12d3-a456-426614174000',
+                                                    label: 'John Doe'
+                                                }
+                                            ]}
+                                            placeholder='Select a person...'
+                                            onCreate={(value) => {
+                                                console.log('create', value);
+                                            }}
+                                            creatable
+                                            {...field}
+                                        />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}

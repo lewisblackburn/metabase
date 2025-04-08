@@ -54,7 +54,6 @@ const MultiSelectField = ({
     const [inputValue, setInputValue] = React.useState('');
     const [localOptions, setLocalOptions] = React.useState<MultiSelectOption[]>(options);
 
-    // Merge external options with any locally created ones.
     React.useEffect(() => {
         setLocalOptions((prev) => {
             const merged = [...prev];
@@ -68,12 +67,10 @@ const MultiSelectField = ({
         });
     }, [options]);
 
-    // Filter options based on search input.
     const filteredOptions = React.useMemo(() => {
         return localOptions.filter((option) => option.label.toLowerCase().includes(inputValue.toLowerCase()));
     }, [localOptions, inputValue]);
 
-    // Split options into selected and unselected based on current value.
     const selectedOptions = React.useMemo(() => {
         return filteredOptions.filter((option) => value.some((v) => v.value === option.value));
     }, [filteredOptions, value]);
@@ -144,7 +141,6 @@ const MultiSelectField = ({
                 <Command>
                     <CommandInput placeholder={searchPlaceholder} value={inputValue} onValueChange={setInputValue} />
                     <CommandGroup>
-                        {/* Selected items rendered in a fixed section at the top */}
                         {selectedOptions.length > 0 && (
                             <>
                                 {selectedOptions.map((option) => (
@@ -162,7 +158,6 @@ const MultiSelectField = ({
                             </>
                         )}
 
-                        {/* Unselected items rendered in the scrollable area */}
                         <ScrollArea className='max-h-60 overflow-y-auto'>
                             <CommandList>
                                 {showCreateOption && (
