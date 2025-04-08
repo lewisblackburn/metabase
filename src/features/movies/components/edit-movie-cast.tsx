@@ -1,15 +1,12 @@
 import React from 'react';
 
-import { AsyncSelect } from '@/components/form/async-select';
-import AsyncSelectField from '@/components/form/async-select';
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
 import SelectField from '@/components/form/select';
-import SimpleSelect from '@/components/form/test-select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
-import { CastMember, Person, allPeople } from '@/lib/data';
+import { CastMember } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -232,13 +229,7 @@ const AddCastMemberDialog = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Person'>
-                                        <SelectField
-                                            options={allPeople.map((person) => ({
-                                                label: person.name,
-                                                value: person.id
-                                            }))}
-                                            {...field}
-                                        />
+                                        <SelectField options={[]} {...field} />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}
