@@ -27,9 +27,10 @@ interface OrderSelectFieldProps {
     value: { orderBy: string; order: 'asc' | 'desc' };
     onChange: (value: { orderBy: string; order: 'asc' | 'desc' }) => void;
     className?: string;
+    modal?: boolean;
 }
 
-const OrderSelectField = ({ options, value, onChange, className }: OrderSelectFieldProps) => {
+const OrderSelectField = ({ options, value, onChange, className, modal = false }: OrderSelectFieldProps) => {
     const [open, setOpen] = React.useState(false);
 
     const current = options.find((opt) => opt.value === value.orderBy) ?? options[0];
@@ -42,7 +43,7 @@ const OrderSelectField = ({ options, value, onChange, className }: OrderSelectFi
     return (
         <div className={cn('flex items-center space-x-4', className)}>
             <p className='text-muted-foreground text-sm'>Order by</p>
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover open={open} onOpenChange={setOpen} modal={modal}>
                 <div className='flex items-center gap-2'>
                     <PopoverTrigger asChild>
                         <Button type='button' variant='outline' className='w-[150px] justify-start'>

@@ -34,6 +34,7 @@ interface MultiSelectFieldProps {
     emptyMessage?: string;
     maxDisplayValues?: number;
     createable?: boolean;
+    modal?: boolean;
 }
 
 const MultiSelectField = ({
@@ -46,7 +47,8 @@ const MultiSelectField = ({
     searchPlaceholder = 'Search options...',
     emptyMessage = 'No options found.',
     maxDisplayValues = 2,
-    createable = false
+    createable = false,
+    modal = false
 }: MultiSelectFieldProps) => {
     const [open, setOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState('');
@@ -119,7 +121,7 @@ const MultiSelectField = ({
         !localOptions.some((opt) => opt.value.toLowerCase() === inputValue.trim().toLowerCase());
 
     return (
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={open} onOpenChange={setOpen} modal={modal}>
             <PopoverTrigger asChild>
                 <Button
                     variant='outline'

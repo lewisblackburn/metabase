@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
-import JobSelectField from '@/components/form/job-select';
-import RoleSelectField from '@/components/form/role-select';
+import SelectField from '@/components/form/select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
-import { CrewMember, Job } from '@/lib/data';
+import { CrewMember, Job, Role } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -25,11 +24,10 @@ import {
 } from '@/registry/new-york-v4/ui/dropdown-menu';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Input } from '@/registry/new-york-v4/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/registry/new-york-v4/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import { AddCrewMemberSchema, addCrewMemberSchema } from '../schemas/add-crew-member.schema';
+import { AddCrewMemberSchema, addCrewMemberSchema } from '../schemas/crew-member.schema';
 import { Eye, MoreHorizontal, Pencil, Plus, Trash, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
@@ -210,6 +208,27 @@ export default function EditMovieCrew() {
 const AddCrewMemberDialog = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
+    const [jobs, setJobs] = React.useState<Job[]>([]);
+    const [roles, setRoles] = React.useState<Role[]>([]);
+
+    React.useEffect(() => {
+        const fetchJobs = async () => {
+            const res = await fetch('/api/jobs');
+            const result = await res.json();
+            setJobs(result.data);
+        };
+        fetchJobs();
+    }, []);
+
+    React.useEffect(() => {
+        const fetchRoles = async () => {
+            const res = await fetch('/api/roles');
+            const result = await res.json();
+            setRoles(result.data);
+        };
+        fetchRoles();
+    }, []);
+
     const form = useForm<AddCrewMemberSchema>({
         resolver: zodResolver(addCrewMemberSchema)
     });
@@ -254,7 +273,14 @@ const AddCrewMemberDialog = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Job'>
-                                        <JobSelectField {...field} />
+                                        <SelectField
+                                            options={jobs.map((job) => ({
+                                                value: job.id,
+                                                label: job.name
+                                            }))}
+                                            loading={true}
+                                            {...field}
+                                        />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}
@@ -265,7 +291,13 @@ const AddCrewMemberDialog = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Role'>
-                                        <RoleSelectField {...field} />
+                                        <SelectField
+                                            options={roles?.map((role) => ({
+                                                value: role.id,
+                                                label: role.name
+                                            }))}
+                                            {...field}
+                                        />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}

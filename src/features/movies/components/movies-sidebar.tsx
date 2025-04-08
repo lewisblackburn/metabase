@@ -6,9 +6,9 @@ import BaseFormLayout from '@/components/form/base-form-layout';
 import CheckboxGroupField from '@/components/form/checkbox-group';
 import DateRangePickerField from '@/components/form/date-range-picker';
 import InputField from '@/components/form/input';
-import LanguageSelectField from '@/components/form/language-select';
 import OrderSelectField from '@/components/form/order-select';
 import RadioGroupField from '@/components/form/radio-group';
+import SelectField from '@/components/form/select';
 import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
@@ -16,6 +16,7 @@ import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
 import { AVAILABILITIES } from '@/constants/availabilities.constant';
 import { CERTIFICATIONS } from '@/constants/certifications.constant';
 import { GENRES } from '@/constants/genres.constant';
+import { LANGUAGES } from '@/constants/languages.constant';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
@@ -223,7 +224,13 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Language'>
-                                                            <LanguageSelectField {...field} />
+                                                            <SelectField
+                                                                options={LANGUAGES.map((language) => ({
+                                                                    value: language.code,
+                                                                    label: language.label
+                                                                }))}
+                                                                {...field}
+                                                            />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}

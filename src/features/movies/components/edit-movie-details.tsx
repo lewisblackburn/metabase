@@ -3,11 +3,11 @@
 import BaseFormLayout from '@/components/form/base-form-layout';
 import { DatePickerField } from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
-import LanguageSelectField from '@/components/form/language-select';
 import MultiSelectField from '@/components/form/multi-select';
 import SelectField, { SelectOption } from '@/components/form/select';
 import TextareaField from '@/components/form/textarea';
 import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
+import { LANGUAGES } from '@/constants/languages.constant';
 import { MOVIE_STATUS_OPTIONS } from '@/constants/status.constant';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
@@ -131,7 +131,15 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Language'>
-                                <LanguageSelectField {...field} />
+                                <SelectField
+                                    options={LANGUAGES.map((language) => ({
+                                        value: language.code,
+                                        label: language.label,
+                                        secondaryLabel: language.englishLabel
+                                    }))}
+                                    modal
+                                    {...field}
+                                />
                             </BaseFormLayout>
                         </FormItem>
                     )}
@@ -142,7 +150,16 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Status'>
-                                <SelectField options={MOVIE_STATUS_OPTIONS as SelectOption[]} {...field} />
+                                <SelectField
+                                    options={
+                                        MOVIE_STATUS_OPTIONS.map((option) => ({
+                                            value: option.value,
+                                            label: option.label
+                                        })) as SelectOption[]
+                                    }
+                                    modal
+                                    {...field}
+                                />
                             </BaseFormLayout>
                         </FormItem>
                     )}
@@ -153,7 +170,16 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Age Certification'>
-                                <SelectField options={MOVIE_CERTIFICATION_OPTIONS as SelectOption[]} {...field} />
+                                <SelectField
+                                    options={
+                                        MOVIE_CERTIFICATION_OPTIONS.map((option) => ({
+                                            value: option.value,
+                                            label: option.label
+                                        })) as SelectOption[]
+                                    }
+                                    modal
+                                    {...field}
+                                />
                             </BaseFormLayout>
                         </FormItem>
                     )}
@@ -164,7 +190,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Alternative Titles'>
-                                <MultiSelectField options={[]} createable {...field} />
+                                <MultiSelectField options={[]} createable modal {...field} />
                             </BaseFormLayout>
                         </FormItem>
                     )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
@@ -26,7 +26,7 @@ import { Input } from '@/registry/new-york-v4/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import { AddCastMemberSchema, addCastMemberSchema } from '../schemas/add-cast-member.schema';
+import { AddCastMemberSchema, addCastMemberSchema } from '../schemas/cast-member.schema';
 import { Eye, MoreHorizontal, Pencil, Plus, Trash, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
