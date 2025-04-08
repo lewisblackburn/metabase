@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { AsyncSelect, AsyncSelectOption } from '@/components/form/async-select';
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
 import SelectField from '@/components/form/select';
@@ -195,6 +196,10 @@ export default function EditMovieCast() {
 
 const AddCastMemberDialog = () => {
     const [isOpen, setIsOpen] = React.useState(false);
+    const [options, setOptions] = React.useState<AsyncSelectOption[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const form = useForm<AddCastMemberSchema>({
         resolver: zodResolver(addCastMemberSchema)
@@ -208,6 +213,58 @@ const AddCastMemberDialog = () => {
         form.reset();
         setIsOpen(false);
     };
+
+    // Function to handle creating a new option
+    const handleCreate = async (value: string) => {
+        const newOption: AsyncSelectOption = {
+            value: `new-${Date.now()}`,
+            label: value
+        };
+
+        setOptions((prev) => [...prev, newOption]);
+        form.setValue('person', newOption.value);
+    };
+
+    // Function to handle search
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        // You could implement debounced API calls here
+    };
+
+    React.useEffect(() => {
+        const fetchOptions = async () => {
+            setIsLoading(true);
+            setError(null);
+
+            try {
+                // Simulate API call with a delay
+                await new Promise((resolve) => setTimeout(resolve, 500));
+
+                // Mock data - in a real app, this would be an API call
+                const mockOptions: AsyncSelectOption[] = [
+                    { value: '1', label: 'Alice Johnson' },
+                    { value: '2', label: 'Bob Smith' },
+                    { value: '3', label: 'Carol Williams' },
+                    { value: '4', label: 'Dave Brown' },
+                    { value: '5', label: 'Eve Davis' }
+                ];
+
+                // Filter options based on search query if needed
+                const filteredOptions = searchQuery
+                    ? mockOptions.filter((option) => option.label.toLowerCase().includes(searchQuery.toLowerCase()))
+                    : mockOptions;
+
+                setOptions(filteredOptions);
+            } catch (err) {
+                setError('Failed to load options. Please try again.');
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchOptions();
+    }, [searchQuery]);
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -229,7 +286,17 @@ const AddCastMemberDialog = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Person'>
-                                        <SelectField options={[]} {...field} />
+                                        <AsyncSelect
+                                            field={field}
+                                            options={options}
+                                            isLoading={isLoading}
+                                            error={error}
+                                            placeholder='Select a user'
+                                            emptyMessage='No users found'
+                                            createMessage='Create user'
+                                            onSearch={handleSearch}
+                                            onCreate={handleCreate}
+                                        />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}

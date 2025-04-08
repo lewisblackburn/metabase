@@ -207,26 +207,31 @@ export default function EditMovieCrew() {
 
 const AddCrewMemberDialog = () => {
     const [isOpen, setIsOpen] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const [jobs, setJobs] = React.useState<Job[]>([]);
     const [roles, setRoles] = React.useState<Role[]>([]);
 
     React.useEffect(() => {
+        setIsLoading(true);
         const fetchJobs = async () => {
             const res = await fetch('/api/jobs');
             const result = await res.json();
             setJobs(result.data);
         };
         fetchJobs();
+        setIsLoading(false);
     }, []);
 
     React.useEffect(() => {
+        setIsLoading(true);
         const fetchRoles = async () => {
             const res = await fetch('/api/roles');
             const result = await res.json();
             setRoles(result.data);
         };
         fetchRoles();
+        setIsLoading(false);
     }, []);
 
     const form = useForm<AddCrewMemberSchema>({
@@ -258,10 +263,10 @@ const AddCrewMemberDialog = () => {
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
                             control={form.control}
-                            name='name'
+                            name='person'
                             render={({ field }) => (
                                 <FormItem>
-                                    <BaseFormLayout label='Name'>
+                                    <BaseFormLayout label='Person'>
                                         <InputField {...field} />
                                     </BaseFormLayout>
                                 </FormItem>
@@ -295,6 +300,7 @@ const AddCrewMemberDialog = () => {
                                                 value: role.id,
                                                 label: role.name
                                             }))}
+                                            loading={isLoading}
                                             {...field}
                                         />
                                     </BaseFormLayout>
