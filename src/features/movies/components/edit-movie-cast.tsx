@@ -1,12 +1,15 @@
 import React from 'react';
 
+import { AsyncSelect } from '@/components/form/async-select';
+import AsyncSelectField from '@/components/form/async-select';
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
 import SelectField from '@/components/form/select';
+import SimpleSelect from '@/components/form/test-select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
-import { CastMember } from '@/lib/data';
+import { CastMember, Person, allPeople } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -25,7 +28,6 @@ import {
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery } from '@tanstack/react-query';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
 import { AddCastMemberSchema, addCastMemberSchema } from '../schemas/cast-member.schema';
@@ -226,22 +228,15 @@ const AddCastMemberDialog = () => {
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
                             control={form.control}
-                            name='personId'
+                            name='person'
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Person'>
                                         <SelectField
-                                            options={[
-                                                {
-                                                    value: '123e4567-e89b-12d3-a456-426614174000',
-                                                    label: 'John Doe'
-                                                }
-                                            ]}
-                                            placeholder='Select a person...'
-                                            onCreate={(value) => {
-                                                console.log('create', value);
-                                            }}
-                                            creatable
+                                            options={allPeople.map((person) => ({
+                                                label: person.name,
+                                                value: person.id
+                                            }))}
                                             {...field}
                                         />
                                     </BaseFormLayout>

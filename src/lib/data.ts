@@ -78,14 +78,6 @@ export type Person = {
 };
 
 export const allPeople: Person[] = [
-    { id: '1', name: 'John Smith', gender: 'Male', birthday: '1990-01-01' },
-    { id: '2', name: 'Jane Doe', gender: 'Female', birthday: '1990-01-01' },
-    { id: '3', name: 'Alice Johnson', gender: 'Female', birthday: '1990-01-01' },
-    { id: '4', name: 'Bob Brown', gender: 'Male', birthday: '1990-01-01' },
-    { id: '5', name: 'Charlie Davis', gender: 'Male', birthday: '1990-01-01' },
-    { id: '6', name: 'Diana Evans', gender: 'Female', birthday: '1990-01-01' },
-    { id: '7', name: 'Ethan Brown', gender: 'Male', birthday: '1990-01-01' },
-    { id: '8', name: 'Fiona Miller', gender: 'Female', birthday: '1990-01-01' },
-    { id: '9', name: 'George Anderson', gender: 'Male', birthday: '1990-01-01' },
-    { id: '10', name: 'Hannah Wilson', gender: 'Female', birthday: '1990-01-01' }
+    { id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479', name: 'John Smith', gender: 'Male', birthday: '1990-01-01' },
+    { id: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d', name: 'Jane Doe', gender: 'Female', birthday: '1990-01-01' }
 ];
