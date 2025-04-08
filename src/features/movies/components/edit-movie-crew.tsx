@@ -278,7 +278,6 @@ const AddCrewMemberDialog = () => {
                                                 value: job.id,
                                                 label: job.name
                                             }))}
-                                            loading={true}
                                             {...field}
                                         />
                                     </BaseFormLayout>

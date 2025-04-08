@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 export const addCrewMemberSchema = z.object({
-    name: z.string().min(1),
-    job: z.string().min(1),
-    role: z.string().min(1)
+    personId: z.string().uuid(),
+    jobId: z.string().uuid(),
+    roleId: z.string().uuid()
 });
 
 export type AddCrewMemberSchema = z.infer<typeof addCrewMemberSchema>;

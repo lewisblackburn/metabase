@@ -1,7 +1,9 @@
 import React from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
+import CreatableSelectField from '@/components/form/createable-select';
 import InputField from '@/components/form/input';
+import SelectField, { SelectOption } from '@/components/form/select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
@@ -24,6 +26,7 @@ import {
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
 import { AddCastMemberSchema, addCastMemberSchema } from '../schemas/cast-member.schema';
@@ -224,11 +227,11 @@ const AddCastMemberDialog = () => {
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
                             control={form.control}
-                            name='name'
+                            name='personId'
                             render={({ field }) => (
                                 <FormItem>
-                                    <BaseFormLayout label='Name'>
-                                        <InputField {...field} />
+                                    <BaseFormLayout label='Person'>
+                                        <SelectField options={[]} placeholder='Select a person...' {...field} />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}

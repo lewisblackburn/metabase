@@ -6,6 +6,7 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
+import QueryProvider from '@/components/query-provider';
 import HotkeyScopeManager from '@/features/shortcuts/components/hotkey-scope-manager';
 import ShortcutManager from '@/features/shortcuts/components/shortcut-manager';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
@@ -34,16 +35,18 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
         <html suppressHydrationWarning lang='en'>
             <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
-                <StoreProvider>
-                    <HotkeyScopeManager />
-                    <ShortcutManager />
-                    <ThemeProvider attribute='class'>
-                        <TooltipProvider>
-                            {children}
-                            <Toaster />
-                        </TooltipProvider>
-                    </ThemeProvider>
-                </StoreProvider>
+                <QueryProvider>
+                    <StoreProvider>
+                        <HotkeyScopeManager />
+                        <ShortcutManager />
+                        <ThemeProvider attribute='class'>
+                            <TooltipProvider>
+                                {children}
+                                <Toaster />
+                            </TooltipProvider>
+                        </ThemeProvider>
+                    </StoreProvider>
+                </QueryProvider>
             </body>
         </html>
     );

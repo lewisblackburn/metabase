@@ -69,3 +69,23 @@ export const allRoles: Role[] = [
     { id: '11', name: 'Lead Editor' },
     { id: '12', name: 'Supporting Editor' }
 ];
+
+export type Person = {
+    id: string;
+    name: string;
+    gender: string;
+    birthday: string;
+};
+
+export const allPeople: Person[] = [
+    { id: '1', name: 'John Smith', gender: 'Male', birthday: '1990-01-01' },
+    { id: '2', name: 'Jane Doe', gender: 'Female', birthday: '1990-01-01' },
+    { id: '3', name: 'Alice Johnson', gender: 'Female', birthday: '1990-01-01' },
+    { id: '4', name: 'Bob Brown', gender: 'Male', birthday: '1990-01-01' },
+    { id: '5', name: 'Charlie Davis', gender: 'Male', birthday: '1990-01-01' },
+    { id: '6', name: 'Diana Evans', gender: 'Female', birthday: '1990-01-01' },
+    { id: '7', name: 'Ethan Brown', gender: 'Male', birthday: '1990-01-01' },
+    { id: '8', name: 'Fiona Miller', gender: 'Female', birthday: '1990-01-01' },
+    { id: '9', name: 'George Anderson', gender: 'Male', birthday: '1990-01-01' },
+    { id: '10', name: 'Hannah Wilson', gender: 'Female', birthday: '1990-01-01' }
+];

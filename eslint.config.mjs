@@ -1,5 +1,6 @@
 import pluginJs from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
+import eslintPluginTanstackQuery from '@tanstack/eslint-plugin';
 
 import eslintConfigPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
@@ -34,6 +35,7 @@ export default [
     eslintConfigPrettier, // ? https://github.com/prettier/eslint-config-prettier
     // TODO: Setup properly: https://www.youtube.com/watch?v=xyxrB2Aa7KE&t=495s
     // eslintPluginBoundaries.configs.recommended, // ? https://github.com/javierbrea/eslint-plugin-boundaries
+    eslintPluginTanstackQuery.configs.recommended,
     {
         rules: {
             'no-unused-vars': 'off',
