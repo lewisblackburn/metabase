@@ -1,7 +1,11 @@
 import { z } from 'zod';
 
 export const addCastMemberSchema = z.object({
-    person: z.string().min(1),
+    person: z.object({
+        value: z.string(),
+        label: z.string(),
+        __isNew__: z.boolean().optional()
+    }),
     character: z.string().min(1)
 });
 

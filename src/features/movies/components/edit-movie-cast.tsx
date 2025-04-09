@@ -7,7 +7,7 @@ import SelectField from '@/components/form/select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
-import { CastMember } from '@/lib/data';
+import { CastMember, allPeople } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -206,6 +206,10 @@ const AddCastMemberDialog = () => {
     });
 
     const onSubmit = async (data: AddCastMemberSchema) => {
+        if (data.person.__isNew__) {
+            // NOTE: Create new person
+            console.log('Creating new person with name:', data.person.value);
+        }
         console.log(data);
     };
 
@@ -214,21 +218,8 @@ const AddCastMemberDialog = () => {
         setIsOpen(false);
     };
 
-    // Function to handle creating a new option
-    const handleCreate = async (value: string) => {
-        const newOption: AsyncSelectOption = {
-            value: `new-${Date.now()}`,
-            label: value
-        };
-
-        setOptions((prev) => [...prev, newOption]);
-        form.setValue('person', newOption.value);
-    };
-
-    // Function to handle search
     const handleSearch = (query: string) => {
         setSearchQuery(query);
-        // You could implement debounced API calls here
     };
 
     React.useEffect(() => {
@@ -237,24 +228,15 @@ const AddCastMemberDialog = () => {
             setError(null);
 
             try {
-                // Simulate API call with a delay
                 await new Promise((resolve) => setTimeout(resolve, 500));
 
-                // Mock data - in a real app, this would be an API call
-                const mockOptions: AsyncSelectOption[] = [
-                    { value: '1', label: 'Alice Johnson' },
-                    { value: '2', label: 'Bob Smith' },
-                    { value: '3', label: 'Carol Williams' },
-                    { value: '4', label: 'Dave Brown' },
-                    { value: '5', label: 'Eve Davis' }
-                ];
+                const mockOptions = allPeople;
 
-                // Filter options based on search query if needed
                 const filteredOptions = searchQuery
-                    ? mockOptions.filter((option) => option.label.toLowerCase().includes(searchQuery.toLowerCase()))
+                    ? mockOptions.filter((option) => option.name.toLowerCase().includes(searchQuery.toLowerCase()))
                     : mockOptions;
 
-                setOptions(filteredOptions);
+                setOptions(filteredOptions.map((option) => ({ value: option.id, label: option.name })));
             } catch (err) {
                 setError('Failed to load options. Please try again.');
                 console.error(err);
@@ -287,15 +269,14 @@ const AddCastMemberDialog = () => {
                                 <FormItem>
                                     <BaseFormLayout label='Person'>
                                         <AsyncSelect
-                                            field={field}
                                             options={options}
                                             isLoading={isLoading}
                                             error={error}
-                                            placeholder='Select a user'
-                                            emptyMessage='No users found'
-                                            createMessage='Create user'
+                                            placeholder='Select a person'
+                                            emptyMessage='No people found'
                                             onSearch={handleSearch}
-                                            onCreate={handleCreate}
+                                            createable={true}
+                                            {...field}
                                         />
                                     </BaseFormLayout>
                                 </FormItem>
