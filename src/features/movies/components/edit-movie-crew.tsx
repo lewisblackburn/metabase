@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
+import Link from 'next/link';
+
+import { AsyncSelect, AsyncSelectOption } from '@/components/form/async-select';
 import BaseFormLayout from '@/components/form/base-form-layout';
-import InputField from '@/components/form/input';
 import SelectField from '@/components/form/select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
+import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { useDebounce } from '@/hooks/use-debounce';
-import { CrewMember, Job, Role } from '@/lib/data';
+import { CrewMember, allJobs, allPeople, allRoles } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -27,20 +30,25 @@ import { Input } from '@/registry/new-york-v4/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import { AddCrewMemberSchema, addCrewMemberSchema } from '../schemas/crew-member.schema';
+import {
+    AddCrewMemberSchema,
+    EditCrewMemberSchema,
+    addCrewMemberSchema,
+    editCrewMemberSchema
+} from '../schemas/movie-crew-member.schema';
 import { Eye, MoreHorizontal, Pencil, Plus, Trash, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 export default function EditMovieCrew() {
-    const [data, setData] = React.useState<CrewMember[]>([]);
-    const [totalRows, setTotalRows] = React.useState(0);
-    const [pageIndex, setPageIndex] = React.useState(0); // 0-based page index
-    const [pageSize, setPageSize] = React.useState(5);
-    const [sorting, setSorting] = React.useState<SortingState>([]);
-    const [rowSelection, setRowSelection] = React.useState({});
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const [isLoading, setIsLoading] = React.useState(false);
-
+    const [data, setData] = useState<CrewMember[]>([]);
+    const [totalRows, setTotalRows] = useState(0);
+    const [pageIndex, setPageIndex] = useState(0); // 0-based page index
+    const [pageSize, setPageSize] = useState(5);
+    const [sorting, setSorting] = useState<SortingState>([]);
+    const [rowSelection, setRowSelection] = useState({});
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [editingCrewMember, setEditingCrewMember] = useState<CrewMember | null>(null);
     const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
     // NOTE: Reset page index when search query changes
@@ -72,7 +80,10 @@ export default function EditMovieCrew() {
                         <SortingArrows column={column} />
                     </button>
                 ),
-                cell: (info) => info.getValue<string>()
+                cell: (info) => {
+                    const job = allJobs.find((job) => job.id === info.getValue<string>());
+                    return job?.name;
+                }
             },
             {
                 accessorKey: 'role',
@@ -84,7 +95,10 @@ export default function EditMovieCrew() {
                         <SortingArrows column={column} />
                     </button>
                 ),
-                cell: (info) => info.getValue<string>()
+                cell: (info) => {
+                    const role = allRoles.find((role) => role.id === info.getValue<string>());
+                    return role?.name;
+                }
             }
         ],
         []
@@ -128,11 +142,13 @@ export default function EditMovieCrew() {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
-                    <DropdownMenuItem onClick={() => console.log(`Viewing ${crewMember.name}`)}>
-                        <Eye className='mr-2 h-4 w-4' />
-                        View
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => console.log(`Editing ${crewMember.name}`)}>
+                    <Link href={`/dashboard/${OBJECT_TYPE.PERSON.path}/${crewMember.personId}`}>
+                        <DropdownMenuItem>
+                            <Eye className='mr-2 h-4 w-4' />
+                            View
+                        </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuItem onClick={() => setEditingCrewMember(crewMember)}>
                         <Pencil className='mr-2 h-4 w-4' />
                         Edit
                     </DropdownMenuItem>
@@ -177,6 +193,9 @@ export default function EditMovieCrew() {
                     </Button>
                 )}
                 <AddCrewMemberDialog />
+                {editingCrewMember && (
+                    <EditCrewMemberDialog crewMember={editingCrewMember} onClose={() => setEditingCrewMember(null)} />
+                )}
                 {Object.keys(rowSelection).length > 0 && (
                     <Button variant='destructive' size='sm' onClick={handleDelete}>
                         <Trash className='size-4' />
@@ -206,39 +225,20 @@ export default function EditMovieCrew() {
 }
 
 const AddCrewMemberDialog = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    const [jobs, setJobs] = React.useState<Job[]>([]);
-    const [roles, setRoles] = React.useState<Role[]>([]);
-
-    React.useEffect(() => {
-        setIsLoading(true);
-        const fetchJobs = async () => {
-            const res = await fetch('/api/jobs');
-            const result = await res.json();
-            setJobs(result.data);
-        };
-        fetchJobs();
-        setIsLoading(false);
-    }, []);
-
-    React.useEffect(() => {
-        setIsLoading(true);
-        const fetchRoles = async () => {
-            const res = await fetch('/api/roles');
-            const result = await res.json();
-            setRoles(result.data);
-        };
-        fetchRoles();
-        setIsLoading(false);
-    }, []);
-
+    const [isOpen, setIsOpen] = useState(false);
+    const [options, setOptions] = useState<AsyncSelectOption[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
     const form = useForm<AddCrewMemberSchema>({
         resolver: zodResolver(addCrewMemberSchema)
     });
 
     const onSubmit = async (data: AddCrewMemberSchema) => {
+        if (data.person.__isNew__) {
+            // NOTE: Create new person
+            console.log('Creating new person with name:', data.person.value);
+        }
         console.log(data);
     };
 
@@ -246,6 +246,36 @@ const AddCrewMemberDialog = () => {
         form.reset();
         setIsOpen(false);
     };
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+    };
+
+    React.useEffect(() => {
+        const fetchOptions = async () => {
+            setIsLoading(true);
+            setError(null);
+
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 500));
+
+                const mockOptions = allPeople;
+
+                const filteredOptions = searchQuery
+                    ? mockOptions.filter((option) => option.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    : mockOptions;
+
+                setOptions(filteredOptions.map((option) => ({ value: option.id, label: option.name })));
+            } catch (err) {
+                setError('Failed to load options. Please try again.');
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchOptions();
+    }, [searchQuery]);
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -267,7 +297,16 @@ const AddCrewMemberDialog = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Person'>
-                                        <InputField {...field} />
+                                        <AsyncSelect
+                                            options={options}
+                                            isLoading={isLoading}
+                                            error={error}
+                                            placeholder='Select a person'
+                                            emptyMessage='No people found'
+                                            onSearch={handleSearch}
+                                            createable={true}
+                                            {...field}
+                                        />
                                     </BaseFormLayout>
                                 </FormItem>
                             )}
@@ -279,10 +318,7 @@ const AddCrewMemberDialog = () => {
                                 <FormItem>
                                     <BaseFormLayout label='Job'>
                                         <SelectField
-                                            options={jobs.map((job) => ({
-                                                value: job.id,
-                                                label: job.name
-                                            }))}
+                                            options={allJobs.map((job) => ({ value: job.id, label: job.name }))}
                                             {...field}
                                         />
                                     </BaseFormLayout>
@@ -296,11 +332,7 @@ const AddCrewMemberDialog = () => {
                                 <FormItem>
                                     <BaseFormLayout label='Role'>
                                         <SelectField
-                                            options={roles?.map((role) => ({
-                                                value: role.id,
-                                                label: role.name
-                                            }))}
-                                            loading={isLoading}
+                                            options={allRoles.map((role) => ({ value: role.id, label: role.name }))}
                                             {...field}
                                         />
                                     </BaseFormLayout>
@@ -309,9 +341,75 @@ const AddCrewMemberDialog = () => {
                         />
                         <div className='flex justify-end gap-2'>
                             <Button variant='outline' type='button' className='mr-2' onClick={handleCancel}>
+                                <X className='size-4' />
                                 Cancel
                             </Button>
                             <Button type='submit'>Add Crew Member</Button>
+                        </div>
+                    </form>
+                </Form>
+            </DialogContent>
+        </Dialog>
+    );
+};
+
+const EditCrewMemberDialog = ({ crewMember, onClose }: { crewMember: CrewMember; onClose: () => void }) => {
+    const form = useForm<EditCrewMemberSchema>({
+        resolver: zodResolver(editCrewMemberSchema),
+        defaultValues: {
+            job: crewMember.job,
+            role: crewMember.role
+        }
+    });
+
+    const onSubmit = async (data: EditCrewMemberSchema) => {
+        console.log(data);
+    };
+
+    return (
+        <Dialog open onOpenChange={onClose}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Edit Crew Member</DialogTitle>
+                </DialogHeader>
+                <DialogDescription>Edit the crew member.</DialogDescription>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                        <FormField
+                            control={form.control}
+                            name='job'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <BaseFormLayout label='Job'>
+                                        <SelectField
+                                            options={allJobs.map((job) => ({ value: job.id, label: job.name }))}
+                                            {...field}
+                                        />
+                                    </BaseFormLayout>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='role'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <BaseFormLayout label='Role'>
+                                        <SelectField
+                                            options={allRoles.map((role) => ({ value: role.id, label: role.name }))}
+                                            {...field}
+                                        />
+                                    </BaseFormLayout>
+                                </FormItem>
+                            )}
+                        />
+
+                        <div className='flex justify-end gap-2'>
+                            <Button variant='outline' type='button' className='mr-2' onClick={onClose}>
+                                <X className='size-4' />
+                                Cancel
+                            </Button>
+                            <Button type='submit'>Save</Button>
                         </div>
                     </form>
                 </Form>

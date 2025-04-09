@@ -3,19 +3,38 @@ export type CastMember = {
     name: string;
     character: string;
     order: number;
+    personId: string;
 };
 
 export const allCastMembers: CastMember[] = [
-    { id: '1', name: 'John Smith', character: 'Hero', order: 1 },
-    { id: '2', name: 'Jane Doe', character: 'Sidekick', order: 2 },
-    { id: '3', name: 'Alice Johnson', character: 'Villain', order: 3 },
-    { id: '4', name: 'Bob Brown', character: 'Mentor', order: 4 },
-    { id: '5', name: 'Charlie Davis', character: 'Supporting', order: 5 },
-    { id: '6', name: 'Diana Evans', character: 'Cameo', order: 6 },
-    { id: '7', name: 'Ethan Brown', character: 'Cameo', order: 7 },
-    { id: '8', name: 'Fiona Miller', character: 'Cameo', order: 8 },
-    { id: '9', name: 'George Anderson', character: 'Cameo', order: 9 },
-    { id: '10', name: 'Hannah Wilson', character: 'Cameo', order: 10 }
+    { id: '1', name: 'John Smith', character: 'Hero', order: 1, personId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+    { id: '2', name: 'Jane Doe', character: 'Sidekick', order: 2, personId: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d' },
+    {
+        id: '3',
+        name: 'Alice Johnson',
+        character: 'Villain',
+        order: 3,
+        personId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+    },
+    { id: '4', name: 'Bob Brown', character: 'Mentor', order: 4, personId: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d' },
+    {
+        id: '5',
+        name: 'Charlie Davis',
+        character: 'Supporting',
+        order: 5,
+        personId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+    },
+    { id: '6', name: 'Diana Evans', character: 'Cameo', order: 6, personId: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d' },
+    { id: '7', name: 'Ethan Brown', character: 'Cameo', order: 7, personId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+    { id: '8', name: 'Fiona Miller', character: 'Cameo', order: 8, personId: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d' },
+    {
+        id: '9',
+        name: 'George Anderson',
+        character: 'Cameo',
+        order: 9,
+        personId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+    },
+    { id: '10', name: 'Hannah Wilson', character: 'Cameo', order: 10, personId: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d' }
 ];
 
 export type CrewMember = {
@@ -27,16 +46,16 @@ export type CrewMember = {
 };
 
 export const allCrewMembers: CrewMember[] = [
-    { id: '1', name: 'Christopher Nolan', job: 'Producer', role: 'Executive Producer', order: 1 },
-    { id: '2', name: 'Emma Thomas', job: 'Director', role: 'Co-Director', order: 2 },
-    { id: '3', name: 'David S. Goyer', job: 'Director', role: 'Screenwriter', order: 3 },
-    { id: '4', name: 'Lee Smith', job: 'Sound Designer', role: 'Sound Editor', order: 4 },
-    { id: '5', name: 'Hans Zimmer', job: 'Music Supervisor', role: 'Composer', order: 5 },
-    { id: '6', name: 'Roger Deakins', job: 'Visual Effects Supervisor', role: 'Cinematographer', order: 6 },
-    { id: '7', name: 'Greig Fraser', job: 'Production Designer', role: 'Cinematographer', order: 7 },
-    { id: '8', name: 'Rachel Morrison', job: 'Costume Designer', role: 'Cinematographer', order: 8 },
-    { id: '9', name: 'Janusz Kamiński', job: 'Art Director', role: 'Cinematographer', order: 9 },
-    { id: '10', name: 'Claudio Miranda', job: 'Makeup Artist', role: 'Cinematographer', order: 10 }
+    { id: '1', name: 'Christopher Nolan', job: '1', role: '1', order: 1 },
+    { id: '2', name: 'Emma Thomas', job: '2', role: '2', order: 2 },
+    { id: '3', name: 'David S. Goyer', job: '3', role: '3', order: 3 },
+    { id: '4', name: 'Lee Smith', job: '4', role: '4', order: 4 },
+    { id: '5', name: 'Hans Zimmer', job: '5', role: '5', order: 5 },
+    { id: '6', name: 'Roger Deakins', job: '6', role: '6', order: 6 },
+    { id: '7', name: 'Greig Fraser', job: '7', role: '7', order: 7 },
+    { id: '8', name: 'Rachel Morrison', job: '8', role: '8', order: 8 },
+    { id: '9', name: 'Janusz Kamiński', job: '9', role: '9', order: 9 },
+    { id: '10', name: 'Claudio Miranda', job: '10', role: '10', order: 10 }
 ];
 
 export type Job = {
@@ -80,4 +99,27 @@ export type Person = {
 export const allPeople: Person[] = [
     { id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479', name: 'John Smith', gender: 'Male', birthday: '1990-01-01' },
     { id: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d', name: 'Jane Doe', gender: 'Female', birthday: '1990-01-01' }
+];
+
+export type MovieSoundtrack = {
+    id: string;
+    songs: Song[];
+};
+
+export type Song = {
+    id: string;
+    name: string;
+    artist: string;
+    order: number;
+};
+
+export const movieSoundtrack: MovieSoundtrack[] = [
+    {
+        id: '1',
+        songs: [
+            { id: '1', name: 'Song 1', artist: 'Artist 1', order: 1 },
+            { id: '2', name: 'Song 2', artist: 'Artist 2', order: 2 },
+            { id: '3', name: 'Song 3', artist: 'Artist 3', order: 3 }
+        ]
+    }
 ];

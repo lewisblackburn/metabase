@@ -10,6 +10,7 @@ import { setActiveItemId } from '../store/movie-edit.slice';
 import EditMovieCast from './edit-movie-cast';
 import EditMovieCrew from './edit-movie-crew';
 import EditMovieDetails from './edit-movie-details';
+import EditMovieSoundtrack from './edit-movie-soundtrack';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EditMovieDialogProps {
@@ -26,7 +27,7 @@ export function EditMovieDialog({ id, isOpen, onOpenChange }: EditMovieDialogPro
         details: (item) => <EditMovieDetails movieId={id} />,
         cast: (item) => <EditMovieCast />,
         crew: (item) => <EditMovieCrew />,
-        soundtrack: (item) => <div>soundtrack</div>,
+        soundtrack: (item) => <EditMovieSoundtrack />,
         genres: (item) => <div>genres</div>,
         keywords: (item) => <div>keywords</div>,
         production_information: (item) => <div>production_information</div>,

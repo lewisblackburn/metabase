@@ -125,7 +125,7 @@ export function AsyncSelect<
                     <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className='w-[--radix-popover-trigger-width] p-0' align='start'>
+            <PopoverContent className='popover-content-width-full p-0' align='start'>
                 <Command shouldFilter={false}>
                     <CommandInput
                         placeholder='Search...'
@@ -162,12 +162,16 @@ export function AsyncSelect<
                                                 setInputValue('');
                                                 setOpen(false);
                                             }}>
-                                            <Check
-                                                className={cn(
-                                                    'mr-2 h-4 w-4',
-                                                    option.value === field.value?.value ? 'opacity-100' : 'opacity-0'
-                                                )}
-                                            />
+                                            {option.value === field.value?.value && (
+                                                <Check
+                                                    className={cn(
+                                                        'size-4',
+                                                        option.value === field.value?.value
+                                                            ? 'opacity-100'
+                                                            : 'opacity-0'
+                                                    )}
+                                                />
+                                            )}
                                             {option.label}
                                         </CommandItem>
                                     ))}
