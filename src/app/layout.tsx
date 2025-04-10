@@ -6,12 +6,15 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
-import QueryProvider from '@/components/query-provider';
 import HotkeyScopeManager from '@/features/shortcuts/components/hotkey-scope-manager';
 import ShortcutManager from '@/features/shortcuts/components/shortcut-manager';
+import { nhost } from '@/lib/nhost';
+import CustomNhostProvider from '@/providers/nhost-provider';
+import QueryProvider from '@/providers/query-provider';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
 import { TooltipProvider } from '@/registry/new-york-v4/ui/tooltip';
 import { StoreProvider } from '@/store/store-provider';
+import { NhostProvider } from '@nhost/nextjs';
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -36,16 +39,18 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         <html suppressHydrationWarning lang='en'>
             <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
                 <QueryProvider>
-                    <StoreProvider>
-                        <HotkeyScopeManager />
-                        <ShortcutManager />
-                        <ThemeProvider attribute='class'>
-                            <TooltipProvider>
-                                {children}
-                                <Toaster />
-                            </TooltipProvider>
-                        </ThemeProvider>
-                    </StoreProvider>
+                    <CustomNhostProvider>
+                        <StoreProvider>
+                            <HotkeyScopeManager />
+                            <ShortcutManager />
+                            <ThemeProvider attribute='class'>
+                                <TooltipProvider>
+                                    {children}
+                                    <Toaster />
+                                </TooltipProvider>
+                            </ThemeProvider>
+                        </StoreProvider>
+                    </CustomNhostProvider>
                 </QueryProvider>
             </body>
         </html>
