@@ -101,25 +101,32 @@ export const allPeople: Person[] = [
     { id: 'a0eebc3e-1b2c-4c3e-8b1e-1c3e1b2c3e4d', name: 'Jane Doe', gender: 'Female', birthday: '1990-01-01' }
 ];
 
-export type MovieSoundtrack = {
-    id: string;
-    songs: Song[];
-};
-
 export type Song = {
     id: string;
     name: string;
-    artist: string;
-    order: number;
+    artists: Artist[];
 };
 
-export const movieSoundtrack: MovieSoundtrack[] = [
+export type MovieSoundtrackSong = {
+    id: string;
+    song: Song;
+    timestamps: string[];
+};
+
+export type Artist = {
+    id: string;
+    name: string;
+};
+
+export const movieSoundtrack: MovieSoundtrackSong[] = [
     {
         id: '1',
-        songs: [
-            { id: '1', name: 'Song 1', artist: 'Artist 1', order: 1 },
-            { id: '2', name: 'Song 2', artist: 'Artist 2', order: 2 },
-            { id: '3', name: 'Song 3', artist: 'Artist 3', order: 3 }
-        ]
+        song: { id: '1', name: 'Song 1', artists: [{ id: '1', name: 'Artist 1' }] },
+        timestamps: ['00:00', '01:00', '02:00']
+    },
+    {
+        id: '2',
+        song: { id: '2', name: 'Song 2', artists: [{ id: '2', name: 'Artist 2' }] },
+        timestamps: ['00:00', '01:00', '02:00']
     }
 ];

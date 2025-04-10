@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 
+import Link from 'next/link';
+
 import { AsyncSelect, AsyncSelectOption } from '@/components/form/async-select';
 import BaseFormLayout from '@/components/form/base-form-layout';
+import InputField from '@/components/form/input';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
+import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { useDebounce } from '@/hooks/use-debounce';
-import { MovieSoundtrack, Song, allPeople } from '@/lib/data';
+import { Artist, MovieSoundtrackSong, Song, allPeople } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -15,17 +19,28 @@ import {
     DialogTitle,
     DialogTrigger
 } from '@/registry/new-york-v4/ui/dialog';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+} from '@/registry/new-york-v4/ui/dropdown-menu';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import { AddSongToMovieSoundtrackSchema, addSongToMovieSoundtrackSchema } from '../schemas/movie-soundtrack.schema';
-import { Plus, Trash, X } from 'lucide-react';
+import {
+    AddMovieSoundtrackSong,
+    EditMovieSoundtrackSong,
+    addMovieSoundtrackSongSchema,
+    editMovieSoundtrackSongSchema
+} from '../schemas/movie-soundtrack.schema';
+import { Eye, MoreHorizontal, Pencil, Plus, Trash, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 export default function EditMovieSoundtrack() {
-    const [data, setData] = useState<MovieSoundtrack['songs']>([]);
+    const [data, setData] = useState<MovieSoundtrackSong[]>([]);
     const [totalRows, setTotalRows] = useState(0);
     const [pageIndex, setPageIndex] = useState(0); // 0-based page index
     const [pageSize, setPageSize] = useState(5);
@@ -33,7 +48,7 @@ export default function EditMovieSoundtrack() {
     const [rowSelection, setRowSelection] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
+    const [editingSong, setEditingSong] = useState<MovieSoundtrackSong | null>(null);
     const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
     // NOTE: Reset page index when search query changes
@@ -41,10 +56,10 @@ export default function EditMovieSoundtrack() {
         setPageIndex(0);
     }, [debouncedSearchQuery]);
 
-    const columns = React.useMemo<ColumnDef<Song, any>[]>(
+    const columns = React.useMemo<ColumnDef<MovieSoundtrackSong, any>[]>(
         () => [
             {
-                accessorKey: 'name',
+                accessorKey: 'song.name',
                 header: ({ column }) => (
                     <button
                         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
@@ -56,16 +71,32 @@ export default function EditMovieSoundtrack() {
                 cell: (info) => info.getValue<string>()
             },
             {
-                accessorKey: 'artist',
+                accessorKey: 'song.artists',
                 header: ({ column }) => (
                     <button
                         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                         className='inline-flex cursor-pointer items-center font-medium'>
-                        Artist
+                        Artists
                         <SortingArrows column={column} />
                     </button>
                 ),
-                cell: (info) => info.getValue<string>()
+                cell: (info) =>
+                    info
+                        .getValue<Artist[]>()
+                        .map((artist) => artist.name)
+                        .join(', ')
+            },
+            {
+                accessorKey: 'timestamps',
+                header: ({ column }) => (
+                    <button
+                        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                        className='inline-flex cursor-pointer items-center font-medium'>
+                        Timestamps
+                        <SortingArrows column={column} />
+                    </button>
+                ),
+                cell: (info) => info.getValue<Song[]>().join(', ')
             }
         ],
         []
@@ -99,7 +130,32 @@ export default function EditMovieSoundtrack() {
         fetchData();
     }, [pageIndex, pageSize, sorting, debouncedSearchQuery]);
 
-    const handleRowOrderChange = (newData: Song[]) => {
+    const renderRowActions = React.useCallback((song: MovieSoundtrackSong) => {
+        return (
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant='ghost' className='h-8 w-8 p-0'>
+                        <span className='sr-only'>Open menu</span>
+                        <MoreHorizontal className='h-4 w-4' />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end'>
+                    <Link href={`/dashboard/${OBJECT_TYPE.SONG.path}/${song.song.id}`}>
+                        <DropdownMenuItem>
+                            <Eye className='mr-2 h-4 w-4' />
+                            View
+                        </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuItem onClick={() => setEditingSong(song)}>
+                        <Pencil className='mr-2 h-4 w-4' />
+                        Edit
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        );
+    }, []);
+
+    const handleRowOrderChange = (newData: MovieSoundtrackSong[]) => {
         setData(newData);
         console.log(
             'New row order:',
@@ -122,7 +178,7 @@ export default function EditMovieSoundtrack() {
         <div className='overflow-x-auto'>
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
-                    placeholder='Search by name or character...'
+                    placeholder='Search by song name or artist...'
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
@@ -135,7 +191,9 @@ export default function EditMovieSoundtrack() {
                     </Button>
                 )}
                 <AddMovieSoundtrackSongDialog />
-
+                {editingSong && (
+                    <EditMovieSoundtrackSongDialog song={editingSong} onClose={() => setEditingSong(null)} />
+                )}
                 {Object.keys(rowSelection).length > 0 && (
                     <Button variant='destructive' size='sm' onClick={handleDelete}>
                         <Trash className='size-4' />
@@ -157,6 +215,7 @@ export default function EditMovieSoundtrack() {
                     onPageSizeChange={handlePageSizeChange}
                     onRowSelectionChange={setRowSelection}
                     onRowOrderChange={handleRowOrderChange}
+                    renderRowActions={renderRowActions}
                 />
             </div>
         </div>
@@ -169,11 +228,11 @@ const AddMovieSoundtrackSongDialog = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const form = useForm<AddSongToMovieSoundtrackSchema>({
-        resolver: zodResolver(addSongToMovieSoundtrackSchema)
+    const form = useForm<AddMovieSoundtrackSong>({
+        resolver: zodResolver(addMovieSoundtrackSongSchema)
     });
 
-    const onSubmit = async (data: AddSongToMovieSoundtrackSchema) => {
+    const onSubmit = async (data: AddMovieSoundtrackSong) => {
         console.log(data);
     };
 
@@ -246,6 +305,17 @@ const AddMovieSoundtrackSongDialog = () => {
                                 </FormItem>
                             )}
                         />
+                        <FormField
+                            control={form.control}
+                            name='timestamps'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <BaseFormLayout label='Timestamps'>
+                                        <InputField {...field} />
+                                    </BaseFormLayout>
+                                </FormItem>
+                            )}
+                        />
                         <div className='flex justify-end gap-2'>
                             <Button variant='outline' type='button' className='mr-2' onClick={handleCancel}>
                                 <X className='size-4' />
@@ -254,6 +324,52 @@ const AddMovieSoundtrackSongDialog = () => {
                             <Button type='submit' onClick={() => console.log(form.formState.errors)}>
                                 Add Song
                             </Button>
+                        </div>
+                    </form>
+                </Form>
+            </DialogContent>
+        </Dialog>
+    );
+};
+
+const EditMovieSoundtrackSongDialog = ({ song, onClose }: { song: MovieSoundtrackSong; onClose: () => void }) => {
+    const form = useForm<EditMovieSoundtrackSong>({
+        resolver: zodResolver(editMovieSoundtrackSongSchema),
+        defaultValues: {
+            timestamps: song.timestamps.join(', ')
+        }
+    });
+
+    const onSubmit = async (data: EditMovieSoundtrackSong) => {
+        console.log(data);
+    };
+
+    return (
+        <Dialog open onOpenChange={onClose}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Edit Song</DialogTitle>
+                </DialogHeader>
+                <DialogDescription>Edit the song.</DialogDescription>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                        <FormField
+                            control={form.control}
+                            name='timestamps'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <BaseFormLayout label='Timestamps'>
+                                        <InputField {...field} />
+                                    </BaseFormLayout>
+                                </FormItem>
+                            )}
+                        />
+                        <div className='flex justify-end gap-2'>
+                            <Button variant='outline' type='button' className='mr-2' onClick={onClose}>
+                                <X className='size-4' />
+                                Cancel
+                            </Button>
+                            <Button type='submit'>Save</Button>
                         </div>
                     </form>
                 </Form>
