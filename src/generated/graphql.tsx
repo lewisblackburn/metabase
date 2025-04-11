@@ -7747,7 +7747,7 @@ export type Movies = {
   /** An aggregate relationship */
   movie_watchlists_aggregate: Movie_Watchlist_Aggregate;
   overview?: Maybe<Scalars['String']['output']>;
-  poster?: Maybe<Scalars['String']['output']>;
+  poster: Scalars['String']['output'];
   /** A computed field, executes function "has_rated_movie" */
   rated?: Maybe<Scalars['Boolean']['output']>;
   release_date?: Maybe<Scalars['date']['output']>;
@@ -7755,7 +7755,7 @@ export type Movies = {
   runtime?: Maybe<Scalars['Int']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   tagline?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
   tmdb_id?: Maybe<Scalars['String']['output']>;
   trailer?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
@@ -20458,7 +20458,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title?: string | null, overview?: string | null, age_rating?: string | null, average_rating?: number | null, backdrop?: string | null, budget?: any | null, content_score?: number | null, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster?: string | null, release_date?: any | null, revenue?: any | null, runtime?: number | null, status?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, rated?: boolean | null, favourited?: boolean | null, watchlisted?: boolean | null, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, role?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', title: string, artwork?: string | null, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, age_rating?: string | null, average_rating?: number | null, backdrop?: string | null, budget?: any | null, content_score?: number | null, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, status?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, rated?: boolean | null, favourited?: boolean | null, watchlisted?: boolean | null, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, role?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', title: string, artwork?: string | null, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -20469,7 +20469,7 @@ export type GetMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title?: string | null, poster?: string | null }> };
+export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, poster: string }> };
 
 
 

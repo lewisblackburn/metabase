@@ -1,5 +1,5 @@
 import { nhost } from './nhost';
-import { ClientError, GraphQLClient } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 export const fetcher = <TData, TVariables>(
     query: string,
@@ -12,9 +12,7 @@ export const fetcher = <TData, TVariables>(
             ...customHeaders
         };
 
-        if (nhost.auth.isAuthenticated()) {
-            headers['Authorization'] = `Bearer ${nhost.auth.getAccessToken()}`;
-        }
+        headers['Authorization'] = `Bearer ${nhost.auth.getAccessToken()}`;
 
         const client = new GraphQLClient(nhost.graphql.httpUrl, {
             headers
@@ -23,11 +21,9 @@ export const fetcher = <TData, TVariables>(
         try {
             const data = await client.request<TData>(query, variables || {});
             return data;
-        } catch (error) {
-            if (error instanceof ClientError) {
-                throw new Error(error.response?.errors?.[0]?.message || 'GraphQL fetching error');
-            }
-            throw error;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            throw new Error(error.response?.errors?.[0]?.message || 'GraphQL fetching error');
         }
     };
 };

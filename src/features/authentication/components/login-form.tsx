@@ -25,7 +25,6 @@ type LoginValues = z.infer<typeof loginSchema>;
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
     const router = useRouter();
-
     const form = useForm<LoginValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {

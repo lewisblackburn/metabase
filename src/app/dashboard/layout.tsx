@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
             <EditDialogManager />
             <CommandPanel />
             <SettingsDialog />
-            <SidebarProvider>
+            <SidebarProvider defaultOpen={true}>
                 <AppSidebar />
                 <SidebarInset>
                     <header className='bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4'>

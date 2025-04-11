@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 
 import { NavUser } from '@/components/nav-user';
 import { DASHBOARD_NAVIGATION } from '@/constants/dashboard-navigation.constant';
-import { OBJECT_TYPE } from '@/constants/objects.constant';
 import {
     Sidebar,
     SidebarContent,
@@ -20,7 +19,7 @@ import {
     SidebarMenuItem
 } from '@/registry/new-york-v4/ui/sidebar';
 
-import { Book, Command, Lock, Music3, Tv, User, Video } from 'lucide-react';
+import { Command } from 'lucide-react';
 
 const data = {
     user: {
