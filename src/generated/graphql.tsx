@@ -20469,7 +20469,7 @@ export type GetMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any }> };
+export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title?: string | null, poster?: string | null }> };
 
 
 
@@ -20606,6 +20606,8 @@ export const GetMoviesDocument = `
     where: $where
   ) {
     id
+    title
+    poster
   }
 }
     `;

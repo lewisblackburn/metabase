@@ -46,7 +46,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                             <ThemeProvider attribute='class'>
                                 <TooltipProvider>
                                     {children}
-                                    <Toaster />
+                                    <Toaster position='top-center' />
                                 </TooltipProvider>
                             </ThemeProvider>
                         </StoreProvider>

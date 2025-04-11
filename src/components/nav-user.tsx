@@ -1,8 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { setSettingsDialogOpenState } from '@/features/settings/store/settings.slice';
 import { ShortcutDisplay } from '@/features/shortcuts/components/shortcut-display';
 import { useShortcut } from '@/features/shortcuts/hooks/useShortcut';
+import { nhost } from '@/lib/nhost';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import {
     DropdownMenu,
@@ -30,6 +33,11 @@ export function NavUser({
     const dispatch = useDispatch();
     const toggleSettings = useShortcut('toggleSettings');
     const { isMobile } = useSidebar();
+    const router = useRouter();
+    const handleLogout = async () => {
+        await nhost.auth.signOut();
+        router.push('/authentication/login');
+    };
 
     return (
         <SidebarMenu>
@@ -97,7 +105,7 @@ export function NavUser({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleLogout()}>
                             <LogOut />
                             Log out
                         </DropdownMenuItem>

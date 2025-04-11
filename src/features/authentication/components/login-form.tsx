@@ -2,22 +2,30 @@
 
 import * as React from 'react';
 
+import { useRouter } from 'next/navigation';
+
+import BaseFormLayout from '@/components/form/base-form-layout';
+import InputField from '@/components/form/input';
 import AppleIcon from '@/components/icons/apple.icon';
 import GoogleIcon from '@/components/icons/google.icon';
 import MetaIcon from '@/components/icons/meta.icon';
+import { nhost } from '@/lib/nhost';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Card, CardContent } from '@/registry/new-york-v4/ui/card';
-import { Form } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { loginSchema } from '../schemas/login.schema';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 type LoginValues = z.infer<typeof loginSchema>;
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
+    const router = useRouter();
+
     const form = useForm<LoginValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -26,8 +34,14 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
         }
     });
 
-    const onSubmit = (data: LoginValues) => {
-        console.log('Login submitted:', data);
+    const onSubmit = async (data: LoginValues) => {
+        const result = await nhost.auth.signIn({
+            email: data.email,
+            password: data.password
+        });
+
+        if (result.error) toast.error(result.error.message);
+        else router.push('/dashboard');
     };
 
     return (
@@ -42,21 +56,29 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                                     <p className='text-muted-foreground text-balance'>Login to your Metabase account</p>
                                 </div>
 
-                                {/* <InputField */}
-                                {/*     control={form.control} */}
-                                {/*     name='email' */}
-                                {/*     label='Email' */}
-                                {/*     placeholder='m@example.com' */}
-                                {/*     type='email' */}
-                                {/* /> */}
-                                {/**/}
-                                {/* <InputField */}
-                                {/*     control={form.control} */}
-                                {/*     name='password' */}
-                                {/*     label='Password' */}
-                                {/*     placeholder='••••••••' */}
-                                {/*     type='password' */}
-                                {/* /> */}
+                                <FormField
+                                    control={form.control}
+                                    name='email'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <BaseFormLayout label='Email'>
+                                                <InputField {...field} />
+                                            </BaseFormLayout>
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name='password'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <BaseFormLayout label='Password'>
+                                                <InputField type='password' {...field} />
+                                            </BaseFormLayout>
+                                        </FormItem>
+                                    )}
+                                />
 
                                 <div className='flex justify-end'>
                                     <a href='#' className='text-sm underline-offset-2 hover:underline'>
@@ -79,7 +101,11 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                                         <AppleIcon />
                                         <span className='sr-only'>Login with Apple</span>
                                     </Button>
-                                    <Button variant='outline' className='w-full' type='button'>
+                                    <Button
+                                        variant='outline'
+                                        className='w-full cursor-pointer'
+                                        type='button'
+                                        onClick={() => nhost.auth.signIn({ provider: 'google' })}>
                                         <GoogleIcon />
                                         <span className='sr-only'>Login with Google</span>
                                     </Button>
