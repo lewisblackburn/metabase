@@ -17,7 +17,6 @@ import { AVAILABILITIES } from '@/constants/availabilities.constant';
 import { CERTIFICATIONS } from '@/constants/certifications.constant';
 import { GENRES } from '@/constants/genres.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';

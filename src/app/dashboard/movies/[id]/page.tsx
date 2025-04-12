@@ -1,19 +1,35 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import Link from 'next/link';
+import { notFound, useParams } from 'next/navigation';
 
 import AwardTable from '@/components/shared/award-table';
+import DefaultLoading from '@/components/shared/default-loading';
 import ImageSlider from '@/components/shared/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
-import { MOVIES_DATA, MOVIE_DATA } from '@/constants/fakedb.constant';
+import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
+import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
+import { useGetMovieQuery } from '@/generated/graphql';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
-import { Layers2, Lightbulb } from 'lucide-react';
+import NotFound from './not-found';
+import { Layers2 } from 'lucide-react';
 
 export default function MoviePage() {
+    const { id } = useParams();
+    const { data, isLoading } = useGetMovieQuery({ id });
+    const movie = data?.movies_by_pk;
+
+    useBreadCrumbs('Testing');
+
+    if (!movie && !isLoading) throw notFound();
+    if (isLoading) return <DefaultLoading />;
+
     const castImages = MOVIE_DATA.cast.map((actor) => ({
         id: actor.name,
         src: actor.headshot,

@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-// NOTE: This is the size at which the application is considered to be in mobile mode.
-const MOBILE_BREAKPOINT = 1920;
+const MOBILE_BREAKPOINT = 768;
 
 export function useIsMobile() {
     const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined);
