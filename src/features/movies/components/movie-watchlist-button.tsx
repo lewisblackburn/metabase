@@ -1,7 +1,7 @@
 import {
-    Movie_Favourites_Constraint,
-    useDeleteMovieFavouriteMutation,
-    useInsertMovieFavouriteMutation
+    Movie_Watchlist_Constraint,
+    useDeleteMovieWatchlistMutation,
+    useInsertMovieWatchlistMutation
 } from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { cn } from '@/lib/utils';
@@ -9,34 +9,34 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { useUserId } from '@nhost/nextjs';
 
 import { useMovie } from './movie-provider';
-import { Heart, Loader2 } from 'lucide-react';
+import { Bookmark, Heart, Loader2 } from 'lucide-react';
 
-export default function MovieFavouriteButton() {
+export default function MovieWatchlistButton() {
     const userId = useUserId();
     const { movie } = useMovie();
-    const { mutateAsync: insertMovieFavourite, isPending: insertFavouritePending } = useInsertMovieFavouriteMutation();
-    const { mutateAsync: deleteMovieFavourite, isPending: deleteFavouritePending } = useDeleteMovieFavouriteMutation();
+    const { mutateAsync: insertMovieWatchlist, isPending: insertWatchlistPending } = useInsertMovieWatchlistMutation();
+    const { mutateAsync: deleteMovieWatchlist, isPending: deleteWatchlistPending } = useDeleteMovieWatchlistMutation();
 
-    const isLoading = insertFavouritePending || deleteFavouritePending;
+    const isLoading = insertWatchlistPending || deleteWatchlistPending;
 
     if (!movie) return null;
 
-    const isFavourited = movie.favourited;
+    const isWatchlisted = movie.watchlisted;
 
-    const handleFavourite = async () => {
-        await insertMovieFavourite({
+    const handleWatchlist = async () => {
+        await insertMovieWatchlist({
             object: {
                 movie_id: movie.id
             },
             on_conflict: {
-                constraint: Movie_Favourites_Constraint.MovieFavouritesPkey,
+                constraint: Movie_Watchlist_Constraint.MovieWatchlistPkey,
                 update_columns: []
             }
         });
     };
 
-    const handleUnfavourite = async () => {
-        await deleteMovieFavourite({
+    const handleUnwatchlist = async () => {
+        await deleteMovieWatchlist({
             where: {
                 movie_id: {
                     _eq: movie.id
@@ -49,23 +49,23 @@ export default function MovieFavouriteButton() {
     };
 
     const handleClick = async () => {
-        if (isFavourited) await handleUnfavourite();
-        else await handleFavourite();
+        if (isWatchlisted) await handleUnwatchlist();
+        else await handleWatchlist();
 
         queryClient.invalidateQueries({ queryKey: ['movie', movie.id] });
     };
     return (
         <Button
             variant='outline'
-            className={cn({ 'fill-red-500 text-red-500': isFavourited })}
+            className={cn({ 'fill-blue-500 text-blue-500': isWatchlisted })}
             disabled={isLoading}
             onClick={async () => await handleClick()}>
             {isLoading ? (
                 <Loader2 className='size-4 animate-spin' />
             ) : (
-                <Heart className={cn({ 'fill-red-500 text-red-500': isFavourited })} />
+                <Bookmark className={cn({ 'fill-blue-500 text-blue-500': isWatchlisted })} />
             )}
-            {isFavourited ? 'Favourited' : 'Favourite'}
+            {isWatchlisted ? 'Watchlisted' : 'Watchlist'}
         </Button>
     );
 }

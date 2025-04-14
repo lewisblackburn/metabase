@@ -20460,6 +20460,13 @@ export type DeleteMovieFavouriteMutationVariables = Exact<{
 
 export type DeleteMovieFavouriteMutation = { __typename?: 'mutation_root', delete_movie_favourites?: { __typename?: 'movie_favourites_mutation_response', returning: Array<{ __typename?: 'movie_favourites', id: any }> } | null };
 
+export type DeleteMovieWatchlistMutationVariables = Exact<{
+  where: Movie_Watchlist_Bool_Exp;
+}>;
+
+
+export type DeleteMovieWatchlistMutation = { __typename?: 'mutation_root', delete_movie_watchlist?: { __typename?: 'movie_watchlist_mutation_response', returning: Array<{ __typename?: 'movie_watchlist', id: any }> } | null };
+
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
@@ -20486,6 +20493,14 @@ export type InsertMovieFavouriteMutationVariables = Exact<{
 
 export type InsertMovieFavouriteMutation = { __typename?: 'mutation_root', insert_movie_favourites_one?: { __typename?: 'movie_favourites', id: any } | null };
 
+export type InsertMovieWatchlistMutationVariables = Exact<{
+  object: Movie_Watchlist_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Watchlist_On_Conflict>;
+}>;
+
+
+export type InsertMovieWatchlistMutation = { __typename?: 'mutation_root', insert_movie_watchlist_one?: { __typename?: 'movie_watchlist', id: any } | null };
+
 
 
 export const DeleteMovieFavouriteDocument = `
@@ -20507,6 +20522,29 @@ export const useDeleteMovieFavouriteMutation = <
       {
     mutationKey: ['DeleteMovieFavourite'],
     mutationFn: (variables?: DeleteMovieFavouriteMutationVariables) => fetcher<DeleteMovieFavouriteMutation, DeleteMovieFavouriteMutationVariables>(DeleteMovieFavouriteDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteMovieWatchlistDocument = `
+    mutation DeleteMovieWatchlist($where: movie_watchlist_bool_exp!) {
+  delete_movie_watchlist(where: $where) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+
+export const useDeleteMovieWatchlistMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieWatchlistMutation, TError, DeleteMovieWatchlistMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieWatchlistMutation, TError, DeleteMovieWatchlistMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieWatchlist'],
+    mutationFn: (variables?: DeleteMovieWatchlistMutationVariables) => fetcher<DeleteMovieWatchlistMutation, DeleteMovieWatchlistMutationVariables>(DeleteMovieWatchlistDocument, variables)(),
     ...options
   }
     )};
@@ -20702,6 +20740,27 @@ export const useInsertMovieFavouriteMutation = <
       {
     mutationKey: ['InsertMovieFavourite'],
     mutationFn: (variables?: InsertMovieFavouriteMutationVariables) => fetcher<InsertMovieFavouriteMutation, InsertMovieFavouriteMutationVariables>(InsertMovieFavouriteDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertMovieWatchlistDocument = `
+    mutation InsertMovieWatchlist($object: movie_watchlist_insert_input!, $on_conflict: movie_watchlist_on_conflict) {
+  insert_movie_watchlist_one(object: $object, on_conflict: $on_conflict) {
+    id
+  }
+}
+    `;
+
+export const useInsertMovieWatchlistMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieWatchlistMutation, TError, InsertMovieWatchlistMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieWatchlistMutation, TError, InsertMovieWatchlistMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieWatchlist'],
+    mutationFn: (variables?: InsertMovieWatchlistMutationVariables) => fetcher<InsertMovieWatchlistMutation, InsertMovieWatchlistMutationVariables>(InsertMovieWatchlistDocument, variables)(),
     ...options
   }
     )};

@@ -16,6 +16,7 @@ import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
+import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
@@ -136,12 +137,7 @@ function MovieLayoutContent({
                         <Separator />
                         <div className='grid grid-cols-2 gap-2'>
                             <MovieFavouriteButton />
-                            <Button
-                                variant='outline'
-                                className={cn({ 'fill-blue-500 text-blue-500': movie.watchlisted })}>
-                                <Bookmark />
-                                Watch Later
-                            </Button>
+                            <MovieWatchlistButton />
                         </div>
                     </SidebarMenu>
                 </SidebarContent>

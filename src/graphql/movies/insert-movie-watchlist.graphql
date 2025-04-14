@@ -1,0 +1,5 @@
+mutation InsertMovieWatchlist($object: movie_watchlist_insert_input!, $on_conflict: movie_watchlist_on_conflict) {
+    insert_movie_watchlist_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}
