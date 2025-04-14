@@ -7,7 +7,7 @@ import ImageSlider from '@/components/shared/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
+import { useMovie } from '@/features/movies/components/movie-provider';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
@@ -105,7 +105,6 @@ export default function MoviePageContent() {
                     </CustomBadge>
                     <AwardTable awards={MOVIE_DATA.awards} />
                 </div>
-                <Separator />
             </div>
         </div>
     );

@@ -1,0 +1,5 @@
+mutation InsertMovieFavourite($object: movie_favourites_insert_input!, $on_conflict: movie_favourites_on_conflict) {
+    insert_movie_favourites_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}

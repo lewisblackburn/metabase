@@ -1,4 +1,4 @@
-import { useQuery, useInfiniteQuery, UseQueryOptions, UseInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
+import { useMutation, useQuery, useInfiniteQuery, UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
 import { fetcher } from '../lib/graphql-client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -20453,6 +20453,13 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp;
 };
 
+export type DeleteMovieFavouriteMutationVariables = Exact<{
+  where: Movie_Favourites_Bool_Exp;
+}>;
+
+
+export type DeleteMovieFavouriteMutation = { __typename?: 'mutation_root', delete_movie_favourites?: { __typename?: 'movie_favourites_mutation_response', returning: Array<{ __typename?: 'movie_favourites', id: any }> } | null };
+
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
@@ -20471,7 +20478,38 @@ export type GetMoviesQueryVariables = Exact<{
 
 export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, poster: string }> };
 
+export type InsertMovieFavouriteMutationVariables = Exact<{
+  object: Movie_Favourites_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Favourites_On_Conflict>;
+}>;
 
+
+export type InsertMovieFavouriteMutation = { __typename?: 'mutation_root', insert_movie_favourites_one?: { __typename?: 'movie_favourites', id: any } | null };
+
+
+
+export const DeleteMovieFavouriteDocument = `
+    mutation DeleteMovieFavourite($where: movie_favourites_bool_exp!) {
+  delete_movie_favourites(where: $where) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+
+export const useDeleteMovieFavouriteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieFavouriteMutation, TError, DeleteMovieFavouriteMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieFavouriteMutation, TError, DeleteMovieFavouriteMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieFavourite'],
+    mutationFn: (variables?: DeleteMovieFavouriteMutationVariables) => fetcher<DeleteMovieFavouriteMutation, DeleteMovieFavouriteMutationVariables>(DeleteMovieFavouriteDocument, variables)(),
+    ...options
+  }
+    )};
 
 export const GetMovieDocument = `
     query GetMovie($id: uuid!) {
@@ -20645,4 +20683,25 @@ export const useInfiniteGetMoviesQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const InsertMovieFavouriteDocument = `
+    mutation InsertMovieFavourite($object: movie_favourites_insert_input!, $on_conflict: movie_favourites_on_conflict) {
+  insert_movie_favourites_one(object: $object, on_conflict: $on_conflict) {
+    id
+  }
+}
+    `;
+
+export const useInsertMovieFavouriteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieFavouriteMutation, TError, InsertMovieFavouriteMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieFavouriteMutation, TError, InsertMovieFavouriteMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieFavourite'],
+    mutationFn: (variables?: InsertMovieFavouriteMutationVariables) => fetcher<InsertMovieFavouriteMutation, InsertMovieFavouriteMutationVariables>(InsertMovieFavouriteDocument, variables)(),
+    ...options
+  }
     )};

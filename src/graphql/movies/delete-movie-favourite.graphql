@@ -1,0 +1,7 @@
+mutation DeleteMovieFavourite($where: movie_favourites_bool_exp!) {
+    delete_movie_favourites(where: $where) {
+        returning {
+            id
+        }
+    }
+}

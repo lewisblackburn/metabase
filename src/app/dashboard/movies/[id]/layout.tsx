@@ -14,6 +14,7 @@ import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
+import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -134,10 +135,7 @@ function MovieLayoutContent({
                         <ProgressItem icon={TrendingUp} label='Content Score' score={movie.content_score} />
                         <Separator />
                         <div className='grid grid-cols-2 gap-2'>
-                            <Button variant='outline' className={cn({ 'fill-red-500 text-red-500': movie.favourited })}>
-                                <Heart />
-                                Favourite
-                            </Button>
+                            <MovieFavouriteButton />
                             <Button
                                 variant='outline'
                                 className={cn({ 'fill-blue-500 text-blue-500': movie.watchlisted })}>
