@@ -1,0 +1,21 @@
+query GetSong($id: uuid!) {
+    songs_by_pk(id: $id) {
+        id
+        title
+        artwork
+        duration
+        content_score
+        spotify_id
+        apple_music_id
+        favourited
+        listen_latered
+        user_rating
+        song_artists(order_by: { order: asc }) {
+            id
+            person {
+                name
+            }
+            order
+        }
+    }
+}

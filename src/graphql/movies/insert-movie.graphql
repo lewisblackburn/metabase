@@ -1,0 +1,5 @@
+mutation InsertMovie($object: movies_insert_input!) {
+    insert_movies_one(object: $object) {
+        id
+    }
+}

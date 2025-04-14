@@ -1,0 +1,12 @@
+query GetFiles(
+    $where: files_bool_exp
+    $order_by: [files_order_by!]
+    $limit: Int
+    $offset: Int
+    $distinct_on: [files_select_column!]
+) {
+    files(where: $where, order_by: $order_by, limit: $limit, offset: $offset, distinct_on: $distinct_on) {
+        id
+        name
+    }
+}

@@ -24,9 +24,9 @@ query GetMovie($id: uuid!) {
         vote_average
         vote_count
         homepage
-        rated
         favourited
         watchlisted
+        user_rating
         movie_genres {
             genre {
                 name
@@ -39,7 +39,7 @@ query GetMovie($id: uuid!) {
         }
         movie_cast_members {
             id
-            role
+            character
             person {
                 id
                 name

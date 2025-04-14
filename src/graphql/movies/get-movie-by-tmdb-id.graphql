@@ -1,0 +1,5 @@
+query GetMovieByTMDB_ID($tmdb_id: String) {
+    movies(where: { tmdb_id: { _eq: $tmdb_id } }) {
+        tmdb_id
+    }
+}
