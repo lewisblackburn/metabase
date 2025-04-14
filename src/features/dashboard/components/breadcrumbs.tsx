@@ -2,12 +2,12 @@
 
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import {
     Breadcrumb,
     BreadcrumbItem,
-    BreadcrumbLink,
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator
@@ -90,9 +90,10 @@ function BreadcrumbsContent() {
                                 <BreadcrumbPage className='capitalize'>{title}</BreadcrumbPage>
                             ) : (
                                 <>
-                                    <BreadcrumbLink href={href} className='capitalize'>
+                                    {/* NOTE: This is a workaround to avoid the breadcrumb link resetting the cache */}
+                                    <Link href={href} className='capitalize'>
                                         {title}
-                                    </BreadcrumbLink>
+                                    </Link>
                                     <BreadcrumbSeparator />
                                 </>
                             )}

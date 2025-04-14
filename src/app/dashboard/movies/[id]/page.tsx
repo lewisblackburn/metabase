@@ -1,34 +1,23 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import Link from 'next/link';
-import { notFound, useParams } from 'next/navigation';
 
 import AwardTable from '@/components/shared/award-table';
-import DefaultLoading from '@/components/shared/default-loading';
 import ImageSlider from '@/components/shared/image-slider';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
+import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
-import { useGetMovieQuery } from '@/generated/graphql';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
-import NotFound from './not-found';
 import { Layers2 } from 'lucide-react';
 
-export default function MoviePage() {
-    const { id } = useParams();
-    const { data, isLoading } = useGetMovieQuery({ id });
-    const movie = data?.movies_by_pk;
+export default function MoviePageContent() {
+    const { movie } = useMovie();
 
-    useBreadCrumbs('Testing');
-
-    if (!movie && !isLoading) throw notFound();
-    if (isLoading) return <DefaultLoading />;
+    if (!movie) return null;
 
     const castImages = MOVIE_DATA.cast.map((actor) => ({
         id: actor.name,
@@ -38,41 +27,7 @@ export default function MoviePage() {
         description: actor.character
     }));
 
-    // NOTE: This is not in the MOVIE_DATA as it will be dynamically fetched based on user and movie id from a custom NHost runner
-    const recommendations = [
-        {
-            id: 'recomendation-1',
-            src: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/rNzQyW4f8B8cQeg7Dgj3n6eT5k9.jpg',
-            alt: 'The Notebook',
-            title: 'The Notebook'
-        },
-        {
-            id: 'recomendation-2',
-            src: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/y5GUXzTvt7kSQbdQrSvbYNoa8HB.jpg',
-            alt: 'The Vow',
-            title: 'The Vow'
-        },
-        {
-            id: 'recomendation-3',
-            src: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/eCOtqtfvn7mxGl6nfmq4b1exJRc.jpg',
-            alt: 'Her',
-            title: 'Her '
-        },
-        {
-            id: 'recomendation-4',
-            src: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/aKCvdFFF5n80P2VdS7d8YBwbCjh.jpg',
-            alt: 'The Perks of Being a Wallflower',
-            title: 'The Perks of Being a Wallflower'
-        },
-        {
-            id: 'recomendation-5',
-            src: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/qx4HXHXt528hS4rwePZbZo20xqZ.jpg',
-            alt: 'Begin Again',
-            title: 'Begin Again'
-        }
-    ];
-
-    const MOST_POPULAR_REVIEW = MOVIE_DATA.reviews[0];
+    const mostPopularReview = MOVIE_DATA.reviews[0];
 
     return (
         <div className='flex flex-col gap-5'>
@@ -89,9 +44,9 @@ export default function MoviePage() {
                 </Link>
             </div>
             <div className='flex flex-col gap-2'>
-                <h2>{MOVIE_DATA.title}</h2>
-                <p className='text-muted-foreground'>{MOVIE_DATA.tagline}</p>
-                <p>{MOVIE_DATA.overview}</p>
+                <h2>{movie.title}</h2>
+                <p className='text-muted-foreground'>{movie.tagline}</p>
+                <p>{movie.overview}</p>
             </div>
             <div className='flex flex-col gap-10 py-5'>
                 <Separator />
@@ -131,24 +86,14 @@ export default function MoviePage() {
                     </Link>
                     <Review
                         id='review-1'
-                        user={MOST_POPULAR_REVIEW.user}
-                        content={MOST_POPULAR_REVIEW.content}
-                        votes={MOST_POPULAR_REVIEW.votes}
-                        voteStatus={MOST_POPULAR_REVIEW.voteStatus}
-                        rating={MOST_POPULAR_REVIEW.rating}
-                        createdAt={MOST_POPULAR_REVIEW.createdAt}
+                        user={mostPopularReview.user}
+                        content={mostPopularReview.content}
+                        votes={mostPopularReview.votes}
+                        voteStatus={mostPopularReview.voteStatus}
+                        rating={mostPopularReview.rating}
+                        createdAt={mostPopularReview.createdAt}
                     />
                 </div>
-                {/* <div className='flex flex-col gap-2'> */}
-                {/*     <CustomBadge */}
-                {/*         icon={OBJECT_TYPE.MEDIUM.icon} */}
-                {/*         background={OBJECT_TYPE.MEDIUM.background} */}
-                {/*         foreground={OBJECT_TYPE.MEDIUM.foreground} */}
-                {/*         border={OBJECT_TYPE.MEDIUM.border}> */}
-                {/*         {OBJECT_TYPE.MEDIUM.plural} */}
-                {/*     </CustomBadge> */}
-                {/* </div> */}
-                {/* <Separator /> */}
                 <Separator />
                 <div className='flex flex-col gap-2'>
                     <CustomBadge
@@ -160,18 +105,7 @@ export default function MoviePage() {
                     </CustomBadge>
                     <AwardTable awards={MOVIE_DATA.awards} />
                 </div>
-                {/* TODO: This should be on the profile page */}
-                {/* <Separator /> 
-                <div className='flex flex-col gap-2'>
-                    <CustomBadge
-                        icon={Lightbulb}
-                        background='bg-blue-300/20'
-                        foreground='text-blue-800'
-                        border='border-blue-400/60'>
-                        Recommendations
-                    </CustomBadge>
-                    <ImageSlider images={recommendations} width={150} height={250} /> 
-                </div> */}
+                <Separator />
             </div>
         </div>
     );

@@ -1,17 +1,20 @@
 'use client';
 
-import { Fragment, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
 
-import ActionButton from '@/components/shared/action-button';
+import DefaultLoading from '@/components/shared/default-loading';
+import NotFound from '@/components/shared/default-not-found';
 import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
 import Poster from '@/components/shared/poster';
 import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
+import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
+import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
@@ -20,52 +23,82 @@ import isLastIndex from '@/utils/is-last-index';
 
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { Bookmark, Calendar, Clock, CreditCard, Heart, Info, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
+import { Bookmark, Calendar, CreditCard, Heart, Info, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
 
 dayjs.extend(advancedFormat);
 
-const INFORMATION = [
-    {
-        icon: Calendar,
-        badges: dayjs(MOVIE_DATA.releaseDate).format('MMMM Do, YYYY'),
-        label: 'Release Date'
-    },
-    {
-        icon: Tags,
-        badges: MOVIE_DATA.genre,
-        label: 'Genre'
-    },
-    {
-        icon: Timer,
-        badges: MOVIE_DATA.formattedDuration,
-        label: 'Duration'
-    },
-    {
-        icon: Info,
-        badges: MOVIE_DATA.status,
-        label: 'Status'
-    },
-    {
-        icon: User,
-        badges: MOVIE_DATA.director,
-        label: 'Director'
-    },
-    {
-        icon: TrendingUp,
-        badges: MOVIE_DATA.revenue,
-        label: 'Revenue'
-    },
-    {
-        icon: CreditCard,
-        badges: MOVIE_DATA.budget,
-        label: 'Budget'
-    }
-];
-
-const MovieLayout = ({ children }: { children: ReactNode }) => {
+export default function MovieLayout({ children }: { children: ReactNode }) {
     const [open, setOpen] = useState(true);
-    const [isFavourite, setIsFavourite] = useState(false);
-    const [isWatchLater, setIsWatchLater] = useState(false);
+
+    return (
+        <MovieProvider>
+            <MovieLayoutContent open={open} setOpen={setOpen}>
+                {children}
+            </MovieLayoutContent>
+        </MovieProvider>
+    );
+}
+
+function MovieLayoutContent({
+    children,
+    open,
+    setOpen
+}: {
+    children: ReactNode;
+    open: boolean;
+    setOpen: (prev: boolean) => void;
+}) {
+    const { movie, isLoading } = useMovie();
+
+    useBreadCrumbs(movie?.title || '');
+
+    if (isLoading) return <DefaultLoading />;
+    if (!movie) return <NotFound />;
+
+    const information = [
+        {
+            id: 'release-date',
+            icon: Calendar,
+            badges: dayjs(movie.release_date).format('MMMM Do, YYYY'),
+            label: 'Release Date'
+        },
+        {
+            id: 'genre',
+            icon: Tags,
+            badges: movie.movie_genres.map((genre) => genre.genre.name),
+            label: 'Genre'
+        },
+        {
+            id: 'duration',
+            icon: Timer,
+            badges: MOVIE_DATA.formattedDuration,
+            label: 'Duration'
+        },
+        {
+            id: 'status',
+            icon: Info,
+            badges: movie.status,
+            label: 'Status'
+        },
+        {
+            id: 'director',
+            icon: User,
+            badges: MOVIE_DATA.director,
+            label: 'Director'
+        },
+        {
+            id: 'revenue',
+            icon: TrendingUp,
+            badges: movie.revenue,
+            label: 'Revenue'
+        },
+        {
+            id: 'budget',
+            icon: CreditCard,
+            badges: movie.budget,
+            label: 'Budget'
+        }
+    ];
 
     return (
         <SidebarProvider
@@ -79,50 +112,47 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
             <Sidebar className='absolute'>
                 <SidebarContent className='bg-white p-5'>
                     <SidebarMenu className='flex flex-col gap-5'>
-                        <Poster title={MOVIE_DATA.title} image={MOVIE_DATA.poster} />
-                        <Link href={MOVIE_DATA.trailer}>
-                            <Button variant='secondary' className='w-full cursor-pointer'>
-                                <Play />
-                                Play Trailer
-                            </Button>
-                        </Link>
+                        <Poster title={movie.title} image={movie.poster} />
+                        {movie.trailer && (
+                            <a href={movie.trailer} target='_blank' rel='noopener noreferrer' className='w-full'>
+                                <Button variant='secondary' className='w-full cursor-pointer'>
+                                    <Play />
+                                    Play Trailer
+                                </Button>
+                            </a>
+                        )}
 
                         <div className='mt-5 flex flex-col gap-5'>
-                            {INFORMATION.map((item, index) => (
-                                <Fragment key={index}>
-                                    <InformationItem key={index} {...item} />
-                                    {isLastIndex(index, INFORMATION) ? null : <Separator />}
-                                </Fragment>
+                            {information.map((item, idx) => (
+                                <div key={item.id}>
+                                    <InformationItem {...item} />
+                                    {!isLastIndex(idx, information) && <Separator className='mt-5' />}
+                                </div>
                             ))}
                         </div>
                         <Separator />
-                        <ProgressItem icon={TrendingUp} label='Content Score' score={MOVIE_DATA.contentScore} />
+                        <ProgressItem icon={TrendingUp} label='Content Score' score={movie.content_score} />
                         <Separator />
                         <div className='grid grid-cols-2 gap-2'>
-                            <ActionButton
-                                icon={Heart}
-                                label='Favourite'
-                                iconClassName={cn({ 'fill-red-500 text-red-500': isFavourite })}
-                                onClick={() => setIsFavourite((prev) => !prev)}
-                            />
-                            <ActionButton
-                                icon={Bookmark}
-                                label='Watch Later'
-                                iconClassName={cn({ 'fill-blue-500 text-blue-500': isWatchLater })}
-                                onClick={() => setIsWatchLater((prev) => !prev)}
-                            />
+                            <Button variant='outline' className={cn({ 'fill-red-500 text-red-500': movie.favourited })}>
+                                <Heart />
+                                Favourite
+                            </Button>
+                            <Button
+                                variant='outline'
+                                className={cn({ 'fill-blue-500 text-blue-500': movie.watchlisted })}>
+                                <Bookmark />
+                                Watch Later
+                            </Button>
                         </div>
                     </SidebarMenu>
                 </SidebarContent>
             </Sidebar>
             <main className='h-[calc(100vh-4rem)] w-full overflow-auto'>
-                <InnerSidebarTrigger
-                    onClick={() => setOpen((prev) => !prev)}
-                    className='absolute m-2 cursor-pointer bg-white'
-                />
+                <InnerSidebarTrigger onClick={() => setOpen(!open)} className='absolute m-2 cursor-pointer bg-white' />
                 <Image
-                    src={MOVIE_DATA.backdrop}
-                    alt={MOVIE_DATA.title}
+                    src={movie.backdrop}
+                    alt={movie.title}
                     width={1920}
                     height={1080}
                     quality={100}
@@ -132,6 +162,4 @@ const MovieLayout = ({ children }: { children: ReactNode }) => {
             </main>
         </SidebarProvider>
     );
-};
-
-export default MovieLayout;
+}

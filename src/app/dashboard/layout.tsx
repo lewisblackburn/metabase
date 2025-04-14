@@ -1,6 +1,7 @@
 import { Fragment, ReactNode } from 'react';
 
 import { AppSidebar } from '@/components/app-sidebar';
+import AuthenticatedComponent from '@/components/shared/authenticated-component';
 import CommandPanel from '@/features/command-panel/components/command-panel';
 import Breadcrumbs, { BreadCrumbsProvider } from '@/features/dashboard/components/breadcrumbs';
 import EditDialogManager from '@/features/edit-dailog/components/edit-dialog-manager';
@@ -10,7 +11,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/registry/new-yo
 
 const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     return (
-        <Fragment>
+        <AuthenticatedComponent>
             <EditDialogManager />
             <CommandPanel />
             <SettingsDialog />
@@ -27,7 +28,7 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                     </SidebarInset>
                 </SidebarProvider>
             </BreadCrumbsProvider>
-        </Fragment>
+        </AuthenticatedComponent>
     );
 };
 
