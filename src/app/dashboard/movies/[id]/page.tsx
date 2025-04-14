@@ -19,12 +19,12 @@ export default function MoviePageContent() {
 
     if (!movie) return null;
 
-    const castImages = MOVIE_DATA.cast.map((actor) => ({
-        id: actor.name,
-        src: actor.headshot,
-        alt: actor.character,
-        title: actor.name,
-        description: actor.character
+    const castImages = movie.movie_cast_members.map((cast_member) => ({
+        id: cast_member.person.name,
+        src: cast_member.person.headshot ?? '',
+        alt: cast_member.character ?? '',
+        title: cast_member.person.name ?? '',
+        description: cast_member.character ?? ''
     }));
 
     const mostPopularReview = MOVIE_DATA.reviews[0];

@@ -38,7 +38,7 @@ query GetMovie($id: uuid!) {
                 keyword
             }
         }
-        movie_cast_members {
+        movie_cast_members(limit: 10) {
             id
             character
             person {
@@ -47,7 +47,7 @@ query GetMovie($id: uuid!) {
                 headshot
             }
         }
-        movie_crew_members {
+        movie_crew_members(limit: 10) {
             id
             job
             department

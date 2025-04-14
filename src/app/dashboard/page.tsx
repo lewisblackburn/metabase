@@ -4,7 +4,7 @@ import { tmdbMovieImporterService } from '@/services/tmdb/tmdb-movie-importer.se
 
 export default function DashboardPage() {
     const test = async () => {
-        const result = await tmdbMovieImporterService.import('123');
+        const result = await tmdbMovieImporterService.import('122906-about-time');
         console.log(result);
     };
 
