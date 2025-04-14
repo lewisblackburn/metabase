@@ -13,7 +13,8 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({
-        title: awards.some((award) => award.title)
+        title: awards.some((award) => award.title),
+        type: awards.some((award) => award.type)
     });
 
     // Sort data based on sorting state
@@ -104,7 +105,7 @@ export default function AwardTable({ awards }: { awards: AwardType[] }) {
                     <SortingArrows column={column} />
                 </button>
             ),
-            cell: ({ row }) => row.original.type.name
+            cell: ({ row }) => row.original.type?.name
         }
     ];
 

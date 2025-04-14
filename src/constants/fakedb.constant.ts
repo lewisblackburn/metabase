@@ -241,8 +241,7 @@ export const MOVIE_DATA = {
             id: 'award-1',
             award: 'Best Picture',
             year: 2013,
-            event: 'Academy Awards',
-            type: OBJECT_TYPE.MOVIE
+            event: 'Academy Awards'
         }
     ],
     soundtrack: [

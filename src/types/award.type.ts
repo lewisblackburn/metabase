@@ -7,5 +7,5 @@ export interface AwardType {
     award: string;
     year: number;
     event: string;
-    type: ObjectType;
+    type?: ObjectType;
 }
