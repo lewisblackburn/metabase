@@ -70,11 +70,11 @@ export class TMDBMovieImporterService extends TMDBService {
                 FileService.uploadFile(this.getProfileImage(crewMember.profile_path), MEDIA_TYPE.HEADSHOT)
             )
         );
-        const productionCompanyLogos = await Promise.all(
-            movie.production_companies.map((company) =>
-                FileService.uploadFile(this.getLogoImage(company.logo_path), MEDIA_TYPE.LOGO)
-            )
-        );
+        // const productionCompanyLogos = await Promise.all(
+        //     movie.production_companies.map((company) =>
+        //         FileService.uploadFile(this.getLogoImage(company.logo_path), MEDIA_TYPE.LOGO)
+        //     )
+        // );
 
         const importedMovie = await this.saveMovie({
             title: movie.title,
@@ -155,18 +155,19 @@ export class TMDBMovieImporterService extends TMDBService {
                                           constraint: Person_Media_Constraint.PersonMediaPkey
                                       }
                                   }
-                                : undefined,
-                            on_conflict: {
-                                constraint: People_Constraint.PeopleTmdbIdKey,
-                                update_columns: [People_Update_Column.Headshot]
-                            }
+                                : undefined
+                        },
+                        on_conflict: {
+                            constraint: People_Constraint.PeopleTmdbIdKey,
+                            update_columns: [People_Update_Column.Headshot]
                         }
                     }
                 }))
             },
             movie_crew_members: {
                 data: movie.credits.crew.map((crewMember, index) => ({
-                    role: crewMember.job,
+                    job: crewMember.job,
+                    department: crewMember.department,
                     person: {
                         data: {
                             tmdb_id: crewMember.id.toString(),
@@ -202,36 +203,14 @@ export class TMDBMovieImporterService extends TMDBService {
             },
             movie_production_companies: {
                 data: movie.production_companies.map((company, index) => ({
-                    production_company: {
-                        data: {
-                            name: company.name,
-                            country: company.origin_country,
-                            company_media: {
-                                data: productionCompanyLogos[index]?.url
-                                    ? [
-                                          {
-                                              image_type: MEDIA_TYPE.LOGO,
-                                              file_url: productionCompanyLogos[index]?.url,
-                                              file_id: productionCompanyLogos[index]?.id,
-                                              uploaded_by: METABASE_BOT_ID
-                                          }
-                                      ]
-                                    : []
-                            }
-                        },
-                        on_conflict: {
-                            constraint: Movie_Production_Companies_Constraint.MovieProductionCompaniesCompanyNameKey,
-                            // NOTE: This would be blank but it fixes: cannot proceed to insert array relations since insert to table "production_companies" affects zero rows
-                            update_columns: [Movie_Production_Companies_Update_Column.Id]
-                        }
-                    }
+                    company_name: company.name
                 }))
             },
             movie_alternative_titles: {
                 data: movie.alternative_titles.titles
                     .filter((title) => LANGUAGES.some((language) => language.code === title.iso_3166_1.toLowerCase()))
                     .map((title) => ({
-                        title: title.title,
+                        alternative_title: title.title,
                         type: title.type,
                         language: title.iso_3166_1.toLowerCase()
                     }))

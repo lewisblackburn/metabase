@@ -17,7 +17,7 @@ class ContentQualityService {
     public async check(objectType: ObjectType, localId: string, externalId: string) {
         switch (objectType) {
             case OBJECT_TYPE.MOVIE:
-                return this.checkFilmQuality(localId, externalId);
+                return this.checkMovieQuality(localId, externalId);
             case OBJECT_TYPE.SONG:
                 return this.checkSongQuality(localId, externalId);
             case OBJECT_TYPE.PERSON:
@@ -27,7 +27,7 @@ class ContentQualityService {
         }
     }
 
-    private async checkFilmQuality(localId: string, tmdbId: string) {
+    private async checkMovieQuality(localId: string, tmdbId: string) {
         const tmdbMovie = await this.tmdb.getEntity<TMDBMovie>('movie', tmdbId, 'credits');
         const localMovie = await nhost.graphql.request<{
             movies_by_pk: Movies;

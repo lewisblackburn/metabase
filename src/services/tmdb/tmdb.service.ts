@@ -37,7 +37,7 @@ export class TMDBService {
         const response = await fetch(url, {
             ...options,
             headers: {
-                Authorization: `Bearer ${process.env.REACT_APP_TMDB_ACCESS_TOKEN}`,
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
                 'Content-Type': 'application/json',
                 ...options.headers
             }

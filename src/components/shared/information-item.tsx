@@ -7,7 +7,7 @@ import { LucideIcon } from 'lucide-react';
 type InformationItemProps = {
     icon?: LucideIcon;
     label: string;
-    badges: string | string[];
+    badges?: string | string[] | undefined;
 };
 
 const InformationItem: React.FC<InformationItemProps> = ({ icon: Icon, label, badges }) => {
@@ -21,7 +21,7 @@ const InformationItem: React.FC<InformationItemProps> = ({ icon: Icon, label, ba
                 {typeof badges === 'string' ? (
                     <Badge variant='outline'>{badges}</Badge>
                 ) : (
-                    badges.map((badge) => (
+                    badges?.map((badge) => (
                         <Badge key={badge} variant='outline'>
                             {badge}
                         </Badge>

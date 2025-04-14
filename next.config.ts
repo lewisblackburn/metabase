@@ -14,7 +14,13 @@ const nextConfig: NextConfig = {
         turbo: {}
     },
     images: {
-        domains: ['image.tmdb.org', 'www.themoviedb.org', 'media.themoviedb.org', 'i.scdn.co']
+        domains: [
+            'image.tmdb.org',
+            'www.themoviedb.org',
+            'media.themoviedb.org',
+            'i.scdn.co',
+            'lwmecktyyhputyqkdigy.storage.eu-west-2.nhost.run'
+        ]
     }
 };
 
