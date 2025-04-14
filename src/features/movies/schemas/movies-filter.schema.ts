@@ -31,7 +31,14 @@ export const moviesFilterSchema = z.object({
     userScore: z.tuple([z.number(), z.number()]).optional(),
     minVotes: z.array(z.number()).optional(),
     runtime: z.tuple([z.number(), z.number()]).optional(),
-    keywords: z.string().optional()
+    keywords: z
+        .array(
+            z.object({
+                value: z.string(),
+                label: z.string()
+            })
+        )
+        .optional()
 });
 
 export type MoviesFilter = z.infer<typeof moviesFilterSchema>;

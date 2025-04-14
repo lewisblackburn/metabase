@@ -6,6 +6,7 @@ import BaseFormLayout from '@/components/form/base-form-layout';
 import CheckboxGroupField from '@/components/form/checkbox-group';
 import DateRangePickerField from '@/components/form/date-range-picker';
 import InputField from '@/components/form/input';
+import MultiSelectField from '@/components/form/multi-select';
 import OrderSelectField from '@/components/form/order-select';
 import RadioGroupField from '@/components/form/radio-group';
 import SelectField from '@/components/form/select';
@@ -281,7 +282,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Keywords'>
-                                                            <InputField {...field} placeholder='Enter keywords...' />
+                                                            <MultiSelectField options={[]} createable {...field} />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}

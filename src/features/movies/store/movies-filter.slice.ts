@@ -17,7 +17,7 @@ const initialState: MoviesFilter = {
     userScore: [0, 10],
     minVotes: [0],
     runtime: [0, 400],
-    keywords: ''
+    keywords: []
 };
 
 export const moviesFilterSlice = createSlice({

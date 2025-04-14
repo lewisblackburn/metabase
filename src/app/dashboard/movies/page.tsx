@@ -129,15 +129,15 @@ export default function MoviePage() {
           }
         : {};
 
+    const keywords = moviesFilter.keywords?.map((keyword) => keyword.value);
+
     const keywordFilter =
-        moviesFilter.keywords && moviesFilter.keywords.length > 0
+        keywords && keywords.length > 0
             ? {
                   movie_keywords: {
                       keyword: {
                           keyword: {
-                              _in: Array.isArray(moviesFilter.keywords)
-                                  ? moviesFilter.keywords
-                                  : [moviesFilter.keywords]
+                              _in: keywords
                           }
                       }
                   }
