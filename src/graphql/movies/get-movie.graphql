@@ -15,6 +15,7 @@ query GetMovie($id: uuid!) {
         release_date
         revenue
         runtime
+        formatted_runtime
         status
         tagline
         tmdb_id

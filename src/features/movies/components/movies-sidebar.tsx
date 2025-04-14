@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import CheckboxGroupField from '@/components/form/checkbox-group';
@@ -22,11 +22,14 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarInput, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
+import { RootState } from '@/store/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
+import { resetMoviesFilter, setMoviesFilter } from '../store/movies-filter.slice';
 import { Calendar, Flame, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
 type MoviesSidebarProps = {
@@ -34,32 +37,25 @@ type MoviesSidebarProps = {
 };
 
 export default function MoviesSidebar({ children }: MoviesSidebarProps) {
+    const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
+    const dispatch = useDispatch();
     const form = useForm<MoviesFilter>({
         resolver: zodResolver(moviesFilterSchema),
-        defaultValues: {
-            orderBy: {
-                orderBy: 'popularity',
-                order: 'asc'
-            },
-            search: '',
-            showMe: 'everything',
-            availabilities: [],
-            releaseDates: undefined,
-            genres: [],
-            certifications: [],
-            language: '',
-            userScore: [0, 10],
-            minVotes: [0],
-            runtime: [0, 400],
-            keywords: ''
-        }
+        defaultValues: moviesFilter
     });
 
+    useEffect(() => {
+        form.reset(moviesFilter);
+    }, [moviesFilter, form]);
+
     function onSubmit(values: MoviesFilter) {
-        toast.success('Filters Applied', {
-            description: JSON.stringify(values, null, 2),
-            duration: 5000
-        });
+        dispatch(setMoviesFilter(values));
+        toast.success('Filters Applied');
+    }
+
+    function onReset() {
+        form.reset();
+        dispatch(resetMoviesFilter());
     }
 
     return (
@@ -294,9 +290,12 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                     </div>
                                 </SidebarAccordionItem>
                             </Accordion>
-                            <div className='mb-15 w-full px-5'>
+                            <div className='mb-15 flex w-full flex-col gap-5 px-5'>
                                 <Button className='w-full' size='lg'>
                                     Search
+                                </Button>
+                                <Button variant='secondary' className='w-full' size='lg' type='reset' onClick={onReset}>
+                                    Reset
                                 </Button>
                             </div>
                         </form>

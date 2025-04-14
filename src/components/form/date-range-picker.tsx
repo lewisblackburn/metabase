@@ -1,13 +1,10 @@
-'use client';
-
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Calendar } from '@/registry/new-york-v4/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
-import { Portal } from '@radix-ui/react-portal';
 
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
@@ -32,11 +29,14 @@ const DateRangePickerField = ({
 }: DateRangePickerFieldProps) => {
     const convertToDayPickerRange = (input?: DateRange | { from?: Date; to?: Date }): DateRange | undefined => {
         if (!input) return undefined;
-
         return { from: input.from, to: input.to };
     };
 
     const [internalDate, setInternalDate] = useState<DateRange | undefined>(convertToDayPickerRange(value));
+
+    useEffect(() => {
+        setInternalDate(convertToDayPickerRange(value));
+    }, [value]);
 
     const handleDateChange = (newDate: DateRange | undefined) => {
         setInternalDate(newDate);

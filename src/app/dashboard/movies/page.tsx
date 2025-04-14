@@ -8,13 +8,166 @@ import { Container } from '@/components/ui/container';
 import { MAX_LIMIT } from '@/constants/api.constant';
 import MoviesSidebar from '@/features/movies/components/movies-sidebar';
 import MoviesSkeleton from '@/features/movies/components/movies-skeleton';
-import { useInfiniteGetMoviesQuery } from '@/generated/graphql';
+import { GetMoviesQueryVariables, Order_By, useInfiniteGetMoviesQuery } from '@/generated/graphql';
+import { RootState } from '@/store/store';
+
+import { useSelector } from 'react-redux';
 
 export default function MoviePage() {
+    const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
+
+    const orderByMap = {
+        popularity: 'view_count',
+        'release-date': 'release_date',
+        rating: 'average_rating'
+    };
+
+    const orderMap = {
+        asc: Order_By.Asc,
+        desc: Order_By.Desc
+    };
+
+    const orderBy = {
+        [orderByMap[moviesFilter.orderBy.orderBy]]: orderMap[moviesFilter.orderBy.order]
+    };
+
+    const titleFilter = moviesFilter.search
+        ? {
+              title: {
+                  _ilike: `%${moviesFilter.search}%`
+              }
+          }
+        : {};
+
+    const alternativeTitlesFilter = moviesFilter.search
+        ? {
+              movie_alternative_titles: {
+                  alternative_title: {
+                      _ilike: `%${moviesFilter.search}%`
+                  }
+              }
+          }
+        : {};
+
+    // TODO: Implement showMe filter
+    // const showMeFilter = moviesFilter.showMe;
+
+    // TODO: Implement availabilities filter
+    // const availabilitiesFilter =
+    //     moviesFilter.availabilities && moviesFilter.availabilities.length > 0
+    //         ? {
+    //               availability: {
+    //                   _in: moviesFilter.availabilities
+    //               }
+    //           }
+    //         : {};
+
+    const releaseDateFilter = moviesFilter.releaseDates
+        ? {
+              release_date: {
+                  _gte: moviesFilter.releaseDates.from,
+                  _lte: moviesFilter.releaseDates.to
+              }
+          }
+        : {};
+
+    const genreFilter =
+        moviesFilter.genres && moviesFilter.genres.length > 0
+            ? {
+                  movie_genres: {
+                      genre: {
+                          name: {
+                              _in: Array.isArray(moviesFilter.genres) ? moviesFilter.genres : [moviesFilter.genres]
+                          }
+                      }
+                  }
+              }
+            : {};
+
+    const certificationFilter =
+        moviesFilter.certifications && moviesFilter.certifications.length > 0
+            ? {
+                  age_certification: {
+                      _in: Array.isArray(moviesFilter.certifications)
+                          ? moviesFilter.certifications
+                          : [moviesFilter.certifications]
+                  }
+              }
+            : {};
+
+    const languageFilter = moviesFilter.language
+        ? {
+              language: {
+                  _ilike: `%${moviesFilter.language}%`
+              }
+          }
+        : {};
+
+    const userScoreFilter = moviesFilter.userScore
+        ? {
+              average_rating: {
+                  _gte: moviesFilter.userScore?.[0],
+                  _lte: moviesFilter.userScore?.[1]
+              }
+          }
+        : {};
+
+    const minimumUserVotesFilter = moviesFilter.minVotes
+        ? {
+              vote_count: {
+                  _gte: moviesFilter.minVotes?.[0]
+              }
+          }
+        : {};
+
+    const runtimeFilter = moviesFilter.runtime
+        ? {
+              runtime: {
+                  _gte: moviesFilter.runtime?.[0],
+                  _lte: moviesFilter.runtime?.[1]
+              }
+          }
+        : {};
+
+    const keywordFilter =
+        moviesFilter.keywords && moviesFilter.keywords.length > 0
+            ? {
+                  movie_keywords: {
+                      keyword: {
+                          keyword: {
+                              _in: Array.isArray(moviesFilter.keywords)
+                                  ? moviesFilter.keywords
+                                  : [moviesFilter.keywords]
+                          }
+                      }
+                  }
+              }
+            : {};
+
+    const where: GetMoviesQueryVariables['where'] = {
+        _or: [
+            {
+                ...titleFilter
+            },
+            { ...alternativeTitlesFilter }
+        ],
+        ...keywordFilter,
+        ...releaseDateFilter,
+        ...genreFilter,
+        ...certificationFilter,
+        ...languageFilter,
+        ...userScoreFilter,
+        ...minimumUserVotesFilter,
+        ...runtimeFilter
+    };
+
     const { data, isLoading } = useInfiniteGetMoviesQuery(
-        { limit: MAX_LIMIT },
         {
-            queryKey: ['movies'],
+            where,
+            order_by: orderBy,
+            limit: MAX_LIMIT
+        },
+        {
             initialPageParam: { offset: 0 },
             // NOTE: If the last page has fewer movies than the limit, there are no more pages
             getNextPageParam: (lastPage, pages) =>
@@ -22,7 +175,12 @@ export default function MoviePage() {
         }
     );
 
-    if (isLoading) return <MoviesSkeleton />;
+    if (isLoading)
+        return (
+            <MoviesSidebar>
+                <MoviesSkeleton />
+            </MoviesSidebar>
+        );
 
     return (
         <MoviesSidebar>

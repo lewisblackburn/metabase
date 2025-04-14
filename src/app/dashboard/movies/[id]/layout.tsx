@@ -14,13 +14,11 @@ import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { OBJECT_TYPE, ObjectTypeKey } from '@/constants/objects.constant';
 import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
-import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
@@ -78,7 +76,7 @@ function MovieLayoutContent({
         {
             id: 'duration',
             icon: Timer,
-            badges: MOVIE_DATA.formattedDuration,
+            badges: movie.formatted_runtime,
             label: 'Duration'
         },
         {
@@ -116,6 +114,12 @@ function MovieLayoutContent({
             icon: CreditCard,
             badges: movie.budget,
             label: 'Budget'
+        },
+        {
+            id: 'keywords',
+            icon: Tags,
+            badges: movie.movie_keywords.map((keyword) => keyword.keyword.keyword),
+            label: 'Keywords'
         }
     ];
 

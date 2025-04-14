@@ -21,11 +21,13 @@ const InformationItem: React.FC<InformationItemProps> = ({ icon: Icon, label, ba
                 {typeof badges === 'string' ? (
                     <Badge variant='outline'>{badges}</Badge>
                 ) : (
-                    badges?.map((badge) => (
-                        <Badge key={badge} variant='outline'>
-                            {badge}
-                        </Badge>
-                    ))
+                    <div className='flex flex-wrap gap-2'>
+                        {badges?.map((badge) => (
+                            <Badge key={badge} variant='outline'>
+                                {badge}
+                            </Badge>
+                        ))}
+                    </div>
                 )}
             </div>
         </div>
