@@ -7678,7 +7678,7 @@ export type Movie_Watchlist_Updates = {
 /** columns and relationships of "movies" */
 export type Movies = {
   __typename?: 'movies';
-  age_rating?: Maybe<Scalars['String']['output']>;
+  age_certification?: Maybe<Scalars['String']['output']>;
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop: Scalars['String']['output'];
   budget?: Maybe<Scalars['money']['output']>;
@@ -8094,7 +8094,7 @@ export type Movies_Bool_Exp = {
   _and?: InputMaybe<Array<Movies_Bool_Exp>>;
   _not?: InputMaybe<Movies_Bool_Exp>;
   _or?: InputMaybe<Array<Movies_Bool_Exp>>;
-  age_rating?: InputMaybe<String_Comparison_Exp>;
+  age_certification?: InputMaybe<String_Comparison_Exp>;
   average_rating?: InputMaybe<Float_Comparison_Exp>;
   backdrop?: InputMaybe<String_Comparison_Exp>;
   budget?: InputMaybe<Money_Comparison_Exp>;
@@ -8171,7 +8171,7 @@ export type Movies_Inc_Input = {
 
 /** input type for inserting data into table "movies" */
 export type Movies_Insert_Input = {
-  age_rating?: InputMaybe<Scalars['String']['input']>;
+  age_certification?: InputMaybe<Scalars['String']['input']>;
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
@@ -8214,7 +8214,7 @@ export type Movies_Insert_Input = {
 /** aggregate max on columns */
 export type Movies_Max_Fields = {
   __typename?: 'movies_max_fields';
-  age_rating?: Maybe<Scalars['String']['output']>;
+  age_certification?: Maybe<Scalars['String']['output']>;
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
@@ -8243,7 +8243,7 @@ export type Movies_Max_Fields = {
 /** aggregate min on columns */
 export type Movies_Min_Fields = {
   __typename?: 'movies_min_fields';
-  age_rating?: Maybe<Scalars['String']['output']>;
+  age_certification?: Maybe<Scalars['String']['output']>;
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
@@ -8294,7 +8294,7 @@ export type Movies_On_Conflict = {
 
 /** Ordering options when selecting data from "movies". */
 export type Movies_Order_By = {
-  age_rating?: InputMaybe<Order_By>;
+  age_certification?: InputMaybe<Order_By>;
   average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
@@ -8345,7 +8345,7 @@ export type Movies_Pk_Columns_Input = {
 /** select columns of table "movies" */
 export enum Movies_Select_Column {
   /** column name */
-  AgeRating = 'age_rating',
+  AgeCertification = 'age_certification',
   /** column name */
   AverageRating = 'average_rating',
   /** column name */
@@ -8396,7 +8396,7 @@ export enum Movies_Select_Column {
 
 /** input type for updating data in table "movies" */
 export type Movies_Set_Input = {
-  age_rating?: InputMaybe<Scalars['String']['input']>;
+  age_certification?: InputMaybe<Scalars['String']['input']>;
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
@@ -8471,7 +8471,7 @@ export type Movies_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movies_Stream_Cursor_Value_Input = {
-  age_rating?: InputMaybe<Scalars['String']['input']>;
+  age_certification?: InputMaybe<Scalars['String']['input']>;
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
@@ -8513,7 +8513,7 @@ export type Movies_Sum_Fields = {
 /** update columns of table "movies" */
 export enum Movies_Update_Column {
   /** column name */
-  AgeRating = 'age_rating',
+  AgeCertification = 'age_certification',
   /** column name */
   AverageRating = 'average_rating',
   /** column name */
@@ -20472,7 +20472,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, age_rating?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, status?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, rated?: boolean | null, favourited?: boolean | null, watchlisted?: boolean | null, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, role?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', title: string, artwork?: string | null, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, age_certification?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, status?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, rated?: boolean | null, favourited?: boolean | null, watchlisted?: boolean | null, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, role?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot?: string | null } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', title: string, artwork?: string | null, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -20500,6 +20500,15 @@ export type InsertMovieWatchlistMutationVariables = Exact<{
 
 
 export type InsertMovieWatchlistMutation = { __typename?: 'mutation_root', insert_movie_watchlist_one?: { __typename?: 'movie_watchlist', id: any } | null };
+
+export type UpdateMovieMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+  inc?: InputMaybe<Movies_Inc_Input>;
+  set?: InputMaybe<Movies_Set_Input>;
+}>;
+
+
+export type UpdateMovieMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any } | null };
 
 
 
@@ -20555,7 +20564,7 @@ export const GetMovieDocument = `
     id
     title
     overview
-    age_rating
+    age_certification
     average_rating
     backdrop
     budget
@@ -20575,6 +20584,7 @@ export const GetMovieDocument = `
     view_count
     vote_average
     vote_count
+    homepage
     rated
     favourited
     watchlisted
@@ -20761,6 +20771,27 @@ export const useInsertMovieWatchlistMutation = <
       {
     mutationKey: ['InsertMovieWatchlist'],
     mutationFn: (variables?: InsertMovieWatchlistMutationVariables) => fetcher<InsertMovieWatchlistMutation, InsertMovieWatchlistMutationVariables>(InsertMovieWatchlistDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const UpdateMovieDocument = `
+    mutation UpdateMovie($id: uuid!, $inc: movies_inc_input, $set: movies_set_input) {
+  update_movies_by_pk(_inc: $inc, _set: $set, pk_columns: {id: $id}) {
+    id
+  }
+}
+    `;
+
+export const useUpdateMovieMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateMovieMutation, TError, UpdateMovieMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateMovieMutation, TError, UpdateMovieMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateMovie'],
+    mutationFn: (variables?: UpdateMovieMutationVariables) => fetcher<UpdateMovieMutation, UpdateMovieMutationVariables>(UpdateMovieDocument, variables)(),
     ...options
   }
     )};

@@ -13,7 +13,10 @@ import Poster from '@/components/shared/poster';
 import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
+import { LANGUAGES } from '@/constants/languages.constant';
+import { OBJECT_TYPE, ObjectTypeKey } from '@/constants/objects.constant';
 import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
+import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
@@ -25,7 +28,8 @@ import isLastIndex from '@/utils/is-last-index';
 
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { Bookmark, Calendar, CreditCard, Heart, Info, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
+import { Calendar, CreditCard, Info, Languages, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 
 dayjs.extend(advancedFormat);
 
@@ -50,6 +54,7 @@ function MovieLayoutContent({
     open: boolean;
     setOpen: (prev: boolean) => void;
 }) {
+    const dispatch = useDispatch();
     const { movie, isLoading } = useMovie();
 
     useBreadCrumbs(movie?.title || '');
@@ -81,6 +86,18 @@ function MovieLayoutContent({
             icon: Info,
             badges: movie.status,
             label: 'Status'
+        },
+        {
+            id: 'language',
+            icon: Languages,
+            badges: LANGUAGES.find((lang) => lang.code === movie.language)?.label,
+            label: 'Language'
+        },
+        {
+            id: 'age-certification',
+            icon: User,
+            badges: movie.age_certification,
+            label: 'Age Certification'
         },
         {
             id: 'director',
@@ -139,6 +156,20 @@ function MovieLayoutContent({
                             <MovieFavouriteButton />
                             <MovieWatchlistButton />
                         </div>
+                        <Separator />
+                        <Button
+                            variant='secondary'
+                            className='w-full cursor-pointer'
+                            onClick={() => {
+                                dispatch(
+                                    toggleEditDialogOpenState({
+                                        objectType: 'MOVIE',
+                                        objectId: movie.id
+                                    })
+                                );
+                            }}>
+                            Edit Movie
+                        </Button>
                     </SidebarMenu>
                 </SidebarContent>
             </Sidebar>

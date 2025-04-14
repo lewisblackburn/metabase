@@ -1,0 +1,5 @@
+mutation UpdateMovie($id: uuid!, $inc: movies_inc_input, $set: movies_set_input) {
+    update_movies_by_pk(_inc: $inc, _set: $set, pk_columns: { id: $id }) {
+        id
+    }
+}

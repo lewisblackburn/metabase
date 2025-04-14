@@ -20,7 +20,11 @@ const AuthenticatedComponent = ({ children }: { children: React.ReactNode }) => 
     }, [nhost.auth]);
 
     if (!initialized) {
-        return <DefaultLoading />;
+        return (
+            <div className='h-screen w-screen'>
+                <DefaultLoading />
+            </div>
+        );
     }
 
     return <>{children}</>;

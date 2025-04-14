@@ -48,7 +48,7 @@ export function DatePickerField({
                         !selectedDate && 'text-muted-foreground',
                         className
                     )}>
-                    <CalendarIcon className='mr-2 h-4 w-4' />
+                    <CalendarIcon className='size-4' />
                     {selectedDate ? format(selectedDate, 'LLL dd, y') : placeholder}
                 </Button>
             </PopoverTrigger>

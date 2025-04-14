@@ -9,6 +9,8 @@ import TextareaField from '@/components/form/textarea';
 import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { MOVIE_STATUS_OPTIONS } from '@/constants/status.constant';
+import { useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
+import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,28 +23,60 @@ interface EditMovieDetailsProps {
 }
 
 export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
+    const { data } = useGetMovieQuery(
+        { id: movieId },
+        {
+            queryKey: ['movie', movieId]
+        }
+    );
+    const { mutateAsync: updateMovie } = useUpdateMovieMutation();
+
+    const movie = data?.movies_by_pk;
+
+    if (!movie) return null;
+
     const form = useForm<MovieDetails>({
         resolver: zodResolver(movieDetailsSchema),
         defaultValues: {
-            title: '',
-            tagline: '',
-            overview: '',
-            releaseDate: undefined,
-            runtime: 0,
-            budget: 0,
-            revenue: 0,
-            language: '',
-            status: undefined,
-            ageCertification: undefined,
+            title: movie.title,
+            tagline: movie.tagline ?? '',
+            overview: movie.overview ?? '',
+            releaseDate: new Date(movie.release_date) ?? undefined,
+            runtime: movie.runtime ?? 0,
+            budget: movie.budget ?? 0,
+            revenue: movie.revenue ?? 0,
+            language: movie.language ?? '',
+            status: movie.status ?? undefined,
+            ageCertification: movie.age_certification ?? undefined,
             alternativeTitles: [],
-            imdbId: '',
-            tmdbId: 0,
-            homepage: ''
+            imdbId: movie.imdb_id ?? '',
+            tmdbId: movie.tmdb_id ?? '',
+            homepage: movie.homepage ?? ''
         }
     });
 
-    function onSubmit(values: MovieDetails) {
-        console.log(values);
+    async function onSubmit(values: MovieDetails) {
+        await updateMovie({
+            id: movieId,
+            inc: {},
+            set: {
+                title: values.title,
+                tagline: values.tagline,
+                overview: values.overview,
+                release_date: values.releaseDate,
+                runtime: values.runtime,
+                budget: values.budget,
+                revenue: values.revenue,
+                language: values.language,
+                status: values.status,
+                age_certification: values.ageCertification,
+                imdb_id: values.imdbId,
+                tmdb_id: values.tmdbId,
+                homepage: values.homepage
+            }
+        }).then(() => {
+            queryClient.invalidateQueries({ queryKey: ['movie', movieId] });
+        });
     }
 
     return (
@@ -109,7 +143,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Budget'>
-                                <InputField type='number' {...field} />
+                                <InputField {...field} />
                             </BaseFormLayout>
                         </FormItem>
                     )}
@@ -120,7 +154,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Revenue'>
-                                <InputField type='number' {...field} />
+                                <InputField {...field} />
                             </BaseFormLayout>
                         </FormItem>
                     )}

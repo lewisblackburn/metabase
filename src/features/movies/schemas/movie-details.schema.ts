@@ -12,8 +12,8 @@ export const movieDetailsSchema = z.object({
     overview: z.string().max(1000, 'The overview must be less than 1000 characters'),
     releaseDate: z.date().optional(),
     runtime: z.preprocess((val) => (typeof val === 'string' ? parseFloat(val) : val), z.number()).optional(),
-    budget: z.preprocess((val) => (typeof val === 'string' ? parseFloat(val) : val), z.number()).optional(),
-    revenue: z.preprocess((val) => (typeof val === 'string' ? parseFloat(val) : val), z.number()).optional(),
+    budget: z.string().optional(),
+    revenue: z.string().optional(),
     // TODO : This needs to match the language code
     language: z.string().optional(),
     status: z.preprocess(
@@ -39,7 +39,7 @@ export const movieDetailsSchema = z.object({
         )
         .optional(),
     imdbId: z.string().optional(),
-    tmdbId: z.number().optional(),
+    tmdbId: z.string().optional(),
     homepage: z.string().url().optional().or(z.literal(''))
 });
 
