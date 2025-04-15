@@ -11,6 +11,7 @@ import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
 import Poster from '@/components/shared/poster';
 import ProgressItem from '@/components/shared/progress-item';
+import RatingSelection from '@/components/shared/rating-selection';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
@@ -19,6 +20,7 @@ import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dia
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';
@@ -26,7 +28,7 @@ import isLastIndex from '@/utils/is-last-index';
 
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { Calendar, CreditCard, Info, Languages, Play, Tags, Timer, TrendingUp, User } from 'lucide-react';
+import { Calendar, CreditCard, Info, Languages, Play, Star, Tags, Timer, TrendingUp, User } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
 dayjs.extend(advancedFormat);
@@ -133,9 +135,23 @@ function MovieLayoutContent({
             className='relative z-0 h-[calc(100vh-4rem)] min-h-0 overflow-hidden'
             open={open}>
             <Sidebar className='absolute'>
-                <SidebarContent className='bg-white p-5'>
+                <SidebarContent className='bg-white p-5 pb-24'>
                     <SidebarMenu className='flex flex-col gap-5'>
                         <Poster title={movie.title} image={movie.poster} />
+                        <Separator />
+                        <div className='flex flex-col gap-2'>
+                            <div className='flex items-center gap-2 text-sm'>
+                                <Star size='1em' />
+                                <span>Rating</span>
+                            </div>
+                            <RatingSelection
+                                initialRating={movie.user_rating || 0}
+                                onRatingChange={(rating) => {
+                                    console.log(rating);
+                                }}
+                            />
+                        </div>
+                        <Separator />
                         {movie.trailer && (
                             <a href={movie.trailer} target='_blank' rel='noopener noreferrer' className='w-full'>
                                 <Button variant='secondary' className='w-full cursor-pointer'>
@@ -154,6 +170,7 @@ function MovieLayoutContent({
                             ))}
                         </div>
                         <Separator />
+
                         <ProgressItem icon={TrendingUp} label='Content Score' score={movie.content_score} />
                         <Separator />
                         <div className='grid grid-cols-2 gap-2'>
