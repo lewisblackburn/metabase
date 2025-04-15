@@ -1,0 +1,6 @@
+query GetAvailabilities($where: availabilities_bool_exp) {
+    availabilities(where: $where) {
+        id
+        name
+    }
+}

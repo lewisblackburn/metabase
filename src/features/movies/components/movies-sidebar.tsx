@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import BaseFormLayout from '@/components/form/base-form-layout';
 import CheckboxGroupField from '@/components/form/checkbox-group';
 import DateRangePickerField from '@/components/form/date-range-picker';
-import InputField from '@/components/form/input';
 import MultiSelectField from '@/components/form/multi-select';
 import OrderSelectField from '@/components/form/order-select';
 import RadioGroupField from '@/components/form/radio-group';
@@ -14,10 +13,10 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
-import { MOVIE_AVAILABILITY_OPTIONS } from '@/constants/availabilities.constant';
 import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { useGetGenresQuery } from '@/generated/graphql';
+import { useGetAvailabilitiesQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
@@ -60,11 +59,20 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
         }
     );
 
-    const genreOptions =
-        genres?.genres.map((genre) => ({
-            value: genre.id.toString(),
-            label: genre.name
-        })) ?? [];
+    const { data: availabilities } = useGetAvailabilitiesQuery(
+        {
+            where: {
+                availability_types: {
+                    type: {
+                        _eq: 'movie'
+                    }
+                }
+            }
+        },
+        {
+            queryKey: ['availabilities']
+        }
+    );
 
     useEffect(() => {
         form.reset(moviesFilter);
@@ -171,7 +179,14 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                     <FormItem>
                                                         <BaseFormLayout label='Availabilities'>
                                                             <CheckboxGroupField
-                                                                options={MOVIE_AVAILABILITY_OPTIONS}
+                                                                options={
+                                                                    availabilities?.availabilities.map(
+                                                                        (availability) => ({
+                                                                            value: availability.id.toString(),
+                                                                            label: availability.name
+                                                                        })
+                                                                    ) ?? []
+                                                                }
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
@@ -204,7 +219,15 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Genres'>
-                                                            <CheckboxGroupField options={genreOptions} {...field} />
+                                                            <CheckboxGroupField
+                                                                options={
+                                                                    genres?.genres.map((genre) => ({
+                                                                        value: genre.id.toString(),
+                                                                        label: genre.name
+                                                                    })) ?? []
+                                                                }
+                                                                {...field}
+                                                            />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}
@@ -307,7 +330,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                             </Accordion>
                             <div className='mb-15 flex w-full flex-col gap-5 px-5'>
                                 <Button className='w-full' size='lg' type='submit'>
-                                    s()) Search
+                                    Search
                                 </Button>
                                 <Button variant='secondary' className='w-full' size='lg' type='reset' onClick={onReset}>
                                     Reset

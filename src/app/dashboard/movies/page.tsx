@@ -16,6 +16,9 @@ import { useSelector } from 'react-redux';
 export default function MoviePage() {
     const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
 
+    // TODO: CONVERT CERTIFICATIONS TO THE API FORMAT
+    // TODO: CONVERT STATUSES TO THE API FORMAT
+
     const orderByMap = {
         popularity: 'view_count',
         'release-date': 'release_date',
@@ -49,15 +52,23 @@ export default function MoviePage() {
           }
         : {};
 
-    // TODO: Implement showMe filter
-    // const showMeFilter = moviesFilter.showMe;
+    const showMeFilter =
+        moviesFilter.showMe === 'everything'
+            ? {}
+            : {
+                  user_rating: {
+                      _is_null: moviesFilter.showMe === 'seen' ? true : false
+                  }
+              };
 
     const availabilitiesFilter =
         moviesFilter.availabilities && moviesFilter.availabilities.length > 0
             ? {
                   movie_availabilities: {
                       availability: {
-                          _in: moviesFilter.availabilities.map((availability) => availability)
+                          id: {
+                              _in: moviesFilter.availabilities
+                          }
                       }
                   }
               }
@@ -146,6 +157,7 @@ export default function MoviePage() {
             : {};
 
     const where: GetMoviesQueryVariables['where'] = {
+        ...showMeFilter,
         _or: [
             {
                 ...titleFilter

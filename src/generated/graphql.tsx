@@ -2943,6 +2943,397 @@ export type Auth_Migrations_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** columns and relationships of "availabilities" */
+export type Availabilities = {
+  __typename?: 'availabilities';
+  /** An array relationship */
+  availability_types: Array<Availability_Types>;
+  /** An aggregate relationship */
+  availability_types_aggregate: Availability_Types_Aggregate;
+  id: Scalars['uuid']['output'];
+  /** An array relationship */
+  movie_availabilities: Array<Movie_Availabilities>;
+  /** An aggregate relationship */
+  movie_availabilities_aggregate: Movie_Availabilities_Aggregate;
+  name: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "availabilities" */
+export type AvailabilitiesAvailability_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
+};
+
+
+/** columns and relationships of "availabilities" */
+export type AvailabilitiesAvailability_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
+};
+
+
+/** columns and relationships of "availabilities" */
+export type AvailabilitiesMovie_AvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "availabilities" */
+export type AvailabilitiesMovie_Availabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+/** aggregated selection of "availabilities" */
+export type Availabilities_Aggregate = {
+  __typename?: 'availabilities_aggregate';
+  aggregate?: Maybe<Availabilities_Aggregate_Fields>;
+  nodes: Array<Availabilities>;
+};
+
+/** aggregate fields of "availabilities" */
+export type Availabilities_Aggregate_Fields = {
+  __typename?: 'availabilities_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Availabilities_Max_Fields>;
+  min?: Maybe<Availabilities_Min_Fields>;
+};
+
+
+/** aggregate fields of "availabilities" */
+export type Availabilities_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Availabilities_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "availabilities". All fields are combined with a logical 'AND'. */
+export type Availabilities_Bool_Exp = {
+  _and?: InputMaybe<Array<Availabilities_Bool_Exp>>;
+  _not?: InputMaybe<Availabilities_Bool_Exp>;
+  _or?: InputMaybe<Array<Availabilities_Bool_Exp>>;
+  availability_types?: InputMaybe<Availability_Types_Bool_Exp>;
+  availability_types_aggregate?: InputMaybe<Availability_Types_Aggregate_Bool_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  movie_availabilities?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Bool_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "availabilities" */
+export enum Availabilities_Constraint {
+  /** unique or primary key constraint on columns "name" */
+  AvailabilitiesNameKey = 'availabilities_name_key',
+  /** unique or primary key constraint on columns "id" */
+  AvailabilitiesPkey = 'availabilities_pkey'
+}
+
+/** input type for inserting data into table "availabilities" */
+export type Availabilities_Insert_Input = {
+  availability_types?: InputMaybe<Availability_Types_Arr_Rel_Insert_Input>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  movie_availabilities?: InputMaybe<Movie_Availabilities_Arr_Rel_Insert_Input>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Availabilities_Max_Fields = {
+  __typename?: 'availabilities_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Availabilities_Min_Fields = {
+  __typename?: 'availabilities_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "availabilities" */
+export type Availabilities_Mutation_Response = {
+  __typename?: 'availabilities_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Availabilities>;
+};
+
+/** input type for inserting object relation for remote table "availabilities" */
+export type Availabilities_Obj_Rel_Insert_Input = {
+  data: Availabilities_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Availabilities_On_Conflict>;
+};
+
+/** on_conflict condition type for table "availabilities" */
+export type Availabilities_On_Conflict = {
+  constraint: Availabilities_Constraint;
+  update_columns?: Array<Availabilities_Update_Column>;
+  where?: InputMaybe<Availabilities_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "availabilities". */
+export type Availabilities_Order_By = {
+  availability_types_aggregate?: InputMaybe<Availability_Types_Aggregate_Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: availabilities */
+export type Availabilities_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "availabilities" */
+export enum Availabilities_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "availabilities" */
+export type Availabilities_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "availabilities" */
+export type Availabilities_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Availabilities_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Availabilities_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "availabilities" */
+export enum Availabilities_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+export type Availabilities_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Availabilities_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Availabilities_Bool_Exp;
+};
+
+/** columns and relationships of "availability_types" */
+export type Availability_Types = {
+  __typename?: 'availability_types';
+  /** An object relationship */
+  availability: Availabilities;
+  availability_id: Scalars['uuid']['output'];
+  id: Scalars['uuid']['output'];
+  type: Scalars['String']['output'];
+};
+
+/** aggregated selection of "availability_types" */
+export type Availability_Types_Aggregate = {
+  __typename?: 'availability_types_aggregate';
+  aggregate?: Maybe<Availability_Types_Aggregate_Fields>;
+  nodes: Array<Availability_Types>;
+};
+
+export type Availability_Types_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Availability_Types_Aggregate_Bool_Exp_Count>;
+};
+
+export type Availability_Types_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Availability_Types_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "availability_types" */
+export type Availability_Types_Aggregate_Fields = {
+  __typename?: 'availability_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Availability_Types_Max_Fields>;
+  min?: Maybe<Availability_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "availability_types" */
+export type Availability_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "availability_types" */
+export type Availability_Types_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Availability_Types_Max_Order_By>;
+  min?: InputMaybe<Availability_Types_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "availability_types" */
+export type Availability_Types_Arr_Rel_Insert_Input = {
+  data: Array<Availability_Types_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Availability_Types_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "availability_types". All fields are combined with a logical 'AND'. */
+export type Availability_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Availability_Types_Bool_Exp>>;
+  _not?: InputMaybe<Availability_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Availability_Types_Bool_Exp>>;
+  availability?: InputMaybe<Availabilities_Bool_Exp>;
+  availability_id?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "availability_types" */
+export enum Availability_Types_Constraint {
+  /** unique or primary key constraint on columns "type", "availability_id" */
+  AvailabilityTypesAvailabilityIdTypeKey = 'availability_types_availability_id_type_key',
+  /** unique or primary key constraint on columns "id" */
+  AvailabilityTypesPkey = 'availability_types_pkey'
+}
+
+/** input type for inserting data into table "availability_types" */
+export type Availability_Types_Insert_Input = {
+  availability?: InputMaybe<Availabilities_Obj_Rel_Insert_Input>;
+  availability_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Availability_Types_Max_Fields = {
+  __typename?: 'availability_types_max_fields';
+  availability_id?: Maybe<Scalars['uuid']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "availability_types" */
+export type Availability_Types_Max_Order_By = {
+  availability_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Availability_Types_Min_Fields = {
+  __typename?: 'availability_types_min_fields';
+  availability_id?: Maybe<Scalars['uuid']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "availability_types" */
+export type Availability_Types_Min_Order_By = {
+  availability_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "availability_types" */
+export type Availability_Types_Mutation_Response = {
+  __typename?: 'availability_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Availability_Types>;
+};
+
+/** on_conflict condition type for table "availability_types" */
+export type Availability_Types_On_Conflict = {
+  constraint: Availability_Types_Constraint;
+  update_columns?: Array<Availability_Types_Update_Column>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "availability_types". */
+export type Availability_Types_Order_By = {
+  availability?: InputMaybe<Availabilities_Order_By>;
+  availability_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: availability_types */
+export type Availability_Types_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "availability_types" */
+export enum Availability_Types_Select_Column {
+  /** column name */
+  AvailabilityId = 'availability_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "availability_types" */
+export type Availability_Types_Set_Input = {
+  availability_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "availability_types" */
+export type Availability_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Availability_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Availability_Types_Stream_Cursor_Value_Input = {
+  availability_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "availability_types" */
+export enum Availability_Types_Update_Column {
+  /** column name */
+  AvailabilityId = 'availability_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Type = 'type'
+}
+
+export type Availability_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Availability_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Availability_Types_Bool_Exp;
+};
+
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['bigint']['input']>;
@@ -4759,13 +5150,13 @@ export type Movie_Alternative_Titles_Updates = {
 /** columns and relationships of "movie_availabilities" */
 export type Movie_Availabilities = {
   __typename?: 'movie_availabilities';
-  availability: Scalars['String']['output'];
-  created_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  availability: Availabilities;
+  availability_id: Scalars['uuid']['output'];
   id: Scalars['uuid']['output'];
   /** An object relationship */
   movie: Movies;
   movie_id: Scalars['uuid']['output'];
-  updated_at: Scalars['timestamptz']['output'];
 };
 
 /** aggregated selection of "movie_availabilities" */
@@ -4820,66 +5211,58 @@ export type Movie_Availabilities_Bool_Exp = {
   _and?: InputMaybe<Array<Movie_Availabilities_Bool_Exp>>;
   _not?: InputMaybe<Movie_Availabilities_Bool_Exp>;
   _or?: InputMaybe<Array<Movie_Availabilities_Bool_Exp>>;
-  availability?: InputMaybe<String_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  availability?: InputMaybe<Availabilities_Bool_Exp>;
+  availability_id?: InputMaybe<Uuid_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   movie?: InputMaybe<Movies_Bool_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "movie_availabilities" */
 export enum Movie_Availabilities_Constraint {
+  /** unique or primary key constraint on columns "movie_id", "availability_id" */
+  MovieAvailabilitiesMovieIdAvailabilityIdKey = 'movie_availabilities_movie_id_availability_id_key',
   /** unique or primary key constraint on columns "id" */
   MovieAvailabilitiesPkey = 'movie_availabilities_pkey'
 }
 
 /** input type for inserting data into table "movie_availabilities" */
 export type Movie_Availabilities_Insert_Input = {
-  availability?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  availability?: InputMaybe<Availabilities_Obj_Rel_Insert_Input>;
+  availability_id?: InputMaybe<Scalars['uuid']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
 /** aggregate max on columns */
 export type Movie_Availabilities_Max_Fields = {
   __typename?: 'movie_availabilities_max_fields';
-  availability?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  availability_id?: Maybe<Scalars['uuid']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
 /** order by max() on columns of table "movie_availabilities" */
 export type Movie_Availabilities_Max_Order_By = {
-  availability?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
+  availability_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Movie_Availabilities_Min_Fields = {
   __typename?: 'movie_availabilities_min_fields';
-  availability?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  availability_id?: Maybe<Scalars['uuid']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
 /** order by min() on columns of table "movie_availabilities" */
 export type Movie_Availabilities_Min_Order_By = {
-  availability?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
+  availability_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "movie_availabilities" */
@@ -4900,12 +5283,11 @@ export type Movie_Availabilities_On_Conflict = {
 
 /** Ordering options when selecting data from "movie_availabilities". */
 export type Movie_Availabilities_Order_By = {
-  availability?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
+  availability?: InputMaybe<Availabilities_Order_By>;
+  availability_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   movie?: InputMaybe<Movies_Order_By>;
   movie_id?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: movie_availabilities */
@@ -4916,24 +5298,18 @@ export type Movie_Availabilities_Pk_Columns_Input = {
 /** select columns of table "movie_availabilities" */
 export enum Movie_Availabilities_Select_Column {
   /** column name */
-  Availability = 'availability',
-  /** column name */
-  CreatedAt = 'created_at',
+  AvailabilityId = 'availability_id',
   /** column name */
   Id = 'id',
   /** column name */
-  MovieId = 'movie_id',
-  /** column name */
-  UpdatedAt = 'updated_at'
+  MovieId = 'movie_id'
 }
 
 /** input type for updating data in table "movie_availabilities" */
 export type Movie_Availabilities_Set_Input = {
-  availability?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  availability_id?: InputMaybe<Scalars['uuid']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
 /** Streaming cursor of the table "movie_availabilities" */
@@ -4946,25 +5322,19 @@ export type Movie_Availabilities_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movie_Availabilities_Stream_Cursor_Value_Input = {
-  availability?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  availability_id?: InputMaybe<Scalars['uuid']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
 /** update columns of table "movie_availabilities" */
 export enum Movie_Availabilities_Update_Column {
   /** column name */
-  Availability = 'availability',
-  /** column name */
-  CreatedAt = 'created_at',
+  AvailabilityId = 'availability_id',
   /** column name */
   Id = 'id',
   /** column name */
-  MovieId = 'movie_id',
-  /** column name */
-  UpdatedAt = 'updated_at'
+  MovieId = 'movie_id'
 }
 
 export type Movie_Availabilities_Updates = {
@@ -9332,6 +9702,14 @@ export type Mutation_Root = {
   delete_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** delete single row from the table: "auth.migrations" */
   delete_auth_migrations_by_pk?: Maybe<Auth_Migrations>;
+  /** delete data from the table: "availabilities" */
+  delete_availabilities?: Maybe<Availabilities_Mutation_Response>;
+  /** delete single row from the table: "availabilities" */
+  delete_availabilities_by_pk?: Maybe<Availabilities>;
+  /** delete data from the table: "availability_types" */
+  delete_availability_types?: Maybe<Availability_Types_Mutation_Response>;
+  /** delete single row from the table: "availability_types" */
+  delete_availability_types_by_pk?: Maybe<Availability_Types>;
   /** delete data from the table: "genre_types" */
   delete_genre_types?: Maybe<Genre_Types_Mutation_Response>;
   /** delete single row from the table: "genre_types" */
@@ -9540,6 +9918,14 @@ export type Mutation_Root = {
   insert_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** insert a single row into the table: "auth.migrations" */
   insert_auth_migrations_one?: Maybe<Auth_Migrations>;
+  /** insert data into the table: "availabilities" */
+  insert_availabilities?: Maybe<Availabilities_Mutation_Response>;
+  /** insert a single row into the table: "availabilities" */
+  insert_availabilities_one?: Maybe<Availabilities>;
+  /** insert data into the table: "availability_types" */
+  insert_availability_types?: Maybe<Availability_Types_Mutation_Response>;
+  /** insert a single row into the table: "availability_types" */
+  insert_availability_types_one?: Maybe<Availability_Types>;
   /** insert data into the table: "genre_types" */
   insert_genre_types?: Maybe<Genre_Types_Mutation_Response>;
   /** insert a single row into the table: "genre_types" */
@@ -9772,6 +10158,18 @@ export type Mutation_Root = {
   update_auth_migrations_by_pk?: Maybe<Auth_Migrations>;
   /** update multiples rows of table: "auth.migrations" */
   update_auth_migrations_many?: Maybe<Array<Maybe<Auth_Migrations_Mutation_Response>>>;
+  /** update data of the table: "availabilities" */
+  update_availabilities?: Maybe<Availabilities_Mutation_Response>;
+  /** update single row of the table: "availabilities" */
+  update_availabilities_by_pk?: Maybe<Availabilities>;
+  /** update multiples rows of table: "availabilities" */
+  update_availabilities_many?: Maybe<Array<Maybe<Availabilities_Mutation_Response>>>;
+  /** update data of the table: "availability_types" */
+  update_availability_types?: Maybe<Availability_Types_Mutation_Response>;
+  /** update single row of the table: "availability_types" */
+  update_availability_types_by_pk?: Maybe<Availability_Types>;
+  /** update multiples rows of table: "availability_types" */
+  update_availability_types_many?: Maybe<Array<Maybe<Availability_Types_Mutation_Response>>>;
   /** update multiples rows of table: "storage.buckets" */
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
@@ -10189,6 +10587,30 @@ export type Mutation_RootDelete_Auth_MigrationsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Auth_Migrations_By_PkArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_AvailabilitiesArgs = {
+  where: Availabilities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Availabilities_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Availability_TypesArgs = {
+  where: Availability_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Availability_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -10849,6 +11271,34 @@ export type Mutation_RootInsert_Auth_MigrationsArgs = {
 export type Mutation_RootInsert_Auth_Migrations_OneArgs = {
   object: Auth_Migrations_Insert_Input;
   on_conflict?: InputMaybe<Auth_Migrations_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_AvailabilitiesArgs = {
+  objects: Array<Availabilities_Insert_Input>;
+  on_conflict?: InputMaybe<Availabilities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Availabilities_OneArgs = {
+  object: Availabilities_Insert_Input;
+  on_conflict?: InputMaybe<Availabilities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Availability_TypesArgs = {
+  objects: Array<Availability_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Availability_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Availability_Types_OneArgs = {
+  object: Availability_Types_Insert_Input;
+  on_conflict?: InputMaybe<Availability_Types_On_Conflict>;
 };
 
 
@@ -11709,6 +12159,46 @@ export type Mutation_RootUpdate_Auth_Migrations_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Auth_Migrations_ManyArgs = {
   updates: Array<Auth_Migrations_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AvailabilitiesArgs = {
+  _set?: InputMaybe<Availabilities_Set_Input>;
+  where: Availabilities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Availabilities_By_PkArgs = {
+  _set?: InputMaybe<Availabilities_Set_Input>;
+  pk_columns: Availabilities_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Availabilities_ManyArgs = {
+  updates: Array<Availabilities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Availability_TypesArgs = {
+  _set?: InputMaybe<Availability_Types_Set_Input>;
+  where: Availability_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Availability_Types_By_PkArgs = {
+  _set?: InputMaybe<Availability_Types_Set_Input>;
+  pk_columns: Availability_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Availability_Types_ManyArgs = {
+  updates: Array<Availability_Types_Updates>;
 };
 
 
@@ -13659,6 +14149,18 @@ export type Query_Root = {
   auth_migrations_aggregate: Auth_Migrations_Aggregate;
   /** fetch data from the table: "auth.migrations" using primary key columns */
   auth_migrations_by_pk?: Maybe<Auth_Migrations>;
+  /** fetch data from the table: "availabilities" */
+  availabilities: Array<Availabilities>;
+  /** fetch aggregated fields from the table: "availabilities" */
+  availabilities_aggregate: Availabilities_Aggregate;
+  /** fetch data from the table: "availabilities" using primary key columns */
+  availabilities_by_pk?: Maybe<Availabilities>;
+  /** An array relationship */
+  availability_types: Array<Availability_Types>;
+  /** An aggregate relationship */
+  availability_types_aggregate: Availability_Types_Aggregate;
+  /** fetch data from the table: "availability_types" using primary key columns */
+  availability_types_by_pk?: Maybe<Availability_Types>;
   /** fetch data from the table: "storage.buckets" using primary key columns */
   bucket?: Maybe<Buckets>;
   /** fetch data from the table: "storage.buckets" */
@@ -14176,6 +14678,52 @@ export type Query_RootAuth_Migrations_AggregateArgs = {
 
 export type Query_RootAuth_Migrations_By_PkArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type Query_RootAvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
+  where?: InputMaybe<Availabilities_Bool_Exp>;
+};
+
+
+export type Query_RootAvailabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
+  where?: InputMaybe<Availabilities_Bool_Exp>;
+};
+
+
+export type Query_RootAvailabilities_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootAvailability_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
+};
+
+
+export type Query_RootAvailability_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
+};
+
+
+export type Query_RootAvailability_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -18783,6 +19331,22 @@ export type Subscription_Root = {
   auth_migrations_by_pk?: Maybe<Auth_Migrations>;
   /** fetch data from the table in a streaming manner: "auth.migrations" */
   auth_migrations_stream: Array<Auth_Migrations>;
+  /** fetch data from the table: "availabilities" */
+  availabilities: Array<Availabilities>;
+  /** fetch aggregated fields from the table: "availabilities" */
+  availabilities_aggregate: Availabilities_Aggregate;
+  /** fetch data from the table: "availabilities" using primary key columns */
+  availabilities_by_pk?: Maybe<Availabilities>;
+  /** fetch data from the table in a streaming manner: "availabilities" */
+  availabilities_stream: Array<Availabilities>;
+  /** An array relationship */
+  availability_types: Array<Availability_Types>;
+  /** An aggregate relationship */
+  availability_types_aggregate: Availability_Types_Aggregate;
+  /** fetch data from the table: "availability_types" using primary key columns */
+  availability_types_by_pk?: Maybe<Availability_Types>;
+  /** fetch data from the table in a streaming manner: "availability_types" */
+  availability_types_stream: Array<Availability_Types>;
   /** fetch data from the table: "storage.buckets" using primary key columns */
   bucket?: Maybe<Buckets>;
   /** fetch data from the table: "storage.buckets" */
@@ -19464,6 +20028,66 @@ export type Subscription_RootAuth_Migrations_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Auth_Migrations_Stream_Cursor_Input>>;
   where?: InputMaybe<Auth_Migrations_Bool_Exp>;
+};
+
+
+export type Subscription_RootAvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
+  where?: InputMaybe<Availabilities_Bool_Exp>;
+};
+
+
+export type Subscription_RootAvailabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
+  where?: InputMaybe<Availabilities_Bool_Exp>;
+};
+
+
+export type Subscription_RootAvailabilities_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootAvailabilities_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Availabilities_Stream_Cursor_Input>>;
+  where?: InputMaybe<Availabilities_Bool_Exp>;
+};
+
+
+export type Subscription_RootAvailability_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootAvailability_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootAvailability_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootAvailability_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Availability_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Availability_Types_Bool_Exp>;
 };
 
 
@@ -22066,6 +22690,13 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp;
 };
 
+export type GetAvailabilitiesQueryVariables = Exact<{
+  where?: InputMaybe<Availabilities_Bool_Exp>;
+}>;
+
+
+export type GetAvailabilitiesQuery = { __typename?: 'query_root', availabilities: Array<{ __typename?: 'availabilities', id: any, name: string }> };
+
 export type GetFilesQueryVariables = Exact<{
   where?: InputMaybe<Files_Bool_Exp>;
   order_by?: InputMaybe<Array<Files_Order_By> | Files_Order_By>;
@@ -22163,6 +22794,50 @@ export type GetSongQueryVariables = Exact<{
 export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, title: string, artwork?: string | null, duration?: any | null, content_score: number, spotify_id?: string | null, apple_music_id?: string | null, favourited?: boolean | null, listen_latered?: boolean | null, user_rating?: number | null, song_artists: Array<{ __typename?: 'song_artists', id: any, order?: number | null, person: { __typename?: 'people', name: string } }> } | null };
 
 
+
+export const GetAvailabilitiesDocument = `
+    query GetAvailabilities($where: availabilities_bool_exp) {
+  availabilities(where: $where) {
+    id
+    name
+  }
+}
+    `;
+
+export const useGetAvailabilitiesQuery = <
+      TData = GetAvailabilitiesQuery,
+      TError = unknown
+    >(
+      variables?: GetAvailabilitiesQueryVariables,
+      options?: Omit<UseQueryOptions<GetAvailabilitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAvailabilitiesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetAvailabilitiesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetAvailabilities'] : ['GetAvailabilities', variables],
+    queryFn: fetcher<GetAvailabilitiesQuery, GetAvailabilitiesQueryVariables>(GetAvailabilitiesDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetAvailabilitiesQuery = <
+      TData = InfiniteData<GetAvailabilitiesQuery>,
+      TError = unknown
+    >(
+      variables: GetAvailabilitiesQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetAvailabilitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetAvailabilitiesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetAvailabilitiesQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetAvailabilities.infinite'] : ['GetAvailabilities.infinite', variables],
+      queryFn: (metaData) => fetcher<GetAvailabilitiesQuery, GetAvailabilitiesQueryVariables>(GetAvailabilitiesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
 
 export const GetFilesDocument = `
     query GetFiles($where: files_bool_exp, $order_by: [files_order_by!], $limit: Int, $offset: Int, $distinct_on: [files_select_column!]) {

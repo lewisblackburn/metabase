@@ -1,4 +1,3 @@
-import { MOVIE_AVAILABILITY_OPTIONS } from '@/constants/availabilities.constant';
 import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 
 import * as z from 'zod';
@@ -12,9 +11,7 @@ export const moviesFilterSchema = z.object({
     showMe: z.enum(['everything', 'not-seen', 'seen'], {
         required_error: 'Please select a view preference'
     }),
-    availabilities: z
-        .array(z.enum(MOVIE_AVAILABILITY_OPTIONS.map((option) => option.value) as [string, ...string[]]))
-        .optional(),
+    availabilities: z.array(z.string().uuid()).optional(),
     releaseDates: z
         .object({
             from: z.date().optional(),
