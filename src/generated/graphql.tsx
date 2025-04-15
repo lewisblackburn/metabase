@@ -3852,10 +3852,205 @@ export type Files_Variance_Order_By = {
   size?: InputMaybe<Order_By>;
 };
 
+/** columns and relationships of "genre_types" */
+export type Genre_Types = {
+  __typename?: 'genre_types';
+  /** An object relationship */
+  genre: Genres;
+  genre_id: Scalars['uuid']['output'];
+  id: Scalars['uuid']['output'];
+  type: Scalars['String']['output'];
+};
+
+/** aggregated selection of "genre_types" */
+export type Genre_Types_Aggregate = {
+  __typename?: 'genre_types_aggregate';
+  aggregate?: Maybe<Genre_Types_Aggregate_Fields>;
+  nodes: Array<Genre_Types>;
+};
+
+export type Genre_Types_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Genre_Types_Aggregate_Bool_Exp_Count>;
+};
+
+export type Genre_Types_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Genre_Types_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "genre_types" */
+export type Genre_Types_Aggregate_Fields = {
+  __typename?: 'genre_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Genre_Types_Max_Fields>;
+  min?: Maybe<Genre_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "genre_types" */
+export type Genre_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "genre_types" */
+export type Genre_Types_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Genre_Types_Max_Order_By>;
+  min?: InputMaybe<Genre_Types_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "genre_types" */
+export type Genre_Types_Arr_Rel_Insert_Input = {
+  data: Array<Genre_Types_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Genre_Types_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "genre_types". All fields are combined with a logical 'AND'. */
+export type Genre_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Genre_Types_Bool_Exp>>;
+  _not?: InputMaybe<Genre_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Genre_Types_Bool_Exp>>;
+  genre?: InputMaybe<Genres_Bool_Exp>;
+  genre_id?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "genre_types" */
+export enum Genre_Types_Constraint {
+  /** unique or primary key constraint on columns "genre_id", "type" */
+  GenreTypesGenreIdTypeKey = 'genre_types_genre_id_type_key',
+  /** unique or primary key constraint on columns "id" */
+  GenreTypesPkey = 'genre_types_pkey'
+}
+
+/** input type for inserting data into table "genre_types" */
+export type Genre_Types_Insert_Input = {
+  genre?: InputMaybe<Genres_Obj_Rel_Insert_Input>;
+  genre_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Genre_Types_Max_Fields = {
+  __typename?: 'genre_types_max_fields';
+  genre_id?: Maybe<Scalars['uuid']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "genre_types" */
+export type Genre_Types_Max_Order_By = {
+  genre_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Genre_Types_Min_Fields = {
+  __typename?: 'genre_types_min_fields';
+  genre_id?: Maybe<Scalars['uuid']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "genre_types" */
+export type Genre_Types_Min_Order_By = {
+  genre_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "genre_types" */
+export type Genre_Types_Mutation_Response = {
+  __typename?: 'genre_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Genre_Types>;
+};
+
+/** on_conflict condition type for table "genre_types" */
+export type Genre_Types_On_Conflict = {
+  constraint: Genre_Types_Constraint;
+  update_columns?: Array<Genre_Types_Update_Column>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "genre_types". */
+export type Genre_Types_Order_By = {
+  genre?: InputMaybe<Genres_Order_By>;
+  genre_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: genre_types */
+export type Genre_Types_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "genre_types" */
+export enum Genre_Types_Select_Column {
+  /** column name */
+  GenreId = 'genre_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "genre_types" */
+export type Genre_Types_Set_Input = {
+  genre_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "genre_types" */
+export type Genre_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Genre_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Genre_Types_Stream_Cursor_Value_Input = {
+  genre_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "genre_types" */
+export enum Genre_Types_Update_Column {
+  /** column name */
+  GenreId = 'genre_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Type = 'type'
+}
+
+export type Genre_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Genre_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Genre_Types_Bool_Exp;
+};
+
 /** columns and relationships of "genres" */
 export type Genres = {
   __typename?: 'genres';
-  description?: Maybe<Scalars['String']['output']>;
+  /** An array relationship */
+  genre_types: Array<Genre_Types>;
+  /** An aggregate relationship */
+  genre_types_aggregate: Genre_Types_Aggregate;
   id: Scalars['uuid']['output'];
   /** An array relationship */
   movie_genres: Array<Movie_Genres>;
@@ -3866,6 +4061,26 @@ export type Genres = {
   song_genres: Array<Song_Genres>;
   /** An aggregate relationship */
   song_genres_aggregate: Song_Genres_Aggregate;
+};
+
+
+/** columns and relationships of "genres" */
+export type GenresGenre_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Genre_Types_Order_By>>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
+};
+
+
+/** columns and relationships of "genres" */
+export type GenresGenre_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Genre_Types_Order_By>>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
 };
 
 
@@ -3935,7 +4150,8 @@ export type Genres_Bool_Exp = {
   _and?: InputMaybe<Array<Genres_Bool_Exp>>;
   _not?: InputMaybe<Genres_Bool_Exp>;
   _or?: InputMaybe<Array<Genres_Bool_Exp>>;
-  description?: InputMaybe<String_Comparison_Exp>;
+  genre_types?: InputMaybe<Genre_Types_Bool_Exp>;
+  genre_types_aggregate?: InputMaybe<Genre_Types_Aggregate_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   movie_genres?: InputMaybe<Movie_Genres_Bool_Exp>;
   movie_genres_aggregate?: InputMaybe<Movie_Genres_Aggregate_Bool_Exp>;
@@ -3954,7 +4170,7 @@ export enum Genres_Constraint {
 
 /** input type for inserting data into table "genres" */
 export type Genres_Insert_Input = {
-  description?: InputMaybe<Scalars['String']['input']>;
+  genre_types?: InputMaybe<Genre_Types_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_genres?: InputMaybe<Movie_Genres_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -3964,7 +4180,6 @@ export type Genres_Insert_Input = {
 /** aggregate max on columns */
 export type Genres_Max_Fields = {
   __typename?: 'genres_max_fields';
-  description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
 };
@@ -3972,7 +4187,6 @@ export type Genres_Max_Fields = {
 /** aggregate min on columns */
 export type Genres_Min_Fields = {
   __typename?: 'genres_min_fields';
-  description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
 };
@@ -4002,7 +4216,7 @@ export type Genres_On_Conflict = {
 
 /** Ordering options when selecting data from "genres". */
 export type Genres_Order_By = {
-  description?: InputMaybe<Order_By>;
+  genre_types_aggregate?: InputMaybe<Genre_Types_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   movie_genres_aggregate?: InputMaybe<Movie_Genres_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
@@ -4017,8 +4231,6 @@ export type Genres_Pk_Columns_Input = {
 /** select columns of table "genres" */
 export enum Genres_Select_Column {
   /** column name */
-  Description = 'description',
-  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name'
@@ -4026,7 +4238,6 @@ export enum Genres_Select_Column {
 
 /** input type for updating data in table "genres" */
 export type Genres_Set_Input = {
-  description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
@@ -4041,15 +4252,12 @@ export type Genres_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Genres_Stream_Cursor_Value_Input = {
-  description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** update columns of table "genres" */
 export enum Genres_Update_Column {
-  /** column name */
-  Description = 'description',
   /** column name */
   Id = 'id',
   /** column name */
@@ -4546,6 +4754,224 @@ export type Movie_Alternative_Titles_Updates = {
   _set?: InputMaybe<Movie_Alternative_Titles_Set_Input>;
   /** filter the rows which have to be updated */
   where: Movie_Alternative_Titles_Bool_Exp;
+};
+
+/** columns and relationships of "movie_availabilities" */
+export type Movie_Availabilities = {
+  __typename?: 'movie_availabilities';
+  availability: Scalars['String']['output'];
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['uuid']['output'];
+  /** An object relationship */
+  movie: Movies;
+  movie_id: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "movie_availabilities" */
+export type Movie_Availabilities_Aggregate = {
+  __typename?: 'movie_availabilities_aggregate';
+  aggregate?: Maybe<Movie_Availabilities_Aggregate_Fields>;
+  nodes: Array<Movie_Availabilities>;
+};
+
+export type Movie_Availabilities_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movie_Availabilities_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movie_Availabilities_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "movie_availabilities" */
+export type Movie_Availabilities_Aggregate_Fields = {
+  __typename?: 'movie_availabilities_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Movie_Availabilities_Max_Fields>;
+  min?: Maybe<Movie_Availabilities_Min_Fields>;
+};
+
+
+/** aggregate fields of "movie_availabilities" */
+export type Movie_Availabilities_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "movie_availabilities" */
+export type Movie_Availabilities_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movie_Availabilities_Max_Order_By>;
+  min?: InputMaybe<Movie_Availabilities_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movie_availabilities" */
+export type Movie_Availabilities_Arr_Rel_Insert_Input = {
+  data: Array<Movie_Availabilities_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Availabilities_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "movie_availabilities". All fields are combined with a logical 'AND'. */
+export type Movie_Availabilities_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Availabilities_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Availabilities_Bool_Exp>>;
+  availability?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  movie?: InputMaybe<Movies_Bool_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_availabilities" */
+export enum Movie_Availabilities_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  MovieAvailabilitiesPkey = 'movie_availabilities_pkey'
+}
+
+/** input type for inserting data into table "movie_availabilities" */
+export type Movie_Availabilities_Insert_Input = {
+  availability?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  movie?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
+  movie_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Availabilities_Max_Fields = {
+  __typename?: 'movie_availabilities_max_fields';
+  availability?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  movie_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by max() on columns of table "movie_availabilities" */
+export type Movie_Availabilities_Max_Order_By = {
+  availability?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Movie_Availabilities_Min_Fields = {
+  __typename?: 'movie_availabilities_min_fields';
+  availability?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  movie_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "movie_availabilities" */
+export type Movie_Availabilities_Min_Order_By = {
+  availability?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "movie_availabilities" */
+export type Movie_Availabilities_Mutation_Response = {
+  __typename?: 'movie_availabilities_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Availabilities>;
+};
+
+/** on_conflict condition type for table "movie_availabilities" */
+export type Movie_Availabilities_On_Conflict = {
+  constraint: Movie_Availabilities_Constraint;
+  update_columns?: Array<Movie_Availabilities_Update_Column>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_availabilities". */
+export type Movie_Availabilities_Order_By = {
+  availability?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie?: InputMaybe<Movies_Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_availabilities */
+export type Movie_Availabilities_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "movie_availabilities" */
+export enum Movie_Availabilities_Select_Column {
+  /** column name */
+  Availability = 'availability',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MovieId = 'movie_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "movie_availabilities" */
+export type Movie_Availabilities_Set_Input = {
+  availability?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  movie_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** Streaming cursor of the table "movie_availabilities" */
+export type Movie_Availabilities_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Availabilities_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Availabilities_Stream_Cursor_Value_Input = {
+  availability?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  movie_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** update columns of table "movie_availabilities" */
+export enum Movie_Availabilities_Update_Column {
+  /** column name */
+  Availability = 'availability',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MovieId = 'movie_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Movie_Availabilities_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Availabilities_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Availabilities_Bool_Exp;
 };
 
 /** columns and relationships of "movie_cast" */
@@ -7866,6 +8292,10 @@ export type Movies = {
   /** An aggregate relationship */
   movie_alternative_titles_aggregate: Movie_Alternative_Titles_Aggregate;
   /** An array relationship */
+  movie_availabilities: Array<Movie_Availabilities>;
+  /** An aggregate relationship */
+  movie_availabilities_aggregate: Movie_Availabilities_Aggregate;
+  /** An array relationship */
   movie_cast_members: Array<Movie_Cast>;
   /** An aggregate relationship */
   movie_cast_members_aggregate: Movie_Cast_Aggregate;
@@ -7955,6 +8385,26 @@ export type MoviesMovie_Alternative_Titles_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Movie_Alternative_Titles_Order_By>>;
   where?: InputMaybe<Movie_Alternative_Titles_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type MoviesMovie_AvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type MoviesMovie_Availabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
 };
 
 
@@ -8281,6 +8731,8 @@ export type Movies_Bool_Exp = {
   language?: InputMaybe<String_Comparison_Exp>;
   movie_alternative_titles?: InputMaybe<Movie_Alternative_Titles_Bool_Exp>;
   movie_alternative_titles_aggregate?: InputMaybe<Movie_Alternative_Titles_Aggregate_Bool_Exp>;
+  movie_availabilities?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Bool_Exp>;
   movie_cast_members?: InputMaybe<Movie_Cast_Bool_Exp>;
   movie_cast_members_aggregate?: InputMaybe<Movie_Cast_Aggregate_Bool_Exp>;
   movie_changes?: InputMaybe<Movie_Changes_Bool_Exp>;
@@ -8360,6 +8812,7 @@ export type Movies_Insert_Input = {
   imdb_id?: InputMaybe<Scalars['String']['input']>;
   language?: InputMaybe<Scalars['String']['input']>;
   movie_alternative_titles?: InputMaybe<Movie_Alternative_Titles_Arr_Rel_Insert_Input>;
+  movie_availabilities?: InputMaybe<Movie_Availabilities_Arr_Rel_Insert_Input>;
   movie_cast_members?: InputMaybe<Movie_Cast_Arr_Rel_Insert_Input>;
   movie_changes?: InputMaybe<Movie_Changes_Arr_Rel_Insert_Input>;
   movie_crew_members?: InputMaybe<Movie_Crew_Arr_Rel_Insert_Input>;
@@ -8493,6 +8946,7 @@ export type Movies_Order_By = {
   imdb_id?: InputMaybe<Order_By>;
   language?: InputMaybe<Order_By>;
   movie_alternative_titles_aggregate?: InputMaybe<Movie_Alternative_Titles_Aggregate_Order_By>;
+  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Order_By>;
   movie_cast_members_aggregate?: InputMaybe<Movie_Cast_Aggregate_Order_By>;
   movie_changes_aggregate?: InputMaybe<Movie_Changes_Aggregate_Order_By>;
   movie_crew_members_aggregate?: InputMaybe<Movie_Crew_Aggregate_Order_By>;
@@ -8878,6 +9332,10 @@ export type Mutation_Root = {
   delete_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** delete single row from the table: "auth.migrations" */
   delete_auth_migrations_by_pk?: Maybe<Auth_Migrations>;
+  /** delete data from the table: "genre_types" */
+  delete_genre_types?: Maybe<Genre_Types_Mutation_Response>;
+  /** delete single row from the table: "genre_types" */
+  delete_genre_types_by_pk?: Maybe<Genre_Types>;
   /** delete data from the table: "genres" */
   delete_genres?: Maybe<Genres_Mutation_Response>;
   /** delete single row from the table: "genres" */
@@ -8890,6 +9348,10 @@ export type Mutation_Root = {
   delete_movie_alternative_titles?: Maybe<Movie_Alternative_Titles_Mutation_Response>;
   /** delete single row from the table: "movie_alternative_titles" */
   delete_movie_alternative_titles_by_pk?: Maybe<Movie_Alternative_Titles>;
+  /** delete data from the table: "movie_availabilities" */
+  delete_movie_availabilities?: Maybe<Movie_Availabilities_Mutation_Response>;
+  /** delete single row from the table: "movie_availabilities" */
+  delete_movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
   /** delete data from the table: "movie_cast" */
   delete_movie_cast?: Maybe<Movie_Cast_Mutation_Response>;
   /** delete single row from the table: "movie_cast" */
@@ -9078,6 +9540,10 @@ export type Mutation_Root = {
   insert_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** insert a single row into the table: "auth.migrations" */
   insert_auth_migrations_one?: Maybe<Auth_Migrations>;
+  /** insert data into the table: "genre_types" */
+  insert_genre_types?: Maybe<Genre_Types_Mutation_Response>;
+  /** insert a single row into the table: "genre_types" */
+  insert_genre_types_one?: Maybe<Genre_Types>;
   /** insert data into the table: "genres" */
   insert_genres?: Maybe<Genres_Mutation_Response>;
   /** insert a single row into the table: "genres" */
@@ -9090,6 +9556,10 @@ export type Mutation_Root = {
   insert_movie_alternative_titles?: Maybe<Movie_Alternative_Titles_Mutation_Response>;
   /** insert a single row into the table: "movie_alternative_titles" */
   insert_movie_alternative_titles_one?: Maybe<Movie_Alternative_Titles>;
+  /** insert data into the table: "movie_availabilities" */
+  insert_movie_availabilities?: Maybe<Movie_Availabilities_Mutation_Response>;
+  /** insert a single row into the table: "movie_availabilities" */
+  insert_movie_availabilities_one?: Maybe<Movie_Availabilities>;
   /** insert data into the table: "movie_cast" */
   insert_movie_cast?: Maybe<Movie_Cast_Mutation_Response>;
   /** insert a single row into the table: "movie_cast" */
@@ -9306,6 +9776,12 @@ export type Mutation_Root = {
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
+  /** update data of the table: "genre_types" */
+  update_genre_types?: Maybe<Genre_Types_Mutation_Response>;
+  /** update single row of the table: "genre_types" */
+  update_genre_types_by_pk?: Maybe<Genre_Types>;
+  /** update multiples rows of table: "genre_types" */
+  update_genre_types_many?: Maybe<Array<Maybe<Genre_Types_Mutation_Response>>>;
   /** update data of the table: "genres" */
   update_genres?: Maybe<Genres_Mutation_Response>;
   /** update single row of the table: "genres" */
@@ -9324,6 +9800,12 @@ export type Mutation_Root = {
   update_movie_alternative_titles_by_pk?: Maybe<Movie_Alternative_Titles>;
   /** update multiples rows of table: "movie_alternative_titles" */
   update_movie_alternative_titles_many?: Maybe<Array<Maybe<Movie_Alternative_Titles_Mutation_Response>>>;
+  /** update data of the table: "movie_availabilities" */
+  update_movie_availabilities?: Maybe<Movie_Availabilities_Mutation_Response>;
+  /** update single row of the table: "movie_availabilities" */
+  update_movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
+  /** update multiples rows of table: "movie_availabilities" */
+  update_movie_availabilities_many?: Maybe<Array<Maybe<Movie_Availabilities_Mutation_Response>>>;
   /** update data of the table: "movie_cast" */
   update_movie_cast?: Maybe<Movie_Cast_Mutation_Response>;
   /** update single row of the table: "movie_cast" */
@@ -9711,6 +10193,18 @@ export type Mutation_RootDelete_Auth_Migrations_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Genre_TypesArgs = {
+  where: Genre_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Genre_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_GenresArgs = {
   where: Genres_Bool_Exp;
 };
@@ -9742,6 +10236,18 @@ export type Mutation_RootDelete_Movie_Alternative_TitlesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Movie_Alternative_Titles_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Movie_AvailabilitiesArgs = {
+  where: Movie_Availabilities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Movie_Availabilities_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -10347,6 +10853,20 @@ export type Mutation_RootInsert_Auth_Migrations_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Genre_TypesArgs = {
+  objects: Array<Genre_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Genre_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Genre_Types_OneArgs = {
+  object: Genre_Types_Insert_Input;
+  on_conflict?: InputMaybe<Genre_Types_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_GenresArgs = {
   objects: Array<Genres_Insert_Input>;
   on_conflict?: InputMaybe<Genres_On_Conflict>;
@@ -10385,6 +10905,20 @@ export type Mutation_RootInsert_Movie_Alternative_TitlesArgs = {
 export type Mutation_RootInsert_Movie_Alternative_Titles_OneArgs = {
   object: Movie_Alternative_Titles_Insert_Input;
   on_conflict?: InputMaybe<Movie_Alternative_Titles_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Movie_AvailabilitiesArgs = {
+  objects: Array<Movie_Availabilities_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Availabilities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Movie_Availabilities_OneArgs = {
+  object: Movie_Availabilities_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Availabilities_On_Conflict>;
 };
 
 
@@ -11191,6 +11725,26 @@ export type Mutation_RootUpdate_Files_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Genre_TypesArgs = {
+  _set?: InputMaybe<Genre_Types_Set_Input>;
+  where: Genre_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Genre_Types_By_PkArgs = {
+  _set?: InputMaybe<Genre_Types_Set_Input>;
+  pk_columns: Genre_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Genre_Types_ManyArgs = {
+  updates: Array<Genre_Types_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_GenresArgs = {
   _set?: InputMaybe<Genres_Set_Input>;
   where: Genres_Bool_Exp;
@@ -11247,6 +11801,26 @@ export type Mutation_RootUpdate_Movie_Alternative_Titles_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Movie_Alternative_Titles_ManyArgs = {
   updates: Array<Movie_Alternative_Titles_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_AvailabilitiesArgs = {
+  _set?: InputMaybe<Movie_Availabilities_Set_Input>;
+  where: Movie_Availabilities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Availabilities_By_PkArgs = {
+  _set?: InputMaybe<Movie_Availabilities_Set_Input>;
+  pk_columns: Movie_Availabilities_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Availabilities_ManyArgs = {
+  updates: Array<Movie_Availabilities_Updates>;
 };
 
 
@@ -13097,6 +13671,12 @@ export type Query_Root = {
   files: Array<Files>;
   /** fetch aggregated fields from the table: "storage.files" */
   filesAggregate: Files_Aggregate;
+  /** An array relationship */
+  genre_types: Array<Genre_Types>;
+  /** An aggregate relationship */
+  genre_types_aggregate: Genre_Types_Aggregate;
+  /** fetch data from the table: "genre_types" using primary key columns */
+  genre_types_by_pk?: Maybe<Genre_Types>;
   /** fetch data from the table: "genres" */
   genres: Array<Genres>;
   /** fetch aggregated fields from the table: "genres" */
@@ -13115,6 +13695,12 @@ export type Query_Root = {
   movie_alternative_titles_aggregate: Movie_Alternative_Titles_Aggregate;
   /** fetch data from the table: "movie_alternative_titles" using primary key columns */
   movie_alternative_titles_by_pk?: Maybe<Movie_Alternative_Titles>;
+  /** An array relationship */
+  movie_availabilities: Array<Movie_Availabilities>;
+  /** An aggregate relationship */
+  movie_availabilities_aggregate: Movie_Availabilities_Aggregate;
+  /** fetch data from the table: "movie_availabilities" using primary key columns */
+  movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
   /** fetch data from the table: "movie_cast" */
   movie_cast: Array<Movie_Cast>;
   /** fetch aggregated fields from the table: "movie_cast" */
@@ -13639,6 +14225,29 @@ export type Query_RootFilesAggregateArgs = {
 };
 
 
+export type Query_RootGenre_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Genre_Types_Order_By>>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
+};
+
+
+export type Query_RootGenre_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Genre_Types_Order_By>>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
+};
+
+
+export type Query_RootGenre_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootGenresArgs = {
   distinct_on?: InputMaybe<Array<Genres_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -13704,6 +14313,29 @@ export type Query_RootMovie_Alternative_Titles_AggregateArgs = {
 
 
 export type Query_RootMovie_Alternative_Titles_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootMovie_AvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+export type Query_RootMovie_Availabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+export type Query_RootMovie_Availabilities_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -18167,6 +18799,14 @@ export type Subscription_Root = {
   filesAggregate: Files_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.files" */
   files_stream: Array<Files>;
+  /** An array relationship */
+  genre_types: Array<Genre_Types>;
+  /** An aggregate relationship */
+  genre_types_aggregate: Genre_Types_Aggregate;
+  /** fetch data from the table: "genre_types" using primary key columns */
+  genre_types_by_pk?: Maybe<Genre_Types>;
+  /** fetch data from the table in a streaming manner: "genre_types" */
+  genre_types_stream: Array<Genre_Types>;
   /** fetch data from the table: "genres" */
   genres: Array<Genres>;
   /** fetch aggregated fields from the table: "genres" */
@@ -18191,6 +18831,14 @@ export type Subscription_Root = {
   movie_alternative_titles_by_pk?: Maybe<Movie_Alternative_Titles>;
   /** fetch data from the table in a streaming manner: "movie_alternative_titles" */
   movie_alternative_titles_stream: Array<Movie_Alternative_Titles>;
+  /** An array relationship */
+  movie_availabilities: Array<Movie_Availabilities>;
+  /** An aggregate relationship */
+  movie_availabilities_aggregate: Movie_Availabilities_Aggregate;
+  /** fetch data from the table: "movie_availabilities" using primary key columns */
+  movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
+  /** fetch data from the table in a streaming manner: "movie_availabilities" */
+  movie_availabilities_stream: Array<Movie_Availabilities>;
   /** fetch data from the table: "movie_cast" */
   movie_cast: Array<Movie_Cast>;
   /** fetch aggregated fields from the table: "movie_cast" */
@@ -18879,6 +19527,36 @@ export type Subscription_RootFiles_StreamArgs = {
 };
 
 
+export type Subscription_RootGenre_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Genre_Types_Order_By>>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootGenre_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Genre_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Genre_Types_Order_By>>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootGenre_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootGenre_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Genre_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Genre_Types_Bool_Exp>;
+};
+
+
 export type Subscription_RootGenresArgs = {
   distinct_on?: InputMaybe<Array<Genres_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -18966,6 +19644,36 @@ export type Subscription_RootMovie_Alternative_Titles_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Movie_Alternative_Titles_Stream_Cursor_Input>>;
   where?: InputMaybe<Movie_Alternative_Titles_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_AvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Availabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Availabilities_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootMovie_Availabilities_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Movie_Availabilities_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
 };
 
 
@@ -21369,6 +22077,13 @@ export type GetFilesQueryVariables = Exact<{
 
 export type GetFilesQuery = { __typename?: 'query_root', files: Array<{ __typename?: 'files', id: any, name?: string | null }> };
 
+export type GetGenresQueryVariables = Exact<{
+  where?: InputMaybe<Genres_Bool_Exp>;
+}>;
+
+
+export type GetGenresQuery = { __typename?: 'query_root', genres: Array<{ __typename?: 'genres', id: any, name: string }> };
+
 export type DeleteMovieFavouriteMutationVariables = Exact<{
   where: Movie_Favourites_Bool_Exp;
 }>;
@@ -21494,6 +22209,50 @@ export const useInfiniteGetFilesQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetFiles.infinite'] : ['GetFiles.infinite', variables],
       queryFn: (metaData) => fetcher<GetFilesQuery, GetFilesQueryVariables>(GetFilesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetGenresDocument = `
+    query GetGenres($where: genres_bool_exp) {
+  genres(where: $where) {
+    id
+    name
+  }
+}
+    `;
+
+export const useGetGenresQuery = <
+      TData = GetGenresQuery,
+      TError = unknown
+    >(
+      variables?: GetGenresQueryVariables,
+      options?: Omit<UseQueryOptions<GetGenresQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetGenresQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetGenresQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetGenres'] : ['GetGenres', variables],
+    queryFn: fetcher<GetGenresQuery, GetGenresQueryVariables>(GetGenresDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetGenresQuery = <
+      TData = InfiniteData<GetGenresQuery>,
+      TError = unknown
+    >(
+      variables: GetGenresQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetGenresQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetGenresQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetGenresQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetGenres.infinite'] : ['GetGenres.infinite', variables],
+      queryFn: (metaData) => fetcher<GetGenresQuery, GetGenresQueryVariables>(GetGenresDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

@@ -1,0 +1,6 @@
+query GetGenres($where: genres_bool_exp) {
+    genres(where: $where) {
+        id
+        name
+    }
+}

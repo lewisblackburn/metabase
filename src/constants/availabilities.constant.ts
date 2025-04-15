@@ -1,12 +1,48 @@
 import { generateOptions, mergeCommonInAll } from '@/utils/generate-options';
 
 export const AVAILABILITIES = {
-    common: ['Free', 'Ads', 'Rent', 'Buy', 'Subscription', 'Stream', 'Offline', 'Limited Time'],
-    movies: ['In Cinemas', 'DVD', 'Blu-ray', 'Digital'],
-    tvShows: ['Live TV', 'Catch-Up', 'Box Set'],
-    songs: ['Streaming', 'Download', 'Vinyl', 'CD', 'Radio'],
-    books: ['Ebook', 'Audiobook', 'Print', 'Library'],
-    games: ['Digital', 'Physical', 'Early Access', 'Beta', 'Demo', 'Game Pass']
+    common: {
+        free: 'Free',
+        ads: 'Ads',
+        rent: 'Rent',
+        buy: 'Buy',
+        subscription: 'Subscription',
+        stream: 'Stream',
+        offline: 'Offline',
+        limitedTime: 'Limited Time'
+    },
+    movies: {
+        inCinemas: 'In Cinemas',
+        dvd: 'DVD',
+        bluRay: 'Blu-ray',
+        digital: 'Digital'
+    },
+    tvShows: {
+        liveTV: 'Live TV',
+        catchUp: 'Catch-Up',
+        boxSet: 'Box Set'
+    },
+    songs: {
+        streaming: 'Streaming',
+        download: 'Download',
+        vinyl: 'Vinyl',
+        cd: 'CD',
+        radio: 'Radio'
+    },
+    books: {
+        ebook: 'Ebook',
+        audiobook: 'Audiobook',
+        print: 'Print',
+        library: 'Library'
+    },
+    games: {
+        digital: 'Digital',
+        physical: 'Physical',
+        earlyAccess: 'Early Access',
+        beta: 'Beta',
+        demo: 'Demo',
+        gamePass: 'Game Pass'
+    }
 };
 
 const mergedAvailabilities = mergeCommonInAll(AVAILABILITIES);

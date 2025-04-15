@@ -14,10 +14,10 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
-import { AVAILABILITIES } from '@/constants/availabilities.constant';
-import { CERTIFICATIONS } from '@/constants/certifications.constant';
-import { GENRES } from '@/constants/genres.constant';
+import { MOVIE_AVAILABILITY_OPTIONS } from '@/constants/availabilities.constant';
+import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
+import { useGetGenresQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
@@ -44,6 +44,27 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
         resolver: zodResolver(moviesFilterSchema),
         defaultValues: moviesFilter
     });
+
+    const { data: genres } = useGetGenresQuery(
+        {
+            where: {
+                genre_types: {
+                    type: {
+                        _eq: 'movie'
+                    }
+                }
+            }
+        },
+        {
+            queryKey: ['genres']
+        }
+    );
+
+    const genreOptions =
+        genres?.genres.map((genre) => ({
+            value: genre.id.toString(),
+            label: genre.name
+        })) ?? [];
 
     useEffect(() => {
         form.reset(moviesFilter);
@@ -150,9 +171,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                     <FormItem>
                                                         <BaseFormLayout label='Availabilities'>
                                                             <CheckboxGroupField
-                                                                options={AVAILABILITIES.common.concat(
-                                                                    AVAILABILITIES.movies
-                                                                )}
+                                                                options={MOVIE_AVAILABILITY_OPTIONS}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
@@ -185,10 +204,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Genres'>
-                                                            <CheckboxGroupField
-                                                                options={GENRES.common.concat(GENRES.movies)}
-                                                                {...field}
-                                                            />
+                                                            <CheckboxGroupField options={genreOptions} {...field} />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}
@@ -203,9 +219,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                     <FormItem>
                                                         <BaseFormLayout label='Certifications'>
                                                             <CheckboxGroupField
-                                                                options={CERTIFICATIONS.common.concat(
-                                                                    CERTIFICATIONS.movies
-                                                                )}
+                                                                options={MOVIE_CERTIFICATION_OPTIONS}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
@@ -292,8 +306,8 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                 </SidebarAccordionItem>
                             </Accordion>
                             <div className='mb-15 flex w-full flex-col gap-5 px-5'>
-                                <Button className='w-full' size='lg'>
-                                    Search
+                                <Button className='w-full' size='lg' type='submit'>
+                                    s()) Search
                                 </Button>
                                 <Button variant='secondary' className='w-full' size='lg' type='reset' onClick={onReset}>
                                     Reset

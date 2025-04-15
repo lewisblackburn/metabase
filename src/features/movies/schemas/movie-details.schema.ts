@@ -1,10 +1,7 @@
-import { CERTIFICATIONS } from '@/constants/certifications.constant';
-import { STATUS } from '@/constants/status.constant';
+import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
+import { MOVIE_STATUS_OPTIONS } from '@/constants/status.constant';
 
 import { z } from 'zod';
-
-const statusArray = STATUS.common.concat(STATUS.movies);
-const certificationArray = CERTIFICATIONS.common.concat(CERTIFICATIONS.movies);
 
 export const movieDetailsSchema = z.object({
     title: z.string().min(1, 'The title is required'),
@@ -19,14 +16,14 @@ export const movieDetailsSchema = z.object({
     status: z.preprocess(
         (val) => (val === '' ? undefined : val),
         z
-            .enum(statusArray as [string, ...string[]])
+            .enum(MOVIE_STATUS_OPTIONS.map((option: { value: string }) => option.value) as [string, ...string[]])
             .nullable()
             .optional()
     ),
     ageCertification: z.preprocess(
         (val) => (val === '' ? undefined : val),
         z
-            .enum(certificationArray as [string, ...string[]])
+            .enum(MOVIE_CERTIFICATION_OPTIONS.map((option: { value: string }) => option.value) as [string, ...string[]])
             .nullable()
             .optional()
     ),

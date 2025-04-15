@@ -9,7 +9,7 @@ import { Label } from '@/registry/new-york-v4/ui/label';
 interface CheckboxGroupFieldProps {
     value?: string[];
     onChange?: (value: string[]) => void;
-    options: string[];
+    options: Array<{ value: string; label: string }>;
     className?: string;
     disabled?: boolean;
 }
@@ -21,22 +21,22 @@ const CheckboxGroupField = ({
     className,
     disabled = false
 }: CheckboxGroupFieldProps) => {
-    const handleToggle = (option: string, checked: boolean) => {
-        const updatedValue = checked ? [...value, option] : value.filter((val) => val !== option);
+    const handleToggle = (optionValue: string, checked: boolean) => {
+        const updatedValue = checked ? [...value, optionValue] : value.filter((val) => val !== optionValue);
         onChange?.(updatedValue);
     };
 
     return (
         <div className={cn('grid grid-cols-2 gap-2', className)}>
-            {options.map((option) => (
-                <div key={option} className='mt-1 flex items-center space-x-2'>
+            {options.map(({ label, value: optionValue }) => (
+                <div key={optionValue} className='mt-1 flex items-center space-x-2'>
                     <Checkbox
-                        id={option}
-                        checked={value.includes(option)}
-                        onCheckedChange={(checked) => handleToggle(option, Boolean(checked))}
+                        id={optionValue}
+                        checked={value.includes(optionValue)}
+                        onCheckedChange={(checked) => handleToggle(optionValue, Boolean(checked))}
                         disabled={disabled}
                     />
-                    <Label htmlFor={option}>{option}</Label>
+                    <Label htmlFor={optionValue}>{label}</Label>
                 </div>
             ))}
         </div>

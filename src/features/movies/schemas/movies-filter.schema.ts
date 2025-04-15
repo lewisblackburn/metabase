@@ -1,12 +1,7 @@
-import { AVAILABILITIES } from '@/constants/availabilities.constant';
-import { CERTIFICATIONS } from '@/constants/certifications.constant';
-import { GENRES } from '@/constants/genres.constant';
+import { MOVIE_AVAILABILITY_OPTIONS } from '@/constants/availabilities.constant';
+import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 
 import * as z from 'zod';
-
-const availabilityArray = AVAILABILITIES.common.concat(AVAILABILITIES.movies);
-const genresArray = GENRES.common.concat(GENRES.movies);
-const certificationArray = CERTIFICATIONS.common.concat(CERTIFICATIONS.movies);
 
 export const moviesFilterSchema = z.object({
     orderBy: z.object({
@@ -17,15 +12,19 @@ export const moviesFilterSchema = z.object({
     showMe: z.enum(['everything', 'not-seen', 'seen'], {
         required_error: 'Please select a view preference'
     }),
-    availabilities: z.array(z.enum(availabilityArray as [string, ...string[]])).optional(),
+    availabilities: z
+        .array(z.enum(MOVIE_AVAILABILITY_OPTIONS.map((option) => option.value) as [string, ...string[]]))
+        .optional(),
     releaseDates: z
         .object({
             from: z.date().optional(),
             to: z.date().optional()
         })
         .optional(),
-    genres: z.array(z.enum(genresArray as [string, ...string[]])).optional(),
-    certifications: z.array(z.enum(certificationArray as [string, ...string[]])).optional(),
+    genres: z.array(z.string().uuid()).optional(),
+    certifications: z
+        .array(z.enum(MOVIE_CERTIFICATION_OPTIONS.map((option) => option.value) as [string, ...string[]]))
+        .optional(),
     // TODO : This needs to match the language code
     language: z.string().optional(),
     userScore: z.tuple([z.number(), z.number()]).optional(),

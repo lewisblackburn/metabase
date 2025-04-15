@@ -1,12 +1,22 @@
 import { generateOptions, mergeCommonInAll } from '@/utils/generate-options';
 
 export const STATUS = {
-    common: ['Rumored', 'Planned', 'In Production', 'Post Production', 'Released', 'Cancelled'],
-    movies: [],
-    tvShows: ['Returning Series', 'Ended'],
-    songs: [],
-    books: [],
-    games: []
+    common: {
+        rumored: 'Rumored',
+        planned: 'Planned',
+        inProduction: 'In Production',
+        postProduction: 'Post Production',
+        released: 'Released',
+        cancelled: 'Cancelled'
+    },
+    movies: {},
+    tvShows: {
+        returningSeries: 'Returning Series',
+        ended: 'Ended'
+    },
+    songs: {},
+    books: {},
+    games: {}
 };
 
 const mergedStatuses = mergeCommonInAll(STATUS);

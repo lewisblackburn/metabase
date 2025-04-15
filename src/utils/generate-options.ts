@@ -1,31 +1,20 @@
-export function createOptions(
-    items: string[],
-    { valueKey = 'value', labelKey = 'label', transform = (item: string) => item } = {}
-): Array<Record<string, string>> {
-    return items.map((item) => ({
-        [valueKey]: transform(item),
-        [labelKey]: transform(item)
-    }));
+// NOTE: Transform key, value to value, label
+export function createOptions(items: Record<string, string>) {
+    return Object.entries(items).map(([value, label]) => ({ value, label }));
 }
 
-export function mergeCommonInAll(obj: Record<string, string[]>): Record<string, string[]> {
-    return Object.keys(obj).reduce(
-        (acc, key) => {
-            acc[key] = [...obj[key], ...obj.common];
+export function mergeCommonInAll(obj: Record<string, Record<string, string>>) {
+    const { common = {}, ...rest } = obj;
 
-            return acc;
-        },
-        {} as Record<string, string[]>
+    // NOTE: Get all the keys except "common" and merge them with the "common" object
+    return Object.fromEntries(
+        Object.entries(rest)
+            .map(([key, value]) => [key, { ...value, ...common }])
+            .concat([['common', { ...common }]])
     );
 }
 
-export function generateOptions(obj: Record<string, string[]>): Record<string, Array<Record<string, string>>> {
-    return Object.keys(obj).reduce(
-        (acc, key) => {
-            acc[key] = createOptions(obj[key]);
-
-            return acc;
-        },
-        {} as Record<string, Array<Record<string, string>>>
-    );
+// NOTE: Convert record into array of options
+export function generateOptions(obj: Record<string, Record<string, string>>) {
+    return Object.fromEntries(Object.entries(obj).map(([key, value]) => [key, createOptions(value)]));
 }

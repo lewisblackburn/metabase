@@ -52,15 +52,16 @@ export default function MoviePage() {
     // TODO: Implement showMe filter
     // const showMeFilter = moviesFilter.showMe;
 
-    // TODO: Implement availabilities filter
-    // const availabilitiesFilter =
-    //     moviesFilter.availabilities && moviesFilter.availabilities.length > 0
-    //         ? {
-    //               availability: {
-    //                   _in: moviesFilter.availabilities
-    //               }
-    //           }
-    //         : {};
+    const availabilitiesFilter =
+        moviesFilter.availabilities && moviesFilter.availabilities.length > 0
+            ? {
+                  movie_availabilities: {
+                      availability: {
+                          _in: moviesFilter.availabilities.map((availability) => availability)
+                      }
+                  }
+              }
+            : {};
 
     const releaseDateFilter = moviesFilter.releaseDates
         ? {
@@ -76,8 +77,8 @@ export default function MoviePage() {
             ? {
                   movie_genres: {
                       genre: {
-                          name: {
-                              _in: Array.isArray(moviesFilter.genres) ? moviesFilter.genres : [moviesFilter.genres]
+                          id: {
+                              _in: moviesFilter.genres
                           }
                       }
                   }
@@ -151,6 +152,7 @@ export default function MoviePage() {
             },
             { ...alternativeTitlesFilter }
         ],
+        ...availabilitiesFilter,
         ...keywordFilter,
         ...releaseDateFilter,
         ...genreFilter,
