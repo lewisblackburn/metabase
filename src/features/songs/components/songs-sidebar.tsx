@@ -9,7 +9,7 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
-import { GENRES } from '@/constants/genres.constant';
+// import { GENRES } from '@/constants/genres.constant';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -123,7 +123,7 @@ export default function SongsSidebar({ children }: SongsSidebarProps) {
                                                 )}
                                             />
                                         </FilterSection>
-                                        <FilterSection isLast>
+                                        {/* <FilterSection isLast>
                                             <FormField
                                                 control={form.control}
                                                 name='genres'
@@ -137,8 +137,8 @@ export default function SongsSidebar({ children }: SongsSidebarProps) {
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}
-                                            />
-                                        </FilterSection>
+                                            /> */}
+                                        {/* </FilterSection> */}
                                     </div>
                                 </SidebarAccordionItem>
                             </Accordion>

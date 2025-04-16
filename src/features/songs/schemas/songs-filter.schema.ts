@@ -1,8 +1,7 @@
-import { GENRES } from '@/constants/genres.constant';
-
+// import { GENRES } from '@/constants/genres.constant';
 import * as z from 'zod';
 
-const genresArray = GENRES.common.concat(GENRES.songs);
+// const genresArray = GENRES.common.concat(GENRES.songs);
 
 export const songsFilterSchema = z.object({
     orderBy: z.object({
@@ -11,7 +10,7 @@ export const songsFilterSchema = z.object({
     }),
     search: z.string().optional(),
     duration: z.tuple([z.number(), z.number()]).optional(),
-    genres: z.array(z.enum(genresArray as [string, ...string[]])).optional(),
+    // genres: z.array(z.enum(genresArray as [string, ...string[]])).optional(),
     releaseDates: z
         .object({
             from: z.date().optional(),

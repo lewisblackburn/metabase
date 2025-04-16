@@ -4,30 +4,42 @@ import movieEditReducer from '@/features/movies/store/movie-edit.slice';
 import moviesFilterReducer from '@/features/movies/store/movies-filter.slice';
 import settingsReducer from '@/features/settings/store/settings.slice';
 import shortcutsReducer from '@/features/shortcuts/store/shortcuts.slice';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import persistedGlobalReducer from './global.slice';
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-export const store = configureStore({
-    reducer: {
-        global: persistedGlobalReducer,
-        shortcuts: shortcutsReducer,
-        settings: settingsReducer,
-        commandPanel: commandPanelReducer,
-        editDialog: editDialogReducer,
-        moviesFilter: moviesFilterReducer,
-        movieEdit: movieEditReducer
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-            }
-        })
+const settingsPersistConfig = {
+    key: 'settings',
+    storage
+};
+const shortcutsPersistConfig = {
+    key: 'shortcuts',
+    storage
+};
+
+const rootReducer = combineReducers({
+    commandPanel: commandPanelReducer,
+    editDialog: editDialogReducer,
+    movieEdit: movieEditReducer,
+    moviesFilter: moviesFilterReducer,
+    settings: persistReducer(settingsPersistConfig, settingsReducer),
+    shortcuts: persistReducer(shortcutsPersistConfig, shortcutsReducer)
 });
 
-export const persistor = persistStore(store);
+export const makeStore = () => {
+    return configureStore({
+        reducer: rootReducer,
+        devTools: process.env.NODE_ENV !== 'production',
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                serializableCheck: {
+                    ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+                }
+            })
+    });
+};
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
