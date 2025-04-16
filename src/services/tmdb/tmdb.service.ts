@@ -13,22 +13,22 @@ export class TMDBService {
         return `${this.TMDB_URL_V3}/search/${type}?query=${query}&language=${this.language}&page=${pageIndex}`;
     }
 
-    protected getProfileImage(profilePath?: string): string {
+    public getProfileImage(profilePath?: string): string {
         if (!profilePath) return '';
         return `${TMDB_PROFILE_URL}${profilePath}`;
     }
 
-    protected getPosterImage(posterPath?: string): string {
+    public getPosterImage(posterPath?: string): string {
         if (!posterPath) return '';
         return `${TMDB_POSTER_URL}${posterPath}`;
     }
 
-    protected getBackdropImage(backdropPath?: string): string {
+    public getBackdropImage(backdropPath?: string): string {
         if (!backdropPath) return '';
         return `${TMDB_BACKDROP_URL}${backdropPath}`;
     }
 
-    protected getLogoImage(logoPath?: string): string {
+    public getLogoImage(logoPath?: string): string {
         if (!logoPath) return '';
         return `${TMDB_LOGO_URL}${logoPath}`;
     }

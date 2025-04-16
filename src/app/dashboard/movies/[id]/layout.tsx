@@ -3,7 +3,6 @@
 import { ReactNode, useState } from 'react';
 
 import Image from 'next/image';
-import Link from 'next/link';
 
 import DefaultLoading from '@/components/shared/default-loading';
 import NotFound from '@/components/shared/default-not-found';
@@ -20,7 +19,6 @@ import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dia
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Sidebar, SidebarContent, SidebarMenu, SidebarProvider } from '@/registry/new-york-v4/ui/sidebar';

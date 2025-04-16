@@ -14,12 +14,13 @@ interface MovieContextType {
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
 
 export function MovieProvider({ children }: { children: ReactNode }) {
-    const { id } = useParams();
+    const params = useParams<{ id: string }>();
     // NOTE: Errors are thrown automatically
     const { data, isLoading } = useGetMovieQuery(
-        { id },
+        { id: params?.id },
         {
-            queryKey: ['movie', id]
+            queryKey: ['movie', params?.id],
+            enabled: !!params?.id
         }
     );
 

@@ -5,7 +5,7 @@ export interface TMDBMovie {
     budget: number;
     genres: Genre[];
     homepage: string;
-    id: number;
+    id: number | string;
     imdb_id: string;
     origin_country: string[];
     original_language: string;

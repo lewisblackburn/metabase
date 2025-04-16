@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignInEmailPassword } from '@nhost/nextjs';
 
 import { loginSchema } from '../schemas/login.schema';
+import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -89,6 +90,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                                 </div>
 
                                 <Button type='submit' className='w-full' disabled={isLoading}>
+                                    {isLoading ? <Loader2 className='mr-2 h-4 w-4 animate-spin' /> : null}
                                     Login
                                 </Button>
 
