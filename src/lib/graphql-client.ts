@@ -1,3 +1,5 @@
+import { useNhostClient } from '@nhost/nextjs';
+
 import { nhost } from './nhost';
 import { ClientError, GraphQLClient } from 'graphql-request';
 

@@ -9,12 +9,12 @@ import InputField from '@/components/form/input';
 import AppleIcon from '@/components/icons/apple.icon';
 import GoogleIcon from '@/components/icons/google.icon';
 import MetaIcon from '@/components/icons/meta.icon';
-import { nhost } from '@/lib/nhost';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Card, CardContent } from '@/registry/new-york-v4/ui/card';
-import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSignInEmailPassword } from '@nhost/nextjs';
 
 import { loginSchema } from '../schemas/login.schema';
 import { useForm } from 'react-hook-form';
@@ -24,6 +24,7 @@ import { z } from 'zod';
 type LoginValues = z.infer<typeof loginSchema>;
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
+    const { isSuccess, isLoading, isError, error, signInEmailPassword } = useSignInEmailPassword();
     const router = useRouter();
     const form = useForm<LoginValues>({
         resolver: zodResolver(loginSchema),
@@ -34,14 +35,16 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
     });
 
     const onSubmit = async (data: LoginValues) => {
-        const result = await nhost.auth.signIn({
-            email: data.email,
-            password: data.password
-        });
-
-        if (result.error) toast.error(result.error.message);
-        else router.push('/dashboard');
+        await signInEmailPassword(data.email, data.password);
     };
+
+    React.useEffect(() => {
+        if (isError) toast.error(error?.message);
+    }, [isError, error]);
+
+    React.useEffect(() => {
+        if (isSuccess) router.push('/dashboard');
+    }, [isSuccess, router]);
 
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -85,7 +88,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                                     </a>
                                 </div>
 
-                                <Button type='submit' className='w-full'>
+                                <Button type='submit' className='w-full' disabled={isLoading}>
                                     Login
                                 </Button>
 
@@ -100,11 +103,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                                         <AppleIcon />
                                         <span className='sr-only'>Login with Apple</span>
                                     </Button>
-                                    <Button
-                                        variant='outline'
-                                        className='w-full cursor-pointer'
-                                        type='button'
-                                        onClick={() => nhost.auth.signIn({ provider: 'google' })}>
+                                    <Button variant='outline' className='w-full cursor-pointer' type='button'>
                                         <GoogleIcon />
                                         <span className='sr-only'>Login with Google</span>
                                     </Button>

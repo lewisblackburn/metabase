@@ -72,6 +72,13 @@ const initialState: SettingsState = {
             icon: 'Plug',
             description: 'Manage your integrations settings',
             iconColor: 'text-teal-500'
+        },
+        {
+            id: 'import',
+            name: 'Import',
+            icon: 'Download',
+            description: 'Import your data from another source',
+            iconColor: 'text-blue-500'
         }
     ],
     activeItemId: 'account'

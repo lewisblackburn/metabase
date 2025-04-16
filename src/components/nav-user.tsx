@@ -1,11 +1,12 @@
 'use client';
 
+import React from 'react';
+
 import { useRouter } from 'next/navigation';
 
 import { setSettingsDialogOpenState } from '@/features/settings/store/settings.slice';
 import { ShortcutDisplay } from '@/features/shortcuts/components/shortcut-display';
 import { useShortcut } from '@/features/shortcuts/hooks/useShortcut';
-import { nhost } from '@/lib/nhost';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import {
     DropdownMenu,
@@ -17,9 +18,11 @@ import {
     DropdownMenuTrigger
 } from '@/registry/new-york-v4/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
+import { useNhostClient, useSignOut } from '@nhost/nextjs';
 
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Settings, Sparkles } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 
 export function NavUser({
     user
@@ -30,14 +33,18 @@ export function NavUser({
         avatar: string;
     };
 }) {
+    const { signOut, isSuccess } = useSignOut();
     const dispatch = useDispatch();
     const toggleSettings = useShortcut('toggleSettings');
     const { isMobile } = useSidebar();
     const router = useRouter();
     const handleLogout = async () => {
-        await nhost.auth.signOut();
-        router.push('/authentication/login');
+        await signOut();
     };
+
+    React.useEffect(() => {
+        if (isSuccess) router.push('/authentication/login');
+    }, [isSuccess, router]);
 
     return (
         <SidebarMenu>

@@ -8,6 +8,7 @@ import { RootState } from '@/store/store';
 
 import { setActiveItemId, setSettingsDialogOpenState } from '../store/settings.slice';
 import Account from './account/account';
+import Import from './import/import';
 import { useDispatch, useSelector } from 'react-redux';
 
 const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
@@ -19,7 +20,8 @@ const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
     backup: (item) => <div>{item.name} settings</div>,
     api: (item) => <div>{item.name} settings</div>,
     appearance: (item) => <div>{item.name} settings</div>,
-    integrations: (item) => <div>{item.name} settings</div>
+    integrations: (item) => <div>{item.name} settings</div>,
+    import: () => <Import />
 };
 
 export function SettingsDialog() {

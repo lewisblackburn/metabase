@@ -1,9 +1,11 @@
 import {
+    ArrowDown,
     Bell,
     CircleHelp,
     Clapperboard,
     Code,
     CreditCard,
+    Download,
     FileText,
     HardDrive,
     Hash,
@@ -40,7 +42,8 @@ export const ICONS = {
     Music,
     Tags,
     Hash,
-    Clapperboard
+    Clapperboard,
+    Download
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconType = keyof typeof ICONS;

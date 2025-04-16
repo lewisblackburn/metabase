@@ -9,7 +9,6 @@ import '@/app/globals.css';
 import HotkeyScopeManager from '@/features/shortcuts/components/hotkey-scope-manager';
 import ShortcutManager from '@/features/shortcuts/components/shortcut-manager';
 import CustomNhostProvider from '@/providers/nhost-provider';
-import PersistProvider from '@/providers/persist-provider';
 import QueryProvider from '@/providers/query-provider';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
 import { TooltipProvider } from '@/registry/new-york-v4/ui/tooltip';
@@ -37,9 +36,10 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
         <html suppressHydrationWarning lang='en'>
             <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
+                {/* persist provider causing hydration error and re-rendering error with nhost */}
                 {/* <PersistProvider> */}
-                <QueryProvider>
-                    <CustomNhostProvider>
+                <CustomNhostProvider>
+                    <QueryProvider>
                         <StoreProvider>
                             <HotkeyScopeManager />
                             <ShortcutManager />
@@ -50,8 +50,8 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                                 </TooltipProvider>
                             </ThemeProvider>
                         </StoreProvider>
-                    </CustomNhostProvider>
-                </QueryProvider>
+                    </QueryProvider>
+                </CustomNhostProvider>
                 {/* </PersistProvider> */}
             </body>
         </html>
