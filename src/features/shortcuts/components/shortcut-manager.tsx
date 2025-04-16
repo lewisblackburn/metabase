@@ -21,22 +21,13 @@ export default function ShortcutManager() {
 
     useEffect(() => {
         pathnameRef.current = pathname;
-
         // NOTE: Update hotkeys scope based on current path
-        const segments = pathnameRef.current.split('/').filter(Boolean);
-        const isObjectPage = Object.values(OBJECT_TYPE).some((obj) => {
-            const idx = segments.indexOf(obj.path);
-
-            return idx !== -1 && segments.length > idx + 1;
-        });
-        hotkeys.setScope(isObjectPage ? 'object' : 'default');
+        const segments = pathnameRef.current ? pathnameRef.current.split('/').filter(Boolean) : [];
 
         const registeredKeys: string[] = [];
 
         Object.values(shortcuts).forEach((shortcut) => {
             if (!shortcut.enabled || !shortcut.key) return;
-
-            const scope = shortcut.global ? 'all' : shortcut.scope || 'default';
 
             const handler = (e: KeyboardEvent) => {
                 e.preventDefault();
@@ -73,7 +64,7 @@ export default function ShortcutManager() {
                 }
             };
 
-            hotkeys(shortcut.key, { scope }, handler);
+            hotkeys(shortcut.key, { scope: 'all' }, handler);
             registeredKeys.push(shortcut.key);
         });
 

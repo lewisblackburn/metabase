@@ -39,7 +39,6 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                 <CustomNhostProvider>
                     <QueryProvider>
                         <StoreProvider>
-                            <HotkeyScopeManager />
                             <ShortcutManager />
                             <ThemeProvider attribute='class'>
                                 <TooltipProvider>
