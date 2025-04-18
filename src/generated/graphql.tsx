@@ -13257,6 +13257,7 @@ export type People = {
   song_artists: Array<Song_Artists>;
   /** An aggregate relationship */
   song_artists_aggregate: Song_Artists_Aggregate;
+  spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
 };
 
@@ -13426,6 +13427,7 @@ export type People_Bool_Exp = {
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Bool_Exp>;
   song_artists?: InputMaybe<Song_Artists_Bool_Exp>;
   song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Bool_Exp>;
+  spotify_id?: InputMaybe<String_Comparison_Exp>;
   tmdb_id?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -13433,6 +13435,8 @@ export type People_Bool_Exp = {
 export enum People_Constraint {
   /** unique or primary key constraint on columns "id" */
   PeoplePkey = 'people_pkey',
+  /** unique or primary key constraint on columns "spotify_id" */
+  PeopleSpotifyIdKey = 'people_spotify_id_key',
   /** unique or primary key constraint on columns "tmdb_id" */
   PeopleTmdbIdKey = 'people_tmdb_id_key'
 }
@@ -13452,6 +13456,7 @@ export type People_Insert_Input = {
   person_changes?: InputMaybe<Person_Changes_Arr_Rel_Insert_Input>;
   person_media?: InputMaybe<Person_Media_Arr_Rel_Insert_Input>;
   song_artists?: InputMaybe<Song_Artists_Arr_Rel_Insert_Input>;
+  spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -13465,6 +13470,7 @@ export type People_Max_Fields = {
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
 };
 
@@ -13478,6 +13484,7 @@ export type People_Min_Fields = {
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
 };
 
@@ -13519,6 +13526,7 @@ export type People_Order_By = {
   person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Order_By>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Order_By>;
   song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Order_By>;
+  spotify_id?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
 };
 
@@ -13544,6 +13552,8 @@ export enum People_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  SpotifyId = 'spotify_id',
+  /** column name */
   TmdbId = 'tmdb_id'
 }
 
@@ -13556,6 +13566,7 @@ export type People_Set_Input = {
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -13576,6 +13587,7 @@ export type People_Stream_Cursor_Value_Input = {
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -13595,6 +13607,8 @@ export enum People_Update_Column {
   Id = 'id',
   /** column name */
   Name = 'name',
+  /** column name */
+  SpotifyId = 'spotify_id',
   /** column name */
   TmdbId = 'tmdb_id'
 }
@@ -22722,6 +22736,13 @@ export type DeleteMovieFavouriteMutationVariables = Exact<{
 
 export type DeleteMovieFavouriteMutation = { __typename?: 'mutation_root', delete_movie_favourites?: { __typename?: 'movie_favourites_mutation_response', returning: Array<{ __typename?: 'movie_favourites', id: any }> } | null };
 
+export type DeleteMovieRatingMutationVariables = Exact<{
+  where: Movie_Ratings_Bool_Exp;
+}>;
+
+
+export type DeleteMovieRatingMutation = { __typename?: 'mutation_root', delete_movie_ratings?: { __typename?: 'movie_ratings_mutation_response', returning: Array<{ __typename?: 'movie_ratings', id: any }> } | null };
+
 export type DeleteMovieWatchlistMutationVariables = Exact<{
   where: Movie_Watchlist_Bool_Exp;
 }>;
@@ -22762,6 +22783,14 @@ export type InsertMovieFavouriteMutationVariables = Exact<{
 
 export type InsertMovieFavouriteMutation = { __typename?: 'mutation_root', insert_movie_favourites_one?: { __typename?: 'movie_favourites', id: any } | null };
 
+export type InsertMovieRatingMutationVariables = Exact<{
+  object: Movie_Ratings_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Ratings_On_Conflict>;
+}>;
+
+
+export type InsertMovieRatingMutation = { __typename?: 'mutation_root', insert_movie_ratings_one?: { __typename?: 'movie_ratings', id: any, rating: any } | null };
+
 export type InsertMovieWatchlistMutationVariables = Exact<{
   object: Movie_Watchlist_Insert_Input;
   on_conflict?: InputMaybe<Movie_Watchlist_On_Conflict>;
@@ -22786,12 +22815,33 @@ export type UpdateMovieMutationVariables = Exact<{
 
 export type UpdateMovieMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any } | null };
 
+export type GetPersonQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, name: string, bio?: string | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null } | null };
+
+export type GetSongBySpotify_IdQueryVariables = Exact<{
+  spotify_id?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetSongBySpotify_IdQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', spotify_id?: string | null }> };
+
 export type GetSongQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
 
 export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, title: string, artwork?: string | null, duration?: any | null, content_score: number, spotify_id?: string | null, apple_music_id?: string | null, favourited?: boolean | null, listen_latered?: boolean | null, user_rating?: number | null, song_artists: Array<{ __typename?: 'song_artists', id: any, order?: number | null, person: { __typename?: 'people', name: string } }> } | null };
+
+export type InsertSongMutationVariables = Exact<{
+  object: Songs_Insert_Input;
+}>;
+
+
+export type InsertSongMutation = { __typename?: 'mutation_root', insert_songs_one?: { __typename?: 'songs', id: any, title: string } | null };
 
 
 
@@ -22952,6 +23002,29 @@ export const useDeleteMovieFavouriteMutation = <
       {
     mutationKey: ['DeleteMovieFavourite'],
     mutationFn: (variables?: DeleteMovieFavouriteMutationVariables) => fetcher<DeleteMovieFavouriteMutation, DeleteMovieFavouriteMutationVariables>(DeleteMovieFavouriteDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteMovieRatingDocument = `
+    mutation DeleteMovieRating($where: movie_ratings_bool_exp!) {
+  delete_movie_ratings(where: $where) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+
+export const useDeleteMovieRatingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieRatingMutation, TError, DeleteMovieRatingMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieRatingMutation, TError, DeleteMovieRatingMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieRating'],
+    mutationFn: (variables?: DeleteMovieRatingMutationVariables) => fetcher<DeleteMovieRatingMutation, DeleteMovieRatingMutationVariables>(DeleteMovieRatingDocument, variables)(),
     ...options
   }
     )};
@@ -23219,6 +23292,28 @@ export const useInsertMovieFavouriteMutation = <
   }
     )};
 
+export const InsertMovieRatingDocument = `
+    mutation InsertMovieRating($object: movie_ratings_insert_input!, $on_conflict: movie_ratings_on_conflict) {
+  insert_movie_ratings_one(object: $object, on_conflict: $on_conflict) {
+    id
+    rating
+  }
+}
+    `;
+
+export const useInsertMovieRatingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieRatingMutation, TError, InsertMovieRatingMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieRatingMutation, TError, InsertMovieRatingMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieRating'],
+    mutationFn: (variables?: InsertMovieRatingMutationVariables) => fetcher<InsertMovieRatingMutation, InsertMovieRatingMutationVariables>(InsertMovieRatingDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const InsertMovieWatchlistDocument = `
     mutation InsertMovieWatchlist($object: movie_watchlist_insert_input!, $on_conflict: movie_watchlist_on_conflict) {
   insert_movie_watchlist_one(object: $object, on_conflict: $on_conflict) {
@@ -23283,6 +23378,98 @@ export const useUpdateMovieMutation = <
   }
     )};
 
+export const GetPersonDocument = `
+    query GetPerson($id: uuid!) {
+  people_by_pk(id: $id) {
+    id
+    headshot
+    name
+    bio
+    birth_date
+    death_date
+    tmdb_id
+  }
+}
+    `;
+
+export const useGetPersonQuery = <
+      TData = GetPersonQuery,
+      TError = unknown
+    >(
+      variables: GetPersonQueryVariables,
+      options?: Omit<UseQueryOptions<GetPersonQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPersonQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetPersonQuery, TError, TData>(
+      {
+    queryKey: ['GetPerson', variables],
+    queryFn: fetcher<GetPersonQuery, GetPersonQueryVariables>(GetPersonDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetPersonQuery = <
+      TData = InfiniteData<GetPersonQuery>,
+      TError = unknown
+    >(
+      variables: GetPersonQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetPersonQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetPersonQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetPersonQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetPerson.infinite', variables],
+      queryFn: (metaData) => fetcher<GetPersonQuery, GetPersonQueryVariables>(GetPersonDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetSongBySpotify_IdDocument = `
+    query GetSongBySpotify_ID($spotify_id: String) {
+  songs(where: {spotify_id: {_eq: $spotify_id}}) {
+    spotify_id
+  }
+}
+    `;
+
+export const useGetSongBySpotify_IdQuery = <
+      TData = GetSongBySpotify_IdQuery,
+      TError = unknown
+    >(
+      variables?: GetSongBySpotify_IdQueryVariables,
+      options?: Omit<UseQueryOptions<GetSongBySpotify_IdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetSongBySpotify_IdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetSongBySpotify_IdQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetSongBySpotify_ID'] : ['GetSongBySpotify_ID', variables],
+    queryFn: fetcher<GetSongBySpotify_IdQuery, GetSongBySpotify_IdQueryVariables>(GetSongBySpotify_IdDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetSongBySpotify_IdQuery = <
+      TData = InfiniteData<GetSongBySpotify_IdQuery>,
+      TError = unknown
+    >(
+      variables: GetSongBySpotify_IdQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetSongBySpotify_IdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetSongBySpotify_IdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetSongBySpotify_IdQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetSongBySpotify_ID.infinite'] : ['GetSongBySpotify_ID.infinite', variables],
+      queryFn: (metaData) => fetcher<GetSongBySpotify_IdQuery, GetSongBySpotify_IdQueryVariables>(GetSongBySpotify_IdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
 export const GetSongDocument = `
     query GetSong($id: uuid!) {
   songs_by_pk(id: $id) {
@@ -23340,4 +23527,26 @@ export const useInfiniteGetSongQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const InsertSongDocument = `
+    mutation InsertSong($object: songs_insert_input!) {
+  insert_songs_one(object: $object) {
+    id
+    title
+  }
+}
+    `;
+
+export const useInsertSongMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertSongMutation, TError, InsertSongMutationVariables, TContext>) => {
+    
+    return useMutation<InsertSongMutation, TError, InsertSongMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertSong'],
+    mutationFn: (variables?: InsertSongMutationVariables) => fetcher<InsertSongMutation, InsertSongMutationVariables>(InsertSongDocument, variables)(),
+    ...options
+  }
     )};

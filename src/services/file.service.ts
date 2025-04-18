@@ -1,6 +1,6 @@
+import { MediaType } from '@/constants/media.constant';
 import { GetFilesDocument } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
-import { NhostReactContext } from '@nhost/nextjs';
 
 export class FileService {
     static async computeFileHash(file: File) {
@@ -9,6 +9,10 @@ export class FileService {
         return Array.from(new Uint8Array(hashBuffer))
             .map((b) => b.toString(16).padStart(2, '0'))
             .join('');
+    }
+    static async uploadImage(path: string | null | undefined, type: MediaType, urlFn: (path: string) => string) {
+        if (!path) return Promise.resolve(null);
+        return FileService.uploadFile(urlFn.call(this, path), type);
     }
 
     static async uploadFile(path: string, type: string): Promise<{ url: string; id: string } | null> {

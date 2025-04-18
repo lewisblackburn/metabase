@@ -18,20 +18,15 @@ import {
     SidebarMenuButton,
     SidebarMenuItem
 } from '@/registry/new-york-v4/ui/sidebar';
+import { useUserData } from '@nhost/nextjs';
 
 import { Command } from 'lucide-react';
-
-const data = {
-    user: {
-        name: 'shadcn',
-        email: 'm@example.com',
-        avatar: 'https://github.com/shadcn.png'
-    }
-};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const pathname = usePathname();
     const isActive = (url: string) => pathname === url;
+
+    const user = useUserData();
 
     return (
         <Sidebar collapsible='icon' className='overflow-hidden *:data-[sidebar=sidebar]:flex-row' {...props}>
@@ -78,9 +73,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         </SidebarGroupContent>
                     </SidebarGroup>
                 </SidebarContent>
-                <SidebarFooter>
-                    <NavUser user={data.user} />
-                </SidebarFooter>
+                <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
             </Sidebar>
         </Sidebar>
     );

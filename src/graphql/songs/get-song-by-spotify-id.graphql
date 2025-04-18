@@ -1,0 +1,5 @@
+query GetSongBySpotify_ID($spotify_id: String) {
+    songs(where: { spotify_id: { _eq: $spotify_id } }) {
+        spotify_id
+    }
+}

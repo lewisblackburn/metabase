@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york-v4/ui/tabs';
 
+import SpotifySongImportTable from './spotify-song-import-table';
 import TMDBMovieImportTable from './tmdb-movie-import-table';
 
 export default function Import() {
@@ -12,7 +13,9 @@ export default function Import() {
             <TabsContent value='tmdb'>
                 <TMDBMovieImportTable />
             </TabsContent>
-            <TabsContent value='spotify'>Change your password here.</TabsContent>
+            <TabsContent value='spotify'>
+                <SpotifySongImportTable />
+            </TabsContent>
         </Tabs>
     );
 }

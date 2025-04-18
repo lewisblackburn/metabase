@@ -1,15 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
-import NextImage from 'next/image';
-
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
-import { tmdbMovieImporterService } from '@/services/tmdb/tmdb-movie-importer.service';
-import { tmdbService } from '@/services/tmdb/tmdb.service';
-import type { SearchResult, TMDBMovie, TMDBSearchResponse } from '@/types/tmdb.type';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { spotifySongImporterService } from '@/services/spotify/spotify-song-importer.service';
+import { SingleTrackResponse, SpotifySearchResponse } from '@/types/spotify.type';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
 import dayjs from 'dayjs';
@@ -19,34 +16,32 @@ import { toast } from 'sonner';
 
 dayjs.extend(advancedFormat);
 
-type MovieRow = SearchResult & { id: string };
-
-export default function TMDBMovieImportTable() {
+export default function SpotifySongImportTable() {
     const [pageIndex, setPageIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
     const debouncedQuery = useDebounce(searchQuery, 500);
 
-    const fetchMovies = useCallback(async (page: number, query: string) => {
-        const res = await tmdbMovieImporterService.search<TMDBSearchResponse>(query, page + 1, 'movie');
+    const fetchSongs = useCallback(async (page: number, query: string) => {
+        const res = await spotifySongImporterService.search<SpotifySearchResponse>(query, page + 1, 'track');
         return {
-            data: res?.results.map((m) => ({ ...m, id: m.id.toString() })) ?? [],
-            total: res?.total_results ?? 0
+            data: res.tracks.items,
+            total: res.tracks.total
         };
     }, []);
 
     const { data, isLoading, isError, refetch, isFetching } = useQuery({
-        queryKey: ['tmdb-movies', debouncedQuery, pageIndex],
-        queryFn: () => fetchMovies(pageIndex, debouncedQuery),
+        queryKey: ['spotify-songs', debouncedQuery, pageIndex],
+        queryFn: () => fetchSongs(pageIndex, debouncedQuery),
         enabled: !!debouncedQuery
     });
 
     const importMutation = useMutation({
-        mutationFn: (tmdbMovieId: TMDBMovie['id']) => tmdbMovieImporterService.import(tmdbMovieId),
+        mutationFn: (songId: SingleTrackResponse['id']) => spotifySongImporterService.import(songId),
         onSuccess: (response) => {
-            if (response === true) toast.success('Movie already exists');
-            else if (response === false) toast.error('Movie not found');
-            else toast.success(`${response.insert_movies_one?.title} imported`);
+            if (response === true) toast.success('Song already exists');
+            else if (response === false) toast.error('Song not found');
+            else toast.success(`${response.insert_songs_one?.title} imported`);
         },
         onError: (error: any) => toast.error(error.message)
     });
@@ -57,34 +52,24 @@ export default function TMDBMovieImportTable() {
         setRowSelection({});
     }, [rowSelection, importMutation]);
 
-    const columns = useMemo<ColumnDef<MovieRow>[]>(
+    const columns = useMemo<ColumnDef<SingleTrackResponse>[]>(
         () => [
             {
-                id: 'movie',
-                header: 'Movie',
+                id: 'track',
+                header: 'Track',
                 accessorFn: (row) => row,
                 cell: ({ row }) => {
-                    const m = row.original;
-                    const title = m.title || m.original_title;
-                    if (!title || !m.release_date) return null;
+                    const t = row.original;
+                    const name = t.name;
+                    if (!name || !t.artists) return null;
 
-                    const metadata = (
+                    return (
                         <div className='flex flex-col'>
-                            <span className='font-medium'>{title}</span>
+                            <span className='font-medium'>{name}</span>
                             <span className='text-muted-foreground text-sm'>
-                                {dayjs(m.release_date).format('MMMM Do, YYYY')}
+                                {t.artists.map((a) => a.name).join(', ')}
                             </span>
                         </div>
-                    );
-
-                    const posterUrl = tmdbService.getPosterImage(m.poster_path ?? '');
-                    return posterUrl ? (
-                        <div className='flex items-center gap-4'>
-                            <NextImage src={posterUrl} alt={title} width={75} height={112.5} className='rounded-md' />
-                            {metadata}
-                        </div>
-                    ) : (
-                        metadata
                     );
                 }
             }
@@ -96,7 +81,7 @@ export default function TMDBMovieImportTable() {
         <div className='overflow-x-auto'>
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
-                    placeholder='Search by movie title...'
+                    placeholder='Search by song title...'
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
@@ -136,9 +121,9 @@ export default function TMDBMovieImportTable() {
                 )}
             </div>
 
-            <DataTable<MovieRow>
+            <DataTable<SingleTrackResponse>
                 columns={columns}
-                data={(data?.data as MovieRow[]) ?? []}
+                data={(data?.data as SingleTrackResponse[]) ?? []}
                 pageIndex={pageIndex}
                 totalRows={data?.total ?? 0}
                 pageSize={20}

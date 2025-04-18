@@ -247,7 +247,7 @@ export function DataTable<TData extends { id: string }>({
                         <TableCell
                             colSpan={finalColumns.length + (enableRowOrdering ? 1 : 0)}
                             className='text-muted-foreground h-24 text-center'>
-                            No results.
+                            {isLoading ? <span className='animate-pulse'>Loading...</span> : <span>No results</span>}
                         </TableCell>
                     </TableRow>
                 )}

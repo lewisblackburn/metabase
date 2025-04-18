@@ -10,7 +10,6 @@ import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
 import Poster from '@/components/shared/poster';
 import ProgressItem from '@/components/shared/progress-item';
-import RatingSelection from '@/components/shared/rating-selection';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
@@ -18,6 +17,7 @@ import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
+import MovieRatingSlider from '@/features/movies/components/movie-rating-slider';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
@@ -142,12 +142,7 @@ function MovieLayoutContent({
                                 <Star size='1em' />
                                 <span>Rating</span>
                             </div>
-                            <RatingSelection
-                                initialRating={movie.user_rating || 0}
-                                onRatingChange={(rating) => {
-                                    console.log(rating);
-                                }}
-                            />
+                            <MovieRatingSlider />
                         </div>
                         <Separator />
                         {movie.trailer && (

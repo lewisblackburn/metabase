@@ -1,17 +1,18 @@
 import { OBJECT_TYPE, ObjectType } from '@/constants/objects.constant';
-import { GetMovieDocument, Movies, Songs } from '@/generated/graphql';
+import { GetMovieDocument, GetPersonDocument, GetSongDocument, Movies, People, Songs } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
-import { TMDBMovie } from '@/types/tmdb.type';
+import { TMDBMovie, TMDBPerson } from '@/types/tmdb.type';
 
+import { SpotifyService, spotifyService } from './spotify/spotify.service';
 import { TMDBService, tmdbService } from './tmdb/tmdb.service';
 
 class ContentQualityService {
     private tmdb: TMDBService;
-    private spotify: SpotifyAPIService;
+    private spotify: SpotifyService;
 
     constructor() {
         this.tmdb = tmdbService;
-        this.spotify = new SpotifyAPIService();
+        this.spotify = spotifyService;
     }
 
     public async check(objectType: ObjectType, localId: string, externalId: string) {
@@ -80,7 +81,7 @@ class ContentQualityService {
 
         const formattedLocalSong = {
             title: localSong.data.songs_by_pk.title,
-            length: localSong.data.songs_by_pk.length,
+            length: localSong.data.songs_by_pk.duration,
             artists: localSong.data.songs_by_pk.song_artists.map((artist) => artist.person.name)
         };
 
@@ -103,16 +104,16 @@ class ContentQualityService {
             name: tmdbPerson.name,
             birthday: tmdbPerson.birthday,
             deathday: tmdbPerson.deathday,
-            biography: tmdbPerson.biography,
-            place_of_birth: tmdbPerson.place_of_birth
+            biography: tmdbPerson.biography
+            // place_of_birth: tmdbPerson.place_of_birth
         };
 
         const formattedLocalPerson = {
             name: localPerson.data.people_by_pk.name,
-            birthday: localPerson.data.people_by_pk.date_of_birth,
-            deathday: localPerson.data.people_by_pk.date_of_death,
-            biography: localPerson.data.people_by_pk.biography,
-            place_of_birth: localPerson.data.people_by_pk.place_of_birth
+            birthday: localPerson.data.people_by_pk.birth_date,
+            deathday: localPerson.data.people_by_pk.death_date,
+            biography: localPerson.data.people_by_pk.bio
+            // place_of_birth: localPerson.data.people_by_pk.birth
         };
 
         const score = this.compareObjects(formattedTmdbPerson, formattedLocalPerson);

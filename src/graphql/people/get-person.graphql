@@ -1,0 +1,11 @@
+query GetPerson($id: uuid!) {
+    people_by_pk(id: $id) {
+        id
+        headshot
+        name
+        bio
+        birth_date
+        death_date
+        tmdb_id
+    }
+}

@@ -22,6 +22,7 @@ import {
 import { nhost } from '@/lib/nhost';
 import { TMDBMovie } from '@/types/tmdb.type';
 
+import { FileService } from '../file.service';
 import { TMDBService } from './tmdb.service';
 
 export class TMDBMovieImporterService extends TMDBService {
@@ -56,7 +57,9 @@ export class TMDBMovieImporterService extends TMDBService {
 
     private async buildCast(movie: TMDBMovie) {
         const uploads = await Promise.all(
-            movie.credits.cast.map((c) => this.uploadImage(c.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage))
+            movie.credits.cast.map((c) =>
+                FileService.uploadImage(c.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage)
+            )
         );
         return movie.credits.cast.map((c, idx) => {
             const file = uploads[idx];
@@ -94,7 +97,9 @@ export class TMDBMovieImporterService extends TMDBService {
 
     private async buildCrew(movie: TMDBMovie) {
         const uploads = await Promise.all(
-            movie.credits.crew.map((c) => this.uploadImage(c.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage))
+            movie.credits.crew.map((c) =>
+                FileService.uploadImage(c.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage)
+            )
         );
         return movie.credits.crew.map((c, idx) => {
             const file = uploads[idx];
@@ -157,7 +162,7 @@ export class TMDBMovieImporterService extends TMDBService {
         };
     }
 
-    async isExistingMovie(tmdbMovieId: TMDBMovie['id']): Promise<GetMovieByTmdb_IdQuery['movies']> {
+    async isExisting(tmdbMovieId: TMDBMovie['id']): Promise<GetMovieByTmdb_IdQuery['movies']> {
         const { data, error } = await nhost.graphql.request<GetMovieByTmdb_IdQuery, GetMovieByTmdb_IdQueryVariables>(
             GetMovieByTmdb_IdDocument,
             { tmdb_id: tmdbMovieId.toString() }
@@ -166,7 +171,7 @@ export class TMDBMovieImporterService extends TMDBService {
         return data.movies;
     }
 
-    async saveMovie(input: Movies_Insert_Input): Promise<InsertMovieMutation> {
+    async save(input: Movies_Insert_Input): Promise<InsertMovieMutation> {
         const { data, error } = await nhost.graphql.request<InsertMovieMutation, InsertMovieMutationVariables>(
             InsertMovieDocument,
             { object: input }
@@ -175,8 +180,8 @@ export class TMDBMovieImporterService extends TMDBService {
         return data;
     }
 
-    async import(tmdbMovieId: string | number): Promise<InsertMovieMutation | boolean> {
-        const existing = await this.isExistingMovie(tmdbMovieId);
+    async import(tmdbMovieId: TMDBMovie['id']): Promise<InsertMovieMutation | boolean> {
+        const existing = await this.isExisting(tmdbMovieId);
         if (existing.length) return true;
 
         const movie = await this.getEntity<TMDBMovie>(
@@ -187,15 +192,15 @@ export class TMDBMovieImporterService extends TMDBService {
         if (!movie) return false;
 
         const [posterFile, backdropFile] = await Promise.all([
-            this.uploadImage(movie.poster_path, MEDIA_TYPE.POSTER, this.getPosterImage),
-            this.uploadImage(movie.backdrop_path, MEDIA_TYPE.BACKDROP, this.getBackdropImage)
+            FileService.uploadImage(movie.poster_path, MEDIA_TYPE.POSTER, this.getPosterImage),
+            FileService.uploadImage(movie.backdrop_path, MEDIA_TYPE.BACKDROP, this.getBackdropImage)
         ]);
 
         const castData = await this.buildCast(movie);
         const crewData = await this.buildCrew(movie);
         const productionCompaniesData = this.buildCompanies(movie);
 
-        const payload = await this.saveMovie({
+        const payload = await this.save({
             title: movie.title,
             tagline: movie.tagline,
             overview: movie.overview,
