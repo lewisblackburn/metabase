@@ -71,8 +71,7 @@ query GetMovie($id: uuid!) {
         movie_soundtracks {
             id
             song {
-                title
-                artwork
+                name
                 song_artists {
                     id
                     person {

@@ -41,7 +41,7 @@ export default function SpotifySongImportTable() {
         onSuccess: (response) => {
             if (response === true) toast.success('Song already exists');
             else if (response === false) toast.error('Song not found');
-            else toast.success(`${response.insert_songs_one?.title} imported`);
+            else toast.success(`${response.insert_songs_one?.name} imported`);
         },
         onError: (error: any) => toast.error(error.message)
     });

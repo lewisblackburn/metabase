@@ -1,4 +1,9 @@
+import { MEDIA_TYPE } from '@/constants/media.constant';
 import {
+    Album_Artists_Arr_Rel_Insert_Input,
+    Album_Media_Constraint,
+    Albums_Constraint,
+    Albums_Update_Column,
     GetSongBySpotify_IdDocument,
     GetSongBySpotify_IdQuery,
     GetSongBySpotify_IdQueryVariables,
@@ -14,10 +19,11 @@ import {
 import { nhost } from '@/lib/nhost';
 import { SingleTrackResponse } from '@/types/spotify.type';
 
+import { FileService } from '../file.service';
 import { SpotifyService } from './spotify.service';
 
 export class SpotifySongImporterService extends SpotifyService {
-    private buildArtists(track: SingleTrackResponse): InputMaybe<Song_Artists_Arr_Rel_Insert_Input> | undefined {
+    private buildSongArtists(track: SingleTrackResponse): InputMaybe<Song_Artists_Arr_Rel_Insert_Input> | undefined {
         return {
             data: track.artists.map((a, index) => {
                 return {
@@ -30,7 +36,32 @@ export class SpotifySongImporterService extends SpotifyService {
                         },
                         on_conflict: {
                             constraint: People_Constraint.PeopleSpotifyIdKey,
-                            update_columns: [People_Update_Column.Headshot]
+                            // NOTE: Required to prevent affected zero rows error
+                            update_columns: [People_Update_Column.Id]
+                        }
+                    }
+                };
+            })
+        };
+    }
+    // Error: Foreign key violation. update or delete on table "people" violates foreign key
+    //  constraint "album_artists_person_id_fkey" on table "album_artists"
+
+    private buildAlbumArtists(track: SingleTrackResponse): InputMaybe<Album_Artists_Arr_Rel_Insert_Input> | undefined {
+        return {
+            data: track.album.artists.map((a, index) => {
+                return {
+                    role: 'Artist',
+                    order: index + 1,
+                    person: {
+                        data: {
+                            spotify_id: a.id.toString(),
+                            name: a.name
+                        },
+                        on_conflict: {
+                            constraint: People_Constraint.PeopleSpotifyIdKey,
+                            // NOTE: Required to prevent affected zero rows error
+                            update_columns: [People_Update_Column.Id]
                         }
                     }
                 };
@@ -63,14 +94,46 @@ export class SpotifySongImporterService extends SpotifyService {
         const song = await this.getTrack(spotifySongId);
         if (!song) return false;
 
-        // TODO: Artwork, Album, Release Date are all tied to the album e.g. name
+        const artworkFile = await FileService.uploadFile(song.album.images[0].url, MEDIA_TYPE.ARTWORK);
 
         const payload = await this.save({
-            title: song.name,
+            name: song.name,
             spotify_id: song.id.toString(),
             // NOTE: The postgresql database uses an interval type to convert this automatically
             duration: `${song.duration_ms.toString()} milliseconds`,
-            song_artists: this.buildArtists(song)
+            song_artists: this.buildSongArtists(song),
+            spotify_uri: song.uri,
+            track_number: song.track_number,
+            disc_number: song.disc_number,
+            explicit: song.explicit,
+            type: song.type,
+            album: {
+                data: {
+                    name: song.album.name,
+                    release_date: song.album.release_date,
+                    artwork: artworkFile?.url,
+                    type: song.album.type,
+                    spotify_id: song.album.id.toString(),
+                    spotify_uri: song.album.uri,
+                    album_artists: this.buildAlbumArtists(song),
+                    album_media: {
+                        data: [
+                            { media_type: MEDIA_TYPE.ARTWORK, media_url: artworkFile?.url, media_id: artworkFile?.id }
+                        ],
+                        on_conflict: { constraint: Album_Media_Constraint.AlbumMediaPkey }
+                    }
+                },
+                on_conflict: {
+                    constraint: Albums_Constraint.AlbumsSpotifyIdKey,
+                    update_columns: [
+                        Albums_Update_Column.Name,
+                        Albums_Update_Column.ReleaseDate,
+                        Albums_Update_Column.Artwork,
+                        Albums_Update_Column.Type,
+                        Albums_Update_Column.SpotifyUri
+                    ]
+                }
+            }
         });
 
         return payload;

@@ -1,6 +1,6 @@
 mutation InsertSong($object: songs_insert_input!) {
     insert_songs_one(object: $object) {
         id
-        title
+        name
     }
 }

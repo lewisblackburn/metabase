@@ -74,13 +74,13 @@ class ContentQualityService {
         if (!spotifySong || !localSong.data?.songs_by_pk) return 0;
 
         const formattedSpotifySong = {
-            title: spotifySong.name,
+            name: spotifySong.name,
             length: spotifySong.duration_ms,
             artists: spotifySong.artists.map((artist) => artist.name)
         };
 
         const formattedLocalSong = {
-            title: localSong.data.songs_by_pk.title,
+            name: localSong.data.songs_by_pk.name,
             length: localSong.data.songs_by_pk.duration,
             artists: localSong.data.songs_by_pk.song_artists.map((artist) => artist.person.name)
         };
