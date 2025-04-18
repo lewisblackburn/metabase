@@ -200,7 +200,8 @@ function MovieLayoutContent({
                     width={1920}
                     height={1080}
                     quality={100}
-                    className='!h-1/5 w-full object-cover object-top'
+                    className='!h-[410px] w-full object-cover object-top'
+                    priority
                 />
                 <Container>{children}</Container>
             </main>

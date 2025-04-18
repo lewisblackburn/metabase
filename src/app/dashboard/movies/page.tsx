@@ -57,7 +57,7 @@ export default function MoviePage() {
             ? {}
             : {
                   user_rating: {
-                      _is_null: moviesFilter.showMe === 'seen' ? true : false
+                      _is_null: moviesFilter.showMe === 'seen' ? false : true
                   }
               };
 
@@ -185,7 +185,9 @@ export default function MoviePage() {
             initialPageParam: { offset: 0 },
             // NOTE: If the last page has fewer movies than the limit, there are no more pages
             getNextPageParam: (lastPage, pages) =>
-                lastPage.movies.length === MAX_LIMIT ? { offset: pages.length * MAX_LIMIT } : undefined
+                lastPage.movies.length === MAX_LIMIT ? { offset: pages.length * MAX_LIMIT } : undefined,
+            gcTime: 0,
+            staleTime: 0
         }
     );
 

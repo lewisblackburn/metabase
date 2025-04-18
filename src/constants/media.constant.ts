@@ -6,3 +6,5 @@ export const MEDIA_TYPE = {
     LOGO: 'logo',
     AVATAR: 'avatar'
 };
+
+export type MediaType = (typeof MEDIA_TYPE)[keyof typeof MEDIA_TYPE];

@@ -1,5 +1,6 @@
 import { GetFilesDocument } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
+import { NhostReactContext } from '@nhost/nextjs';
 
 export class FileService {
     static async computeFileHash(file: File) {

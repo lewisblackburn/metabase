@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
             'www.themoviedb.org',
             'media.themoviedb.org',
             'i.scdn.co',
+            'placehold.co',
             'lwmecktyyhputyqkdigy.storage.eu-west-2.nhost.run'
         ]
     }

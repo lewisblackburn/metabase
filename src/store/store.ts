@@ -6,8 +6,8 @@ import settingsReducer from '@/features/settings/store/settings.slice';
 import shortcutsReducer from '@/features/shortcuts/store/shortcuts.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import storage from './storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 const settingsPersistConfig = {
     key: 'settings',

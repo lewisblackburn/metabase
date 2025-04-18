@@ -10,8 +10,6 @@ import { DataTable } from '@/components/ui/data-table';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
-
 type SoundtrackData = (typeof MOVIE_DATA.soundtrack)[0];
 
 export default function SoundtrackTable() {

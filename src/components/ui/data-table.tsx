@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Checkbox } from '@/registry/new-york-v4/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/registry/new-york-v4/ui/select';
@@ -21,7 +22,7 @@ import {
     useReactTable
 } from '@tanstack/react-table';
 
-import { GripVertical, Loader2 } from 'lucide-react';
+import { GripVertical } from 'lucide-react';
 
 interface DataTableProps<TData extends { id: string }> {
     columns: ColumnDef<TData, any>[];
@@ -198,14 +199,16 @@ export function DataTable<TData extends { id: string }>({
     const startIndex = totalRows === 0 ? 0 : pageIndex * pageSize + 1;
     const endIndex = pageIndex * pageSize + data.length;
 
-    // Build the table content without drag-and-drop wrappers.
     const tableContent = (
         <Table className='relative'>
             <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
                         {headerGroup.headers.map((header) => (
-                            <TableHead key={header.id} className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
+                            <TableHead
+                                key={header.id}
+                                className='px-4 py-4 text-sm font-medium whitespace-nowrap'
+                                style={{ width: header.getSize() !== 150 ? header.getSize() : undefined }}>
                                 {header.isPlaceholder
                                     ? null
                                     : flexRender(header.column.columnDef.header, header.getContext())}
@@ -254,15 +257,24 @@ export function DataTable<TData extends { id: string }>({
 
     return (
         <div className='w-full'>
-            {/* Wrap tableContent in an extra styled div to preserve the original styling */}
             {enableRowOrdering ? (
                 <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
                     <SortableContext items={data.map((item) => item.id)} strategy={verticalListSortingStrategy}>
-                        <div className='relative overflow-hidden rounded-md border shadow-sm'>{tableContent}</div>
+                        <div
+                            className={cn('relative overflow-hidden rounded-md border shadow-sm', {
+                                'pointer-events-none opacity-50': isLoading
+                            })}>
+                            {tableContent}
+                        </div>
                     </SortableContext>
                 </DndContext>
             ) : (
-                <div className='relative overflow-hidden rounded-md border shadow-sm'>{tableContent}</div>
+                <div
+                    className={cn('relative overflow-hidden rounded-md border shadow-sm', {
+                        'pointer-events-none opacity-50': isLoading
+                    })}>
+                    {tableContent}
+                </div>
             )}
             <div className='mt-4 flex items-center justify-between px-2 text-sm'>
                 <div className='flex flex-col items-center gap-2 md:flex-row'>

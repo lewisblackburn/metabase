@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+
+import NextImage from 'next/image';
 
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
@@ -6,76 +8,85 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { tmdbMovieImporterService } from '@/services/tmdb/tmdb-movie-importer.service';
 import { tmdbService } from '@/services/tmdb/tmdb.service';
-import { SearchResult, TMDBMovie, TMDBSearchResponse } from '@/types/tmdb.type';
-import { ColumnDef, SortingState } from '@tanstack/react-table';
+import type { SearchResult, TMDBSearchResponse } from '@/types/tmdb.type';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { ColumnDef } from '@tanstack/react-table';
 
-import { Plus, X } from 'lucide-react';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { Loader2, Plus, X } from 'lucide-react';
+import { toast } from 'sonner';
+
+dayjs.extend(advancedFormat);
+
+type MovieRow = SearchResult & { id: string };
 
 export default function TMDBMovieImportTable() {
-    const [data, setData] = useState<SearchResult[]>([]);
-    const [totalRows, setTotalRows] = useState(0);
     const [pageIndex, setPageIndex] = useState(0);
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [rowSelection, setRowSelection] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const debouncedSearchQuery = useDebounce(searchQuery, 500);
+    const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+    const debouncedQuery = useDebounce(searchQuery, 500);
 
-    // NOTE: TMDB API returns 20 results per page
-    const pageSize = 20;
-
-    React.useEffect(() => {
-        setPageIndex(0);
-    }, [debouncedSearchQuery]);
-
-    React.useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-                const response = await tmdbMovieImporterService.search<TMDBSearchResponse>(
-                    debouncedSearchQuery,
-                    pageIndex + 1,
-                    'movie'
-                );
-                if (response) {
-                    setData(response.results);
-                    console.log('response', response);
-                    setTotalRows(response.total_results);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setIsLoading(false);
-            }
+    const fetchMovies = useCallback(async (page: number, query: string) => {
+        const res = await tmdbMovieImporterService.search<TMDBSearchResponse>(query, page + 1, 'movie');
+        return {
+            data: res?.results.map((m) => ({ ...m, id: m.id.toString() })) ?? [],
+            total: res?.total_results ?? 0
         };
+    }, []);
 
-        fetchData();
-    }, [debouncedSearchQuery, pageIndex]);
+    const { data, isLoading, isError, refetch, isFetching } = useQuery({
+        queryKey: ['tmdb-movies', debouncedQuery, pageIndex],
+        queryFn: () => fetchMovies(pageIndex, debouncedQuery),
+        enabled: !!debouncedQuery
+    });
 
-    const columns = React.useMemo<ColumnDef<SearchResult, any>[]>(
+    const importMutation = useMutation({
+        mutationFn: (movieId: string) => tmdbMovieImporterService.import(movieId),
+        onSuccess: (response) => {
+            if (response === true) toast.success('Movie already exists');
+            else if (response === false) toast.error('Movie not found');
+            else toast.success(`${response.insert_movies_one?.title} imported`);
+        },
+        onError: (error: any) => toast.error(error.message)
+    });
+
+    const handleImport = useCallback(async () => {
+        const ids = Object.keys(rowSelection);
+        await Promise.all(ids.map((id) => importMutation.mutateAsync(id)));
+        setRowSelection({});
+    }, [rowSelection, importMutation]);
+
+    const columns = useMemo<ColumnDef<MovieRow>[]>(
         () => [
             {
-                accessorKey: 'poster_path',
-                header: 'Poster',
-                cell: (info) => {
-                    const row = info.getValue<TMDBMovie>();
+                id: 'movie',
+                header: 'Movie',
+                accessorFn: (row) => row,
+                cell: ({ row }) => {
+                    const m = row.original;
+                    const title = m.title || m.original_title;
+                    if (!title || !m.release_date) return null;
 
-                    if (row.poster_path === null) return null;
-                    return (
-                        <div className='flex h-20 w-20 items-center justify-center'>
-                            <img
-                                src={tmdbService.getPosterImage(row.poster_path) ?? null}
-                                alt={row.title}
-                                className='h-full w-full rounded-lg object-cover'
-                            />
+                    const metadata = (
+                        <div className='flex flex-col'>
+                            <span className='font-medium'>{title}</span>
+                            <span className='text-muted-foreground text-sm'>
+                                {dayjs(m.release_date).format('MMMM Do, YYYY')}
+                            </span>
                         </div>
                     );
+
+                    const posterUrl = tmdbService.getPosterImage(m.poster_path ?? '');
+                    return posterUrl ? (
+                        <div className='flex items-center gap-4'>
+                            <NextImage src={posterUrl} alt={title} width={75} height={112.5} className='rounded-md' />
+                            {metadata}
+                        </div>
+                    ) : (
+                        metadata
+                    );
                 }
-            },
-            {
-                accessorKey: 'title',
-                header: 'Title',
-                cell: (info) => info.getValue<string>()
             }
         ],
         []
@@ -102,11 +113,14 @@ export default function TMDBMovieImportTable() {
                     <Button
                         variant='outline'
                         size='sm'
-                        onClick={() => {
-                            console.log(rowSelection);
-                        }}>
-                        <Plus className='size-4' />
-                        Import ({Object.keys(rowSelection).length})
+                        onClick={handleImport}
+                        disabled={importMutation.isPending || Object.keys(rowSelection).length === 0}>
+                        {importMutation.isPending ? (
+                            <Loader2 className='h-4 w-4 animate-spin' />
+                        ) : (
+                            <Plus className='h-4 w-4' />
+                        )}
+                        {importMutation.isPending ? 'Importing...' : `Import (${Object.keys(rowSelection).length})`}
                     </Button>
                 )}
                 {Object.keys(rowSelection).length > 0 && (
@@ -121,22 +135,31 @@ export default function TMDBMovieImportTable() {
                     </Button>
                 )}
             </div>
-            <div className='xs:max-w-full max-w-xs'>
-                <DataTable
-                    columns={columns}
-                    data={data}
-                    pageIndex={pageIndex}
-                    totalRows={totalRows}
-                    pageSize={pageSize}
-                    pageSizeOptions={[pageSize]}
-                    sorting={sorting}
-                    rowSelection={rowSelection}
-                    isLoading={isLoading}
-                    onSortingChange={setSorting}
-                    onPageChange={setPageIndex}
-                    onRowSelectionChange={setRowSelection}
-                />
-            </div>
+
+            <DataTable<MovieRow>
+                columns={columns}
+                data={(data?.data as MovieRow[]) ?? []}
+                pageIndex={pageIndex}
+                totalRows={data?.total ?? 0}
+                pageSize={20}
+                pageSizeOptions={[20]}
+                rowSelection={rowSelection}
+                isLoading={isLoading || isFetching || importMutation.isPending}
+                onPageChange={setPageIndex}
+                onPageSizeChange={() => {}}
+                onSortingChange={() => {}}
+                sorting={[]}
+                onRowSelectionChange={setRowSelection}
+            />
+
+            {isError && (
+                <div className='p-4 text-red-600'>
+                    Error fetching movies.{' '}
+                    <Button variant='link' onClick={() => refetch()}>
+                        Retry
+                    </Button>
+                </div>
+            )}
         </div>
     );
 }

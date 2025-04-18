@@ -1,16 +1,24 @@
+import { MediaType } from '@/constants/media.constant';
 import { TMDB_BACKDROP_URL, TMDB_LOGO_URL, TMDB_POSTER_URL, TMDB_PROFILE_URL } from '@/constants/tmdb.constant';
+
+import { FileService } from '../file.service';
 
 export class TMDBService {
     private readonly TMDB_URL_V3 = 'https://api.themoviedb.org/3';
 
     constructor(public language: string = 'en-GB') {}
 
-    protected TMDB_ENTITY_URL(type: string, id: string, appendToResponse?: string): string {
+    protected TMDB_ENTITY_URL(type: string, id: string | number, appendToResponse?: string): string {
         return `${this.TMDB_URL_V3}/${type}/${id}?append_to_response=${appendToResponse}&language=${this.language}`;
     }
 
     protected TMDB_SEARCH_URL(query: string, pageIndex: number, type: string): string {
         return `${this.TMDB_URL_V3}/search/${type}?query=${query}&language=${this.language}&page=${pageIndex}`;
+    }
+
+    protected uploadImage(path: string | null | undefined, type: MediaType, urlFn: (path: string) => string) {
+        if (!path) return Promise.resolve(null);
+        return FileService.uploadFile(urlFn.call(this, path), type);
     }
 
     public getProfileImage(profilePath?: string): string {
@@ -50,7 +58,7 @@ export class TMDBService {
         return response.json();
     }
 
-    public async getEntity<T>(type: 'movie' | 'person', id: string, appendToResponse = ''): Promise<T> {
+    public async getEntity<T>(type: 'movie' | 'person', id: string | number, appendToResponse = ''): Promise<T> {
         return this.fetcher<T>(this.TMDB_ENTITY_URL(type, id, appendToResponse));
     }
 

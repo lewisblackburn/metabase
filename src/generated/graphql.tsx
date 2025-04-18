@@ -22775,7 +22775,7 @@ export type InsertMovieMutationVariables = Exact<{
 }>;
 
 
-export type InsertMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any } | null };
+export type InsertMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
 export type UpdateMovieMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -23244,6 +23244,7 @@ export const InsertMovieDocument = `
     mutation InsertMovie($object: movies_insert_input!) {
   insert_movies_one(object: $object) {
     id
+    title
   }
 }
     `;
