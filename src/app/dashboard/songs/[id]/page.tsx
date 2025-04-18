@@ -76,7 +76,7 @@ export default function SongPage() {
                         )}
                         {SONG_DATA.genres && <CustomBadge icon={Music}>{SONG_DATA.genres.join(', ')}</CustomBadge>}
                         <div>
-                            <ProgressItem label='Content Score' score={SONG_DATA.contentScore} variant='labelled' />
+                            <ProgressItem label='Content Score' score={SONG_DATA.contentScore} />
                         </div>
                     </div>
                     <Separator />

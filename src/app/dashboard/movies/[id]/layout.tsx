@@ -15,6 +15,7 @@ import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { useBreadCrumbs } from '@/features/dashboard/components/breadcrumbs';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
+import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieRatingSlider from '@/features/movies/components/movie-rating-slider';
@@ -163,8 +164,7 @@ function MovieLayoutContent({
                             ))}
                         </div>
                         <Separator />
-
-                        <ProgressItem icon={TrendingUp} label='Content Score' score={movie.content_score} />
+                        <MovieContentScore />
                         <Separator />
                         <div className='grid grid-cols-2 gap-2'>
                             <MovieFavouriteButton />

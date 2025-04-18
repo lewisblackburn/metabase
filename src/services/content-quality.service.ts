@@ -42,20 +42,20 @@ class ContentQualityService {
             title: tmdbMovie.title,
             tagline: tmdbMovie.tagline,
             overview: tmdbMovie.overview,
-            budget: tmdbMovie.budget,
             runtime: tmdbMovie.runtime,
             release_date: tmdbMovie.release_date,
-            cast: tmdbMovie.credits.cast.map((cast) => cast.name)
+            cast: tmdbMovie.credits.cast.map((cast) => cast.name),
+            crew: tmdbMovie.credits.crew.map((crew) => crew.name)
         };
 
         const formattedLocalMovie = {
             title: localMovie.data.movies_by_pk.title,
             tagline: localMovie.data.movies_by_pk.tagline,
             overview: localMovie.data.movies_by_pk.overview,
-            budget: localMovie.data.movies_by_pk.budget,
             runtime: localMovie.data.movies_by_pk.runtime,
             release_date: localMovie.data.movies_by_pk.release_date,
-            cast: localMovie.data.movies_by_pk.movie_cast_members.map((cast_member) => cast_member.person.name)
+            cast: localMovie.data.movies_by_pk.movie_cast_members.map((cast_member) => cast_member.person.name),
+            crew: localMovie.data.movies_by_pk.movie_crew_members.map((crew_member) => crew_member.person.name)
         };
 
         const score = this.compareObjects(formattedTmdbMovie, formattedLocalMovie);
