@@ -1,0 +1,6 @@
+query GetStatuses($where: statuses_bool_exp) {
+    statuses(where: $where) {
+        id
+        name
+    }
+}

@@ -9207,7 +9207,9 @@ export type Movies = {
   release_date?: Maybe<Scalars['date']['output']>;
   revenue?: Maybe<Scalars['money']['output']>;
   runtime?: Maybe<Scalars['Int']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  status?: Maybe<Statuses>;
+  status_id?: Maybe<Scalars['uuid']['output']>;
   tagline?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   tmdb_id?: Maybe<Scalars['String']['output']>;
@@ -9665,7 +9667,8 @@ export type Movies_Bool_Exp = {
   release_date?: InputMaybe<Date_Comparison_Exp>;
   revenue?: InputMaybe<Money_Comparison_Exp>;
   runtime?: InputMaybe<Int_Comparison_Exp>;
-  status?: InputMaybe<String_Comparison_Exp>;
+  status?: InputMaybe<Statuses_Bool_Exp>;
+  status_id?: InputMaybe<Uuid_Comparison_Exp>;
   tagline?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   tmdb_id?: InputMaybe<String_Comparison_Exp>;
@@ -9733,7 +9736,8 @@ export type Movies_Insert_Input = {
   release_date?: InputMaybe<Scalars['date']['input']>;
   revenue?: InputMaybe<Scalars['money']['input']>;
   runtime?: InputMaybe<Scalars['Int']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Statuses_Obj_Rel_Insert_Input>;
+  status_id?: InputMaybe<Scalars['uuid']['input']>;
   tagline?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -9764,7 +9768,7 @@ export type Movies_Max_Fields = {
   release_date?: Maybe<Scalars['date']['output']>;
   revenue?: Maybe<Scalars['money']['output']>;
   runtime?: Maybe<Scalars['Int']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
+  status_id?: Maybe<Scalars['uuid']['output']>;
   tagline?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
@@ -9794,7 +9798,7 @@ export type Movies_Max_Order_By = {
   release_date?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
   runtime?: InputMaybe<Order_By>;
-  status?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
   tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
@@ -9825,7 +9829,7 @@ export type Movies_Min_Fields = {
   release_date?: Maybe<Scalars['date']['output']>;
   revenue?: Maybe<Scalars['money']['output']>;
   runtime?: Maybe<Scalars['Int']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
+  status_id?: Maybe<Scalars['uuid']['output']>;
   tagline?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
@@ -9855,7 +9859,7 @@ export type Movies_Min_Order_By = {
   release_date?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
   runtime?: InputMaybe<Order_By>;
-  status?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
   tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
@@ -9924,7 +9928,8 @@ export type Movies_Order_By = {
   release_date?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
   runtime?: InputMaybe<Order_By>;
-  status?: InputMaybe<Order_By>;
+  status?: InputMaybe<Statuses_Order_By>;
+  status_id?: InputMaybe<Order_By>;
   tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
@@ -9975,7 +9980,7 @@ export enum Movies_Select_Column {
   /** column name */
   Runtime = 'runtime',
   /** column name */
-  Status = 'status',
+  StatusId = 'status_id',
   /** column name */
   Tagline = 'tagline',
   /** column name */
@@ -10011,7 +10016,7 @@ export type Movies_Set_Input = {
   release_date?: InputMaybe<Scalars['date']['input']>;
   revenue?: InputMaybe<Scalars['money']['input']>;
   runtime?: InputMaybe<Scalars['Int']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status_id?: InputMaybe<Scalars['uuid']['input']>;
   tagline?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -10128,7 +10133,7 @@ export type Movies_Stream_Cursor_Value_Input = {
   release_date?: InputMaybe<Scalars['date']['input']>;
   revenue?: InputMaybe<Scalars['money']['input']>;
   runtime?: InputMaybe<Scalars['Int']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status_id?: InputMaybe<Scalars['uuid']['input']>;
   tagline?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -10199,7 +10204,7 @@ export enum Movies_Update_Column {
   /** column name */
   Runtime = 'runtime',
   /** column name */
-  Status = 'status',
+  StatusId = 'status_id',
   /** column name */
   Tagline = 'tagline',
   /** column name */
@@ -10527,6 +10532,14 @@ export type Mutation_Root = {
   delete_songs?: Maybe<Songs_Mutation_Response>;
   /** delete single row from the table: "songs" */
   delete_songs_by_pk?: Maybe<Songs>;
+  /** delete data from the table: "status_types" */
+  delete_status_types?: Maybe<Status_Types_Mutation_Response>;
+  /** delete single row from the table: "status_types" */
+  delete_status_types_by_pk?: Maybe<Status_Types>;
+  /** delete data from the table: "statuses" */
+  delete_statuses?: Maybe<Statuses_Mutation_Response>;
+  /** delete single row from the table: "statuses" */
+  delete_statuses_by_pk?: Maybe<Statuses>;
   /** delete data from the table: "storage.schema_migrations" */
   delete_storage_schema_migrations?: Maybe<Storage_Schema_Migrations_Mutation_Response>;
   /** delete single row from the table: "storage.schema_migrations" */
@@ -10747,6 +10760,14 @@ export type Mutation_Root = {
   insert_songs?: Maybe<Songs_Mutation_Response>;
   /** insert a single row into the table: "songs" */
   insert_songs_one?: Maybe<Songs>;
+  /** insert data into the table: "status_types" */
+  insert_status_types?: Maybe<Status_Types_Mutation_Response>;
+  /** insert a single row into the table: "status_types" */
+  insert_status_types_one?: Maybe<Status_Types>;
+  /** insert data into the table: "statuses" */
+  insert_statuses?: Maybe<Statuses_Mutation_Response>;
+  /** insert a single row into the table: "statuses" */
+  insert_statuses_one?: Maybe<Statuses>;
   /** insert data into the table: "storage.schema_migrations" */
   insert_storage_schema_migrations?: Maybe<Storage_Schema_Migrations_Mutation_Response>;
   /** insert a single row into the table: "storage.schema_migrations" */
@@ -11071,6 +11092,18 @@ export type Mutation_Root = {
   update_songs_by_pk?: Maybe<Songs>;
   /** update multiples rows of table: "songs" */
   update_songs_many?: Maybe<Array<Maybe<Songs_Mutation_Response>>>;
+  /** update data of the table: "status_types" */
+  update_status_types?: Maybe<Status_Types_Mutation_Response>;
+  /** update single row of the table: "status_types" */
+  update_status_types_by_pk?: Maybe<Status_Types>;
+  /** update multiples rows of table: "status_types" */
+  update_status_types_many?: Maybe<Array<Maybe<Status_Types_Mutation_Response>>>;
+  /** update data of the table: "statuses" */
+  update_statuses?: Maybe<Statuses_Mutation_Response>;
+  /** update single row of the table: "statuses" */
+  update_statuses_by_pk?: Maybe<Statuses>;
+  /** update multiples rows of table: "statuses" */
+  update_statuses_many?: Maybe<Array<Maybe<Statuses_Mutation_Response>>>;
   /** update data of the table: "storage.schema_migrations" */
   update_storage_schema_migrations?: Maybe<Storage_Schema_Migrations_Mutation_Response>;
   /** update single row of the table: "storage.schema_migrations" */
@@ -11732,6 +11765,30 @@ export type Mutation_RootDelete_SongsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Songs_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Status_TypesArgs = {
+  where: Status_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Status_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_StatusesArgs = {
+  where: Statuses_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Statuses_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -12501,6 +12558,34 @@ export type Mutation_RootInsert_SongsArgs = {
 export type Mutation_RootInsert_Songs_OneArgs = {
   object: Songs_Insert_Input;
   on_conflict?: InputMaybe<Songs_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Status_TypesArgs = {
+  objects: Array<Status_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Status_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Status_Types_OneArgs = {
+  object: Status_Types_Insert_Input;
+  on_conflict?: InputMaybe<Status_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_StatusesArgs = {
+  objects: Array<Statuses_Insert_Input>;
+  on_conflict?: InputMaybe<Statuses_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Statuses_OneArgs = {
+  object: Statuses_Insert_Input;
+  on_conflict?: InputMaybe<Statuses_On_Conflict>;
 };
 
 
@@ -13661,6 +13746,46 @@ export type Mutation_RootUpdate_Songs_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Songs_ManyArgs = {
   updates: Array<Songs_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Status_TypesArgs = {
+  _set?: InputMaybe<Status_Types_Set_Input>;
+  where: Status_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Status_Types_By_PkArgs = {
+  _set?: InputMaybe<Status_Types_Set_Input>;
+  pk_columns: Status_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Status_Types_ManyArgs = {
+  updates: Array<Status_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StatusesArgs = {
+  _set?: InputMaybe<Statuses_Set_Input>;
+  where: Statuses_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Statuses_By_PkArgs = {
+  _set?: InputMaybe<Statuses_Set_Input>;
+  pk_columns: Statuses_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Statuses_ManyArgs = {
+  updates: Array<Statuses_Updates>;
 };
 
 
@@ -15135,6 +15260,18 @@ export type Query_Root = {
   songs_aggregate: Songs_Aggregate;
   /** fetch data from the table: "songs" using primary key columns */
   songs_by_pk?: Maybe<Songs>;
+  /** An array relationship */
+  status_types: Array<Status_Types>;
+  /** An aggregate relationship */
+  status_types_aggregate: Status_Types_Aggregate;
+  /** fetch data from the table: "status_types" using primary key columns */
+  status_types_by_pk?: Maybe<Status_Types>;
+  /** fetch data from the table: "statuses" */
+  statuses: Array<Statuses>;
+  /** fetch aggregated fields from the table: "statuses" */
+  statuses_aggregate: Statuses_Aggregate;
+  /** fetch data from the table: "statuses" using primary key columns */
+  statuses_by_pk?: Maybe<Statuses>;
   /** fetch data from the table: "storage.schema_migrations" */
   storage_schema_migrations: Array<Storage_Schema_Migrations>;
   /** fetch aggregated fields from the table: "storage.schema_migrations" */
@@ -16352,6 +16489,52 @@ export type Query_RootSongs_AggregateArgs = {
 
 
 export type Query_RootSongs_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootStatus_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Status_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Status_Types_Order_By>>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+
+export type Query_RootStatus_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Status_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Status_Types_Order_By>>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+
+export type Query_RootStatus_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootStatusesArgs = {
+  distinct_on?: InputMaybe<Array<Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Statuses_Order_By>>;
+  where?: InputMaybe<Statuses_Bool_Exp>;
+};
+
+
+export type Query_RootStatuses_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Statuses_Order_By>>;
+  where?: InputMaybe<Statuses_Bool_Exp>;
+};
+
+
+export type Query_RootStatuses_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -19742,6 +19925,395 @@ export type Songs_Variance_Order_By = {
   track_number?: InputMaybe<Order_By>;
 };
 
+/** columns and relationships of "status_types" */
+export type Status_Types = {
+  __typename?: 'status_types';
+  id: Scalars['uuid']['output'];
+  /** An object relationship */
+  status: Statuses;
+  status_id: Scalars['uuid']['output'];
+  type: Scalars['String']['output'];
+};
+
+/** aggregated selection of "status_types" */
+export type Status_Types_Aggregate = {
+  __typename?: 'status_types_aggregate';
+  aggregate?: Maybe<Status_Types_Aggregate_Fields>;
+  nodes: Array<Status_Types>;
+};
+
+export type Status_Types_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Status_Types_Aggregate_Bool_Exp_Count>;
+};
+
+export type Status_Types_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Status_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Status_Types_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "status_types" */
+export type Status_Types_Aggregate_Fields = {
+  __typename?: 'status_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Status_Types_Max_Fields>;
+  min?: Maybe<Status_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "status_types" */
+export type Status_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Status_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "status_types" */
+export type Status_Types_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Status_Types_Max_Order_By>;
+  min?: InputMaybe<Status_Types_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "status_types" */
+export type Status_Types_Arr_Rel_Insert_Input = {
+  data: Array<Status_Types_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Status_Types_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "status_types". All fields are combined with a logical 'AND'. */
+export type Status_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Status_Types_Bool_Exp>>;
+  _not?: InputMaybe<Status_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Status_Types_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  status?: InputMaybe<Statuses_Bool_Exp>;
+  status_id?: InputMaybe<Uuid_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "status_types" */
+export enum Status_Types_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  StatusTypesPkey = 'status_types_pkey'
+}
+
+/** input type for inserting data into table "status_types" */
+export type Status_Types_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  status?: InputMaybe<Statuses_Obj_Rel_Insert_Input>;
+  status_id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Status_Types_Max_Fields = {
+  __typename?: 'status_types_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  status_id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "status_types" */
+export type Status_Types_Max_Order_By = {
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Status_Types_Min_Fields = {
+  __typename?: 'status_types_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  status_id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "status_types" */
+export type Status_Types_Min_Order_By = {
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "status_types" */
+export type Status_Types_Mutation_Response = {
+  __typename?: 'status_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Status_Types>;
+};
+
+/** on_conflict condition type for table "status_types" */
+export type Status_Types_On_Conflict = {
+  constraint: Status_Types_Constraint;
+  update_columns?: Array<Status_Types_Update_Column>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "status_types". */
+export type Status_Types_Order_By = {
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Statuses_Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: status_types */
+export type Status_Types_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "status_types" */
+export enum Status_Types_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  StatusId = 'status_id',
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "status_types" */
+export type Status_Types_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  status_id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "status_types" */
+export type Status_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Status_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Status_Types_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  status_id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "status_types" */
+export enum Status_Types_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  StatusId = 'status_id',
+  /** column name */
+  Type = 'type'
+}
+
+export type Status_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Status_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Status_Types_Bool_Exp;
+};
+
+/** columns and relationships of "statuses" */
+export type Statuses = {
+  __typename?: 'statuses';
+  id: Scalars['uuid']['output'];
+  /** An array relationship */
+  movies: Array<Movies>;
+  /** An aggregate relationship */
+  movies_aggregate: Movies_Aggregate;
+  name: Scalars['String']['output'];
+  /** An array relationship */
+  status_types: Array<Status_Types>;
+  /** An aggregate relationship */
+  status_types_aggregate: Status_Types_Aggregate;
+};
+
+
+/** columns and relationships of "statuses" */
+export type StatusesMoviesArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "statuses" */
+export type StatusesMovies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "statuses" */
+export type StatusesStatus_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Status_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Status_Types_Order_By>>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+
+/** columns and relationships of "statuses" */
+export type StatusesStatus_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Status_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Status_Types_Order_By>>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+/** aggregated selection of "statuses" */
+export type Statuses_Aggregate = {
+  __typename?: 'statuses_aggregate';
+  aggregate?: Maybe<Statuses_Aggregate_Fields>;
+  nodes: Array<Statuses>;
+};
+
+/** aggregate fields of "statuses" */
+export type Statuses_Aggregate_Fields = {
+  __typename?: 'statuses_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Statuses_Max_Fields>;
+  min?: Maybe<Statuses_Min_Fields>;
+};
+
+
+/** aggregate fields of "statuses" */
+export type Statuses_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Statuses_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "statuses". All fields are combined with a logical 'AND'. */
+export type Statuses_Bool_Exp = {
+  _and?: InputMaybe<Array<Statuses_Bool_Exp>>;
+  _not?: InputMaybe<Statuses_Bool_Exp>;
+  _or?: InputMaybe<Array<Statuses_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  movies?: InputMaybe<Movies_Bool_Exp>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Bool_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  status_types?: InputMaybe<Status_Types_Bool_Exp>;
+  status_types_aggregate?: InputMaybe<Status_Types_Aggregate_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "statuses" */
+export enum Statuses_Constraint {
+  /** unique or primary key constraint on columns "name" */
+  StatusesNameKey = 'statuses_name_key',
+  /** unique or primary key constraint on columns "id" */
+  StatusesPkey = 'statuses_pkey'
+}
+
+/** input type for inserting data into table "statuses" */
+export type Statuses_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  movies?: InputMaybe<Movies_Arr_Rel_Insert_Input>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  status_types?: InputMaybe<Status_Types_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Statuses_Max_Fields = {
+  __typename?: 'statuses_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Statuses_Min_Fields = {
+  __typename?: 'statuses_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "statuses" */
+export type Statuses_Mutation_Response = {
+  __typename?: 'statuses_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Statuses>;
+};
+
+/** input type for inserting object relation for remote table "statuses" */
+export type Statuses_Obj_Rel_Insert_Input = {
+  data: Statuses_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Statuses_On_Conflict>;
+};
+
+/** on_conflict condition type for table "statuses" */
+export type Statuses_On_Conflict = {
+  constraint: Statuses_Constraint;
+  update_columns?: Array<Statuses_Update_Column>;
+  where?: InputMaybe<Statuses_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "statuses". */
+export type Statuses_Order_By = {
+  id?: InputMaybe<Order_By>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Order_By>;
+  name?: InputMaybe<Order_By>;
+  status_types_aggregate?: InputMaybe<Status_Types_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: statuses */
+export type Statuses_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "statuses" */
+export enum Statuses_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "statuses" */
+export type Statuses_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "statuses" */
+export type Statuses_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Statuses_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Statuses_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "statuses" */
+export enum Statuses_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+export type Statuses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Statuses_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Statuses_Bool_Exp;
+};
+
 /** columns and relationships of "storage.schema_migrations" */
 export type Storage_Schema_Migrations = {
   __typename?: 'storage_schema_migrations';
@@ -20355,6 +20927,22 @@ export type Subscription_Root = {
   songs_by_pk?: Maybe<Songs>;
   /** fetch data from the table in a streaming manner: "songs" */
   songs_stream: Array<Songs>;
+  /** An array relationship */
+  status_types: Array<Status_Types>;
+  /** An aggregate relationship */
+  status_types_aggregate: Status_Types_Aggregate;
+  /** fetch data from the table: "status_types" using primary key columns */
+  status_types_by_pk?: Maybe<Status_Types>;
+  /** fetch data from the table in a streaming manner: "status_types" */
+  status_types_stream: Array<Status_Types>;
+  /** fetch data from the table: "statuses" */
+  statuses: Array<Statuses>;
+  /** fetch aggregated fields from the table: "statuses" */
+  statuses_aggregate: Statuses_Aggregate;
+  /** fetch data from the table: "statuses" using primary key columns */
+  statuses_by_pk?: Maybe<Statuses>;
+  /** fetch data from the table in a streaming manner: "statuses" */
+  statuses_stream: Array<Statuses>;
   /** fetch data from the table: "storage.schema_migrations" */
   storage_schema_migrations: Array<Storage_Schema_Migrations>;
   /** fetch aggregated fields from the table: "storage.schema_migrations" */
@@ -21946,6 +22534,66 @@ export type Subscription_RootSongs_StreamArgs = {
 };
 
 
+export type Subscription_RootStatus_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Status_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Status_Types_Order_By>>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootStatus_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Status_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Status_Types_Order_By>>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootStatus_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootStatus_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Status_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Status_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootStatusesArgs = {
+  distinct_on?: InputMaybe<Array<Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Statuses_Order_By>>;
+  where?: InputMaybe<Statuses_Bool_Exp>;
+};
+
+
+export type Subscription_RootStatuses_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Statuses_Order_By>>;
+  where?: InputMaybe<Statuses_Bool_Exp>;
+};
+
+
+export type Subscription_RootStatuses_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootStatuses_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Statuses_Stream_Cursor_Input>>;
+  where?: InputMaybe<Statuses_Bool_Exp>;
+};
+
+
 export type Subscription_RootStorage_Schema_MigrationsArgs = {
   distinct_on?: InputMaybe<Array<Storage_Schema_Migrations_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -23496,7 +24144,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, status?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, favourited?: boolean | null, watchlisted?: boolean | null, user_rating?: number | null, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: { __typename?: 'availabilities', id: any, name: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, character?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, favourited?: boolean | null, watchlisted?: boolean | null, user_rating?: number | null, status?: { __typename?: 'statuses', id: any, name: string } | null, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: { __typename?: 'availabilities', id: any, name: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, character?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -23576,6 +24224,13 @@ export type InsertSongMutationVariables = Exact<{
 
 
 export type InsertSongMutation = { __typename?: 'mutation_root', insert_songs_one?: { __typename?: 'songs', id: any, name: string } | null };
+
+export type GetStatusesQueryVariables = Exact<{
+  where?: InputMaybe<Statuses_Bool_Exp>;
+}>;
+
+
+export type GetStatusesQuery = { __typename?: 'query_root', statuses: Array<{ __typename?: 'statuses', id: any, name: string }> };
 
 
 
@@ -23891,7 +24546,6 @@ export const GetMovieDocument = `
     revenue
     runtime
     formatted_runtime
-    status
     tagline
     tmdb_id
     trailer
@@ -23903,6 +24557,10 @@ export const GetMovieDocument = `
     favourited
     watchlisted
     user_rating
+    status {
+      id
+      name
+    }
     certification {
       id
       name
@@ -24347,4 +25005,48 @@ export const useInsertSongMutation = <
     mutationFn: (variables?: InsertSongMutationVariables) => fetcher<InsertSongMutation, InsertSongMutationVariables>(InsertSongDocument, variables)(),
     ...options
   }
+    )};
+
+export const GetStatusesDocument = `
+    query GetStatuses($where: statuses_bool_exp) {
+  statuses(where: $where) {
+    id
+    name
+  }
+}
+    `;
+
+export const useGetStatusesQuery = <
+      TData = GetStatusesQuery,
+      TError = unknown
+    >(
+      variables?: GetStatusesQueryVariables,
+      options?: Omit<UseQueryOptions<GetStatusesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetStatusesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetStatusesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetStatuses'] : ['GetStatuses', variables],
+    queryFn: fetcher<GetStatusesQuery, GetStatusesQueryVariables>(GetStatusesDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetStatusesQuery = <
+      TData = InfiniteData<GetStatusesQuery>,
+      TError = unknown
+    >(
+      variables: GetStatusesQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetStatusesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetStatusesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetStatusesQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetStatuses.infinite'] : ['GetStatuses.infinite', variables],
+      queryFn: (metaData) => fetcher<GetStatusesQuery, GetStatusesQueryVariables>(GetStatusesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
     )};

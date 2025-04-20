@@ -14,7 +14,7 @@ import FilterSection from '@/components/shared/filter-section';
 import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { useGetCertificationsQuery, useGetGenresQuery } from '@/generated/graphql';
+import { useGetCertificationsQuery, useGetGenresQuery, useGetStatusesQuery } from '@/generated/graphql';
 import { useGetAvailabilitiesQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -85,6 +85,21 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
         },
         {
             queryKey: ['certifications']
+        }
+    );
+
+    const { data: statuses } = useGetStatusesQuery(
+        {
+            where: {
+                status_types: {
+                    type: {
+                        _eq: 'movie'
+                    }
+                }
+            }
+        },
+        {
+            queryKey: ['statuses']
         }
     );
 
@@ -196,7 +211,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                                 options={
                                                                     availabilities?.availabilities.map(
                                                                         (availability) => ({
-                                                                            value: availability.id.toString(),
+                                                                            value: availability.id,
                                                                             label: availability.name
                                                                         })
                                                                     ) ?? []
@@ -236,7 +251,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                             <CheckboxGroupField
                                                                 options={
                                                                     genres?.genres.map((genre) => ({
-                                                                        value: genre.id.toString(),
+                                                                        value: genre.id,
                                                                         label: genre.name
                                                                     })) ?? []
                                                                 }
@@ -259,10 +274,32 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                                 options={
                                                                     certifications?.certifications.map(
                                                                         (certification) => ({
-                                                                            value: certification.id.toString(),
+                                                                            value: certification.id,
                                                                             label: certification.name
                                                                         })
                                                                     ) ?? []
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </BaseFormLayout>
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </FilterSection>
+
+                                        <FilterSection>
+                                            <FormField
+                                                control={form.control}
+                                                name='statuses'
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <BaseFormLayout label='Statuses'>
+                                                            <CheckboxGroupField
+                                                                options={
+                                                                    statuses?.statuses.map((status) => ({
+                                                                        value: status.id,
+                                                                        label: status.name
+                                                                    })) ?? []
                                                                 }
                                                                 {...field}
                                                             />

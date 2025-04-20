@@ -83,7 +83,7 @@ function MovieLayoutContent({
         {
             id: 'status',
             icon: Info,
-            badges: movie.status,
+            badges: movie.status?.name ?? 'Unknown',
             label: 'Status'
         },
         {

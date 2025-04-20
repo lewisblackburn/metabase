@@ -3,12 +3,15 @@
 import BaseFormLayout from '@/components/form/base-form-layout';
 import { DatePickerField } from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
-import MultiSelectField from '@/components/form/multi-select';
 import SelectField, { SelectOption } from '@/components/form/select';
 import TextareaField from '@/components/form/textarea';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { MOVIE_STATUS_OPTIONS } from '@/constants/status.constant';
-import { useGetCertificationsQuery, useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
+import {
+    useGetCertificationsQuery,
+    useGetMovieQuery,
+    useGetStatusesQuery,
+    useUpdateMovieMutation
+} from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
@@ -45,6 +48,21 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
         }
     );
 
+    const { data: statuses } = useGetStatusesQuery(
+        {
+            where: {
+                status_types: {
+                    type: {
+                        _eq: 'movie'
+                    }
+                }
+            }
+        },
+        {
+            queryKey: ['statuses']
+        }
+    );
+
     const { mutateAsync: updateMovie } = useUpdateMovieMutation();
 
     const movie = data?.movies_by_pk;
@@ -62,8 +80,8 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
             budget: movie.budget ?? 0,
             revenue: movie.revenue ?? 0,
             language: movie.language ?? '',
-            status: movie.status ?? undefined,
             certification: movie.certification?.id ?? undefined,
+            status: movie.status?.id ?? undefined,
             imdbId: movie.imdb_id ?? '',
             tmdbId: movie.tmdb_id ?? '',
             homepage: movie.homepage ?? ''
@@ -84,8 +102,8 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     budget: values.budget,
                     revenue: values.revenue,
                     language: values.language,
-                    status: values.status,
                     certification_id: values.certification,
+                    status_id: values.status,
                     imdb_id: values.imdbId,
                     tmdb_id: values.tmdbId,
                     homepage: values.homepage
@@ -210,10 +228,10 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                             <BaseFormLayout label='Status'>
                                 <SelectField
                                     options={
-                                        MOVIE_STATUS_OPTIONS.map((option) => ({
-                                            value: option.value,
-                                            label: option.label
-                                        })) as SelectOption[]
+                                        statuses?.statuses.map((status) => ({
+                                            value: status.id.toString(),
+                                            label: status.name
+                                        })) ?? []
                                     }
                                     modal
                                     {...field}

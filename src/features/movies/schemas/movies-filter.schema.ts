@@ -9,7 +9,6 @@ export const moviesFilterSchema = z.object({
     showMe: z.enum(['everything', 'not-seen', 'seen'], {
         required_error: 'Please select a view preference'
     }),
-    availabilities: z.array(z.string().uuid()).optional(),
     releaseDates: z
         .object({
             from: z.date().optional(),
@@ -18,6 +17,8 @@ export const moviesFilterSchema = z.object({
         .optional(),
     genres: z.array(z.string().uuid()).optional(),
     certifications: z.array(z.string().uuid()).optional(),
+    availabilities: z.array(z.string().uuid()).optional(),
+    statuses: z.array(z.string().uuid()).optional(),
     // TODO : This needs to match the language code
     language: z.string().optional(),
     userScore: z.tuple([z.number(), z.number()]).optional(),

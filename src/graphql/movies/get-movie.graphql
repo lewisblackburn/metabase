@@ -15,7 +15,6 @@ query GetMovie($id: uuid!) {
         revenue
         runtime
         formatted_runtime
-        status
         tagline
         tmdb_id
         trailer
@@ -27,6 +26,10 @@ query GetMovie($id: uuid!) {
         favourited
         watchlisted
         user_rating
+        status {
+            id
+            name
+        }
         certification {
             id
             name

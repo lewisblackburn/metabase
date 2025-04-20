@@ -1,5 +1,3 @@
-import { MOVIE_STATUS_OPTIONS } from '@/constants/status.constant';
-
 import { z } from 'zod';
 
 export const movieDetailsSchema = z.object({
@@ -12,14 +10,8 @@ export const movieDetailsSchema = z.object({
     revenue: z.string().optional(),
     // TODO : This needs to match the language code
     language: z.string().optional(),
-    status: z.preprocess(
-        (val) => (val === '' ? undefined : val),
-        z
-            .enum(MOVIE_STATUS_OPTIONS.map((option: { value: string }) => option.value) as [string, ...string[]])
-            .nullable()
-            .optional()
-    ),
     certification: z.string().uuid().optional(),
+    status: z.string().uuid().optional(),
     imdbId: z.string().optional(),
     tmdbId: z.string().optional(),
     homepage: z.string().url().optional().or(z.literal(''))

@@ -16,9 +16,6 @@ import { useSelector } from 'react-redux';
 export default function MoviePage() {
     const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
 
-    // TODO: CONVERT CERTIFICATIONS TO THE API FORMAT
-    // TODO: CONVERT STATUSES TO THE API FORMAT
-
     const orderByMap = {
         popularity: 'view_count',
         'release-date': 'release_date',
@@ -34,7 +31,7 @@ export default function MoviePage() {
         [orderByMap[moviesFilter.orderBy.orderBy]]: orderMap[moviesFilter.orderBy.order]
     };
 
-    const titleFilter = moviesFilter.search
+    const titleFilter: GetMoviesQueryVariables['where'] = moviesFilter.search
         ? {
               title: {
                   _ilike: `%${moviesFilter.search}%`
@@ -42,7 +39,7 @@ export default function MoviePage() {
           }
         : {};
 
-    const alternativeTitlesFilter = moviesFilter.search
+    const alternativeTitlesFilter: GetMoviesQueryVariables['where'] = moviesFilter.search
         ? {
               movie_alternative_titles: {
                   alternative_title: {
@@ -52,7 +49,7 @@ export default function MoviePage() {
           }
         : {};
 
-    const showMeFilter =
+    const showMeFilter: GetMoviesQueryVariables['where'] =
         moviesFilter.showMe === 'everything'
             ? {}
             : {
@@ -61,7 +58,7 @@ export default function MoviePage() {
                   }
               };
 
-    const availabilitiesFilter =
+    const availabilitiesFilter: GetMoviesQueryVariables['where'] =
         moviesFilter.availabilities && moviesFilter.availabilities.length > 0
             ? {
                   movie_availabilities: {
@@ -74,7 +71,7 @@ export default function MoviePage() {
               }
             : {};
 
-    const releaseDateFilter = moviesFilter.releaseDates
+    const releaseDateFilter: GetMoviesQueryVariables['where'] = moviesFilter.releaseDates
         ? {
               release_date: {
                   _gte: moviesFilter.releaseDates.from,
@@ -83,7 +80,7 @@ export default function MoviePage() {
           }
         : {};
 
-    const genreFilter =
+    const genreFilter: GetMoviesQueryVariables['where'] =
         moviesFilter.genres && moviesFilter.genres.length > 0
             ? {
                   movie_genres: {
@@ -96,18 +93,31 @@ export default function MoviePage() {
               }
             : {};
 
-    const certificationFilter =
+    const certificationFilter: GetMoviesQueryVariables['where'] =
         moviesFilter.certifications && moviesFilter.certifications.length > 0
             ? {
-                  age_certification: {
-                      _in: Array.isArray(moviesFilter.certifications)
-                          ? moviesFilter.certifications
-                          : [moviesFilter.certifications]
+                  certification: {
+                      id: {
+                          _in: Array.isArray(moviesFilter.certifications)
+                              ? moviesFilter.certifications
+                              : [moviesFilter.certifications]
+                      }
                   }
               }
             : {};
 
-    const languageFilter = moviesFilter.language
+    const statusFilter: GetMoviesQueryVariables['where'] =
+        moviesFilter.statuses && moviesFilter.statuses.length > 0
+            ? {
+                  status: {
+                      id: {
+                          _in: Array.isArray(moviesFilter.statuses) ? moviesFilter.statuses : [moviesFilter.statuses]
+                      }
+                  }
+              }
+            : {};
+
+    const languageFilter: GetMoviesQueryVariables['where'] = moviesFilter.language
         ? {
               language: {
                   _ilike: `%${moviesFilter.language}%`
@@ -115,7 +125,7 @@ export default function MoviePage() {
           }
         : {};
 
-    const userScoreFilter = moviesFilter.userScore
+    const userScoreFilter: GetMoviesQueryVariables['where'] = moviesFilter.userScore
         ? {
               average_rating: {
                   _gte: moviesFilter.userScore?.[0],
@@ -124,7 +134,7 @@ export default function MoviePage() {
           }
         : {};
 
-    const minimumUserVotesFilter = moviesFilter.minVotes
+    const minimumUserVotesFilter: GetMoviesQueryVariables['where'] = moviesFilter.minVotes
         ? {
               vote_count: {
                   _gte: moviesFilter.minVotes?.[0]
@@ -132,7 +142,7 @@ export default function MoviePage() {
           }
         : {};
 
-    const runtimeFilter = moviesFilter.runtime
+    const runtimeFilter: GetMoviesQueryVariables['where'] = moviesFilter.runtime
         ? {
               runtime: {
                   _gte: moviesFilter.runtime?.[0],
@@ -143,7 +153,7 @@ export default function MoviePage() {
 
     const keywords = moviesFilter.keywords?.map((keyword) => keyword.value);
 
-    const keywordFilter =
+    const keywordFilter: GetMoviesQueryVariables['where'] =
         keywords && keywords.length > 0
             ? {
                   movie_keywords: {
@@ -169,6 +179,7 @@ export default function MoviePage() {
         ...releaseDateFilter,
         ...genreFilter,
         ...certificationFilter,
+        ...statusFilter,
         ...languageFilter,
         ...userScoreFilter,
         ...minimumUserVotesFilter,

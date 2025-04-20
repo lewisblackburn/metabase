@@ -28,7 +28,10 @@ import {
     Movies_Insert_Input,
     People_Constraint,
     People_Update_Column,
-    Person_Media_Constraint
+    Person_Media_Constraint,
+    Statuses_Constraint,
+    Statuses_Obj_Rel_Insert_Input,
+    Statuses_Update_Column
 } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
 import { TMDBMovie } from '@/types/tmdb.type';
@@ -207,6 +210,18 @@ export class TMDBMovieImporterService extends TMDBService {
         };
     }
 
+    private buildStatus(movie: TMDBMovie): InputMaybe<Statuses_Obj_Rel_Insert_Input> | undefined {
+        return {
+            data: {
+                name: movie.status
+            },
+            on_conflict: {
+                constraint: Statuses_Constraint.StatusesNameKey,
+                update_columns: [Statuses_Update_Column.Name]
+            }
+        };
+    }
+
     async isExisting(tmdbMovieId: TMDBMovie['id']): Promise<GetMovieByTmdb_IdQuery['movies']> {
         const { data, error } = await nhost.graphql.request<GetMovieByTmdb_IdQuery, GetMovieByTmdb_IdQueryVariables>(
             GetMovieByTmdb_IdDocument,
@@ -248,7 +263,7 @@ export class TMDBMovieImporterService extends TMDBService {
             runtime: movie.runtime,
             budget: movie.budget,
             revenue: movie.revenue,
-            status: movie.status,
+            status: this.buildStatus(movie),
             release_date: new Date(movie.release_date),
             language: movie.original_language,
             tmdb_id: movie.id.toString(),
