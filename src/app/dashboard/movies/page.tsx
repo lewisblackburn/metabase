@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useMemo } from 'react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -12,6 +14,9 @@ import MoviesSkeleton from '@/features/movies/components/movies-skeleton';
 import { useIncrementMovieViews } from '@/features/movies/hooks/useIncrementMovieViews';
 import { useMovieFilters } from '@/features/movies/hooks/useMovieFilters';
 import { GetMoviesQuery, useInfiniteGetMoviesQuery } from '@/generated/graphql';
+import { Button } from '@/registry/new-york-v4/ui/button';
+
+import { useInView } from 'react-intersection-observer';
 
 function MovieCard({ movie }: { movie: GetMoviesQuery['movies'][number] }) {
     const router = useRouter();
@@ -35,25 +40,40 @@ function MovieCard({ movie }: { movie: GetMoviesQuery['movies'][number] }) {
 export default function MoviePage() {
     const { where, order_by } = useMovieFilters();
 
-    const { data, isLoading } = useInfiniteGetMoviesQuery(
-        {
+    const vars = useMemo(
+        () => ({
             where,
             order_by,
             limit: MAX_LIMIT
-        },
-        {
-            initialPageParam: { offset: 0 },
-            // NOTE: If the last page has fewer movies than the limit, there are no more pages
-            getNextPageParam: (lastPage, pages) =>
-                lastPage.movies.length === MAX_LIMIT ? { offset: pages.length * MAX_LIMIT } : undefined,
-            gcTime: 0,
-            staleTime: 0
-        }
+        }),
+        [where, order_by]
     );
-    //   const loadMoreRef = useIntersectionObserver(
-    //     () => hasNextPage && fetchNextPage(),
-    //     { rootMargin: '200px' }
-    //   );
+
+    const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteGetMoviesQuery(vars, {
+        initialPageParam: { offset: 0 },
+        getPreviousPageParam: (_firstPage, pages) => {
+            const prevPage = pages.length - 1;
+            const hasPrevious = prevPage > 0;
+            return hasPrevious ? { offset: prevPage * MAX_LIMIT } : undefined;
+        },
+        getNextPageParam: (lastPage, pages) => {
+            const nextPage = pages.length * MAX_LIMIT;
+            const hasMore = lastPage.movies.length === MAX_LIMIT;
+            return hasMore ? { offset: nextPage } : undefined;
+        },
+        gcTime: 0,
+        staleTime: 0
+    });
+
+    const { ref: loadMoreRef, inView } = useInView({ threshold: 0.5 });
+
+    const handleLoadMore = () => {
+        if (hasNextPage) fetchNextPage();
+    };
+
+    useEffect(() => {
+        if (inView) handleLoadMore();
+    }, [inView]);
 
     if (isLoading)
         return (
@@ -70,7 +90,15 @@ export default function MoviePage() {
                         page.movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
                     )}
                 </Grid>
-                {/* <div ref={loadMoreRef} /> */}
+                {/* NOTE: load more films when in view */}
+                <Button
+                    ref={loadMoreRef}
+                    onClick={handleLoadMore}
+                    className='mt-5 w-full'
+                    size='lg'
+                    disabled={!hasNextPage || isFetchingNextPage}>
+                    {isFetchingNextPage ? 'Loading...' : 'Load More'}
+                </Button>
             </Container>
         </MoviesSidebar>
     );

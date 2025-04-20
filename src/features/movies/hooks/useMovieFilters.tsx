@@ -36,10 +36,15 @@ export function useMovieFilters(): {
         keywords
     } = useSelector((s: RootState) => s.moviesFilter);
 
-    const order_by = useMemo(() => {
-        const field = orderByFieldMap[orderBy.orderBy] ?? orderByFieldMap.popularity;
+    const order_by = useMemo<NonNullable<GetMoviesQueryVariables['order_by']>>(() => {
+        const field = orderByFieldMap[orderBy.orderBy] ?? 'view_count';
         const dir = orderEnumMap[orderBy.order] ?? Order_By.Desc;
-        return { [field]: dir };
+
+        return [
+            { [field]: dir },
+            // NOTE: This is a tie-breaker to ensure consistent ordering
+            { id: Order_By.Asc }
+        ];
     }, [orderBy]);
 
     const where = useMemo<GetMoviesQueryVariables['where']>(() => {
