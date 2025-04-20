@@ -24157,6 +24157,13 @@ export type GetMoviesQueryVariables = Exact<{
 
 export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, poster: string }> };
 
+export type IncrementMovieViewsMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type IncrementMovieViewsMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any, view_count?: number | null } | null };
+
 export type InsertMovieFavouriteMutationVariables = Exact<{
   object: Movie_Favourites_Insert_Input;
   on_conflict?: InputMaybe<Movie_Favourites_On_Conflict>;
@@ -24713,6 +24720,28 @@ export const useInfiniteGetMoviesQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const IncrementMovieViewsDocument = `
+    mutation IncrementMovieViews($id: uuid!) {
+  update_movies_by_pk(pk_columns: {id: $id}, _inc: {view_count: 1}) {
+    id
+    view_count
+  }
+}
+    `;
+
+export const useIncrementMovieViewsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<IncrementMovieViewsMutation, TError, IncrementMovieViewsMutationVariables, TContext>) => {
+    
+    return useMutation<IncrementMovieViewsMutation, TError, IncrementMovieViewsMutationVariables, TContext>(
+      {
+    mutationKey: ['IncrementMovieViews'],
+    mutationFn: (variables?: IncrementMovieViewsMutationVariables) => fetcher<IncrementMovieViewsMutation, IncrementMovieViewsMutationVariables>(IncrementMovieViewsDocument, variables)(),
+    ...options
+  }
     )};
 
 export const InsertMovieFavouriteDocument = `

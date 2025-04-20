@@ -24,7 +24,8 @@ export default function MoviePageContent() {
         src: cast_member.person.headshot ?? '',
         alt: cast_member.character ?? '',
         title: cast_member.person.name ?? '',
-        description: cast_member.character ?? ''
+        description: cast_member.character ?? '',
+        href: `/dashboard/${OBJECT_TYPE.PERSON.path}/${cast_member.person.id}`
     }));
 
     const mostPopularReview = MOVIE_DATA.reviews[0];

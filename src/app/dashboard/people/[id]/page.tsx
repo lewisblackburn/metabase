@@ -68,7 +68,7 @@ export default function PersonPage() {
                         {PERSON_DATA.gender && <CustomBadge icon={VenusAndMars}>{PERSON_DATA.gender}</CustomBadge>}
                         {PERSON_DATA.deathdate && <CustomBadge icon={Skull}>{PERSON_DATA.deathdate}</CustomBadge>}
                         <div>
-                            <ProgressItem label='Content Score' score={PERSON_DATA.contentScore} variant='labelled' />
+                            <ProgressItem label='Content Score' score={PERSON_DATA.contentScore} />
                         </div>
                     </div>
                 </div>

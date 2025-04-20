@@ -5,7 +5,7 @@ import { MoviesFilter } from '../schemas/movies-filter.schema';
 const initialState: MoviesFilter = {
     orderBy: {
         orderBy: 'popularity',
-        order: 'asc'
+        order: 'desc'
     },
     search: '',
     showMe: 'everything',

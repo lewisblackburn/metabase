@@ -9,7 +9,6 @@ import NotFound from '@/components/shared/default-not-found';
 import InformationItem from '@/components/shared/information-item';
 import { InnerSidebarTrigger } from '@/components/shared/inner-sidebar-trigger';
 import Poster from '@/components/shared/poster';
-import ProgressItem from '@/components/shared/progress-item';
 import { Container } from '@/components/ui/container';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
@@ -27,7 +26,7 @@ import isLastIndex from '@/utils/is-last-index';
 
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { Calendar, CreditCard, Info, Languages, Play, Star, Tags, Timer, TrendingUp, User } from 'lucide-react';
+import { Calendar, CreditCard, Eye, Info, Languages, Play, Star, Tags, Timer, TrendingUp, User } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
 dayjs.extend(advancedFormat);
@@ -121,6 +120,12 @@ function MovieLayoutContent({
             icon: Tags,
             badges: movie.movie_keywords.map((keyword) => keyword.keyword.keyword),
             label: 'Keywords'
+        },
+        {
+            id: 'views',
+            icon: Eye,
+            badges: movie.view_count?.toString(),
+            label: 'Views'
         }
     ];
 
