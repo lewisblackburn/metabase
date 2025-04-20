@@ -31,11 +31,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
-type MoviesSidebarProps = {
-    children: React.ReactNode;
-};
-
-export default function MoviesSidebar({ children }: MoviesSidebarProps) {
+export default function MoviesSidebar() {
     const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
     const dispatch = useDispatch();
     const form = useForm<MoviesFilter>({
@@ -118,9 +114,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
     }
 
     return (
-        <SidebarProvider
-            style={{ '--sidebar-width': '350px' } as React.CSSProperties}
-            className='relative z-0 !h-[calc(100vh-4rem)] !min-h-0 overflow-hidden'>
+        <SidebarProvider style={{ '--sidebar-width': '350px' } as React.CSSProperties} className='relative z-0'>
             <Sidebar className='absolute'>
                 <SidebarContent className='py-5'>
                     <Form {...form}>
@@ -386,7 +380,7 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                     </div>
                                 </SidebarAccordionItem>
                             </Accordion>
-                            <div className='mb-15 flex w-full flex-col gap-5 px-5'>
+                            <div className='flex w-full flex-col gap-5 px-5'>
                                 <Button className='w-full' size='lg' type='submit'>
                                     Search
                                 </Button>
@@ -398,12 +392,6 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                     </Form>
                 </SidebarContent>
             </Sidebar>
-            <main className='h-[calc(100vh-4rem)] w-full overflow-auto'>
-                <div className='mx-auto max-w-full border-b px-5 py-5 sm:px-10'>
-                    <FilterSidebarTrigger className='justify-end' />
-                </div>
-                {children}
-            </main>
         </SidebarProvider>
     );
 }

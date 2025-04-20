@@ -193,7 +193,10 @@ function MovieLayoutContent({
                 </SidebarContent>
             </Sidebar>
             <main className='h-[calc(100vh-4rem)] w-full overflow-auto'>
-                <InnerSidebarTrigger onClick={() => setOpen(!open)} className='absolute m-2 cursor-pointer bg-white' />
+                <InnerSidebarTrigger
+                    onClick={() => setOpen(!open)}
+                    className='absolute z-50 m-2 cursor-pointer bg-white'
+                />
                 <Image
                     src={movie.backdrop}
                     alt={movie.title}
