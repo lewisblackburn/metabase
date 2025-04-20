@@ -13,9 +13,8 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import FilterSidebarTrigger from '@/components/shared/filter-sidebar-trigger';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
-import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { useGetGenresQuery } from '@/generated/graphql';
+import { useGetCertificationsQuery, useGetGenresQuery } from '@/generated/graphql';
 import { useGetAvailabilitiesQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -71,6 +70,21 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
         },
         {
             queryKey: ['availabilities']
+        }
+    );
+
+    const { data: certifications } = useGetCertificationsQuery(
+        {
+            where: {
+                certification_types: {
+                    type: {
+                        _eq: 'movie'
+                    }
+                }
+            }
+        },
+        {
+            queryKey: ['certifications']
         }
     );
 
@@ -242,7 +256,14 @@ export default function MoviesSidebar({ children }: MoviesSidebarProps) {
                                                     <FormItem>
                                                         <BaseFormLayout label='Certifications'>
                                                             <CheckboxGroupField
-                                                                options={MOVIE_CERTIFICATION_OPTIONS}
+                                                                options={
+                                                                    certifications?.certifications.map(
+                                                                        (certification) => ({
+                                                                            value: certification.id.toString(),
+                                                                            label: certification.name
+                                                                        })
+                                                                    ) ?? []
+                                                                }
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>

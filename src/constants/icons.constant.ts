@@ -1,5 +1,4 @@
 import {
-    ArrowDown,
     Bell,
     CircleHelp,
     Clapperboard,
@@ -7,6 +6,7 @@ import {
     CreditCard,
     Download,
     FileText,
+    Globe,
     HardDrive,
     Hash,
     Image,
@@ -43,7 +43,8 @@ export const ICONS = {
     Tags,
     Hash,
     Clapperboard,
-    Download
+    Download,
+    Globe
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconType = keyof typeof ICONS;

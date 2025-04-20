@@ -32,6 +32,12 @@ export interface TMDBMovie {
     credits: Credits;
     videos: Videos;
     images: Images;
+    release_dates: {
+        results: {
+            iso_3166_1: string;
+            release_dates: ReleaseDate[];
+        }[];
+    };
 }
 
 export interface Genre {
@@ -168,4 +174,17 @@ export interface TMDBPerson {
     place_of_birth: string;
     popularity: number;
     profile_path: string;
+}
+
+export const TMDB_SEARCH_RESULT_TYPES = ['movie', 'tv', 'person'] as const;
+
+export type TMDBSearchResultType = (typeof TMDB_SEARCH_RESULT_TYPES)[number];
+
+export interface ReleaseDate {
+    certification: string;
+    descriptors: any[];
+    iso_639_1: string;
+    note: string;
+    release_date: string;
+    type: number;
 }

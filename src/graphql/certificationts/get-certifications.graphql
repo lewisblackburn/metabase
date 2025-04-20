@@ -1,0 +1,6 @@
+query GetCertifications($where: certifications_bool_exp) {
+    certifications(where: $where) {
+        id
+        name
+    }
+}

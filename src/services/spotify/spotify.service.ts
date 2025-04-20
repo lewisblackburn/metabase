@@ -1,4 +1,4 @@
-import { SingleArtistResponse, SingleTrackResponse } from '@/types/spotify.type';
+import { SingleArtistResponse, SingleTrackResponse, SpotifySearchResultType } from '@/types/spotify.type';
 
 export class SpotifyService {
     private readonly SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token';
@@ -80,7 +80,7 @@ export class SpotifyService {
         return this.fetcher<SingleTrackResponse>(url);
     }
 
-    public async search<T>(query: string, pageIndex: number, type: 'track' | 'artist' | 'album') {
+    public async search<T>(query: string, pageIndex: number, type: SpotifySearchResultType): Promise<T> {
         const url = this.SPOTIFY_SEARCH_URL(query, pageIndex, type);
         const response = await this.fetcher<T>(url);
 

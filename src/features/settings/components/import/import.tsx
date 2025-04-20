@@ -7,8 +7,8 @@ export default function Import() {
     return (
         <Tabs defaultValue='tmdb' className='w-full'>
             <TabsList>
-                <TabsTrigger value='tmdb'>The Movie Database</TabsTrigger>
-                <TabsTrigger value='spotify'>Spotify</TabsTrigger>
+                <TabsTrigger value='tmdb'>The Movie Database (Movie)</TabsTrigger>
+                <TabsTrigger value='spotify'>Spotify (Song)</TabsTrigger>
             </TabsList>
             <TabsContent value='tmdb'>
                 <TMDBMovieImportTable />

@@ -1,4 +1,3 @@
-import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 import { MOVIE_STATUS_OPTIONS } from '@/constants/status.constant';
 
 import { z } from 'zod';
@@ -20,21 +19,7 @@ export const movieDetailsSchema = z.object({
             .nullable()
             .optional()
     ),
-    ageCertification: z.preprocess(
-        (val) => (val === '' ? undefined : val),
-        z
-            .enum(MOVIE_CERTIFICATION_OPTIONS.map((option: { value: string }) => option.value) as [string, ...string[]])
-            .nullable()
-            .optional()
-    ),
-    alternativeTitles: z
-        .array(
-            z.object({
-                value: z.string(),
-                label: z.string()
-            })
-        )
-        .optional(),
+    certification: z.string().uuid().optional(),
     imdbId: z.string().optional(),
     tmdbId: z.string().optional(),
     homepage: z.string().url().optional().or(z.literal(''))

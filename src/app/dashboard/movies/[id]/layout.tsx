@@ -95,7 +95,7 @@ function MovieLayoutContent({
         {
             id: 'age-certification',
             icon: User,
-            badges: movie.age_certification,
+            badges: movie.certification?.name ?? 'Unknown',
             label: 'Age Certification'
         },
         {

@@ -17,6 +17,20 @@ const initialState: MovieEditState = {
             iconColor: 'text-blue-500'
         },
         {
+            id: 'alternative_titles',
+            name: 'Alternative Titles',
+            icon: 'Languages',
+            description: 'Edit the alternative titles of the movie',
+            iconColor: 'text-blue-500'
+        },
+        {
+            id: 'availabilities',
+            name: 'Availabilities',
+            icon: 'Globe',
+            description: 'Edit the availability of the movie in different regions',
+            iconColor: 'text-blue-500'
+        },
+        {
             id: 'cast',
             name: 'Cast',
             icon: 'Users',

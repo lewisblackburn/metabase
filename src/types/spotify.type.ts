@@ -1,6 +1,6 @@
 export interface SingleTrackResponse {
     album: Album;
-    artists: Artist[];
+    artists: SpotifyArtist[];
     available_markets: string[];
     disc_number: number;
     duration_ms: number;
@@ -35,7 +35,7 @@ export interface Album {
     restrictions: Restrictions;
     type: string;
     uri: string;
-    artists: Artist[];
+    artists: SpotifyArtist[];
 }
 
 export interface ExternalUrls {
@@ -52,7 +52,7 @@ export interface Restrictions {
     reason: string;
 }
 
-export interface Artist {
+export interface SpotifyArtist {
     external_urls: ExternalUrls;
     href: string;
     id: string;
@@ -69,7 +69,7 @@ export interface ExternalIds {
 
 export interface SingleArtistResponse {
     external_urls: ExternalUrls;
-    followers: Followers;
+    followers: SpotifyFollowers;
     genres: string[];
     href: string;
     id: string;
@@ -80,16 +80,28 @@ export interface SingleArtistResponse {
     uri: string;
 }
 
-export interface Followers {
+export interface SpotifyFollowers {
     href: string;
     total: number;
 }
 
+export const SPOTIFY_SEARCH_RESULT_TYPES = [
+    'album',
+    'artist',
+    'playlist',
+    'track',
+    'show',
+    'episode',
+    'audiobook'
+] as const;
+
+export type SpotifySearchResultType = (typeof SPOTIFY_SEARCH_RESULT_TYPES)[number];
+
 export interface SpotifySearchResponse {
-    tracks: Tracks;
+    tracks: SpotifyTracks;
 }
 
-export interface Tracks {
+export interface SpotifyTracks {
     href: string;
     limit: number;
     next: string;

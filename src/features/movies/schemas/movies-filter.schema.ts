@@ -1,5 +1,3 @@
-import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
-
 import * as z from 'zod';
 
 export const moviesFilterSchema = z.object({
@@ -19,9 +17,7 @@ export const moviesFilterSchema = z.object({
         })
         .optional(),
     genres: z.array(z.string().uuid()).optional(),
-    certifications: z
-        .array(z.enum(MOVIE_CERTIFICATION_OPTIONS.map((option) => option.value) as [string, ...string[]]))
-        .optional(),
+    certifications: z.array(z.string().uuid()).optional(),
     // TODO : This needs to match the language code
     language: z.string().optional(),
     userScore: z.tuple([z.number(), z.number()]).optional(),

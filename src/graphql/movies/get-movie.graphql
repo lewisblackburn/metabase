@@ -3,7 +3,6 @@ query GetMovie($id: uuid!) {
         id
         title
         overview
-        age_certification
         average_rating
         backdrop
         budget
@@ -28,6 +27,16 @@ query GetMovie($id: uuid!) {
         favourited
         watchlisted
         user_rating
+        certification {
+            id
+            name
+        }
+        movie_availabilities {
+            availability {
+                id
+                name
+            }
+        }
         movie_genres {
             genre {
                 name

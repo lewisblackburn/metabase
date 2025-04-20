@@ -710,313 +710,6 @@ export type Album_Media_Updates = {
   where: Album_Media_Bool_Exp;
 };
 
-/** columns and relationships of "album_songs" */
-export type Album_Songs = {
-  __typename?: 'album_songs';
-  /** An object relationship */
-  album: Albums;
-  album_id: Scalars['uuid']['output'];
-  /** An object relationship */
-  song: Songs;
-  song_id: Scalars['uuid']['output'];
-  track_number?: Maybe<Scalars['Int']['output']>;
-};
-
-/** aggregated selection of "album_songs" */
-export type Album_Songs_Aggregate = {
-  __typename?: 'album_songs_aggregate';
-  aggregate?: Maybe<Album_Songs_Aggregate_Fields>;
-  nodes: Array<Album_Songs>;
-};
-
-export type Album_Songs_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Album_Songs_Aggregate_Bool_Exp_Count>;
-};
-
-export type Album_Songs_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Album_Songs_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "album_songs" */
-export type Album_Songs_Aggregate_Fields = {
-  __typename?: 'album_songs_aggregate_fields';
-  avg?: Maybe<Album_Songs_Avg_Fields>;
-  count: Scalars['Int']['output'];
-  max?: Maybe<Album_Songs_Max_Fields>;
-  min?: Maybe<Album_Songs_Min_Fields>;
-  stddev?: Maybe<Album_Songs_Stddev_Fields>;
-  stddev_pop?: Maybe<Album_Songs_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Album_Songs_Stddev_Samp_Fields>;
-  sum?: Maybe<Album_Songs_Sum_Fields>;
-  var_pop?: Maybe<Album_Songs_Var_Pop_Fields>;
-  var_samp?: Maybe<Album_Songs_Var_Samp_Fields>;
-  variance?: Maybe<Album_Songs_Variance_Fields>;
-};
-
-
-/** aggregate fields of "album_songs" */
-export type Album_Songs_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "album_songs" */
-export type Album_Songs_Aggregate_Order_By = {
-  avg?: InputMaybe<Album_Songs_Avg_Order_By>;
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Album_Songs_Max_Order_By>;
-  min?: InputMaybe<Album_Songs_Min_Order_By>;
-  stddev?: InputMaybe<Album_Songs_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<Album_Songs_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Album_Songs_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Album_Songs_Sum_Order_By>;
-  var_pop?: InputMaybe<Album_Songs_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Album_Songs_Var_Samp_Order_By>;
-  variance?: InputMaybe<Album_Songs_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "album_songs" */
-export type Album_Songs_Arr_Rel_Insert_Input = {
-  data: Array<Album_Songs_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Album_Songs_On_Conflict>;
-};
-
-/** aggregate avg on columns */
-export type Album_Songs_Avg_Fields = {
-  __typename?: 'album_songs_avg_fields';
-  track_number?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by avg() on columns of table "album_songs" */
-export type Album_Songs_Avg_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "album_songs". All fields are combined with a logical 'AND'. */
-export type Album_Songs_Bool_Exp = {
-  _and?: InputMaybe<Array<Album_Songs_Bool_Exp>>;
-  _not?: InputMaybe<Album_Songs_Bool_Exp>;
-  _or?: InputMaybe<Array<Album_Songs_Bool_Exp>>;
-  album?: InputMaybe<Albums_Bool_Exp>;
-  album_id?: InputMaybe<Uuid_Comparison_Exp>;
-  song?: InputMaybe<Songs_Bool_Exp>;
-  song_id?: InputMaybe<Uuid_Comparison_Exp>;
-  track_number?: InputMaybe<Int_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "album_songs" */
-export enum Album_Songs_Constraint {
-  /** unique or primary key constraint on columns "album_id", "song_id" */
-  AlbumSongsPkey = 'album_songs_pkey'
-}
-
-/** input type for incrementing numeric columns in table "album_songs" */
-export type Album_Songs_Inc_Input = {
-  track_number?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** input type for inserting data into table "album_songs" */
-export type Album_Songs_Insert_Input = {
-  album?: InputMaybe<Albums_Obj_Rel_Insert_Input>;
-  album_id?: InputMaybe<Scalars['uuid']['input']>;
-  song?: InputMaybe<Songs_Obj_Rel_Insert_Input>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-  track_number?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** aggregate max on columns */
-export type Album_Songs_Max_Fields = {
-  __typename?: 'album_songs_max_fields';
-  album_id?: Maybe<Scalars['uuid']['output']>;
-  song_id?: Maybe<Scalars['uuid']['output']>;
-  track_number?: Maybe<Scalars['Int']['output']>;
-};
-
-/** order by max() on columns of table "album_songs" */
-export type Album_Songs_Max_Order_By = {
-  album_id?: InputMaybe<Order_By>;
-  song_id?: InputMaybe<Order_By>;
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Album_Songs_Min_Fields = {
-  __typename?: 'album_songs_min_fields';
-  album_id?: Maybe<Scalars['uuid']['output']>;
-  song_id?: Maybe<Scalars['uuid']['output']>;
-  track_number?: Maybe<Scalars['Int']['output']>;
-};
-
-/** order by min() on columns of table "album_songs" */
-export type Album_Songs_Min_Order_By = {
-  album_id?: InputMaybe<Order_By>;
-  song_id?: InputMaybe<Order_By>;
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "album_songs" */
-export type Album_Songs_Mutation_Response = {
-  __typename?: 'album_songs_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Album_Songs>;
-};
-
-/** on_conflict condition type for table "album_songs" */
-export type Album_Songs_On_Conflict = {
-  constraint: Album_Songs_Constraint;
-  update_columns?: Array<Album_Songs_Update_Column>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "album_songs". */
-export type Album_Songs_Order_By = {
-  album?: InputMaybe<Albums_Order_By>;
-  album_id?: InputMaybe<Order_By>;
-  song?: InputMaybe<Songs_Order_By>;
-  song_id?: InputMaybe<Order_By>;
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: album_songs */
-export type Album_Songs_Pk_Columns_Input = {
-  album_id: Scalars['uuid']['input'];
-  song_id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "album_songs" */
-export enum Album_Songs_Select_Column {
-  /** column name */
-  AlbumId = 'album_id',
-  /** column name */
-  SongId = 'song_id',
-  /** column name */
-  TrackNumber = 'track_number'
-}
-
-/** input type for updating data in table "album_songs" */
-export type Album_Songs_Set_Input = {
-  album_id?: InputMaybe<Scalars['uuid']['input']>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-  track_number?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Album_Songs_Stddev_Fields = {
-  __typename?: 'album_songs_stddev_fields';
-  track_number?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev() on columns of table "album_songs" */
-export type Album_Songs_Stddev_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Album_Songs_Stddev_Pop_Fields = {
-  __typename?: 'album_songs_stddev_pop_fields';
-  track_number?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_pop() on columns of table "album_songs" */
-export type Album_Songs_Stddev_Pop_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Album_Songs_Stddev_Samp_Fields = {
-  __typename?: 'album_songs_stddev_samp_fields';
-  track_number?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_samp() on columns of table "album_songs" */
-export type Album_Songs_Stddev_Samp_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** Streaming cursor of the table "album_songs" */
-export type Album_Songs_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Album_Songs_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Album_Songs_Stream_Cursor_Value_Input = {
-  album_id?: InputMaybe<Scalars['uuid']['input']>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-  track_number?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Album_Songs_Sum_Fields = {
-  __typename?: 'album_songs_sum_fields';
-  track_number?: Maybe<Scalars['Int']['output']>;
-};
-
-/** order by sum() on columns of table "album_songs" */
-export type Album_Songs_Sum_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** update columns of table "album_songs" */
-export enum Album_Songs_Update_Column {
-  /** column name */
-  AlbumId = 'album_id',
-  /** column name */
-  SongId = 'song_id',
-  /** column name */
-  TrackNumber = 'track_number'
-}
-
-export type Album_Songs_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Album_Songs_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Album_Songs_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Album_Songs_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Album_Songs_Var_Pop_Fields = {
-  __typename?: 'album_songs_var_pop_fields';
-  track_number?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_pop() on columns of table "album_songs" */
-export type Album_Songs_Var_Pop_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** aggregate var_samp on columns */
-export type Album_Songs_Var_Samp_Fields = {
-  __typename?: 'album_songs_var_samp_fields';
-  track_number?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_samp() on columns of table "album_songs" */
-export type Album_Songs_Var_Samp_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
-/** aggregate variance on columns */
-export type Album_Songs_Variance_Fields = {
-  __typename?: 'album_songs_variance_fields';
-  track_number?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by variance() on columns of table "album_songs" */
-export type Album_Songs_Variance_Order_By = {
-  track_number?: InputMaybe<Order_By>;
-};
-
 /** columns and relationships of "albums" */
 export type Albums = {
   __typename?: 'albums';
@@ -1028,10 +721,6 @@ export type Albums = {
   album_media: Array<Album_Media>;
   /** An aggregate relationship */
   album_media_aggregate: Album_Media_Aggregate;
-  /** An array relationship */
-  album_songs: Array<Album_Songs>;
-  /** An aggregate relationship */
-  album_songs_aggregate: Album_Songs_Aggregate;
   artwork: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
   name: Scalars['String']['output'];
@@ -1087,26 +776,6 @@ export type AlbumsAlbum_Media_AggregateArgs = {
 
 
 /** columns and relationships of "albums" */
-export type AlbumsAlbum_SongsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-
-/** columns and relationships of "albums" */
-export type AlbumsAlbum_Songs_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-
-/** columns and relationships of "albums" */
 export type AlbumsSongsArgs = {
   distinct_on?: InputMaybe<Array<Songs_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1156,8 +825,6 @@ export type Albums_Bool_Exp = {
   album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Bool_Exp>;
   album_media?: InputMaybe<Album_Media_Bool_Exp>;
   album_media_aggregate?: InputMaybe<Album_Media_Aggregate_Bool_Exp>;
-  album_songs?: InputMaybe<Album_Songs_Bool_Exp>;
-  album_songs_aggregate?: InputMaybe<Album_Songs_Aggregate_Bool_Exp>;
   artwork?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
@@ -1181,7 +848,6 @@ export enum Albums_Constraint {
 export type Albums_Insert_Input = {
   album_artists?: InputMaybe<Album_Artists_Arr_Rel_Insert_Input>;
   album_media?: InputMaybe<Album_Media_Arr_Rel_Insert_Input>;
-  album_songs?: InputMaybe<Album_Songs_Arr_Rel_Insert_Input>;
   artwork?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1243,7 +909,6 @@ export type Albums_On_Conflict = {
 export type Albums_Order_By = {
   album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Order_By>;
   album_media_aggregate?: InputMaybe<Album_Media_Aggregate_Order_By>;
-  album_songs_aggregate?: InputMaybe<Album_Songs_Aggregate_Order_By>;
   artwork?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
@@ -4107,6 +3772,395 @@ export type Bytea_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['bytea']['input']>;
   _neq?: InputMaybe<Scalars['bytea']['input']>;
   _nin?: InputMaybe<Array<Scalars['bytea']['input']>>;
+};
+
+/** columns and relationships of "certification_types" */
+export type Certification_Types = {
+  __typename?: 'certification_types';
+  /** An object relationship */
+  certification: Certifications;
+  certification_id: Scalars['uuid']['output'];
+  id: Scalars['uuid']['output'];
+  type: Scalars['String']['output'];
+};
+
+/** aggregated selection of "certification_types" */
+export type Certification_Types_Aggregate = {
+  __typename?: 'certification_types_aggregate';
+  aggregate?: Maybe<Certification_Types_Aggregate_Fields>;
+  nodes: Array<Certification_Types>;
+};
+
+export type Certification_Types_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Certification_Types_Aggregate_Bool_Exp_Count>;
+};
+
+export type Certification_Types_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Certification_Types_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "certification_types" */
+export type Certification_Types_Aggregate_Fields = {
+  __typename?: 'certification_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Certification_Types_Max_Fields>;
+  min?: Maybe<Certification_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "certification_types" */
+export type Certification_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "certification_types" */
+export type Certification_Types_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Certification_Types_Max_Order_By>;
+  min?: InputMaybe<Certification_Types_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "certification_types" */
+export type Certification_Types_Arr_Rel_Insert_Input = {
+  data: Array<Certification_Types_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Certification_Types_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "certification_types". All fields are combined with a logical 'AND'. */
+export type Certification_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Certification_Types_Bool_Exp>>;
+  _not?: InputMaybe<Certification_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Certification_Types_Bool_Exp>>;
+  certification?: InputMaybe<Certifications_Bool_Exp>;
+  certification_id?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "certification_types" */
+export enum Certification_Types_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  CertificationTypesPkey = 'certification_types_pkey'
+}
+
+/** input type for inserting data into table "certification_types" */
+export type Certification_Types_Insert_Input = {
+  certification?: InputMaybe<Certifications_Obj_Rel_Insert_Input>;
+  certification_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Certification_Types_Max_Fields = {
+  __typename?: 'certification_types_max_fields';
+  certification_id?: Maybe<Scalars['uuid']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "certification_types" */
+export type Certification_Types_Max_Order_By = {
+  certification_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Certification_Types_Min_Fields = {
+  __typename?: 'certification_types_min_fields';
+  certification_id?: Maybe<Scalars['uuid']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "certification_types" */
+export type Certification_Types_Min_Order_By = {
+  certification_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "certification_types" */
+export type Certification_Types_Mutation_Response = {
+  __typename?: 'certification_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Certification_Types>;
+};
+
+/** on_conflict condition type for table "certification_types" */
+export type Certification_Types_On_Conflict = {
+  constraint: Certification_Types_Constraint;
+  update_columns?: Array<Certification_Types_Update_Column>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "certification_types". */
+export type Certification_Types_Order_By = {
+  certification?: InputMaybe<Certifications_Order_By>;
+  certification_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: certification_types */
+export type Certification_Types_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "certification_types" */
+export enum Certification_Types_Select_Column {
+  /** column name */
+  CertificationId = 'certification_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "certification_types" */
+export type Certification_Types_Set_Input = {
+  certification_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "certification_types" */
+export type Certification_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Certification_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Certification_Types_Stream_Cursor_Value_Input = {
+  certification_id?: InputMaybe<Scalars['uuid']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "certification_types" */
+export enum Certification_Types_Update_Column {
+  /** column name */
+  CertificationId = 'certification_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Type = 'type'
+}
+
+export type Certification_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Certification_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Certification_Types_Bool_Exp;
+};
+
+/** columns and relationships of "certifications" */
+export type Certifications = {
+  __typename?: 'certifications';
+  /** An array relationship */
+  certification_types: Array<Certification_Types>;
+  /** An aggregate relationship */
+  certification_types_aggregate: Certification_Types_Aggregate;
+  id: Scalars['uuid']['output'];
+  /** An array relationship */
+  movies: Array<Movies>;
+  /** An aggregate relationship */
+  movies_aggregate: Movies_Aggregate;
+  name: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "certifications" */
+export type CertificationsCertification_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+
+/** columns and relationships of "certifications" */
+export type CertificationsCertification_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+
+/** columns and relationships of "certifications" */
+export type CertificationsMoviesArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "certifications" */
+export type CertificationsMovies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+/** aggregated selection of "certifications" */
+export type Certifications_Aggregate = {
+  __typename?: 'certifications_aggregate';
+  aggregate?: Maybe<Certifications_Aggregate_Fields>;
+  nodes: Array<Certifications>;
+};
+
+/** aggregate fields of "certifications" */
+export type Certifications_Aggregate_Fields = {
+  __typename?: 'certifications_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Certifications_Max_Fields>;
+  min?: Maybe<Certifications_Min_Fields>;
+};
+
+
+/** aggregate fields of "certifications" */
+export type Certifications_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Certifications_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "certifications". All fields are combined with a logical 'AND'. */
+export type Certifications_Bool_Exp = {
+  _and?: InputMaybe<Array<Certifications_Bool_Exp>>;
+  _not?: InputMaybe<Certifications_Bool_Exp>;
+  _or?: InputMaybe<Array<Certifications_Bool_Exp>>;
+  certification_types?: InputMaybe<Certification_Types_Bool_Exp>;
+  certification_types_aggregate?: InputMaybe<Certification_Types_Aggregate_Bool_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  movies?: InputMaybe<Movies_Bool_Exp>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Bool_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "certifications" */
+export enum Certifications_Constraint {
+  /** unique or primary key constraint on columns "name" */
+  CertificationsNameKey = 'certifications_name_key',
+  /** unique or primary key constraint on columns "id" */
+  CertificationsPkey = 'certifications_pkey'
+}
+
+/** input type for inserting data into table "certifications" */
+export type Certifications_Insert_Input = {
+  certification_types?: InputMaybe<Certification_Types_Arr_Rel_Insert_Input>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  movies?: InputMaybe<Movies_Arr_Rel_Insert_Input>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Certifications_Max_Fields = {
+  __typename?: 'certifications_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Certifications_Min_Fields = {
+  __typename?: 'certifications_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "certifications" */
+export type Certifications_Mutation_Response = {
+  __typename?: 'certifications_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Certifications>;
+};
+
+/** input type for inserting object relation for remote table "certifications" */
+export type Certifications_Obj_Rel_Insert_Input = {
+  data: Certifications_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Certifications_On_Conflict>;
+};
+
+/** on_conflict condition type for table "certifications" */
+export type Certifications_On_Conflict = {
+  constraint: Certifications_Constraint;
+  update_columns?: Array<Certifications_Update_Column>;
+  where?: InputMaybe<Certifications_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "certifications". */
+export type Certifications_Order_By = {
+  certification_types_aggregate?: InputMaybe<Certification_Types_Aggregate_Order_By>;
+  id?: InputMaybe<Order_By>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: certifications */
+export type Certifications_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "certifications" */
+export enum Certifications_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "certifications" */
+export type Certifications_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "certifications" */
+export type Certifications_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Certifications_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Certifications_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "certifications" */
+export enum Certifications_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+export type Certifications_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Certifications_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Certifications_Bool_Exp;
 };
 
 /** Boolean expression to compare columns of type "citext". All fields are combined with logical 'AND'. */
@@ -9072,10 +9126,12 @@ export type Movie_Watchlist_Updates = {
 /** columns and relationships of "movies" */
 export type Movies = {
   __typename?: 'movies';
-  age_certification?: Maybe<Scalars['String']['output']>;
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop: Scalars['String']['output'];
   budget?: Maybe<Scalars['money']['output']>;
+  /** An object relationship */
+  certification?: Maybe<Certifications>;
+  certification_id?: Maybe<Scalars['uuid']['output']>;
   content_score: Scalars['Float']['output'];
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   /** A computed field, executes function "has_favourited_movie" */
@@ -9473,6 +9529,17 @@ export type Movies_Aggregate = {
   nodes: Array<Movies>;
 };
 
+export type Movies_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movies_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movies_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movies_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Movies_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "movies" */
 export type Movies_Aggregate_Fields = {
   __typename?: 'movies_aggregate_fields';
@@ -9496,6 +9563,28 @@ export type Movies_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "movies" */
+export type Movies_Aggregate_Order_By = {
+  avg?: InputMaybe<Movies_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movies_Max_Order_By>;
+  min?: InputMaybe<Movies_Min_Order_By>;
+  stddev?: InputMaybe<Movies_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Movies_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Movies_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Movies_Sum_Order_By>;
+  var_pop?: InputMaybe<Movies_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Movies_Var_Samp_Order_By>;
+  variance?: InputMaybe<Movies_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movies" */
+export type Movies_Arr_Rel_Insert_Input = {
+  data: Array<Movies_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movies_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Movies_Avg_Fields = {
   __typename?: 'movies_avg_fields';
@@ -9511,15 +9600,28 @@ export type Movies_Avg_Fields = {
   vote_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by avg() on columns of table "movies" */
+export type Movies_Avg_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "movies". All fields are combined with a logical 'AND'. */
 export type Movies_Bool_Exp = {
   _and?: InputMaybe<Array<Movies_Bool_Exp>>;
   _not?: InputMaybe<Movies_Bool_Exp>;
   _or?: InputMaybe<Array<Movies_Bool_Exp>>;
-  age_certification?: InputMaybe<String_Comparison_Exp>;
   average_rating?: InputMaybe<Float_Comparison_Exp>;
   backdrop?: InputMaybe<String_Comparison_Exp>;
   budget?: InputMaybe<Money_Comparison_Exp>;
+  certification?: InputMaybe<Certifications_Bool_Exp>;
+  certification_id?: InputMaybe<Uuid_Comparison_Exp>;
   content_score?: InputMaybe<Float_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   favourited?: InputMaybe<Boolean_Comparison_Exp>;
@@ -9600,10 +9702,11 @@ export type Movies_Inc_Input = {
 
 /** input type for inserting data into table "movies" */
 export type Movies_Insert_Input = {
-  age_certification?: InputMaybe<Scalars['String']['input']>;
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
+  certification?: InputMaybe<Certifications_Obj_Rel_Insert_Input>;
+  certification_id?: InputMaybe<Scalars['uuid']['input']>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   homepage?: InputMaybe<Scalars['String']['input']>;
@@ -9644,10 +9747,10 @@ export type Movies_Insert_Input = {
 /** aggregate max on columns */
 export type Movies_Max_Fields = {
   __typename?: 'movies_max_fields';
-  age_certification?: Maybe<Scalars['String']['output']>;
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
+  certification_id?: Maybe<Scalars['uuid']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   /** A computed field, executes function "movie_format_runtime" */
@@ -9674,13 +9777,41 @@ export type Movies_Max_Fields = {
   vote_count?: Maybe<Scalars['Int']['output']>;
 };
 
+/** order by max() on columns of table "movies" */
+export type Movies_Max_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  backdrop?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  certification_id?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  homepage?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  imdb_id?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
+  overview?: InputMaybe<Order_By>;
+  poster?: InputMaybe<Order_By>;
+  release_date?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  tagline?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+  trailer?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Movies_Min_Fields = {
   __typename?: 'movies_min_fields';
-  age_certification?: Maybe<Scalars['String']['output']>;
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
+  certification_id?: Maybe<Scalars['uuid']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   /** A computed field, executes function "movie_format_runtime" */
@@ -9705,6 +9836,34 @@ export type Movies_Min_Fields = {
   view_count?: Maybe<Scalars['Int']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by min() on columns of table "movies" */
+export type Movies_Min_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  backdrop?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  certification_id?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  homepage?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  imdb_id?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
+  overview?: InputMaybe<Order_By>;
+  poster?: InputMaybe<Order_By>;
+  release_date?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  tagline?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+  trailer?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "movies" */
@@ -9732,10 +9891,11 @@ export type Movies_On_Conflict = {
 
 /** Ordering options when selecting data from "movies". */
 export type Movies_Order_By = {
-  age_certification?: InputMaybe<Order_By>;
   average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
+  certification?: InputMaybe<Certifications_Order_By>;
+  certification_id?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   favourited?: InputMaybe<Order_By>;
@@ -9785,13 +9945,13 @@ export type Movies_Pk_Columns_Input = {
 /** select columns of table "movies" */
 export enum Movies_Select_Column {
   /** column name */
-  AgeCertification = 'age_certification',
-  /** column name */
   AverageRating = 'average_rating',
   /** column name */
   Backdrop = 'backdrop',
   /** column name */
   Budget = 'budget',
+  /** column name */
+  CertificationId = 'certification_id',
   /** column name */
   ContentScore = 'content_score',
   /** column name */
@@ -9836,10 +9996,10 @@ export enum Movies_Select_Column {
 
 /** input type for updating data in table "movies" */
 export type Movies_Set_Input = {
-  age_certification?: InputMaybe<Scalars['String']['input']>;
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
+  certification_id?: InputMaybe<Scalars['uuid']['input']>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   homepage?: InputMaybe<Scalars['String']['input']>;
@@ -9877,6 +10037,18 @@ export type Movies_Stddev_Fields = {
   vote_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "movies" */
+export type Movies_Stddev_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Movies_Stddev_Pop_Fields = {
   __typename?: 'movies_stddev_pop_fields';
@@ -9890,6 +10062,18 @@ export type Movies_Stddev_Pop_Fields = {
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "movies" */
+export type Movies_Stddev_Pop_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -9907,6 +10091,18 @@ export type Movies_Stddev_Samp_Fields = {
   vote_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_samp() on columns of table "movies" */
+export type Movies_Stddev_Samp_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** Streaming cursor of the table "movies" */
 export type Movies_Stream_Cursor_Input = {
   /** Stream column input with initial value */
@@ -9917,10 +10113,10 @@ export type Movies_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movies_Stream_Cursor_Value_Input = {
-  age_certification?: InputMaybe<Scalars['String']['input']>;
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
+  certification_id?: InputMaybe<Scalars['uuid']['input']>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   homepage?: InputMaybe<Scalars['String']['input']>;
@@ -9958,16 +10154,28 @@ export type Movies_Sum_Fields = {
   vote_count?: Maybe<Scalars['Int']['output']>;
 };
 
+/** order by sum() on columns of table "movies" */
+export type Movies_Sum_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** update columns of table "movies" */
 export enum Movies_Update_Column {
-  /** column name */
-  AgeCertification = 'age_certification',
   /** column name */
   AverageRating = 'average_rating',
   /** column name */
   Backdrop = 'backdrop',
   /** column name */
   Budget = 'budget',
+  /** column name */
+  CertificationId = 'certification_id',
   /** column name */
   ContentScore = 'content_score',
   /** column name */
@@ -10034,6 +10242,18 @@ export type Movies_Var_Pop_Fields = {
   vote_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "movies" */
+export type Movies_Var_Pop_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Movies_Var_Samp_Fields = {
   __typename?: 'movies_var_samp_fields';
@@ -10049,6 +10269,18 @@ export type Movies_Var_Samp_Fields = {
   vote_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "movies" */
+export type Movies_Var_Samp_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type Movies_Variance_Fields = {
   __typename?: 'movies_variance_fields';
@@ -10062,6 +10294,18 @@ export type Movies_Variance_Fields = {
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "movies" */
+export type Movies_Variance_Order_By = {
+  average_rating?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** mutation root */
@@ -10123,10 +10367,6 @@ export type Mutation_Root = {
   delete_album_media?: Maybe<Album_Media_Mutation_Response>;
   /** delete single row from the table: "album_media" */
   delete_album_media_by_pk?: Maybe<Album_Media>;
-  /** delete data from the table: "album_songs" */
-  delete_album_songs?: Maybe<Album_Songs_Mutation_Response>;
-  /** delete single row from the table: "album_songs" */
-  delete_album_songs_by_pk?: Maybe<Album_Songs>;
   /** delete data from the table: "albums" */
   delete_albums?: Maybe<Albums_Mutation_Response>;
   /** delete single row from the table: "albums" */
@@ -10143,6 +10383,14 @@ export type Mutation_Root = {
   delete_availability_types?: Maybe<Availability_Types_Mutation_Response>;
   /** delete single row from the table: "availability_types" */
   delete_availability_types_by_pk?: Maybe<Availability_Types>;
+  /** delete data from the table: "certification_types" */
+  delete_certification_types?: Maybe<Certification_Types_Mutation_Response>;
+  /** delete single row from the table: "certification_types" */
+  delete_certification_types_by_pk?: Maybe<Certification_Types>;
+  /** delete data from the table: "certifications" */
+  delete_certifications?: Maybe<Certifications_Mutation_Response>;
+  /** delete single row from the table: "certifications" */
+  delete_certifications_by_pk?: Maybe<Certifications>;
   /** delete data from the table: "genre_types" */
   delete_genre_types?: Maybe<Genre_Types_Mutation_Response>;
   /** delete single row from the table: "genre_types" */
@@ -10339,10 +10587,6 @@ export type Mutation_Root = {
   insert_album_media?: Maybe<Album_Media_Mutation_Response>;
   /** insert a single row into the table: "album_media" */
   insert_album_media_one?: Maybe<Album_Media>;
-  /** insert data into the table: "album_songs" */
-  insert_album_songs?: Maybe<Album_Songs_Mutation_Response>;
-  /** insert a single row into the table: "album_songs" */
-  insert_album_songs_one?: Maybe<Album_Songs>;
   /** insert data into the table: "albums" */
   insert_albums?: Maybe<Albums_Mutation_Response>;
   /** insert a single row into the table: "albums" */
@@ -10359,6 +10603,14 @@ export type Mutation_Root = {
   insert_availability_types?: Maybe<Availability_Types_Mutation_Response>;
   /** insert a single row into the table: "availability_types" */
   insert_availability_types_one?: Maybe<Availability_Types>;
+  /** insert data into the table: "certification_types" */
+  insert_certification_types?: Maybe<Certification_Types_Mutation_Response>;
+  /** insert a single row into the table: "certification_types" */
+  insert_certification_types_one?: Maybe<Certification_Types>;
+  /** insert data into the table: "certifications" */
+  insert_certifications?: Maybe<Certifications_Mutation_Response>;
+  /** insert a single row into the table: "certifications" */
+  insert_certifications_one?: Maybe<Certifications>;
   /** insert data into the table: "genre_types" */
   insert_genre_types?: Maybe<Genre_Types_Mutation_Response>;
   /** insert a single row into the table: "genre_types" */
@@ -10559,12 +10811,6 @@ export type Mutation_Root = {
   update_album_media_by_pk?: Maybe<Album_Media>;
   /** update multiples rows of table: "album_media" */
   update_album_media_many?: Maybe<Array<Maybe<Album_Media_Mutation_Response>>>;
-  /** update data of the table: "album_songs" */
-  update_album_songs?: Maybe<Album_Songs_Mutation_Response>;
-  /** update single row of the table: "album_songs" */
-  update_album_songs_by_pk?: Maybe<Album_Songs>;
-  /** update multiples rows of table: "album_songs" */
-  update_album_songs_many?: Maybe<Array<Maybe<Album_Songs_Mutation_Response>>>;
   /** update data of the table: "albums" */
   update_albums?: Maybe<Albums_Mutation_Response>;
   /** update single row of the table: "albums" */
@@ -10607,6 +10853,18 @@ export type Mutation_Root = {
   update_availability_types_many?: Maybe<Array<Maybe<Availability_Types_Mutation_Response>>>;
   /** update multiples rows of table: "storage.buckets" */
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
+  /** update data of the table: "certification_types" */
+  update_certification_types?: Maybe<Certification_Types_Mutation_Response>;
+  /** update single row of the table: "certification_types" */
+  update_certification_types_by_pk?: Maybe<Certification_Types>;
+  /** update multiples rows of table: "certification_types" */
+  update_certification_types_many?: Maybe<Array<Maybe<Certification_Types_Mutation_Response>>>;
+  /** update data of the table: "certifications" */
+  update_certifications?: Maybe<Certifications_Mutation_Response>;
+  /** update single row of the table: "certifications" */
+  update_certifications_by_pk?: Maybe<Certifications>;
+  /** update multiples rows of table: "certifications" */
+  update_certifications_many?: Maybe<Array<Maybe<Certifications_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
   /** update data of the table: "genre_types" */
@@ -10995,19 +11253,6 @@ export type Mutation_RootDelete_Album_Media_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Album_SongsArgs = {
-  where: Album_Songs_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Album_Songs_By_PkArgs = {
-  album_id: Scalars['uuid']['input'];
-  song_id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_AlbumsArgs = {
   where: Albums_Bool_Exp;
 };
@@ -11051,6 +11296,30 @@ export type Mutation_RootDelete_Availability_TypesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Availability_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Certification_TypesArgs = {
+  where: Certification_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Certification_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_CertificationsArgs = {
+  where: Certifications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Certifications_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -11676,20 +11945,6 @@ export type Mutation_RootInsert_Album_Media_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Album_SongsArgs = {
-  objects: Array<Album_Songs_Insert_Input>;
-  on_conflict?: InputMaybe<Album_Songs_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Album_Songs_OneArgs = {
-  object: Album_Songs_Insert_Input;
-  on_conflict?: InputMaybe<Album_Songs_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_AlbumsArgs = {
   objects: Array<Albums_Insert_Input>;
   on_conflict?: InputMaybe<Albums_On_Conflict>;
@@ -11742,6 +11997,34 @@ export type Mutation_RootInsert_Availability_TypesArgs = {
 export type Mutation_RootInsert_Availability_Types_OneArgs = {
   object: Availability_Types_Insert_Input;
   on_conflict?: InputMaybe<Availability_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Certification_TypesArgs = {
+  objects: Array<Certification_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Certification_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Certification_Types_OneArgs = {
+  object: Certification_Types_Insert_Input;
+  on_conflict?: InputMaybe<Certification_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_CertificationsArgs = {
+  objects: Array<Certifications_Insert_Input>;
+  on_conflict?: InputMaybe<Certifications_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Certifications_OneArgs = {
+  object: Certifications_Insert_Input;
+  on_conflict?: InputMaybe<Certifications_On_Conflict>;
 };
 
 
@@ -12502,28 +12785,6 @@ export type Mutation_RootUpdate_Album_Media_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Album_SongsArgs = {
-  _inc?: InputMaybe<Album_Songs_Inc_Input>;
-  _set?: InputMaybe<Album_Songs_Set_Input>;
-  where: Album_Songs_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Album_Songs_By_PkArgs = {
-  _inc?: InputMaybe<Album_Songs_Inc_Input>;
-  _set?: InputMaybe<Album_Songs_Set_Input>;
-  pk_columns: Album_Songs_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Album_Songs_ManyArgs = {
-  updates: Array<Album_Songs_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_AlbumsArgs = {
   _set?: InputMaybe<Albums_Set_Input>;
   where: Albums_Bool_Exp;
@@ -12656,6 +12917,46 @@ export type Mutation_RootUpdate_Availability_Types_ManyArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Buckets_ManyArgs = {
   updates: Array<Buckets_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Certification_TypesArgs = {
+  _set?: InputMaybe<Certification_Types_Set_Input>;
+  where: Certification_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Certification_Types_By_PkArgs = {
+  _set?: InputMaybe<Certification_Types_Set_Input>;
+  pk_columns: Certification_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Certification_Types_ManyArgs = {
+  updates: Array<Certification_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CertificationsArgs = {
+  _set?: InputMaybe<Certifications_Set_Input>;
+  where: Certifications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Certifications_By_PkArgs = {
+  _set?: InputMaybe<Certifications_Set_Input>;
+  pk_columns: Certifications_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Certifications_ManyArgs = {
+  updates: Array<Certifications_Updates>;
 };
 
 
@@ -14534,12 +14835,6 @@ export type Query_Root = {
   album_media_aggregate: Album_Media_Aggregate;
   /** fetch data from the table: "album_media" using primary key columns */
   album_media_by_pk?: Maybe<Album_Media>;
-  /** An array relationship */
-  album_songs: Array<Album_Songs>;
-  /** An aggregate relationship */
-  album_songs_aggregate: Album_Songs_Aggregate;
-  /** fetch data from the table: "album_songs" using primary key columns */
-  album_songs_by_pk?: Maybe<Album_Songs>;
   /** fetch data from the table: "albums" */
   albums: Array<Albums>;
   /** fetch aggregated fields from the table: "albums" */
@@ -14618,6 +14913,18 @@ export type Query_Root = {
   buckets: Array<Buckets>;
   /** fetch aggregated fields from the table: "storage.buckets" */
   bucketsAggregate: Buckets_Aggregate;
+  /** An array relationship */
+  certification_types: Array<Certification_Types>;
+  /** An aggregate relationship */
+  certification_types_aggregate: Certification_Types_Aggregate;
+  /** fetch data from the table: "certification_types" using primary key columns */
+  certification_types_by_pk?: Maybe<Certification_Types>;
+  /** fetch data from the table: "certifications" */
+  certifications: Array<Certifications>;
+  /** fetch aggregated fields from the table: "certifications" */
+  certifications_aggregate: Certifications_Aggregate;
+  /** fetch data from the table: "certifications" using primary key columns */
+  certifications_by_pk?: Maybe<Certifications>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -14732,9 +15039,9 @@ export type Query_Root = {
   movie_watchlist_aggregate: Movie_Watchlist_Aggregate;
   /** fetch data from the table: "movie_watchlist" using primary key columns */
   movie_watchlist_by_pk?: Maybe<Movie_Watchlist>;
-  /** fetch data from the table: "movies" */
+  /** An array relationship */
   movies: Array<Movies>;
-  /** fetch aggregated fields from the table: "movies" */
+  /** An aggregate relationship */
   movies_aggregate: Movies_Aggregate;
   /** fetch data from the table: "movies" using primary key columns */
   movies_by_pk?: Maybe<Movies>;
@@ -14892,30 +15199,6 @@ export type Query_RootAlbum_Media_AggregateArgs = {
 
 export type Query_RootAlbum_Media_By_PkArgs = {
   id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootAlbum_SongsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-
-export type Query_RootAlbum_Songs_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-
-export type Query_RootAlbum_Songs_By_PkArgs = {
-  album_id: Scalars['uuid']['input'];
-  song_id: Scalars['uuid']['input'];
 };
 
 
@@ -15215,6 +15498,52 @@ export type Query_RootBucketsAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Buckets_Order_By>>;
   where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Query_RootCertification_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+
+export type Query_RootCertification_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+
+export type Query_RootCertification_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootCertificationsArgs = {
+  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certifications_Order_By>>;
+  where?: InputMaybe<Certifications_Bool_Exp>;
+};
+
+
+export type Query_RootCertifications_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certifications_Order_By>>;
+  where?: InputMaybe<Certifications_Bool_Exp>;
+};
+
+
+export type Query_RootCertifications_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -18633,10 +18962,6 @@ export type Songs = {
   /** An object relationship */
   album: Albums;
   album_id: Scalars['uuid']['output'];
-  /** An array relationship */
-  album_songs: Array<Album_Songs>;
-  /** An aggregate relationship */
-  album_songs_aggregate: Album_Songs_Aggregate;
   apple_music_id?: Maybe<Scalars['String']['output']>;
   content_score: Scalars['Float']['output'];
   created_at?: Maybe<Scalars['timestamp']['output']>;
@@ -18691,26 +19016,6 @@ export type Songs = {
   type?: Maybe<Scalars['String']['output']>;
   /** A computed field, executes function "get_user_song_rating" */
   user_rating?: Maybe<Scalars['Int']['output']>;
-};
-
-
-/** columns and relationships of "songs" */
-export type SongsAlbum_SongsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-
-/** columns and relationships of "songs" */
-export type SongsAlbum_Songs_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
 };
 
 
@@ -18996,8 +19301,6 @@ export type Songs_Bool_Exp = {
   _or?: InputMaybe<Array<Songs_Bool_Exp>>;
   album?: InputMaybe<Albums_Bool_Exp>;
   album_id?: InputMaybe<Uuid_Comparison_Exp>;
-  album_songs?: InputMaybe<Album_Songs_Bool_Exp>;
-  album_songs_aggregate?: InputMaybe<Album_Songs_Aggregate_Bool_Exp>;
   apple_music_id?: InputMaybe<String_Comparison_Exp>;
   content_score?: InputMaybe<Float_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
@@ -19050,7 +19353,6 @@ export type Songs_Inc_Input = {
 export type Songs_Insert_Input = {
   album?: InputMaybe<Albums_Obj_Rel_Insert_Input>;
   album_id?: InputMaybe<Scalars['uuid']['input']>;
-  album_songs?: InputMaybe<Album_Songs_Arr_Rel_Insert_Input>;
   apple_music_id?: InputMaybe<Scalars['String']['input']>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
@@ -19167,7 +19469,6 @@ export type Songs_On_Conflict = {
 export type Songs_Order_By = {
   album?: InputMaybe<Albums_Order_By>;
   album_id?: InputMaybe<Order_By>;
-  album_songs_aggregate?: InputMaybe<Album_Songs_Aggregate_Order_By>;
   apple_music_id?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
@@ -19654,14 +19955,6 @@ export type Subscription_Root = {
   album_media_by_pk?: Maybe<Album_Media>;
   /** fetch data from the table in a streaming manner: "album_media" */
   album_media_stream: Array<Album_Media>;
-  /** An array relationship */
-  album_songs: Array<Album_Songs>;
-  /** An aggregate relationship */
-  album_songs_aggregate: Album_Songs_Aggregate;
-  /** fetch data from the table: "album_songs" using primary key columns */
-  album_songs_by_pk?: Maybe<Album_Songs>;
-  /** fetch data from the table in a streaming manner: "album_songs" */
-  album_songs_stream: Array<Album_Songs>;
   /** fetch data from the table: "albums" */
   albums: Array<Albums>;
   /** fetch aggregated fields from the table: "albums" */
@@ -19766,6 +20059,22 @@ export type Subscription_Root = {
   bucketsAggregate: Buckets_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.buckets" */
   buckets_stream: Array<Buckets>;
+  /** An array relationship */
+  certification_types: Array<Certification_Types>;
+  /** An aggregate relationship */
+  certification_types_aggregate: Certification_Types_Aggregate;
+  /** fetch data from the table: "certification_types" using primary key columns */
+  certification_types_by_pk?: Maybe<Certification_Types>;
+  /** fetch data from the table in a streaming manner: "certification_types" */
+  certification_types_stream: Array<Certification_Types>;
+  /** fetch data from the table: "certifications" */
+  certifications: Array<Certifications>;
+  /** fetch aggregated fields from the table: "certifications" */
+  certifications_aggregate: Certifications_Aggregate;
+  /** fetch data from the table: "certifications" using primary key columns */
+  certifications_by_pk?: Maybe<Certifications>;
+  /** fetch data from the table in a streaming manner: "certifications" */
+  certifications_stream: Array<Certifications>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -19918,9 +20227,9 @@ export type Subscription_Root = {
   movie_watchlist_by_pk?: Maybe<Movie_Watchlist>;
   /** fetch data from the table in a streaming manner: "movie_watchlist" */
   movie_watchlist_stream: Array<Movie_Watchlist>;
-  /** fetch data from the table: "movies" */
+  /** An array relationship */
   movies: Array<Movies>;
-  /** fetch aggregated fields from the table: "movies" */
+  /** An aggregate relationship */
   movies_aggregate: Movies_Aggregate;
   /** fetch data from the table: "movies" using primary key columns */
   movies_by_pk?: Maybe<Movies>;
@@ -20130,37 +20439,6 @@ export type Subscription_RootAlbum_Media_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Album_Media_Stream_Cursor_Input>>;
   where?: InputMaybe<Album_Media_Bool_Exp>;
-};
-
-
-export type Subscription_RootAlbum_SongsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-
-export type Subscription_RootAlbum_Songs_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Songs_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Songs_Order_By>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
-};
-
-
-export type Subscription_RootAlbum_Songs_By_PkArgs = {
-  album_id: Scalars['uuid']['input'];
-  song_id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootAlbum_Songs_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Album_Songs_Stream_Cursor_Input>>;
-  where?: InputMaybe<Album_Songs_Bool_Exp>;
 };
 
 
@@ -20551,6 +20829,66 @@ export type Subscription_RootBuckets_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Buckets_Stream_Cursor_Input>>;
   where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Subscription_RootCertification_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootCertification_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootCertification_Types_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootCertification_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Certification_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Certification_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootCertificationsArgs = {
+  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certifications_Order_By>>;
+  where?: InputMaybe<Certifications_Bool_Exp>;
+};
+
+
+export type Subscription_RootCertifications_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Certifications_Order_By>>;
+  where?: InputMaybe<Certifications_Bool_Exp>;
+};
+
+
+export type Subscription_RootCertifications_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootCertifications_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Certifications_Stream_Cursor_Input>>;
+  where?: InputMaybe<Certifications_Bool_Exp>;
 };
 
 
@@ -23100,6 +23438,13 @@ export type GetAvailabilitiesQueryVariables = Exact<{
 
 export type GetAvailabilitiesQuery = { __typename?: 'query_root', availabilities: Array<{ __typename?: 'availabilities', id: any, name: string }> };
 
+export type GetCertificationsQueryVariables = Exact<{
+  where?: InputMaybe<Certifications_Bool_Exp>;
+}>;
+
+
+export type GetCertificationsQuery = { __typename?: 'query_root', certifications: Array<{ __typename?: 'certifications', id: any, name: string }> };
+
 export type GetFilesQueryVariables = Exact<{
   where?: InputMaybe<Files_Bool_Exp>;
   order_by?: InputMaybe<Array<Files_Order_By> | Files_Order_By>;
@@ -23151,7 +23496,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, age_certification?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, status?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, favourited?: boolean | null, watchlisted?: boolean | null, user_rating?: number | null, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, character?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, status?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, favourited?: boolean | null, watchlisted?: boolean | null, user_rating?: number | null, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: { __typename?: 'availabilities', id: any, name: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, character?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_reviews: Array<{ __typename?: 'movie_reviews', id: any, rating?: any | null, review?: string | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -23273,6 +23618,50 @@ export const useInfiniteGetAvailabilitiesQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetAvailabilities.infinite'] : ['GetAvailabilities.infinite', variables],
       queryFn: (metaData) => fetcher<GetAvailabilitiesQuery, GetAvailabilitiesQueryVariables>(GetAvailabilitiesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetCertificationsDocument = `
+    query GetCertifications($where: certifications_bool_exp) {
+  certifications(where: $where) {
+    id
+    name
+  }
+}
+    `;
+
+export const useGetCertificationsQuery = <
+      TData = GetCertificationsQuery,
+      TError = unknown
+    >(
+      variables?: GetCertificationsQueryVariables,
+      options?: Omit<UseQueryOptions<GetCertificationsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetCertificationsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetCertificationsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetCertifications'] : ['GetCertifications', variables],
+    queryFn: fetcher<GetCertificationsQuery, GetCertificationsQueryVariables>(GetCertificationsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetCertificationsQuery = <
+      TData = InfiniteData<GetCertificationsQuery>,
+      TError = unknown
+    >(
+      variables: GetCertificationsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetCertificationsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetCertificationsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetCertificationsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetCertifications.infinite'] : ['GetCertifications.infinite', variables],
+      queryFn: (metaData) => fetcher<GetCertificationsQuery, GetCertificationsQueryVariables>(GetCertificationsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -23490,7 +23879,6 @@ export const GetMovieDocument = `
     id
     title
     overview
-    age_certification
     average_rating
     backdrop
     budget
@@ -23515,6 +23903,16 @@ export const GetMovieDocument = `
     favourited
     watchlisted
     user_rating
+    certification {
+      id
+      name
+    }
+    movie_availabilities {
+      availability {
+        id
+        name
+      }
+    }
     movie_genres {
       genre {
         name

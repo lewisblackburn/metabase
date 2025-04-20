@@ -1,6 +1,8 @@
 import { LANGUAGES } from '@/constants/languages.constant';
 import { MEDIA_TYPE } from '@/constants/media.constant';
 import {
+    Certifications_Constraint,
+    Certifications_Update_Column,
     Genres_Constraint,
     Genres_Update_Column,
     GetMovieByTmdb_IdDocument,
@@ -162,6 +164,25 @@ export class TMDBMovieImporterService extends TMDBService {
         };
     }
 
+    // NOTE: This only stores GB/US certification for now
+    private buildCertification(movie: TMDBMovie) {
+        const certificationName =
+            (
+                movie.release_dates.results.find((r) => r.iso_3166_1 === 'GB') ||
+                movie.release_dates.results.find((r) => r.iso_3166_1 === 'US')
+            )?.release_dates.find((d) => d.certification)?.certification ?? 'Unrated';
+
+        return {
+            data: {
+                name: certificationName
+            },
+            on_conflict: {
+                constraint: Certifications_Constraint.CertificationsNameKey,
+                update_columns: [Certifications_Update_Column.Name]
+            }
+        };
+    }
+
     async isExisting(tmdbMovieId: TMDBMovie['id']): Promise<GetMovieByTmdb_IdQuery['movies']> {
         const { data, error } = await nhost.graphql.request<GetMovieByTmdb_IdQuery, GetMovieByTmdb_IdQueryVariables>(
             GetMovieByTmdb_IdDocument,
@@ -187,7 +208,7 @@ export class TMDBMovieImporterService extends TMDBService {
         const movie = await this.getEntity<TMDBMovie>(
             'movie',
             tmdbMovieId,
-            'keywords,credits,videos,images,production_companies,production_countries,alternative_titles'
+            'keywords,credits,videos,images,production_companies,production_countries,alternative_titles,release_dates'
         );
         if (!movie) return false;
 
@@ -233,7 +254,8 @@ export class TMDBMovieImporterService extends TMDBService {
                     update_columns: [Movie_Production_Companies_Update_Column.CompanyName]
                 }
             },
-            movie_alternative_titles: this.buildAlternativeTitles(movie)
+            movie_alternative_titles: this.buildAlternativeTitles(movie),
+            certification: this.buildCertification(movie)
         });
 
         return payload;

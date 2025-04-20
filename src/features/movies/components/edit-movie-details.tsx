@@ -6,10 +6,9 @@ import InputField from '@/components/form/input';
 import MultiSelectField from '@/components/form/multi-select';
 import SelectField, { SelectOption } from '@/components/form/select';
 import TextareaField from '@/components/form/textarea';
-import { MOVIE_CERTIFICATION_OPTIONS } from '@/constants/certifications.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { MOVIE_STATUS_OPTIONS } from '@/constants/status.constant';
-import { useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
+import { useGetCertificationsQuery, useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
@@ -17,6 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { MovieDetails, movieDetailsSchema } from '../schemas/movie-details.schema';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 interface EditMovieDetailsProps {
     movieId: string;
@@ -29,6 +29,22 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
             queryKey: ['movie', movieId]
         }
     );
+
+    const { data: certifications } = useGetCertificationsQuery(
+        {
+            where: {
+                certification_types: {
+                    type: {
+                        _eq: 'movie'
+                    }
+                }
+            }
+        },
+        {
+            queryKey: ['certifications']
+        }
+    );
+
     const { mutateAsync: updateMovie } = useUpdateMovieMutation();
 
     const movie = data?.movies_by_pk;
@@ -47,8 +63,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
             revenue: movie.revenue ?? 0,
             language: movie.language ?? '',
             status: movie.status ?? undefined,
-            ageCertification: movie.age_certification ?? undefined,
-            alternativeTitles: [],
+            certification: movie.certification?.id ?? undefined,
             imdbId: movie.imdb_id ?? '',
             tmdbId: movie.tmdb_id ?? '',
             homepage: movie.homepage ?? ''
@@ -56,27 +71,36 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
     });
 
     async function onSubmit(values: MovieDetails) {
-        await updateMovie({
-            id: movieId,
-            inc: {},
-            set: {
-                title: values.title,
-                tagline: values.tagline,
-                overview: values.overview,
-                release_date: values.releaseDate,
-                runtime: values.runtime,
-                budget: values.budget,
-                revenue: values.revenue,
-                language: values.language,
-                status: values.status,
-                age_certification: values.ageCertification,
-                imdb_id: values.imdbId,
-                tmdb_id: values.tmdbId,
-                homepage: values.homepage
+        await updateMovie(
+            {
+                id: movieId,
+                inc: {},
+                set: {
+                    title: values.title,
+                    tagline: values.tagline,
+                    overview: values.overview,
+                    release_date: values.releaseDate,
+                    runtime: values.runtime,
+                    budget: values.budget,
+                    revenue: values.revenue,
+                    language: values.language,
+                    status: values.status,
+                    certification_id: values.certification,
+                    imdb_id: values.imdbId,
+                    tmdb_id: values.tmdbId,
+                    homepage: values.homepage
+                }
+            },
+            {
+                onSuccess: () => {
+                    toast.success('Movie updated successfully');
+                    queryClient.invalidateQueries({ queryKey: ['movie', movieId] });
+                },
+                onError: (error) => {
+                    toast.error((error as Error).message);
+                }
             }
-        }).then(() => {
-            queryClient.invalidateQueries({ queryKey: ['movie', movieId] });
-        });
+        );
     }
 
     return (
@@ -200,31 +224,20 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                 />
                 <FormField
                     control={form.control}
-                    name='ageCertification'
+                    name='certification'
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Age Certification'>
                                 <SelectField
                                     options={
-                                        MOVIE_CERTIFICATION_OPTIONS.map((option) => ({
-                                            value: option.value,
-                                            label: option.label
-                                        })) as SelectOption[]
+                                        certifications?.certifications.map((certification) => ({
+                                            value: certification.id.toString(),
+                                            label: certification.name
+                                        })) ?? []
                                     }
                                     modal
                                     {...field}
                                 />
-                            </BaseFormLayout>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name='alternativeTitles'
-                    render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Alternative Titles'>
-                                <MultiSelectField options={[]} createable modal {...field} />
                             </BaseFormLayout>
                         </FormItem>
                     )}

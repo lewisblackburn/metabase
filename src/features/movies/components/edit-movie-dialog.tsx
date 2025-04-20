@@ -25,6 +25,8 @@ export function EditMovieDialog({ id, isOpen, onOpenChange }: EditMovieDialogPro
 
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
         details: (item) => <EditMovieDetails movieId={id} />,
+        // alternative_titles: (item) => <div>alternative_titles</div>,
+        // availabilities: (item) => <div>availabilities</div>,
         cast: (item) => <EditMovieCast />,
         crew: (item) => <EditMovieCrew />,
         soundtrack: (item) => <EditMovieSoundtrack />,
