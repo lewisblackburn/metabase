@@ -20,7 +20,8 @@ const nextConfig: NextConfig = {
             'media.themoviedb.org',
             'i.scdn.co',
             'placehold.co',
-            'lwmecktyyhputyqkdigy.storage.eu-west-2.nhost.run'
+            'lwmecktyyhputyqkdigy.storage.eu-west-2.nhost.run',
+            'www.gravatar.com'
         ]
     }
 };

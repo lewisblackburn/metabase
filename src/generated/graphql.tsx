@@ -24244,7 +24244,7 @@ export type GetProfileQueryVariables = Exact<{
 }>;
 
 
-export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, email?: any | null, lastSeen?: any | null, createdAt: any, avatarUrl: string } | null };
+export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, email?: any | null, lastSeen?: any | null, createdAt: any, avatarUrl: string, emailVerified: boolean, disabled: boolean, locale: string } | null };
 
 
 
@@ -25096,6 +25096,9 @@ export const GetProfileDocument = `
     lastSeen
     createdAt
     avatarUrl
+    emailVerified
+    disabled
+    locale
   }
 }
     `;

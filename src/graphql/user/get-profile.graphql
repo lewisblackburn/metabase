@@ -6,5 +6,8 @@ query GetProfile($id: uuid!) {
         lastSeen
         createdAt
         avatarUrl
+        emailVerified
+        disabled
+        locale
     }
 }

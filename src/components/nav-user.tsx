@@ -20,7 +20,7 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
 import { User, useSignOut } from '@nhost/nextjs';
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Settings, Sparkles, User, User, UserIcon } from 'lucide-react';
+import { BadgeCheck, Bell, Bookmark, ChevronsUpDown, CreditCard, Heart, LogOut, Settings, Sparkles, Star, User, User, UserIcon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 
@@ -76,9 +76,21 @@ export function NavUser({ user }: { user: User }) {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
+     <DropdownMenuItem>
                                 <Sparkles />
-                                Upgrade to Pro
+                                Recommendations
+                            </DropdownMenuItem>
+     <DropdownMenuItem>
+                                <Star />
+                                Ratings
+                            </DropdownMenuItem>
+     <DropdownMenuItem>
+                                <Bookmark />
+                                Lists
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Heart />
+                                Favourites
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
@@ -88,12 +100,8 @@ export function NavUser({ user }: { user: User }) {
                                 <UserIcon />
                                 Profile
                             </DropdownMenuItem>
-
                             </Link>
-                            <DropdownMenuItem>
-                                <CreditCard />
-                                Billing
-                            </DropdownMenuItem>
+                       
                             <DropdownMenuItem>
                                 <Bell />
                                 Notifications
