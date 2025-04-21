@@ -8,7 +8,7 @@ export default function DefaultLoading({ customSkeleton }: DefaultLoadingProps) 
     return (
         <>
             {customSkeleton || (
-                <div className='flex h-full w-full items-center justify-center'>
+                <div className='flex h-full min-h-96 w-full items-center justify-center'>
                     <Loader2 className='animate-spin' />
                 </div>
             )}

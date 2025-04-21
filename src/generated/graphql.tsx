@@ -24239,6 +24239,13 @@ export type GetStatusesQueryVariables = Exact<{
 
 export type GetStatusesQuery = { __typename?: 'query_root', statuses: Array<{ __typename?: 'statuses', id: any, name: string }> };
 
+export type GetProfileQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, email?: any | null, lastSeen?: any | null, createdAt: any, avatarUrl: string } | null };
+
 
 
 export const GetAvailabilitiesDocument = `
@@ -25075,6 +25082,54 @@ export const useInfiniteGetStatusesQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetStatuses.infinite'] : ['GetStatuses.infinite', variables],
       queryFn: (metaData) => fetcher<GetStatusesQuery, GetStatusesQueryVariables>(GetStatusesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetProfileDocument = `
+    query GetProfile($id: uuid!) {
+  user(id: $id) {
+    id
+    displayName
+    email
+    lastSeen
+    createdAt
+    avatarUrl
+  }
+}
+    `;
+
+export const useGetProfileQuery = <
+      TData = GetProfileQuery,
+      TError = unknown
+    >(
+      variables: GetProfileQueryVariables,
+      options?: Omit<UseQueryOptions<GetProfileQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetProfileQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetProfileQuery, TError, TData>(
+      {
+    queryKey: ['GetProfile', variables],
+    queryFn: fetcher<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetProfileQuery = <
+      TData = InfiniteData<GetProfileQuery>,
+      TError = unknown
+    >(
+      variables: GetProfileQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetProfileQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetProfileQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetProfileQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetProfile.infinite', variables],
+      queryFn: (metaData) => fetcher<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

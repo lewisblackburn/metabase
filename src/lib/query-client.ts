@@ -8,6 +8,10 @@ export const queryClient = new QueryClient({
             staleTime: STALE_TIME,
             gcTime: GC_TIME,
             retry: false
+        },
+        mutations: {
+            throwOnError: true,
+            retry: false
         }
     }
 });

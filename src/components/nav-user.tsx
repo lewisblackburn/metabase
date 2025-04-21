@@ -20,8 +20,9 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/registry/new-york-v4/ui/sidebar';
 import { User, useSignOut } from '@nhost/nextjs';
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Settings, Sparkles } from 'lucide-react';
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Settings, Sparkles, User, User, UserIcon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+import Link from 'next/link';
 
 export function NavUser({ user }: { user: User }) {
     const { signOut, isSuccess } = useSignOut();
@@ -82,10 +83,13 @@ export function NavUser({ user }: { user: User }) {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
+                            <Link href='/dashboard/profile' >
                             <DropdownMenuItem>
-                                <BadgeCheck />
-                                Account
+                                <UserIcon />
+                                Profile
                             </DropdownMenuItem>
+
+                            </Link>
                             <DropdownMenuItem>
                                 <CreditCard />
                                 Billing
