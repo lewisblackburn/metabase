@@ -9,10 +9,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import storage from './storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from 'redux-persist';
 
-const settingsPersistConfig = {
-    key: 'settings',
-    storage
-};
 const shortcutsPersistConfig = {
     key: 'shortcuts',
     storage
@@ -23,7 +19,7 @@ const rootReducer = combineReducers({
     editDialog: editDialogReducer,
     movieEdit: movieEditReducer,
     moviesFilter: moviesFilterReducer,
-    settings: persistReducer(settingsPersistConfig, settingsReducer),
+    settings: settingsReducer,
     shortcuts: persistReducer(shortcutsPersistConfig, shortcutsReducer)
 });
 
