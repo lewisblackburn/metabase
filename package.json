@@ -51,6 +51,7 @@
         "dayjs": "^1.11.13",
         "embla-carousel-react": "^8.6.0",
         "eslint-plugin-boundaries": "^5.0.1",
+        "fast-equals": "^5.2.2",
         "graphql-codegen-typescript-validation-schema": "^0.17.1",
         "graphql-request": "^7.1.2",
         "hotkeys-js": "^3.13.9",

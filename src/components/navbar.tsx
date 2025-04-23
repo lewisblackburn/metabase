@@ -117,10 +117,17 @@ const Navbar: React.FC = () => {
                     <NavigationMenu className='hidden lg:block'>
                         <NavigationMenuList>
                             <NavigationMenuItem>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    <Link href='/dashboard' className='flex items-center gap-1.5'>
-                                        <Home className='mt-0.5 size-3' />
-                                        <span>Home</span>
+                                <NavigationMenuLink asChild>
+                                    <Link
+                                        href='/dashboard'
+                                        className={cn(
+                                            'block h-full rounded-md p-3 leading-none no-underline transition-colors outline-none select-none',
+                                            'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'
+                                        )}>
+                                        <div className='flex items-center gap-1.5'>
+                                            <Home className='mt-0.5 size-3' />
+                                            <span>Home</span>
+                                        </div>
                                     </Link>
                                 </NavigationMenuLink>
                             </NavigationMenuItem>
