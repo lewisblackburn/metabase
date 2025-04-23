@@ -13,7 +13,7 @@ import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
-import { useMovie } from '@/features/movies/components/movie-provider';
+import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieRatingSlider from '@/features/movies/components/movie-rating-slider';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
@@ -68,7 +68,15 @@ const Backdrop = ({ image, title }: { image: string; title: string }) => (
     </div>
 );
 
-export default function MoviePageContent() {
+export default function MoviePage() {
+    return (
+        <MovieProvider>
+            <MoviePageContent />
+        </MovieProvider>
+    );
+}
+
+function MoviePageContent() {
     const dispatch = useDispatch();
     const { movie } = useMovie();
 
