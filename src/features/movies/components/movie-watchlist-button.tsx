@@ -57,6 +57,7 @@ export default function MovieWatchlistButton() {
     return (
         <Button
             variant='outline'
+            size='sm'
             className={cn({ 'fill-blue-500 text-blue-500': isWatchlisted })}
             disabled={isLoading}
             onClick={async () => await handleClick()}>

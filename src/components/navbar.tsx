@@ -20,14 +20,14 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle
+    NavigationMenuTrigger
 } from '@/registry/new-york-v4/ui/navigation-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/registry/new-york-v4/ui/sheet';
 import { useUserData } from '@nhost/nextjs';
 
 import { NavUser } from './nav-user';
 import Artwork, { ArtworkSkeleton } from './shared/artwork';
+import ImageWithSkeleton from './shared/image-with-skeleton';
 import Poster, { PosterSkeleton } from './shared/poster';
 import { Container } from './ui/container';
 import { Home, LucideIcon, MenuIcon, Search } from 'lucide-react';
@@ -104,7 +104,7 @@ const Navbar: React.FC = () => {
             <nav className='flex items-center justify-between'>
                 <div className='flex items-center gap-2'>
                     <Link href='/' className='flex w-8 items-center'>
-                        <Image
+                        <ImageWithSkeleton
                             src='/images/logo/logo-light-streamline.png'
                             className='max-h-8'
                             width={32}

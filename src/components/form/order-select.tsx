@@ -55,7 +55,7 @@ const OrderSelectField = ({ options, value, onChange, className, modal = false }
                         {value.order === 'asc' ? <ArrowUp className='h-4 w-4' /> : <ArrowDown className='h-4 w-4' />}
                     </Button>
                 </div>
-                <PopoverContent className='p-0' side='right' align='start'>
+                <PopoverContent className='p-0' side='bottom' align='start'>
                     <Command>
                         <CommandInput placeholder='Change order by...' />
                         <CommandList>

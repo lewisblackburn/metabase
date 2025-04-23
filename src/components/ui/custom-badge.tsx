@@ -10,18 +10,26 @@ export const CustomBadge = ({
     children,
     background,
     foreground,
-    border
+    border,
+    className
 }: {
     icon: LucideIcon;
     children: ReactNode;
     background?: string;
     foreground?: string;
     border?: string;
+    className?: string;
 }) => {
     return (
         <Badge
             variant='outline'
-            className={cn('gap-2 py-1 transition-colors delay-0 duration-75', background, foreground, border)}>
+            className={cn(
+                'gap-2 py-1 transition-colors delay-0 duration-75',
+                background,
+                foreground,
+                border,
+                className
+            )}>
             <Icon className='!size-4' />
             <span>{children}</span>
         </Badge>

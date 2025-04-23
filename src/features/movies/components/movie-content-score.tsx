@@ -34,7 +34,6 @@ export default function MovieContentScore() {
             icon={TrendingUp}
             label='Content Score'
             score={movie.content_score}
-            variant='labelled'
             onClick={handleClick}
             loading={updateMovie.isPending}
         />

@@ -4,17 +4,72 @@ import Link from 'next/link';
 
 import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
+import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
+import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
-import { MOVIE_DATA } from '@/constants/fakedb.constant';
+import { MOVIE_DATA, PERSON_DATA } from '@/constants/fakedb.constant';
+import { LANGUAGES } from '@/constants/languages.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
+import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
+import MovieContentScore from '@/features/movies/components/movie-content-score';
+import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { useMovie } from '@/features/movies/components/movie-provider';
+import MovieRatingSlider from '@/features/movies/components/movie-rating-slider';
+import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
+import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
-import { Layers2 } from 'lucide-react';
+import dayjs from 'dayjs';
+import {
+    Calendar,
+    CreditCard,
+    Edit,
+    Edit2,
+    Eye,
+    Info,
+    Languages,
+    Layers2,
+    MapPin,
+    Pencil,
+    Play,
+    Skull,
+    Star,
+    Tags,
+    Timer,
+    TrendingUp,
+    User,
+    VenusAndMars
+} from 'lucide-react';
+import { useDispatch } from 'react-redux';
+
+const Poster = ({ image, title }: { image: string; title: string }) => (
+    <div className='relative aspect-[2/3] h-42 lg:h-96'>
+        <ImageWithSkeleton
+            src={image}
+            alt={title}
+            fill
+            wrapperClassName='absolute inset-0'
+            imageClassName='object-cover object-center border rounded-md'
+        />
+    </div>
+);
+
+const Backdrop = ({ image, title }: { image: string; title: string }) => (
+    <div className='relative h-42 flex-1 lg:h-96'>
+        <ImageWithSkeleton
+            src={image}
+            alt={title}
+            fill
+            wrapperClassName='absolute inset-0'
+            imageClassName='object-cover object-top border rounded-md'
+        />
+    </div>
+);
 
 export default function MoviePageContent() {
+    const dispatch = useDispatch();
     const { movie } = useMovie();
 
     if (!movie) return null;
@@ -30,26 +85,90 @@ export default function MoviePageContent() {
 
     const mostPopularReview = MOVIE_DATA.reviews[0];
 
+    console.log(movie.average_rating, movie.budget, movie.revenue, movie.certification, movie.trailer);
+
     return (
         <div className='flex flex-col gap-5'>
-            <div className='flex items-center gap-2'>
-                <CustomBadge
-                    icon={OBJECT_TYPE.MOVIE.icon}
-                    background={OBJECT_TYPE.MOVIE.background}
-                    foreground={OBJECT_TYPE.MOVIE.foreground}
-                    border={OBJECT_TYPE.MOVIE.border}>
-                    {OBJECT_TYPE.MOVIE.name}
-                </CustomBadge>
-                <Link href=''>
-                    <CustomBadge icon={Layers2}>Collections</CustomBadge>
-                </Link>
-            </div>
-            <div className='flex flex-col gap-2'>
-                <h2>{movie.title}</h2>
-                <p className='text-muted-foreground'>{movie.tagline}</p>
-                <p>{movie.overview}</p>
+            <div className='flex gap-2'>
+                <Poster image={movie.poster} title={movie.title} />
+                <Backdrop image={movie.backdrop} title={movie.title} />
             </div>
             <div className='flex flex-col gap-10 py-5'>
+                <div className='flex flex-col gap-2'>
+                    <div className='flex items-center gap-2'>
+                        <CustomBadge
+                            icon={OBJECT_TYPE.MOVIE.icon}
+                            background={OBJECT_TYPE.MOVIE.background}
+                            foreground={OBJECT_TYPE.MOVIE.foreground}
+                            border={OBJECT_TYPE.MOVIE.border}>
+                            {OBJECT_TYPE.MOVIE.name}
+                        </CustomBadge>
+                        <Link href=''>
+                            <CustomBadge icon={Layers2}>Collections</CustomBadge>
+                        </Link>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                        <h2>{movie.title}</h2>
+                        <p className='text-muted-foreground'>{movie.tagline}</p>
+                        <p>{movie.overview}</p>
+                    </div>
+                </div>
+                <Separator />
+                <div className='flex flex-wrap gap-2'>
+                    <div>
+                        <MovieFavouriteButton />
+                    </div>
+                    <div>
+                        <MovieWatchlistButton />
+                    </div>
+
+                    <Button
+                        variant='outline'
+                        size='sm'
+                        onClick={() => {
+                            dispatch(
+                                toggleEditDialogOpenState({
+                                    objectType: 'MOVIE',
+                                    objectId: movie.id
+                                })
+                            );
+                        }}>
+                        <Edit2 className='size-3.5' />
+                        Edit Movie
+                    </Button>
+                    <Button variant='outline' size='sm'>
+                        <Star className='size-3.5' />
+                        Review
+                    </Button>
+                    {movie.trailer && (
+                        <Link href={movie.trailer ?? ''} target='_blank'>
+                            <Button variant='outline' size='sm'>
+                                <Play />
+                                Play Trailer
+                            </Button>
+                        </Link>
+                    )}
+                    {/* <MovieRatingSlider /> */}
+                </div>
+                <Separator />
+                <div className='flex flex-wrap gap-2'>
+                    <CustomBadge icon={Calendar}>{dayjs(movie.release_date).format('MMMM Do, YYYY')}</CustomBadge>
+                    {/* <CustomBadge icon={MapPin}>{movie.production_countries.join(', ')}</CustomBadge> */}
+                    <CustomBadge icon={Timer}>{movie.formatted_runtime}</CustomBadge>
+                    <CustomBadge icon={Languages}>
+                        {LANGUAGES.find((lang) => lang.code === movie.language)?.label}
+                    </CustomBadge>
+                    <CustomBadge icon={Tags}>
+                        {movie.movie_genres.map((genre) => genre.genre.name).join(', ')}
+                    </CustomBadge>
+                    <CustomBadge icon={Info}>{movie.status?.name ?? 'Unknown'}</CustomBadge>
+                    <CustomBadge icon={Eye}>{movie.view_count}</CustomBadge>
+                    <CustomBadge icon={CreditCard}>{movie.budget}</CustomBadge>
+                    <CustomBadge icon={TrendingUp}>{movie.revenue}</CustomBadge>
+                    <CustomBadge icon={User}>{movie.certification?.name ?? 'Unknown'}</CustomBadge>
+                    {/* <CustomBadge icon={Tags}>{movie.movie_keywords.map((keyword) => keyword.keyword.keyword)}</CustomBadge> */}
+                    <MovieContentScore />
+                </div>
                 <Separator />
                 <div className='flex flex-col gap-2'>
                     <Link href='' className='w-fit'>

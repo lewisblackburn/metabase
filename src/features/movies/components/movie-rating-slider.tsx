@@ -10,12 +10,21 @@ import { queryClient } from '@/lib/query-client';
 import { useUserId } from '@nhost/nextjs';
 
 import { useMovie } from './movie-provider';
+import { toast } from 'sonner';
 
 export default function MovieRatingSlider() {
     const userId = useUserId();
     const { movie } = useMovie();
-    const { mutateAsync: insertMovieRating, isPending: insertRatingPending } = useInsertMovieRatingMutation();
-    const { mutateAsync: deleteMovieRating, isPending: deleteRatingPending } = useDeleteMovieRatingMutation();
+    const { mutateAsync: insertMovieRating, isPending: insertRatingPending } = useInsertMovieRatingMutation({
+        onSuccess: () => {
+            toast.success('Rating saved successfully');
+        }
+    });
+    const { mutateAsync: deleteMovieRating, isPending: deleteRatingPending } = useDeleteMovieRatingMutation({
+        onSuccess: () => {
+            toast.success('Rating removed successfully');
+        }
+    });
 
     const isLoading = insertRatingPending || deleteRatingPending;
 

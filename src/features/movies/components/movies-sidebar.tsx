@@ -159,7 +159,7 @@ export default function MoviesSidebar() {
 
                         <Separator className='my-1' />
 
-                        <div className='flex w-full justify-center px-3 sm:px-5'>
+                        <div className='grid place-items-center px-3 sm:px-5'>
                             <FormField
                                 control={form.control}
                                 name='orderBy'
@@ -253,6 +253,7 @@ export default function MoviesSidebar() {
                                                         <BaseFormLayout label='Release Dates'>
                                                             <DateRangePickerField
                                                                 placeholder='Pick a date'
+                                                                modal
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>

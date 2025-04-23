@@ -57,6 +57,7 @@ export default function MovieFavouriteButton() {
     return (
         <Button
             variant='outline'
+            size='sm'
             className={cn({ 'fill-red-500 text-red-500': isFavourited })}
             disabled={isLoading}
             onClick={async () => await handleClick()}>

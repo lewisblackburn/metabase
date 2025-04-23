@@ -1,14 +1,14 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useRef } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { BlurFade } from '@/components/magicui/blur-fade';
 import Grid from '@/components/shared/grid';
 import Poster from '@/components/shared/poster';
 import { MAX_LIMIT } from '@/constants/api.constant';
+import { OBJECT_TYPE } from '@/constants/objects.constant';
 import MoviesSidebar from '@/features/movies/components/movies-sidebar';
 import { useIncrementMovieViews } from '@/features/movies/hooks/useIncrementMovieViews';
 import { useMovieFilters } from '@/features/movies/hooks/useMovieFilters';
@@ -19,7 +19,7 @@ import { useInView } from 'react-intersection-observer';
 function MovieCard({ movie, index }: { index: number; movie: GetMoviesQuery['movies'][number] }) {
     const router = useRouter();
     const { mutate: bumpViews } = useIncrementMovieViews(movie.id);
-    const firstRender = useRef(true);
+
     if (!movie) return null;
 
     const handleClick = async (e: React.MouseEvent) => {
@@ -62,6 +62,10 @@ export default function MoviesPage() {
         if (inView) handleLoadMore();
     }, [inView]);
 
+    const allMovies = useMemo(() => {
+        return data?.pages.flatMap((page) => page.movies) || [];
+    }, [data]);
+
     // NOTE: This is handle by the poster component
     if (isLoading) return null;
 
@@ -76,9 +80,9 @@ export default function MoviesPage() {
             </div>
 
             <Grid>
-                {data?.pages.flatMap((page) =>
-                    page.movies.map((movie, index) => <MovieCard key={movie.id} movie={movie} index={index} />)
-                )}
+                {allMovies.map((movie, index) => (
+                    <MovieCard key={movie.id} movie={movie} index={index} />
+                ))}
             </Grid>
             <div ref={loadMoreRef} />
         </Fragment>

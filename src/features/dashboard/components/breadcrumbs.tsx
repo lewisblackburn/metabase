@@ -1,5 +1,6 @@
 'use client';
 
+// NOTE: This file is no longer used but is being kept for reference
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
