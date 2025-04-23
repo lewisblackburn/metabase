@@ -4,6 +4,7 @@ import {
     Book,
     Briefcase,
     Camera,
+    Clapperboard,
     Flag,
     Gamepad,
     Headphones,
@@ -27,7 +28,7 @@ export const OBJECT_TYPE = {
         background: 'bg-green-300/20',
         foreground: 'text-green-800',
         border: 'border-green-400/60',
-        icon: Video
+        icon: Clapperboard
     },
     TV: {
         type: 'tv',

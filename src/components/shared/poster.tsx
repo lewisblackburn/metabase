@@ -8,7 +8,7 @@ type PosterProps = {
 };
 
 export default function Poster({ title, image }: PosterProps) {
-    return <NextImage src={image} alt={title} width={300} height={450} className='aspect-[2/3] rounded-md' />;
+    return <NextImage src={image} alt={title} width={300} height={450} className='aspect-[2/3] rounded-md' priority />;
 }
 
 export function PosterSkeleton() {

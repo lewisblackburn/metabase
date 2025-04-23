@@ -6,7 +6,12 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
-import HotkeyScopeManager from '@/features/shortcuts/components/hotkey-scope-manager';
+import { Footer } from '@/components/footer';
+import Navbar from '@/components/navbar';
+import { Container } from '@/components/ui/container';
+import CommandPanel from '@/features/command-panel/components/command-panel';
+import EditDialogManager from '@/features/edit-dailog/components/edit-dialog-manager';
+import { SettingsDialog } from '@/features/settings/components/settings-dialog';
 import ShortcutManager from '@/features/shortcuts/components/shortcut-manager';
 import CustomNhostProvider from '@/providers/nhost-provider';
 import QueryProvider from '@/providers/query-provider';
@@ -42,7 +47,14 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                             <ShortcutManager />
                             <ThemeProvider attribute='class'>
                                 <TooltipProvider>
-                                    {children}
+                                    <Navbar />
+                                    <Container>
+                                        <EditDialogManager />
+                                        <CommandPanel />
+                                        <SettingsDialog />
+                                        {children}
+                                        <Footer />
+                                    </Container>
                                     <Toaster position='top-center' richColors />
                                 </TooltipProvider>
                             </ThemeProvider>

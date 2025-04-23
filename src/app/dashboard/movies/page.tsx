@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { BlurFade } from '@/components/magicui/blur-fade';
 import Grid from '@/components/shared/grid';
 import Poster from '@/components/shared/poster';
 import { Container } from '@/components/ui/container';
@@ -65,42 +66,26 @@ export default function MoviesPage() {
     }, [inView]);
 
     if (isLoading) {
-        return (
-            <div className='flex'>
-                <aside className='sticky top-[4rem] h-[calc(100vh-4rem)] w-[350px] self-start overflow-auto'>
-                    <MoviesSidebar />
-                </aside>
-                <div className='flex-1'>
-                    <MoviesSkeleton />
-                </div>
-            </div>
-        );
+        return <MoviesSkeleton />;
     }
 
     return (
-        <div className='flex'>
-            <aside className='sticky top-[4rem] h-[calc(100vh-4rem)] w-[350px] self-start overflow-auto'>
-                <MoviesSidebar />
-            </aside>
-
-            <main className='flex-1'>
-                <Container size='full'>
-                    <Grid>
-                        {data?.pages.flatMap((page) =>
-                            page.movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
-                        )}
-                    </Grid>
-
-                    <Button
-                        ref={loadMoreRef}
-                        onClick={handleLoadMore}
-                        className='mt-5 w-full'
-                        size='lg'
-                        disabled={!hasNextPage || isFetchingNextPage}>
-                        {isFetchingNextPage ? 'Loading...' : 'Load More'}
-                    </Button>
-                </Container>
-            </main>
-        </div>
+        <Fragment>
+            <BlurFade>
+                <Grid>
+                    {data?.pages.flatMap((page) =>
+                        page.movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+                    )}
+                </Grid>
+            </BlurFade>
+            <Button
+                ref={loadMoreRef}
+                onClick={handleLoadMore}
+                className='mt-5 w-full'
+                size='lg'
+                disabled={!hasNextPage || isFetchingNextPage}>
+                {isFetchingNextPage ? 'Loading...' : 'Load More'}
+            </Button>
+        </Fragment>
     );
 }

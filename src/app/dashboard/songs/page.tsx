@@ -9,15 +9,13 @@ import SongsSidebar from '@/features/songs/components/songs-sidebar';
 export default function SongsPage() {
     return (
         <SongsSidebar>
-            <Container size='full'>
-                <Grid>
-                    {SONGS_DATA.map((song) => (
-                        <Link key={song.id} href={`songs/${song.id}`}>
-                            <Artwork title={song.title} image={song.artwork} />
-                        </Link>
-                    ))}
-                </Grid>
-            </Container>
+            <Grid>
+                {SONGS_DATA.map((song) => (
+                    <Link key={song.id} href={`songs/${song.id}`}>
+                        <Artwork title={song.title} image={song.artwork} />
+                    </Link>
+                ))}
+            </Grid>
         </SongsSidebar>
     );
 }

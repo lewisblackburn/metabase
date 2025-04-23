@@ -130,84 +130,90 @@ function MovieLayoutContent({
     ];
 
     return (
-        <SidebarProvider
-            style={
-                {
-                    '--sidebar-width': '300px'
-                } as React.CSSProperties
-            }
-            className='relative z-0 h-[calc(100vh-4rem)] min-h-0 overflow-hidden'
-            open={open}>
-            <Sidebar className='absolute'>
-                <SidebarContent className='bg-white p-5 pb-24'>
-                    <SidebarMenu className='flex flex-col gap-5'>
-                        <Poster title={movie.title} image={movie.poster} />
-                        <Separator />
-                        <div className='flex flex-col gap-2'>
-                            <div className='flex items-center gap-2 text-sm'>
-                                <Star size='1em' />
-                                <span>Rating</span>
-                            </div>
-                            <MovieRatingSlider />
-                        </div>
-                        <Separator />
-                        {movie.trailer && (
-                            <a href={movie.trailer} target='_blank' rel='noopener noreferrer' className='w-full'>
-                                <Button variant='secondary' className='w-full cursor-pointer'>
-                                    <Play />
-                                    Play Trailer
-                                </Button>
-                            </a>
-                        )}
+        <div>{children}</div>
+        // <SidebarProvider
+        //     style={
+        //         {
+        //             '--sidebar-width': '300px'
+        //         } as React.CSSProperties
+        //     }
+        //     className='relative z-0 h-[calc(100vh-4rem)] min-h-0 overflow-hidden'
+        //     open={open}>
+        //     <Sidebar className='absolute'>
+        //         <SidebarContent className='bg-white p-5 pb-24'>
+        //             <SidebarMenu className='flex flex-col gap-5'>
+        //                 <Poster title={movie.title} image={movie.poster} />
+        //                 <Separator />
+        //                 <div className='flex flex-col gap-2'>
+        //                     <div className='flex items-center gap-2 text-sm'>
+        //                         <Star size='1em' />
+        //                         <span>Rating</span>
+        //                     </div>
+        //                     <MovieRatingSlider />
+        //                 </div>
+        //                 <Separator />
+        //                 {movie.trailer && (
+        //                     <a href={movie.trailer} target='_blank' rel='noopener noreferrer' className='w-full'>
+        //                         <Button variant='secondary' className='w-full cursor-pointer'>
+        //                             <Play />
+        //                             Play Trailer
+        //                         </Button>
+        //                     </a>
+        //                 )}
 
-                        <div className='mt-5 flex flex-col gap-5'>
-                            {information.map((item, idx) => (
-                                <div key={item.id}>
-                                    <InformationItem {...item} />
-                                    {!isLastIndex(idx, information) && <Separator className='mt-5' />}
-                                </div>
-                            ))}
-                        </div>
-                        <Separator />
-                        <MovieContentScore />
-                        <Separator />
-                        <div className='grid grid-cols-2 gap-2'>
-                            <MovieFavouriteButton />
-                            <MovieWatchlistButton />
-                        </div>
-                        <Separator />
-                        <Button
-                            variant='secondary'
-                            className='w-full cursor-pointer'
-                            onClick={() => {
-                                dispatch(
-                                    toggleEditDialogOpenState({
-                                        objectType: 'MOVIE',
-                                        objectId: movie.id
-                                    })
-                                );
-                            }}>
-                            Edit Movie
-                        </Button>
-                    </SidebarMenu>
-                </SidebarContent>
-            </Sidebar>
-            <main className='h-[calc(100vh-4rem)] w-full overflow-auto'>
-                <InnerSidebarTrigger
-                    onClick={() => setOpen(!open)}
-                    className='absolute z-50 m-2 cursor-pointer bg-white'
-                />
-                <Image
-                    src={movie.backdrop}
-                    alt={movie.title}
-                    width={1920}
-                    height={1080}
-                    quality={100}
-                    className='!h-[410px] w-full object-cover object-top'
-                    priority
-                />
-                <Container>{children}</Container>
-            </main>
-        </SidebarProvider>
+        //                 <div className='mt-5 flex flex-col gap-5'>
+        //                     {information.map((item, idx) => (
+        //                         <div key={item.id}>
+        //                             <InformationItem {...item} />
+        //                             {!isLastIndex(idx, information) && <Separator className='mt-5' />}
+        //                         </div>
+        //                     ))}
+        //                 </div>
+        //                 <Separator />
+        //                 <MovieContentScore />
+        //                 <Separator />
+        //                 <div className='grid grid-cols-2 gap-2'>
+        //                     <MovieFavouriteButton />
+        //                     <MovieWatchlistButton />
+        //                 </div>
+        //                 <Separator />
+        //                 <Button
+        //                     variant='secondary'
+        //                     className='w-full cursor-pointer'
+        //                     onClick={() => {
+        //                         dispatch(
+        //                             toggleEditDialogOpenState({
+        //                                 objectType: 'MOVIE',
+        //                                 objectId: movie.id
+        //                             })
+        //                         );
+        //                     }}>
+        //                     Edit Movie
+        //                 </Button>
+        //             </SidebarMenu>
+        //         </SidebarContent>
+        //     </Sidebar>
+        //     <main className='w-full overflow-auto'>
+        //         <InnerSidebarTrigger
+        //             onClick={() => setOpen(!open)}
+        //             className='absolute z-50 m-2 cursor-pointer bg-white'
+        //         />
+
+        //         <Container>
+        //             <div className='flex flex-col gap-5'>
+        //                 <Image
+        //                     src={movie.backdrop}
+        //                     alt={movie.title}
+        //                     width={1920}
+        //                     height={1080}
+        //                     quality={100}
+        //                     className='!h-[410px] w-full object-cover object-top'
+        //                     priority
+        //                 />
+        //                 {children}
+        //             </div>
+        //         </Container>
+        //     </main>
+        // </SidebarProvider>
     );
 }

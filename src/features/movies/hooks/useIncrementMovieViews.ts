@@ -16,6 +16,7 @@ export function useIncrementMovieViews(movieId: string) {
                 }));
             }
             const list = queryClient.getQueryData<Array<{ id: string; view_count: number }>>(['movies']);
+
             if (list) {
                 queryClient.setQueryData(
                     ['movies'],

@@ -24225,6 +24225,17 @@ export type GetSongQueryVariables = Exact<{
 
 export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, duration?: any | null, content_score: number, spotify_id?: string | null, apple_music_id?: string | null, album_id: any, track_number?: number | null, explicit?: boolean | null, type?: string | null, spotify_uri?: string | null, disc_number?: number | null, favourited?: boolean | null, listen_latered?: boolean | null, user_rating?: number | null, album: { __typename?: 'albums', id: any, name: string, artwork: string, release_date?: any | null, type?: string | null }, song_artists: Array<{ __typename?: 'song_artists', id: any, order?: number | null, person: { __typename?: 'people', name: string } }> } | null };
 
+export type GetSongsQueryVariables = Exact<{
+  distinct_on?: InputMaybe<Array<Songs_Select_Column> | Songs_Select_Column>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Songs_Order_By> | Songs_Order_By>;
+  where?: InputMaybe<Songs_Bool_Exp>;
+}>;
+
+
+export type GetSongsQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', id: any, name: string, album: { __typename?: 'albums', artwork: string } }> };
+
 export type InsertSongMutationVariables = Exact<{
   object: Songs_Insert_Input;
 }>;
@@ -25016,6 +25027,59 @@ export const useInfiniteGetSongQuery = <
     return {
       queryKey: optionsQueryKey ?? ['GetSong.infinite', variables],
       queryFn: (metaData) => fetcher<GetSongQuery, GetSongQueryVariables>(GetSongDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetSongsDocument = `
+    query GetSongs($distinct_on: [songs_select_column!], $limit: Int, $offset: Int, $order_by: [songs_order_by!], $where: songs_bool_exp) {
+  songs(
+    distinct_on: $distinct_on
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+    where: $where
+  ) {
+    id
+    name
+    album {
+      artwork
+    }
+  }
+}
+    `;
+
+export const useGetSongsQuery = <
+      TData = GetSongsQuery,
+      TError = unknown
+    >(
+      variables?: GetSongsQueryVariables,
+      options?: Omit<UseQueryOptions<GetSongsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetSongsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetSongsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetSongs'] : ['GetSongs', variables],
+    queryFn: fetcher<GetSongsQuery, GetSongsQueryVariables>(GetSongsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetSongsQuery = <
+      TData = InfiniteData<GetSongsQuery>,
+      TError = unknown
+    >(
+      variables: GetSongsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetSongsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetSongsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetSongsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetSongs.infinite'] : ['GetSongs.infinite', variables],
+      queryFn: (metaData) => fetcher<GetSongsQuery, GetSongsQueryVariables>(GetSongsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

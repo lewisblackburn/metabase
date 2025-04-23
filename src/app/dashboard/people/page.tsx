@@ -9,15 +9,13 @@ import PeopleSidebar from '@/features/people/components/people-sidebar';
 export default function PeoplePage() {
     return (
         <PeopleSidebar>
-            <Container size='full'>
-                <Grid>
-                    {PEOPLE_DATA.map((person) => (
-                        <Link key={person.id} href={`people/${person.id}`}>
-                            <Poster title={person.name} image={person.headshot} />
-                        </Link>
-                    ))}
-                </Grid>
-            </Container>
+            <Grid>
+                {PEOPLE_DATA.map((person) => (
+                    <Link key={person.id} href={`people/${person.id}`}>
+                        <Poster title={person.name} image={person.headshot} />
+                    </Link>
+                ))}
+            </Grid>
         </PeopleSidebar>
     );
 }
