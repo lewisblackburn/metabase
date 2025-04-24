@@ -70,25 +70,23 @@ export function NavUser({ user }: { user: User | null }) {
             <DropdownMenuTrigger asChild>
                 <Avatar className='size-8 cursor-pointer'>
                     <AvatarImage src={user?.avatarUrl} alt={`@${user?.displayName ?? 'user'}`} />
-                    <AvatarFallback>{user?.displayName[0] ?? 'U'}</AvatarFallback>
+                    <AvatarFallback />
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className='w-56'>
                 {user ? (
                     <>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuLabel>
+                            <Link href='/dashboard/profile' className='flex items-center gap-2'>
+                                <Avatar className='size-6'>
+                                    <AvatarImage src={user.avatarUrl} alt={`@${user.displayName ?? 'user'}`} />
+                                    <AvatarFallback />
+                                </Avatar>
+                                <span>{user.displayName}</span>
+                            </Link>
+                        </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <Link href='/dashboard/profile'>
-                                <DropdownMenuItem>
-                                    <UserIcon />
-                                    <span>Profile</span>
-                                </DropdownMenuItem>
-                            </Link>
-                            <DropdownMenuItem>
-                                <CreditCard />
-                                <span>Billing</span>
-                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => dispatch(toggleSettingsDialogOpenState())}>
                                 <Settings />
                                 <span>Settings</span>
@@ -96,20 +94,12 @@ export function NavUser({ user }: { user: User | null }) {
                                     <ShortcutDisplay combo={toggleSettings.key} />
                                 </DropdownMenuShortcut>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem disabled>
                                 <Keyboard />
                                 <span>Keyboard shortcuts</span>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Github />
-                            <span>GitHub</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <LifeBuoy />
-                            <span>Support</span>
-                        </DropdownMenuItem>
                         <DropdownMenuItem disabled>
                             <Cloud />
                             <span>API</span>
