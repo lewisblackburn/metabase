@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { Metadata } from 'next';
+import { Space_Grotesk as SpaceGrotesk } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import { ThemeProvider } from 'next-themes';
@@ -19,11 +20,12 @@ import StoreProvider from '@/providers/store-provider';
 import { Toaster } from '@/registry/new-york-v4/ui/sonner';
 import { TooltipProvider } from '@/registry/new-york-v4/ui/tooltip';
 
-const geistSans = localFont({
-    src: './fonts/GeistVF.woff',
-    variable: '--font-geist-sans',
-    weight: '100 900'
-});
+const spaceGrotesk = SpaceGrotesk({ subsets: ['latin'], preload: true });
+// const geistSans = localFont({
+//     src: './fonts/GeistVF.woff',
+//     variable: '--font-geist-sans',
+//     weight: '100 900',
+// });
 const geistMono = localFont({
     src: './fonts/GeistMonoVF.woff',
     variable: '--font-geist-mono',
@@ -40,7 +42,8 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         // ? https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
         <html suppressHydrationWarning lang='en'>
-            <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
+            <body
+                className={`${spaceGrotesk.className} ${geistMono.variable} bg-background text-foreground antialiased`}>
                 <CustomNhostProvider>
                     <QueryProvider>
                         <StoreProvider>

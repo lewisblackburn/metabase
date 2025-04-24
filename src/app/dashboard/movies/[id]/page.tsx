@@ -5,16 +5,13 @@ import Link from 'next/link';
 import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
 import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
-import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
-import { MOVIE_DATA, PERSON_DATA } from '@/constants/fakedb.constant';
+import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
-import MovieRatingSlider from '@/features/movies/components/movie-rating-slider';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
@@ -25,22 +22,16 @@ import dayjs from 'dayjs';
 import {
     Calendar,
     CreditCard,
-    Edit,
-    Edit2,
     Eye,
     Info,
     Languages,
     Layers2,
-    MapPin,
-    Pencil,
     Play,
-    Skull,
     Star,
     Tags,
     Timer,
     TrendingUp,
-    User,
-    VenusAndMars
+    User
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
@@ -102,61 +93,63 @@ function MoviePageContent() {
                 <Backdrop image={movie.backdrop} title={movie.title} />
             </div>
             <div className='flex flex-col gap-10 py-5'>
-                <div className='flex flex-col gap-2'>
-                    <div className='flex items-center gap-2'>
-                        <CustomBadge
-                            icon={OBJECT_TYPE.MOVIE.icon}
-                            background={OBJECT_TYPE.MOVIE.background}
-                            foreground={OBJECT_TYPE.MOVIE.foreground}
-                            border={OBJECT_TYPE.MOVIE.border}>
-                            {OBJECT_TYPE.MOVIE.name}
-                        </CustomBadge>
-                        <Link href=''>
-                            <CustomBadge icon={Layers2}>Collections</CustomBadge>
-                        </Link>
+                <div className='flex flex-col gap-5'>
+                    <div className='flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-0'>
+                        <div className='flex items-center gap-2'>
+                            <CustomBadge
+                                icon={OBJECT_TYPE.MOVIE.icon}
+                                background={OBJECT_TYPE.MOVIE.background}
+                                foreground={OBJECT_TYPE.MOVIE.foreground}
+                                border={OBJECT_TYPE.MOVIE.border}>
+                                {OBJECT_TYPE.MOVIE.name}
+                            </CustomBadge>
+                            <Link href=''>
+                                <CustomBadge icon={Layers2}>Collections</CustomBadge>
+                            </Link>
+                        </div>
+
+                        <div className='flex flex-wrap gap-2'>
+                            <div>
+                                <MovieFavouriteButton />
+                            </div>
+                            <div>
+                                <MovieWatchlistButton />
+                            </div>
+
+                            <Button variant='outline' size='sm'>
+                                <Star className='size-3.5' />
+                                Review
+                            </Button>
+                            {movie.trailer && (
+                                <Link href={movie.trailer ?? ''} target='_blank'>
+                                    <Button variant='outline' size='sm'>
+                                        <Play />
+                                        Play Trailer
+                                    </Button>
+                                </Link>
+                            )}
+                            {/* <Button
+                                variant='outline'
+                                size='sm'
+                                onClick={() => {
+                                    dispatch(
+                                        toggleEditDialogOpenState({
+                                            objectType: 'MOVIE',
+                                            objectId: movie.id
+                                        })
+                                    );
+                                }}>
+                                <Edit2 className='size-3.5' />
+                                Edit Movie
+                            </Button> */}
+                            {/* <MovieRatingSlider /> */}
+                        </div>
                     </div>
                     <div className='flex flex-col gap-2'>
                         <h2>{movie.title}</h2>
                         <p className='text-muted-foreground'>{movie.tagline}</p>
                         <p>{movie.overview}</p>
                     </div>
-                </div>
-                <Separator />
-                <div className='flex flex-wrap gap-2'>
-                    <div>
-                        <MovieFavouriteButton />
-                    </div>
-                    <div>
-                        <MovieWatchlistButton />
-                    </div>
-
-                    <Button
-                        variant='outline'
-                        size='sm'
-                        onClick={() => {
-                            dispatch(
-                                toggleEditDialogOpenState({
-                                    objectType: 'MOVIE',
-                                    objectId: movie.id
-                                })
-                            );
-                        }}>
-                        <Edit2 className='size-3.5' />
-                        Edit Movie
-                    </Button>
-                    <Button variant='outline' size='sm'>
-                        <Star className='size-3.5' />
-                        Review
-                    </Button>
-                    {movie.trailer && (
-                        <Link href={movie.trailer ?? ''} target='_blank'>
-                            <Button variant='outline' size='sm'>
-                                <Play />
-                                Play Trailer
-                            </Button>
-                        </Link>
-                    )}
-                    {/* <MovieRatingSlider /> */}
                 </div>
                 <Separator />
                 <div className='flex flex-wrap gap-2'>

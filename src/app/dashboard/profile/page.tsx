@@ -1,157 +1,183 @@
 'use client';
 
-import DefaultLoading from '@/components/shared/default-loading';
-import { Container } from '@/components/ui/container';
-import { useGetProfileQuery } from '@/generated/graphql';
-import { cn } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/registry/new-york-v4/ui/card';
-import { Separator } from '@/registry/new-york-v4/ui/separator';
-import { useUserId } from '@nhost/nextjs';
+import { useMemo } from 'react';
 
-import { languages } from 'countries-list';
+import Link from 'next/link';
+
+import InstagramIcon from '@/components/icons/instagram.icon';
+import XIcon from '@/components/icons/x.icon';
+import DefaultLoading from '@/components/shared/default-loading';
+import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
+import ScrollableTabs from '@/components/shared/scrollable-tabs';
+import { useGetProfileQuery } from '@/generated/graphql';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
+import { Button } from '@/registry/new-york-v4/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york-v4/ui/tabs';
+import { Tooltip } from '@/registry/new-york-v4/ui/tooltip';
+import { useUserId } from '@nhost/nextjs';
+import { TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
+
 import { format, formatDistanceToNow } from 'date-fns';
-import { CalendarDays, Mail } from 'lucide-react';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { Activity, Crown, Folder, Lightbulb, List, Star, Verified } from 'lucide-react';
+
+dayjs.extend(advancedFormat);
+
+const Backdrop = ({ image, title }: { image: string; title: string }) => (
+    <div className='relative h-28 w-full sm:h-36 md:h-64 lg:h-80'>
+        <ImageWithSkeleton
+            src={image}
+            alt={title}
+            fill
+            wrapperClassName='absolute inset-0'
+            imageClassName='object-cover object-center rounded-md'
+        />
+        <div className='absolute inset-0 rounded-md bg-gradient-to-t from-black/30 to-transparent'></div>
+    </div>
+);
+
+const ProfileAvatar = ({ image, title }: { image: string; title: string }) => (
+    <div className='relative aspect-square h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 lg:h-32 lg:w-32'>
+        <ImageWithSkeleton
+            src={image}
+            alt={title}
+            fill
+            wrapperClassName='absolute inset-0'
+            imageClassName='object-cover object-center border-2 border-white rounded-full'
+        />
+    </div>
+);
+
+const VerifiedBadge = () => (
+    <Tooltip>
+        <TooltipTrigger>
+            <Verified className='mt-0.5 size-4 fill-green-500 text-white sm:size-5' />
+        </TooltipTrigger>
+        <TooltipContent className='flex items-center gap-2 rounded-md border bg-white p-1'>
+            <Verified className='size-5 fill-green-500 text-white' />
+            <span className='text-sm font-semibold'>Verified</span>
+        </TooltipContent>
+    </Tooltip>
+);
+
+const ProBadge = () => (
+    <Badge variant='outline' className='w-fit gap-1 px-2 py-1 transition-colors delay-0 duration-75'>
+        <Crown className='mb-0.5 !size-3 text-yellow-600 sm:!size-3.5' />
+        <span>PRO</span>
+    </Badge>
+);
+
+const tabItems = [
+    { value: 'activity', icon: Activity, label: 'Activity' },
+    { value: 'collections', icon: Folder, label: 'Collections' },
+    { value: 'lists', icon: List, label: 'Lists' },
+    { value: 'reviews', icon: Star, label: 'Reviews' },
+    { value: 'recommendations', icon: Lightbulb, label: 'Recs', responsiveLabel: 'Recommendations' }
+];
+
+const tabContents = {
+    activity: { title: 'Recent Activity', content: 'No recent activity to display.' },
+    collections: { title: 'Your Collection', content: 'Your collection is empty.' },
+    lists: { title: 'Your Lists', content: "You haven't created any lists yet." },
+    reviews: { title: 'Your Reviews', content: "You haven't written any reviews yet." },
+    recommendations: { title: 'Your Recommendations', content: 'No recommendations available.' }
+};
 
 export default function ProfilePage() {
     const userId = useUserId();
     const { data, isLoading } = useGetProfileQuery(
-        {
-            id: userId
-        },
+        { id: userId },
         {
             queryKey: ['profile', userId],
             enabled: !!userId
         }
     );
 
+    const userInfo = useMemo(() => {
+        if (!data?.user) return null;
+
+        const { displayName, avatarUrl, createdAt, emailVerified } = data.user;
+        const joined = createdAt ? format(new Date(createdAt), 'MMMM do, yyyy') : 'Unknown';
+        const joinedAgo = createdAt ? formatDistanceToNow(new Date(createdAt), { addSuffix: true }) : '';
+
+        return {
+            displayName,
+            avatarUrl,
+            joined,
+            joinedAgo,
+            emailVerified
+        };
+    }, [data]);
+
     if (isLoading) return <DefaultLoading />;
-
-    const { displayName, email, avatarUrl, createdAt, emailVerified, disabled, locale } = data?.user || {};
-    const joined = createdAt ? format(new Date(createdAt), 'MMMM d, yyyy') : 'Unknown';
-    const joinedAgo = createdAt ? formatDistanceToNow(new Date(createdAt), { addSuffix: true }) : '';
-
-    const language = languages[locale ?? 'en'].name;
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    const getInitials = (name: string | undefined) => {
-        if (!name) return 'U';
-        return name
-            .split(' ')
-            .map((part) => part[0])
-            .join('')
-            .toUpperCase()
-            .substring(0, 2);
-    };
+    if (!userInfo) return null;
 
     return (
-        <div className='grid grid-cols-1 gap-6 2xl:grid-cols-3'>
-            {/* User Info Card */}
-            <Card className='2xl:col-span-1'>
-                <CardHeader className='flex flex-row items-center gap-3'>
-                    <Avatar className='h-16 w-16'>
-                        <AvatarImage src={avatarUrl} alt={displayName} />
-                        <AvatarFallback>{getInitials(displayName)}</AvatarFallback>
-                    </Avatar>
-                    <div className='flex flex-col'>
-                        <CardTitle className='text-xl'>{displayName || 'User'}</CardTitle>
-                        <CardDescription className='text-muted-foreground ellipses w-4/5 truncate text-sm sm:w-full'>
-                            {userId}
-                        </CardDescription>
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    <div className='space-y-4'>
-                        <div className='flex flex-col gap-1'>
-                            <div className='flex items-center gap-3 pt-2'>
-                                <Mail className='text-muted-foreground h-4 w-4' />
-                                <div className='flex items-center gap-2'>
-                                    <p className='text-muted-foreground text-sm'>{email}</p>
-                                </div>
-                            </div>
-                            <div className='flex items-center gap-3 pt-2'>
-                                <CalendarDays className='text-muted-foreground h-4 w-4' />
-                                <div className='flex items-center gap-2'>
-                                    <p className='text-sm font-medium'>Member since</p>
-                                    <p className='text-muted-foreground text-sm'>{joined}</p>
-                                    <p className='text-muted-foreground text-xs'>({joinedAgo})</p>
-                                </div>
-                            </div>
-                        </div>
-                        <Separator />
-                        <div className='pt-2'>
-                            <p className='mb-2 text-sm font-medium'>Account Status</p>
-                            <div className='flex flex-wrap gap-2'>
-                                <Badge
-                                    variant='outline'
-                                    className={cn(
-                                        !disabled
-                                            ? 'bg-green-50 text-green-700 hover:bg-green-50'
-                                            : 'bg-red-50 text-red-700 hover:bg-red-50'
-                                    )}>
-                                    {!disabled ? 'Active' : 'Inactive'}
-                                </Badge>
-                                <Badge
-                                    variant='outline'
-                                    className={cn(
-                                        emailVerified
-                                            ? 'bg-blue-50 text-blue-700 hover:bg-blue-50'
-                                            : 'bg-yellow-50 text-yellow-700 hover:bg-yellow-50'
-                                    )}>
-                                    {emailVerified ? 'Verified' : 'Not Verified'}
-                                </Badge>
+        <div className='relative'>
+            <Backdrop
+                image='https://media.themoviedb.org/t/p/w1066_and_h600_bestv2/fzZmcKQv7ZTGIiPvocPhNs3wUyK.jpg'
+                title={userInfo.displayName}
+            />
+
+            <div className='px-3 sm:px-6 lg:px-12'>
+                <div className='relative -mt-8 mb-3 inline-block sm:-mt-10 md:-mt-12 lg:-mt-16'>
+                    <ProfileAvatar image={userInfo.avatarUrl} title={userInfo.displayName} />
+                </div>
+
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6'>
+                    <div className='flex flex-col gap-2'>
+                        <h2 className='flex items-center gap-1 text-lg font-bold sm:text-xl md:text-2xl'>
+                            {userInfo.displayName}
+                            {userInfo.emailVerified && <VerifiedBadge />}
+                        </h2>
+
+                        <p className='text-muted-foreground text-xs sm:text-sm'>
+                            Member since {userInfo.joined}
+                            <span className='hidden text-xs sm:inline'> ({userInfo.joinedAgo})</span>
+                        </p>
+
+                        <p className='mt-1 text-sm sm:text-base'>
+                            "I'd rather die drunk, broke at 34 and have people at a dinner table talk about me than live
+                            to be rich and sober at 90 and nobody remembered who I was."
+                        </p>
+
+                        <div className='mt-2 flex flex-col gap-2 sm:mt-3 sm:gap-3'>
+                            <ProBadge />
+                            <div className='flex flex-wrap items-center gap-2'>
+                                <Link href=''>
+                                    <Button
+                                        size='sm'
+                                        variant='outline'
+                                        className='h-8 cursor-pointer text-xs sm:text-sm'>
+                                        <InstagramIcon className='mr-1 size-3 sm:size-4' />
+                                        Instagram
+                                    </Button>
+                                </Link>
+                                <Link href=''>
+                                    <Button
+                                        size='sm'
+                                        variant='outline'
+                                        className='h-8 cursor-pointer text-xs sm:text-sm'>
+                                        <XIcon className='mr-1 size-3 sm:size-4' />
+                                        Twitter
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
                     </div>
-                </CardContent>
-            </Card>
-            <div className='2xl:col-span-2'>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Account Details</CardTitle>
-                        <CardDescription>Detailed information about your account</CardDescription>
-                    </CardHeader>
-                    <CardContent className='space-y-6'>
-                        <div>
-                            <h6 className='mb-2'>User Information</h6>
-                            <div className='bg-muted/50 grid grid-cols-1 gap-4 rounded-lg p-4 2xl:grid-cols-2'>
-                                <div>
-                                    <p className='text-muted-foreground text-xs'>Display Name</p>
-                                    <p className='text-sm font-medium'>{displayName || 'Not set'}</p>
-                                </div>
-                                <div>
-                                    <p className='text-muted-foreground text-xs'>Email Address</p>
-                                    <p className='text-sm font-medium'>{email || 'Not set'}</p>
-                                </div>
-                                <div>
-                                    <p className='text-muted-foreground text-xs'>User ID</p>
-                                    <p className='truncate text-sm font-medium'>{userId || 'Not available'}</p>
-                                </div>
-                                <div>
-                                    <p className='text-muted-foreground text-xs'>Account Created</p>
-                                    <p className='text-sm font-medium'>{joined}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <Separator />
-                        <div>
-                            <h6 className='mb-2'>Account Settings</h6>
-                            <div className='bg-muted/50 rounded-lg p-4'>
-                                <div className='grid grid-cols-1 gap-4 2xl:grid-cols-2'>
-                                    <div>
-                                        <p className='text-muted-foreground text-xs'>Language</p>
-                                        <p className='text-sm font-medium'>{language}</p>
-                                    </div>
-                                    <div>
-                                        <p className='text-muted-foreground text-xs'>Time Zone</p>
-                                        <p className='text-sm font-medium'>{timeZone}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+
+                    <div className='md:col-span-2'>
+                        <ScrollableTabs defaultValue='activity' tabs={tabItems}>
+                            {Object.entries(tabContents).map(([key, { title, content }]) => (
+                                <TabsContent key={key} value={key} className='mt-3 sm:mt-4'>
+                                    <h3 className='mb-2 text-base font-medium sm:mb-4 sm:text-lg'>{title}</h3>
+                                    <p className='text-muted-foreground text-sm'>{content}</p>
+                                </TabsContent>
+                            ))}
+                        </ScrollableTabs>
+                    </div>
+                </div>
             </div>
         </div>
     );

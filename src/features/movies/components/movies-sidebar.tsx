@@ -138,7 +138,7 @@ export default function MoviesSidebar() {
                         onSubmit={form.handleSubmit(onSubmit)}
                         className='flex h-full w-full flex-col items-center gap-3 overflow-hidden'>
                         <SheetHeader className='w-full'>
-                            <SheetTitle className='font-mono text-xl font-bold sm:text-2xl'>Discover</SheetTitle>
+                            <SheetTitle className='text-xl font-bold sm:text-2xl'>Discover</SheetTitle>
                         </SheetHeader>
                         <Separator />
 

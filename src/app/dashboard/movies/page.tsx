@@ -73,7 +73,7 @@ export default function MoviesPage() {
         <Fragment>
             <div className='mb-5 flex items-center justify-between'>
                 <div>
-                    <h2 className='font-mono text-2xl font-bold'>Discover</h2>
+                    <h2 className='text-2xl font-bold'>Discover</h2>
                     <p>Explore a wide-range of movies with filters and sorting options.</p>
                 </div>
                 <MoviesSidebar />
