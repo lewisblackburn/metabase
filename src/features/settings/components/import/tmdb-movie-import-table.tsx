@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import NextImage from 'next/image';
 
+import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -80,7 +81,14 @@ export default function TMDBMovieImportTable() {
                     const posterUrl = tmdbService.getPosterImage(m.poster_path ?? '');
                     return posterUrl ? (
                         <div className='flex items-center gap-4'>
-                            <NextImage src={posterUrl} alt={title} width={75} height={112.5} className='rounded-md' />
+                            <ImageWithSkeleton
+                                src={posterUrl}
+                                alt={title}
+                                width={75}
+                                height={112.5}
+                                wrapperClassName='relative h-16 w-12 overflow-hidden rounded-md'
+                                className='absolute inset-0 h-full w-full object-cover'
+                            />
                             {metadata}
                         </div>
                     ) : (

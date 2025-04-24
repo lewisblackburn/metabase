@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
+import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -64,11 +65,21 @@ export default function SpotifySongImportTable() {
                     if (!name || !t.artists) return null;
 
                     return (
-                        <div className='flex flex-col'>
-                            <span className='font-medium'>{name}</span>
-                            <span className='text-muted-foreground text-sm'>
-                                {t.artists.map((a) => a.name).join(', ')}
-                            </span>
+                        <div className='flex items-center gap-2'>
+                            <ImageWithSkeleton
+                                src={t.album.images[0]?.url ?? ''}
+                                alt={name}
+                                width={75}
+                                height={75}
+                                wrapperClassName='relative h-16 w-16 overflow-hidden rounded-md'
+                                className='absolute inset-0 h-full w-full object-cover'
+                            />
+                            <div className='flex flex-col'>
+                                <span className='font-medium'>{name}</span>
+                                <span className='text-muted-foreground text-sm'>
+                                    {t.artists.map((a) => a.name).join(', ')}
+                                </span>
+                            </div>
                         </div>
                     );
                 }
