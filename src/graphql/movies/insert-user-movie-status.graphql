@@ -1,0 +1,9 @@
+mutation InsertUserMovieStatus($object: user_movie_status_insert_input!, $on_conflict: user_movie_status_on_conflict) {
+    insert_user_movie_status_one(object: $object, on_conflict: $on_conflict) {
+        favourited
+        rating
+        review
+        status
+        updated_at
+    }
+}

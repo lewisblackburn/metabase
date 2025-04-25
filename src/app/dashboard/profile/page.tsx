@@ -6,13 +6,14 @@ import Link from 'next/link';
 
 import InstagramIcon from '@/components/icons/instagram.icon';
 import XIcon from '@/components/icons/x.icon';
+import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
 import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york-v4/ui/tabs';
+import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 import { Tooltip } from '@/registry/new-york-v4/ui/tooltip';
 import { useUserId } from '@nhost/nextjs';
 import { TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
@@ -146,22 +147,14 @@ export default function ProfilePage() {
                             <ProBadge />
                             <div className='flex flex-wrap items-center gap-2'>
                                 <Link href=''>
-                                    <Button
-                                        size='sm'
-                                        variant='outline'
-                                        className='h-8 cursor-pointer text-xs sm:text-sm'>
-                                        <InstagramIcon className='mr-1 size-3 sm:size-4' />
+                                    <ActionButton icon={InstagramIcon} size='sm'>
                                         Instagram
-                                    </Button>
+                                    </ActionButton>
                                 </Link>
                                 <Link href=''>
-                                    <Button
-                                        size='sm'
-                                        variant='outline'
-                                        className='h-8 cursor-pointer text-xs sm:text-sm'>
-                                        <XIcon className='mr-1 size-3 sm:size-4' />
+                                    <ActionButton icon={XIcon} size='sm'>
                                         Twitter
-                                    </Button>
+                                    </ActionButton>
                                 </Link>
                             </div>
                         </div>

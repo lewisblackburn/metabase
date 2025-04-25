@@ -5,6 +5,7 @@ import Link from 'next/link';
 import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
 import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
+import StatusPickerButton from '@/components/shared/status-picker.button';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
@@ -12,6 +13,7 @@ import { OBJECT_TYPE } from '@/constants/objects.constant';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
+import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
@@ -84,8 +86,6 @@ function MoviePageContent() {
 
     const mostPopularReview = MOVIE_DATA.reviews[0];
 
-    console.log(movie.average_rating, movie.budget, movie.revenue, movie.certification, movie.trailer);
-
     return (
         <div className='flex flex-col gap-5'>
             <div className='flex gap-2'>
@@ -109,13 +109,8 @@ function MoviePageContent() {
                         </div>
 
                         <div className='flex flex-wrap gap-2'>
-                            <div>
-                                <MovieFavouriteButton />
-                            </div>
-                            <div>
-                                <MovieWatchlistButton />
-                            </div>
-
+                            {/* <MovieFavouriteButton /> */}
+                            {/* <MovieWatchlistButton /> */}
                             <Button variant='outline' size='sm'>
                                 <Star className='size-3.5' />
                                 Review
@@ -128,6 +123,7 @@ function MoviePageContent() {
                                     </Button>
                                 </Link>
                             )}
+                            <MovieStatusPicker />
                             {/* <Button
                                 variant='outline'
                                 size='sm'

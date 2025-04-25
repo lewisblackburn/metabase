@@ -12,9 +12,6 @@ query GetSong($id: uuid!) {
         type
         spotify_uri
         disc_number
-        favourited
-        listen_latered
-        user_rating
         album {
             id
             name

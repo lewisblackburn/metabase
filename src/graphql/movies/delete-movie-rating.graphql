@@ -1,7 +1,0 @@
-mutation DeleteMovieRating($where: movie_ratings_bool_exp!) {
-    delete_movie_ratings(where: $where) {
-        returning {
-            id
-        }
-    }
-}

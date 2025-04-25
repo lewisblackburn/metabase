@@ -23,9 +23,13 @@ query GetMovie($id: uuid!) {
         vote_average
         vote_count
         homepage
-        favourited
-        watchlisted
-        user_rating
+        user_movie_statuses {
+            favourited
+            rating
+            review
+            status
+            updated_at
+        }
         status {
             id
             name
@@ -68,17 +72,6 @@ query GetMovie($id: uuid!) {
                 name
                 headshot
             }
-        }
-        movie_reviews {
-            id
-            rating
-            review
-            user {
-                id
-                displayName
-                avatarUrl
-            }
-            created_at
         }
         movie_soundtracks {
             id

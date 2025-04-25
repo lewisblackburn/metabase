@@ -35,7 +35,6 @@ dayjs.extend(advancedFormat);
 
 export default function SongPage() {
     const [isFavourite, setIsFavourite] = useState(false);
-    const [isListenLater, setIsListenLater] = useState(false);
 
     return (
         <div className='flex flex-col gap-5'>
@@ -84,16 +83,10 @@ export default function SongPage() {
                         <div className='grid grid-cols-2 gap-2'>
                             <ActionButton
                                 icon={Heart}
-                                label='Favourite'
                                 iconClassName={cn({ 'fill-red-500 text-red-500': isFavourite })}
-                                onClick={() => setIsFavourite((prev) => !prev)}
-                            />
-                            <ActionButton
-                                icon={Bookmark}
-                                label='Listen Later'
-                                iconClassName={cn({ 'fill-blue-500 text-blue-500': isListenLater })}
-                                onClick={() => setIsListenLater((prev) => !prev)}
-                            />
+                                onClick={() => setIsFavourite((prev) => !prev)}>
+                                Favourite
+                            </ActionButton>
                         </div>
                     </div>
                 </div>

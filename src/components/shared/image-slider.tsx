@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '@/registry/new-york-v4/ui/scroll-area';
 
+import ImageWithSkeleton from './image-with-skeleton';
+
 export type ImageSliderProps = {
     images: Array<{
         id: string;
@@ -26,10 +28,11 @@ export default function ImageSlider({ images, width = 100, height = 200, imageCl
                     <Link key={image.id} href={image.href ?? ''}>
                         <figure className='shrink-0' style={{ maxWidth: width }}>
                             <div className='overflow-hidden rounded-md'>
-                                <Image
+                                <ImageWithSkeleton
                                     src={image.src}
                                     alt={`Photo by ${image.alt}`}
-                                    className={cn('aspect-[3/4] h-fit w-fit object-cover', imageClassName)}
+                                    wrapperClassName='relative h-full w-full'
+                                    imageClassName={cn('h-full w-full  object-cover aspect-[3/4]', imageClassName)}
                                     width={width}
                                     height={Math.round(width * (4 / 3))}
                                 />

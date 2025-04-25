@@ -1,7 +1,0 @@
-mutation DeleteMovieWatchlist($where: movie_watchlist_bool_exp!) {
-    delete_movie_watchlist(where: $where) {
-        returning {
-            id
-        }
-    }
-}

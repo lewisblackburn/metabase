@@ -1,6 +1,0 @@
-mutation InsertMovieRating($object: movie_ratings_insert_input!, $on_conflict: movie_ratings_on_conflict) {
-    insert_movie_ratings_one(object: $object, on_conflict: $on_conflict) {
-        id
-        rating
-    }
-}

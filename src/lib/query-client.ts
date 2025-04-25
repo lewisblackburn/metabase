@@ -10,7 +10,7 @@ export const queryClient = new QueryClient({
             retry: false
         },
         mutations: {
-            throwOnError: true,
+            throwOnError: false,
             retry: false
         }
     }
