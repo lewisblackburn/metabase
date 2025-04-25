@@ -36,8 +36,8 @@ export default function MovieStatusPicker() {
 
     const initialStatus = (movie.user_movie_statuses[0]?.status as UserMovieStatus) || undefined;
 
-    const handleStatusChange = (status: string | null) => {
-        insertUserMovieStatus({
+    const handleStatusChange = async (status: string | null) => {
+        await insertUserMovieStatus({
             object: {
                 movie_id: movie.id,
                 status: status as UserMovieStatus

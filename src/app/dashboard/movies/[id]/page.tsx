@@ -15,6 +15,7 @@ import MovieFavouriteButton from '@/features/movies/components/movie-favourite-b
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
 import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
+import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -109,12 +110,7 @@ function MoviePageContent() {
                         </div>
 
                         <div className='flex flex-wrap gap-2'>
-                            {/* <MovieFavouriteButton /> */}
-                            {/* <MovieWatchlistButton /> */}
-                            <Button variant='outline' size='sm'>
-                                <Star className='size-3.5' />
-                                Review
-                            </Button>
+                            <MovieFavouriteButton />
                             {movie.trailer && (
                                 <Link href={movie.trailer ?? ''} target='_blank'>
                                     <Button variant='outline' size='sm'>
@@ -123,6 +119,7 @@ function MoviePageContent() {
                                     </Button>
                                 </Link>
                             )}
+                            <ReviewMovieDialog />
                             <MovieStatusPicker />
                             {/* <Button
                                 variant='outline'
@@ -138,7 +135,6 @@ function MoviePageContent() {
                                 <Edit2 className='size-3.5' />
                                 Edit Movie
                             </Button> */}
-                            {/* <MovieRatingSlider /> */}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>

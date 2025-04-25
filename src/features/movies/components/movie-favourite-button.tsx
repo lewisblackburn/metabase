@@ -1,72 +1,58 @@
+import ActionButton from '@/components/shared/action-button';
 import {
-    Movie_Favourites_Constraint,
-    useDeleteMovieFavouriteMutation,
-    useInsertMovieFavouriteMutation
+    User_Movie_Status_Constraint,
+    User_Movie_Status_Update_Column,
+    useInsertUserMovieStatusMutation
 } from '@/generated/graphql';
-import { queryClient } from '@/lib/query-client';
 import { cn } from '@/lib/utils';
-import { Button } from '@/registry/new-york-v4/ui/button';
 import { useUserId } from '@nhost/nextjs';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useMovie } from './movie-provider';
-import { Heart, Loader2 } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function MovieFavouriteButton() {
     const userId = useUserId();
+    const queryClient = useQueryClient();
     const { movie } = useMovie();
-    const { mutateAsync: insertMovieFavourite, isPending: insertFavouritePending } = useInsertMovieFavouriteMutation();
-    const { mutateAsync: deleteMovieFavourite, isPending: deleteFavouritePending } = useDeleteMovieFavouriteMutation();
 
-    const isLoading = insertFavouritePending || deleteFavouritePending;
+    const { mutateAsync: insertUserMovieStatus } = useInsertUserMovieStatusMutation({
+        onSuccess: () => {
+            toast.success('Movie status updated successfully');
+            queryClient.invalidateQueries({ queryKey: ['movie', movie?.id] });
+        },
+        onError: (error) => toast.error((error as Error).message)
+    });
 
     if (!movie) return null;
 
-    const isFavourited = movie.favourited;
+    const isFavourited = movie.user_movie_statuses[0]?.favourited || false;
 
-    const handleFavourite = async () => {
-        await insertMovieFavourite({
+    const handleClick = async () => {
+        await insertUserMovieStatus({
             object: {
-                movie_id: movie.id
+                movie_id: movie.id,
+                favourited: !isFavourited
             },
             on_conflict: {
-                constraint: Movie_Favourites_Constraint.MovieFavouritesPkey,
-                update_columns: []
-            }
-        });
-    };
-
-    const handleUnfavourite = async () => {
-        await deleteMovieFavourite({
-            where: {
-                movie_id: {
-                    _eq: movie.id
-                },
-                user_id: {
-                    _eq: userId
+                constraint: User_Movie_Status_Constraint.UserMovieStatusPkey,
+                update_columns: [User_Movie_Status_Update_Column.Favourited],
+                where: {
+                    user_id: { _eq: userId },
+                    movie_id: { _eq: movie.id }
                 }
             }
         });
     };
 
-    const handleClick = async () => {
-        if (isFavourited) await handleUnfavourite();
-        else await handleFavourite();
-
-        queryClient.invalidateQueries({ queryKey: ['movie', movie.id] });
-    };
     return (
-        <Button
-            variant='outline'
+        <ActionButton
             size='sm'
-            className={cn({ 'fill-red-500 text-red-500': isFavourited })}
-            disabled={isLoading}
+            icon={Heart}
+            iconClassName={cn({ 'fill-red-500 text-red-500': isFavourited })}
             onClick={async () => await handleClick()}>
-            {isLoading ? (
-                <Loader2 className='size-4 animate-spin' />
-            ) : (
-                <Heart className={cn({ 'fill-red-500 text-red-500': isFavourited })} />
-            )}
             {isFavourited ? 'Favourited' : 'Favourite'}
-        </Button>
+        </ActionButton>
     );
 }
