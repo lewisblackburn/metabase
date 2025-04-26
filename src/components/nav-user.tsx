@@ -70,7 +70,10 @@ export function NavUser({ user }: { user: User | null }) {
             <DropdownMenuTrigger asChild>
                 <Avatar className='size-8 cursor-pointer'>
                     <AvatarImage src={user?.avatarUrl} alt={`@${user?.displayName ?? 'user'}`} />
-                    <AvatarFallback />
+                    <AvatarFallback>
+                        <UserIcon className='size-3.5' />
+                        <span className='sr-only'>@{user?.displayName}</span>
+                    </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className='w-56'>
@@ -80,7 +83,10 @@ export function NavUser({ user }: { user: User | null }) {
                             <Link href='/dashboard/profile' className='flex items-center gap-2'>
                                 <Avatar className='size-6'>
                                     <AvatarImage src={user.avatarUrl} alt={`@${user.displayName ?? 'user'}`} />
-                                    <AvatarFallback />
+                                    <AvatarFallback>
+                                        <UserIcon className='size-3.5' />
+                                        <span className='sr-only'>@{user.displayName}</span>
+                                    </AvatarFallback>
                                 </Avatar>
                                 <span>{user.displayName}</span>
                             </Link>
