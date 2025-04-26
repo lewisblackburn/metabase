@@ -8,7 +8,14 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/registry/new-york-v4/ui/dialog';
 import { Form, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/registry/new-york-v4/ui/radio-group';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/registry/new-york-v4/ui/sheet';
+import {
+    Sheet,
+    SheetContent,
+    SheetContentWithoutClose,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger
+} from '@/registry/new-york-v4/ui/sheet';
 import { Textarea } from '@/registry/new-york-v4/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -152,8 +159,8 @@ export default function ReviewDialog({ defaultValues, onSubmitReview, onDeleteRe
                         <ReviewButton reviewed={!!defaultValues?.rating} />
                     </div>
                 </SheetTrigger>
-                <SheetContent side='bottom' className='h-auto max-h-[90vh] overflow-auto p-4'>
-                    <SheetHeader>
+                <SheetContentWithoutClose side='bottom' className='h-auto max-h-[90vh] overflow-auto rounded-lg p-4'>
+                    <SheetHeader className='p-0'>
                         <SheetTitle className='sr-only'>Write a Review</SheetTitle>
                     </SheetHeader>
                     <ReviewForm
@@ -162,7 +169,7 @@ export default function ReviewDialog({ defaultValues, onSubmitReview, onDeleteRe
                         onCancel={handleCancel}
                         onDelete={handleDelete}
                     />
-                </SheetContent>
+                </SheetContentWithoutClose>
             </Sheet>
         );
     }

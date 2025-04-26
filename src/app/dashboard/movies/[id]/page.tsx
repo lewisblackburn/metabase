@@ -5,6 +5,7 @@ import Link from 'next/link';
 import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
 import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
+import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import StatusPickerButton from '@/components/shared/status-picker.button';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
@@ -20,21 +21,26 @@ import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
+import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
 import {
     Calendar,
     CreditCard,
     Eye,
+    Image,
     Info,
     Languages,
     Layers2,
+    Music,
     Play,
     Star,
     Tags,
     Timer,
     TrendingUp,
-    User
+    Trophy,
+    User,
+    Video
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
@@ -70,6 +76,40 @@ export default function MoviePage() {
     );
 }
 
+const tabItems = [
+    { value: 'reviews', icon: Star, label: 'Reviews' },
+    {
+        value: 'where-to-watch',
+        icon: Layers2,
+        label: 'Where to Watch'
+    },
+    {
+        value: 'credits',
+        icon: User,
+        label: 'Credits'
+    },
+    {
+        value: 'soundtrack',
+        icon: Music,
+        label: 'Soundtrack'
+    },
+    {
+        value: 'awards',
+        icon: Trophy,
+        label: 'Awards'
+    },
+    {
+        value: 'images',
+        icon: Image,
+        label: 'Images'
+    },
+    {
+        value: 'videos',
+        icon: Video,
+        label: 'Videos'
+    }
+];
+
 function MoviePageContent() {
     const dispatch = useDispatch();
     const { movie } = useMovie();
@@ -86,6 +126,27 @@ function MoviePageContent() {
     }));
 
     const mostPopularReview = MOVIE_DATA.reviews[0];
+    const tabContents = {
+        reviews: {
+            content: (
+                <Review
+                    id='review-1'
+                    user={mostPopularReview.user}
+                    content={mostPopularReview.content}
+                    votes={mostPopularReview.votes}
+                    voteStatus={mostPopularReview.voteStatus}
+                    rating={mostPopularReview.rating}
+                    createdAt={mostPopularReview.createdAt}
+                />
+            )
+        },
+        'where-to-watch': { content: 'No where to watch information available.' },
+        credits: { content: <ImageSlider images={castImages} /> },
+        soundtrack: { content: <SoundtrackTable /> },
+        awards: { content: <AwardTable awards={MOVIE_DATA.awards} /> },
+        images: { content: 'No images available.' },
+        videos: { content: 'No videos available.' }
+    };
 
     return (
         <div className='flex flex-col gap-5'>
@@ -163,61 +224,14 @@ function MoviePageContent() {
                     <MovieContentScore />
                 </div>
                 <Separator />
-                <div className='flex flex-col gap-2'>
-                    <Link href='' className='w-fit'>
-                        <CustomBadge
-                            icon={OBJECT_TYPE.CAST.icon}
-                            background={OBJECT_TYPE.CAST.background}
-                            foreground={OBJECT_TYPE.CAST.foreground}
-                            border={OBJECT_TYPE.CAST.border}>
-                            {OBJECT_TYPE.CAST.name}
-                        </CustomBadge>
-                    </Link>
-                    <ImageSlider images={castImages} />
-                </div>
-                <Separator />
-                <div className='flex flex-col gap-2'>
-                    <CustomBadge
-                        icon={OBJECT_TYPE.SOUNDTRACK.icon}
-                        background={OBJECT_TYPE.SOUNDTRACK.background}
-                        foreground={OBJECT_TYPE.SOUNDTRACK.foreground}
-                        border={OBJECT_TYPE.SOUNDTRACK.border}>
-                        {OBJECT_TYPE.SOUNDTRACK.name}
-                    </CustomBadge>
-                    <SoundtrackTable />
-                </div>
-                <Separator />
-                <div className='flex flex-col gap-2'>
-                    <Link href='' className='w-fit'>
-                        <CustomBadge
-                            icon={OBJECT_TYPE.REVIEW.icon}
-                            background={OBJECT_TYPE.REVIEW.background}
-                            foreground={OBJECT_TYPE.REVIEW.foreground}
-                            border={OBJECT_TYPE.REVIEW.border}>
-                            {OBJECT_TYPE.REVIEW.plural}
-                        </CustomBadge>
-                    </Link>
-                    <Review
-                        id='review-1'
-                        user={mostPopularReview.user}
-                        content={mostPopularReview.content}
-                        votes={mostPopularReview.votes}
-                        voteStatus={mostPopularReview.voteStatus}
-                        rating={mostPopularReview.rating}
-                        createdAt={mostPopularReview.createdAt}
-                    />
-                </div>
-                <Separator />
-                <div className='flex flex-col gap-2'>
-                    <CustomBadge
-                        icon={OBJECT_TYPE.AWARD.icon}
-                        background={OBJECT_TYPE.AWARD.background}
-                        foreground={OBJECT_TYPE.AWARD.foreground}
-                        border={OBJECT_TYPE.AWARD.border}>
-                        {OBJECT_TYPE.AWARD.plural}
-                    </CustomBadge>
-                    <AwardTable awards={MOVIE_DATA.awards} />
-                </div>
+
+                <ScrollableTabs defaultValue='reviews' tabs={tabItems}>
+                    {Object.entries(tabContents).map(([key, { title, content }]) => (
+                        <TabsContent key={key} value={key} className='mt-3 sm:mt-4'>
+                            {content}
+                        </TabsContent>
+                    ))}
+                </ScrollableTabs>
             </div>
         </div>
     );
