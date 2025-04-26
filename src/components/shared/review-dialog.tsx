@@ -21,6 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import BaseFormLayout from '../form/base-form-layout';
 import ActionButton from './action-button';
+import ResponsiveDialog from './responsive-dailog';
 import { Star, Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -134,7 +135,6 @@ const ReviewForm = ({ defaultValues, onSubmit, onCancel, onDelete }: ReviewFormP
 };
 
 export default function ReviewDialog({ defaultValues, onSubmitReview, onDeleteReview }: ReviewDialogProps) {
-    const isMobile = useIsMobile();
     const [open, setOpen] = useState(false);
 
     const handleSubmit = (reviewData: ReviewFormValues) => {
@@ -151,47 +151,22 @@ export default function ReviewDialog({ defaultValues, onSubmitReview, onDeleteRe
         setOpen(false);
     };
 
-    if (isMobile) {
-        return (
-            <Sheet open={open} onOpenChange={setOpen}>
-                <SheetTrigger asChild>
-                    <div>
-                        <ReviewButton reviewed={!!defaultValues?.rating} />
-                    </div>
-                </SheetTrigger>
-                <SheetContentWithoutClose side='bottom' className='h-auto max-h-[90vh] overflow-auto rounded-lg p-4'>
-                    <SheetHeader className='p-0'>
-                        <SheetTitle className='sr-only'>Write a Review</SheetTitle>
-                    </SheetHeader>
-                    <ReviewForm
-                        defaultValues={defaultValues}
-                        onSubmit={handleSubmit}
-                        onCancel={handleCancel}
-                        onDelete={handleDelete}
-                    />
-                </SheetContentWithoutClose>
-            </Sheet>
-        );
-    }
-
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
+        <ResponsiveDialog
+            open={open}
+            onOpenChange={setOpen}
+            title='Write a Review'
+            trigger={
                 <div>
                     <ReviewButton reviewed={!!defaultValues?.rating} />
                 </div>
-            </DialogTrigger>
-            <DialogContent className='sm:max-w-md'>
-                <DialogHeader>
-                    <DialogTitle className='sr-only'>Write a Review</DialogTitle>
-                </DialogHeader>
-                <ReviewForm
-                    defaultValues={defaultValues}
-                    onSubmit={handleSubmit}
-                    onCancel={handleCancel}
-                    onDelete={handleDelete}
-                />
-            </DialogContent>
-        </Dialog>
+            }>
+            <ReviewForm
+                defaultValues={defaultValues}
+                onSubmit={handleSubmit}
+                onCancel={handleCancel}
+                onDelete={handleDelete}
+            />
+        </ResponsiveDialog>
     );
 }
