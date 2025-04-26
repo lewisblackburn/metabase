@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import Grid from '@/components/shared/grid';
 import Poster from '@/components/shared/poster';
 import { MAX_LIMIT } from '@/constants/api.constant';
-import { OBJECT_TYPE } from '@/constants/objects.constant';
 import MoviesSidebar from '@/features/movies/components/movies-sidebar';
 import { useIncrementMovieViews } from '@/features/movies/hooks/useIncrementMovieViews';
 import { useMovieFilters } from '@/features/movies/hooks/useMovieFilters';
@@ -16,7 +15,7 @@ import { GetMoviesQuery, useInfiniteGetMoviesQuery } from '@/generated/graphql';
 
 import { useInView } from 'react-intersection-observer';
 
-function MovieCard({ movie, index }: { index: number; movie: GetMoviesQuery['movies'][number] }) {
+function MovieCard({ movie }: { movie: GetMoviesQuery['movies'][number] }) {
     const router = useRouter();
     const { mutate: bumpViews } = useIncrementMovieViews(movie.id);
 
@@ -80,8 +79,8 @@ export default function MoviesPage() {
             </div>
 
             <Grid>
-                {allMovies.map((movie, index) => (
-                    <MovieCard key={movie.id} movie={movie} index={index} />
+                {allMovies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
                 ))}
             </Grid>
             <div ref={loadMoreRef} />

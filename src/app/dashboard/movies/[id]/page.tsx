@@ -111,7 +111,6 @@ const tabItems = [
 ];
 
 function MoviePageContent() {
-    const dispatch = useDispatch();
     const { movie } = useMovie();
 
     if (!movie) return null;

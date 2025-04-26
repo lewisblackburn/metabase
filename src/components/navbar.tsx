@@ -124,8 +124,8 @@ const Navbar: React.FC = () => {
                                             'block h-full rounded-md p-3 leading-none no-underline transition-colors outline-none select-none',
                                             'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'
                                         )}>
-                                        <div className='flex items-center gap-1.5'>
-                                            <Home className='mt-0.5 size-3' />
+                                        <div className='flex items-center gap-1.5 font-semibold'>
+                                            <Home className='font-semibol mt-0.5 size-3' />
                                             <span>Home</span>
                                         </div>
                                     </Link>

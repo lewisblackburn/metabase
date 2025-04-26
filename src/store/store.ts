@@ -2,6 +2,7 @@ import commandPanelReducer from '@/features/command-panel/store/command-panel.sl
 import editDialogReducer from '@/features/edit-dailog/store/edit-dialog.slice';
 import movieEditReducer from '@/features/movies/store/movie-edit.slice';
 import moviesFilterReducer from '@/features/movies/store/movies-filter.slice';
+import personEditReducer from '@/features/people/store/person-edit.slice';
 import settingsReducer from '@/features/settings/store/settings.slice';
 import shortcutsReducer from '@/features/shortcuts/store/shortcuts.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     commandPanel: commandPanelReducer,
     editDialog: editDialogReducer,
     movieEdit: movieEditReducer,
+    personEdit: personEditReducer,
     moviesFilter: moviesFilterReducer,
     settings: settingsReducer,
     shortcuts: persistReducer(shortcutsPersistConfig, shortcutsReducer)

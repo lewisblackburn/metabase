@@ -30,7 +30,7 @@ export const CustomBadge = ({
                 border,
                 className
             )}>
-            <Icon className='!size-4' />
+            <Icon className='!size-3.5' />
             <span>{children}</span>
         </Badge>
     );

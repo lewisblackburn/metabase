@@ -1,102 +1,136 @@
 'use client';
 
-import Image from 'next/image';
+import Link from 'next/link';
 
-import AwardTable from '@/components/shared/award-table';
-import ImageSlider from '@/components/shared/image-slider';
-import Poster from '@/components/shared/poster';
-import ProgressItem from '@/components/shared/progress-item';
+import InstagramIcon from '@/components/icons/instagram.icon';
+import XIcon from '@/components/icons/x.icon';
+import ActionButton from '@/components/shared/action-button';
+import HeroCardLayout from '@/components/shared/hero-layout';
 import { CustomBadge } from '@/components/ui/custom-badge';
-import { PERSON_DATA } from '@/constants/fakedb.constant';
-import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { Separator } from '@/registry/new-york-v4/ui/separator';
+import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
+import { PersonProvider, usePerson } from '@/features/people/components/person-provider';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from '@/registry/new-york-v4/ui/select';
 
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { Calendar, MapPin, Skull, Star, TrendingUp, VenusAndMars } from 'lucide-react';
+import { format } from 'date-fns';
+import { Calendar, Edit, LucideIcon, User, UserCheck, VenusAndMars } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 
-dayjs.extend(advancedFormat);
+function PersonInformation({
+    icon: Icon,
+    label,
+    children
+}: {
+    icon: LucideIcon;
+    label: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <div className='flex items-center justify-between'>
+            <h6>{label}</h6>
+            <CustomBadge icon={Icon}>{children}</CustomBadge>
+        </div>
+    );
+}
 
 export default function PersonPage() {
-    const knownForImages = PERSON_DATA.knownForTitles.map((item) => ({
-        id: item.id,
-        src: item.poster,
-        alt: item.title,
-        title: item.title
-    }));
+    return (
+        <PersonProvider>
+            <PersonPageContent />
+        </PersonProvider>
+    );
+}
+
+function PersonPageContent() {
+    const dispatch = useDispatch();
+    const { person } = usePerson();
+
+    if (!person) return null;
 
     return (
-        <div className='flex flex-col gap-5'>
-            <div className='flex items-center gap-2'>
-                <CustomBadge
-                    icon={OBJECT_TYPE.PERSON.icon}
-                    background={OBJECT_TYPE.PERSON.background}
-                    foreground={OBJECT_TYPE.PERSON.foreground}
-                    border={OBJECT_TYPE.PERSON.border}>
-                    {OBJECT_TYPE.PERSON.name}
-                </CustomBadge>
-                <CustomBadge
-                    icon={OBJECT_TYPE.ACTOR.icon}
-                    background={OBJECT_TYPE.ACTOR.background}
-                    foreground={OBJECT_TYPE.ACTOR.foreground}
-                    border={OBJECT_TYPE.ACTOR.border}>
-                    {OBJECT_TYPE.ACTOR.name}
-                </CustomBadge>
-            </div>
-            <div className='grid grid-cols-1 gap-5 md:grid-cols-[250px_1fr]'>
-                <div className='flex flex-col gap-5'>
-                    <Poster title={PERSON_DATA.name} image={PERSON_DATA.headshot} />
-                </div>
-                <div className='flex flex-col gap-5'>
-                    <div className='flex flex-col gap-2'>
-                        <h2 className=''>{PERSON_DATA.name}</h2>
-                        <p className='text-muted-foreground'>
-                            {PERSON_DATA.knownForTitles
-                                .map((item) => item.title)
-                                .splice(0, 3)
-                                .join(', ')}
-                        </p>
-                        <p>{PERSON_DATA.biography}</p>
-                    </div>
-                    <div className='flex flex-wrap gap-2'>
-                        {PERSON_DATA.birthdate && (
-                            <CustomBadge icon={Calendar}>
-                                {dayjs(PERSON_DATA.birthdate).format('MMMM Do, YYYY')}
-                            </CustomBadge>
-                        )}
-                        {PERSON_DATA.birthplace && <CustomBadge icon={MapPin}>{PERSON_DATA.birthplace}</CustomBadge>}
-                        {PERSON_DATA.gender && <CustomBadge icon={VenusAndMars}>{PERSON_DATA.gender}</CustomBadge>}
-                        {PERSON_DATA.deathdate && <CustomBadge icon={Skull}>{PERSON_DATA.deathdate}</CustomBadge>}
-                        <div>
-                            <ProgressItem label='Content Score' score={PERSON_DATA.contentScore} />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className='flex flex-col gap-10 md:py-5'>
-                <Separator />
+        <HeroCardLayout
+            backdropImage={person.backdrop}
+            backdropAlt={`${person.name} backdrop`}
+            avatarImage={person.headshot}
+            avatarAlt={`${person.name} avatar`}>
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6'>
                 <div className='flex flex-col gap-2'>
-                    <CustomBadge
-                        icon={Star}
-                        background='bg-orange-300/20'
-                        foreground='text-orange-800'
-                        border='border-orange-400/60'>
-                        Known For
-                    </CustomBadge>
-                    <ImageSlider images={knownForImages} />
+                    <div className='flex items-center justify-between'>
+                        <h2 className='text-lg font-bold sm:text-xl md:text-2xl'>{person.name}</h2>
+                        <ActionButton
+                            icon={Edit}
+                            size='sm'
+                            onClick={() =>
+                                dispatch(toggleEditDialogOpenState({ objectType: 'PERSON', objectId: person.id }))
+                            }>
+                            Edit
+                        </ActionButton>
+                    </div>
+
+                    <p className='text-muted-foreground mt-1 text-sm sm:text-base'>{person.bio}</p>
+
+                    <div className='mt-5 flex flex-col gap-4'>
+                        <PersonInformation icon={User} label='Known for'>
+                            {person.known_for ?? 'Unknown'}
+                        </PersonInformation>
+                        <PersonInformation icon={UserCheck} label='Credited in'>
+                            54
+                        </PersonInformation>
+                        <PersonInformation icon={VenusAndMars} label='Gender'>
+                            {person.gender ?? 'Unknown'}
+                        </PersonInformation>
+                        <PersonInformation icon={Calendar} label='Birthdate'>
+                            <div className='flex items-center gap-1'>
+                                {person.birth_date ? (
+                                    <span>{format(new Date(person.birth_date), 'MMMM Do, yyyy')}</span>
+                                ) : (
+                                    <span>Unknown</span>
+                                )}
+                                {person.death_date ? (
+                                    <>
+                                        <span>-</span>
+                                        <span>{format(new Date(person.death_date), 'MMMM Do, yyyy')}</span>
+                                    </>
+                                ) : null}
+                            </div>
+                        </PersonInformation>
+                    </div>
+
+                    <div className='mt-5 flex flex-wrap items-center gap-2'>
+                        <Link href={'#'}>
+                            <ActionButton icon={InstagramIcon} size='sm'>
+                                Instagram
+                            </ActionButton>
+                        </Link>
+                        <Link href={'#'}>
+                            <ActionButton icon={XIcon} size='sm'>
+                                Twitter
+                            </ActionButton>
+                        </Link>
+                    </div>
                 </div>
-                <Separator />
-                <div className='flex flex-col gap-2'>
-                    <CustomBadge
-                        icon={OBJECT_TYPE.AWARD.icon}
-                        background={OBJECT_TYPE.AWARD.background}
-                        foreground={OBJECT_TYPE.AWARD.foreground}
-                        border={OBJECT_TYPE.AWARD.border}>
-                        {OBJECT_TYPE.AWARD.plural}
-                    </CustomBadge>
-                    <AwardTable awards={PERSON_DATA.awards} />
+
+                <div className='md:col-span-2'>
+                    <Select defaultValue='actor'>
+                        <SelectTrigger className='w-[180px]'>
+                            <SelectValue placeholder='Select a role' />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem value='actor'>Actor</SelectItem>
+                                <SelectItem value='producer'>Producer</SelectItem>
+                                <SelectItem value='author'>Author</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
             </div>
-        </div>
+        </HeroCardLayout>
     );
 }

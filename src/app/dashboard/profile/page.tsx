@@ -8,11 +8,10 @@ import InstagramIcon from '@/components/icons/instagram.icon';
 import XIcon from '@/components/icons/x.icon';
 import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
-import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
+import HeroCardLayout from '@/components/shared/hero-layout';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Button } from '@/registry/new-york-v4/ui/button';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 import { Tooltip } from '@/registry/new-york-v4/ui/tooltip';
 import { useUserId } from '@nhost/nextjs';
@@ -24,31 +23,6 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Activity, Crown, Folder, Lightbulb, List, Star, Verified } from 'lucide-react';
 
 dayjs.extend(advancedFormat);
-
-const Backdrop = ({ image, title }: { image: string; title: string }) => (
-    <div className='relative h-28 w-full sm:h-36 md:h-64 lg:h-80'>
-        <ImageWithSkeleton
-            src={image}
-            alt={title}
-            fill
-            wrapperClassName='absolute inset-0'
-            imageClassName='object-cover object-center rounded-md'
-        />
-        <div className='absolute inset-0 rounded-md bg-gradient-to-t from-black/30 to-transparent'></div>
-    </div>
-);
-
-const ProfileAvatar = ({ image, title }: { image: string; title: string }) => (
-    <div className='relative aspect-square h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 lg:h-32 lg:w-32'>
-        <ImageWithSkeleton
-            src={image}
-            alt={title}
-            fill
-            wrapperClassName='absolute inset-0'
-            imageClassName='object-cover object-center border-2 border-white rounded-full'
-        />
-    </div>
-);
 
 const VerifiedBadge = () => (
     <Tooltip>
@@ -115,63 +89,56 @@ export default function ProfilePage() {
     if (!userInfo) return null;
 
     return (
-        <div className='relative'>
-            <Backdrop
-                image='https://media.themoviedb.org/t/p/w1066_and_h600_bestv2/fzZmcKQv7ZTGIiPvocPhNs3wUyK.jpg'
-                title={userInfo.displayName}
-            />
+        <HeroCardLayout
+            backdropImage='https://media.themoviedb.org/t/p/w1066_and_h600_bestv2/fzZmcKQv7ZTGIiPvocPhNs3wUyK.jpg'
+            backdropAlt={userInfo.displayName}
+            avatarImage={userInfo.avatarUrl}
+            avatarAlt={userInfo.displayName}>
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6'>
+                <div className='flex flex-col gap-2'>
+                    <h2 className='flex items-center gap-1 text-lg font-bold sm:text-xl md:text-2xl'>
+                        {userInfo.displayName}
+                        {userInfo.emailVerified && <VerifiedBadge />}
+                    </h2>
 
-            <div className='px-3 sm:px-6 lg:px-12'>
-                <div className='relative -mt-8 mb-3 inline-block sm:-mt-10 md:-mt-12 lg:-mt-16'>
-                    <ProfileAvatar image={userInfo.avatarUrl} title={userInfo.displayName} />
-                </div>
+                    <p className='text-muted-foreground text-xs sm:text-sm'>
+                        Member since {userInfo.joined}
+                        <span className='hidden text-xs sm:inline'> ({userInfo.joinedAgo})</span>
+                    </p>
 
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6'>
-                    <div className='flex flex-col gap-2'>
-                        <h2 className='flex items-center gap-1 text-lg font-bold sm:text-xl md:text-2xl'>
-                            {userInfo.displayName}
-                            {userInfo.emailVerified && <VerifiedBadge />}
-                        </h2>
+                    <p className='mt-1 text-sm sm:text-base'>
+                        "I'd rather die drunk, broke at 34 and have people at a dinner table talk about me than live to
+                        be rich and sober at 90 and nobody remembered who I was."
+                    </p>
 
-                        <p className='text-muted-foreground text-xs sm:text-sm'>
-                            Member since {userInfo.joined}
-                            <span className='hidden text-xs sm:inline'> ({userInfo.joinedAgo})</span>
-                        </p>
-
-                        <p className='mt-1 text-sm sm:text-base'>
-                            "I'd rather die drunk, broke at 34 and have people at a dinner table talk about me than live
-                            to be rich and sober at 90 and nobody remembered who I was."
-                        </p>
-
-                        <div className='mt-2 flex flex-col gap-2 sm:mt-3 sm:gap-3'>
-                            <ProBadge />
-                            <div className='flex flex-wrap items-center gap-2'>
-                                <Link href=''>
-                                    <ActionButton icon={InstagramIcon} size='sm'>
-                                        Instagram
-                                    </ActionButton>
-                                </Link>
-                                <Link href=''>
-                                    <ActionButton icon={XIcon} size='sm'>
-                                        Twitter
-                                    </ActionButton>
-                                </Link>
-                            </div>
+                    <div className='mt-2 flex flex-col gap-2 sm:mt-3 sm:gap-3'>
+                        <ProBadge />
+                        <div className='flex flex-wrap items-center gap-2'>
+                            <Link href=''>
+                                <ActionButton icon={InstagramIcon} size='sm'>
+                                    Instagram
+                                </ActionButton>
+                            </Link>
+                            <Link href=''>
+                                <ActionButton icon={XIcon} size='sm'>
+                                    Twitter
+                                </ActionButton>
+                            </Link>
                         </div>
                     </div>
+                </div>
 
-                    <div className='md:col-span-2'>
-                        <ScrollableTabs defaultValue='activity' tabs={tabItems}>
-                            {Object.entries(tabContents).map(([key, { title, content }]) => (
-                                <TabsContent key={key} value={key} className='mt-3 sm:mt-4'>
-                                    <h3 className='mb-2 text-base font-medium sm:mb-4 sm:text-lg'>{title}</h3>
-                                    <p className='text-muted-foreground text-sm'>{content}</p>
-                                </TabsContent>
-                            ))}
-                        </ScrollableTabs>
-                    </div>
+                <div className='md:col-span-2'>
+                    <ScrollableTabs defaultValue='activity' tabs={tabItems}>
+                        {Object.entries(tabContents).map(([key, { title, content }]) => (
+                            <TabsContent key={key} value={key} className='mt-3 sm:mt-4'>
+                                <h3 className='mb-2 text-base font-medium sm:mb-4 sm:text-lg'>{title}</h3>
+                                <p className='text-muted-foreground text-sm'>{content}</p>
+                            </TabsContent>
+                        ))}
+                    </ScrollableTabs>
                 </div>
             </div>
-        </div>
+        </HeroCardLayout>
     );
 }

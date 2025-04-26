@@ -5,11 +5,13 @@ import {
     Code,
     CreditCard,
     Download,
+    FilePlus,
     FileText,
     Globe,
     HardDrive,
     Hash,
     Image,
+    Import,
     Languages,
     LanguagesIcon,
     Lock,
@@ -44,7 +46,9 @@ export const ICONS = {
     Hash,
     Clapperboard,
     Download,
-    Globe
+    Globe,
+    FilePlus,
+    Import
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconType = keyof typeof ICONS;

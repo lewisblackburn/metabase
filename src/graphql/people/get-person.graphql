@@ -2,8 +2,13 @@ query GetPerson($id: uuid!) {
     people_by_pk(id: $id) {
         id
         headshot
+        backdrop
         name
         bio
+        known_for
+        gender
+        content_score
+        view_count
         birth_date
         death_date
         tmdb_id

@@ -1,0 +1,5 @@
+mutation UpdatePerson($id: uuid!, $set: people_set_input) {
+    update_people_by_pk(_set: $set, pk_columns: { id: $id }) {
+        id
+    }
+}

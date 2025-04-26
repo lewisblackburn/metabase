@@ -1,6 +1,7 @@
 'use client';
 
 import { EditMovieDialog } from '@/features/movies/components/edit-movie-dialog';
+import { EditPersonDialog } from '@/features/people/components/edit-person.dialog';
 import { RootState } from '@/store/store';
 
 import { setEditDialogOpenState } from '../store/edit-dialog.slice';
@@ -22,6 +23,8 @@ export default function EditDialogManager() {
     switch (objectType) {
         case 'MOVIE':
             return <EditMovieDialog {...commonProps} />;
+        case 'PERSON':
+            return <EditPersonDialog {...commonProps} />;
         default:
             return null;
     }

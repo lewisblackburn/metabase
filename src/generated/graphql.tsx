@@ -11567,6 +11567,7 @@ export type Mutation_RootUpdate_Notifications_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_PeopleArgs = {
+  _inc?: InputMaybe<People_Inc_Input>;
   _set?: InputMaybe<People_Set_Input>;
   where: People_Bool_Exp;
 };
@@ -11574,6 +11575,7 @@ export type Mutation_RootUpdate_PeopleArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_People_By_PkArgs = {
+  _inc?: InputMaybe<People_Inc_Input>;
   _set?: InputMaybe<People_Set_Input>;
   pk_columns: People_Pk_Columns_Input;
 };
@@ -12131,12 +12133,16 @@ export type People = {
   album_artists: Array<Album_Artists>;
   /** An aggregate relationship */
   album_artists_aggregate: Album_Artists_Aggregate;
+  backdrop: Scalars['String']['output'];
   bio?: Maybe<Scalars['String']['output']>;
   birth_date?: Maybe<Scalars['date']['output']>;
+  content_score: Scalars['Float']['output'];
   created_at?: Maybe<Scalars['timestamp']['output']>;
   death_date?: Maybe<Scalars['date']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
   headshot: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
+  known_for?: Maybe<Scalars['String']['output']>;
   /** An array relationship */
   movie_casts: Array<Movie_Cast>;
   /** An aggregate relationship */
@@ -12160,6 +12166,7 @@ export type People = {
   song_artists_aggregate: Song_Artists_Aggregate;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 
@@ -12292,9 +12299,17 @@ export type People_Aggregate = {
 /** aggregate fields of "people" */
 export type People_Aggregate_Fields = {
   __typename?: 'people_aggregate_fields';
+  avg?: Maybe<People_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<People_Max_Fields>;
   min?: Maybe<People_Min_Fields>;
+  stddev?: Maybe<People_Stddev_Fields>;
+  stddev_pop?: Maybe<People_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<People_Stddev_Samp_Fields>;
+  sum?: Maybe<People_Sum_Fields>;
+  var_pop?: Maybe<People_Var_Pop_Fields>;
+  var_samp?: Maybe<People_Var_Samp_Fields>;
+  variance?: Maybe<People_Variance_Fields>;
 };
 
 
@@ -12304,6 +12319,13 @@ export type People_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** aggregate avg on columns */
+export type People_Avg_Fields = {
+  __typename?: 'people_avg_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
+};
+
 /** Boolean expression to filter rows from the table "people". All fields are combined with a logical 'AND'. */
 export type People_Bool_Exp = {
   _and?: InputMaybe<Array<People_Bool_Exp>>;
@@ -12311,12 +12333,16 @@ export type People_Bool_Exp = {
   _or?: InputMaybe<Array<People_Bool_Exp>>;
   album_artists?: InputMaybe<Album_Artists_Bool_Exp>;
   album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Bool_Exp>;
+  backdrop?: InputMaybe<String_Comparison_Exp>;
   bio?: InputMaybe<String_Comparison_Exp>;
   birth_date?: InputMaybe<Date_Comparison_Exp>;
+  content_score?: InputMaybe<Float_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   death_date?: InputMaybe<Date_Comparison_Exp>;
+  gender?: InputMaybe<String_Comparison_Exp>;
   headshot?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  known_for?: InputMaybe<String_Comparison_Exp>;
   movie_casts?: InputMaybe<Movie_Cast_Bool_Exp>;
   movie_casts_aggregate?: InputMaybe<Movie_Cast_Aggregate_Bool_Exp>;
   movie_crews?: InputMaybe<Movie_Crew_Bool_Exp>;
@@ -12330,6 +12356,7 @@ export type People_Bool_Exp = {
   song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Bool_Exp>;
   spotify_id?: InputMaybe<String_Comparison_Exp>;
   tmdb_id?: InputMaybe<String_Comparison_Exp>;
+  view_count?: InputMaybe<Int_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "people" */
@@ -12342,15 +12369,25 @@ export enum People_Constraint {
   PeopleTmdbIdKey = 'people_tmdb_id_key'
 }
 
+/** input type for incrementing numeric columns in table "people" */
+export type People_Inc_Input = {
+  content_score?: InputMaybe<Scalars['Float']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
+};
+
 /** input type for inserting data into table "people" */
 export type People_Insert_Input = {
   album_artists?: InputMaybe<Album_Artists_Arr_Rel_Insert_Input>;
+  backdrop?: InputMaybe<Scalars['String']['input']>;
   bio?: InputMaybe<Scalars['String']['input']>;
   birth_date?: InputMaybe<Scalars['date']['input']>;
+  content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   death_date?: InputMaybe<Scalars['date']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  known_for?: InputMaybe<Scalars['String']['input']>;
   movie_casts?: InputMaybe<Movie_Cast_Arr_Rel_Insert_Input>;
   movie_crews?: InputMaybe<Movie_Crew_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -12359,34 +12396,45 @@ export type People_Insert_Input = {
   song_artists?: InputMaybe<Song_Artists_Arr_Rel_Insert_Input>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate max on columns */
 export type People_Max_Fields = {
   __typename?: 'people_max_fields';
+  backdrop?: Maybe<Scalars['String']['output']>;
   bio?: Maybe<Scalars['String']['output']>;
   birth_date?: Maybe<Scalars['date']['output']>;
+  content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   death_date?: Maybe<Scalars['date']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  known_for?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 /** aggregate min on columns */
 export type People_Min_Fields = {
   __typename?: 'people_min_fields';
+  backdrop?: Maybe<Scalars['String']['output']>;
   bio?: Maybe<Scalars['String']['output']>;
   birth_date?: Maybe<Scalars['date']['output']>;
+  content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   death_date?: Maybe<Scalars['date']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  known_for?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 /** response of any mutation on the table "people" */
@@ -12415,12 +12463,16 @@ export type People_On_Conflict = {
 /** Ordering options when selecting data from "people". */
 export type People_Order_By = {
   album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Order_By>;
+  backdrop?: InputMaybe<Order_By>;
   bio?: InputMaybe<Order_By>;
   birth_date?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   death_date?: InputMaybe<Order_By>;
+  gender?: InputMaybe<Order_By>;
   headshot?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  known_for?: InputMaybe<Order_By>;
   movie_casts_aggregate?: InputMaybe<Movie_Cast_Aggregate_Order_By>;
   movie_crews_aggregate?: InputMaybe<Movie_Crew_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
@@ -12429,6 +12481,7 @@ export type People_Order_By = {
   song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Order_By>;
   spotify_id?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: people */
@@ -12439,36 +12492,72 @@ export type People_Pk_Columns_Input = {
 /** select columns of table "people" */
 export enum People_Select_Column {
   /** column name */
+  Backdrop = 'backdrop',
+  /** column name */
   Bio = 'bio',
   /** column name */
   BirthDate = 'birth_date',
+  /** column name */
+  ContentScore = 'content_score',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
   DeathDate = 'death_date',
   /** column name */
+  Gender = 'gender',
+  /** column name */
   Headshot = 'headshot',
   /** column name */
   Id = 'id',
+  /** column name */
+  KnownFor = 'known_for',
   /** column name */
   Name = 'name',
   /** column name */
   SpotifyId = 'spotify_id',
   /** column name */
-  TmdbId = 'tmdb_id'
+  TmdbId = 'tmdb_id',
+  /** column name */
+  ViewCount = 'view_count'
 }
 
 /** input type for updating data in table "people" */
 export type People_Set_Input = {
+  backdrop?: InputMaybe<Scalars['String']['input']>;
   bio?: InputMaybe<Scalars['String']['input']>;
   birth_date?: InputMaybe<Scalars['date']['input']>;
+  content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   death_date?: InputMaybe<Scalars['date']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  known_for?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type People_Stddev_Fields = {
+  __typename?: 'people_stddev_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type People_Stddev_Pop_Fields = {
+  __typename?: 'people_stddev_pop_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type People_Stddev_Samp_Fields = {
+  __typename?: 'people_stddev_samp_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Streaming cursor of the table "people" */
@@ -12481,44 +12570,89 @@ export type People_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type People_Stream_Cursor_Value_Input = {
+  backdrop?: InputMaybe<Scalars['String']['input']>;
   bio?: InputMaybe<Scalars['String']['input']>;
   birth_date?: InputMaybe<Scalars['date']['input']>;
+  content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   death_date?: InputMaybe<Scalars['date']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  known_for?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate sum on columns */
+export type People_Sum_Fields = {
+  __typename?: 'people_sum_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 /** update columns of table "people" */
 export enum People_Update_Column {
   /** column name */
+  Backdrop = 'backdrop',
+  /** column name */
   Bio = 'bio',
   /** column name */
   BirthDate = 'birth_date',
+  /** column name */
+  ContentScore = 'content_score',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
   DeathDate = 'death_date',
   /** column name */
+  Gender = 'gender',
+  /** column name */
   Headshot = 'headshot',
   /** column name */
   Id = 'id',
+  /** column name */
+  KnownFor = 'known_for',
   /** column name */
   Name = 'name',
   /** column name */
   SpotifyId = 'spotify_id',
   /** column name */
-  TmdbId = 'tmdb_id'
+  TmdbId = 'tmdb_id',
+  /** column name */
+  ViewCount = 'view_count'
 }
 
 export type People_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<People_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<People_Set_Input>;
   /** filter the rows which have to be updated */
   where: People_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type People_Var_Pop_Fields = {
+  __typename?: 'people_var_pop_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type People_Var_Samp_Fields = {
+  __typename?: 'people_var_samp_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type People_Variance_Fields = {
+  __typename?: 'people_variance_fields';
+  content_score?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "person_changes" */
@@ -19101,7 +19235,7 @@ export type User_Movie_Status = {
   /** An object relationship */
   movie: Movies;
   movie_id: Scalars['uuid']['output'];
-  rating: Scalars['smallint']['output'];
+  rating?: Maybe<Scalars['smallint']['output']>;
   review?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   updated_at: Scalars['timestamptz']['output'];
@@ -20643,7 +20777,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, user_movie_statuses: Array<{ __typename?: 'user_movie_status', favourited: boolean, rating: any, review?: string | null, status?: string | null, updated_at: any }>, status?: { __typename?: 'statuses', id: any, name: string } | null, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: { __typename?: 'availabilities', id: any, name: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, character?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, user_movie_statuses: Array<{ __typename?: 'user_movie_status', favourited: boolean, rating?: any | null, review?: string | null, status?: string | null, updated_at: any }>, status?: { __typename?: 'statuses', id: any, name: string } | null, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: { __typename?: 'availabilities', id: any, name: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_cast_members: Array<{ __typename?: 'movie_cast', id: any, character?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_crew_members: Array<{ __typename?: 'movie_crew', id: any, job?: string | null, department?: string | null, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -20665,7 +20799,7 @@ export type GetUserMovieStatusQueryVariables = Exact<{
 }>;
 
 
-export type GetUserMovieStatusQuery = { __typename?: 'query_root', user_movie_status: Array<{ __typename?: 'user_movie_status', favourited: boolean, rating: any, review?: string | null, status?: string | null, updated_at: any }> };
+export type GetUserMovieStatusQuery = { __typename?: 'query_root', user_movie_status: Array<{ __typename?: 'user_movie_status', favourited: boolean, rating?: any | null, review?: string | null, status?: string | null, updated_at: any }> };
 
 export type IncrementMovieViewsMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -20687,7 +20821,7 @@ export type InsertUserMovieStatusMutationVariables = Exact<{
 }>;
 
 
-export type InsertUserMovieStatusMutation = { __typename?: 'mutation_root', insert_user_movie_status_one?: { __typename?: 'user_movie_status', favourited: boolean, rating: any, review?: string | null, status?: string | null, updated_at: any } | null };
+export type InsertUserMovieStatusMutation = { __typename?: 'mutation_root', insert_user_movie_status_one?: { __typename?: 'user_movie_status', favourited: boolean, rating?: any | null, review?: string | null, status?: string | null, updated_at: any } | null };
 
 export type UpdateMovieMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -20703,7 +20837,15 @@ export type GetPersonQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, name: string, bio?: string | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null } | null };
+export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for?: string | null, gender?: string | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null } | null };
+
+export type UpdatePersonMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+  set?: InputMaybe<People_Set_Input>;
+}>;
+
+
+export type UpdatePersonMutation = { __typename?: 'mutation_root', update_people_by_pk?: { __typename?: 'people', id: any } | null };
 
 export type GetSongBySpotify_IdQueryVariables = Exact<{
   spotify_id?: InputMaybe<Scalars['String']['input']>;
@@ -21306,8 +21448,13 @@ export const GetPersonDocument = `
   people_by_pk(id: $id) {
     id
     headshot
+    backdrop
     name
     bio
+    known_for
+    gender
+    content_score
+    view_count
     birth_date
     death_date
     tmdb_id
@@ -21348,6 +21495,27 @@ export const useInfiniteGetPersonQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const UpdatePersonDocument = `
+    mutation UpdatePerson($id: uuid!, $set: people_set_input) {
+  update_people_by_pk(_set: $set, pk_columns: {id: $id}) {
+    id
+  }
+}
+    `;
+
+export const useUpdatePersonMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdatePersonMutation, TError, UpdatePersonMutationVariables, TContext>) => {
+    
+    return useMutation<UpdatePersonMutation, TError, UpdatePersonMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdatePerson'],
+    mutationFn: (variables?: UpdatePersonMutationVariables) => fetcher<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, variables)(),
+    ...options
+  }
     )};
 
 export const GetSongBySpotify_IdDocument = `
