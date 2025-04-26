@@ -18,11 +18,7 @@ import { useUserId } from '@nhost/nextjs';
 import { TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
 
 import { format, formatDistanceToNow } from 'date-fns';
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Activity, Crown, Folder, Lightbulb, List, Star, Verified } from 'lucide-react';
-
-dayjs.extend(advancedFormat);
 
 const VerifiedBadge = () => (
     <Tooltip>

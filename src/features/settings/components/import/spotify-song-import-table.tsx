@@ -15,8 +15,6 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Loader2, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-dayjs.extend(advancedFormat);
-
 export default function SpotifySongImportTable() {
     const [pageIndex, setPageIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');

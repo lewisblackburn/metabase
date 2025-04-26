@@ -31,8 +31,6 @@ import {
     VenusAndMars
 } from 'lucide-react';
 
-dayjs.extend(advancedFormat);
-
 export default function SongPage() {
     const [isFavourite, setIsFavourite] = useState(false);
 

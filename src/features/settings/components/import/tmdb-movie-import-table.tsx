@@ -14,11 +14,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
 import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Loader2, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
-
-dayjs.extend(advancedFormat);
 
 type MovieRow = SearchResult & { id: string };
 

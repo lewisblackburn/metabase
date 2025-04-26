@@ -20832,12 +20832,27 @@ export type UpdateMovieMutationVariables = Exact<{
 
 export type UpdateMovieMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any } | null };
 
+export type GetPersonByTmdb_IdQueryVariables = Exact<{
+  tmdb_id?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetPersonByTmdb_IdQuery = { __typename?: 'query_root', people: Array<{ __typename?: 'people', tmdb_id?: string | null }> };
+
 export type GetPersonQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
 
 export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for?: string | null, gender?: string | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null } | null };
+
+export type InsertPersonMutationVariables = Exact<{
+  object: People_Insert_Input;
+  on_conflict?: InputMaybe<People_On_Conflict>;
+}>;
+
+
+export type InsertPersonMutation = { __typename?: 'mutation_root', insert_people_one?: { __typename?: 'people', id: any, name: string } | null };
 
 export type UpdatePersonMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -21443,6 +21458,49 @@ export const useUpdateMovieMutation = <
   }
     )};
 
+export const GetPersonByTmdb_IdDocument = `
+    query GetPersonByTMDB_ID($tmdb_id: String) {
+  people(where: {tmdb_id: {_eq: $tmdb_id}}) {
+    tmdb_id
+  }
+}
+    `;
+
+export const useGetPersonByTmdb_IdQuery = <
+      TData = GetPersonByTmdb_IdQuery,
+      TError = unknown
+    >(
+      variables?: GetPersonByTmdb_IdQueryVariables,
+      options?: Omit<UseQueryOptions<GetPersonByTmdb_IdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPersonByTmdb_IdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetPersonByTmdb_IdQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetPersonByTMDB_ID'] : ['GetPersonByTMDB_ID', variables],
+    queryFn: fetcher<GetPersonByTmdb_IdQuery, GetPersonByTmdb_IdQueryVariables>(GetPersonByTmdb_IdDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetPersonByTmdb_IdQuery = <
+      TData = InfiniteData<GetPersonByTmdb_IdQuery>,
+      TError = unknown
+    >(
+      variables: GetPersonByTmdb_IdQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetPersonByTmdb_IdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetPersonByTmdb_IdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetPersonByTmdb_IdQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetPersonByTMDB_ID.infinite'] : ['GetPersonByTMDB_ID.infinite', variables],
+      queryFn: (metaData) => fetcher<GetPersonByTmdb_IdQuery, GetPersonByTmdb_IdQueryVariables>(GetPersonByTmdb_IdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
 export const GetPersonDocument = `
     query GetPerson($id: uuid!) {
   people_by_pk(id: $id) {
@@ -21495,6 +21553,28 @@ export const useInfiniteGetPersonQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const InsertPersonDocument = `
+    mutation InsertPerson($object: people_insert_input!, $on_conflict: people_on_conflict) {
+  insert_people_one(object: $object, on_conflict: $on_conflict) {
+    id
+    name
+  }
+}
+    `;
+
+export const useInsertPersonMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertPersonMutation, TError, InsertPersonMutationVariables, TContext>) => {
+    
+    return useMutation<InsertPersonMutation, TError, InsertPersonMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertPerson'],
+    mutationFn: (variables?: InsertPersonMutationVariables) => fetcher<InsertPersonMutation, InsertPersonMutationVariables>(InsertPersonDocument, variables)(),
+    ...options
+  }
     )};
 
 export const UpdatePersonDocument = `

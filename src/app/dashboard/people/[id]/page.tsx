@@ -88,14 +88,14 @@ function PersonPageContent() {
                         <PersonInformation icon={Calendar} label='Birthdate'>
                             <div className='flex items-center gap-1'>
                                 {person.birth_date ? (
-                                    <span>{format(new Date(person.birth_date), 'MMMM Do, yyyy')}</span>
+                                    <span>{format(new Date(person.birth_date), 'MMMM do, yyyy')}</span>
                                 ) : (
                                     <span>Unknown</span>
                                 )}
                                 {person.death_date ? (
                                     <>
                                         <span>-</span>
-                                        <span>{format(new Date(person.death_date), 'MMMM Do, yyyy')}</span>
+                                        <span>{format(new Date(person.death_date), 'MMMM do, yyyy')}</span>
                                     </>
                                 ) : null}
                             </div>

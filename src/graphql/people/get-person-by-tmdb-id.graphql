@@ -1,0 +1,5 @@
+query GetPersonByTMDB_ID($tmdb_id: String) {
+    people(where: { tmdb_id: { _eq: $tmdb_id } }) {
+        tmdb_id
+    }
+}

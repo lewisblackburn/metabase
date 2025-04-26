@@ -8,6 +8,7 @@ import { RootState } from '@/store/store';
 
 import { setActiveItemId } from '../store/person-edit.slice';
 import EditPersonDetails from './edit-person.details';
+import ImportPerson from './import-person';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EditPersonDialogProps {
@@ -21,8 +22,8 @@ export function EditPersonDialog({ id, isOpen, onOpenChange }: EditPersonDialogP
     const dispatch = useDispatch();
 
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
-        details: (item) => <EditPersonDetails personId={id} />,
-        import: (item) => <div>import</div>
+        details: () => <EditPersonDetails personId={id} />,
+        import: () => <ImportPerson />
     };
 
     const config: DialogConfig = {
