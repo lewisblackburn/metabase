@@ -12,7 +12,7 @@ query GetPerson(
         backdrop
         name
         bio
-        known_for
+        known_for_department
         credits(
             distinct_on: $credit_distinct_on
             limit: $credit_limit

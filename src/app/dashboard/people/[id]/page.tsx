@@ -1,31 +1,17 @@
 'use client';
 
-import { Fragment } from 'react';
-
 import Link from 'next/link';
 
 import InstagramIcon from '@/components/icons/instagram.icon';
 import XIcon from '@/components/icons/x.icon';
 import ActionButton from '@/components/shared/action-button';
 import HeroCardLayout from '@/components/shared/hero-layout';
-import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
-import MovieContentScore from '@/features/movies/components/movie-content-score';
 import PersonBio from '@/features/people/components/person-bio';
 import PersonMedia from '@/features/people/components/person-media';
 import { PersonProvider, usePerson } from '@/features/people/components/person-provider';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Button } from '@/registry/new-york-v4/ui/button';
 import { Progress } from '@/registry/new-york-v4/ui/progress';
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from '@/registry/new-york-v4/ui/select';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 
 import { format } from 'date-fns';
@@ -44,7 +30,9 @@ function PersonInformation({
     return (
         <div className='flex items-center justify-between'>
             <h6>{label}</h6>
-            <CustomBadge icon={Icon}>{children}</CustomBadge>
+            <CustomBadge icon={Icon} className='capitalize'>
+                {children}
+            </CustomBadge>
         </div>
     );
 }
@@ -87,7 +75,7 @@ function PersonPageContent() {
 
                     <div className='mt-5 flex flex-col gap-4'>
                         <PersonInformation icon={User} label='Known for'>
-                            {person.known_for ?? 'Unknown'}
+                            {person.known_for_department ?? 'Unknown'}
                         </PersonInformation>
                         <PersonInformation icon={UserCheck} label='Credited in'>
                             54

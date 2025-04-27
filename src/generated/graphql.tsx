@@ -11903,7 +11903,10 @@ export type People = {
   gender?: Maybe<Scalars['String']['output']>;
   headshot: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
-  known_for?: Maybe<Scalars['String']['output']>;
+  /** A computed field, executes function "top_department_for" */
+  known_for_department?: Maybe<Scalars['String']['output']>;
+  /** A computed field, executes function "top_role_for" */
+  known_for_role?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   /** An array relationship */
   person_changes: Array<Person_Changes>;
@@ -12077,7 +12080,8 @@ export type People_Bool_Exp = {
   gender?: InputMaybe<String_Comparison_Exp>;
   headshot?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  known_for?: InputMaybe<String_Comparison_Exp>;
+  known_for_department?: InputMaybe<String_Comparison_Exp>;
+  known_for_role?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   person_changes?: InputMaybe<Person_Changes_Bool_Exp>;
   person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Bool_Exp>;
@@ -12119,7 +12123,6 @@ export type People_Insert_Input = {
   gender?: InputMaybe<Scalars['String']['input']>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  known_for?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   person_changes?: InputMaybe<Person_Changes_Arr_Rel_Insert_Input>;
   person_media?: InputMaybe<Person_Media_Arr_Rel_Insert_Input>;
@@ -12141,7 +12144,10 @@ export type People_Max_Fields = {
   gender?: Maybe<Scalars['String']['output']>;
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  known_for?: Maybe<Scalars['String']['output']>;
+  /** A computed field, executes function "top_department_for" */
+  known_for_department?: Maybe<Scalars['String']['output']>;
+  /** A computed field, executes function "top_role_for" */
+  known_for_role?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
@@ -12160,7 +12166,10 @@ export type People_Min_Fields = {
   gender?: Maybe<Scalars['String']['output']>;
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  known_for?: Maybe<Scalars['String']['output']>;
+  /** A computed field, executes function "top_department_for" */
+  known_for_department?: Maybe<Scalars['String']['output']>;
+  /** A computed field, executes function "top_role_for" */
+  known_for_role?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
@@ -12203,7 +12212,8 @@ export type People_Order_By = {
   gender?: InputMaybe<Order_By>;
   headshot?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  known_for?: InputMaybe<Order_By>;
+  known_for_department?: InputMaybe<Order_By>;
+  known_for_role?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Order_By>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Order_By>;
@@ -12239,8 +12249,6 @@ export enum People_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  KnownFor = 'known_for',
-  /** column name */
   Name = 'name',
   /** column name */
   SpotifyId = 'spotify_id',
@@ -12261,7 +12269,6 @@ export type People_Set_Input = {
   gender?: InputMaybe<Scalars['String']['input']>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  known_for?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -12308,7 +12315,6 @@ export type People_Stream_Cursor_Value_Input = {
   gender?: InputMaybe<Scalars['String']['input']>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  known_for?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -12342,8 +12348,6 @@ export enum People_Update_Column {
   Headshot = 'headshot',
   /** column name */
   Id = 'id',
-  /** column name */
-  KnownFor = 'known_for',
   /** column name */
   Name = 'name',
   /** column name */
@@ -20529,7 +20533,7 @@ export type GetPersonQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for?: string | null, gender?: string | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, media_id: any, media_type: string, role: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, song_credit?: { __typename?: 'songs', name: string, album: { __typename?: 'albums', artwork: string } } | null }> } | null };
+export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: string | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, media_id: any, media_type: string, role: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, song_credit?: { __typename?: 'songs', name: string, album: { __typename?: 'albums', artwork: string } } | null }> } | null };
 
 export type InsertPersonMutationVariables = Exact<{
   object: People_Insert_Input;
@@ -21281,7 +21285,7 @@ export const GetPersonDocument = `
     backdrop
     name
     bio
-    known_for
+    known_for_department
     credits(
       distinct_on: $credit_distinct_on
       limit: $credit_limit

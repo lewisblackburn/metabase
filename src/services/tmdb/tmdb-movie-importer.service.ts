@@ -87,15 +87,15 @@ export class TMDBMovieImporterService extends TMDBService {
                 profile_path: c.profile_path ?? null,
                 credit_type: 'cast' as const,
                 role: 'actor' as const,
-                details: { character: c.character }
+                details: { character: c.character, department: 'acting' as const }
             })),
             ...movie.credits.crew.map((c) => ({
                 id: c.id,
                 name: c.name,
                 profile_path: c.profile_path ?? null,
                 credit_type: 'crew' as const,
-                role: c.job,
-                details: { department: c.department, job: c.job }
+                role: c.job.toLowerCase(),
+                details: { department: c.department.toLowerCase(), job: c.job.toLowerCase() }
             }))
         ];
 

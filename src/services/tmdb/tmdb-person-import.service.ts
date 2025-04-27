@@ -57,6 +57,24 @@ export class TMDBPersonImporterService extends TMDBService {
             FileService.uploadImage(person.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage)
         ]);
 
+        const hasProfile = !!person.profile_path;
+
+        const personMedia = hasProfile
+            ? {
+                  data: [
+                      {
+                          media_type: MEDIA_TYPE.HEADSHOT,
+                          media_url: profileFile?.url,
+                          media_id: profileFile?.id
+                      }
+                  ],
+                  on_conflict: {
+                      constraint: Person_Media_Constraint.PersonMediaPkey,
+                      update_columns: []
+                  }
+              }
+            : { data: [], on_conflict: null };
+
         const payload = await this.save(
             {
                 name: person.name,
@@ -64,14 +82,10 @@ export class TMDBPersonImporterService extends TMDBService {
                 birth_date: person.birthday,
                 death_date: person.deathday,
                 gender: genderMap[person.gender as keyof typeof genderMap],
-                known_for: person.known_for_department,
                 tmdb_id: person.id.toString(),
                 // imdb_id: person.imdb_id?.toString(),
                 headshot: profileFile?.url,
-                person_media: {
-                    data: [{ media_type: MEDIA_TYPE.HEADSHOT, media_url: profileFile?.url, media_id: profileFile?.id }],
-                    on_conflict: { constraint: Person_Media_Constraint.PersonMediaPkey }
-                }
+                person_media: personMedia
             },
             {
                 constraint: People_Constraint.PeopleTmdbIdKey,

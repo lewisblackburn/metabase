@@ -18,11 +18,42 @@ import {
 
 import { usePerson } from './person-provider';
 
+function MediaSkeleton() {
+    return Array(6)
+        .fill(0)
+        .map((_, i) => <div key={i} className='aspect-[2/3] w-full animate-pulse rounded bg-gray-200' />);
+}
+
+function MediaItem({ credit }) {
+    if (credit.type === 'movie') {
+        return (
+            <div key={credit.id}>
+                <Link href={`/dashboard/movies/${credit.media_id}`} scroll={false}>
+                    <Poster image={credit.image} title={credit.title} />
+                </Link>
+            </div>
+        );
+    }
+
+    if (credit.type === 'song') {
+        return (
+            <div key={credit.id}>
+                <Link href={`/dashboard/music/${credit.media_id}`} scroll={false}>
+                    <Artwork image={credit.image} title={credit.title} />
+                </Link>
+            </div>
+        );
+    }
+
+    return null;
+}
+
 export default function PersonMedia() {
     const params = useParams<{ id: string }>();
     const [creditRole, setCreditRole] = useState('');
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
 
-    const { person } = usePerson({
+    const { person, isLoading: isPersonLoading } = usePerson({
         id: params?.id,
         credit_where: {
             role: {
@@ -31,29 +62,40 @@ export default function PersonMedia() {
         }
     });
 
-    const { data: roles } = useGetPersonRolesQuery({ pid: person?.id }, { enabled: !!person?.id });
+    const { data: roles, isLoading: isRolesLoading } = useGetPersonRolesQuery(
+        { pid: person?.id },
+        { enabled: !!person?.id }
+    );
+
+    const isLoading = isPersonLoading || isRolesLoading;
 
     useEffect(() => {
-        if (roles) setCreditRole(roles.credits[0]?.role);
-    }, [roles]);
+        if (roles && roles.credits.length > 0 && isFirstLoad) {
+            console.log(roles);
+            setCreditRole(roles.credits[0]?.role);
+            setIsFirstLoad(false);
+        }
+    }, [roles, isFirstLoad]);
 
-    if (!person || !roles) return null;
+    const flattenedRoles = roles?.credits.flat() || [];
 
-    const flattenedRoles = roles.credits.flat();
+    const allCredits =
+        person?.credits.map((credit) => ({
+            id: credit.id,
+            media_id: credit.media_id,
+            title: credit.movie_credit?.title ?? credit.song_credit?.name,
+            image: credit.movie_credit?.poster ?? credit.song_credit?.album.artwork,
+            type: credit.movie_credit ? 'movie' : credit.song_credit ? 'song' : 'unknown'
+        })) || [];
 
-    const allCredits = person.credits.map((credit) => ({
-        id: credit.id,
-        media_id: credit.media_id,
-        title: credit.movie_credit?.title ?? credit.song_credit?.name,
-        image: credit.movie_credit?.poster ?? credit.song_credit?.album.artwork,
-        type: credit.movie_credit ? 'movie' : credit.song_credit ? 'song' : 'unknown'
-    }));
-
-    return (
-        <div className='flex flex-col gap-4'>
-            <Select value={creditRole} onValueChange={setCreditRole} defaultValue={creditRole || undefined}>
+    function RoleSelector() {
+        return (
+            <Select
+                value={creditRole}
+                onValueChange={setCreditRole}
+                disabled={isLoading || flattenedRoles.length === 0}>
                 <SelectTrigger className='w-[180px] capitalize'>
-                    <SelectValue placeholder='Select a role' />
+                    <SelectValue placeholder={isRolesLoading ? 'Loading roles...' : 'Select a role'} />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
@@ -65,31 +107,22 @@ export default function PersonMedia() {
                     </SelectGroup>
                 </SelectContent>
             </Select>
+        );
+    }
 
+    function MediaContent() {
+        if (isLoading) {
+            return <MediaSkeleton />;
+        }
+
+        return allCredits.map((credit) => <MediaItem key={credit.id} credit={credit} />);
+    }
+
+    return (
+        <div className='flex flex-col gap-4'>
+            <RoleSelector />
             <Grid>
-                {allCredits.map((credit) => {
-                    if (credit.type === 'movie') {
-                        return (
-                            <div key={credit.id}>
-                                <Link href={`/dashboard/movies/${credit.media_id}`} scroll={false}>
-                                    <Poster image={credit.image!} title={credit.title!} />
-                                </Link>
-                            </div>
-                        );
-                    }
-
-                    if (credit.type === 'song') {
-                        return (
-                            <div key={credit.id}>
-                                <Link href={`/dashboard/music/${credit.media_id}`} scroll={false}>
-                                    <Artwork image={credit.image!} title={credit.title!} />
-                                </Link>
-                            </div>
-                        );
-                    }
-
-                    return null;
-                })}
+                <MediaContent />
             </Grid>
         </div>
     );

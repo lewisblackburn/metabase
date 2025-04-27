@@ -31,7 +31,7 @@ function CreditMember({ id, image, name, description }: CreditMemberProps) {
                 <SmallAvatar image={image} alt={name} />
                 <span className='text-sm'>{name}</span>
             </Link>
-            <span className='text-xs text-gray-500'>{description}</span>
+            <span className='text-xs text-gray-500 capitalize'>{description}</span>
         </div>
     );
 }
