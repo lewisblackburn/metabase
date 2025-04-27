@@ -1,14 +1,22 @@
 'use client';
 
+import { Fragment } from 'react';
+
 import Link from 'next/link';
 
 import InstagramIcon from '@/components/icons/instagram.icon';
 import XIcon from '@/components/icons/x.icon';
 import ActionButton from '@/components/shared/action-button';
 import HeroCardLayout from '@/components/shared/hero-layout';
+import ProgressItem from '@/components/shared/progress-item';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
+import MovieContentScore from '@/features/movies/components/movie-content-score';
+import PersonBio from '@/features/people/components/person-bio';
 import { PersonProvider, usePerson } from '@/features/people/components/person-provider';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
+import { Button } from '@/registry/new-york-v4/ui/button';
+import { Progress } from '@/registry/new-york-v4/ui/progress';
 import {
     Select,
     SelectContent,
@@ -17,9 +25,10 @@ import {
     SelectTrigger,
     SelectValue
 } from '@/registry/new-york-v4/ui/select';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 
 import { format } from 'date-fns';
-import { Calendar, Edit, LucideIcon, User, UserCheck, VenusAndMars } from 'lucide-react';
+import { Calendar, Edit, LucideIcon, TrendingUp, User, UserCheck, VenusAndMars } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
 function PersonInformation({
@@ -73,7 +82,7 @@ function PersonPageContent() {
                         </ActionButton>
                     </div>
 
-                    <p className='text-muted-foreground mt-1 text-sm sm:text-base'>{person.bio}</p>
+                    <PersonBio />
 
                     <div className='mt-5 flex flex-col gap-4'>
                         <PersonInformation icon={User} label='Known for'>
@@ -99,6 +108,17 @@ function PersonPageContent() {
                                     </>
                                 ) : null}
                             </div>
+                        </PersonInformation>
+                        <PersonInformation icon={TrendingUp} label='Content Score'>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div className='flex items-center gap-2'>
+                                        <Progress value={0} className='min-w-24' />
+                                        <span>{0}%</span>
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>Click to compute the content score</TooltipContent>
+                            </Tooltip>
                         </PersonInformation>
                     </div>
 

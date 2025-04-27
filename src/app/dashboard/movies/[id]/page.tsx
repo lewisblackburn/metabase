@@ -6,7 +6,6 @@ import AwardTable from '@/components/shared/award-table';
 import ImageSlider from '@/components/shared/image-slider';
 import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
-import StatusPickerButton from '@/components/shared/status-picker.button';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
@@ -15,7 +14,6 @@ import MovieContentScore from '@/features/movies/components/movie-content-score'
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
-import MovieWatchlistButton from '@/features/movies/components/movie-watchlist-button';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import Review from '@/features/reviews/components/review';

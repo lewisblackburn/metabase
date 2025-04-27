@@ -3,6 +3,7 @@
 import { ReactNode, useState } from 'react';
 
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/registry/new-york-v4/ui/dialog';
 import {
     Sheet,
@@ -47,13 +48,11 @@ export default function ResponsiveDialog({
         return (
             <Sheet open={open} onOpenChange={onOpenChange}>
                 <SheetTrigger asChild>{trigger}</SheetTrigger>
-                <SheetContentWithoutClose
-                    side='bottom'
-                    className={`h-auto max-h-[90vh] overflow-auto rounded-t-lg p-4 ${className}`}>
+                <SheetContentWithoutClose side='bottom' className={`h-auto max-h-[90vh] rounded-t-lg p-4 ${className}`}>
                     <SheetHeader className='p-0'>
-                        <SheetTitle className={titleClasses}>{title || 'Dialog'}</SheetTitle>
+                        <SheetTitle className={cn('text-lg', titleClasses)}>{title || 'Dialog'}</SheetTitle>
                     </SheetHeader>
-                    {children}
+                    <div className='overflow-auto'>{children}</div>
                 </SheetContentWithoutClose>
             </Sheet>
         );
@@ -62,11 +61,11 @@ export default function ResponsiveDialog({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
-            <DialogContent className={`sm:max-w-md ${className}`}>
+            <DialogContent className={`sm:max-w-lg ${className}`}>
                 <DialogHeader>
                     <DialogTitle className={titleClasses}>{title || 'Dialog'}</DialogTitle>
                 </DialogHeader>
-                {children}
+                <div className='overflow-auto'>{children}</div>
             </DialogContent>
         </Dialog>
     );
