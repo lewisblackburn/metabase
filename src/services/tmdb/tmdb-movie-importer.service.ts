@@ -4,6 +4,9 @@ import {
     Certifications_Constraint,
     Certifications_Obj_Rel_Insert_Input,
     Certifications_Update_Column,
+    Credits_Arr_Rel_Insert_Input,
+    Credits_Constraint,
+    Credits_Insert_Input,
     Genres_Constraint,
     Genres_Update_Column,
     GetMovieByTmdb_IdDocument,
@@ -16,8 +19,6 @@ import {
     Keywords_Constraint,
     Keywords_Update_Column,
     Movie_Alternative_Titles_Arr_Rel_Insert_Input,
-    Movie_Cast_Arr_Rel_Insert_Input,
-    Movie_Crew_Arr_Rel_Insert_Input,
     Movie_Genres_Arr_Rel_Insert_Input,
     Movie_Keywords_Arr_Rel_Insert_Input,
     Movie_Media_Constraint,
@@ -38,6 +39,15 @@ import { TMDBMovie } from '@/types/tmdb.type';
 
 import { FileService } from '../file.service';
 import { TMDBService } from './tmdb.service';
+
+type RawCredit = {
+    id: number;
+    name: string;
+    profile_path: string | null | undefined;
+    credit_type: 'cast' | 'crew';
+    role: string;
+    details: Record<string, any>;
+};
 
 export class TMDBMovieImporterService extends TMDBService {
     private buildKeywords(movie: TMDBMovie): InputMaybe<Movie_Keywords_Arr_Rel_Insert_Input> | undefined {
@@ -69,87 +79,73 @@ export class TMDBMovieImporterService extends TMDBService {
         };
     }
 
-    private async buildCast(movie: TMDBMovie): Promise<InputMaybe<Movie_Cast_Arr_Rel_Insert_Input> | undefined> {
-        const uploads = await Promise.all(
-            movie.credits.cast.map((c) =>
-                FileService.uploadImage(c.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage)
-            )
-        );
-        return {
-            data: movie.credits.cast.map((c, idx) => {
-                const file = uploads[idx];
-                return {
-                    character: c.character,
-                    order: idx + 1,
-                    person: {
-                        data: {
-                            tmdb_id: c.id.toString(),
-                            name: c.name,
-                            headshot: file?.url,
-                            person_media: file
-                                ? {
-                                      data: [
-                                          {
-                                              media_type: MEDIA_TYPE.HEADSHOT,
-                                              media_url: file.url,
-                                              media_id: file.id
-                                          }
-                                      ],
-                                      on_conflict: {
-                                          constraint: Person_Media_Constraint.PersonMediaPkey
-                                      }
-                                  }
-                                : undefined
-                        },
-                        on_conflict: {
-                            constraint: People_Constraint.PeopleTmdbIdKey,
-                            update_columns: [People_Update_Column.Headshot]
-                        }
-                    }
-                };
-            })
-        };
-    }
+    private async buildCredits(movie: TMDBMovie): Promise<InputMaybe<Credits_Arr_Rel_Insert_Input> | undefined> {
+        const rawCredits: RawCredit[] = [
+            ...movie.credits.cast.map((c) => ({
+                id: c.id,
+                name: c.name,
+                profile_path: c.profile_path ?? null,
+                credit_type: 'cast' as const,
+                role: 'actor' as const,
+                details: { character: c.character }
+            })),
+            ...movie.credits.crew.map((c) => ({
+                id: c.id,
+                name: c.name,
+                profile_path: c.profile_path ?? null,
+                credit_type: 'crew' as const,
+                role: c.job,
+                details: { department: c.department, job: c.job }
+            }))
+        ];
 
-    private async buildCrew(movie: TMDBMovie): Promise<InputMaybe<Movie_Crew_Arr_Rel_Insert_Input> | undefined> {
         const uploads = await Promise.all(
-            movie.credits.crew.map((c) =>
-                FileService.uploadImage(c.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage)
-            )
+            rawCredits.map((rc) => FileService.uploadImage(rc.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage))
         );
-        return {
-            data: movie.credits.crew.map((c, idx) => {
-                const file = uploads[idx];
-                return {
-                    job: c.job,
-                    department: c.department,
-                    person: {
-                        data: {
-                            tmdb_id: c.id.toString(),
-                            name: c.name,
-                            headshot: file?.url,
-                            person_media: file
-                                ? {
-                                      data: [
-                                          {
-                                              media_type: MEDIA_TYPE.HEADSHOT,
-                                              media_url: file.url,
-                                              media_id: file.id
-                                          }
-                                      ],
-                                      on_conflict: {
-                                          constraint: Person_Media_Constraint.PersonMediaPkey
-                                      }
-                                  }
-                                : undefined
-                        },
-                        on_conflict: {
-                            constraint: People_Constraint.PeopleTmdbIdKey,
-                            update_columns: [People_Update_Column.Headshot]
-                        }
+
+        const data: Credits_Insert_Input[] = rawCredits.map((rc, i) => {
+            const file = uploads[i];
+            const personMedia = file
+                ? {
+                      data: [
+                          {
+                              media_type: MEDIA_TYPE.HEADSHOT,
+                              media_url: file.url,
+                              media_id: file.id
+                          }
+                      ],
+                      on_conflict: {
+                          constraint: Person_Media_Constraint.PersonMediaPkey
+                      }
+                  }
+                : undefined;
+
+            return {
+                credit_type: rc.credit_type,
+                media_type: 'movie',
+                role: rc.role,
+                details: rc.details,
+                person: {
+                    data: {
+                        tmdb_id: rc.id.toString(),
+                        name: rc.name,
+                        headshot: file?.url,
+                        person_media: personMedia
+                    },
+                    on_conflict: {
+                        constraint: People_Constraint.PeopleTmdbIdKey,
+                        update_columns: [People_Update_Column.Headshot]
                     }
-                };
-            })
+                }
+            };
+        });
+
+        return {
+            data,
+            on_conflict: {
+                constraint: Credits_Constraint.CreditsPkey,
+                update_columns: []
+            }
         };
     }
 
@@ -279,8 +275,7 @@ export class TMDBMovieImporterService extends TMDBService {
             },
             movie_keywords: this.buildKeywords(movie),
             movie_genres: this.buildGenres(movie),
-            movie_cast_members: await this.buildCast(movie),
-            movie_crew_members: await this.buildCrew(movie),
+            credits: await this.buildCredits(movie),
             movie_production_countries: this.buildCountries(movie),
             movie_production_companies: await this.buildCompanies(movie),
             movie_alternative_titles: this.buildAlternativeTitles(movie),

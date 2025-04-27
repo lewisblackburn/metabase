@@ -1,4 +1,11 @@
-query GetPerson($id: uuid!) {
+query GetPerson(
+    $id: uuid!
+    $credit_distinct_on: [credits_select_column!]
+    $credit_limit: Int
+    $credit_offset: Int
+    $credit_order_by: [credits_order_by!]
+    $credit_where: credits_bool_exp
+) {
     people_by_pk(id: $id) {
         id
         headshot
@@ -6,6 +13,30 @@ query GetPerson($id: uuid!) {
         name
         bio
         known_for
+        credits(
+            distinct_on: $credit_distinct_on
+            limit: $credit_limit
+            offset: $credit_offset
+            order_by: $credit_order_by
+            where: $credit_where
+        ) {
+            id
+            credit_type
+            details
+            media_id
+            media_type
+            role
+            movie_credit {
+                title
+                poster
+            }
+            song_credit {
+                name
+                album {
+                    artwork
+                }
+            }
+        }
         gender
         content_score
         view_count

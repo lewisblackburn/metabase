@@ -11,6 +11,7 @@ import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
+import MovieCredits from '@/features/movies/components/movie-credits';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
@@ -113,15 +114,6 @@ function MoviePageContent() {
 
     if (!movie) return null;
 
-    const castImages = movie.movie_cast_members.map((cast_member) => ({
-        id: cast_member.person.name,
-        src: cast_member.person.headshot ?? '',
-        alt: cast_member.character ?? '',
-        title: cast_member.person.name ?? '',
-        description: cast_member.character ?? '',
-        href: `/dashboard/${OBJECT_TYPE.PERSON.path}/${cast_member.person.id}`
-    }));
-
     const mostPopularReview = MOVIE_DATA.reviews[0];
     const tabContents = {
         reviews: {
@@ -138,7 +130,7 @@ function MoviePageContent() {
             )
         },
         'where-to-watch': { content: 'No where to watch information available.' },
-        credits: { content: <ImageSlider images={castImages} /> },
+        credits: { content: <MovieCredits /> },
         soundtrack: { content: <SoundtrackTable /> },
         awards: { content: <AwardTable awards={MOVIE_DATA.awards} /> },
         images: { content: 'No images available.' },
@@ -223,7 +215,7 @@ function MoviePageContent() {
                 <Separator />
 
                 <ScrollableTabs defaultValue='reviews' tabs={tabItems}>
-                    {Object.entries(tabContents).map(([key, { title, content }]) => (
+                    {Object.entries(tabContents).map(([key, { content }]) => (
                         <TabsContent key={key} value={key} className='mt-3 sm:mt-4'>
                             {content}
                         </TabsContent>

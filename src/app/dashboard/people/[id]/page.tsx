@@ -13,6 +13,7 @@ import { CustomBadge } from '@/components/ui/custom-badge';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
 import PersonBio from '@/features/people/components/person-bio';
+import PersonMedia from '@/features/people/components/person-media';
 import { PersonProvider, usePerson } from '@/features/people/components/person-provider';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -137,18 +138,7 @@ function PersonPageContent() {
                 </div>
 
                 <div className='md:col-span-2'>
-                    <Select defaultValue='actor'>
-                        <SelectTrigger className='w-[180px]'>
-                            <SelectValue placeholder='Select a role' />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectItem value='actor'>Actor</SelectItem>
-                                <SelectItem value='producer'>Producer</SelectItem>
-                                <SelectItem value='author'>Author</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                    <PersonMedia />
                 </div>
             </div>
         </HeroCardLayout>

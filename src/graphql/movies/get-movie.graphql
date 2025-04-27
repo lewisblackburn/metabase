@@ -54,25 +54,6 @@ query GetMovie($id: uuid!) {
                 keyword
             }
         }
-        movie_cast_members(limit: 10) {
-            id
-            character
-            person {
-                id
-                name
-                headshot
-            }
-        }
-        movie_crew_members(limit: 10) {
-            id
-            job
-            department
-            person {
-                id
-                name
-                headshot
-            }
-        }
         movie_soundtracks {
             id
             song {
