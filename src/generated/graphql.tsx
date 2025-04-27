@@ -20449,6 +20449,13 @@ export type GetMovieByTmdb_IdQueryVariables = Exact<{
 
 export type GetMovieByTmdb_IdQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', tmdb_id?: string | null }> };
 
+export type GetMovieForContentQualityCheckQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, media_type: string, order: number, role: string, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, status?: { __typename?: 'statuses', id: any, name: string } | null, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
@@ -20878,6 +20885,102 @@ export const useInfiniteGetMovieByTmdb_IdQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetMovieByTMDB_ID.infinite'] : ['GetMovieByTMDB_ID.infinite', variables],
       queryFn: (metaData) => fetcher<GetMovieByTmdb_IdQuery, GetMovieByTmdb_IdQueryVariables>(GetMovieByTmdb_IdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetMovieForContentQualityCheckDocument = `
+    query GetMovieForContentQualityCheck($id: uuid!) {
+  movies_by_pk(id: $id) {
+    id
+    title
+    overview
+    average_rating
+    backdrop
+    budget
+    content_score
+    created_at
+    imdb_id
+    language
+    poster
+    release_date
+    revenue
+    runtime
+    formatted_runtime
+    tagline
+    tmdb_id
+    trailer
+    updated_at
+    view_count
+    vote_average
+    vote_count
+    homepage
+    credits {
+      id
+      credit_type
+      details
+      media_type
+      order
+      role
+      person {
+        id
+        name
+        headshot
+      }
+    }
+    status {
+      id
+      name
+    }
+    certification {
+      id
+      name
+    }
+    movie_genres {
+      genre {
+        name
+      }
+    }
+    movie_keywords {
+      keyword {
+        keyword
+      }
+    }
+  }
+}
+    `;
+
+export const useGetMovieForContentQualityCheckQuery = <
+      TData = GetMovieForContentQualityCheckQuery,
+      TError = unknown
+    >(
+      variables: GetMovieForContentQualityCheckQueryVariables,
+      options?: Omit<UseQueryOptions<GetMovieForContentQualityCheckQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMovieForContentQualityCheckQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMovieForContentQualityCheckQuery, TError, TData>(
+      {
+    queryKey: ['GetMovieForContentQualityCheck', variables],
+    queryFn: fetcher<GetMovieForContentQualityCheckQuery, GetMovieForContentQualityCheckQueryVariables>(GetMovieForContentQualityCheckDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetMovieForContentQualityCheckQuery = <
+      TData = InfiniteData<GetMovieForContentQualityCheckQuery>,
+      TError = unknown
+    >(
+      variables: GetMovieForContentQualityCheckQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetMovieForContentQualityCheckQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetMovieForContentQualityCheckQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetMovieForContentQualityCheckQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetMovieForContentQualityCheck.infinite', variables],
+      queryFn: (metaData) => fetcher<GetMovieForContentQualityCheckQuery, GetMovieForContentQualityCheckQueryVariables>(GetMovieForContentQualityCheckDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

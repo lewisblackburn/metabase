@@ -91,7 +91,7 @@ export default function ProfilePage() {
             avatarImage={userInfo.avatarUrl}
             avatarAlt={userInfo.displayName}>
             <div className='grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6'>
-                <div className='flex flex-col gap-2'>
+                <div className='mb-5 flex flex-col gap-2'>
                     <h2 className='flex items-center gap-1 text-lg font-bold sm:text-xl md:text-2xl'>
                         {userInfo.displayName}
                         {userInfo.emailVerified && <VerifiedBadge />}

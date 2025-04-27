@@ -2,30 +2,30 @@
 
 import Link from 'next/link';
 
-import AwardTable from '@/components/shared/award-table';
-import ImageSlider from '@/components/shared/image-slider';
-import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
+import ActionButton from '@/components/shared/action-button';
+import ItemInformation from '@/components/shared/item-information';
+import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
-import { CustomBadge } from '@/components/ui/custom-badge';
-import { MOVIE_DATA } from '@/constants/fakedb.constant';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { OBJECT_TYPE } from '@/constants/objects.constant';
+import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieCredits from '@/features/movies/components/movie-credits';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
+import MovieLayout from '@/features/movies/components/movie-layout';
+import MovieOverview from '@/features/movies/components/movie-overview';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
-import Review from '@/features/reviews/components/review';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
-import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
 import {
     Calendar,
     CreditCard,
+    Edit,
     Eye,
     Image,
     Info,
@@ -43,30 +43,6 @@ import {
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
-const Poster = ({ image, title }: { image: string; title: string }) => (
-    <div className='relative aspect-[2/3] h-42 lg:h-96'>
-        <ImageWithSkeleton
-            src={image}
-            alt={title}
-            fill
-            wrapperClassName='absolute inset-0'
-            imageClassName='object-cover object-center border rounded-md'
-        />
-    </div>
-);
-
-const Backdrop = ({ image, title }: { image: string; title: string }) => (
-    <div className='relative h-42 flex-1 lg:h-96'>
-        <ImageWithSkeleton
-            src={image}
-            alt={title}
-            fill
-            wrapperClassName='absolute inset-0'
-            imageClassName='object-cover object-top border rounded-md'
-        />
-    </div>
-);
-
 export default function MoviePage() {
     return (
         <MovieProvider>
@@ -77,151 +53,145 @@ export default function MoviePage() {
 
 const tabItems = [
     { value: 'reviews', icon: Star, label: 'Reviews' },
-    {
-        value: 'where-to-watch',
-        icon: Layers2,
-        label: 'Where to Watch'
-    },
-    {
-        value: 'credits',
-        icon: User,
-        label: 'Credits'
-    },
-    {
-        value: 'soundtrack',
-        icon: Music,
-        label: 'Soundtrack'
-    },
-    {
-        value: 'awards',
-        icon: Trophy,
-        label: 'Awards'
-    },
-    {
-        value: 'images',
-        icon: Image,
-        label: 'Images'
-    },
-    {
-        value: 'videos',
-        icon: Video,
-        label: 'Videos'
-    }
+    { value: 'where-to-watch', icon: Layers2, label: 'Where to Watch' },
+    { value: 'credits', icon: User, label: 'Credits' },
+    { value: 'soundtrack', icon: Music, label: 'Soundtrack' },
+    { value: 'awards', icon: Trophy, label: 'Awards' },
+    { value: 'images', icon: Image, label: 'Images' },
+    { value: 'videos', icon: Video, label: 'Videos' }
 ];
 
 function MoviePageContent() {
+    const dispatch = useDispatch();
     const { movie } = useMovie();
 
     if (!movie) return null;
 
-    const mostPopularReview = MOVIE_DATA.reviews[0];
     const tabContents = {
         reviews: {
-            content: (
-                <Review
-                    id='review-1'
-                    user={mostPopularReview.user}
-                    content={mostPopularReview.content}
-                    votes={mostPopularReview.votes}
-                    voteStatus={mostPopularReview.voteStatus}
-                    rating={mostPopularReview.rating}
-                    createdAt={mostPopularReview.createdAt}
-                />
-            )
+            content: 'No reviews available.'
         },
         'where-to-watch': { content: 'No where to watch information available.' },
         credits: { content: <MovieCredits /> },
         soundtrack: { content: <SoundtrackTable /> },
-        awards: { content: <AwardTable awards={MOVIE_DATA.awards} /> },
+        awards: { content: 'No awards available' },
         images: { content: 'No images available.' },
         videos: { content: 'No videos available.' }
     };
 
     return (
-        <div className='flex flex-col gap-5'>
-            <div className='flex gap-2'>
-                <Poster image={movie.poster} title={movie.title} />
-                <Backdrop image={movie.backdrop} title={movie.title} />
-            </div>
-            <div className='flex flex-col gap-10 py-5'>
-                <div className='flex flex-col gap-5'>
-                    <div className='flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-0'>
-                        <div className='flex items-center gap-2'>
-                            <CustomBadge
-                                icon={OBJECT_TYPE.MOVIE.icon}
-                                background={OBJECT_TYPE.MOVIE.background}
-                                foreground={OBJECT_TYPE.MOVIE.foreground}
-                                border={OBJECT_TYPE.MOVIE.border}>
-                                {OBJECT_TYPE.MOVIE.name}
-                            </CustomBadge>
-                            <Link href=''>
-                                <CustomBadge icon={Layers2}>Collections</CustomBadge>
-                            </Link>
+        <MovieLayout
+            backdropAlt={movie.title}
+            backdropImage={movie.backdrop}
+            posterAlt={movie.title}
+            posterImage={movie.poster}>
+            {{
+                mainContent: (
+                    <div className='space-y-4'>
+                        <div>
+                            <div className='flex items-start justify-between'>
+                                <h2>{movie.title}</h2>
+                            </div>
+                            {movie.tagline && (
+                                <p className='text-muted-foreground mt-1 text-sm italic'>{movie.tagline}</p>
+                            )}
+
+                            <div className='mt-3 flex flex-wrap gap-2'>
+                                {movie.movie_genres.map((genre) => (
+                                    <Badge key={genre.genre.name} variant='outline'>
+                                        {genre.genre.name}
+                                    </Badge>
+                                ))}
+                            </div>
                         </div>
 
-                        <div className='flex flex-wrap gap-2'>
+                        <div className='text-muted-foreground flex flex-wrap gap-x-6 gap-y-2 text-sm'>
+                            <span className='flex items-center gap-1'>
+                                <Calendar className='h-4 w-4' />
+                                {dayjs(movie.release_date).format('MMMM Do, YYYY')}
+                            </span>
+                            <span className='flex items-center gap-1'>
+                                <Timer className='h-4 w-4' />
+                                {movie.formatted_runtime}
+                            </span>
+                            {movie.certification && (
+                                <span className='flex items-center gap-1'>
+                                    <User className='h-4 w-4' />
+                                    {movie.certification.name}
+                                </span>
+                            )}
+                            <ResponsiveDialog
+                                title='More Information'
+                                hasVisibleTitle
+                                trigger={
+                                    <span className='flex cursor-pointer items-center gap-1'>
+                                        <Info className='size-3' />
+                                        View More
+                                    </span>
+                                }>
+                                <div className='flex flex-col gap-4'>
+                                    <ItemInformation icon={Languages} label='Language'>
+                                        {LANGUAGES.find((lang) => lang.code === movie.language)?.label || 'Unknown'}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={Info} label='Status'>
+                                        {movie.status?.name || 'Unknown'}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={CreditCard} label='Budget'>
+                                        {movie.budget || 'Not available'}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={TrendingUp} label='Revenue'>
+                                        {movie.revenue || 'Not available'}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={Eye} label='View Count'>
+                                        {movie.view_count || 0}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={TrendingUp} label='Content Score'>
+                                        <MovieContentScore />
+                                    </ItemInformation>
+                                </div>
+                            </ResponsiveDialog>
+                        </div>
+
+                        <MovieOverview />
+
+                        <div className='flex flex-wrap items-center gap-2'>
                             <MovieFavouriteButton />
                             {movie.trailer && (
                                 <Link href={movie.trailer ?? ''} target='_blank'>
                                     <Button variant='outline' size='sm'>
-                                        <Play />
+                                        <Play className='mr-1 h-4 w-4' />
                                         Play Trailer
                                     </Button>
                                 </Link>
                             )}
                             <ReviewMovieDialog />
                             <MovieStatusPicker />
-                            {/* <Button
-                                variant='outline'
+                            <ActionButton
+                                icon={Edit}
                                 size='sm'
-                                onClick={() => {
-                                    dispatch(
-                                        toggleEditDialogOpenState({
-                                            objectType: 'MOVIE',
-                                            objectId: movie.id
-                                        })
-                                    );
-                                }}>
-                                <Edit2 className='size-3.5' />
-                                Edit Movie
-                            </Button> */}
+                                onClick={() =>
+                                    dispatch(toggleEditDialogOpenState({ objectType: 'MOVIE', objectId: movie.id }))
+                                }>
+                                Edit
+                            </ActionButton>
                         </div>
                     </div>
-                    <div className='flex flex-col gap-2'>
-                        <h2>{movie.title}</h2>
-                        <p className='text-muted-foreground'>{movie.tagline}</p>
-                        <p>{movie.overview}</p>
-                    </div>
-                </div>
-                <Separator />
-                <div className='flex flex-wrap gap-2'>
-                    <CustomBadge icon={Calendar}>{dayjs(movie.release_date).format('MMMM Do, YYYY')}</CustomBadge>
-                    {/* <CustomBadge icon={MapPin}>{movie.production_countries.join(', ')}</CustomBadge> */}
-                    <CustomBadge icon={Timer}>{movie.formatted_runtime}</CustomBadge>
-                    <CustomBadge icon={Languages}>
-                        {LANGUAGES.find((lang) => lang.code === movie.language)?.label}
-                    </CustomBadge>
-                    <CustomBadge icon={Tags}>
-                        {movie.movie_genres.map((genre) => genre.genre.name).join(', ')}
-                    </CustomBadge>
-                    <CustomBadge icon={Info}>{movie.status?.name ?? 'Unknown'}</CustomBadge>
-                    <CustomBadge icon={Eye}>{movie.view_count}</CustomBadge>
-                    <CustomBadge icon={CreditCard}>{movie.budget}</CustomBadge>
-                    <CustomBadge icon={TrendingUp}>{movie.revenue}</CustomBadge>
-                    <CustomBadge icon={User}>{movie.certification?.name ?? 'Unknown'}</CustomBadge>
-                    {/* <CustomBadge icon={Tags}>{movie.movie_keywords.map((keyword) => keyword.keyword.keyword)}</CustomBadge> */}
-                    <MovieContentScore />
-                </div>
-                <Separator />
-
-                <ScrollableTabs defaultValue='reviews' tabs={tabItems}>
-                    {Object.entries(tabContents).map(([key, { content }]) => (
-                        <TabsContent key={key} value={key} className='mt-3 sm:mt-4'>
-                            {content}
-                        </TabsContent>
-                    ))}
-                </ScrollableTabs>
-            </div>
-        </div>
+                ),
+                bottomContent: (
+                    <ScrollableTabs defaultValue='reviews' tabs={tabItems}>
+                        {Object.entries(tabContents).map(([key, { content }]) => (
+                            <TabsContent key={key} value={key} className='px-1'>
+                                {content}
+                            </TabsContent>
+                        ))}
+                    </ScrollableTabs>
+                )
+            }}
+        </MovieLayout>
     );
 }

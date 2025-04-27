@@ -71,7 +71,6 @@ export default function PersonMedia() {
 
     useEffect(() => {
         if (roles && roles.credits.length > 0 && isFirstLoad) {
-            console.log(roles);
             setCreditRole(roles.credits[0]?.role);
             setIsFirstLoad(false);
         }

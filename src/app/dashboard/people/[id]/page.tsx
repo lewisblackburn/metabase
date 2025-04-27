@@ -6,6 +6,7 @@ import InstagramIcon from '@/components/icons/instagram.icon';
 import XIcon from '@/components/icons/x.icon';
 import ActionButton from '@/components/shared/action-button';
 import HeroCardLayout from '@/components/shared/hero-layout';
+import ItemInformation from '@/components/shared/item-information';
 import { CustomBadge } from '@/components/ui/custom-badge';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import PersonBio from '@/features/people/components/person-bio';
@@ -17,25 +18,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/
 import { format } from 'date-fns';
 import { Calendar, Edit, LucideIcon, TrendingUp, User, UserCheck, VenusAndMars } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-
-function PersonInformation({
-    icon: Icon,
-    label,
-    children
-}: {
-    icon: LucideIcon;
-    label: string;
-    children: React.ReactNode;
-}) {
-    return (
-        <div className='flex items-center justify-between'>
-            <h6>{label}</h6>
-            <CustomBadge icon={Icon} className='capitalize'>
-                {children}
-            </CustomBadge>
-        </div>
-    );
-}
 
 export default function PersonPage() {
     return (
@@ -74,16 +56,16 @@ function PersonPageContent() {
                     <PersonBio />
 
                     <div className='mt-5 flex flex-col gap-4'>
-                        <PersonInformation icon={User} label='Known for'>
+                        <ItemInformation icon={User} label='Known for'>
                             {person.known_for_department ?? 'Unknown'}
-                        </PersonInformation>
-                        <PersonInformation icon={UserCheck} label='Credited in'>
+                        </ItemInformation>
+                        <ItemInformation icon={UserCheck} label='Credited in'>
                             54
-                        </PersonInformation>
-                        <PersonInformation icon={VenusAndMars} label='Gender'>
+                        </ItemInformation>
+                        <ItemInformation icon={VenusAndMars} label='Gender'>
                             {person.gender ?? 'Unknown'}
-                        </PersonInformation>
-                        <PersonInformation icon={Calendar} label='Birthdate'>
+                        </ItemInformation>
+                        <ItemInformation icon={Calendar} label='Birthdate'>
                             <div className='flex items-center gap-1'>
                                 {person.birth_date ? (
                                     <span>{format(new Date(person.birth_date), 'MMMM do, yyyy')}</span>
@@ -97,8 +79,8 @@ function PersonPageContent() {
                                     </>
                                 ) : null}
                             </div>
-                        </PersonInformation>
-                        <PersonInformation icon={TrendingUp} label='Content Score'>
+                        </ItemInformation>
+                        <ItemInformation icon={TrendingUp} label='Content Score'>
                             <Tooltip>
                                 <TooltipTrigger>
                                     <div className='flex items-center gap-2'>
@@ -108,7 +90,7 @@ function PersonPageContent() {
                                 </TooltipTrigger>
                                 <TooltipContent>Click to compute the content score</TooltipContent>
                             </Tooltip>
-                        </PersonInformation>
+                        </ItemInformation>
                     </div>
 
                     <div className='mt-5 flex flex-wrap items-center gap-2'>

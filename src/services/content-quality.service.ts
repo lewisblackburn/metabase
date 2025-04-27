@@ -1,5 +1,13 @@
 import { OBJECT_TYPE, ObjectType } from '@/constants/objects.constant';
-import { GetMovieDocument, GetPersonDocument, GetSongDocument, Movies, People, Songs } from '@/generated/graphql';
+import {
+    GetMovieDocument,
+    GetMovieForContentQualityCheckDocument,
+    GetPersonDocument,
+    GetSongDocument,
+    Movies,
+    People,
+    Songs
+} from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
 import { TMDBMovie, TMDBPerson } from '@/types/tmdb.type';
 
@@ -32,7 +40,7 @@ class ContentQualityService {
         const tmdbMovie = await this.tmdb.getEntity<TMDBMovie>('movie', tmdbId, 'credits');
         const localMovie = await nhost.graphql.request<{
             movies_by_pk: Movies;
-        }>(GetMovieDocument, {
+        }>(GetMovieForContentQualityCheckDocument, {
             id: localId
         });
 
@@ -54,8 +62,12 @@ class ContentQualityService {
             overview: localMovie.data.movies_by_pk.overview,
             runtime: localMovie.data.movies_by_pk.runtime,
             release_date: localMovie.data.movies_by_pk.release_date,
-            cast: localMovie.data.movies_by_pk.movie_cast_members.map((cast_member) => cast_member.person.name),
-            crew: localMovie.data.movies_by_pk.movie_crew_members.map((crew_member) => crew_member.person.name)
+            cast: localMovie.data.movies_by_pk.credits
+                .filter((credit) => credit.credit_type === 'cast')
+                .map((cast_member) => cast_member.person.name),
+            crew: localMovie.data.movies_by_pk.credits
+                .filter((credit) => credit.credit_type === 'crew')
+                .map((crew_member) => crew_member.person.name)
         };
 
         const score = this.compareObjects(formattedTmdbMovie, formattedLocalMovie);

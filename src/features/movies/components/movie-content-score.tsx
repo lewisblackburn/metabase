@@ -1,13 +1,11 @@
-import { useState } from 'react';
-
-import ProgressItem from '@/components/shared/progress-item';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { useUpdateMovieMutation } from '@/generated/graphql';
+import { Progress } from '@/registry/new-york-v4/ui/progress';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 import { contentQualityService } from '@/services/content-quality.service';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useMovie } from './movie-provider';
-import { TrendingUp } from 'lucide-react';
 
 export default function MovieContentScore() {
     const { movie } = useMovie();
@@ -30,12 +28,15 @@ export default function MovieContentScore() {
     };
 
     return (
-        <ProgressItem
-            icon={TrendingUp}
-            label='Content Score'
-            score={movie.content_score}
-            onClick={handleClick}
-            loading={updateMovie.isPending}
-        />
+        <Tooltip>
+            {/* NOTE: TabIndex stops tooltip from opening when Sheets component is opened */}
+            <TooltipTrigger tabIndex={-1}>
+                <div className='flex items-center gap-2' onClick={handleClick}>
+                    <Progress value={movie.content_score} className='min-w-24' />
+                    <span>{movie.content_score}%</span>
+                </div>
+            </TooltipTrigger>
+            <TooltipContent>Click to compute the content score</TooltipContent>
+        </Tooltip>
     );
 }
