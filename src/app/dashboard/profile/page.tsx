@@ -10,6 +10,7 @@ import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
 import HeroCardLayout from '@/components/shared/hero-layout';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
+import UserActivity from '@/features/profile/components/user-activity';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
@@ -48,11 +49,11 @@ const tabItems = [
 ];
 
 const tabContents = {
-    activity: { title: 'Recent Activity', content: 'No recent activity to display.' },
-    collections: { title: 'Your Collection', content: 'Your collection is empty.' },
-    lists: { title: 'Your Lists', content: "You haven't created any lists yet." },
-    reviews: { title: 'Your Reviews', content: "You haven't written any reviews yet." },
-    recommendations: { title: 'Your Recommendations', content: 'No recommendations available.' }
+    activity: { content: <UserActivity /> },
+    collections: { content: 'Your collection is empty.' },
+    lists: { content: "You haven't created any lists yet." },
+    reviews: { content: "You haven't written any reviews yet." },
+    recommendations: { content: 'No recommendations available.' }
 };
 
 export default function ProfilePage() {
@@ -126,10 +127,9 @@ export default function ProfilePage() {
 
                 <div className='md:col-span-2'>
                     <ScrollableTabs defaultValue='activity' tabs={tabItems}>
-                        {Object.entries(tabContents).map(([key, { title, content }]) => (
-                            <TabsContent key={key} value={key} className='mt-3 sm:mt-4'>
-                                <h3 className='mb-2 text-base font-medium sm:mb-4 sm:text-lg'>{title}</h3>
-                                <p className='text-muted-foreground text-sm'>{content}</p>
+                        {Object.entries(tabContents).map(([key, { content }]) => (
+                            <TabsContent key={key} value={key} className='px-1'>
+                                {content}
                             </TabsContent>
                         ))}
                     </ScrollableTabs>

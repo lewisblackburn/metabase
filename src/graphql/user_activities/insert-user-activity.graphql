@@ -1,0 +1,5 @@
+mutation InsertUserActivity($object: user_activities_insert_input!, $on_conflict: user_activities_on_conflict) {
+    insert_user_activities_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}

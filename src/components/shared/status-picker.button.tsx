@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { USER_OBJECT_STATUS_ICONS } from '@/constants/user-object-statuses.constant';
+import { Verb_Types_Enum } from '@/generated/graphql';
 import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
@@ -16,32 +16,41 @@ import {
 import { ButtonProps } from '@/types/button.types';
 
 import ActionButton from './action-button';
-import { Check, LucideIcon } from 'lucide-react';
+import { Check, CheckCircle, CircleHelp, Clock, List, LucideIcon, X } from 'lucide-react';
+
+export const VERB_TYPES_ICONS: Record<Verb_Types_Enum, LucideIcon> = {
+    dropped: X,
+    watchlisted: List,
+    watched: CheckCircle,
+    watching: Clock,
+    favourited: CheckCircle,
+    unfavourited: X,
+    reviewed: CheckCircle,
+    nulled: CircleHelp
+};
 
 interface StatusButtonProps extends ButtonProps {
-    defaultIcon: LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>;
-    currentStatus?: string;
+    currentStatus?: Verb_Types_Enum;
     statuses?: {
-        value: string;
+        value: Verb_Types_Enum;
         label: string;
     }[];
-    onStatusChange?: (value: string | null) => void;
-    defaultValue?: string;
+    onStatusChange?: (value: Verb_Types_Enum | null) => void;
+    defaultValue?: Verb_Types_Enum;
     statusIcons?: Record<string, LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>>;
 }
 
 export default function StatusPickerButton({
-    defaultIcon,
     currentStatus,
     statuses,
     onStatusChange,
     defaultValue,
-    statusIcons = USER_OBJECT_STATUS_ICONS,
+    statusIcons = VERB_TYPES_ICONS,
     ...props
 }: StatusButtonProps) {
-    const [status, setStatus] = useState<string | null>(defaultValue || null);
+    const [status, setStatus] = useState<Verb_Types_Enum | null>(defaultValue || null);
 
-    const handleStatusClick = (value: string) => {
+    const handleStatusClick = (value: Verb_Types_Enum) => {
         // NOTE: If the same status is clicked, unset it
         if (value === status) {
             setStatus(null);
@@ -55,14 +64,13 @@ export default function StatusPickerButton({
     // NOTE: Find the label for the current status, not the default value
     const statusLabel = status ? statuses?.find((s) => s.value === status)?.label : null;
 
-    // NOTE: Find the icon to use based on the current status
-    const CurrentIcon = status && statusIcons[status] ? statusIcons[status] : defaultIcon;
+    const currentIcon = statusIcons[status || ''] || statusIcons[defaultValue || ''] || CircleHelp;
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <div className='inline-flex'>
-                    <ActionButton icon={CurrentIcon} {...props}>
+                    <ActionButton icon={currentIcon} {...props}>
                         {statusLabel || currentStatus || 'Update Status'}
                     </ActionButton>
                 </div>

@@ -2,22 +2,26 @@
 
 import StatusPickerButton from '@/components/shared/status-picker.button';
 import {
-    DEFAULT_USER_OBJECT_CATEGORY_ICONS,
-    MOVIE_OBJECT_STATUS_OPTIONS,
-    USER_OBJECT_STATUS
-} from '@/constants/user-object-statuses.constant';
-import {
     User_Movie_Status_Constraint,
     User_Movie_Status_Update_Column,
+    Verb_Types_Enum,
     useInsertUserMovieStatusMutation
 } from '@/generated/graphql';
+import { enumToOptions } from '@/utils/enum-to-options';
 import { useUserId } from '@nhost/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useMovie } from './movie-provider';
 import { toast } from 'sonner';
 
-type UserMovieStatus = keyof (typeof USER_OBJECT_STATUS)['movie'] | keyof (typeof USER_OBJECT_STATUS)['common'];
+const hiddenVerbs = [
+    Verb_Types_Enum.Favourited,
+    Verb_Types_Enum.Unfavourited,
+    Verb_Types_Enum.Nulled,
+    Verb_Types_Enum.Reviewed
+];
+const allVerbOptions = enumToOptions(Verb_Types_Enum);
+export const movieStatusMenuOptions = allVerbOptions.filter((opt) => !hiddenVerbs.includes(opt.value));
 
 export default function MovieStatusPicker() {
     const userId = useUserId();
@@ -34,13 +38,13 @@ export default function MovieStatusPicker() {
 
     if (!movie) return null;
 
-    const initialStatus = (movie.user_movie_statuses[0]?.status as UserMovieStatus) || undefined;
+    const initialStatus = movie.user_movie_statuses[0]?.status || undefined;
 
-    const handleStatusChange = async (status: string | null) => {
+    const handleStatusChange = async (status: Verb_Types_Enum | null) => {
         await insertUserMovieStatus({
             object: {
                 movie_id: movie.id,
-                status: status as UserMovieStatus
+                status: status
             },
             on_conflict: {
                 constraint: User_Movie_Status_Constraint.UserMovieStatusPkey,
@@ -55,8 +59,7 @@ export default function MovieStatusPicker() {
 
     return (
         <StatusPickerButton
-            defaultIcon={DEFAULT_USER_OBJECT_CATEGORY_ICONS.movie}
-            statuses={MOVIE_OBJECT_STATUS_OPTIONS}
+            statuses={movieStatusMenuOptions}
             size='sm'
             defaultValue={initialStatus}
             onStatusChange={handleStatusChange}

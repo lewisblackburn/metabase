@@ -2,6 +2,7 @@ import ReviewDialog, { ReviewFormValues } from '@/components/shared/review-dialo
 import {
     User_Movie_Status_Constraint,
     User_Movie_Status_Update_Column,
+    Verb_Types_Enum,
     useInsertUserMovieStatusMutation
 } from '@/generated/graphql';
 import { useUserId } from '@nhost/nextjs';
@@ -32,11 +33,16 @@ export default function ReviewMovieDialog() {
                 object: {
                     movie_id: movie.id,
                     rating: reviewData.rating,
-                    review: reviewData.review
+                    review: reviewData.review,
+                    status: Verb_Types_Enum.Reviewed
                 },
                 on_conflict: {
                     constraint: User_Movie_Status_Constraint.UserMovieStatusPkey,
-                    update_columns: [User_Movie_Status_Update_Column.Rating, User_Movie_Status_Update_Column.Review],
+                    update_columns: [
+                        User_Movie_Status_Update_Column.Rating,
+                        User_Movie_Status_Update_Column.Review,
+                        User_Movie_Status_Update_Column.Status
+                    ],
                     where: {
                         user_id: { _eq: userId },
                         movie_id: { _eq: movie.id }
@@ -58,7 +64,8 @@ export default function ReviewMovieDialog() {
                 object: {
                     movie_id: movie.id,
                     rating: null,
-                    review: null
+                    review: null,
+                    status: Verb_Types_Enum.Nulled
                 },
                 on_conflict: {
                     constraint: User_Movie_Status_Constraint.UserMovieStatusPkey,

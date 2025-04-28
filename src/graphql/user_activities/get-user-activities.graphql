@@ -1,0 +1,21 @@
+query GetUserActivities(
+    $distinct_on: [user_activities_select_column!]
+    $limit: Int
+    $offset: Int
+    $order_by: [user_activities_order_by!]
+    $where: user_activities_bool_exp
+) {
+    user_activities(distinct_on: $distinct_on, limit: $limit, offset: $offset, order_by: $order_by, where: $where) {
+        id
+        object_type
+        object_id
+        object_title
+        payload
+        verb
+        user {
+            avatarUrl
+            displayName
+        }
+        created_at
+    }
+}

@@ -2,6 +2,7 @@ import ActionButton from '@/components/shared/action-button';
 import {
     User_Movie_Status_Constraint,
     User_Movie_Status_Update_Column,
+    Verb_Types_Enum,
     useInsertUserMovieStatusMutation
 } from '@/generated/graphql';
 import { cn } from '@/lib/utils';
@@ -33,11 +34,12 @@ export default function MovieFavouriteButton() {
         await insertUserMovieStatus({
             object: {
                 movie_id: movie.id,
-                favourited: !isFavourited
+                favourited: !isFavourited,
+                status: isFavourited ? Verb_Types_Enum.Unfavourited : Verb_Types_Enum.Favourited
             },
             on_conflict: {
                 constraint: User_Movie_Status_Constraint.UserMovieStatusPkey,
-                update_columns: [User_Movie_Status_Update_Column.Favourited],
+                update_columns: [User_Movie_Status_Update_Column.Favourited, User_Movie_Status_Update_Column.Status],
                 where: {
                     user_id: { _eq: userId },
                     movie_id: { _eq: movie.id }
