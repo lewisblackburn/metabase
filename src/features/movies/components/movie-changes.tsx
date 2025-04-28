@@ -6,10 +6,37 @@ import DifferenceViewer from '@/components/shared/difference-viewer';
 import { MAX_LIMIT } from '@/constants/api.constant';
 import { Order_By, useInfiniteGetAuditLogsQuery } from '@/generated/graphql';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
+import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 import isLastIndex from '@/utils/is-last-index';
 
 import { useMovie } from './movie-provider';
 import { useInView } from 'react-intersection-observer';
+
+function ChangesSkeleton() {
+    return (
+        <div className='flex flex-col gap-4'>
+            {Array(3)
+                .fill(0)
+                .map((_, i) => (
+                    <div key={i} className='flex flex-col gap-2'>
+                        <div className='overflow-hidden rounded-md border border-gray-200'>
+                            <div className='flex items-center border-b border-gray-200 bg-gray-50 p-2'>
+                                <Skeleton className='h-4 w-24' />
+                            </div>
+                            <div className='bg-gray-50 p-4'>
+                                <Skeleton className='h-20 w-full' />
+                            </div>
+                            <div className='flex items-center gap-2 border-t border-gray-200 bg-gray-50 p-2'>
+                                <Skeleton className='h-5 w-5 rounded-full' />
+                                <Skeleton className='h-4 w-32' />
+                            </div>
+                        </div>
+                        {!isLastIndex(i, Array(3)) && <Separator />}
+                    </div>
+                ))}
+        </div>
+    );
+}
 
 export default function MovieChanges() {
     const { movie } = useMovie();
@@ -56,7 +83,7 @@ export default function MovieChanges() {
         return data?.pages.flatMap((page) => page.audit_logs) || [];
     }, [data]);
 
-    // if (isLoading) return <ActivitySkeleton />;
+    if (isLoading) return <ChangesSkeleton />;
 
     return (
         <div className='flex flex-col gap-2 text-sm'>

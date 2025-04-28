@@ -54,7 +54,7 @@ export default function ScrollableTabs({
                     ))}
                 </TabsList>
             </div>
-            {children}
+            <div className='py-1'>{children}</div>
         </Tabs>
     );
 }
