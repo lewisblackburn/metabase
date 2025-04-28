@@ -1,10 +1,13 @@
 'use client';
 
+import { useEffect, useMemo } from 'react';
+
 import Link from 'next/link';
 
 import Rating from '@/components/shared/rating';
+import { MAX_LIMIT } from '@/constants/api.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { Order_By, useGetUserActivitiesQuery } from '@/generated/graphql';
+import { Order_By, useInfiniteGetUserActivitiesQuery } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 import { useUserId } from '@nhost/nextjs';
@@ -12,6 +15,7 @@ import { useUserId } from '@nhost/nextjs';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { UserIcon } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
 
 dayjs.extend(relativeTime);
 
@@ -35,24 +39,49 @@ function ActivitySkeleton() {
 
 export default function UserActivity() {
     const userId = useUserId();
-    const { data: userActivity, isLoading } = useGetUserActivitiesQuery(
+    const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetUserActivitiesQuery(
         {
             where: {
                 user_id: { _eq: userId }
             },
-            order_by: { created_at: Order_By.Desc }
+            order_by: { created_at: Order_By.Desc },
+            limit: MAX_LIMIT
         },
         {
-            queryKey: ['user-activity', userId],
-            enabled: !!userId
+            initialPageParam: { offset: 0 },
+            getPreviousPageParam: (_firstPage, pages) => {
+                const prevPage = pages.length - 1;
+                return prevPage > 0 ? { offset: prevPage * MAX_LIMIT } : undefined;
+            },
+            getNextPageParam: (lastPage, pages) => {
+                const nextOffset = pages.length * MAX_LIMIT;
+                return lastPage.user_activities.length === MAX_LIMIT ? { offset: nextOffset } : undefined;
+            },
+            enabled: !!userId,
+            staleTime: 0,
+            gcTime: 0
         }
     );
+
+    const { ref: loadMoreRef, inView } = useInView({ threshold: 0.5 });
+
+    const handleLoadMore = () => {
+        if (hasNextPage) fetchNextPage();
+    };
+
+    useEffect(() => {
+        if (inView) handleLoadMore();
+    }, [inView]);
+
+    const allActivities = useMemo(() => {
+        return data?.pages.flatMap((page) => page.user_activities) || [];
+    }, [data]);
 
     if (isLoading) return <ActivitySkeleton />;
 
     return (
         <div className='flex flex-col gap-2 text-sm'>
-            {userActivity?.user_activities.map((activity) => (
+            {allActivities?.map((activity) => (
                 <div key={activity.id} className='mb-3 flex flex-wrap items-start gap-1 sm:mb-2 sm:items-center'>
                     <Avatar className='size-6 shrink-0 cursor-pointer border'>
                         <AvatarImage src={activity.user.avatarUrl} alt={`@${activity.user.displayName}`} />
@@ -79,6 +108,7 @@ export default function UserActivity() {
                     </span>
                 </div>
             ))}
+            <div ref={loadMoreRef} />
         </div>
     );
 }
