@@ -97,6 +97,7 @@ export default function MovieChanges() {
                     {!isLastIndex(index, allChanges) && <Separator />}
                 </div>
             ))}
+            {allChanges.length === 0 && <p className='text-muted-foreground'>No changes available</p>}
             <div ref={loadMoreRef} />
         </div>
     );
