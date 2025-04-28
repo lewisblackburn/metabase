@@ -997,6 +997,253 @@ export type Albums_Updates = {
   where: Albums_Bool_Exp;
 };
 
+/** columns and relationships of "audit_logs" */
+export type Audit_Logs = {
+  __typename?: 'audit_logs';
+  created_at: Scalars['timestamptz']['output'];
+  diff: Scalars['jsonb']['output'];
+  id: Scalars['uuid']['output'];
+  operation: Scalars['String']['output'];
+  pk: Scalars['jsonb']['output'];
+  table_name: Scalars['String']['output'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid']['output'];
+};
+
+
+/** columns and relationships of "audit_logs" */
+export type Audit_LogsDiffArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** columns and relationships of "audit_logs" */
+export type Audit_LogsPkArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregated selection of "audit_logs" */
+export type Audit_Logs_Aggregate = {
+  __typename?: 'audit_logs_aggregate';
+  aggregate?: Maybe<Audit_Logs_Aggregate_Fields>;
+  nodes: Array<Audit_Logs>;
+};
+
+/** aggregate fields of "audit_logs" */
+export type Audit_Logs_Aggregate_Fields = {
+  __typename?: 'audit_logs_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Audit_Logs_Max_Fields>;
+  min?: Maybe<Audit_Logs_Min_Fields>;
+};
+
+
+/** aggregate fields of "audit_logs" */
+export type Audit_Logs_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Audit_Logs_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Audit_Logs_Append_Input = {
+  diff?: InputMaybe<Scalars['jsonb']['input']>;
+  pk?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "audit_logs". All fields are combined with a logical 'AND'. */
+export type Audit_Logs_Bool_Exp = {
+  _and?: InputMaybe<Array<Audit_Logs_Bool_Exp>>;
+  _not?: InputMaybe<Audit_Logs_Bool_Exp>;
+  _or?: InputMaybe<Array<Audit_Logs_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  diff?: InputMaybe<Jsonb_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  operation?: InputMaybe<String_Comparison_Exp>;
+  pk?: InputMaybe<Jsonb_Comparison_Exp>;
+  table_name?: InputMaybe<String_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "audit_logs" */
+export enum Audit_Logs_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  AuditLogsPkey = 'audit_logs_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Audit_Logs_Delete_At_Path_Input = {
+  diff?: InputMaybe<Array<Scalars['String']['input']>>;
+  pk?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Audit_Logs_Delete_Elem_Input = {
+  diff?: InputMaybe<Scalars['Int']['input']>;
+  pk?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Audit_Logs_Delete_Key_Input = {
+  diff?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** input type for inserting data into table "audit_logs" */
+export type Audit_Logs_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  diff?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  operation?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['jsonb']['input']>;
+  table_name?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Audit_Logs_Max_Fields = {
+  __typename?: 'audit_logs_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  operation?: Maybe<Scalars['String']['output']>;
+  table_name?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type Audit_Logs_Min_Fields = {
+  __typename?: 'audit_logs_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  operation?: Maybe<Scalars['String']['output']>;
+  table_name?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** response of any mutation on the table "audit_logs" */
+export type Audit_Logs_Mutation_Response = {
+  __typename?: 'audit_logs_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Audit_Logs>;
+};
+
+/** on_conflict condition type for table "audit_logs" */
+export type Audit_Logs_On_Conflict = {
+  constraint: Audit_Logs_Constraint;
+  update_columns?: Array<Audit_Logs_Update_Column>;
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "audit_logs". */
+export type Audit_Logs_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  diff?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  operation?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  table_name?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: audit_logs */
+export type Audit_Logs_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Audit_Logs_Prepend_Input = {
+  diff?: InputMaybe<Scalars['jsonb']['input']>;
+  pk?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** select columns of table "audit_logs" */
+export enum Audit_Logs_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Diff = 'diff',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Operation = 'operation',
+  /** column name */
+  Pk = 'pk',
+  /** column name */
+  TableName = 'table_name',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "audit_logs" */
+export type Audit_Logs_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  diff?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  operation?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['jsonb']['input']>;
+  table_name?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "audit_logs" */
+export type Audit_Logs_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Audit_Logs_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Audit_Logs_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  diff?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  operation?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['jsonb']['input']>;
+  table_name?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "audit_logs" */
+export enum Audit_Logs_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Diff = 'diff',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Operation = 'operation',
+  /** column name */
+  Pk = 'pk',
+  /** column name */
+  TableName = 'table_name',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Audit_Logs_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<Audit_Logs_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<Audit_Logs_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<Audit_Logs_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<Audit_Logs_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<Audit_Logs_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Audit_Logs_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Audit_Logs_Bool_Exp;
+};
+
 /** Oauth requests, inserted before redirecting to the provider's site. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProviderRequests = {
   __typename?: 'authProviderRequests';
@@ -8710,6 +8957,10 @@ export type Mutation_Root = {
   delete_albums?: Maybe<Albums_Mutation_Response>;
   /** delete single row from the table: "albums" */
   delete_albums_by_pk?: Maybe<Albums>;
+  /** delete data from the table: "audit_logs" */
+  delete_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
+  /** delete single row from the table: "audit_logs" */
+  delete_audit_logs_by_pk?: Maybe<Audit_Logs>;
   /** delete data from the table: "auth.migrations" */
   delete_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** delete single row from the table: "auth.migrations" */
@@ -8914,6 +9165,10 @@ export type Mutation_Root = {
   insert_albums?: Maybe<Albums_Mutation_Response>;
   /** insert a single row into the table: "albums" */
   insert_albums_one?: Maybe<Albums>;
+  /** insert data into the table: "audit_logs" */
+  insert_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
+  /** insert a single row into the table: "audit_logs" */
+  insert_audit_logs_one?: Maybe<Audit_Logs>;
   /** insert data into the table: "auth.migrations" */
   insert_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** insert a single row into the table: "auth.migrations" */
@@ -9124,6 +9379,12 @@ export type Mutation_Root = {
   update_albums_by_pk?: Maybe<Albums>;
   /** update multiples rows of table: "albums" */
   update_albums_many?: Maybe<Array<Maybe<Albums_Mutation_Response>>>;
+  /** update data of the table: "audit_logs" */
+  update_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
+  /** update single row of the table: "audit_logs" */
+  update_audit_logs_by_pk?: Maybe<Audit_Logs>;
+  /** update multiples rows of table: "audit_logs" */
+  update_audit_logs_many?: Maybe<Array<Maybe<Audit_Logs_Mutation_Response>>>;
   /** update multiples rows of table: "auth.provider_requests" */
   update_authProviderRequests_many?: Maybe<Array<Maybe<AuthProviderRequests_Mutation_Response>>>;
   /** update multiples rows of table: "auth.providers" */
@@ -9543,6 +9804,18 @@ export type Mutation_RootDelete_AlbumsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Albums_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Audit_LogsArgs = {
+  where: Audit_Logs_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Audit_Logs_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -10191,6 +10464,20 @@ export type Mutation_RootInsert_AlbumsArgs = {
 export type Mutation_RootInsert_Albums_OneArgs = {
   object: Albums_Insert_Input;
   on_conflict?: InputMaybe<Albums_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Audit_LogsArgs = {
+  objects: Array<Audit_Logs_Insert_Input>;
+  on_conflict?: InputMaybe<Audit_Logs_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Audit_Logs_OneArgs = {
+  object: Audit_Logs_Insert_Input;
+  on_conflict?: InputMaybe<Audit_Logs_On_Conflict>;
 };
 
 
@@ -10981,6 +11268,36 @@ export type Mutation_RootUpdate_Albums_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Albums_ManyArgs = {
   updates: Array<Albums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Audit_LogsArgs = {
+  _append?: InputMaybe<Audit_Logs_Append_Input>;
+  _delete_at_path?: InputMaybe<Audit_Logs_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Audit_Logs_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Audit_Logs_Delete_Key_Input>;
+  _prepend?: InputMaybe<Audit_Logs_Prepend_Input>;
+  _set?: InputMaybe<Audit_Logs_Set_Input>;
+  where: Audit_Logs_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Audit_Logs_By_PkArgs = {
+  _append?: InputMaybe<Audit_Logs_Append_Input>;
+  _delete_at_path?: InputMaybe<Audit_Logs_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Audit_Logs_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Audit_Logs_Delete_Key_Input>;
+  _prepend?: InputMaybe<Audit_Logs_Prepend_Input>;
+  _set?: InputMaybe<Audit_Logs_Set_Input>;
+  pk_columns: Audit_Logs_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Audit_Logs_ManyArgs = {
+  updates: Array<Audit_Logs_Updates>;
 };
 
 
@@ -12061,9 +12378,9 @@ export type Notifications_Updates = {
 export type Object_Types = {
   __typename?: 'object_types';
   type: Scalars['String']['output'];
-  /** fetch data from the table: "user_activities" */
+  /** An array relationship */
   user_activities: Array<User_Activities>;
-  /** fetch aggregated fields from the table: "user_activities" */
+  /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
 };
 
@@ -12168,6 +12485,13 @@ export type Object_Types_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Object_Types>;
+};
+
+/** input type for inserting object relation for remote table "object_types" */
+export type Object_Types_Obj_Rel_Insert_Input = {
+  data: Object_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Object_Types_On_Conflict>;
 };
 
 /** on_conflict condition type for table "object_types" */
@@ -13235,6 +13559,12 @@ export type Query_Root = {
   albums_aggregate: Albums_Aggregate;
   /** fetch data from the table: "albums" using primary key columns */
   albums_by_pk?: Maybe<Albums>;
+  /** fetch data from the table: "audit_logs" */
+  audit_logs: Array<Audit_Logs>;
+  /** fetch aggregated fields from the table: "audit_logs" */
+  audit_logs_aggregate: Audit_Logs_Aggregate;
+  /** fetch data from the table: "audit_logs" using primary key columns */
+  audit_logs_by_pk?: Maybe<Audit_Logs>;
   /** fetch data from the table: "auth.providers" using primary key columns */
   authProvider?: Maybe<AuthProviders>;
   /** fetch data from the table: "auth.provider_requests" using primary key columns */
@@ -13495,9 +13825,9 @@ export type Query_Root = {
   storage_schema_migrations_by_pk?: Maybe<Storage_Schema_Migrations>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
-  /** fetch data from the table: "user_activities" */
+  /** An array relationship */
   user_activities: Array<User_Activities>;
-  /** fetch aggregated fields from the table: "user_activities" */
+  /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
   /** fetch data from the table: "user_activities" using primary key columns */
   user_activities_by_pk?: Maybe<User_Activities>;
@@ -13591,6 +13921,29 @@ export type Query_RootAlbums_AggregateArgs = {
 
 
 export type Query_RootAlbums_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootAudit_LogsArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Audit_Logs_Order_By>>;
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
+};
+
+
+export type Query_RootAudit_Logs_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Audit_Logs_Order_By>>;
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
+};
+
+
+export type Query_RootAudit_Logs_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -17506,6 +17859,14 @@ export type Subscription_Root = {
   albums_by_pk?: Maybe<Albums>;
   /** fetch data from the table in a streaming manner: "albums" */
   albums_stream: Array<Albums>;
+  /** fetch data from the table: "audit_logs" */
+  audit_logs: Array<Audit_Logs>;
+  /** fetch aggregated fields from the table: "audit_logs" */
+  audit_logs_aggregate: Audit_Logs_Aggregate;
+  /** fetch data from the table: "audit_logs" using primary key columns */
+  audit_logs_by_pk?: Maybe<Audit_Logs>;
+  /** fetch data from the table in a streaming manner: "audit_logs" */
+  audit_logs_stream: Array<Audit_Logs>;
   /** fetch data from the table: "auth.providers" using primary key columns */
   authProvider?: Maybe<AuthProviders>;
   /** fetch data from the table: "auth.provider_requests" using primary key columns */
@@ -17852,9 +18213,9 @@ export type Subscription_Root = {
   storage_schema_migrations_stream: Array<Storage_Schema_Migrations>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
-  /** fetch data from the table: "user_activities" */
+  /** An array relationship */
   user_activities: Array<User_Activities>;
-  /** fetch aggregated fields from the table: "user_activities" */
+  /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
   /** fetch data from the table: "user_activities" using primary key columns */
   user_activities_by_pk?: Maybe<User_Activities>;
@@ -17980,6 +18341,36 @@ export type Subscription_RootAlbums_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Albums_Stream_Cursor_Input>>;
   where?: InputMaybe<Albums_Bool_Exp>;
+};
+
+
+export type Subscription_RootAudit_LogsArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Audit_Logs_Order_By>>;
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
+};
+
+
+export type Subscription_RootAudit_Logs_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Audit_Logs_Order_By>>;
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
+};
+
+
+export type Subscription_RootAudit_Logs_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootAudit_Logs_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Audit_Logs_Stream_Cursor_Input>>;
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
 };
 
 
@@ -19458,6 +19849,8 @@ export type User_Activities = {
   __typename?: 'user_activities';
   created_at: Scalars['timestamptz']['output'];
   id: Scalars['uuid']['output'];
+  /** An object relationship */
+  objectTypeByObjectType: Object_Types;
   object_id: Scalars['uuid']['output'];
   object_title: Scalars['String']['output'];
   object_type: Object_Types_Enum;
@@ -19466,6 +19859,8 @@ export type User_Activities = {
   user: Users;
   user_id: Scalars['uuid']['output'];
   verb: Verb_Types_Enum;
+  /** An object relationship */
+  verb_type: Verb_Types;
 };
 
 
@@ -19533,6 +19928,7 @@ export type User_Activities_Bool_Exp = {
   _or?: InputMaybe<Array<User_Activities_Bool_Exp>>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Bool_Exp>;
   object_id?: InputMaybe<Uuid_Comparison_Exp>;
   object_title?: InputMaybe<String_Comparison_Exp>;
   object_type?: InputMaybe<Object_Types_Enum_Comparison_Exp>;
@@ -19540,6 +19936,7 @@ export type User_Activities_Bool_Exp = {
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
   verb?: InputMaybe<Verb_Types_Enum_Comparison_Exp>;
+  verb_type?: InputMaybe<Verb_Types_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "user_activities" */
@@ -19567,6 +19964,7 @@ export type User_Activities_Delete_Key_Input = {
 export type User_Activities_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Obj_Rel_Insert_Input>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_title?: InputMaybe<Scalars['String']['input']>;
   object_type?: InputMaybe<Object_Types_Enum>;
@@ -19574,6 +19972,7 @@ export type User_Activities_Insert_Input = {
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
   verb?: InputMaybe<Verb_Types_Enum>;
+  verb_type?: InputMaybe<Verb_Types_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -19634,6 +20033,7 @@ export type User_Activities_On_Conflict = {
 export type User_Activities_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_title?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
@@ -19641,6 +20041,7 @@ export type User_Activities_Order_By = {
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
   verb?: InputMaybe<Order_By>;
+  verb_type?: InputMaybe<Verb_Types_Order_By>;
 };
 
 /** primary key columns input for table: user_activities */
@@ -19756,6 +20157,8 @@ export type User_Movie_Status = {
   /** An object relationship */
   user: Users;
   user_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  verb_type?: Maybe<Verb_Types>;
 };
 
 /** aggregated selection of "user_movie_status" */
@@ -19862,6 +20265,7 @@ export type User_Movie_Status_Bool_Exp = {
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
+  verb_type?: InputMaybe<Verb_Types_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "user_movie_status" */
@@ -19886,6 +20290,7 @@ export type User_Movie_Status_Insert_Input = {
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
+  verb_type?: InputMaybe<Verb_Types_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -19953,6 +20358,7 @@ export type User_Movie_Status_Order_By = {
   updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
+  verb_type?: InputMaybe<Verb_Types_Order_By>;
 };
 
 /** primary key columns input for table: user_movie_status */
@@ -20964,10 +21370,14 @@ export type Uuid_Comparison_Exp = {
 export type Verb_Types = {
   __typename?: 'verb_types';
   type: Scalars['String']['output'];
-  /** fetch data from the table: "user_activities" */
+  /** An array relationship */
   user_activities: Array<User_Activities>;
-  /** fetch aggregated fields from the table: "user_activities" */
+  /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
+  /** An array relationship */
+  user_movie_statuses: Array<User_Movie_Status>;
+  /** An aggregate relationship */
+  user_movie_statuses_aggregate: User_Movie_Status_Aggregate;
 };
 
 
@@ -20988,6 +21398,26 @@ export type Verb_TypesUser_Activities_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<User_Activities_Order_By>>;
   where?: InputMaybe<User_Activities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "verb_types" */
+export type Verb_TypesUser_Movie_StatusesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Status_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Movie_Status_Order_By>>;
+  where?: InputMaybe<User_Movie_Status_Bool_Exp>;
+};
+
+
+/** columns and relationships of "verb_types" */
+export type Verb_TypesUser_Movie_Statuses_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Status_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Movie_Status_Order_By>>;
+  where?: InputMaybe<User_Movie_Status_Bool_Exp>;
 };
 
 /** aggregated selection of "verb_types" */
@@ -21020,6 +21450,8 @@ export type Verb_Types_Bool_Exp = {
   type?: InputMaybe<String_Comparison_Exp>;
   user_activities?: InputMaybe<User_Activities_Bool_Exp>;
   user_activities_aggregate?: InputMaybe<User_Activities_Aggregate_Bool_Exp>;
+  user_movie_statuses?: InputMaybe<User_Movie_Status_Bool_Exp>;
+  user_movie_statuses_aggregate?: InputMaybe<User_Movie_Status_Aggregate_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "verb_types" */
@@ -21052,6 +21484,7 @@ export type Verb_Types_Enum_Comparison_Exp = {
 export type Verb_Types_Insert_Input = {
   type?: InputMaybe<Scalars['String']['input']>;
   user_activities?: InputMaybe<User_Activities_Arr_Rel_Insert_Input>;
+  user_movie_statuses?: InputMaybe<User_Movie_Status_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -21075,6 +21508,13 @@ export type Verb_Types_Mutation_Response = {
   returning: Array<Verb_Types>;
 };
 
+/** input type for inserting object relation for remote table "verb_types" */
+export type Verb_Types_Obj_Rel_Insert_Input = {
+  data: Verb_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Verb_Types_On_Conflict>;
+};
+
 /** on_conflict condition type for table "verb_types" */
 export type Verb_Types_On_Conflict = {
   constraint: Verb_Types_Constraint;
@@ -21086,6 +21526,7 @@ export type Verb_Types_On_Conflict = {
 export type Verb_Types_Order_By = {
   type?: InputMaybe<Order_By>;
   user_activities_aggregate?: InputMaybe<User_Activities_Aggregate_Order_By>;
+  user_movie_statuses_aggregate?: InputMaybe<User_Movie_Status_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: verb_types */
@@ -21413,6 +21854,17 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp;
 };
 
+export type GetAuditLogsQueryVariables = Exact<{
+  distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column> | Audit_Logs_Select_Column>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Audit_Logs_Order_By> | Audit_Logs_Order_By>;
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
+}>;
+
+
+export type GetAuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, diff: any, operation: string, pk: any, table_name: string, created_at: any, user: { __typename?: 'users', avatarUrl: string, displayName: string } }> };
+
 export type GetAvailabilitiesQueryVariables = Exact<{
   where?: InputMaybe<Availabilities_Bool_Exp>;
 }>;
@@ -21638,6 +22090,64 @@ export type InsertUserActivityMutationVariables = Exact<{
 export type InsertUserActivityMutation = { __typename?: 'mutation_root', insert_user_activities_one?: { __typename?: 'user_activities', id: any } | null };
 
 
+
+export const GetAuditLogsDocument = `
+    query GetAuditLogs($distinct_on: [audit_logs_select_column!], $limit: Int, $offset: Int, $order_by: [audit_logs_order_by!], $where: audit_logs_bool_exp) {
+  audit_logs(
+    distinct_on: $distinct_on
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+    where: $where
+  ) {
+    id
+    diff
+    operation
+    pk
+    table_name
+    user {
+      avatarUrl
+      displayName
+    }
+    created_at
+  }
+}
+    `;
+
+export const useGetAuditLogsQuery = <
+      TData = GetAuditLogsQuery,
+      TError = unknown
+    >(
+      variables?: GetAuditLogsQueryVariables,
+      options?: Omit<UseQueryOptions<GetAuditLogsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAuditLogsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetAuditLogsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetAuditLogs'] : ['GetAuditLogs', variables],
+    queryFn: fetcher<GetAuditLogsQuery, GetAuditLogsQueryVariables>(GetAuditLogsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetAuditLogsQuery = <
+      TData = InfiniteData<GetAuditLogsQuery>,
+      TError = unknown
+    >(
+      variables: GetAuditLogsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetAuditLogsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetAuditLogsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetAuditLogsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetAuditLogs.infinite'] : ['GetAuditLogs.infinite', variables],
+      queryFn: (metaData) => fetcher<GetAuditLogsQuery, GetAuditLogsQueryVariables>(GetAuditLogsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
 
 export const GetAvailabilitiesDocument = `
     query GetAvailabilities($where: availabilities_bool_exp) {

@@ -8,6 +8,7 @@ import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
+import MovieChanges from '@/features/movies/components/movie-changes';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieCredits from '@/features/movies/components/movie-credits';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
@@ -22,6 +23,7 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
+import { channel } from 'diagnostics_channel';
 import {
     Calendar,
     CreditCard,
@@ -58,7 +60,8 @@ const tabItems = [
     { value: 'soundtrack', icon: Music, label: 'Soundtrack' },
     { value: 'awards', icon: Trophy, label: 'Awards' },
     { value: 'images', icon: Image, label: 'Images' },
-    { value: 'videos', icon: Video, label: 'Videos' }
+    { value: 'videos', icon: Video, label: 'Videos' },
+    { value: 'changes', icon: Edit, label: 'Changes' }
 ];
 
 function MoviePageContent() {
@@ -76,7 +79,8 @@ function MoviePageContent() {
         soundtrack: { content: <SoundtrackTable /> },
         awards: { content: 'No awards available' },
         images: { content: 'No images available.' },
-        videos: { content: 'No videos available.' }
+        videos: { content: 'No videos available.' },
+        changes: { content: <MovieChanges /> }
     };
 
     return (
