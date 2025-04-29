@@ -1,3 +1,5 @@
+import { Movie_Release_Statuses_Enum } from '@/generated/graphql';
+
 import { z } from 'zod';
 
 export const movieDetailsSchema = z.object({
@@ -11,7 +13,8 @@ export const movieDetailsSchema = z.object({
     // TODO : This needs to match the language code
     language: z.string().optional(),
     certification: z.string().uuid().optional(),
-    status: z.string().uuid().optional(),
+
+    status: z.nativeEnum(Movie_Release_Statuses_Enum).optional(),
     imdbId: z.string().optional(),
     tmdbId: z.string().optional(),
     homepage: z.string().url().optional().or(z.literal(''))

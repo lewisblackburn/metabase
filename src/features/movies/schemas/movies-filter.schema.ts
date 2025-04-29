@@ -1,3 +1,5 @@
+import { Movie_Release_Statuses_Enum } from '@/generated/graphql';
+
 import * as z from 'zod';
 
 export const moviesFilterSchema = z.object({
@@ -18,7 +20,7 @@ export const moviesFilterSchema = z.object({
     genres: z.array(z.string().uuid()).optional(),
     certifications: z.array(z.string().uuid()).optional(),
     availabilities: z.array(z.string().uuid()).optional(),
-    statuses: z.array(z.string().uuid()).optional(),
+    statuses: z.array(z.nativeEnum(Movie_Release_Statuses_Enum)).optional(),
     // TODO : This needs to match the language code
     language: z.string().optional(),
     userScore: z.tuple([z.number(), z.number()]).optional(),

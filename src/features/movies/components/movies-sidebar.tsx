@@ -13,7 +13,7 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { useGetCertificationsQuery, useGetGenresQuery, useGetStatusesQuery } from '@/generated/graphql';
+import { Movie_Release_Statuses_Enum, useGetCertificationsQuery, useGetGenresQuery } from '@/generated/graphql';
 import { useGetAvailabilitiesQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -30,6 +30,7 @@ import {
 } from '@/registry/new-york-v4/ui/sheet';
 import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
 import { RootState } from '@/store/store';
+import { enumToOptions } from '@/utils/enum-to-options';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
@@ -38,6 +39,8 @@ import { Calendar, Flame, Settings2, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
+
+const statuses = enumToOptions(Movie_Release_Statuses_Enum);
 
 export default function MoviesSidebar() {
     const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
@@ -90,21 +93,6 @@ export default function MoviesSidebar() {
         },
         {
             queryKey: ['certifications']
-        }
-    );
-
-    const { data: statuses } = useGetStatusesQuery(
-        {
-            where: {
-                status_types: {
-                    type: {
-                        _eq: 'movie'
-                    }
-                }
-            }
-        },
-        {
-            queryKey: ['statuses']
         }
     );
 
@@ -315,15 +303,7 @@ export default function MoviesSidebar() {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Statuses'>
-                                                            <CheckboxGroupField
-                                                                options={
-                                                                    statuses?.statuses.map((status) => ({
-                                                                        value: status.id,
-                                                                        label: status.name
-                                                                    })) ?? []
-                                                                }
-                                                                {...field}
-                                                            />
+                                                            <CheckboxGroupField options={statuses} {...field} />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}

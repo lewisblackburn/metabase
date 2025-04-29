@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Verb_Types_Enum } from '@/generated/graphql';
+import { User_Movie_Statuses_Types_Enum } from '@/generated/graphql';
 import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
@@ -18,39 +18,45 @@ import { ButtonProps } from '@/types/button.types';
 import ActionButton from './action-button';
 import { Check, CheckCircle, CircleHelp, Clock, List, LucideIcon, X } from 'lucide-react';
 
-export const VERB_TYPES_ICONS: Record<Verb_Types_Enum, LucideIcon> = {
+type STATUS_TYPES = User_Movie_Statuses_Types_Enum;
+
+export const STATUS_TYPES_ICONS: Record<STATUS_TYPES, LucideIcon> = {
     dropped: X,
-    watchlisted: List,
+    watchlist: List,
     watched: CheckCircle,
-    watching: Clock,
-    favourited: CheckCircle,
-    unfavourited: X,
-    reviewed: CheckCircle,
-    nulled: CircleHelp
+    watching: Clock
 };
 
-interface StatusButtonProps extends ButtonProps {
-    currentStatus?: Verb_Types_Enum;
+interface StatusButtonProps<T extends string | number> {
+    currentStatus?: T;
     statuses?: {
-        value: Verb_Types_Enum;
+        value: T;
         label: string;
     }[];
-    onStatusChange?: (value: Verb_Types_Enum | null) => void;
-    defaultValue?: Verb_Types_Enum;
+    onStatusChange?: (value: T | null) => void;
+    defaultStatus?: T;
     statusIcons?: Record<string, LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>>;
 }
 
-export default function StatusPickerButton({
+export default function StatusPickerButton<T extends string | number>({
     currentStatus,
     statuses,
     onStatusChange,
-    defaultValue,
-    statusIcons = VERB_TYPES_ICONS,
+    defaultStatus,
+    statusIcons = STATUS_TYPES_ICONS as unknown as Record<string, LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>>,
     ...props
-}: StatusButtonProps) {
-    const [status, setStatus] = useState<Verb_Types_Enum | null>(defaultValue || null);
+}: StatusButtonProps<T> & ButtonProps) {
+    // Use currentStatus from props if available, otherwise use defaultStatus
+    const [status, setStatus] = useState<T | null>(currentStatus || defaultStatus || null);
 
-    const handleStatusClick = (value: Verb_Types_Enum) => {
+    // Update local state when currentStatus prop changes
+    useEffect(() => {
+        if (currentStatus !== undefined) {
+            setStatus(currentStatus);
+        }
+    }, [currentStatus]);
+
+    const handleStatusClick = (value: T) => {
         // NOTE: If the same status is clicked, unset it
         if (value === status) {
             setStatus(null);
@@ -64,14 +70,16 @@ export default function StatusPickerButton({
     // NOTE: Find the label for the current status, not the default value
     const statusLabel = status ? statuses?.find((s) => s.value === status)?.label : null;
 
-    const currentIcon = statusIcons[status || ''] || statusIcons[defaultValue || ''] || CircleHelp;
+    // NOTE: Get the icon for this status option if available
+    const statusKey = status as unknown as string;
+    const CurrentIcon = status && statusKey in statusIcons ? statusIcons[statusKey] : CircleHelp;
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <div className='inline-flex'>
-                    <ActionButton icon={currentIcon} {...props}>
-                        {statusLabel || currentStatus || 'Update Status'}
+                    <ActionButton icon={CurrentIcon} {...props}>
+                        {statusLabel || 'Update Status'}
                     </ActionButton>
                 </div>
             </DropdownMenuTrigger>
@@ -81,11 +89,12 @@ export default function StatusPickerButton({
                 <DropdownMenuGroup>
                     {statuses?.map((statusOption) => {
                         // NOTE: Get the icon for this status option if available
-                        const StatusIcon = statusIcons[statusOption.value];
+                        const optionKey = statusOption.value as unknown as string;
+                        const StatusIcon = optionKey in statusIcons ? statusIcons[optionKey] : undefined;
 
                         return (
                             <DropdownMenuItem
-                                key={statusOption.value}
+                                key={String(statusOption.value)}
                                 onClick={() => handleStatusClick(statusOption.value)}
                                 className={cn(
                                     'flex cursor-pointer items-center justify-between py-2',

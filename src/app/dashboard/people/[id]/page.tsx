@@ -12,6 +12,7 @@ import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dia
 import PersonBio from '@/features/people/components/person-bio';
 import PersonMedia from '@/features/people/components/person-media';
 import { PersonProvider, usePerson } from '@/features/people/components/person-provider';
+import { Object_Types_Enum } from '@/generated/graphql';
 import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 
@@ -47,7 +48,12 @@ function PersonPageContent() {
                             icon={Edit}
                             size='sm'
                             onClick={() =>
-                                dispatch(toggleEditDialogOpenState({ objectType: 'PERSON', objectId: person.id }))
+                                dispatch(
+                                    toggleEditDialogOpenState({
+                                        objectType: Object_Types_Enum.Person,
+                                        objectId: person.id
+                                    })
+                                )
                             }>
                             Edit
                         </ActionButton>

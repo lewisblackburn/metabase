@@ -10,8 +10,8 @@ query GetUserActivities(
         object_type
         object_id
         object_title
-        payload
-        verb
+        details
+        activity_type
         user {
             avatarUrl
             displayName

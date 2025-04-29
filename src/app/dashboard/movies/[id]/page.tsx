@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 
+import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
 import ItemInformation from '@/components/shared/item-information';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
@@ -18,12 +19,12 @@ import { MovieProvider, useMovie } from '@/features/movies/components/movie-prov
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
+import { Movie_Release_Statuses_Enum, Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
-import { channel } from 'diagnostics_channel';
 import {
     Calendar,
     CreditCard,
@@ -44,6 +45,13 @@ import {
     Video
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+
+const statusLabelMap = {
+    [Movie_Release_Statuses_Enum['InProduction']]: 'In Production',
+    [Movie_Release_Statuses_Enum['Rumoured']]: 'Rumoured',
+    [Movie_Release_Statuses_Enum['Cancelled']]: 'Cancelled',
+    [Movie_Release_Statuses_Enum['Released']]: 'Released'
+};
 
 export default function MoviePage() {
     return (
@@ -68,7 +76,7 @@ function MoviePageContent() {
     const dispatch = useDispatch();
     const { movie } = useMovie();
 
-    if (!movie) return null;
+    if (!movie) return <NotFound />;
 
     const tabContents = {
         reviews: {
@@ -139,7 +147,7 @@ function MoviePageContent() {
                                     </ItemInformation>
 
                                     <ItemInformation icon={Info} label='Status'>
-                                        {movie.status?.name || 'Unknown'}
+                                        {movie.status && <>{statusLabelMap[movie.status] || 'Unknown'}</>}
                                     </ItemInformation>
 
                                     <ItemInformation icon={CreditCard} label='Budget'>
@@ -179,7 +187,12 @@ function MoviePageContent() {
                                 icon={Edit}
                                 size='sm'
                                 onClick={() =>
-                                    dispatch(toggleEditDialogOpenState({ objectType: 'MOVIE', objectId: movie.id }))
+                                    dispatch(
+                                        toggleEditDialogOpenState({
+                                            objectType: Object_Types_Enum.Movie,
+                                            objectId: movie.id
+                                        })
+                                    )
                                 }>
                                 Edit
                             </ActionButton>

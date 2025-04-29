@@ -1,8 +1,7 @@
 import ReviewDialog, { ReviewFormValues } from '@/components/shared/review-dialog';
 import {
-    User_Movie_Status_Constraint,
-    User_Movie_Status_Update_Column,
-    Verb_Types_Enum,
+    User_Movie_Statuses_Constraint,
+    User_Movie_Statuses_Update_Column,
     useInsertUserMovieStatusMutation
 } from '@/generated/graphql';
 import { useUserId } from '@nhost/nextjs';
@@ -33,15 +32,13 @@ export default function ReviewMovieDialog() {
                 object: {
                     movie_id: movie.id,
                     rating: reviewData.rating,
-                    review: reviewData.review,
-                    status: Verb_Types_Enum.Reviewed
+                    review: !!reviewData?.review ? reviewData.review : null
                 },
                 on_conflict: {
-                    constraint: User_Movie_Status_Constraint.UserMovieStatusPkey,
+                    constraint: User_Movie_Statuses_Constraint.UserMovieStatusesPkey,
                     update_columns: [
-                        User_Movie_Status_Update_Column.Rating,
-                        User_Movie_Status_Update_Column.Review,
-                        User_Movie_Status_Update_Column.Status
+                        User_Movie_Statuses_Update_Column.Rating,
+                        User_Movie_Statuses_Update_Column.Review
                     ],
                     where: {
                         user_id: { _eq: userId },
@@ -64,12 +61,14 @@ export default function ReviewMovieDialog() {
                 object: {
                     movie_id: movie.id,
                     rating: null,
-                    review: null,
-                    status: Verb_Types_Enum.Nulled
+                    review: null
                 },
                 on_conflict: {
-                    constraint: User_Movie_Status_Constraint.UserMovieStatusPkey,
-                    update_columns: [User_Movie_Status_Update_Column.Rating, User_Movie_Status_Update_Column.Review],
+                    constraint: User_Movie_Statuses_Constraint.UserMovieStatusesPkey,
+                    update_columns: [
+                        User_Movie_Statuses_Update_Column.Rating,
+                        User_Movie_Statuses_Update_Column.Review
+                    ],
                     where: {
                         user_id: { _eq: userId },
                         movie_id: { _eq: movie.id }

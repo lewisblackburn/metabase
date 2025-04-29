@@ -36,10 +36,7 @@ query GetMovieForContentQualityCheck($id: uuid!) {
                 headshot
             }
         }
-        status {
-            id
-            name
-        }
+        status
         certification {
             id
             name

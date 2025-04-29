@@ -30,10 +30,7 @@ query GetMovie($id: uuid!) {
             status
             updated_at
         }
-        status {
-            id
-            name
-        }
+        status
         certification {
             id
             name

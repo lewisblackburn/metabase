@@ -1,6 +1,12 @@
 import { useMemo } from 'react';
 
-import { GetMoviesQueryVariables, InputMaybe, Movies_Bool_Exp, Order_By } from '@/generated/graphql';
+import {
+    GetMoviesQueryVariables,
+    InputMaybe,
+    Movies_Bool_Exp,
+    Order_By,
+    User_Movie_Statuses_Types_Enum
+} from '@/generated/graphql';
 import { RootState } from '@/store/store';
 
 import { useSelector } from 'react-redux';
@@ -61,8 +67,22 @@ export function useMovieFilters(): {
 
         if (showMe !== 'everything') {
             const isNull = showMe === 'not-seen';
+
+            // NOTE: If there is 1 user_movie_status that is watched, then the user has seen the movie
+            // NOTE: If there is 0 user_movie_status that is watched, then the user has not seen the movie
             clauses.push({
-                user_rating: { _is_null: isNull }
+                user_movie_statuses_aggregate: {
+                    count: {
+                        predicate: {
+                            _eq: isNull ? 0 : 1
+                        },
+                        filter: {
+                            status: {
+                                _eq: User_Movie_Statuses_Types_Enum.Watched
+                            }
+                        }
+                    }
+                }
             });
         }
 
@@ -85,7 +105,7 @@ export function useMovieFilters(): {
         }
 
         if (statuses?.length) {
-            clauses.push({ status: { id: { _in: statuses } } });
+            clauses.push({ status: { _in: statuses } });
         }
 
         if (language) {
