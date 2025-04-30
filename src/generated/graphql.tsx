@@ -120,6 +120,30 @@ export type String_Comparison_Exp = {
 export type Activity_Types = {
   __typename?: 'activity_types';
   type: Scalars['String']['output'];
+  /** An array relationship */
+  user_activities: Array<User_Activities>;
+  /** An aggregate relationship */
+  user_activities_aggregate: User_Activities_Aggregate;
+};
+
+
+/** columns and relationships of "activity_types" */
+export type Activity_TypesUser_ActivitiesArgs = {
+  distinct_on?: InputMaybe<Array<User_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Activities_Order_By>>;
+  where?: InputMaybe<User_Activities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "activity_types" */
+export type Activity_TypesUser_Activities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Activities_Order_By>>;
+  where?: InputMaybe<User_Activities_Bool_Exp>;
 };
 
 /** aggregated selection of "activity_types" */
@@ -150,6 +174,8 @@ export type Activity_Types_Bool_Exp = {
   _not?: InputMaybe<Activity_Types_Bool_Exp>;
   _or?: InputMaybe<Array<Activity_Types_Bool_Exp>>;
   type?: InputMaybe<String_Comparison_Exp>;
+  user_activities?: InputMaybe<User_Activities_Bool_Exp>;
+  user_activities_aggregate?: InputMaybe<User_Activities_Aggregate_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "activity_types" */
@@ -183,6 +209,7 @@ export type Activity_Types_Enum_Comparison_Exp = {
 /** input type for inserting data into table "activity_types" */
 export type Activity_Types_Insert_Input = {
   type?: InputMaybe<Scalars['String']['input']>;
+  user_activities?: InputMaybe<User_Activities_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -206,6 +233,13 @@ export type Activity_Types_Mutation_Response = {
   returning: Array<Activity_Types>;
 };
 
+/** input type for inserting object relation for remote table "activity_types" */
+export type Activity_Types_Obj_Rel_Insert_Input = {
+  data: Activity_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Activity_Types_On_Conflict>;
+};
+
 /** on_conflict condition type for table "activity_types" */
 export type Activity_Types_On_Conflict = {
   constraint: Activity_Types_Constraint;
@@ -216,6 +250,7 @@ export type Activity_Types_On_Conflict = {
 /** Ordering options when selecting data from "activity_types". */
 export type Activity_Types_Order_By = {
   type?: InputMaybe<Order_By>;
+  user_activities_aggregate?: InputMaybe<User_Activities_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: activity_types */
@@ -3428,397 +3463,6 @@ export type Auth_Migrations_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** columns and relationships of "availabilities" */
-export type Availabilities = {
-  __typename?: 'availabilities';
-  /** An array relationship */
-  availability_types: Array<Availability_Types>;
-  /** An aggregate relationship */
-  availability_types_aggregate: Availability_Types_Aggregate;
-  id: Scalars['uuid']['output'];
-  /** An array relationship */
-  movie_availabilities: Array<Movie_Availabilities>;
-  /** An aggregate relationship */
-  movie_availabilities_aggregate: Movie_Availabilities_Aggregate;
-  name: Scalars['String']['output'];
-};
-
-
-/** columns and relationships of "availabilities" */
-export type AvailabilitiesAvailability_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-
-/** columns and relationships of "availabilities" */
-export type AvailabilitiesAvailability_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-
-/** columns and relationships of "availabilities" */
-export type AvailabilitiesMovie_AvailabilitiesArgs = {
-  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
-  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
-};
-
-
-/** columns and relationships of "availabilities" */
-export type AvailabilitiesMovie_Availabilities_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
-  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
-};
-
-/** aggregated selection of "availabilities" */
-export type Availabilities_Aggregate = {
-  __typename?: 'availabilities_aggregate';
-  aggregate?: Maybe<Availabilities_Aggregate_Fields>;
-  nodes: Array<Availabilities>;
-};
-
-/** aggregate fields of "availabilities" */
-export type Availabilities_Aggregate_Fields = {
-  __typename?: 'availabilities_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Availabilities_Max_Fields>;
-  min?: Maybe<Availabilities_Min_Fields>;
-};
-
-
-/** aggregate fields of "availabilities" */
-export type Availabilities_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Availabilities_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Boolean expression to filter rows from the table "availabilities". All fields are combined with a logical 'AND'. */
-export type Availabilities_Bool_Exp = {
-  _and?: InputMaybe<Array<Availabilities_Bool_Exp>>;
-  _not?: InputMaybe<Availabilities_Bool_Exp>;
-  _or?: InputMaybe<Array<Availabilities_Bool_Exp>>;
-  availability_types?: InputMaybe<Availability_Types_Bool_Exp>;
-  availability_types_aggregate?: InputMaybe<Availability_Types_Aggregate_Bool_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  movie_availabilities?: InputMaybe<Movie_Availabilities_Bool_Exp>;
-  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Bool_Exp>;
-  name?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "availabilities" */
-export enum Availabilities_Constraint {
-  /** unique or primary key constraint on columns "name" */
-  AvailabilitiesNameKey = 'availabilities_name_key',
-  /** unique or primary key constraint on columns "id" */
-  AvailabilitiesPkey = 'availabilities_pkey'
-}
-
-/** input type for inserting data into table "availabilities" */
-export type Availabilities_Insert_Input = {
-  availability_types?: InputMaybe<Availability_Types_Arr_Rel_Insert_Input>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  movie_availabilities?: InputMaybe<Movie_Availabilities_Arr_Rel_Insert_Input>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Availabilities_Max_Fields = {
-  __typename?: 'availabilities_max_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
-/** aggregate min on columns */
-export type Availabilities_Min_Fields = {
-  __typename?: 'availabilities_min_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
-/** response of any mutation on the table "availabilities" */
-export type Availabilities_Mutation_Response = {
-  __typename?: 'availabilities_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Availabilities>;
-};
-
-/** input type for inserting object relation for remote table "availabilities" */
-export type Availabilities_Obj_Rel_Insert_Input = {
-  data: Availabilities_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Availabilities_On_Conflict>;
-};
-
-/** on_conflict condition type for table "availabilities" */
-export type Availabilities_On_Conflict = {
-  constraint: Availabilities_Constraint;
-  update_columns?: Array<Availabilities_Update_Column>;
-  where?: InputMaybe<Availabilities_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "availabilities". */
-export type Availabilities_Order_By = {
-  availability_types_aggregate?: InputMaybe<Availability_Types_Aggregate_Order_By>;
-  id?: InputMaybe<Order_By>;
-  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Order_By>;
-  name?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: availabilities */
-export type Availabilities_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "availabilities" */
-export enum Availabilities_Select_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-/** input type for updating data in table "availabilities" */
-export type Availabilities_Set_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Streaming cursor of the table "availabilities" */
-export type Availabilities_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Availabilities_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Availabilities_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** update columns of table "availabilities" */
-export enum Availabilities_Update_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-export type Availabilities_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Availabilities_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Availabilities_Bool_Exp;
-};
-
-/** columns and relationships of "availability_types" */
-export type Availability_Types = {
-  __typename?: 'availability_types';
-  /** An object relationship */
-  availability: Availabilities;
-  availability_id: Scalars['uuid']['output'];
-  id: Scalars['uuid']['output'];
-  type: Scalars['String']['output'];
-};
-
-/** aggregated selection of "availability_types" */
-export type Availability_Types_Aggregate = {
-  __typename?: 'availability_types_aggregate';
-  aggregate?: Maybe<Availability_Types_Aggregate_Fields>;
-  nodes: Array<Availability_Types>;
-};
-
-export type Availability_Types_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Availability_Types_Aggregate_Bool_Exp_Count>;
-};
-
-export type Availability_Types_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Availability_Types_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "availability_types" */
-export type Availability_Types_Aggregate_Fields = {
-  __typename?: 'availability_types_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Availability_Types_Max_Fields>;
-  min?: Maybe<Availability_Types_Min_Fields>;
-};
-
-
-/** aggregate fields of "availability_types" */
-export type Availability_Types_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "availability_types" */
-export type Availability_Types_Aggregate_Order_By = {
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Availability_Types_Max_Order_By>;
-  min?: InputMaybe<Availability_Types_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "availability_types" */
-export type Availability_Types_Arr_Rel_Insert_Input = {
-  data: Array<Availability_Types_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Availability_Types_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "availability_types". All fields are combined with a logical 'AND'. */
-export type Availability_Types_Bool_Exp = {
-  _and?: InputMaybe<Array<Availability_Types_Bool_Exp>>;
-  _not?: InputMaybe<Availability_Types_Bool_Exp>;
-  _or?: InputMaybe<Array<Availability_Types_Bool_Exp>>;
-  availability?: InputMaybe<Availabilities_Bool_Exp>;
-  availability_id?: InputMaybe<Uuid_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  type?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "availability_types" */
-export enum Availability_Types_Constraint {
-  /** unique or primary key constraint on columns "type", "availability_id" */
-  AvailabilityTypesAvailabilityIdTypeKey = 'availability_types_availability_id_type_key',
-  /** unique or primary key constraint on columns "id" */
-  AvailabilityTypesPkey = 'availability_types_pkey'
-}
-
-/** input type for inserting data into table "availability_types" */
-export type Availability_Types_Insert_Input = {
-  availability?: InputMaybe<Availabilities_Obj_Rel_Insert_Input>;
-  availability_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Availability_Types_Max_Fields = {
-  __typename?: 'availability_types_max_fields';
-  availability_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-};
-
-/** order by max() on columns of table "availability_types" */
-export type Availability_Types_Max_Order_By = {
-  availability_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  type?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Availability_Types_Min_Fields = {
-  __typename?: 'availability_types_min_fields';
-  availability_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-};
-
-/** order by min() on columns of table "availability_types" */
-export type Availability_Types_Min_Order_By = {
-  availability_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  type?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "availability_types" */
-export type Availability_Types_Mutation_Response = {
-  __typename?: 'availability_types_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Availability_Types>;
-};
-
-/** on_conflict condition type for table "availability_types" */
-export type Availability_Types_On_Conflict = {
-  constraint: Availability_Types_Constraint;
-  update_columns?: Array<Availability_Types_Update_Column>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "availability_types". */
-export type Availability_Types_Order_By = {
-  availability?: InputMaybe<Availabilities_Order_By>;
-  availability_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  type?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: availability_types */
-export type Availability_Types_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "availability_types" */
-export enum Availability_Types_Select_Column {
-  /** column name */
-  AvailabilityId = 'availability_id',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Type = 'type'
-}
-
-/** input type for updating data in table "availability_types" */
-export type Availability_Types_Set_Input = {
-  availability_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Streaming cursor of the table "availability_types" */
-export type Availability_Types_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Availability_Types_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Availability_Types_Stream_Cursor_Value_Input = {
-  availability_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** update columns of table "availability_types" */
-export enum Availability_Types_Update_Column {
-  /** column name */
-  AvailabilityId = 'availability_id',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Type = 'type'
-}
-
-export type Availability_Types_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Availability_Types_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Availability_Types_Bool_Exp;
-};
-
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['bigint']['input']>;
@@ -6442,12 +6086,11 @@ export type Movie_Alternative_Titles_Updates = {
 /** columns and relationships of "movie_availabilities" */
 export type Movie_Availabilities = {
   __typename?: 'movie_availabilities';
-  /** An object relationship */
-  availability: Availabilities;
-  availability_id: Scalars['uuid']['output'];
-  id: Scalars['uuid']['output'];
+  availability: Movie_Availability_Types_Enum;
   /** An object relationship */
   movie: Movies;
+  /** An object relationship */
+  movie_availability_type: Movie_Availability_Types;
   movie_id: Scalars['uuid']['output'];
 };
 
@@ -6503,57 +6146,45 @@ export type Movie_Availabilities_Bool_Exp = {
   _and?: InputMaybe<Array<Movie_Availabilities_Bool_Exp>>;
   _not?: InputMaybe<Movie_Availabilities_Bool_Exp>;
   _or?: InputMaybe<Array<Movie_Availabilities_Bool_Exp>>;
-  availability?: InputMaybe<Availabilities_Bool_Exp>;
-  availability_id?: InputMaybe<Uuid_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
+  availability?: InputMaybe<Movie_Availability_Types_Enum_Comparison_Exp>;
   movie?: InputMaybe<Movies_Bool_Exp>;
+  movie_availability_type?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "movie_availabilities" */
 export enum Movie_Availabilities_Constraint {
-  /** unique or primary key constraint on columns "movie_id", "availability_id" */
-  MovieAvailabilitiesMovieIdAvailabilityIdKey = 'movie_availabilities_movie_id_availability_id_key',
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint on columns "availability", "movie_id" */
   MovieAvailabilitiesPkey = 'movie_availabilities_pkey'
 }
 
 /** input type for inserting data into table "movie_availabilities" */
 export type Movie_Availabilities_Insert_Input = {
-  availability?: InputMaybe<Availabilities_Obj_Rel_Insert_Input>;
-  availability_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
+  availability?: InputMaybe<Movie_Availability_Types_Enum>;
   movie?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
+  movie_availability_type?: InputMaybe<Movie_Availability_Types_Obj_Rel_Insert_Input>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
 export type Movie_Availabilities_Max_Fields = {
   __typename?: 'movie_availabilities_max_fields';
-  availability_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "movie_availabilities" */
 export type Movie_Availabilities_Max_Order_By = {
-  availability_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Movie_Availabilities_Min_Fields = {
   __typename?: 'movie_availabilities_min_fields';
-  availability_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "movie_availabilities" */
 export type Movie_Availabilities_Min_Order_By = {
-  availability_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
 };
 
@@ -6575,32 +6206,29 @@ export type Movie_Availabilities_On_Conflict = {
 
 /** Ordering options when selecting data from "movie_availabilities". */
 export type Movie_Availabilities_Order_By = {
-  availability?: InputMaybe<Availabilities_Order_By>;
-  availability_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
+  availability?: InputMaybe<Order_By>;
   movie?: InputMaybe<Movies_Order_By>;
+  movie_availability_type?: InputMaybe<Movie_Availability_Types_Order_By>;
   movie_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: movie_availabilities */
 export type Movie_Availabilities_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
+  availability: Movie_Availability_Types_Enum;
+  movie_id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "movie_availabilities" */
 export enum Movie_Availabilities_Select_Column {
   /** column name */
-  AvailabilityId = 'availability_id',
-  /** column name */
-  Id = 'id',
+  Availability = 'availability',
   /** column name */
   MovieId = 'movie_id'
 }
 
 /** input type for updating data in table "movie_availabilities" */
 export type Movie_Availabilities_Set_Input = {
-  availability_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
+  availability?: InputMaybe<Movie_Availability_Types_Enum>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
@@ -6614,17 +6242,14 @@ export type Movie_Availabilities_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movie_Availabilities_Stream_Cursor_Value_Input = {
-  availability_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
+  availability?: InputMaybe<Movie_Availability_Types_Enum>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "movie_availabilities" */
 export enum Movie_Availabilities_Update_Column {
   /** column name */
-  AvailabilityId = 'availability_id',
-  /** column name */
-  Id = 'id',
+  Availability = 'availability',
   /** column name */
   MovieId = 'movie_id'
 }
@@ -6634,6 +6259,180 @@ export type Movie_Availabilities_Updates = {
   _set?: InputMaybe<Movie_Availabilities_Set_Input>;
   /** filter the rows which have to be updated */
   where: Movie_Availabilities_Bool_Exp;
+};
+
+/** columns and relationships of "movie_availability_types" */
+export type Movie_Availability_Types = {
+  __typename?: 'movie_availability_types';
+  /** An array relationship */
+  movie_availabilities: Array<Movie_Availabilities>;
+  /** An aggregate relationship */
+  movie_availabilities_aggregate: Movie_Availabilities_Aggregate;
+  type: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "movie_availability_types" */
+export type Movie_Availability_TypesMovie_AvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movie_availability_types" */
+export type Movie_Availability_TypesMovie_Availabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availabilities_Order_By>>;
+  where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+/** aggregated selection of "movie_availability_types" */
+export type Movie_Availability_Types_Aggregate = {
+  __typename?: 'movie_availability_types_aggregate';
+  aggregate?: Maybe<Movie_Availability_Types_Aggregate_Fields>;
+  nodes: Array<Movie_Availability_Types>;
+};
+
+/** aggregate fields of "movie_availability_types" */
+export type Movie_Availability_Types_Aggregate_Fields = {
+  __typename?: 'movie_availability_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Movie_Availability_Types_Max_Fields>;
+  min?: Maybe<Movie_Availability_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "movie_availability_types" */
+export type Movie_Availability_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Movie_Availability_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "movie_availability_types". All fields are combined with a logical 'AND'. */
+export type Movie_Availability_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Availability_Types_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Availability_Types_Bool_Exp>>;
+  movie_availabilities?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Bool_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_availability_types" */
+export enum Movie_Availability_Types_Constraint {
+  /** unique or primary key constraint on columns "type" */
+  MovieAvailabilityTypesPkey = 'movie_availability_types_pkey'
+}
+
+export enum Movie_Availability_Types_Enum {
+  BluRay = 'blu_ray',
+  Download = 'download',
+  Dvd = 'dvd',
+  InCinemas = 'in_cinemas',
+  Streaming = 'streaming'
+}
+
+/** Boolean expression to compare columns of type "movie_availability_types_enum". All fields are combined with logical 'AND'. */
+export type Movie_Availability_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Movie_Availability_Types_Enum>;
+  _in?: InputMaybe<Array<Movie_Availability_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Movie_Availability_Types_Enum>;
+  _nin?: InputMaybe<Array<Movie_Availability_Types_Enum>>;
+};
+
+/** input type for inserting data into table "movie_availability_types" */
+export type Movie_Availability_Types_Insert_Input = {
+  movie_availabilities?: InputMaybe<Movie_Availabilities_Arr_Rel_Insert_Input>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Availability_Types_Max_Fields = {
+  __typename?: 'movie_availability_types_max_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Movie_Availability_Types_Min_Fields = {
+  __typename?: 'movie_availability_types_min_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "movie_availability_types" */
+export type Movie_Availability_Types_Mutation_Response = {
+  __typename?: 'movie_availability_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Availability_Types>;
+};
+
+/** input type for inserting object relation for remote table "movie_availability_types" */
+export type Movie_Availability_Types_Obj_Rel_Insert_Input = {
+  data: Movie_Availability_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Availability_Types_On_Conflict>;
+};
+
+/** on_conflict condition type for table "movie_availability_types" */
+export type Movie_Availability_Types_On_Conflict = {
+  constraint: Movie_Availability_Types_Constraint;
+  update_columns?: Array<Movie_Availability_Types_Update_Column>;
+  where?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_availability_types". */
+export type Movie_Availability_Types_Order_By = {
+  movie_availabilities_aggregate?: InputMaybe<Movie_Availabilities_Aggregate_Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_availability_types */
+export type Movie_Availability_Types_Pk_Columns_Input = {
+  type: Scalars['String']['input'];
+};
+
+/** select columns of table "movie_availability_types" */
+export enum Movie_Availability_Types_Select_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "movie_availability_types" */
+export type Movie_Availability_Types_Set_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "movie_availability_types" */
+export type Movie_Availability_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Availability_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Availability_Types_Stream_Cursor_Value_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "movie_availability_types" */
+export enum Movie_Availability_Types_Update_Column {
+  /** column name */
+  Type = 'type'
+}
+
+export type Movie_Availability_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Availability_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Availability_Types_Bool_Exp;
 };
 
 /** columns and relationships of "movie_genres" */
@@ -7784,7 +7583,31 @@ export type Movie_Production_Countries_Updates = {
 /** columns and relationships of "movie_release_statuses" */
 export type Movie_Release_Statuses = {
   __typename?: 'movie_release_statuses';
+  /** An array relationship */
+  movies: Array<Movies>;
+  /** An aggregate relationship */
+  movies_aggregate: Movies_Aggregate;
   status: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "movie_release_statuses" */
+export type Movie_Release_StatusesMoviesArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movie_release_statuses" */
+export type Movie_Release_StatusesMovies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
 };
 
 /** aggregated selection of "movie_release_statuses" */
@@ -7814,6 +7637,8 @@ export type Movie_Release_Statuses_Bool_Exp = {
   _and?: InputMaybe<Array<Movie_Release_Statuses_Bool_Exp>>;
   _not?: InputMaybe<Movie_Release_Statuses_Bool_Exp>;
   _or?: InputMaybe<Array<Movie_Release_Statuses_Bool_Exp>>;
+  movies?: InputMaybe<Movies_Bool_Exp>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Bool_Exp>;
   status?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -7841,6 +7666,7 @@ export type Movie_Release_Statuses_Enum_Comparison_Exp = {
 
 /** input type for inserting data into table "movie_release_statuses" */
 export type Movie_Release_Statuses_Insert_Input = {
+  movies?: InputMaybe<Movies_Arr_Rel_Insert_Input>;
   status?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -7865,6 +7691,13 @@ export type Movie_Release_Statuses_Mutation_Response = {
   returning: Array<Movie_Release_Statuses>;
 };
 
+/** input type for inserting object relation for remote table "movie_release_statuses" */
+export type Movie_Release_Statuses_Obj_Rel_Insert_Input = {
+  data: Movie_Release_Statuses_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Release_Statuses_On_Conflict>;
+};
+
 /** on_conflict condition type for table "movie_release_statuses" */
 export type Movie_Release_Statuses_On_Conflict = {
   constraint: Movie_Release_Statuses_Constraint;
@@ -7874,6 +7707,7 @@ export type Movie_Release_Statuses_On_Conflict = {
 
 /** Ordering options when selecting data from "movie_release_statuses". */
 export type Movie_Release_Statuses_Order_By = {
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Order_By>;
   status?: InputMaybe<Order_By>;
 };
 
@@ -8205,6 +8039,8 @@ export type Movies = {
   movie_production_countries: Array<Movie_Production_Countries>;
   /** An aggregate relationship */
   movie_production_countries_aggregate: Movie_Production_Countries_Aggregate;
+  /** An object relationship */
+  movie_release_status?: Maybe<Movie_Release_Statuses>;
   /** An array relationship */
   movie_soundtracks: Array<Movie_Soundtrack>;
   /** An aggregate relationship */
@@ -8550,6 +8386,7 @@ export type Movies_Bool_Exp = {
   movie_production_companies_aggregate?: InputMaybe<Movie_Production_Companies_Aggregate_Bool_Exp>;
   movie_production_countries?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
   movie_production_countries_aggregate?: InputMaybe<Movie_Production_Countries_Aggregate_Bool_Exp>;
+  movie_release_status?: InputMaybe<Movie_Release_Statuses_Bool_Exp>;
   movie_soundtracks?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
   movie_soundtracks_aggregate?: InputMaybe<Movie_Soundtrack_Aggregate_Bool_Exp>;
   overview?: InputMaybe<String_Comparison_Exp>;
@@ -8613,6 +8450,7 @@ export type Movies_Insert_Input = {
   movie_media?: InputMaybe<Movie_Media_Arr_Rel_Insert_Input>;
   movie_production_companies?: InputMaybe<Movie_Production_Companies_Arr_Rel_Insert_Input>;
   movie_production_countries?: InputMaybe<Movie_Production_Countries_Arr_Rel_Insert_Input>;
+  movie_release_status?: InputMaybe<Movie_Release_Statuses_Obj_Rel_Insert_Input>;
   movie_soundtracks?: InputMaybe<Movie_Soundtrack_Arr_Rel_Insert_Input>;
   overview?: InputMaybe<Scalars['String']['input']>;
   poster?: InputMaybe<Scalars['String']['input']>;
@@ -8790,6 +8628,7 @@ export type Movies_Order_By = {
   movie_media_aggregate?: InputMaybe<Movie_Media_Aggregate_Order_By>;
   movie_production_companies_aggregate?: InputMaybe<Movie_Production_Companies_Aggregate_Order_By>;
   movie_production_countries_aggregate?: InputMaybe<Movie_Production_Countries_Aggregate_Order_By>;
+  movie_release_status?: InputMaybe<Movie_Release_Statuses_Order_By>;
   movie_soundtracks_aggregate?: InputMaybe<Movie_Soundtrack_Aggregate_Order_By>;
   overview?: InputMaybe<Order_By>;
   poster?: InputMaybe<Order_By>;
@@ -9240,14 +9079,6 @@ export type Mutation_Root = {
   delete_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** delete single row from the table: "auth.migrations" */
   delete_auth_migrations_by_pk?: Maybe<Auth_Migrations>;
-  /** delete data from the table: "availabilities" */
-  delete_availabilities?: Maybe<Availabilities_Mutation_Response>;
-  /** delete single row from the table: "availabilities" */
-  delete_availabilities_by_pk?: Maybe<Availabilities>;
-  /** delete data from the table: "availability_types" */
-  delete_availability_types?: Maybe<Availability_Types_Mutation_Response>;
-  /** delete single row from the table: "availability_types" */
-  delete_availability_types_by_pk?: Maybe<Availability_Types>;
   /** delete data from the table: "certification_types" */
   delete_certification_types?: Maybe<Certification_Types_Mutation_Response>;
   /** delete single row from the table: "certification_types" */
@@ -9280,6 +9111,10 @@ export type Mutation_Root = {
   delete_movie_availabilities?: Maybe<Movie_Availabilities_Mutation_Response>;
   /** delete single row from the table: "movie_availabilities" */
   delete_movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
+  /** delete data from the table: "movie_availability_types" */
+  delete_movie_availability_types?: Maybe<Movie_Availability_Types_Mutation_Response>;
+  /** delete single row from the table: "movie_availability_types" */
+  delete_movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
   /** delete data from the table: "movie_genres" */
   delete_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
   /** delete single row from the table: "movie_genres" */
@@ -9448,14 +9283,6 @@ export type Mutation_Root = {
   insert_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** insert a single row into the table: "auth.migrations" */
   insert_auth_migrations_one?: Maybe<Auth_Migrations>;
-  /** insert data into the table: "availabilities" */
-  insert_availabilities?: Maybe<Availabilities_Mutation_Response>;
-  /** insert a single row into the table: "availabilities" */
-  insert_availabilities_one?: Maybe<Availabilities>;
-  /** insert data into the table: "availability_types" */
-  insert_availability_types?: Maybe<Availability_Types_Mutation_Response>;
-  /** insert a single row into the table: "availability_types" */
-  insert_availability_types_one?: Maybe<Availability_Types>;
   /** insert data into the table: "certification_types" */
   insert_certification_types?: Maybe<Certification_Types_Mutation_Response>;
   /** insert a single row into the table: "certification_types" */
@@ -9488,6 +9315,10 @@ export type Mutation_Root = {
   insert_movie_availabilities?: Maybe<Movie_Availabilities_Mutation_Response>;
   /** insert a single row into the table: "movie_availabilities" */
   insert_movie_availabilities_one?: Maybe<Movie_Availabilities>;
+  /** insert data into the table: "movie_availability_types" */
+  insert_movie_availability_types?: Maybe<Movie_Availability_Types_Mutation_Response>;
+  /** insert a single row into the table: "movie_availability_types" */
+  insert_movie_availability_types_one?: Maybe<Movie_Availability_Types>;
   /** insert data into the table: "movie_genres" */
   insert_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
   /** insert a single row into the table: "movie_genres" */
@@ -9684,18 +9515,6 @@ export type Mutation_Root = {
   update_auth_migrations_by_pk?: Maybe<Auth_Migrations>;
   /** update multiples rows of table: "auth.migrations" */
   update_auth_migrations_many?: Maybe<Array<Maybe<Auth_Migrations_Mutation_Response>>>;
-  /** update data of the table: "availabilities" */
-  update_availabilities?: Maybe<Availabilities_Mutation_Response>;
-  /** update single row of the table: "availabilities" */
-  update_availabilities_by_pk?: Maybe<Availabilities>;
-  /** update multiples rows of table: "availabilities" */
-  update_availabilities_many?: Maybe<Array<Maybe<Availabilities_Mutation_Response>>>;
-  /** update data of the table: "availability_types" */
-  update_availability_types?: Maybe<Availability_Types_Mutation_Response>;
-  /** update single row of the table: "availability_types" */
-  update_availability_types_by_pk?: Maybe<Availability_Types>;
-  /** update multiples rows of table: "availability_types" */
-  update_availability_types_many?: Maybe<Array<Maybe<Availability_Types_Mutation_Response>>>;
   /** update multiples rows of table: "storage.buckets" */
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
   /** update data of the table: "certification_types" */
@@ -9748,6 +9567,12 @@ export type Mutation_Root = {
   update_movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
   /** update multiples rows of table: "movie_availabilities" */
   update_movie_availabilities_many?: Maybe<Array<Maybe<Movie_Availabilities_Mutation_Response>>>;
+  /** update data of the table: "movie_availability_types" */
+  update_movie_availability_types?: Maybe<Movie_Availability_Types_Mutation_Response>;
+  /** update single row of the table: "movie_availability_types" */
+  update_movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
+  /** update multiples rows of table: "movie_availability_types" */
+  update_movie_availability_types_many?: Maybe<Array<Maybe<Movie_Availability_Types_Mutation_Response>>>;
   /** update data of the table: "movie_genres" */
   update_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
   /** update single row of the table: "movie_genres" */
@@ -10116,30 +9941,6 @@ export type Mutation_RootDelete_Auth_Migrations_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_AvailabilitiesArgs = {
-  where: Availabilities_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Availabilities_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Availability_TypesArgs = {
-  where: Availability_Types_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Availability_Types_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_Certification_TypesArgs = {
   where: Certification_Types_Bool_Exp;
 };
@@ -10231,7 +10032,20 @@ export type Mutation_RootDelete_Movie_AvailabilitiesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Movie_Availabilities_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  availability: Movie_Availability_Types_Enum;
+  movie_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Movie_Availability_TypesArgs = {
+  where: Movie_Availability_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Movie_Availability_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
 };
 
 
@@ -10781,34 +10595,6 @@ export type Mutation_RootInsert_Auth_Migrations_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_AvailabilitiesArgs = {
-  objects: Array<Availabilities_Insert_Input>;
-  on_conflict?: InputMaybe<Availabilities_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Availabilities_OneArgs = {
-  object: Availabilities_Insert_Input;
-  on_conflict?: InputMaybe<Availabilities_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Availability_TypesArgs = {
-  objects: Array<Availability_Types_Insert_Input>;
-  on_conflict?: InputMaybe<Availability_Types_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Availability_Types_OneArgs = {
-  object: Availability_Types_Insert_Input;
-  on_conflict?: InputMaybe<Availability_Types_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_Certification_TypesArgs = {
   objects: Array<Certification_Types_Insert_Input>;
   on_conflict?: InputMaybe<Certification_Types_On_Conflict>;
@@ -10917,6 +10703,20 @@ export type Mutation_RootInsert_Movie_AvailabilitiesArgs = {
 export type Mutation_RootInsert_Movie_Availabilities_OneArgs = {
   object: Movie_Availabilities_Insert_Input;
   on_conflict?: InputMaybe<Movie_Availabilities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Movie_Availability_TypesArgs = {
+  objects: Array<Movie_Availability_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Availability_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Movie_Availability_Types_OneArgs = {
+  object: Movie_Availability_Types_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Availability_Types_On_Conflict>;
 };
 
 
@@ -11663,46 +11463,6 @@ export type Mutation_RootUpdate_Auth_Migrations_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_AvailabilitiesArgs = {
-  _set?: InputMaybe<Availabilities_Set_Input>;
-  where: Availabilities_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Availabilities_By_PkArgs = {
-  _set?: InputMaybe<Availabilities_Set_Input>;
-  pk_columns: Availabilities_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Availabilities_ManyArgs = {
-  updates: Array<Availabilities_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Availability_TypesArgs = {
-  _set?: InputMaybe<Availability_Types_Set_Input>;
-  where: Availability_Types_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Availability_Types_By_PkArgs = {
-  _set?: InputMaybe<Availability_Types_Set_Input>;
-  pk_columns: Availability_Types_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Availability_Types_ManyArgs = {
-  updates: Array<Availability_Types_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Buckets_ManyArgs = {
   updates: Array<Buckets_Updates>;
 };
@@ -11883,6 +11643,26 @@ export type Mutation_RootUpdate_Movie_Availabilities_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Movie_Availabilities_ManyArgs = {
   updates: Array<Movie_Availabilities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Availability_TypesArgs = {
+  _set?: InputMaybe<Movie_Availability_Types_Set_Input>;
+  where: Movie_Availability_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Availability_Types_By_PkArgs = {
+  _set?: InputMaybe<Movie_Availability_Types_Set_Input>;
+  pk_columns: Movie_Availability_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Availability_Types_ManyArgs = {
+  updates: Array<Movie_Availability_Types_Updates>;
 };
 
 
@@ -12649,9 +12429,9 @@ export type Notifications_Updates = {
 export type Object_Types = {
   __typename?: 'object_types';
   type: Scalars['String']['output'];
-  /** fetch data from the table: "user_activities" */
+  /** An array relationship */
   user_activities: Array<User_Activities>;
-  /** fetch aggregated fields from the table: "user_activities" */
+  /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
 };
 
@@ -12756,6 +12536,13 @@ export type Object_Types_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Object_Types>;
+};
+
+/** input type for inserting object relation for remote table "object_types" */
+export type Object_Types_Obj_Rel_Insert_Input = {
+  data: Object_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Object_Types_On_Conflict>;
 };
 
 /** on_conflict condition type for table "object_types" */
@@ -13889,18 +13676,6 @@ export type Query_Root = {
   auth_migrations_aggregate: Auth_Migrations_Aggregate;
   /** fetch data from the table: "auth.migrations" using primary key columns */
   auth_migrations_by_pk?: Maybe<Auth_Migrations>;
-  /** fetch data from the table: "availabilities" */
-  availabilities: Array<Availabilities>;
-  /** fetch aggregated fields from the table: "availabilities" */
-  availabilities_aggregate: Availabilities_Aggregate;
-  /** fetch data from the table: "availabilities" using primary key columns */
-  availabilities_by_pk?: Maybe<Availabilities>;
-  /** An array relationship */
-  availability_types: Array<Availability_Types>;
-  /** An aggregate relationship */
-  availability_types_aggregate: Availability_Types_Aggregate;
-  /** fetch data from the table: "availability_types" using primary key columns */
-  availability_types_by_pk?: Maybe<Availability_Types>;
   /** fetch data from the table: "storage.buckets" using primary key columns */
   bucket?: Maybe<Buckets>;
   /** fetch data from the table: "storage.buckets" */
@@ -13961,6 +13736,12 @@ export type Query_Root = {
   movie_availabilities_aggregate: Movie_Availabilities_Aggregate;
   /** fetch data from the table: "movie_availabilities" using primary key columns */
   movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
+  /** fetch data from the table: "movie_availability_types" */
+  movie_availability_types: Array<Movie_Availability_Types>;
+  /** fetch aggregated fields from the table: "movie_availability_types" */
+  movie_availability_types_aggregate: Movie_Availability_Types_Aggregate;
+  /** fetch data from the table: "movie_availability_types" using primary key columns */
+  movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
   /** An array relationship */
   movie_genres: Array<Movie_Genres>;
   /** An aggregate relationship */
@@ -14089,9 +13870,9 @@ export type Query_Root = {
   storage_schema_migrations_by_pk?: Maybe<Storage_Schema_Migrations>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
-  /** fetch data from the table: "user_activities" */
+  /** An array relationship */
   user_activities: Array<User_Activities>;
-  /** fetch aggregated fields from the table: "user_activities" */
+  /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
   /** fetch data from the table: "user_activities" using primary key columns */
   user_activities_by_pk?: Maybe<User_Activities>;
@@ -14442,52 +14223,6 @@ export type Query_RootAuth_Migrations_By_PkArgs = {
 };
 
 
-export type Query_RootAvailabilitiesArgs = {
-  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
-  where?: InputMaybe<Availabilities_Bool_Exp>;
-};
-
-
-export type Query_RootAvailabilities_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
-  where?: InputMaybe<Availabilities_Bool_Exp>;
-};
-
-
-export type Query_RootAvailabilities_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootAvailability_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-
-export type Query_RootAvailability_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-
-export type Query_RootAvailability_Types_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
 export type Query_RootBucketArgs = {
   id: Scalars['String']['input'];
 };
@@ -14714,7 +14449,31 @@ export type Query_RootMovie_Availabilities_AggregateArgs = {
 
 
 export type Query_RootMovie_Availabilities_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  availability: Movie_Availability_Types_Enum;
+  movie_id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootMovie_Availability_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availability_Types_Order_By>>;
+  where?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
+};
+
+
+export type Query_RootMovie_Availability_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availability_Types_Order_By>>;
+  where?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
+};
+
+
+export type Query_RootMovie_Availability_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
 };
 
 
@@ -17822,22 +17581,6 @@ export type Subscription_Root = {
   auth_migrations_by_pk?: Maybe<Auth_Migrations>;
   /** fetch data from the table in a streaming manner: "auth.migrations" */
   auth_migrations_stream: Array<Auth_Migrations>;
-  /** fetch data from the table: "availabilities" */
-  availabilities: Array<Availabilities>;
-  /** fetch aggregated fields from the table: "availabilities" */
-  availabilities_aggregate: Availabilities_Aggregate;
-  /** fetch data from the table: "availabilities" using primary key columns */
-  availabilities_by_pk?: Maybe<Availabilities>;
-  /** fetch data from the table in a streaming manner: "availabilities" */
-  availabilities_stream: Array<Availabilities>;
-  /** An array relationship */
-  availability_types: Array<Availability_Types>;
-  /** An aggregate relationship */
-  availability_types_aggregate: Availability_Types_Aggregate;
-  /** fetch data from the table: "availability_types" using primary key columns */
-  availability_types_by_pk?: Maybe<Availability_Types>;
-  /** fetch data from the table in a streaming manner: "availability_types" */
-  availability_types_stream: Array<Availability_Types>;
   /** fetch data from the table: "storage.buckets" using primary key columns */
   bucket?: Maybe<Buckets>;
   /** fetch data from the table: "storage.buckets" */
@@ -17918,6 +17661,14 @@ export type Subscription_Root = {
   movie_availabilities_by_pk?: Maybe<Movie_Availabilities>;
   /** fetch data from the table in a streaming manner: "movie_availabilities" */
   movie_availabilities_stream: Array<Movie_Availabilities>;
+  /** fetch data from the table: "movie_availability_types" */
+  movie_availability_types: Array<Movie_Availability_Types>;
+  /** fetch aggregated fields from the table: "movie_availability_types" */
+  movie_availability_types_aggregate: Movie_Availability_Types_Aggregate;
+  /** fetch data from the table: "movie_availability_types" using primary key columns */
+  movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
+  /** fetch data from the table in a streaming manner: "movie_availability_types" */
+  movie_availability_types_stream: Array<Movie_Availability_Types>;
   /** An array relationship */
   movie_genres: Array<Movie_Genres>;
   /** An aggregate relationship */
@@ -18088,9 +17839,9 @@ export type Subscription_Root = {
   storage_schema_migrations_stream: Array<Storage_Schema_Migrations>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
-  /** fetch data from the table: "user_activities" */
+  /** An array relationship */
   user_activities: Array<User_Activities>;
-  /** fetch aggregated fields from the table: "user_activities" */
+  /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
   /** fetch data from the table: "user_activities" using primary key columns */
   user_activities_by_pk?: Maybe<User_Activities>;
@@ -18549,66 +18300,6 @@ export type Subscription_RootAuth_Migrations_StreamArgs = {
 };
 
 
-export type Subscription_RootAvailabilitiesArgs = {
-  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
-  where?: InputMaybe<Availabilities_Bool_Exp>;
-};
-
-
-export type Subscription_RootAvailabilities_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Availabilities_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availabilities_Order_By>>;
-  where?: InputMaybe<Availabilities_Bool_Exp>;
-};
-
-
-export type Subscription_RootAvailabilities_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootAvailabilities_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Availabilities_Stream_Cursor_Input>>;
-  where?: InputMaybe<Availabilities_Bool_Exp>;
-};
-
-
-export type Subscription_RootAvailability_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-
-export type Subscription_RootAvailability_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Availability_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Availability_Types_Order_By>>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-
-export type Subscription_RootAvailability_Types_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootAvailability_Types_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Availability_Types_Stream_Cursor_Input>>;
-  where?: InputMaybe<Availability_Types_Bool_Exp>;
-};
-
-
 export type Subscription_RootBucketArgs = {
   id: Scalars['String']['input'];
 };
@@ -18898,7 +18589,8 @@ export type Subscription_RootMovie_Availabilities_AggregateArgs = {
 
 
 export type Subscription_RootMovie_Availabilities_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  availability: Movie_Availability_Types_Enum;
+  movie_id: Scalars['uuid']['input'];
 };
 
 
@@ -18906,6 +18598,36 @@ export type Subscription_RootMovie_Availabilities_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Movie_Availabilities_Stream_Cursor_Input>>;
   where?: InputMaybe<Movie_Availabilities_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Availability_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availability_Types_Order_By>>;
+  where?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Availability_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Availability_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Availability_Types_Order_By>>;
+  where?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Availability_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootMovie_Availability_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Movie_Availability_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
 };
 
 
@@ -19722,10 +19444,14 @@ export type Timestamptz_Comparison_Exp = {
 /** columns and relationships of "user_activities" */
 export type User_Activities = {
   __typename?: 'user_activities';
+  /** An object relationship */
+  activityTypeByActivityType: Activity_Types;
   activity_type: Activity_Types_Enum;
   created_at: Scalars['timestamptz']['output'];
   details: Scalars['jsonb']['output'];
   id: Scalars['uuid']['output'];
+  /** An object relationship */
+  objectTypeByObjectType: Object_Types;
   object_id: Scalars['uuid']['output'];
   object_title: Scalars['String']['output'];
   object_type: Object_Types_Enum;
@@ -19797,10 +19523,12 @@ export type User_Activities_Bool_Exp = {
   _and?: InputMaybe<Array<User_Activities_Bool_Exp>>;
   _not?: InputMaybe<User_Activities_Bool_Exp>;
   _or?: InputMaybe<Array<User_Activities_Bool_Exp>>;
+  activityTypeByActivityType?: InputMaybe<Activity_Types_Bool_Exp>;
   activity_type?: InputMaybe<Activity_Types_Enum_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   details?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Bool_Exp>;
   object_id?: InputMaybe<Uuid_Comparison_Exp>;
   object_title?: InputMaybe<String_Comparison_Exp>;
   object_type?: InputMaybe<Object_Types_Enum_Comparison_Exp>;
@@ -19831,10 +19559,12 @@ export type User_Activities_Delete_Key_Input = {
 
 /** input type for inserting data into table "user_activities" */
 export type User_Activities_Insert_Input = {
+  activityTypeByActivityType?: InputMaybe<Activity_Types_Obj_Rel_Insert_Input>;
   activity_type?: InputMaybe<Activity_Types_Enum>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   details?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Obj_Rel_Insert_Input>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_title?: InputMaybe<Scalars['String']['input']>;
   object_type?: InputMaybe<Object_Types_Enum>;
@@ -19898,10 +19628,12 @@ export type User_Activities_On_Conflict = {
 
 /** Ordering options when selecting data from "user_activities". */
 export type User_Activities_Order_By = {
+  activityTypeByActivityType?: InputMaybe<Activity_Types_Order_By>;
   activity_type?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   details?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_title?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
@@ -20012,11 +19744,15 @@ export type User_Activities_Updates = {
 export type User_Movie_Statuses = {
   __typename?: 'user_movie_statuses';
   favourited: Scalars['Boolean']['output'];
+  /** An object relationship */
+  movie: Movies;
   movie_id: Scalars['uuid']['output'];
   rating?: Maybe<Scalars['smallint']['output']>;
   review?: Maybe<Scalars['String']['output']>;
   status?: Maybe<User_Movie_Statuses_Types_Enum>;
   updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid']['output'];
   /** An object relationship */
   user_movie_statuses_type?: Maybe<User_Movie_Statuses_Types>;
@@ -20118,11 +19854,13 @@ export type User_Movie_Statuses_Bool_Exp = {
   _not?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
   _or?: InputMaybe<Array<User_Movie_Statuses_Bool_Exp>>;
   favourited?: InputMaybe<Boolean_Comparison_Exp>;
+  movie?: InputMaybe<Movies_Bool_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
   rating?: InputMaybe<Smallint_Comparison_Exp>;
   review?: InputMaybe<String_Comparison_Exp>;
   status?: InputMaybe<User_Movie_Statuses_Types_Enum_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
   user_movie_statuses_type?: InputMaybe<User_Movie_Statuses_Types_Bool_Exp>;
 };
@@ -20141,11 +19879,13 @@ export type User_Movie_Statuses_Inc_Input = {
 /** input type for inserting data into table "user_movie_statuses" */
 export type User_Movie_Statuses_Insert_Input = {
   favourited?: InputMaybe<Scalars['Boolean']['input']>;
+  movie?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
   rating?: InputMaybe<Scalars['smallint']['input']>;
   review?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<User_Movie_Statuses_Types_Enum>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
   user_movie_statuses_type?: InputMaybe<User_Movie_Statuses_Types_Obj_Rel_Insert_Input>;
 };
@@ -20207,11 +19947,13 @@ export type User_Movie_Statuses_On_Conflict = {
 /** Ordering options when selecting data from "user_movie_statuses". */
 export type User_Movie_Statuses_Order_By = {
   favourited?: InputMaybe<Order_By>;
+  movie?: InputMaybe<Movies_Order_By>;
   movie_id?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   review?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
   user_movie_statuses_type?: InputMaybe<User_Movie_Statuses_Types_Order_By>;
 };
@@ -21688,13 +21430,6 @@ export type GetAuditLogsQueryVariables = Exact<{
 
 export type GetAuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, diff: any, operation: string, pk: any, table_name: string, created_at: any, user: { __typename?: 'users', avatarUrl: string, displayName: string } }> };
 
-export type GetAvailabilitiesQueryVariables = Exact<{
-  where?: InputMaybe<Availabilities_Bool_Exp>;
-}>;
-
-
-export type GetAvailabilitiesQuery = { __typename?: 'query_root', availabilities: Array<{ __typename?: 'availabilities', id: any, name: string }> };
-
 export type GetCertificationsQueryVariables = Exact<{
   where?: InputMaybe<Certifications_Bool_Exp>;
 }>;
@@ -21750,7 +21485,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Statuses_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Statuses_Types_Enum | null, updated_at: any }>, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: { __typename?: 'availabilities', id: any, name: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Statuses_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Statuses_Types_Enum | null, updated_at: any }>, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -21960,50 +21695,6 @@ export const useInfiniteGetAuditLogsQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetAuditLogs.infinite'] : ['GetAuditLogs.infinite', variables],
       queryFn: (metaData) => fetcher<GetAuditLogsQuery, GetAuditLogsQueryVariables>(GetAuditLogsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
-      ...restOptions
-    }
-  })()
-    )};
-
-export const GetAvailabilitiesDocument = `
-    query GetAvailabilities($where: availabilities_bool_exp) {
-  availabilities(where: $where) {
-    id
-    name
-  }
-}
-    `;
-
-export const useGetAvailabilitiesQuery = <
-      TData = GetAvailabilitiesQuery,
-      TError = unknown
-    >(
-      variables?: GetAvailabilitiesQueryVariables,
-      options?: Omit<UseQueryOptions<GetAvailabilitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAvailabilitiesQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<GetAvailabilitiesQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['GetAvailabilities'] : ['GetAvailabilities', variables],
-    queryFn: fetcher<GetAvailabilitiesQuery, GetAvailabilitiesQueryVariables>(GetAvailabilitiesDocument, variables),
-    ...options
-  }
-    )};
-
-export const useInfiniteGetAvailabilitiesQuery = <
-      TData = InfiniteData<GetAvailabilitiesQuery>,
-      TError = unknown
-    >(
-      variables: GetAvailabilitiesQueryVariables,
-      options: Omit<UseInfiniteQueryOptions<GetAvailabilitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetAvailabilitiesQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useInfiniteQuery<GetAvailabilitiesQuery, TError, TData>(
-      (() => {
-    const { queryKey: optionsQueryKey, ...restOptions } = options;
-    return {
-      queryKey: optionsQueryKey ?? variables === undefined ? ['GetAvailabilities.infinite'] : ['GetAvailabilities.infinite', variables],
-      queryFn: (metaData) => fetcher<GetAvailabilitiesQuery, GetAvailabilitiesQueryVariables>(GetAvailabilitiesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -22381,10 +22072,7 @@ export const GetMovieDocument = `
       name
     }
     movie_availabilities {
-      availability {
-        id
-        name
-      }
+      availability
     }
     movie_genres {
       genre {

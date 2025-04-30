@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import CheckboxGroupField from '@/components/form/checkbox-group';
 import DateRangePickerField from '@/components/form/date-range-picker';
-import MultiSelectField from '@/components/form/multi-select';
 import OrderSelectField from '@/components/form/order-select';
 import RadioGroupField from '@/components/form/radio-group';
 import SelectField from '@/components/form/select';
@@ -13,15 +12,13 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { Movie_Release_Statuses_Enum, useGetCertificationsQuery, useGetGenresQuery } from '@/generated/graphql';
-import { useGetAvailabilitiesQuery } from '@/generated/graphql';
+import { useGetCertificationsQuery, useGetGenresQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetFooter,
     SheetHeader,
@@ -30,19 +27,21 @@ import {
 } from '@/registry/new-york-v4/ui/sheet';
 import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
 import { RootState } from '@/store/store';
-import { enumToOptions } from '@/utils/enum-to-options';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { movieAvailabilityOptions, movieReleaseStatusOptions } from '../constants/movie-enums';
 import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
 import { resetMoviesFilter, setMoviesFilter } from '../store/movies-filter.slice';
+import { Tag, TagInput } from 'emblor';
 import { Calendar, Flame, Settings2, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
-const statuses = enumToOptions(Movie_Release_Statuses_Enum);
-
 export default function MoviesSidebar() {
+    const [keywords, setKeywords] = useState<Tag[]>([]);
+    const [activeKeywordIndex, setActiveKeywordIndex] = useState<number | null>(null);
+
     const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
@@ -63,21 +62,6 @@ export default function MoviesSidebar() {
         },
         {
             queryKey: ['genres']
-        }
-    );
-
-    const { data: availabilities } = useGetAvailabilitiesQuery(
-        {
-            where: {
-                availability_types: {
-                    type: {
-                        _eq: 'movie'
-                    }
-                }
-            }
-        },
-        {
-            queryKey: ['availabilities']
         }
     );
 
@@ -216,14 +200,7 @@ export default function MoviesSidebar() {
                                                     <FormItem>
                                                         <BaseFormLayout label='Availabilities'>
                                                             <CheckboxGroupField
-                                                                options={
-                                                                    availabilities?.availabilities.map(
-                                                                        (availability) => ({
-                                                                            value: availability.id,
-                                                                            label: availability.name
-                                                                        })
-                                                                    ) ?? []
-                                                                }
+                                                                options={movieAvailabilityOptions}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
@@ -303,7 +280,10 @@ export default function MoviesSidebar() {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Statuses'>
-                                                            <CheckboxGroupField options={statuses} {...field} />
+                                                            <CheckboxGroupField
+                                                                options={movieReleaseStatusOptions}
+                                                                {...field}
+                                                            />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}
@@ -378,7 +358,30 @@ export default function MoviesSidebar() {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Keywords'>
-                                                            <MultiSelectField options={[]} createable {...field} />
+                                                            <TagInput
+                                                                tags={field.value || keywords}
+                                                                setTags={(keywords) => {
+                                                                    setKeywords(keywords);
+                                                                    field.onChange(keywords);
+                                                                }}
+                                                                placeholder='Add a keyword'
+                                                                activeTagIndex={activeKeywordIndex}
+                                                                setActiveTagIndex={setActiveKeywordIndex}
+                                                                inlineTags={false}
+                                                                inputFieldPosition='top'
+                                                                styleClasses={{
+                                                                    tagList: {
+                                                                        container: 'gap-1'
+                                                                    },
+                                                                    input: 'rounded-md transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                                                                    tag: {
+                                                                        body: 'relative h-7 bg-background border border-input hover:bg-background rounded-md font-medium text-xs ps-2 pe-7',
+                                                                        closeButton:
+                                                                            'absolute -inset-y-px -end-px p-0 rounded-s-none rounded-e-md flex size-7 transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-muted-foreground/80 hover:text-foreground'
+                                                                    }
+                                                                }}
+                                                                {...field}
+                                                            />
                                                         </BaseFormLayout>
                                                     </FormItem>
                                                 )}

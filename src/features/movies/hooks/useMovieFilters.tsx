@@ -87,7 +87,7 @@ export function useMovieFilters(): {
         }
 
         if (availabilities?.length) {
-            clauses.push({ movie_availabilities: { availability: { id: { _in: availabilities } } } });
+            clauses.push({ movie_availabilities: { availability: { _in: availabilities } } });
         }
 
         if (releaseDates) {
@@ -125,7 +125,7 @@ export function useMovieFilters(): {
         }
 
         if (keywords?.length) {
-            clauses.push({ movie_keywords: { keyword: { keyword: { _in: keywords.map((k) => k.value) } } } });
+            clauses.push({ movie_keywords: { keyword: { keyword: { _in: keywords.map((k) => k.text) } } } });
         }
 
         return clauses.length > 0 ? { _and: clauses as Movies_Bool_Exp[] } : {};

@@ -50,6 +50,7 @@
         "date-fns": "^4.1.0",
         "dayjs": "^1.11.13",
         "embla-carousel-react": "^8.6.0",
+        "emblor": "^1.4.8",
         "eslint-plugin-boundaries": "^5.0.1",
         "fast-equals": "^5.2.2",
         "graphql-codegen-typescript-validation-schema": "^0.17.1",

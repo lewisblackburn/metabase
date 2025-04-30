@@ -6,18 +6,14 @@ import InputField from '@/components/form/input';
 import SelectField, { SelectOption } from '@/components/form/select';
 import TextareaField from '@/components/form/textarea';
 import { LANGUAGES } from '@/constants/languages.constant';
-import {
-    Movie_Release_Statuses_Enum,
-    useGetCertificationsQuery,
-    useGetMovieQuery,
-    useUpdateMovieMutation
-} from '@/generated/graphql';
+import { useGetCertificationsQuery, useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
-import { enumToOptions } from '@/utils/enum-to-options';
+import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { movieAvailabilityOptions, movieReleaseStatusOptions } from '../constants/movie-enums';
 import { MovieDetails, movieDetailsSchema } from '../schemas/movie-details.schema';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -25,8 +21,6 @@ import { toast } from 'sonner';
 interface EditMovieDetailsProps {
     movieId: string;
 }
-
-const movie_statuses = enumToOptions(Movie_Release_Statuses_Enum);
 
 export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
     const { data } = useGetMovieQuery(
@@ -70,6 +64,11 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
             language: movie.language ?? '',
             certification: movie.certification?.id ?? undefined,
             status: movie.status ?? undefined,
+            availabilities: movie.movie_availabilities.map((availability) => ({
+                value: availability.availability,
+                label:
+                    movieAvailabilityOptions.find((option) => option.value === availability.availability)?.label ?? ''
+            })),
             imdbId: movie.imdb_id ?? '',
             tmdbId: movie.tmdb_id ?? '',
             homepage: movie.homepage ?? ''
@@ -77,6 +76,8 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
     });
 
     async function onSubmit(values: MovieDetails) {
+        console.log(values.availabilities);
+
         await updateMovie(
             {
                 id: movieId,
@@ -214,7 +215,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Status'>
-                                <SelectField options={movie_statuses} modal {...field} />
+                                <SelectField options={movieReleaseStatusOptions} modal {...field} />
                             </BaseFormLayout>
                         </FormItem>
                     )}
@@ -233,6 +234,25 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                                         })) ?? []
                                     }
                                     modal
+                                    {...field}
+                                />
+                            </BaseFormLayout>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name='availabilities'
+                    render={({ field }) => (
+                        <FormItem>
+                            <BaseFormLayout label='Availabilities'>
+                                <MultipleSelector
+                                    commandProps={{
+                                        label: 'Select Availabilities'
+                                    }}
+                                    defaultOptions={movieAvailabilityOptions}
+                                    placeholder='Select Availabilities'
+                                    emptyIndicator='No availabilities found'
                                     {...field}
                                 />
                             </BaseFormLayout>

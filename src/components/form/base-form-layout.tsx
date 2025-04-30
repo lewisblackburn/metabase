@@ -12,7 +12,7 @@ const BaseFormLayout = ({
     <>
         {label && <FormLabel className='font-semibold'>{label}</FormLabel>}
         {description && <div className='text-muted-foreground text-xs'>{description}</div>}
-        <FormControl className='mt-2'>{children}</FormControl>
+        <FormControl className='!mt-4'>{children}</FormControl>
         <FormMessage />
     </>
 );

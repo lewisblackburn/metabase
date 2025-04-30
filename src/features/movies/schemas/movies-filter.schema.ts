@@ -1,4 +1,4 @@
-import { Movie_Release_Statuses_Enum } from '@/generated/graphql';
+import { Movie_Availability_Types_Enum, Movie_Release_Statuses_Enum } from '@/generated/graphql';
 
 import * as z from 'zod';
 
@@ -19,21 +19,14 @@ export const moviesFilterSchema = z.object({
         .optional(),
     genres: z.array(z.string().uuid()).optional(),
     certifications: z.array(z.string().uuid()).optional(),
-    availabilities: z.array(z.string().uuid()).optional(),
+    availabilities: z.array(z.nativeEnum(Movie_Availability_Types_Enum)).optional(),
     statuses: z.array(z.nativeEnum(Movie_Release_Statuses_Enum)).optional(),
     // TODO : This needs to match the language code
     language: z.string().optional(),
     userScore: z.tuple([z.number(), z.number()]).optional(),
     minVotes: z.array(z.number()).optional(),
     runtime: z.tuple([z.number(), z.number()]).optional(),
-    keywords: z
-        .array(
-            z.object({
-                value: z.string(),
-                label: z.string()
-            })
-        )
-        .optional()
+    keywords: z.array(z.object({ id: z.string(), text: z.string() })).optional()
 });
 
 export type MoviesFilter = z.infer<typeof moviesFilterSchema>;

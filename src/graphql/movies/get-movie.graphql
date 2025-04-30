@@ -36,10 +36,7 @@ query GetMovie($id: uuid!) {
             name
         }
         movie_availabilities {
-            availability {
-                id
-                name
-            }
+            availability
         }
         movie_genres {
             genre {

@@ -7,14 +7,12 @@ import {
     User_Movie_Statuses_Update_Column,
     useInsertUserMovieStatusMutation
 } from '@/generated/graphql';
-import { enumToOptions } from '@/utils/enum-to-options';
 import { useUserId } from '@nhost/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { userMovieStatusOptions } from '../constants/movie-enums';
 import { useMovie } from './movie-provider';
 import { toast } from 'sonner';
-
-const userMovieStatusOptions = enumToOptions(User_Movie_Statuses_Types_Enum);
 
 export default function MovieStatusPicker() {
     const userId = useUserId();
