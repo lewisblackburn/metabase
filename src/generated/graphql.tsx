@@ -21152,6 +21152,17 @@ export type UpdateMovieMutationVariables = Exact<{
 
 export type UpdateMovieMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any } | null };
 
+export type GetPeopleQueryVariables = Exact<{
+  distinct_on?: InputMaybe<Array<People_Select_Column> | People_Select_Column>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<People_Order_By> | People_Order_By>;
+  where?: InputMaybe<People_Bool_Exp>;
+}>;
+
+
+export type GetPeopleQuery = { __typename?: 'query_root', people: Array<{ __typename?: 'people', id: any, name: string, headshot: string }> };
+
 export type GetPersonByTmdb_IdQueryVariables = Exact<{
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -21891,6 +21902,57 @@ export const useUpdateMovieMutation = <
     mutationFn: (variables?: UpdateMovieMutationVariables) => fetcher<UpdateMovieMutation, UpdateMovieMutationVariables>(UpdateMovieDocument, variables)(),
     ...options
   }
+    )};
+
+export const GetPeopleDocument = `
+    query GetPeople($distinct_on: [people_select_column!], $limit: Int, $offset: Int, $order_by: [people_order_by!], $where: people_bool_exp) {
+  people(
+    distinct_on: $distinct_on
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+    where: $where
+  ) {
+    id
+    name
+    headshot
+  }
+}
+    `;
+
+export const useGetPeopleQuery = <
+      TData = GetPeopleQuery,
+      TError = unknown
+    >(
+      variables?: GetPeopleQueryVariables,
+      options?: Omit<UseQueryOptions<GetPeopleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPeopleQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetPeopleQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetPeople'] : ['GetPeople', variables],
+    queryFn: fetcher<GetPeopleQuery, GetPeopleQueryVariables>(GetPeopleDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetPeopleQuery = <
+      TData = InfiniteData<GetPeopleQuery>,
+      TError = unknown
+    >(
+      variables: GetPeopleQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetPeopleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetPeopleQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetPeopleQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetPeople.infinite'] : ['GetPeople.infinite', variables],
+      queryFn: (metaData) => fetcher<GetPeopleQuery, GetPeopleQueryVariables>(GetPeopleDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
     )};
 
 export const GetPersonByTmdb_IdDocument = `

@@ -3,7 +3,7 @@ import { selectSchema } from '@/schemas/select.schema';
 import { z } from 'zod';
 
 export const addCastMemberSchema = z.object({
-    person: selectSchema,
+    person: z.string().uuid(),
     character: z.string().min(1)
 });
 

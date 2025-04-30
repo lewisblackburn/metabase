@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AsyncSelect, AsyncSelectOption } from '@/components/form/async-select';
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
+import PersonSelect from '@/components/form/person-select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
@@ -207,60 +208,20 @@ export default function EditMovieCast() {
 }
 
 const AddCastMemberDialog = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [options, setOptions] = useState<AsyncSelectOption[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [searchQuery, setSearchQuery] = useState('');
     const form = useForm<AddCastMemberSchema>({
-        resolver: zodResolver(addCastMemberSchema)
+        resolver: zodResolver(addCastMemberSchema),
+        defaultValues: {
+            person: 'a7a56353-e6b8-44d9-a33e-5786c55c5918',
+            character: 'testing 123'
+        }
     });
 
     const onSubmit = async (data: AddCastMemberSchema) => {
-        if (data.person.__isNew__) {
-            // NOTE: Create new person
-            console.log('Creating new person with name:', data.person.value);
-        }
         console.log(data);
     };
 
-    const handleCancel = () => {
-        form.reset();
-        setIsOpen(false);
-    };
-
-    const handleSearch = (query: string) => {
-        setSearchQuery(query);
-    };
-
-    React.useEffect(() => {
-        const fetchOptions = async () => {
-            setIsLoading(true);
-            setError(null);
-
-            try {
-                await new Promise((resolve) => setTimeout(resolve, 500));
-
-                const mockOptions = allPeople;
-
-                const filteredOptions = searchQuery
-                    ? mockOptions.filter((option) => option.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                    : mockOptions;
-
-                setOptions(filteredOptions.map((option) => ({ value: option.id, label: option.name })));
-            } catch (err) {
-                setError('Failed to load options. Please try again.');
-                console.error(err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchOptions();
-    }, [searchQuery]);
-
     return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <Dialog>
             <DialogTrigger asChild>
                 <Button variant='outline' size='sm'>
                     <Plus className='size-4' />
@@ -279,15 +240,9 @@ const AddCastMemberDialog = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <BaseFormLayout label='Person'>
-                                        <AsyncSelect
-                                            options={options}
-                                            isLoading={isLoading}
-                                            error={error}
-                                            placeholder='Select a person'
-                                            emptyMessage='No people found'
-                                            onSearch={handleSearch}
-                                            createable={true}
-                                            {...field}
+                                        <PersonSelect
+                                            onValueChange={(value) => field.onChange(value)}
+                                            defaultValue={field.value}
                                         />
                                     </BaseFormLayout>
                                 </FormItem>
@@ -305,7 +260,7 @@ const AddCastMemberDialog = () => {
                             )}
                         />
                         <div className='flex justify-end gap-2'>
-                            <Button variant='outline' type='button' className='mr-2' onClick={handleCancel}>
+                            <Button variant='outline' type='button' className='mr-2'>
                                 <X className='size-4' />
                                 Cancel
                             </Button>
