@@ -124,7 +124,7 @@ export default function EditMovieCast() {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
-                    <Link href={`/dashboard/${OBJECT_TYPE.PERSON.path}/${castMember.personId}`}>
+                    <Link href={`/dashboard/${OBJECT_TYPE.person.path}/${castMember.personId}`}>
                         <DropdownMenuItem>
                             <Eye className='mr-2 h-4 w-4' />
                             View

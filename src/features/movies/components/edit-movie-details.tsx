@@ -3,17 +3,21 @@
 import BaseFormLayout from '@/components/form/base-form-layout';
 import { DatePickerField } from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
-import SelectField, { SelectOption } from '@/components/form/select';
+import SelectField from '@/components/form/select';
 import TextareaField from '@/components/form/textarea';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { useGetCertificationsQuery, useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
+import { useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
 import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { movieAvailabilityOptions, movieReleaseStatusOptions } from '../constants/movie-enums';
+import {
+    movieAvailabilityOptions,
+    movieCertificationOptions,
+    movieReleaseStatusOptions
+} from '../constants/movie-enums';
 import { MovieDetails, movieDetailsSchema } from '../schemas/movie-details.schema';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -27,21 +31,6 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
         { id: movieId },
         {
             queryKey: ['movie', movieId]
-        }
-    );
-
-    const { data: certifications } = useGetCertificationsQuery(
-        {
-            where: {
-                certification_types: {
-                    type: {
-                        _eq: 'movie'
-                    }
-                }
-            }
-        },
-        {
-            queryKey: ['certifications']
         }
     );
 
@@ -62,8 +51,8 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
             budget: movie.budget ?? 0,
             revenue: movie.revenue ?? 0,
             language: movie.language ?? '',
-            certification: movie.certification?.id ?? undefined,
             status: movie.status ?? undefined,
+            certification: movie.certification ?? undefined,
             availabilities: movie.movie_availabilities.map((availability) => ({
                 value: availability.availability,
                 label:
@@ -91,8 +80,8 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     budget: values.budget,
                     revenue: values.revenue,
                     language: values.language,
-                    certification_id: values.certification,
                     status: values.status,
+                    certification: values.certification,
                     imdb_id: values.imdbId,
                     tmdb_id: values.tmdbId,
                     homepage: values.homepage
@@ -226,16 +215,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     render={({ field }) => (
                         <FormItem>
                             <BaseFormLayout label='Age Certification'>
-                                <SelectField
-                                    options={
-                                        certifications?.certifications.map((certification) => ({
-                                            value: certification.id.toString(),
-                                            label: certification.name
-                                        })) ?? []
-                                    }
-                                    modal
-                                    {...field}
-                                />
+                                <SelectField options={movieCertificationOptions} modal {...field} />
                             </BaseFormLayout>
                         </FormItem>
                     )}

@@ -1,9 +1,7 @@
 import { LANGUAGES } from '@/constants/languages.constant';
 import { MEDIA_TYPE } from '@/constants/media.constant';
+import { movieCertificationOptions, movieReleaseStatusOptions } from '@/features/movies/constants/movie-enums';
 import {
-    Certifications_Constraint,
-    Certifications_Obj_Rel_Insert_Input,
-    Certifications_Update_Column,
     Credits_Arr_Rel_Insert_Input,
     Credits_Constraint,
     Credits_Insert_Input,
@@ -19,6 +17,8 @@ import {
     Keywords_Constraint,
     Keywords_Update_Column,
     Movie_Alternative_Titles_Arr_Rel_Insert_Input,
+    Movie_Certification_Types,
+    Movie_Certification_Types_Enum,
     Movie_Genres_Arr_Rel_Insert_Input,
     Movie_Keywords_Arr_Rel_Insert_Input,
     Movie_Media_Constraint,
@@ -26,6 +26,7 @@ import {
     Movie_Production_Companies_Constraint,
     Movie_Production_Companies_Update_Column,
     Movie_Production_Countries_Arr_Rel_Insert_Input,
+    Movie_Release_Statuses_Enum,
     Movies_Insert_Input,
     People_Constraint,
     People_Update_Column,
@@ -185,26 +186,20 @@ export class TMDBMovieImporterService extends TMDBService {
     }
 
     // NOTE: This only stores GB/US certification for now
-    private buildCertification(movie: TMDBMovie): InputMaybe<Certifications_Obj_Rel_Insert_Input> | undefined {
+    private buildCertification(movie: TMDBMovie): InputMaybe<Movie_Certification_Types_Enum> | undefined {
         const certificationName =
             (
                 movie.release_dates.results.find((r) => r.iso_3166_1 === 'GB') ||
                 movie.release_dates.results.find((r) => r.iso_3166_1 === 'US')
             )?.release_dates.find((d) => d.certification)?.certification ?? 'Unrated';
 
-        return {
-            data: {
-                name: certificationName
-            },
-            on_conflict: {
-                constraint: Certifications_Constraint.CertificationsNameKey,
-                update_columns: [Certifications_Update_Column.Name]
-            }
-        };
+        const certification = movieCertificationOptions.find((s) => s.label === certificationName);
+        return certification ? certification.value : undefined;
     }
 
-    private buildStatus(movie: TMDBMovie): InputMaybe<string> | undefined {
-        return movie.status;
+    private buildStatus(movie: TMDBMovie): InputMaybe<Movie_Release_Statuses_Enum> | undefined {
+        const status = movieReleaseStatusOptions.find((s) => s.label === movie.status);
+        return status ? status.value : undefined;
     }
 
     async isExisting(tmdbMovieId: TMDBMovie['id']): Promise<GetMovieByTmdb_IdQuery['movies']> {

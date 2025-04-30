@@ -20,7 +20,3 @@ export function createOptionSchema<E extends { [k: string]: string }>(enumObj: E
         label: z.string()
     });
 }
-
-export function getDefaultOptions<T>(allOptions: SelectOption<T>[], selectedValues: T[]): SelectOption<T>[] {
-    return allOptions.filter((opt) => selectedValues.includes(opt.value));
-}

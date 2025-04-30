@@ -101,7 +101,7 @@ export function useMovieFilters(): {
         }
 
         if (certifications?.length) {
-            clauses.push({ certification: { id: { _in: certifications } } });
+            clauses.push({ certification: { _in: certifications } });
         }
 
         if (statuses?.length) {

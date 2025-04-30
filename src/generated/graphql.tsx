@@ -3809,395 +3809,6 @@ export type Bytea_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['bytea']['input']>>;
 };
 
-/** columns and relationships of "certification_types" */
-export type Certification_Types = {
-  __typename?: 'certification_types';
-  /** An object relationship */
-  certification: Certifications;
-  certification_id: Scalars['uuid']['output'];
-  id: Scalars['uuid']['output'];
-  type: Scalars['String']['output'];
-};
-
-/** aggregated selection of "certification_types" */
-export type Certification_Types_Aggregate = {
-  __typename?: 'certification_types_aggregate';
-  aggregate?: Maybe<Certification_Types_Aggregate_Fields>;
-  nodes: Array<Certification_Types>;
-};
-
-export type Certification_Types_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Certification_Types_Aggregate_Bool_Exp_Count>;
-};
-
-export type Certification_Types_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Certification_Types_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "certification_types" */
-export type Certification_Types_Aggregate_Fields = {
-  __typename?: 'certification_types_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Certification_Types_Max_Fields>;
-  min?: Maybe<Certification_Types_Min_Fields>;
-};
-
-
-/** aggregate fields of "certification_types" */
-export type Certification_Types_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "certification_types" */
-export type Certification_Types_Aggregate_Order_By = {
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Certification_Types_Max_Order_By>;
-  min?: InputMaybe<Certification_Types_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "certification_types" */
-export type Certification_Types_Arr_Rel_Insert_Input = {
-  data: Array<Certification_Types_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Certification_Types_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "certification_types". All fields are combined with a logical 'AND'. */
-export type Certification_Types_Bool_Exp = {
-  _and?: InputMaybe<Array<Certification_Types_Bool_Exp>>;
-  _not?: InputMaybe<Certification_Types_Bool_Exp>;
-  _or?: InputMaybe<Array<Certification_Types_Bool_Exp>>;
-  certification?: InputMaybe<Certifications_Bool_Exp>;
-  certification_id?: InputMaybe<Uuid_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  type?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "certification_types" */
-export enum Certification_Types_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  CertificationTypesPkey = 'certification_types_pkey'
-}
-
-/** input type for inserting data into table "certification_types" */
-export type Certification_Types_Insert_Input = {
-  certification?: InputMaybe<Certifications_Obj_Rel_Insert_Input>;
-  certification_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Certification_Types_Max_Fields = {
-  __typename?: 'certification_types_max_fields';
-  certification_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-};
-
-/** order by max() on columns of table "certification_types" */
-export type Certification_Types_Max_Order_By = {
-  certification_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  type?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Certification_Types_Min_Fields = {
-  __typename?: 'certification_types_min_fields';
-  certification_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-};
-
-/** order by min() on columns of table "certification_types" */
-export type Certification_Types_Min_Order_By = {
-  certification_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  type?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "certification_types" */
-export type Certification_Types_Mutation_Response = {
-  __typename?: 'certification_types_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Certification_Types>;
-};
-
-/** on_conflict condition type for table "certification_types" */
-export type Certification_Types_On_Conflict = {
-  constraint: Certification_Types_Constraint;
-  update_columns?: Array<Certification_Types_Update_Column>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "certification_types". */
-export type Certification_Types_Order_By = {
-  certification?: InputMaybe<Certifications_Order_By>;
-  certification_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  type?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: certification_types */
-export type Certification_Types_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "certification_types" */
-export enum Certification_Types_Select_Column {
-  /** column name */
-  CertificationId = 'certification_id',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Type = 'type'
-}
-
-/** input type for updating data in table "certification_types" */
-export type Certification_Types_Set_Input = {
-  certification_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Streaming cursor of the table "certification_types" */
-export type Certification_Types_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Certification_Types_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Certification_Types_Stream_Cursor_Value_Input = {
-  certification_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** update columns of table "certification_types" */
-export enum Certification_Types_Update_Column {
-  /** column name */
-  CertificationId = 'certification_id',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Type = 'type'
-}
-
-export type Certification_Types_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Certification_Types_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Certification_Types_Bool_Exp;
-};
-
-/** columns and relationships of "certifications" */
-export type Certifications = {
-  __typename?: 'certifications';
-  /** An array relationship */
-  certification_types: Array<Certification_Types>;
-  /** An aggregate relationship */
-  certification_types_aggregate: Certification_Types_Aggregate;
-  id: Scalars['uuid']['output'];
-  /** An array relationship */
-  movies: Array<Movies>;
-  /** An aggregate relationship */
-  movies_aggregate: Movies_Aggregate;
-  name: Scalars['String']['output'];
-};
-
-
-/** columns and relationships of "certifications" */
-export type CertificationsCertification_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-
-/** columns and relationships of "certifications" */
-export type CertificationsCertification_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-
-/** columns and relationships of "certifications" */
-export type CertificationsMoviesArgs = {
-  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Movies_Order_By>>;
-  where?: InputMaybe<Movies_Bool_Exp>;
-};
-
-
-/** columns and relationships of "certifications" */
-export type CertificationsMovies_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Movies_Order_By>>;
-  where?: InputMaybe<Movies_Bool_Exp>;
-};
-
-/** aggregated selection of "certifications" */
-export type Certifications_Aggregate = {
-  __typename?: 'certifications_aggregate';
-  aggregate?: Maybe<Certifications_Aggregate_Fields>;
-  nodes: Array<Certifications>;
-};
-
-/** aggregate fields of "certifications" */
-export type Certifications_Aggregate_Fields = {
-  __typename?: 'certifications_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Certifications_Max_Fields>;
-  min?: Maybe<Certifications_Min_Fields>;
-};
-
-
-/** aggregate fields of "certifications" */
-export type Certifications_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Certifications_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Boolean expression to filter rows from the table "certifications". All fields are combined with a logical 'AND'. */
-export type Certifications_Bool_Exp = {
-  _and?: InputMaybe<Array<Certifications_Bool_Exp>>;
-  _not?: InputMaybe<Certifications_Bool_Exp>;
-  _or?: InputMaybe<Array<Certifications_Bool_Exp>>;
-  certification_types?: InputMaybe<Certification_Types_Bool_Exp>;
-  certification_types_aggregate?: InputMaybe<Certification_Types_Aggregate_Bool_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  movies?: InputMaybe<Movies_Bool_Exp>;
-  movies_aggregate?: InputMaybe<Movies_Aggregate_Bool_Exp>;
-  name?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "certifications" */
-export enum Certifications_Constraint {
-  /** unique or primary key constraint on columns "name" */
-  CertificationsNameKey = 'certifications_name_key',
-  /** unique or primary key constraint on columns "id" */
-  CertificationsPkey = 'certifications_pkey'
-}
-
-/** input type for inserting data into table "certifications" */
-export type Certifications_Insert_Input = {
-  certification_types?: InputMaybe<Certification_Types_Arr_Rel_Insert_Input>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  movies?: InputMaybe<Movies_Arr_Rel_Insert_Input>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Certifications_Max_Fields = {
-  __typename?: 'certifications_max_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
-/** aggregate min on columns */
-export type Certifications_Min_Fields = {
-  __typename?: 'certifications_min_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
-/** response of any mutation on the table "certifications" */
-export type Certifications_Mutation_Response = {
-  __typename?: 'certifications_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Certifications>;
-};
-
-/** input type for inserting object relation for remote table "certifications" */
-export type Certifications_Obj_Rel_Insert_Input = {
-  data: Certifications_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Certifications_On_Conflict>;
-};
-
-/** on_conflict condition type for table "certifications" */
-export type Certifications_On_Conflict = {
-  constraint: Certifications_Constraint;
-  update_columns?: Array<Certifications_Update_Column>;
-  where?: InputMaybe<Certifications_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "certifications". */
-export type Certifications_Order_By = {
-  certification_types_aggregate?: InputMaybe<Certification_Types_Aggregate_Order_By>;
-  id?: InputMaybe<Order_By>;
-  movies_aggregate?: InputMaybe<Movies_Aggregate_Order_By>;
-  name?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: certifications */
-export type Certifications_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "certifications" */
-export enum Certifications_Select_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-/** input type for updating data in table "certifications" */
-export type Certifications_Set_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Streaming cursor of the table "certifications" */
-export type Certifications_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Certifications_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Certifications_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** update columns of table "certifications" */
-export enum Certifications_Update_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-export type Certifications_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Certifications_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Certifications_Bool_Exp;
-};
-
 /** Boolean expression to compare columns of type "citext". All fields are combined with logical 'AND'. */
 export type Citext_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['citext']['input']>;
@@ -6435,6 +6046,150 @@ export type Movie_Availability_Types_Updates = {
   where: Movie_Availability_Types_Bool_Exp;
 };
 
+/** columns and relationships of "movie_certification_types" */
+export type Movie_Certification_Types = {
+  __typename?: 'movie_certification_types';
+  type: Scalars['String']['output'];
+};
+
+/** aggregated selection of "movie_certification_types" */
+export type Movie_Certification_Types_Aggregate = {
+  __typename?: 'movie_certification_types_aggregate';
+  aggregate?: Maybe<Movie_Certification_Types_Aggregate_Fields>;
+  nodes: Array<Movie_Certification_Types>;
+};
+
+/** aggregate fields of "movie_certification_types" */
+export type Movie_Certification_Types_Aggregate_Fields = {
+  __typename?: 'movie_certification_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Movie_Certification_Types_Max_Fields>;
+  min?: Maybe<Movie_Certification_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "movie_certification_types" */
+export type Movie_Certification_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Movie_Certification_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "movie_certification_types". All fields are combined with a logical 'AND'. */
+export type Movie_Certification_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Certification_Types_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Certification_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Certification_Types_Bool_Exp>>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_certification_types" */
+export enum Movie_Certification_Types_Constraint {
+  /** unique or primary key constraint on columns "type" */
+  MovieCertificationTypesPkey = 'movie_certification_types_pkey'
+}
+
+export enum Movie_Certification_Types_Enum {
+  Eighteen = 'eighteen',
+  Fifteen = 'fifteen',
+  G = 'g',
+  NcSeventeen = 'nc_seventeen',
+  Pg = 'pg',
+  PgThirteen = 'pg_thirteen',
+  R = 'r',
+  Twelve = 'twelve',
+  TwelveA = 'twelve_a',
+  Unrated = 'unrated'
+}
+
+/** Boolean expression to compare columns of type "movie_certification_types_enum". All fields are combined with logical 'AND'. */
+export type Movie_Certification_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Movie_Certification_Types_Enum>;
+  _in?: InputMaybe<Array<Movie_Certification_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Movie_Certification_Types_Enum>;
+  _nin?: InputMaybe<Array<Movie_Certification_Types_Enum>>;
+};
+
+/** input type for inserting data into table "movie_certification_types" */
+export type Movie_Certification_Types_Insert_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Certification_Types_Max_Fields = {
+  __typename?: 'movie_certification_types_max_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Movie_Certification_Types_Min_Fields = {
+  __typename?: 'movie_certification_types_min_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "movie_certification_types" */
+export type Movie_Certification_Types_Mutation_Response = {
+  __typename?: 'movie_certification_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Certification_Types>;
+};
+
+/** on_conflict condition type for table "movie_certification_types" */
+export type Movie_Certification_Types_On_Conflict = {
+  constraint: Movie_Certification_Types_Constraint;
+  update_columns?: Array<Movie_Certification_Types_Update_Column>;
+  where?: InputMaybe<Movie_Certification_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_certification_types". */
+export type Movie_Certification_Types_Order_By = {
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_certification_types */
+export type Movie_Certification_Types_Pk_Columns_Input = {
+  type: Scalars['String']['input'];
+};
+
+/** select columns of table "movie_certification_types" */
+export enum Movie_Certification_Types_Select_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "movie_certification_types" */
+export type Movie_Certification_Types_Set_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "movie_certification_types" */
+export type Movie_Certification_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Certification_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Certification_Types_Stream_Cursor_Value_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "movie_certification_types" */
+export enum Movie_Certification_Types_Update_Column {
+  /** column name */
+  Type = 'type'
+}
+
+export type Movie_Certification_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Certification_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Certification_Types_Bool_Exp;
+};
+
 /** columns and relationships of "movie_genres" */
 export type Movie_Genres = {
   __typename?: 'movie_genres';
@@ -7996,9 +7751,7 @@ export type Movies = {
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop: Scalars['String']['output'];
   budget?: Maybe<Scalars['money']['output']>;
-  /** An object relationship */
-  certification?: Maybe<Certifications>;
-  certification_id?: Maybe<Scalars['uuid']['output']>;
+  certification?: Maybe<Movie_Certification_Types_Enum>;
   content_score: Scalars['Float']['output'];
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   /** An array relationship */
@@ -8361,8 +8114,7 @@ export type Movies_Bool_Exp = {
   average_rating?: InputMaybe<Float_Comparison_Exp>;
   backdrop?: InputMaybe<String_Comparison_Exp>;
   budget?: InputMaybe<Money_Comparison_Exp>;
-  certification?: InputMaybe<Certifications_Bool_Exp>;
-  certification_id?: InputMaybe<Uuid_Comparison_Exp>;
+  certification?: InputMaybe<Movie_Certification_Types_Enum_Comparison_Exp>;
   content_score?: InputMaybe<Float_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   credits?: InputMaybe<Credits_Bool_Exp>;
@@ -8434,8 +8186,7 @@ export type Movies_Insert_Input = {
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
-  certification?: InputMaybe<Certifications_Obj_Rel_Insert_Input>;
-  certification_id?: InputMaybe<Scalars['uuid']['input']>;
+  certification?: InputMaybe<Movie_Certification_Types_Enum>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
@@ -8475,7 +8226,6 @@ export type Movies_Max_Fields = {
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
-  certification_id?: Maybe<Scalars['uuid']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   /** A computed field, executes function "movie_format_runtime" */
@@ -8504,7 +8254,6 @@ export type Movies_Max_Order_By = {
   average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
-  certification_id?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   homepage?: InputMaybe<Order_By>;
@@ -8532,7 +8281,6 @@ export type Movies_Min_Fields = {
   average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
-  certification_id?: Maybe<Scalars['uuid']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   /** A computed field, executes function "movie_format_runtime" */
@@ -8561,7 +8309,6 @@ export type Movies_Min_Order_By = {
   average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
-  certification_id?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   homepage?: InputMaybe<Order_By>;
@@ -8611,8 +8358,7 @@ export type Movies_Order_By = {
   average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
-  certification?: InputMaybe<Certifications_Order_By>;
-  certification_id?: InputMaybe<Order_By>;
+  certification?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
@@ -8661,7 +8407,7 @@ export enum Movies_Select_Column {
   /** column name */
   Budget = 'budget',
   /** column name */
-  CertificationId = 'certification_id',
+  Certification = 'certification',
   /** column name */
   ContentScore = 'content_score',
   /** column name */
@@ -8709,7 +8455,7 @@ export type Movies_Set_Input = {
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
-  certification_id?: InputMaybe<Scalars['uuid']['input']>;
+  certification?: InputMaybe<Movie_Certification_Types_Enum>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   homepage?: InputMaybe<Scalars['String']['input']>;
@@ -8820,7 +8566,7 @@ export type Movies_Stream_Cursor_Value_Input = {
   average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
-  certification_id?: InputMaybe<Scalars['uuid']['input']>;
+  certification?: InputMaybe<Movie_Certification_Types_Enum>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   homepage?: InputMaybe<Scalars['String']['input']>;
@@ -8877,7 +8623,7 @@ export enum Movies_Update_Column {
   /** column name */
   Budget = 'budget',
   /** column name */
-  CertificationId = 'certification_id',
+  Certification = 'certification',
   /** column name */
   ContentScore = 'content_score',
   /** column name */
@@ -9079,14 +8825,6 @@ export type Mutation_Root = {
   delete_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** delete single row from the table: "auth.migrations" */
   delete_auth_migrations_by_pk?: Maybe<Auth_Migrations>;
-  /** delete data from the table: "certification_types" */
-  delete_certification_types?: Maybe<Certification_Types_Mutation_Response>;
-  /** delete single row from the table: "certification_types" */
-  delete_certification_types_by_pk?: Maybe<Certification_Types>;
-  /** delete data from the table: "certifications" */
-  delete_certifications?: Maybe<Certifications_Mutation_Response>;
-  /** delete single row from the table: "certifications" */
-  delete_certifications_by_pk?: Maybe<Certifications>;
   /** delete data from the table: "credits" */
   delete_credits?: Maybe<Credits_Mutation_Response>;
   /** delete single row from the table: "credits" */
@@ -9115,6 +8853,10 @@ export type Mutation_Root = {
   delete_movie_availability_types?: Maybe<Movie_Availability_Types_Mutation_Response>;
   /** delete single row from the table: "movie_availability_types" */
   delete_movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
+  /** delete data from the table: "movie_certification_types" */
+  delete_movie_certification_types?: Maybe<Movie_Certification_Types_Mutation_Response>;
+  /** delete single row from the table: "movie_certification_types" */
+  delete_movie_certification_types_by_pk?: Maybe<Movie_Certification_Types>;
   /** delete data from the table: "movie_genres" */
   delete_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
   /** delete single row from the table: "movie_genres" */
@@ -9283,14 +9025,6 @@ export type Mutation_Root = {
   insert_auth_migrations?: Maybe<Auth_Migrations_Mutation_Response>;
   /** insert a single row into the table: "auth.migrations" */
   insert_auth_migrations_one?: Maybe<Auth_Migrations>;
-  /** insert data into the table: "certification_types" */
-  insert_certification_types?: Maybe<Certification_Types_Mutation_Response>;
-  /** insert a single row into the table: "certification_types" */
-  insert_certification_types_one?: Maybe<Certification_Types>;
-  /** insert data into the table: "certifications" */
-  insert_certifications?: Maybe<Certifications_Mutation_Response>;
-  /** insert a single row into the table: "certifications" */
-  insert_certifications_one?: Maybe<Certifications>;
   /** insert data into the table: "credits" */
   insert_credits?: Maybe<Credits_Mutation_Response>;
   /** insert a single row into the table: "credits" */
@@ -9319,6 +9053,10 @@ export type Mutation_Root = {
   insert_movie_availability_types?: Maybe<Movie_Availability_Types_Mutation_Response>;
   /** insert a single row into the table: "movie_availability_types" */
   insert_movie_availability_types_one?: Maybe<Movie_Availability_Types>;
+  /** insert data into the table: "movie_certification_types" */
+  insert_movie_certification_types?: Maybe<Movie_Certification_Types_Mutation_Response>;
+  /** insert a single row into the table: "movie_certification_types" */
+  insert_movie_certification_types_one?: Maybe<Movie_Certification_Types>;
   /** insert data into the table: "movie_genres" */
   insert_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
   /** insert a single row into the table: "movie_genres" */
@@ -9517,18 +9255,6 @@ export type Mutation_Root = {
   update_auth_migrations_many?: Maybe<Array<Maybe<Auth_Migrations_Mutation_Response>>>;
   /** update multiples rows of table: "storage.buckets" */
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
-  /** update data of the table: "certification_types" */
-  update_certification_types?: Maybe<Certification_Types_Mutation_Response>;
-  /** update single row of the table: "certification_types" */
-  update_certification_types_by_pk?: Maybe<Certification_Types>;
-  /** update multiples rows of table: "certification_types" */
-  update_certification_types_many?: Maybe<Array<Maybe<Certification_Types_Mutation_Response>>>;
-  /** update data of the table: "certifications" */
-  update_certifications?: Maybe<Certifications_Mutation_Response>;
-  /** update single row of the table: "certifications" */
-  update_certifications_by_pk?: Maybe<Certifications>;
-  /** update multiples rows of table: "certifications" */
-  update_certifications_many?: Maybe<Array<Maybe<Certifications_Mutation_Response>>>;
   /** update data of the table: "credits" */
   update_credits?: Maybe<Credits_Mutation_Response>;
   /** update single row of the table: "credits" */
@@ -9573,6 +9299,12 @@ export type Mutation_Root = {
   update_movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
   /** update multiples rows of table: "movie_availability_types" */
   update_movie_availability_types_many?: Maybe<Array<Maybe<Movie_Availability_Types_Mutation_Response>>>;
+  /** update data of the table: "movie_certification_types" */
+  update_movie_certification_types?: Maybe<Movie_Certification_Types_Mutation_Response>;
+  /** update single row of the table: "movie_certification_types" */
+  update_movie_certification_types_by_pk?: Maybe<Movie_Certification_Types>;
+  /** update multiples rows of table: "movie_certification_types" */
+  update_movie_certification_types_many?: Maybe<Array<Maybe<Movie_Certification_Types_Mutation_Response>>>;
   /** update data of the table: "movie_genres" */
   update_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
   /** update single row of the table: "movie_genres" */
@@ -9941,30 +9673,6 @@ export type Mutation_RootDelete_Auth_Migrations_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Certification_TypesArgs = {
-  where: Certification_Types_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Certification_Types_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_CertificationsArgs = {
-  where: Certifications_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Certifications_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_CreditsArgs = {
   where: Credits_Bool_Exp;
 };
@@ -10045,6 +9753,18 @@ export type Mutation_RootDelete_Movie_Availability_TypesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Movie_Availability_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Movie_Certification_TypesArgs = {
+  where: Movie_Certification_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Movie_Certification_Types_By_PkArgs = {
   type: Scalars['String']['input'];
 };
 
@@ -10595,34 +10315,6 @@ export type Mutation_RootInsert_Auth_Migrations_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Certification_TypesArgs = {
-  objects: Array<Certification_Types_Insert_Input>;
-  on_conflict?: InputMaybe<Certification_Types_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Certification_Types_OneArgs = {
-  object: Certification_Types_Insert_Input;
-  on_conflict?: InputMaybe<Certification_Types_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_CertificationsArgs = {
-  objects: Array<Certifications_Insert_Input>;
-  on_conflict?: InputMaybe<Certifications_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Certifications_OneArgs = {
-  object: Certifications_Insert_Input;
-  on_conflict?: InputMaybe<Certifications_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_CreditsArgs = {
   objects: Array<Credits_Insert_Input>;
   on_conflict?: InputMaybe<Credits_On_Conflict>;
@@ -10717,6 +10409,20 @@ export type Mutation_RootInsert_Movie_Availability_TypesArgs = {
 export type Mutation_RootInsert_Movie_Availability_Types_OneArgs = {
   object: Movie_Availability_Types_Insert_Input;
   on_conflict?: InputMaybe<Movie_Availability_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Movie_Certification_TypesArgs = {
+  objects: Array<Movie_Certification_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Certification_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Movie_Certification_Types_OneArgs = {
+  object: Movie_Certification_Types_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Certification_Types_On_Conflict>;
 };
 
 
@@ -11469,46 +11175,6 @@ export type Mutation_RootUpdate_Buckets_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Certification_TypesArgs = {
-  _set?: InputMaybe<Certification_Types_Set_Input>;
-  where: Certification_Types_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Certification_Types_By_PkArgs = {
-  _set?: InputMaybe<Certification_Types_Set_Input>;
-  pk_columns: Certification_Types_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Certification_Types_ManyArgs = {
-  updates: Array<Certification_Types_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_CertificationsArgs = {
-  _set?: InputMaybe<Certifications_Set_Input>;
-  where: Certifications_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Certifications_By_PkArgs = {
-  _set?: InputMaybe<Certifications_Set_Input>;
-  pk_columns: Certifications_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Certifications_ManyArgs = {
-  updates: Array<Certifications_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_CreditsArgs = {
   _append?: InputMaybe<Credits_Append_Input>;
   _delete_at_path?: InputMaybe<Credits_Delete_At_Path_Input>;
@@ -11663,6 +11329,26 @@ export type Mutation_RootUpdate_Movie_Availability_Types_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Movie_Availability_Types_ManyArgs = {
   updates: Array<Movie_Availability_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Certification_TypesArgs = {
+  _set?: InputMaybe<Movie_Certification_Types_Set_Input>;
+  where: Movie_Certification_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Certification_Types_By_PkArgs = {
+  _set?: InputMaybe<Movie_Certification_Types_Set_Input>;
+  pk_columns: Movie_Certification_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Movie_Certification_Types_ManyArgs = {
+  updates: Array<Movie_Certification_Types_Updates>;
 };
 
 
@@ -13683,18 +13369,6 @@ export type Query_Root = {
   /** fetch aggregated fields from the table: "storage.buckets" */
   bucketsAggregate: Buckets_Aggregate;
   /** An array relationship */
-  certification_types: Array<Certification_Types>;
-  /** An aggregate relationship */
-  certification_types_aggregate: Certification_Types_Aggregate;
-  /** fetch data from the table: "certification_types" using primary key columns */
-  certification_types_by_pk?: Maybe<Certification_Types>;
-  /** fetch data from the table: "certifications" */
-  certifications: Array<Certifications>;
-  /** fetch aggregated fields from the table: "certifications" */
-  certifications_aggregate: Certifications_Aggregate;
-  /** fetch data from the table: "certifications" using primary key columns */
-  certifications_by_pk?: Maybe<Certifications>;
-  /** An array relationship */
   credits: Array<Credits>;
   /** An aggregate relationship */
   credits_aggregate: Credits_Aggregate;
@@ -13742,6 +13416,12 @@ export type Query_Root = {
   movie_availability_types_aggregate: Movie_Availability_Types_Aggregate;
   /** fetch data from the table: "movie_availability_types" using primary key columns */
   movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
+  /** fetch data from the table: "movie_certification_types" */
+  movie_certification_types: Array<Movie_Certification_Types>;
+  /** fetch aggregated fields from the table: "movie_certification_types" */
+  movie_certification_types_aggregate: Movie_Certification_Types_Aggregate;
+  /** fetch data from the table: "movie_certification_types" using primary key columns */
+  movie_certification_types_by_pk?: Maybe<Movie_Certification_Types>;
   /** An array relationship */
   movie_genres: Array<Movie_Genres>;
   /** An aggregate relationship */
@@ -14246,52 +13926,6 @@ export type Query_RootBucketsAggregateArgs = {
 };
 
 
-export type Query_RootCertification_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-
-export type Query_RootCertification_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-
-export type Query_RootCertification_Types_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootCertificationsArgs = {
-  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certifications_Order_By>>;
-  where?: InputMaybe<Certifications_Bool_Exp>;
-};
-
-
-export type Query_RootCertifications_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certifications_Order_By>>;
-  where?: InputMaybe<Certifications_Bool_Exp>;
-};
-
-
-export type Query_RootCertifications_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
 export type Query_RootCreditsArgs = {
   distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -14473,6 +14107,29 @@ export type Query_RootMovie_Availability_Types_AggregateArgs = {
 
 
 export type Query_RootMovie_Availability_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Query_RootMovie_Certification_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Certification_Types_Order_By>>;
+  where?: InputMaybe<Movie_Certification_Types_Bool_Exp>;
+};
+
+
+export type Query_RootMovie_Certification_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Certification_Types_Order_By>>;
+  where?: InputMaybe<Movie_Certification_Types_Bool_Exp>;
+};
+
+
+export type Query_RootMovie_Certification_Types_By_PkArgs = {
   type: Scalars['String']['input'];
 };
 
@@ -17590,22 +17247,6 @@ export type Subscription_Root = {
   /** fetch data from the table in a streaming manner: "storage.buckets" */
   buckets_stream: Array<Buckets>;
   /** An array relationship */
-  certification_types: Array<Certification_Types>;
-  /** An aggregate relationship */
-  certification_types_aggregate: Certification_Types_Aggregate;
-  /** fetch data from the table: "certification_types" using primary key columns */
-  certification_types_by_pk?: Maybe<Certification_Types>;
-  /** fetch data from the table in a streaming manner: "certification_types" */
-  certification_types_stream: Array<Certification_Types>;
-  /** fetch data from the table: "certifications" */
-  certifications: Array<Certifications>;
-  /** fetch aggregated fields from the table: "certifications" */
-  certifications_aggregate: Certifications_Aggregate;
-  /** fetch data from the table: "certifications" using primary key columns */
-  certifications_by_pk?: Maybe<Certifications>;
-  /** fetch data from the table in a streaming manner: "certifications" */
-  certifications_stream: Array<Certifications>;
-  /** An array relationship */
   credits: Array<Credits>;
   /** An aggregate relationship */
   credits_aggregate: Credits_Aggregate;
@@ -17669,6 +17310,14 @@ export type Subscription_Root = {
   movie_availability_types_by_pk?: Maybe<Movie_Availability_Types>;
   /** fetch data from the table in a streaming manner: "movie_availability_types" */
   movie_availability_types_stream: Array<Movie_Availability_Types>;
+  /** fetch data from the table: "movie_certification_types" */
+  movie_certification_types: Array<Movie_Certification_Types>;
+  /** fetch aggregated fields from the table: "movie_certification_types" */
+  movie_certification_types_aggregate: Movie_Certification_Types_Aggregate;
+  /** fetch data from the table: "movie_certification_types" using primary key columns */
+  movie_certification_types_by_pk?: Maybe<Movie_Certification_Types>;
+  /** fetch data from the table in a streaming manner: "movie_certification_types" */
+  movie_certification_types_stream: Array<Movie_Certification_Types>;
   /** An array relationship */
   movie_genres: Array<Movie_Genres>;
   /** An aggregate relationship */
@@ -18330,66 +17979,6 @@ export type Subscription_RootBuckets_StreamArgs = {
 };
 
 
-export type Subscription_RootCertification_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-
-export type Subscription_RootCertification_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Certification_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certification_Types_Order_By>>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-
-export type Subscription_RootCertification_Types_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootCertification_Types_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Certification_Types_Stream_Cursor_Input>>;
-  where?: InputMaybe<Certification_Types_Bool_Exp>;
-};
-
-
-export type Subscription_RootCertificationsArgs = {
-  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certifications_Order_By>>;
-  where?: InputMaybe<Certifications_Bool_Exp>;
-};
-
-
-export type Subscription_RootCertifications_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Certifications_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Certifications_Order_By>>;
-  where?: InputMaybe<Certifications_Bool_Exp>;
-};
-
-
-export type Subscription_RootCertifications_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootCertifications_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Certifications_Stream_Cursor_Input>>;
-  where?: InputMaybe<Certifications_Bool_Exp>;
-};
-
-
 export type Subscription_RootCreditsArgs = {
   distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -18628,6 +18217,36 @@ export type Subscription_RootMovie_Availability_Types_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Movie_Availability_Types_Stream_Cursor_Input>>;
   where?: InputMaybe<Movie_Availability_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Certification_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Certification_Types_Order_By>>;
+  where?: InputMaybe<Movie_Certification_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Certification_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Certification_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Certification_Types_Order_By>>;
+  where?: InputMaybe<Movie_Certification_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootMovie_Certification_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootMovie_Certification_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Movie_Certification_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Certification_Types_Bool_Exp>;
 };
 
 
@@ -21430,13 +21049,6 @@ export type GetAuditLogsQueryVariables = Exact<{
 
 export type GetAuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, diff: any, operation: string, pk: any, table_name: string, created_at: any, user: { __typename?: 'users', avatarUrl: string, displayName: string } }> };
 
-export type GetCertificationsQueryVariables = Exact<{
-  where?: InputMaybe<Certifications_Bool_Exp>;
-}>;
-
-
-export type GetCertificationsQuery = { __typename?: 'query_root', certifications: Array<{ __typename?: 'certifications', id: any, name: string }> };
-
 export type GetCreditsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Credits_Select_Column> | Credits_Select_Column>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -21478,14 +21090,14 @@ export type GetMovieForContentQualityCheckQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Statuses_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, media_type: string, order: number, role: string, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Statuses_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, media_type: string, order: number, role: string, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Statuses_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Statuses_Types_Enum | null, updated_at: any }>, certification?: { __typename?: 'certifications', id: any, name: string } | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Statuses_Enum | null, certification?: Movie_Certification_Types_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Statuses_Types_Enum | null, updated_at: any }>, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -21695,50 +21307,6 @@ export const useInfiniteGetAuditLogsQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetAuditLogs.infinite'] : ['GetAuditLogs.infinite', variables],
       queryFn: (metaData) => fetcher<GetAuditLogsQuery, GetAuditLogsQueryVariables>(GetAuditLogsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
-      ...restOptions
-    }
-  })()
-    )};
-
-export const GetCertificationsDocument = `
-    query GetCertifications($where: certifications_bool_exp) {
-  certifications(where: $where) {
-    id
-    name
-  }
-}
-    `;
-
-export const useGetCertificationsQuery = <
-      TData = GetCertificationsQuery,
-      TError = unknown
-    >(
-      variables?: GetCertificationsQueryVariables,
-      options?: Omit<UseQueryOptions<GetCertificationsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetCertificationsQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<GetCertificationsQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['GetCertifications'] : ['GetCertifications', variables],
-    queryFn: fetcher<GetCertificationsQuery, GetCertificationsQueryVariables>(GetCertificationsDocument, variables),
-    ...options
-  }
-    )};
-
-export const useInfiniteGetCertificationsQuery = <
-      TData = InfiniteData<GetCertificationsQuery>,
-      TError = unknown
-    >(
-      variables: GetCertificationsQueryVariables,
-      options: Omit<UseInfiniteQueryOptions<GetCertificationsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetCertificationsQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useInfiniteQuery<GetCertificationsQuery, TError, TData>(
-      (() => {
-    const { queryKey: optionsQueryKey, ...restOptions } = options;
-    return {
-      queryKey: optionsQueryKey ?? variables === undefined ? ['GetCertifications.infinite'] : ['GetCertifications.infinite', variables],
-      queryFn: (metaData) => fetcher<GetCertificationsQuery, GetCertificationsQueryVariables>(GetCertificationsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -21980,10 +21548,7 @@ export const GetMovieForContentQualityCheckDocument = `
       }
     }
     status
-    certification {
-      id
-      name
-    }
+    certification
     movie_genres {
       genre {
         name
@@ -22067,10 +21632,7 @@ export const GetMovieDocument = `
       updated_at
     }
     status
-    certification {
-      id
-      name
-    }
+    certification
     movie_availabilities {
       availability
     }

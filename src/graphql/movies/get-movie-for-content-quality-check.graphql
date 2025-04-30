@@ -37,10 +37,7 @@ query GetMovieForContentQualityCheck($id: uuid!) {
             }
         }
         status
-        certification {
-            id
-            name
-        }
+        certification
         movie_genres {
             genre {
                 name

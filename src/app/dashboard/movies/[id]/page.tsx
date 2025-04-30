@@ -19,6 +19,7 @@ import { MovieProvider, useMovie } from '@/features/movies/components/movie-prov
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
+import { movieCertificationLabels, movieReleaseStatusLabels } from '@/features/movies/constants/movie-enums';
 import { Movie_Release_Statuses_Enum, Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -45,13 +46,6 @@ import {
     Video
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-
-const statusLabelMap = {
-    [Movie_Release_Statuses_Enum['InProduction']]: 'In Production',
-    [Movie_Release_Statuses_Enum['Rumoured']]: 'Rumoured',
-    [Movie_Release_Statuses_Enum['Cancelled']]: 'Cancelled',
-    [Movie_Release_Statuses_Enum['Released']]: 'Released'
-};
 
 export default function MoviePage() {
     return (
@@ -129,7 +123,9 @@ function MoviePageContent() {
                             {movie.certification && (
                                 <span className='flex items-center gap-1'>
                                     <User className='h-4 w-4' />
-                                    {movie.certification.name}
+                                    {movie.certification && (
+                                        <>{movieCertificationLabels[movie.certification] || 'Unknown'}</>
+                                    )}
                                 </span>
                             )}
                             <ResponsiveDialog
@@ -147,7 +143,7 @@ function MoviePageContent() {
                                     </ItemInformation>
 
                                     <ItemInformation icon={Info} label='Status'>
-                                        {movie.status && <>{statusLabelMap[movie.status] || 'Unknown'}</>}
+                                        {movie.status && <>{movieReleaseStatusLabels[movie.status] || 'Unknown'}</>}
                                     </ItemInformation>
 
                                     <ItemInformation icon={CreditCard} label='Budget'>

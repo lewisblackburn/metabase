@@ -29,7 +29,11 @@ import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
 import { RootState } from '@/store/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { movieAvailabilityOptions, movieReleaseStatusOptions } from '../constants/movie-enums';
+import {
+    movieAvailabilityOptions,
+    movieCertificationOptions,
+    movieReleaseStatusOptions
+} from '../constants/movie-enums';
 import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
 import { resetMoviesFilter, setMoviesFilter } from '../store/movies-filter.slice';
 import { Tag, TagInput } from 'emblor';
@@ -62,21 +66,6 @@ export default function MoviesSidebar() {
         },
         {
             queryKey: ['genres']
-        }
-    );
-
-    const { data: certifications } = useGetCertificationsQuery(
-        {
-            where: {
-                certification_types: {
-                    type: {
-                        _eq: 'movie'
-                    }
-                }
-            }
-        },
-        {
-            queryKey: ['certifications']
         }
     );
 
@@ -257,14 +246,7 @@ export default function MoviesSidebar() {
                                                     <FormItem>
                                                         <BaseFormLayout label='Certifications'>
                                                             <CheckboxGroupField
-                                                                options={
-                                                                    certifications?.certifications.map(
-                                                                        (certification) => ({
-                                                                            value: certification.id,
-                                                                            label: certification.name
-                                                                        })
-                                                                    ) ?? []
-                                                                }
+                                                                options={movieCertificationOptions}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
