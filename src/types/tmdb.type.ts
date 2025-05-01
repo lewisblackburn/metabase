@@ -3,7 +3,7 @@ export interface TMDBMovie {
     backdrop_path: string;
     belongs_to_collection: any;
     budget: number;
-    genres: Genre[];
+    genres: TMDBGenre[];
     homepage: string;
     id: number | string;
     imdb_id: string;
@@ -13,77 +13,77 @@ export interface TMDBMovie {
     overview: string;
     popularity: number;
     poster_path: string;
-    production_companies: ProductionCompany[];
-    production_countries: ProductionCountry[];
+    production_companies: TMDBProductionCompany[];
+    production_countries: TMDBProductionCountry[];
     alternative_titles: {
-        titles: AlternativeTitle[];
+        titles: TMDBAlternativeTitle[];
     };
     release_date: string;
     revenue: number;
     runtime: number;
-    spoken_languages: SpokenLanguage[];
+    spoken_languages: TMDBSpokenLanguage[];
     status: string;
     tagline: string;
     title: string;
     video: boolean;
     vote_average: number;
     vote_count: number;
-    keywords: Keywords;
-    credits: Credits;
-    videos: Videos;
-    images: Images;
+    keywords: TMDBKeywords;
+    credits: TMDBCredits;
+    videos: TMDBVideos;
+    images: TMDBImages;
     release_dates: {
         results: {
             iso_3166_1: string;
-            release_dates: ReleaseDate[];
+            release_dates: TMDBReleaseDate[];
         }[];
     };
 }
 
-export interface Genre {
+export interface TMDBGenre {
     id: number;
     name: string;
 }
 
-export interface ProductionCompany {
+export interface TMDBProductionCompany {
     id: number;
     logo_path: string;
     name: string;
     origin_country: string;
 }
 
-export interface ProductionCountry {
+export interface TMDBProductionCountry {
     iso_3166_1: string;
     name: string;
 }
 
-export interface AlternativeTitle {
+export interface TMDBAlternativeTitle {
     iso_3166_1: string;
     title: string;
     type: string;
 }
 
-export interface SpokenLanguage {
+export interface TMDBSpokenLanguage {
     english_name: string;
     iso_639_1: string;
     name: string;
 }
 
-export interface Keywords {
-    keywords: Keyword[];
+export interface TMDBKeywords {
+    keywords: TMDBKeyword[];
 }
 
-export interface Keyword {
+export interface TMDBKeyword {
     id: number;
     name: string;
 }
 
-export interface Credits {
-    cast: Cast[];
-    crew: Crew[];
+export interface TMDBCredits {
+    cast: TMDBCast[];
+    crew: TMDBCrew[];
 }
 
-export interface Cast {
+export interface TMDBCast {
     adult: boolean;
     gender: number;
     id: number;
@@ -98,7 +98,7 @@ export interface Cast {
     order: number;
 }
 
-export interface Crew {
+export interface TMDBCrew {
     adult: boolean;
     gender: number;
     id: number;
@@ -112,11 +112,11 @@ export interface Crew {
     job: string;
 }
 
-export interface Videos {
-    results: Result[];
+export interface TMDBVideos {
+    results: TMDBResult[];
 }
 
-export interface Result {
+export interface TMDBResult {
     iso_639_1: string;
     iso_3166_1: string;
     name: string;
@@ -129,7 +129,7 @@ export interface Result {
     id: string;
 }
 
-export interface Images {
+export interface TMDBImages {
     backdrops: any[];
     logos: any[];
     posters: any[];
@@ -137,12 +137,12 @@ export interface Images {
 
 export interface TMDBSearchResponse {
     page: number;
-    results: SearchResult[];
+    results: TMDBSearchResult[];
     total_pages: number;
     total_results: number;
 }
 
-export interface SearchResult {
+export interface TMDBSearchResult {
     adult: boolean;
     backdrop_path?: string;
     genre_ids: number[];
@@ -180,7 +180,7 @@ export const TMDB_SEARCH_RESULT_TYPES = ['movie', 'tv', 'person'] as const;
 
 export type TMDBSearchResultType = (typeof TMDB_SEARCH_RESULT_TYPES)[number];
 
-export interface ReleaseDate {
+export interface TMDBReleaseDate {
     certification: string;
     descriptors: any[];
     iso_639_1: string;

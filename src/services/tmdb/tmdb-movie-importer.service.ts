@@ -1,5 +1,5 @@
 import { LANGUAGES } from '@/constants/languages.constant';
-import { MEDIA_TYPE } from '@/constants/media.constant';
+import { BUCKET } from '@/constants/media.constant';
 import { movieCertificationOptions, movieReleaseStatusOptions } from '@/features/movies/constants/movie-enums';
 import {
     Credits_Arr_Rel_Insert_Input,
@@ -17,7 +17,6 @@ import {
     Keywords_Constraint,
     Keywords_Update_Column,
     Movie_Alternative_Titles_Arr_Rel_Insert_Input,
-    Movie_Certification_Types,
     Movie_Certification_Types_Enum,
     Movie_Genres_Arr_Rel_Insert_Input,
     Movie_Keywords_Arr_Rel_Insert_Input,
@@ -26,8 +25,9 @@ import {
     Movie_Production_Companies_Constraint,
     Movie_Production_Companies_Update_Column,
     Movie_Production_Countries_Arr_Rel_Insert_Input,
-    Movie_Release_Statuses_Enum,
+    Movie_Release_Status_Types_Enum,
     Movies_Insert_Input,
+    Object_Types_Enum,
     People_Constraint,
     People_Update_Column,
     Person_Media_Constraint
@@ -98,7 +98,7 @@ export class TMDBMovieImporterService extends TMDBService {
         ];
 
         const uploads = await Promise.all(
-            rawCredits.map((rc) => FileService.uploadImage(rc.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage))
+            rawCredits.map((rc) => FileService.uploadImage(rc.profile_path, BUCKET.HEADSHOT, this.getProfileImage))
         );
 
         const data: Credits_Insert_Input[] = rawCredits.map((rc, i) => {
@@ -107,8 +107,8 @@ export class TMDBMovieImporterService extends TMDBService {
                 ? {
                       data: [
                           {
-                              media_type: MEDIA_TYPE.HEADSHOT,
-                              media_url: file.url,
+                              bucket: BUCKET.HEADSHOT,
+                              file_url: file.url,
                               media_id: file.id
                           }
                       ],
@@ -120,7 +120,7 @@ export class TMDBMovieImporterService extends TMDBService {
 
             return {
                 credit_type: rc.credit_type,
-                media_type: 'movie',
+                object_type: Object_Types_Enum.Movie,
                 role: rc.role,
                 details: rc.details,
                 person: {
@@ -197,7 +197,7 @@ export class TMDBMovieImporterService extends TMDBService {
         return certification ? certification.value : undefined;
     }
 
-    private buildStatus(movie: TMDBMovie): InputMaybe<Movie_Release_Statuses_Enum> | undefined {
+    private buildStatus(movie: TMDBMovie): InputMaybe<Movie_Release_Status_Types_Enum> | undefined {
         const status = movieReleaseStatusOptions.find((s) => s.label === movie.status);
         return status ? status.value : undefined;
     }
@@ -232,8 +232,8 @@ export class TMDBMovieImporterService extends TMDBService {
         if (!movie) return false;
 
         const [posterFile, backdropFile] = await Promise.all([
-            FileService.uploadImage(movie.poster_path, MEDIA_TYPE.POSTER, this.getPosterImage),
-            FileService.uploadImage(movie.backdrop_path, MEDIA_TYPE.BACKDROP, this.getBackdropImage)
+            FileService.uploadImage(movie.poster_path, BUCKET.POSTER, this.getPosterImage),
+            FileService.uploadImage(movie.backdrop_path, BUCKET.BACKDROP, this.getBackdropImage)
         ]);
 
         const payload = await this.save({
@@ -252,8 +252,8 @@ export class TMDBMovieImporterService extends TMDBService {
             backdrop: backdropFile?.url,
             movie_media: {
                 data: [
-                    { media_type: MEDIA_TYPE.POSTER, media_url: posterFile?.url, media_id: posterFile?.id },
-                    { media_type: MEDIA_TYPE.BACKDROP, media_url: backdropFile?.url, media_id: backdropFile?.id }
+                    { bucket: BUCKET.POSTER, file_url: posterFile?.url, media_id: posterFile?.id },
+                    { bucket: BUCKET.BACKDROP, file_url: backdropFile?.url, media_id: backdropFile?.id }
                 ],
                 on_conflict: { constraint: Movie_Media_Constraint.MovieMediaPkey }
             },

@@ -5,7 +5,7 @@ import {
     InputMaybe,
     Movies_Bool_Exp,
     Order_By,
-    User_Movie_Statuses_Types_Enum
+    User_Movie_Status_Types_Enum
 } from '@/generated/graphql';
 import { RootState } from '@/store/store';
 
@@ -78,7 +78,7 @@ export function useMovieFilters(): {
                         },
                         filter: {
                             status: {
-                                _eq: User_Movie_Statuses_Types_Enum.Watched
+                                _eq: User_Movie_Status_Types_Enum.Watched
                             }
                         }
                     }

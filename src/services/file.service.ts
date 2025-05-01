@@ -1,4 +1,4 @@
-import { MediaType } from '@/constants/media.constant';
+import { BucketType } from '@/constants/media.constant';
 import { GetFilesDocument } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
 
@@ -10,7 +10,7 @@ export class FileService {
             .map((b) => b.toString(16).padStart(2, '0'))
             .join('');
     }
-    static async uploadImage(path: string | null | undefined, type: MediaType, urlFn: (path: string) => string) {
+    static async uploadImage(path: string | null | undefined, type: BucketType, urlFn: (path: string) => string) {
         if (!path) return Promise.resolve(null);
         return FileService.uploadFile(urlFn.call(this, path), type);
     }

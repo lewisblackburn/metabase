@@ -1,3 +1,4 @@
+import { LucideIcon } from 'lucide-react';
 import { z } from 'zod';
 
 export function enumToOptions<T extends { [K in keyof T]: string }>(e: T): { label: keyof T; value: T[keyof T] }[] {
@@ -6,11 +7,13 @@ export function enumToOptions<T extends { [K in keyof T]: string }>(e: T): { lab
 
 export function buildEnumOptions<E extends Record<string, string>, V extends E[keyof E]>(
     gqlEnum: E,
-    labelMap?: Partial<Record<V, string>>
+    labelMap?: Partial<Record<V, string>>,
+    iconMap?: Partial<Record<V, LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>>>
 ) {
     return enumToOptions(gqlEnum).map((opt) => ({
         value: opt.value as V,
-        label: labelMap?.[opt.value as V] ?? opt.label
+        label: labelMap?.[opt.value as V] ?? opt.label,
+        icon: iconMap?.[opt.value as V]
     }));
 }
 

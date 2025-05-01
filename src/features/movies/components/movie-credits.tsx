@@ -80,7 +80,7 @@ export default function MovieCredits() {
     const { data, isLoading } = useGetCreditsQuery(
         {
             where: {
-                media_id: {
+                object_id: {
                     _eq: params?.id
                 }
             }

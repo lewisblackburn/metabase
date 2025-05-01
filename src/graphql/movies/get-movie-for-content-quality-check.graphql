@@ -27,7 +27,6 @@ query GetMovieForContentQualityCheck($id: uuid!) {
             id
             credit_type
             details
-            media_type
             order
             role
             person {

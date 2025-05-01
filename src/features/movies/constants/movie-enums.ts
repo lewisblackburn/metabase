@@ -1,19 +1,21 @@
 import {
     Movie_Availability_Types_Enum,
     Movie_Certification_Types_Enum,
-    Movie_Release_Statuses_Enum,
-    User_Movie_Statuses_Types_Enum
+    Movie_Release_Status_Types_Enum,
+    User_Movie_Status_Types_Enum
 } from '@/generated/graphql';
-import { buildEnumOptions, createOptionSchema, enumToOptions } from '@/utils/enum-to-options';
+import { buildEnumOptions, createOptionSchema } from '@/utils/enum-to-options';
+
+import { CheckCircle, List, Loader, LucideIcon, X } from 'lucide-react';
 
 // Movie Release Status
-export const movieReleaseStatusLabels: Record<Movie_Release_Statuses_Enum, string> = {
-    [Movie_Release_Statuses_Enum.InProduction]: 'In Production',
-    [Movie_Release_Statuses_Enum.Rumoured]: 'Rumoured',
-    [Movie_Release_Statuses_Enum.Cancelled]: 'Cancelled',
-    [Movie_Release_Statuses_Enum.Released]: 'Released'
+export const movieReleaseStatusLabels: Record<Movie_Release_Status_Types_Enum, string> = {
+    [Movie_Release_Status_Types_Enum.InProduction]: 'In Production',
+    [Movie_Release_Status_Types_Enum.Rumoured]: 'Rumoured',
+    [Movie_Release_Status_Types_Enum.Cancelled]: 'Cancelled',
+    [Movie_Release_Status_Types_Enum.Released]: 'Released'
 };
-export const movieReleaseStatusOptions = buildEnumOptions(Movie_Release_Statuses_Enum, movieReleaseStatusLabels);
+export const movieReleaseStatusOptions = buildEnumOptions(Movie_Release_Status_Types_Enum, movieReleaseStatusLabels);
 
 // Movie Availability
 export const movieAvailabilityLabels: Record<Movie_Availability_Types_Enum, string> = {
@@ -43,4 +45,21 @@ export const movieCertificationOptions = buildEnumOptions(Movie_Certification_Ty
 export const movieCertificationOptionsSchema = createOptionSchema(Movie_Certification_Types_Enum);
 
 // Movie User Status
-export const userMovieStatusOptions = enumToOptions(User_Movie_Statuses_Types_Enum);
+
+export const userMovieStatusLabels: Record<User_Movie_Status_Types_Enum, string> = {
+    [User_Movie_Status_Types_Enum.Watched]: 'Watched',
+    [User_Movie_Status_Types_Enum.Watching]: 'Watching',
+    [User_Movie_Status_Types_Enum.Watchlist]: 'Watchlist',
+    [User_Movie_Status_Types_Enum.Dropped]: 'Dropped'
+};
+export const userMovieStatusIcons: Record<User_Movie_Status_Types_Enum, LucideIcon> = {
+    [User_Movie_Status_Types_Enum.Watched]: CheckCircle,
+    [User_Movie_Status_Types_Enum.Watching]: Loader,
+    [User_Movie_Status_Types_Enum.Watchlist]: List,
+    [User_Movie_Status_Types_Enum.Dropped]: X
+};
+export const userMovieStatusOptions = buildEnumOptions(
+    User_Movie_Status_Types_Enum,
+    userMovieStatusLabels,
+    userMovieStatusIcons
+);

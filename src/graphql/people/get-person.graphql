@@ -23,12 +23,16 @@ query GetPerson(
             id
             credit_type
             details
-            media_id
-            media_type
+            object_id
+            object_type
             role
             movie_credit {
                 title
                 poster
+            }
+            book_credit {
+                title
+                cover
             }
             song_credit {
                 name

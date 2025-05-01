@@ -5,92 +5,79 @@ import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
-import { tmdbMovieImporterService } from '@/services/tmdb/tmdb-movie-importer.service';
-import { tmdbService } from '@/services/tmdb/tmdb.service';
-import type { TMDBMovie, TMDBSearchResponse, TMDBSearchResult } from '@/types/tmdb.type';
+import { openLibraryBookImporterService } from '@/services/openlibrary/openlibrary-book-importer.service';
+import { OpenLibraryDoc, OpenLibraryWork } from '@/types/openlibrary.type';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Loader2, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-dayjs.extend(advancedFormat);
+type BookRow = OpenLibraryDoc & { id: string };
 
-type MovieRow = TMDBSearchResult & { id: string };
-
-export default function TMDBMovieImportTable() {
+export default function OpenLibraryBookImportTable() {
     const [pageIndex, setPageIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
     const debouncedQuery = useDebounce(searchQuery, 500);
 
-    const fetchMovies = useCallback(async (page: number, query: string) => {
-        const res = await tmdbMovieImporterService.search<TMDBSearchResponse>(query, page + 1, 'movie');
+    const fetchBooks = useCallback(async (page: number, query: string) => {
+        const res = await openLibraryBookImporterService.searchBooks(query, page + 1);
         return {
-            data: res?.results.map((m) => ({ ...m, id: m.id.toString() })) ?? [],
-            total: res?.total_results ?? 0
+            data: res?.docs.map((b) => ({ ...b, id: b.key })) ?? [],
+            total: res.numFound
         };
     }, []);
 
     const { data, isLoading, isError, refetch, isFetching } = useQuery({
-        queryKey: ['tmdb-movies', debouncedQuery, pageIndex],
-        queryFn: () => fetchMovies(pageIndex, debouncedQuery),
+        queryKey: ['openlibrary-books', debouncedQuery, pageIndex],
+        queryFn: () => fetchBooks(pageIndex, debouncedQuery),
         enabled: !!debouncedQuery
     });
 
     const importMutation = useMutation({
-        mutationFn: (tmdbMovieId: TMDBMovie['id']) => tmdbMovieImporterService.import(tmdbMovieId),
+        mutationFn: (bookId: OpenLibraryWork['key']) => openLibraryBookImporterService.import(bookId),
         onSuccess: (response) => {
-            if (response === true) toast.success('Movie already exists');
-            else if (response === false) toast.error('Movie not found');
-            else toast.success(`${response.insert_movies_one?.title} imported`);
+            if (response === true) toast.success('Book already exists');
+            else if (response === false) toast.error('Book not found');
+            else toast.success(`${response.insert_books_one?.title} imported`);
         },
         onError: (error: any) => toast.error(error.message)
     });
 
     const handleImport = useCallback(async () => {
         const ids = Object.keys(rowSelection);
+        console.log(ids);
         await Promise.all(ids.map((id) => importMutation.mutateAsync(id)));
         setRowSelection({});
     }, [rowSelection, importMutation]);
 
-    const columns = useMemo<ColumnDef<MovieRow>[]>(
+    const columns = useMemo<ColumnDef<BookRow>[]>(
         () => [
             {
-                id: 'movie',
-                header: 'Movie',
+                id: 'book',
+                header: 'Book',
                 accessorFn: (row) => row,
                 cell: ({ row }) => {
-                    const m = row.original;
-                    const title = m.title || m.original_title;
-                    if (!title || !m.release_date) return null;
+                    const b = row.original;
+                    const title = b.title;
+                    if (!title || !b.author_name) return null;
 
-                    const metadata = (
-                        <div className='flex flex-col'>
-                            <span className='font-medium'>{title}</span>
-                            <span className='text-muted-foreground text-sm'>
-                                {dayjs(m.release_date).format('MMMM Do, YYYY')}
-                            </span>
-                        </div>
-                    );
-
-                    const posterUrl = tmdbService.getPosterImage(m.poster_path ?? '');
-                    return posterUrl ? (
-                        <div className='flex items-center gap-4'>
-                            <ImageWithSkeleton
-                                src={posterUrl}
-                                alt={title}
+                    return (
+                        <div className='flex items-center gap-2'>
+                            {/* <ImageWithSkeleton
+                                src={b.album.images[0]?.url ?? ''}
+                                alt={name}
                                 width={75}
-                                height={112.5}
-                                wrapperClassName='relative h-16 w-12 overflow-hidden rounded-md'
+                                height={75}
+                                wrapperClassName='relative h-16 w-16 overflow-hidden rounded-md'
                                 className='absolute inset-0 h-full w-full object-cover'
-                            />
-                            {metadata}
+                            /> */}
+                            <div className='flex flex-col'>
+                                <span className='truncate font-medium'>{title}</span>
+                                <span className='text-muted-foreground text-sm'>{b.author_name}</span>
+                            </div>
                         </div>
-                    ) : (
-                        metadata
                     );
                 }
             }
@@ -102,7 +89,7 @@ export default function TMDBMovieImportTable() {
         <div className='overflow-x-auto'>
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
-                    placeholder='Search by movie title...'
+                    placeholder='Search by book title...'
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
@@ -142,13 +129,13 @@ export default function TMDBMovieImportTable() {
                 )}
             </div>
 
-            <DataTable<MovieRow>
+            <DataTable<BookRow>
                 columns={columns}
-                data={(data?.data as MovieRow[]) ?? []}
+                data={(data?.data as BookRow[]) ?? []}
                 pageIndex={pageIndex}
                 totalRows={data?.total ?? 0}
-                pageSize={20}
-                pageSizeOptions={[20]}
+                pageSize={100}
+                pageSizeOptions={[100]}
                 rowSelection={rowSelection}
                 isLoading={isLoading || isFetching || importMutation.isPending}
                 onPageChange={setPageIndex}
@@ -160,7 +147,7 @@ export default function TMDBMovieImportTable() {
 
             {isError && (
                 <div className='p-4 text-red-600'>
-                    Error fetching movies.{' '}
+                    Error fetching books.{' '}
                     <Button variant='link' onClick={() => refetch()}>
                         Retry
                     </Button>

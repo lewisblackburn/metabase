@@ -9,7 +9,6 @@ query GetCredits(
         id
         credit_type
         details
-        media_type
         order
         role
         person {

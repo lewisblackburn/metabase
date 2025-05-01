@@ -1,4 +1,4 @@
-import { MEDIA_TYPE } from '@/constants/media.constant';
+import { BUCKET } from '@/constants/media.constant';
 import {
     GetPersonByTmdb_IdDocument,
     GetPersonByTmdb_IdQuery,
@@ -54,7 +54,7 @@ export class TMDBPersonImporterService extends TMDBService {
         if (!person) return false;
 
         const [profileFile] = await Promise.all([
-            FileService.uploadImage(person.profile_path, MEDIA_TYPE.HEADSHOT, this.getProfileImage)
+            FileService.uploadImage(person.profile_path, BUCKET.HEADSHOT, this.getProfileImage)
         ]);
 
         const hasProfile = !!person.profile_path;
@@ -63,7 +63,7 @@ export class TMDBPersonImporterService extends TMDBService {
             ? {
                   data: [
                       {
-                          media_type: MEDIA_TYPE.HEADSHOT,
+                          media_type: BUCKET.HEADSHOT,
                           media_url: profileFile?.url,
                           media_id: profileFile?.id
                       }

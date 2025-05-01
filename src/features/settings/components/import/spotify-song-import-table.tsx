@@ -10,8 +10,6 @@ import { SingleTrackResponse, SpotifySearchResponse } from '@/types/spotify.type
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Loader2, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -148,7 +146,7 @@ export default function SpotifySongImportTable() {
 
             {isError && (
                 <div className='p-4 text-red-600'>
-                    Error fetching movies.{' '}
+                    Error fetching books.{' '}
                     <Button variant='link' onClick={() => refetch()}>
                         Retry
                     </Button>

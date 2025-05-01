@@ -1,4 +1,4 @@
-import { MEDIA_TYPE } from '@/constants/media.constant';
+import { BUCKET } from '@/constants/media.constant';
 import {
     Album_Artists_Arr_Rel_Insert_Input,
     Album_Media_Constraint,
@@ -94,7 +94,7 @@ export class SpotifySongImporterService extends SpotifyService {
         const song = await this.getTrack(spotifySongId);
         if (!song) return false;
 
-        const artworkFile = await FileService.uploadFile(song.album.images[0].url, MEDIA_TYPE.ARTWORK);
+        const artworkFile = await FileService.uploadFile(song.album.images[0].url, BUCKET.ARTWORK);
 
         const payload = await this.save({
             name: song.name,
@@ -117,9 +117,7 @@ export class SpotifySongImporterService extends SpotifyService {
                     spotify_uri: song.album.uri,
                     album_artists: this.buildAlbumArtists(song),
                     album_media: {
-                        data: [
-                            { media_type: MEDIA_TYPE.ARTWORK, media_url: artworkFile?.url, media_id: artworkFile?.id }
-                        ],
+                        data: [{ media_type: BUCKET.ARTWORK, media_url: artworkFile?.url, media_id: artworkFile?.id }],
                         on_conflict: { constraint: Album_Media_Constraint.AlbumMediaPkey }
                     }
                 },

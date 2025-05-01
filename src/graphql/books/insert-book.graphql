@@ -1,0 +1,6 @@
+mutation InsertBook($object: books_insert_input!) {
+    insert_books_one(object: $object) {
+        id
+        title
+    }
+}

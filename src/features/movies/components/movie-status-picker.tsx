@@ -2,8 +2,8 @@
 
 import StatusPickerButton from '@/components/shared/status-picker.button';
 import {
+    User_Movie_Status_Types_Enum,
     User_Movie_Statuses_Constraint,
-    User_Movie_Statuses_Types_Enum,
     User_Movie_Statuses_Update_Column,
     useInsertUserMovieStatusMutation
 } from '@/generated/graphql';
@@ -31,7 +31,7 @@ export default function MovieStatusPicker() {
 
     const initialStatus = movie.user_movie_statuses[0]?.status || undefined;
 
-    const handleStatusChange = async (status: User_Movie_Statuses_Types_Enum | null) => {
+    const handleStatusChange = async (status: User_Movie_Status_Types_Enum | null) => {
         await insertUserMovieStatus({
             object: {
                 movie_id: movie.id,
@@ -49,7 +49,7 @@ export default function MovieStatusPicker() {
     };
 
     return (
-        <StatusPickerButton<User_Movie_Statuses_Types_Enum>
+        <StatusPickerButton<User_Movie_Status_Types_Enum>
             statuses={userMovieStatusOptions}
             size='sm'
             defaultStatus={initialStatus}

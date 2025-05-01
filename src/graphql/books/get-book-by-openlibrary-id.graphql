@@ -1,0 +1,5 @@
+query GetBookByOpenLibrary_ID($openlibrary_id: String) {
+    books(where: { openlibrary_id: { _eq: $openlibrary_id } }) {
+        openlibrary_id
+    }
+}

@@ -10,6 +10,7 @@ import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
 import HeroCardLayout from '@/components/shared/hero-layout';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
+import Collections from '@/features/profile/components/collections/collections';
 import UserActivity from '@/features/profile/components/user-activity';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
@@ -50,7 +51,7 @@ const tabItems = [
 
 const tabContents = {
     activity: { content: <UserActivity /> },
-    collections: { content: 'Your collection is empty.' },
+    collections: { content: <Collections /> },
     lists: { content: "You haven't created any lists yet." },
     reviews: { content: "You haven't written any reviews yet." },
     recommendations: { content: 'No recommendations available.' }
