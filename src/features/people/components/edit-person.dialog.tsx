@@ -8,7 +8,7 @@ import { RootState } from '@/store/store';
 
 import { setActiveItemId } from '../store/person-edit.slice';
 import EditPersonDetails from './edit-person.details';
-import ImportPerson from './import-person';
+import ImportPerson from './import-person-from-tmdb';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EditPersonDialogProps {

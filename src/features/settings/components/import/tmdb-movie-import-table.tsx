@@ -45,7 +45,7 @@ export default function TMDBMovieImportTable() {
         onSuccess: (response) => {
             if (response === true) toast.success('Movie already exists');
             else if (response === false) toast.error('Movie not found');
-            else toast.success(`${response.insert_movies_one?.title} imported`);
+            else toast.success(`${response.insert_movies_one?.title} Imported`);
         },
         onError: (error: any) => toast.error(error.message)
     });

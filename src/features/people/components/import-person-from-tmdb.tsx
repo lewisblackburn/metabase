@@ -35,6 +35,7 @@ export function ImportPersonContent() {
 
     const handleImportPersonFromTMDB = async () => {
         if (person?.tmdb_id) await importPersonFromTMDBMutation.mutate(parseInt(person.tmdb_id));
+        else toast.error('This person does not have a TMDB ID');
     };
 
     return (

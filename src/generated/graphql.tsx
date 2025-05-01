@@ -5027,8 +5027,8 @@ export type Books = {
   id: Scalars['uuid']['output'];
   openlibrary_id?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
+  publish_date?: Maybe<Scalars['date']['output']>;
   read_time?: Maybe<Scalars['Int']['output']>;
-  release_date?: Maybe<Scalars['date']['output']>;
   status?: Maybe<Book_Release_Status_Types_Enum>;
   title: Scalars['String']['output'];
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
@@ -5244,8 +5244,8 @@ export type Books_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   openlibrary_id?: InputMaybe<String_Comparison_Exp>;
   overview?: InputMaybe<String_Comparison_Exp>;
+  publish_date?: InputMaybe<Date_Comparison_Exp>;
   read_time?: InputMaybe<Int_Comparison_Exp>;
-  release_date?: InputMaybe<Date_Comparison_Exp>;
   status?: InputMaybe<Book_Release_Status_Types_Enum_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -5287,8 +5287,8 @@ export type Books_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
+  publish_date?: InputMaybe<Scalars['date']['input']>;
   read_time?: InputMaybe<Scalars['Int']['input']>;
-  release_date?: InputMaybe<Scalars['date']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -5307,8 +5307,8 @@ export type Books_Max_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   openlibrary_id?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
+  publish_date?: Maybe<Scalars['date']['output']>;
   read_time?: Maybe<Scalars['Int']['output']>;
-  release_date?: Maybe<Scalars['date']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
@@ -5324,8 +5324,8 @@ export type Books_Max_Order_By = {
   id?: InputMaybe<Order_By>;
   openlibrary_id?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
+  publish_date?: InputMaybe<Order_By>;
   read_time?: InputMaybe<Order_By>;
-  release_date?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
@@ -5342,8 +5342,8 @@ export type Books_Min_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   openlibrary_id?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
+  publish_date?: Maybe<Scalars['date']['output']>;
   read_time?: Maybe<Scalars['Int']['output']>;
-  release_date?: Maybe<Scalars['date']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
@@ -5359,8 +5359,8 @@ export type Books_Min_Order_By = {
   id?: InputMaybe<Order_By>;
   openlibrary_id?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
+  publish_date?: InputMaybe<Order_By>;
   read_time?: InputMaybe<Order_By>;
-  release_date?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
@@ -5405,8 +5405,8 @@ export type Books_Order_By = {
   id?: InputMaybe<Order_By>;
   openlibrary_id?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
+  publish_date?: InputMaybe<Order_By>;
   read_time?: InputMaybe<Order_By>;
-  release_date?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
@@ -5436,9 +5436,9 @@ export enum Books_Select_Column {
   /** column name */
   Overview = 'overview',
   /** column name */
-  ReadTime = 'read_time',
+  PublishDate = 'publish_date',
   /** column name */
-  ReleaseDate = 'release_date',
+  ReadTime = 'read_time',
   /** column name */
   Status = 'status',
   /** column name */
@@ -5461,8 +5461,8 @@ export type Books_Set_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
+  publish_date?: InputMaybe<Scalars['date']['input']>;
   read_time?: InputMaybe<Scalars['Int']['input']>;
-  release_date?: InputMaybe<Scalars['date']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -5544,8 +5544,8 @@ export type Books_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
+  publish_date?: InputMaybe<Scalars['date']['input']>;
   read_time?: InputMaybe<Scalars['Int']['input']>;
-  release_date?: InputMaybe<Scalars['date']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -5588,9 +5588,9 @@ export enum Books_Update_Column {
   /** column name */
   Overview = 'overview',
   /** column name */
-  ReadTime = 'read_time',
+  PublishDate = 'publish_date',
   /** column name */
-  ReleaseDate = 'release_date',
+  ReadTime = 'read_time',
   /** column name */
   Status = 'status',
   /** column name */

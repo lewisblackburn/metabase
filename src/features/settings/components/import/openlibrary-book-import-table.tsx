@@ -40,7 +40,7 @@ export default function OpenLibraryBookImportTable() {
         onSuccess: (response) => {
             if (response === true) toast.success('Book already exists');
             else if (response === false) toast.error('Book not found');
-            else toast.success(`${response.insert_books_one?.title} imported`);
+            else toast.success(`${response.insert_books_one?.title} Imported`);
         },
         onError: (error: any) => toast.error(error.message)
     });
