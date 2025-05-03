@@ -41,8 +41,6 @@ import { TmdbMovieDetails } from '../../types/tmdb.types';
 import { uploadFile } from '../file.service';
 import { tmdbService } from './tmdb.service';
 
-const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
 const TMDB_RELEASE_STATUS_MAP = {
     Rumored: Movie_Release_Status_Types_Enum.Rumoured,
     Planned: Movie_Release_Status_Types_Enum.Planned,
@@ -81,11 +79,7 @@ export async function importMovieFromTmdb(
     let tmdbMovieData: TmdbMovieDetails;
     try {
         const appendToResponse = 'credits,keywords,images,release_dates,alternative_titles';
-        tmdbMovieData = await tmdbService.getEntity<TmdbMovieDetails>(
-            'movie',
-            tmdbId,
-            `?api_key=${TMDB_API_KEY}&append_to_response=${appendToResponse}`
-        );
+        tmdbMovieData = await tmdbService.getEntity<TmdbMovieDetails>('movie', tmdbId, appendToResponse);
     } catch (error) {
         console.error('Error fetching movie details from TMDB:', error);
         return { message: `Error fetching movie details for TMDB ID ${tmdbId}.` };

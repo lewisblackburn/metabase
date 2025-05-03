@@ -1,3 +1,4 @@
+import booksFilterReducer from '@/features/books/store/books-filter.slice';
 import commandPanelReducer from '@/features/command-panel/store/command-panel.slice';
 import editDialogReducer from '@/features/edit-dailog/store/edit-dialog.slice';
 import movieEditReducer from '@/features/movies/store/movie-edit.slice';
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     movieEdit: movieEditReducer,
     personEdit: personEditReducer,
     moviesFilter: moviesFilterReducer,
+    booksFilter: booksFilterReducer,
     settings: settingsReducer,
     shortcuts: persistReducer(shortcutsPersistConfig, shortcutsReducer)
 });

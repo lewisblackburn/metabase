@@ -1,0 +1,6 @@
+mutation IncrementBookViews($id: uuid!) {
+    update_books_by_pk(pk_columns: { id: $id }, _inc: { view_count: 1 }) {
+        id
+        view_count
+    }
+}

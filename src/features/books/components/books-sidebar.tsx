@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import CheckboxGroupField from '@/components/form/checkbox-group';
@@ -15,41 +15,33 @@ import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
-import {
-    Sheet,
-    SheetContent,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from '@/registry/new-york-v4/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/registry/new-york-v4/ui/sheet';
+import { SheetFooter } from '@/registry/new-york-v4/ui/sheet';
 import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
 import { RootState } from '@/store/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-    movieAvailabilityOptions,
-    movieCertificationOptions,
-    movieReleaseStatusOptions
-} from '../constants/movie-enums';
-import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
-import { resetMoviesFilter, setMoviesFilter } from '../store/movies-filter.slice';
+import { bookAvailabilityOptions, bookReleaseStatusOptions } from '../constants/book-enums';
+import { booksFilterSchema } from '../schemas/books-filter.schema';
+import { BooksFilter } from '../schemas/books-filter.schema';
+import { resetBooksFilter } from '../store/books-filter.slice';
+import { setBooksFilter } from '../store/books-filter.slice';
 import { Tag, TagInput } from 'emblor';
 import { Calendar, Flame, Settings2, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
-export default function MoviesSidebar() {
+export default function BooksSidebar() {
     const [keywords, setKeywords] = useState<Tag[]>([]);
     const [activeKeywordIndex, setActiveKeywordIndex] = useState<number | null>(null);
 
-    const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
+    const booksFilter = useSelector((state: RootState) => state.booksFilter);
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
-    const form = useForm<MoviesFilter>({
-        resolver: zodResolver(moviesFilterSchema),
-        defaultValues: moviesFilter
+    const form = useForm<BooksFilter>({
+        resolver: zodResolver(booksFilterSchema),
+        defaultValues: booksFilter
     });
 
     const { data: genres } = useGetGenresQuery(
@@ -57,29 +49,29 @@ export default function MoviesSidebar() {
             where: {
                 genre_types: {
                     type: {
-                        _eq: Object_Types_Enum.Movie
+                        _eq: Object_Types_Enum.Book
                     }
                 }
             }
         },
         {
-            queryKey: ['movie-genres']
+            queryKey: ['book-genres']
         }
     );
 
     useEffect(() => {
-        form.reset(moviesFilter);
-    }, [moviesFilter, form]);
+        form.reset(booksFilter);
+    }, [booksFilter, form]);
 
-    function onSubmit(values: MoviesFilter) {
-        dispatch(setMoviesFilter(values));
+    function onSubmit(values: BooksFilter) {
+        dispatch(setBooksFilter(values));
         setOpen(false);
         toast.success('Filters Applied');
     }
 
     function onReset() {
         form.reset();
-        dispatch(resetMoviesFilter());
+        dispatch(resetBooksFilter());
         setOpen(false);
         toast.info('Filters Reset');
     }
@@ -108,7 +100,7 @@ export default function MoviesSidebar() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
-                                            <SidebarInput placeholder='Search movies...' {...field} />
+                                            <SidebarInput placeholder='Search books...' {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -129,8 +121,8 @@ export default function MoviesSidebar() {
                                                 options={[
                                                     { value: 'popularity', label: 'Popularity', icon: Flame },
                                                     {
-                                                        value: 'release-date',
-                                                        label: 'Release Date',
+                                                        value: 'publish-date',
+                                                        label: 'Publish Date',
                                                         icon: Calendar
                                                     },
                                                     { value: 'rating', label: 'Rating', icon: Star }
@@ -150,7 +142,7 @@ export default function MoviesSidebar() {
                                 type='multiple'
                                 className='flex w-full flex-col gap-4 px-2 sm:px-4'
                                 defaultValue={['filters']}>
-                                <SidebarAccordionItem id='where-to-watch' title='Where to Watch'>
+                                <SidebarAccordionItem id='where-to-watch' title='Where to Read'>
                                     content
                                 </SidebarAccordionItem>
                                 <SidebarAccordionItem id='filters' title='Filters'>
@@ -166,10 +158,10 @@ export default function MoviesSidebar() {
                                                                 options={[
                                                                     { value: 'everything', label: 'Everything' },
                                                                     {
-                                                                        value: 'not-seen',
-                                                                        label: "Movies I Haven't Seen"
+                                                                        value: 'not-read',
+                                                                        label: "Books I Haven't Read"
                                                                     },
-                                                                    { value: 'seen', label: 'Movies I Have Seen' }
+                                                                    { value: 'read', label: 'Books I Have Read' }
                                                                 ]}
                                                                 {...field}
                                                             />
@@ -187,7 +179,7 @@ export default function MoviesSidebar() {
                                                     <FormItem>
                                                         <BaseFormLayout label='Availabilities'>
                                                             <CheckboxGroupField
-                                                                options={movieAvailabilityOptions}
+                                                                options={bookAvailabilityOptions}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
@@ -199,10 +191,10 @@ export default function MoviesSidebar() {
                                         <FilterSection>
                                             <FormField
                                                 control={form.control}
-                                                name='releaseDates'
+                                                name='publishDates'
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <BaseFormLayout label='Release Dates'>
+                                                        <BaseFormLayout label='Publish Dates'>
                                                             <DateRangePickerField
                                                                 placeholder='Pick a date'
                                                                 modal
@@ -239,29 +231,12 @@ export default function MoviesSidebar() {
                                         <FilterSection>
                                             <FormField
                                                 control={form.control}
-                                                name='certifications'
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Certifications'>
-                                                            <CheckboxGroupField
-                                                                options={movieCertificationOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </FilterSection>
-
-                                        <FilterSection>
-                                            <FormField
-                                                control={form.control}
                                                 name='statuses'
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <BaseFormLayout label='Statuses'>
                                                             <CheckboxGroupField
-                                                                options={movieReleaseStatusOptions}
+                                                                options={bookReleaseStatusOptions}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>
@@ -320,10 +295,10 @@ export default function MoviesSidebar() {
                                         <FilterSection>
                                             <FormField
                                                 control={form.control}
-                                                name='runtime'
+                                                name='readingTime'
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <BaseFormLayout label='Runtime'>
+                                                        <BaseFormLayout label='Reading Time'>
                                                             <TooltipSliderField min={0} max={400} {...field} />
                                                         </BaseFormLayout>
                                                     </FormItem>

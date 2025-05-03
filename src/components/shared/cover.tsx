@@ -2,12 +2,12 @@ import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
 import ImageWithSkeleton from './image-with-skeleton';
 
-type PosterProps = {
+type CoverProps = {
     title: string;
     image: string;
 };
 
-export default function Poster({ title, image }: PosterProps) {
+export default function Cover({ title, image }: CoverProps) {
     return (
         <ImageWithSkeleton
             src={image}
@@ -20,7 +20,7 @@ export default function Poster({ title, image }: PosterProps) {
         />
     );
 }
-export function PosterSkeleton() {
+export function CoverSkeleton() {
     return (
         <div className='aspect-[2/3] w-full'>
             <Skeleton className='h-full w-full rounded-lg' />

@@ -9,8 +9,8 @@ import Grid from '@/components/shared/grid';
 import Poster from '@/components/shared/poster';
 import { MAX_LIMIT } from '@/constants/api.constant';
 import MoviesSidebar from '@/features/movies/components/movies-sidebar';
-import { useIncrementMovieViews } from '@/features/movies/hooks/useIncrementMovieViews';
-import { useMovieFilters } from '@/features/movies/hooks/useMovieFilters';
+import { useIncrementMovieViews } from '@/features/movies/hooks/use-increment-movie-views';
+import { useMovieFilters } from '@/features/movies/hooks/use-movie-filters';
 import { GetMoviesQuery, useInfiniteGetMoviesQuery } from '@/generated/graphql';
 
 import { useInView } from 'react-intersection-observer';

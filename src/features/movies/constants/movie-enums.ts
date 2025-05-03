@@ -13,7 +13,9 @@ export const movieReleaseStatusLabels: Record<Movie_Release_Status_Types_Enum, s
     [Movie_Release_Status_Types_Enum.InProduction]: 'In Production',
     [Movie_Release_Status_Types_Enum.Rumoured]: 'Rumoured',
     [Movie_Release_Status_Types_Enum.Cancelled]: 'Cancelled',
-    [Movie_Release_Status_Types_Enum.Released]: 'Released'
+    [Movie_Release_Status_Types_Enum.Released]: 'Released',
+    [Movie_Release_Status_Types_Enum.PostProduction]: 'Post Production',
+    [Movie_Release_Status_Types_Enum.Planned]: 'Planned'
 };
 export const movieReleaseStatusOptions = buildEnumOptions(Movie_Release_Status_Types_Enum, movieReleaseStatusLabels);
 

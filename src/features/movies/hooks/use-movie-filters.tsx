@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { orderEnumMap } from '@/constants/misc.constant';
 import {
     GetMoviesQueryVariables,
     InputMaybe,
@@ -15,11 +16,6 @@ const orderByFieldMap = {
     popularity: 'view_count',
     'release-date': 'release_date',
     rating: 'average_rating'
-} as const;
-
-const orderEnumMap = {
-    asc: Order_By.Asc,
-    desc: Order_By.Desc
 } as const;
 
 export function useMovieFilters(): {
@@ -113,7 +109,7 @@ export function useMovieFilters(): {
         }
 
         if (userScore) {
-            clauses.push({ average_rating: { _gte: userScore[0], _lte: userScore[1] } });
+            clauses.push({ vote_average: { _gte: userScore[0], _lte: userScore[1] } });
         }
 
         if (minVotes) {

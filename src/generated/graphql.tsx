@@ -4607,7 +4607,7 @@ export type Books = {
   /** An aggregate relationship */
   book_alternative_titles_aggregate: Book_Alternative_Titles_Aggregate;
   /** An object relationship */
-  book_availability?: Maybe<Book_Availabilities>;
+  book_availabilities?: Maybe<Book_Availabilities>;
   /** An array relationship */
   book_genres: Array<Book_Genres>;
   /** An aggregate relationship */
@@ -4631,9 +4631,10 @@ export type Books = {
   credits_aggregate: Credits_Aggregate;
   googlebooks_id?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
+  language?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
   publish_date?: Maybe<Scalars['date']['output']>;
-  read_time?: Maybe<Scalars['Int']['output']>;
+  reading_time?: Maybe<Scalars['Int']['output']>;
   status?: Maybe<Book_Release_Status_Types_Enum>;
   title: Scalars['String']['output'];
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
@@ -4833,7 +4834,7 @@ export type Books_Arr_Rel_Insert_Input = {
 export type Books_Avg_Fields = {
   __typename?: 'books_avg_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Float']['output']>;
+  reading_time?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
@@ -4842,7 +4843,7 @@ export type Books_Avg_Fields = {
 /** order by avg() on columns of table "books" */
 export type Books_Avg_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -4855,7 +4856,7 @@ export type Books_Bool_Exp = {
   _or?: InputMaybe<Array<Books_Bool_Exp>>;
   book_alternative_titles?: InputMaybe<Book_Alternative_Titles_Bool_Exp>;
   book_alternative_titles_aggregate?: InputMaybe<Book_Alternative_Titles_Aggregate_Bool_Exp>;
-  book_availability?: InputMaybe<Book_Availabilities_Bool_Exp>;
+  book_availabilities?: InputMaybe<Book_Availabilities_Bool_Exp>;
   book_genres?: InputMaybe<Book_Genres_Bool_Exp>;
   book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Bool_Exp>;
   book_keywords?: InputMaybe<Book_Keywords_Bool_Exp>;
@@ -4870,9 +4871,10 @@ export type Books_Bool_Exp = {
   credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
   googlebooks_id?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  language?: InputMaybe<String_Comparison_Exp>;
   overview?: InputMaybe<String_Comparison_Exp>;
   publish_date?: InputMaybe<Date_Comparison_Exp>;
-  read_time?: InputMaybe<Int_Comparison_Exp>;
+  reading_time?: InputMaybe<Int_Comparison_Exp>;
   status?: InputMaybe<Book_Release_Status_Types_Enum_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -4894,7 +4896,7 @@ export enum Books_Constraint {
 /** input type for incrementing numeric columns in table "books" */
 export type Books_Inc_Input = {
   content_score?: InputMaybe<Scalars['Float']['input']>;
-  read_time?: InputMaybe<Scalars['Int']['input']>;
+  reading_time?: InputMaybe<Scalars['Int']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
   vote_count?: InputMaybe<Scalars['Int']['input']>;
@@ -4903,7 +4905,7 @@ export type Books_Inc_Input = {
 /** input type for inserting data into table "books" */
 export type Books_Insert_Input = {
   book_alternative_titles?: InputMaybe<Book_Alternative_Titles_Arr_Rel_Insert_Input>;
-  book_availability?: InputMaybe<Book_Availabilities_Obj_Rel_Insert_Input>;
+  book_availabilities?: InputMaybe<Book_Availabilities_Obj_Rel_Insert_Input>;
   book_genres?: InputMaybe<Book_Genres_Arr_Rel_Insert_Input>;
   book_keywords?: InputMaybe<Book_Keywords_Arr_Rel_Insert_Input>;
   book_media?: InputMaybe<Book_Media_Arr_Rel_Insert_Input>;
@@ -4914,9 +4916,10 @@ export type Books_Insert_Input = {
   credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
   googlebooks_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
   publish_date?: InputMaybe<Scalars['date']['input']>;
-  read_time?: InputMaybe<Scalars['Int']['input']>;
+  reading_time?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -4934,9 +4937,10 @@ export type Books_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   googlebooks_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  language?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
   publish_date?: Maybe<Scalars['date']['output']>;
-  read_time?: Maybe<Scalars['Int']['output']>;
+  reading_time?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
@@ -4951,9 +4955,10 @@ export type Books_Max_Order_By = {
   created_at?: InputMaybe<Order_By>;
   googlebooks_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   publish_date?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
@@ -4969,9 +4974,10 @@ export type Books_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   googlebooks_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  language?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
   publish_date?: Maybe<Scalars['date']['output']>;
-  read_time?: Maybe<Scalars['Int']['output']>;
+  reading_time?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
@@ -4986,9 +4992,10 @@ export type Books_Min_Order_By = {
   created_at?: InputMaybe<Order_By>;
   googlebooks_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   publish_date?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
@@ -5022,7 +5029,7 @@ export type Books_On_Conflict = {
 /** Ordering options when selecting data from "books". */
 export type Books_Order_By = {
   book_alternative_titles_aggregate?: InputMaybe<Book_Alternative_Titles_Aggregate_Order_By>;
-  book_availability?: InputMaybe<Book_Availabilities_Order_By>;
+  book_availabilities?: InputMaybe<Book_Availabilities_Order_By>;
   book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Order_By>;
   book_keywords_aggregate?: InputMaybe<Book_Keywords_Aggregate_Order_By>;
   book_media_aggregate?: InputMaybe<Book_Media_Aggregate_Order_By>;
@@ -5033,9 +5040,10 @@ export type Books_Order_By = {
   credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
   googlebooks_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   publish_date?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
@@ -5063,11 +5071,13 @@ export enum Books_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Language = 'language',
+  /** column name */
   Overview = 'overview',
   /** column name */
   PublishDate = 'publish_date',
   /** column name */
-  ReadTime = 'read_time',
+  ReadingTime = 'reading_time',
   /** column name */
   Status = 'status',
   /** column name */
@@ -5089,9 +5099,10 @@ export type Books_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   googlebooks_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
   publish_date?: InputMaybe<Scalars['date']['input']>;
-  read_time?: InputMaybe<Scalars['Int']['input']>;
+  reading_time?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -5104,7 +5115,7 @@ export type Books_Set_Input = {
 export type Books_Stddev_Fields = {
   __typename?: 'books_stddev_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Float']['output']>;
+  reading_time?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
@@ -5113,7 +5124,7 @@ export type Books_Stddev_Fields = {
 /** order by stddev() on columns of table "books" */
 export type Books_Stddev_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -5123,7 +5134,7 @@ export type Books_Stddev_Order_By = {
 export type Books_Stddev_Pop_Fields = {
   __typename?: 'books_stddev_pop_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Float']['output']>;
+  reading_time?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
@@ -5132,7 +5143,7 @@ export type Books_Stddev_Pop_Fields = {
 /** order by stddev_pop() on columns of table "books" */
 export type Books_Stddev_Pop_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -5142,7 +5153,7 @@ export type Books_Stddev_Pop_Order_By = {
 export type Books_Stddev_Samp_Fields = {
   __typename?: 'books_stddev_samp_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Float']['output']>;
+  reading_time?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
@@ -5151,7 +5162,7 @@ export type Books_Stddev_Samp_Fields = {
 /** order by stddev_samp() on columns of table "books" */
 export type Books_Stddev_Samp_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -5172,9 +5183,10 @@ export type Books_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   googlebooks_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
   publish_date?: InputMaybe<Scalars['date']['input']>;
-  read_time?: InputMaybe<Scalars['Int']['input']>;
+  reading_time?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -5187,7 +5199,7 @@ export type Books_Stream_Cursor_Value_Input = {
 export type Books_Sum_Fields = {
   __typename?: 'books_sum_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Int']['output']>;
+  reading_time?: Maybe<Scalars['Int']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Int']['output']>;
@@ -5196,7 +5208,7 @@ export type Books_Sum_Fields = {
 /** order by sum() on columns of table "books" */
 export type Books_Sum_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -5215,11 +5227,13 @@ export enum Books_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Language = 'language',
+  /** column name */
   Overview = 'overview',
   /** column name */
   PublishDate = 'publish_date',
   /** column name */
-  ReadTime = 'read_time',
+  ReadingTime = 'reading_time',
   /** column name */
   Status = 'status',
   /** column name */
@@ -5247,7 +5261,7 @@ export type Books_Updates = {
 export type Books_Var_Pop_Fields = {
   __typename?: 'books_var_pop_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Float']['output']>;
+  reading_time?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
@@ -5256,7 +5270,7 @@ export type Books_Var_Pop_Fields = {
 /** order by var_pop() on columns of table "books" */
 export type Books_Var_Pop_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -5266,7 +5280,7 @@ export type Books_Var_Pop_Order_By = {
 export type Books_Var_Samp_Fields = {
   __typename?: 'books_var_samp_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Float']['output']>;
+  reading_time?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
@@ -5275,7 +5289,7 @@ export type Books_Var_Samp_Fields = {
 /** order by var_samp() on columns of table "books" */
 export type Books_Var_Samp_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -5285,7 +5299,7 @@ export type Books_Var_Samp_Order_By = {
 export type Books_Variance_Fields = {
   __typename?: 'books_variance_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
-  read_time?: Maybe<Scalars['Float']['output']>;
+  reading_time?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Float']['output']>;
@@ -5294,7 +5308,7 @@ export type Books_Variance_Fields = {
 /** order by variance() on columns of table "books" */
 export type Books_Variance_Order_By = {
   content_score?: InputMaybe<Order_By>;
-  read_time?: InputMaybe<Order_By>;
+  reading_time?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -11124,10 +11138,6 @@ export type Mutation_Root = {
   delete_people?: Maybe<People_Mutation_Response>;
   /** delete single row from the table: "people" */
   delete_people_by_pk?: Maybe<People>;
-  /** delete data from the table: "person_changes" */
-  delete_person_changes?: Maybe<Person_Changes_Mutation_Response>;
-  /** delete single row from the table: "person_changes" */
-  delete_person_changes_by_pk?: Maybe<Person_Changes>;
   /** delete data from the table: "person_media" */
   delete_person_media?: Maybe<Person_Media_Mutation_Response>;
   /** delete single row from the table: "person_media" */
@@ -11140,10 +11150,6 @@ export type Mutation_Root = {
   delete_reports?: Maybe<Reports_Mutation_Response>;
   /** delete single row from the table: "reports" */
   delete_reports_by_pk?: Maybe<Reports>;
-  /** delete data from the table: "song_changes" */
-  delete_song_changes?: Maybe<Song_Changes_Mutation_Response>;
-  /** delete single row from the table: "song_changes" */
-  delete_song_changes_by_pk?: Maybe<Song_Changes>;
   /** delete data from the table: "song_genres" */
   delete_song_genres?: Maybe<Song_Genres_Mutation_Response>;
   /** delete single row from the table: "song_genres" */
@@ -11368,10 +11374,6 @@ export type Mutation_Root = {
   insert_people?: Maybe<People_Mutation_Response>;
   /** insert a single row into the table: "people" */
   insert_people_one?: Maybe<People>;
-  /** insert data into the table: "person_changes" */
-  insert_person_changes?: Maybe<Person_Changes_Mutation_Response>;
-  /** insert a single row into the table: "person_changes" */
-  insert_person_changes_one?: Maybe<Person_Changes>;
   /** insert data into the table: "person_media" */
   insert_person_media?: Maybe<Person_Media_Mutation_Response>;
   /** insert a single row into the table: "person_media" */
@@ -11384,10 +11386,6 @@ export type Mutation_Root = {
   insert_reports?: Maybe<Reports_Mutation_Response>;
   /** insert a single row into the table: "reports" */
   insert_reports_one?: Maybe<Reports>;
-  /** insert data into the table: "song_changes" */
-  insert_song_changes?: Maybe<Song_Changes_Mutation_Response>;
-  /** insert a single row into the table: "song_changes" */
-  insert_song_changes_one?: Maybe<Song_Changes>;
   /** insert data into the table: "song_genres" */
   insert_song_genres?: Maybe<Song_Genres_Mutation_Response>;
   /** insert a single row into the table: "song_genres" */
@@ -11702,12 +11700,6 @@ export type Mutation_Root = {
   update_people_by_pk?: Maybe<People>;
   /** update multiples rows of table: "people" */
   update_people_many?: Maybe<Array<Maybe<People_Mutation_Response>>>;
-  /** update data of the table: "person_changes" */
-  update_person_changes?: Maybe<Person_Changes_Mutation_Response>;
-  /** update single row of the table: "person_changes" */
-  update_person_changes_by_pk?: Maybe<Person_Changes>;
-  /** update multiples rows of table: "person_changes" */
-  update_person_changes_many?: Maybe<Array<Maybe<Person_Changes_Mutation_Response>>>;
   /** update data of the table: "person_media" */
   update_person_media?: Maybe<Person_Media_Mutation_Response>;
   /** update single row of the table: "person_media" */
@@ -11726,12 +11718,6 @@ export type Mutation_Root = {
   update_reports_by_pk?: Maybe<Reports>;
   /** update multiples rows of table: "reports" */
   update_reports_many?: Maybe<Array<Maybe<Reports_Mutation_Response>>>;
-  /** update data of the table: "song_changes" */
-  update_song_changes?: Maybe<Song_Changes_Mutation_Response>;
-  /** update single row of the table: "song_changes" */
-  update_song_changes_by_pk?: Maybe<Song_Changes>;
-  /** update multiples rows of table: "song_changes" */
-  update_song_changes_many?: Maybe<Array<Maybe<Song_Changes_Mutation_Response>>>;
   /** update data of the table: "song_genres" */
   update_song_genres?: Maybe<Song_Genres_Mutation_Response>;
   /** update single row of the table: "song_genres" */
@@ -12367,18 +12353,6 @@ export type Mutation_RootDelete_People_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Person_ChangesArgs = {
-  where: Person_Changes_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Person_Changes_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_Person_MediaArgs = {
   where: Person_Media_Bool_Exp;
 };
@@ -12411,18 +12385,6 @@ export type Mutation_RootDelete_ReportsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Reports_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Song_ChangesArgs = {
-  where: Song_Changes_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Song_Changes_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -13198,20 +13160,6 @@ export type Mutation_RootInsert_People_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Person_ChangesArgs = {
-  objects: Array<Person_Changes_Insert_Input>;
-  on_conflict?: InputMaybe<Person_Changes_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Person_Changes_OneArgs = {
-  object: Person_Changes_Insert_Input;
-  on_conflict?: InputMaybe<Person_Changes_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_Person_MediaArgs = {
   objects: Array<Person_Media_Insert_Input>;
   on_conflict?: InputMaybe<Person_Media_On_Conflict>;
@@ -13250,20 +13198,6 @@ export type Mutation_RootInsert_ReportsArgs = {
 export type Mutation_RootInsert_Reports_OneArgs = {
   object: Reports_Insert_Input;
   on_conflict?: InputMaybe<Reports_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Song_ChangesArgs = {
-  objects: Array<Song_Changes_Insert_Input>;
-  on_conflict?: InputMaybe<Song_Changes_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Song_Changes_OneArgs = {
-  object: Song_Changes_Insert_Input;
-  on_conflict?: InputMaybe<Song_Changes_On_Conflict>;
 };
 
 
@@ -14410,26 +14344,6 @@ export type Mutation_RootUpdate_People_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Person_ChangesArgs = {
-  _set?: InputMaybe<Person_Changes_Set_Input>;
-  where: Person_Changes_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Person_Changes_By_PkArgs = {
-  _set?: InputMaybe<Person_Changes_Set_Input>;
-  pk_columns: Person_Changes_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Person_Changes_ManyArgs = {
-  updates: Array<Person_Changes_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Person_MediaArgs = {
   _set?: InputMaybe<Person_Media_Set_Input>;
   where: Person_Media_Bool_Exp;
@@ -14488,26 +14402,6 @@ export type Mutation_RootUpdate_Reports_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Reports_ManyArgs = {
   updates: Array<Reports_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Song_ChangesArgs = {
-  _set?: InputMaybe<Song_Changes_Set_Input>;
-  where: Song_Changes_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Song_Changes_By_PkArgs = {
-  _set?: InputMaybe<Song_Changes_Set_Input>;
-  pk_columns: Song_Changes_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Song_Changes_ManyArgs = {
-  updates: Array<Song_Changes_Updates>;
 };
 
 
@@ -15178,10 +15072,6 @@ export type People = {
   known_for_role?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   /** An array relationship */
-  person_changes: Array<Person_Changes>;
-  /** An aggregate relationship */
-  person_changes_aggregate: Person_Changes_Aggregate;
-  /** An array relationship */
   person_media: Array<Person_Media>;
   /** An aggregate relationship */
   person_media_aggregate: Person_Media_Aggregate;
@@ -15208,26 +15098,6 @@ export type PeopleCredits_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Credits_Order_By>>;
   where?: InputMaybe<Credits_Bool_Exp>;
-};
-
-
-/** columns and relationships of "people" */
-export type PeoplePerson_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-
-/** columns and relationships of "people" */
-export type PeoplePerson_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
 };
 
 
@@ -15346,8 +15216,6 @@ export type People_Bool_Exp = {
   known_for_department?: InputMaybe<String_Comparison_Exp>;
   known_for_role?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
-  person_changes?: InputMaybe<Person_Changes_Bool_Exp>;
-  person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Bool_Exp>;
   person_media?: InputMaybe<Person_Media_Bool_Exp>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Bool_Exp>;
   spotify_id?: InputMaybe<String_Comparison_Exp>;
@@ -15385,7 +15253,6 @@ export type People_Insert_Input = {
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  person_changes?: InputMaybe<Person_Changes_Arr_Rel_Insert_Input>;
   person_media?: InputMaybe<Person_Media_Arr_Rel_Insert_Input>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -15505,7 +15372,6 @@ export type People_Order_By = {
   known_for_department?: InputMaybe<Order_By>;
   known_for_role?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
-  person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Order_By>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Order_By>;
   spotify_id?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
@@ -15717,229 +15583,6 @@ export type People_Variance_Fields = {
 export type People_Variance_Order_By = {
   content_score?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
-};
-
-/** columns and relationships of "person_changes" */
-export type Person_Changes = {
-  __typename?: 'person_changes';
-  change_description?: Maybe<Scalars['String']['output']>;
-  changed_at?: Maybe<Scalars['timestamp']['output']>;
-  id: Scalars['uuid']['output'];
-  /** An object relationship */
-  person: People;
-  person_id: Scalars['uuid']['output'];
-  /** An object relationship */
-  user: Users;
-  user_id: Scalars['uuid']['output'];
-};
-
-/** aggregated selection of "person_changes" */
-export type Person_Changes_Aggregate = {
-  __typename?: 'person_changes_aggregate';
-  aggregate?: Maybe<Person_Changes_Aggregate_Fields>;
-  nodes: Array<Person_Changes>;
-};
-
-export type Person_Changes_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Person_Changes_Aggregate_Bool_Exp_Count>;
-};
-
-export type Person_Changes_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Person_Changes_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "person_changes" */
-export type Person_Changes_Aggregate_Fields = {
-  __typename?: 'person_changes_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Person_Changes_Max_Fields>;
-  min?: Maybe<Person_Changes_Min_Fields>;
-};
-
-
-/** aggregate fields of "person_changes" */
-export type Person_Changes_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "person_changes" */
-export type Person_Changes_Aggregate_Order_By = {
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Person_Changes_Max_Order_By>;
-  min?: InputMaybe<Person_Changes_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "person_changes" */
-export type Person_Changes_Arr_Rel_Insert_Input = {
-  data: Array<Person_Changes_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Person_Changes_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "person_changes". All fields are combined with a logical 'AND'. */
-export type Person_Changes_Bool_Exp = {
-  _and?: InputMaybe<Array<Person_Changes_Bool_Exp>>;
-  _not?: InputMaybe<Person_Changes_Bool_Exp>;
-  _or?: InputMaybe<Array<Person_Changes_Bool_Exp>>;
-  change_description?: InputMaybe<String_Comparison_Exp>;
-  changed_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  person?: InputMaybe<People_Bool_Exp>;
-  person_id?: InputMaybe<Uuid_Comparison_Exp>;
-  user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "person_changes" */
-export enum Person_Changes_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  PersonChangesPkey = 'person_changes_pkey'
-}
-
-/** input type for inserting data into table "person_changes" */
-export type Person_Changes_Insert_Input = {
-  change_description?: InputMaybe<Scalars['String']['input']>;
-  changed_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  person?: InputMaybe<People_Obj_Rel_Insert_Input>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate max on columns */
-export type Person_Changes_Max_Fields = {
-  __typename?: 'person_changes_max_fields';
-  change_description?: Maybe<Scalars['String']['output']>;
-  changed_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  person_id?: Maybe<Scalars['uuid']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by max() on columns of table "person_changes" */
-export type Person_Changes_Max_Order_By = {
-  change_description?: InputMaybe<Order_By>;
-  changed_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Person_Changes_Min_Fields = {
-  __typename?: 'person_changes_min_fields';
-  change_description?: Maybe<Scalars['String']['output']>;
-  changed_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  person_id?: Maybe<Scalars['uuid']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by min() on columns of table "person_changes" */
-export type Person_Changes_Min_Order_By = {
-  change_description?: InputMaybe<Order_By>;
-  changed_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "person_changes" */
-export type Person_Changes_Mutation_Response = {
-  __typename?: 'person_changes_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Person_Changes>;
-};
-
-/** on_conflict condition type for table "person_changes" */
-export type Person_Changes_On_Conflict = {
-  constraint: Person_Changes_Constraint;
-  update_columns?: Array<Person_Changes_Update_Column>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "person_changes". */
-export type Person_Changes_Order_By = {
-  change_description?: InputMaybe<Order_By>;
-  changed_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  person?: InputMaybe<People_Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  user?: InputMaybe<Users_Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: person_changes */
-export type Person_Changes_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "person_changes" */
-export enum Person_Changes_Select_Column {
-  /** column name */
-  ChangeDescription = 'change_description',
-  /** column name */
-  ChangedAt = 'changed_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  UserId = 'user_id'
-}
-
-/** input type for updating data in table "person_changes" */
-export type Person_Changes_Set_Input = {
-  change_description?: InputMaybe<Scalars['String']['input']>;
-  changed_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** Streaming cursor of the table "person_changes" */
-export type Person_Changes_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Person_Changes_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Person_Changes_Stream_Cursor_Value_Input = {
-  change_description?: InputMaybe<Scalars['String']['input']>;
-  changed_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** update columns of table "person_changes" */
-export enum Person_Changes_Update_Column {
-  /** column name */
-  ChangeDescription = 'change_description',
-  /** column name */
-  ChangedAt = 'changed_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  UserId = 'user_id'
-}
-
-export type Person_Changes_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Person_Changes_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Person_Changes_Bool_Exp;
 };
 
 /** columns and relationships of "person_media" */
@@ -16397,12 +16040,6 @@ export type Query_Root = {
   /** fetch data from the table: "people" using primary key columns */
   people_by_pk?: Maybe<People>;
   /** An array relationship */
-  person_changes: Array<Person_Changes>;
-  /** An aggregate relationship */
-  person_changes_aggregate: Person_Changes_Aggregate;
-  /** fetch data from the table: "person_changes" using primary key columns */
-  person_changes_by_pk?: Maybe<Person_Changes>;
-  /** An array relationship */
   person_media: Array<Person_Media>;
   /** An aggregate relationship */
   person_media_aggregate: Person_Media_Aggregate;
@@ -16420,12 +16057,6 @@ export type Query_Root = {
   reports_aggregate: Reports_Aggregate;
   /** fetch data from the table: "reports" using primary key columns */
   reports_by_pk?: Maybe<Reports>;
-  /** An array relationship */
-  song_changes: Array<Song_Changes>;
-  /** An aggregate relationship */
-  song_changes_aggregate: Song_Changes_Aggregate;
-  /** fetch data from the table: "song_changes" using primary key columns */
-  song_changes_by_pk?: Maybe<Song_Changes>;
   /** An array relationship */
   song_genres: Array<Song_Genres>;
   /** An aggregate relationship */
@@ -17539,29 +17170,6 @@ export type Query_RootPeople_By_PkArgs = {
 };
 
 
-export type Query_RootPerson_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-
-export type Query_RootPerson_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-
-export type Query_RootPerson_Changes_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
 export type Query_RootPerson_MediaArgs = {
   distinct_on?: InputMaybe<Array<Person_Media_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -17628,29 +17236,6 @@ export type Query_RootReports_AggregateArgs = {
 
 
 export type Query_RootReports_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootSong_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
-};
-
-
-export type Query_RootSong_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
-};
-
-
-export type Query_RootSong_Changes_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -18527,229 +18112,6 @@ export type Smallint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['smallint']['input']>>;
 };
 
-/** columns and relationships of "song_changes" */
-export type Song_Changes = {
-  __typename?: 'song_changes';
-  change_description?: Maybe<Scalars['String']['output']>;
-  changed_at?: Maybe<Scalars['timestamp']['output']>;
-  id: Scalars['uuid']['output'];
-  /** An object relationship */
-  song: Songs;
-  song_id: Scalars['uuid']['output'];
-  /** An object relationship */
-  user: Users;
-  user_id: Scalars['uuid']['output'];
-};
-
-/** aggregated selection of "song_changes" */
-export type Song_Changes_Aggregate = {
-  __typename?: 'song_changes_aggregate';
-  aggregate?: Maybe<Song_Changes_Aggregate_Fields>;
-  nodes: Array<Song_Changes>;
-};
-
-export type Song_Changes_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Song_Changes_Aggregate_Bool_Exp_Count>;
-};
-
-export type Song_Changes_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Song_Changes_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "song_changes" */
-export type Song_Changes_Aggregate_Fields = {
-  __typename?: 'song_changes_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Song_Changes_Max_Fields>;
-  min?: Maybe<Song_Changes_Min_Fields>;
-};
-
-
-/** aggregate fields of "song_changes" */
-export type Song_Changes_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "song_changes" */
-export type Song_Changes_Aggregate_Order_By = {
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Song_Changes_Max_Order_By>;
-  min?: InputMaybe<Song_Changes_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "song_changes" */
-export type Song_Changes_Arr_Rel_Insert_Input = {
-  data: Array<Song_Changes_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Song_Changes_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "song_changes". All fields are combined with a logical 'AND'. */
-export type Song_Changes_Bool_Exp = {
-  _and?: InputMaybe<Array<Song_Changes_Bool_Exp>>;
-  _not?: InputMaybe<Song_Changes_Bool_Exp>;
-  _or?: InputMaybe<Array<Song_Changes_Bool_Exp>>;
-  change_description?: InputMaybe<String_Comparison_Exp>;
-  changed_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  song?: InputMaybe<Songs_Bool_Exp>;
-  song_id?: InputMaybe<Uuid_Comparison_Exp>;
-  user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "song_changes" */
-export enum Song_Changes_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  SongChangesPkey = 'song_changes_pkey'
-}
-
-/** input type for inserting data into table "song_changes" */
-export type Song_Changes_Insert_Input = {
-  change_description?: InputMaybe<Scalars['String']['input']>;
-  changed_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  song?: InputMaybe<Songs_Obj_Rel_Insert_Input>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate max on columns */
-export type Song_Changes_Max_Fields = {
-  __typename?: 'song_changes_max_fields';
-  change_description?: Maybe<Scalars['String']['output']>;
-  changed_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  song_id?: Maybe<Scalars['uuid']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by max() on columns of table "song_changes" */
-export type Song_Changes_Max_Order_By = {
-  change_description?: InputMaybe<Order_By>;
-  changed_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  song_id?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Song_Changes_Min_Fields = {
-  __typename?: 'song_changes_min_fields';
-  change_description?: Maybe<Scalars['String']['output']>;
-  changed_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  song_id?: Maybe<Scalars['uuid']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by min() on columns of table "song_changes" */
-export type Song_Changes_Min_Order_By = {
-  change_description?: InputMaybe<Order_By>;
-  changed_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  song_id?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "song_changes" */
-export type Song_Changes_Mutation_Response = {
-  __typename?: 'song_changes_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Song_Changes>;
-};
-
-/** on_conflict condition type for table "song_changes" */
-export type Song_Changes_On_Conflict = {
-  constraint: Song_Changes_Constraint;
-  update_columns?: Array<Song_Changes_Update_Column>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "song_changes". */
-export type Song_Changes_Order_By = {
-  change_description?: InputMaybe<Order_By>;
-  changed_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  song?: InputMaybe<Songs_Order_By>;
-  song_id?: InputMaybe<Order_By>;
-  user?: InputMaybe<Users_Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: song_changes */
-export type Song_Changes_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "song_changes" */
-export enum Song_Changes_Select_Column {
-  /** column name */
-  ChangeDescription = 'change_description',
-  /** column name */
-  ChangedAt = 'changed_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  SongId = 'song_id',
-  /** column name */
-  UserId = 'user_id'
-}
-
-/** input type for updating data in table "song_changes" */
-export type Song_Changes_Set_Input = {
-  change_description?: InputMaybe<Scalars['String']['input']>;
-  changed_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** Streaming cursor of the table "song_changes" */
-export type Song_Changes_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Song_Changes_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Song_Changes_Stream_Cursor_Value_Input = {
-  change_description?: InputMaybe<Scalars['String']['input']>;
-  changed_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** update columns of table "song_changes" */
-export enum Song_Changes_Update_Column {
-  /** column name */
-  ChangeDescription = 'change_description',
-  /** column name */
-  ChangedAt = 'changed_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  SongId = 'song_id',
-  /** column name */
-  UserId = 'user_id'
-}
-
-export type Song_Changes_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Song_Changes_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Song_Changes_Bool_Exp;
-};
-
 /** columns and relationships of "song_genres" */
 export type Song_Genres = {
   __typename?: 'song_genres';
@@ -19137,10 +18499,6 @@ export type Songs = {
   movie_soundtracks_aggregate: Movie_Soundtrack_Aggregate;
   name: Scalars['String']['output'];
   /** An array relationship */
-  song_changes: Array<Song_Changes>;
-  /** An aggregate relationship */
-  song_changes_aggregate: Song_Changes_Aggregate;
-  /** An array relationship */
   song_genres: Array<Song_Genres>;
   /** An aggregate relationship */
   song_genres_aggregate: Song_Genres_Aggregate;
@@ -19192,26 +18550,6 @@ export type SongsMovie_Soundtracks_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Movie_Soundtrack_Order_By>>;
   where?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
-};
-
-
-/** columns and relationships of "songs" */
-export type SongsSong_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
-};
-
-
-/** columns and relationships of "songs" */
-export type SongsSong_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
 };
 
 
@@ -19367,8 +18705,6 @@ export type Songs_Bool_Exp = {
   movie_soundtracks?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
   movie_soundtracks_aggregate?: InputMaybe<Movie_Soundtrack_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
-  song_changes?: InputMaybe<Song_Changes_Bool_Exp>;
-  song_changes_aggregate?: InputMaybe<Song_Changes_Aggregate_Bool_Exp>;
   song_genres?: InputMaybe<Song_Genres_Bool_Exp>;
   song_genres_aggregate?: InputMaybe<Song_Genres_Aggregate_Bool_Exp>;
   song_keywords?: InputMaybe<Song_Keywords_Bool_Exp>;
@@ -19406,7 +18742,6 @@ export type Songs_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_soundtracks?: InputMaybe<Movie_Soundtrack_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
-  song_changes?: InputMaybe<Song_Changes_Arr_Rel_Insert_Input>;
   song_genres?: InputMaybe<Song_Genres_Arr_Rel_Insert_Input>;
   song_keywords?: InputMaybe<Song_Keywords_Arr_Rel_Insert_Input>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
@@ -19514,7 +18849,6 @@ export type Songs_Order_By = {
   id?: InputMaybe<Order_By>;
   movie_soundtracks_aggregate?: InputMaybe<Movie_Soundtrack_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
-  song_changes_aggregate?: InputMaybe<Song_Changes_Aggregate_Order_By>;
   song_genres_aggregate?: InputMaybe<Song_Genres_Aggregate_Order_By>;
   song_keywords_aggregate?: InputMaybe<Song_Keywords_Aggregate_Order_By>;
   spotify_id?: InputMaybe<Order_By>;
@@ -20314,14 +19648,6 @@ export type Subscription_Root = {
   /** fetch data from the table in a streaming manner: "people" */
   people_stream: Array<People>;
   /** An array relationship */
-  person_changes: Array<Person_Changes>;
-  /** An aggregate relationship */
-  person_changes_aggregate: Person_Changes_Aggregate;
-  /** fetch data from the table: "person_changes" using primary key columns */
-  person_changes_by_pk?: Maybe<Person_Changes>;
-  /** fetch data from the table in a streaming manner: "person_changes" */
-  person_changes_stream: Array<Person_Changes>;
-  /** An array relationship */
   person_media: Array<Person_Media>;
   /** An aggregate relationship */
   person_media_aggregate: Person_Media_Aggregate;
@@ -20345,14 +19671,6 @@ export type Subscription_Root = {
   reports_by_pk?: Maybe<Reports>;
   /** fetch data from the table in a streaming manner: "reports" */
   reports_stream: Array<Reports>;
-  /** An array relationship */
-  song_changes: Array<Song_Changes>;
-  /** An aggregate relationship */
-  song_changes_aggregate: Song_Changes_Aggregate;
-  /** fetch data from the table: "song_changes" using primary key columns */
-  song_changes_by_pk?: Maybe<Song_Changes>;
-  /** fetch data from the table in a streaming manner: "song_changes" */
-  song_changes_stream: Array<Song_Changes>;
   /** An array relationship */
   song_genres: Array<Song_Genres>;
   /** An aggregate relationship */
@@ -21803,36 +21121,6 @@ export type Subscription_RootPeople_StreamArgs = {
 };
 
 
-export type Subscription_RootPerson_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-
-export type Subscription_RootPerson_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-
-export type Subscription_RootPerson_Changes_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootPerson_Changes_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Person_Changes_Stream_Cursor_Input>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-
 export type Subscription_RootPerson_MediaArgs = {
   distinct_on?: InputMaybe<Array<Person_Media_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -21921,36 +21209,6 @@ export type Subscription_RootReports_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Reports_Stream_Cursor_Input>>;
   where?: InputMaybe<Reports_Bool_Exp>;
-};
-
-
-export type Subscription_RootSong_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
-};
-
-
-export type Subscription_RootSong_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
-};
-
-
-export type Subscription_RootSong_Changes_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootSong_Changes_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Song_Changes_Stream_Cursor_Input>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
 };
 
 
@@ -23766,10 +23024,6 @@ export type Users = {
   otpHashExpiresAt: Scalars['timestamptz']['output'];
   otpMethodLastUsed?: Maybe<Scalars['String']['output']>;
   passwordHash?: Maybe<Scalars['String']['output']>;
-  /** An array relationship */
-  person_changes: Array<Person_Changes>;
-  /** An aggregate relationship */
-  person_changes_aggregate: Person_Changes_Aggregate;
   phoneNumber?: Maybe<Scalars['String']['output']>;
   phoneNumberVerified: Scalars['Boolean']['output'];
   /** An array relationship */
@@ -23792,10 +23046,6 @@ export type Users = {
   securityKeys: Array<AuthUserSecurityKeys>;
   /** An aggregate relationship */
   securityKeys_aggregate: AuthUserSecurityKeys_Aggregate;
-  /** An array relationship */
-  song_changes: Array<Song_Changes>;
-  /** An aggregate relationship */
-  song_changes_aggregate: Song_Changes_Aggregate;
   ticket?: Maybe<Scalars['String']['output']>;
   ticketExpiresAt: Scalars['timestamptz']['output'];
   totpSecret?: Maybe<Scalars['String']['output']>;
@@ -23830,26 +23080,6 @@ export type UsersNotifications_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Notifications_Order_By>>;
   where?: InputMaybe<Notifications_Bool_Exp>;
-};
-
-
-/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
-export type UsersPerson_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
-};
-
-
-/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
-export type UsersPerson_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Person_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Person_Changes_Order_By>>;
-  where?: InputMaybe<Person_Changes_Bool_Exp>;
 };
 
 
@@ -23950,26 +23180,6 @@ export type UsersSecurityKeys_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<AuthUserSecurityKeys_Order_By>>;
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
-};
-
-
-/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
-export type UsersSong_ChangesArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
-};
-
-
-/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
-export type UsersSong_Changes_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Changes_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Changes_Order_By>>;
-  where?: InputMaybe<Song_Changes_Bool_Exp>;
 };
 
 
@@ -24087,8 +23297,6 @@ export type Users_Bool_Exp = {
   otpHashExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   otpMethodLastUsed?: InputMaybe<String_Comparison_Exp>;
   passwordHash?: InputMaybe<String_Comparison_Exp>;
-  person_changes?: InputMaybe<Person_Changes_Bool_Exp>;
-  person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Bool_Exp>;
   phoneNumber?: InputMaybe<String_Comparison_Exp>;
   phoneNumberVerified?: InputMaybe<Boolean_Comparison_Exp>;
   refreshTokens?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
@@ -24101,8 +23309,6 @@ export type Users_Bool_Exp = {
   roles_aggregate?: InputMaybe<AuthUserRoles_Aggregate_Bool_Exp>;
   securityKeys?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
   securityKeys_aggregate?: InputMaybe<AuthUserSecurityKeys_Aggregate_Bool_Exp>;
-  song_changes?: InputMaybe<Song_Changes_Bool_Exp>;
-  song_changes_aggregate?: InputMaybe<Song_Changes_Aggregate_Bool_Exp>;
   ticket?: InputMaybe<String_Comparison_Exp>;
   ticketExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   totpSecret?: InputMaybe<String_Comparison_Exp>;
@@ -24159,7 +23365,6 @@ export type Users_Insert_Input = {
   otpHashExpiresAt?: InputMaybe<Scalars['timestamptz']['input']>;
   otpMethodLastUsed?: InputMaybe<Scalars['String']['input']>;
   passwordHash?: InputMaybe<Scalars['String']['input']>;
-  person_changes?: InputMaybe<Person_Changes_Arr_Rel_Insert_Input>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
   phoneNumberVerified?: InputMaybe<Scalars['Boolean']['input']>;
   refreshTokens?: InputMaybe<AuthRefreshTokens_Arr_Rel_Insert_Input>;
@@ -24167,7 +23372,6 @@ export type Users_Insert_Input = {
   reports?: InputMaybe<Reports_Arr_Rel_Insert_Input>;
   roles?: InputMaybe<AuthUserRoles_Arr_Rel_Insert_Input>;
   securityKeys?: InputMaybe<AuthUserSecurityKeys_Arr_Rel_Insert_Input>;
-  song_changes?: InputMaybe<Song_Changes_Arr_Rel_Insert_Input>;
   ticket?: InputMaybe<Scalars['String']['input']>;
   ticketExpiresAt?: InputMaybe<Scalars['timestamptz']['input']>;
   totpSecret?: InputMaybe<Scalars['String']['input']>;
@@ -24319,7 +23523,6 @@ export type Users_Order_By = {
   otpHashExpiresAt?: InputMaybe<Order_By>;
   otpMethodLastUsed?: InputMaybe<Order_By>;
   passwordHash?: InputMaybe<Order_By>;
-  person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Order_By>;
   phoneNumber?: InputMaybe<Order_By>;
   phoneNumberVerified?: InputMaybe<Order_By>;
   refreshTokens_aggregate?: InputMaybe<AuthRefreshTokens_Aggregate_Order_By>;
@@ -24327,7 +23530,6 @@ export type Users_Order_By = {
   reports_aggregate?: InputMaybe<Reports_Aggregate_Order_By>;
   roles_aggregate?: InputMaybe<AuthUserRoles_Aggregate_Order_By>;
   securityKeys_aggregate?: InputMaybe<AuthUserSecurityKeys_Aggregate_Order_By>;
-  song_changes_aggregate?: InputMaybe<Song_Changes_Aggregate_Order_By>;
   ticket?: InputMaybe<Order_By>;
   ticketExpiresAt?: InputMaybe<Order_By>;
   totpSecret?: InputMaybe<Order_By>;
@@ -24883,7 +24085,14 @@ export type GetBooksQueryVariables = Exact<{
 }>;
 
 
-export type GetBooksQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', id: any, title: string }> };
+export type GetBooksQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', id: any, title: string, cover: string }> };
+
+export type IncrementBookViewsMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type IncrementBookViewsMutation = { __typename?: 'mutation_root', update_books_by_pk?: { __typename?: 'books', id: any, view_count?: number | null } | null };
 
 export type InsertBookMutationVariables = Exact<{
   object: Books_Insert_Input;
@@ -25220,6 +24429,7 @@ export const GetBooksDocument = `
   ) {
     id
     title
+    cover
   }
 }
     `;
@@ -25257,6 +24467,28 @@ export const useInfiniteGetBooksQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const IncrementBookViewsDocument = `
+    mutation IncrementBookViews($id: uuid!) {
+  update_books_by_pk(pk_columns: {id: $id}, _inc: {view_count: 1}) {
+    id
+    view_count
+  }
+}
+    `;
+
+export const useIncrementBookViewsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<IncrementBookViewsMutation, TError, IncrementBookViewsMutationVariables, TContext>) => {
+    
+    return useMutation<IncrementBookViewsMutation, TError, IncrementBookViewsMutationVariables, TContext>(
+      {
+    mutationKey: ['IncrementBookViews'],
+    mutationFn: (variables?: IncrementBookViewsMutationVariables) => fetcher<IncrementBookViewsMutation, IncrementBookViewsMutationVariables>(IncrementBookViewsDocument, variables)(),
+    ...options
+  }
     )};
 
 export const InsertBookDocument = `

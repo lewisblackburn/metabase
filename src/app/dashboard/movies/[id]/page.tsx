@@ -38,7 +38,6 @@ import {
     Music,
     Play,
     Star,
-    Tags,
     Timer,
     TrendingUp,
     Trophy,
