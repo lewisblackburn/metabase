@@ -49,7 +49,7 @@ query GetMovie($id: uuid!) {
             id
             song {
                 name
-                song_artists {
+                credits {
                     id
                     person {
                         name

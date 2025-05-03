@@ -5,9 +5,8 @@ import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
-import { tmdbMovieImporterService } from '@/services/tmdb/tmdb-movie-importer.service';
+import { importMovieFromTmdb } from '@/services/tmdb/tmdb-import-movie.service';
 import { tmdbService } from '@/services/tmdb/tmdb.service';
-import type { TMDBMovie, TMDBSearchResponse, TMDBSearchResult } from '@/types/tmdb.type';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
@@ -18,6 +17,19 @@ import { toast } from 'sonner';
 
 dayjs.extend(advancedFormat);
 
+interface TMDBSearchResult {
+    id: number;
+    title: string;
+    original_title: string;
+    release_date: string;
+    poster_path: string | null;
+}
+
+interface TMDBSearchResponse {
+    results: TMDBSearchResult[];
+    total_results: number;
+}
+
 type MovieRow = TMDBSearchResult & { id: string };
 
 export default function TMDBMovieImportTable() {
@@ -27,7 +39,7 @@ export default function TMDBMovieImportTable() {
     const debouncedQuery = useDebounce(searchQuery, 500);
 
     const fetchMovies = useCallback(async (page: number, query: string) => {
-        const res = await tmdbMovieImporterService.search<TMDBSearchResponse>(query, page + 1, 'movie');
+        const res = await tmdbService.search<TMDBSearchResponse>(query, page + 1, 'movie');
         return {
             data: res?.results.map((m) => ({ ...m, id: m.id.toString() })) ?? [],
             total: res?.total_results ?? 0
@@ -41,17 +53,28 @@ export default function TMDBMovieImportTable() {
     });
 
     const importMutation = useMutation({
-        mutationFn: (tmdbMovieId: TMDBMovie['id']) => tmdbMovieImporterService.import(tmdbMovieId),
+        mutationFn: (tmdbMovieId: number) => importMovieFromTmdb(tmdbMovieId),
         onSuccess: (response) => {
-            if (response === true) toast.success('Movie already exists');
-            else if (response === false) toast.error('Movie not found');
-            else toast.success(`${response.insert_movies_one?.title} Imported`);
+            if (!response) {
+                toast.error('No response received from import');
+                return;
+            }
+
+            if ('message' in response) {
+                if (response.message.includes('already exists')) {
+                    toast.success('Movie already exists');
+                } else {
+                    toast.error(response.message);
+                }
+            } else {
+                toast.success(`${response.title} Imported`);
+            }
         },
         onError: (error: any) => toast.error(error.message)
     });
 
     const handleImport = useCallback(async () => {
-        const ids = Object.keys(rowSelection);
+        const ids = Object.keys(rowSelection).map(Number);
         await Promise.all(ids.map((id) => importMutation.mutateAsync(id)));
         setRowSelection({});
     }, [rowSelection, importMutation]);

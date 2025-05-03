@@ -1,28 +1,32 @@
-import { SingleArtistResponse, SingleTrackResponse, SpotifySearchResultType } from '@/types/spotify.type';
+import {
+    SpotifyAlbum,
+    SpotifyArtist,
+    SpotifyPlaylist,
+    SpotifyPlaylistTracksResponse,
+    SpotifySearchResponse,
+    SpotifyTrack,
+    SpotifyUser
+} from '@/types/spotify.types';
 
 export class SpotifyService {
-    private readonly SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token';
     private readonly SPOTIFY_URL = 'https://api.spotify.com/v1';
+    private readonly SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token';
     private readonly SPOTIFY_CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
     private readonly SPOTIFY_CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
+    private readonly READ_ONLY_METHODS = ['GET'];
+    private readonly ALLOWED_ENDPOINTS = [
+        '/users/{userId}/playlists',
+        '/playlists/{playlistId}/tracks',
+        '/search',
+        '/tracks/{trackId}',
+        '/albums/{albumId}',
+        '/artists/{artistId}'
+    ];
 
     protected accessToken: string | null = null;
     private accessTokenExpiresAt: number | null = null;
 
-    constructor() {}
-
-    protected SPOTIFY_ENTITY_URL(type: string, id: string): string {
-        return `${this.SPOTIFY_URL}/${type}/${id}`;
-    }
-
-    protected SPOTIFY_SEARCH_URL(query: string, pageIndex: number, type: string): string {
-        const offset = (pageIndex - 1) * 20;
-        const limit = 20;
-
-        return `${this.SPOTIFY_URL}/search?q=${query}&type=${type}&offset=${offset}&limit=${limit}`;
-    }
-
-    protected async getAccessToken(): Promise<string | null> {
+    public async getAccessToken(): Promise<string | null> {
         const now = Date.now() / 1000;
 
         // NOTE: If the token is still valid, don't request a new one
@@ -51,13 +55,37 @@ export class SpotifyService {
         return this.accessToken;
     }
 
+    // private validateRequest(method: string, url: string): void {
+    //     if (!this.READ_ONLY_METHODS.includes(method)) {
+    //         throw new Error('This service is read-only. No modifications are allowed.');
+    //     }
+
+    //     const endpoint = url.replace(this.SPOTIFY_URL, '');
+    //     const isAllowed = this.ALLOWED_ENDPOINTS.some((allowed) => {
+    //         const pattern = allowed.replace(/\{.*?\}/g, '.*');
+    //         return new RegExp(`^${pattern}$`).test(endpoint);
+    //     });
+
+    //     if (!isAllowed) {
+    //         throw new Error(`Access to endpoint ${endpoint} is not allowed.`);
+    //     }
+    // }
+
     public async fetcher<T>(url: string, options: RequestInit = {}): Promise<T> {
         const accessToken = await this.getAccessToken();
 
+        if (!accessToken) {
+            throw new Error('Access token is required');
+        }
+
+        // NOTE: As this is my personal API key, I'm not going to validate the request
+        // this.validateRequest(options.method || 'GET', url);
+
         const response = await fetch(url, {
             ...options,
+            method: 'GET',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${this.accessToken}`,
                 'Content-Type': 'application/json',
                 ...options.headers
             }
@@ -70,21 +98,30 @@ export class SpotifyService {
         return response.json();
     }
 
-    public async getArtist(id: string): Promise<SingleArtistResponse> {
-        const url = this.SPOTIFY_ENTITY_URL('artists', id);
-        return this.fetcher(url);
+    public async getUserPlaylists(userId: string): Promise<{ items: SpotifyPlaylist[] }> {
+        return this.fetcher<{ items: SpotifyPlaylist[] }>(`${this.SPOTIFY_URL}/users/${userId}/playlists`);
     }
 
-    public async getTrack(id: string): Promise<SingleTrackResponse> {
-        const url = this.SPOTIFY_ENTITY_URL('tracks', id);
-        return this.fetcher<SingleTrackResponse>(url);
+    public async getPlaylistTracks(playlistId: string): Promise<SpotifyPlaylistTracksResponse> {
+        return this.fetcher<SpotifyPlaylistTracksResponse>(`${this.SPOTIFY_URL}/playlists/${playlistId}/tracks`);
     }
 
-    public async search<T>(query: string, pageIndex: number, type: SpotifySearchResultType): Promise<T> {
-        const url = this.SPOTIFY_SEARCH_URL(query, pageIndex, type);
-        const response = await this.fetcher<T>(url);
+    public async searchTracks(query: string, limit: number = 20): Promise<SpotifySearchResponse> {
+        return this.fetcher<SpotifySearchResponse>(
+            `${this.SPOTIFY_URL}/search?q=${encodeURIComponent(query)}&type=track&limit=${limit}`
+        );
+    }
 
-        return response;
+    public async getTrack(trackId: string): Promise<SpotifyTrack> {
+        return this.fetcher<SpotifyTrack>(`${this.SPOTIFY_URL}/tracks/${trackId}`);
+    }
+
+    public async getAlbum(albumId: string): Promise<SpotifyAlbum> {
+        return this.fetcher<SpotifyAlbum>(`${this.SPOTIFY_URL}/albums/${albumId}`);
+    }
+
+    public async getArtist(artistId: string): Promise<SpotifyArtist> {
+        return this.fetcher<SpotifyArtist>(`${this.SPOTIFY_URL}/artists/${artistId}`);
     }
 }
 

@@ -295,366 +295,15 @@ export type Activity_Types_Updates = {
   where: Activity_Types_Bool_Exp;
 };
 
-/** columns and relationships of "album_artists" */
-export type Album_Artists = {
-  __typename?: 'album_artists';
-  /** An object relationship */
-  album: Albums;
-  album_id: Scalars['uuid']['output'];
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id: Scalars['uuid']['output'];
-  order?: Maybe<Scalars['Int']['output']>;
-  /** An object relationship */
-  person: People;
-  person_id: Scalars['uuid']['output'];
-  role?: Maybe<Scalars['String']['output']>;
-};
-
-/** aggregated selection of "album_artists" */
-export type Album_Artists_Aggregate = {
-  __typename?: 'album_artists_aggregate';
-  aggregate?: Maybe<Album_Artists_Aggregate_Fields>;
-  nodes: Array<Album_Artists>;
-};
-
-export type Album_Artists_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Album_Artists_Aggregate_Bool_Exp_Count>;
-};
-
-export type Album_Artists_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Album_Artists_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "album_artists" */
-export type Album_Artists_Aggregate_Fields = {
-  __typename?: 'album_artists_aggregate_fields';
-  avg?: Maybe<Album_Artists_Avg_Fields>;
-  count: Scalars['Int']['output'];
-  max?: Maybe<Album_Artists_Max_Fields>;
-  min?: Maybe<Album_Artists_Min_Fields>;
-  stddev?: Maybe<Album_Artists_Stddev_Fields>;
-  stddev_pop?: Maybe<Album_Artists_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Album_Artists_Stddev_Samp_Fields>;
-  sum?: Maybe<Album_Artists_Sum_Fields>;
-  var_pop?: Maybe<Album_Artists_Var_Pop_Fields>;
-  var_samp?: Maybe<Album_Artists_Var_Samp_Fields>;
-  variance?: Maybe<Album_Artists_Variance_Fields>;
-};
-
-
-/** aggregate fields of "album_artists" */
-export type Album_Artists_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "album_artists" */
-export type Album_Artists_Aggregate_Order_By = {
-  avg?: InputMaybe<Album_Artists_Avg_Order_By>;
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Album_Artists_Max_Order_By>;
-  min?: InputMaybe<Album_Artists_Min_Order_By>;
-  stddev?: InputMaybe<Album_Artists_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<Album_Artists_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Album_Artists_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Album_Artists_Sum_Order_By>;
-  var_pop?: InputMaybe<Album_Artists_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Album_Artists_Var_Samp_Order_By>;
-  variance?: InputMaybe<Album_Artists_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "album_artists" */
-export type Album_Artists_Arr_Rel_Insert_Input = {
-  data: Array<Album_Artists_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Album_Artists_On_Conflict>;
-};
-
-/** aggregate avg on columns */
-export type Album_Artists_Avg_Fields = {
-  __typename?: 'album_artists_avg_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by avg() on columns of table "album_artists" */
-export type Album_Artists_Avg_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "album_artists". All fields are combined with a logical 'AND'. */
-export type Album_Artists_Bool_Exp = {
-  _and?: InputMaybe<Array<Album_Artists_Bool_Exp>>;
-  _not?: InputMaybe<Album_Artists_Bool_Exp>;
-  _or?: InputMaybe<Array<Album_Artists_Bool_Exp>>;
-  album?: InputMaybe<Albums_Bool_Exp>;
-  album_id?: InputMaybe<Uuid_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  order?: InputMaybe<Int_Comparison_Exp>;
-  person?: InputMaybe<People_Bool_Exp>;
-  person_id?: InputMaybe<Uuid_Comparison_Exp>;
-  role?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "album_artists" */
-export enum Album_Artists_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  AlbumArtistsPkey = 'album_artists_pkey'
-}
-
-/** input type for incrementing numeric columns in table "album_artists" */
-export type Album_Artists_Inc_Input = {
-  order?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** input type for inserting data into table "album_artists" */
-export type Album_Artists_Insert_Input = {
-  album?: InputMaybe<Albums_Obj_Rel_Insert_Input>;
-  album_id?: InputMaybe<Scalars['uuid']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  order?: InputMaybe<Scalars['Int']['input']>;
-  person?: InputMaybe<People_Obj_Rel_Insert_Input>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Album_Artists_Max_Fields = {
-  __typename?: 'album_artists_max_fields';
-  album_id?: Maybe<Scalars['uuid']['output']>;
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  order?: Maybe<Scalars['Int']['output']>;
-  person_id?: Maybe<Scalars['uuid']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
-};
-
-/** order by max() on columns of table "album_artists" */
-export type Album_Artists_Max_Order_By = {
-  album_id?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  order?: InputMaybe<Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Album_Artists_Min_Fields = {
-  __typename?: 'album_artists_min_fields';
-  album_id?: Maybe<Scalars['uuid']['output']>;
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  order?: Maybe<Scalars['Int']['output']>;
-  person_id?: Maybe<Scalars['uuid']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
-};
-
-/** order by min() on columns of table "album_artists" */
-export type Album_Artists_Min_Order_By = {
-  album_id?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  order?: InputMaybe<Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "album_artists" */
-export type Album_Artists_Mutation_Response = {
-  __typename?: 'album_artists_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Album_Artists>;
-};
-
-/** on_conflict condition type for table "album_artists" */
-export type Album_Artists_On_Conflict = {
-  constraint: Album_Artists_Constraint;
-  update_columns?: Array<Album_Artists_Update_Column>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "album_artists". */
-export type Album_Artists_Order_By = {
-  album?: InputMaybe<Albums_Order_By>;
-  album_id?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  order?: InputMaybe<Order_By>;
-  person?: InputMaybe<People_Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: album_artists */
-export type Album_Artists_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "album_artists" */
-export enum Album_Artists_Select_Column {
-  /** column name */
-  AlbumId = 'album_id',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Order = 'order',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  Role = 'role'
-}
-
-/** input type for updating data in table "album_artists" */
-export type Album_Artists_Set_Input = {
-  album_id?: InputMaybe<Scalars['uuid']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  order?: InputMaybe<Scalars['Int']['input']>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Album_Artists_Stddev_Fields = {
-  __typename?: 'album_artists_stddev_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev() on columns of table "album_artists" */
-export type Album_Artists_Stddev_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Album_Artists_Stddev_Pop_Fields = {
-  __typename?: 'album_artists_stddev_pop_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_pop() on columns of table "album_artists" */
-export type Album_Artists_Stddev_Pop_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Album_Artists_Stddev_Samp_Fields = {
-  __typename?: 'album_artists_stddev_samp_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_samp() on columns of table "album_artists" */
-export type Album_Artists_Stddev_Samp_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** Streaming cursor of the table "album_artists" */
-export type Album_Artists_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Album_Artists_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Album_Artists_Stream_Cursor_Value_Input = {
-  album_id?: InputMaybe<Scalars['uuid']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  order?: InputMaybe<Scalars['Int']['input']>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Album_Artists_Sum_Fields = {
-  __typename?: 'album_artists_sum_fields';
-  order?: Maybe<Scalars['Int']['output']>;
-};
-
-/** order by sum() on columns of table "album_artists" */
-export type Album_Artists_Sum_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** update columns of table "album_artists" */
-export enum Album_Artists_Update_Column {
-  /** column name */
-  AlbumId = 'album_id',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Order = 'order',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  Role = 'role'
-}
-
-export type Album_Artists_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Album_Artists_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Album_Artists_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Album_Artists_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Album_Artists_Var_Pop_Fields = {
-  __typename?: 'album_artists_var_pop_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_pop() on columns of table "album_artists" */
-export type Album_Artists_Var_Pop_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate var_samp on columns */
-export type Album_Artists_Var_Samp_Fields = {
-  __typename?: 'album_artists_var_samp_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_samp() on columns of table "album_artists" */
-export type Album_Artists_Var_Samp_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate variance on columns */
-export type Album_Artists_Variance_Fields = {
-  __typename?: 'album_artists_variance_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by variance() on columns of table "album_artists" */
-export type Album_Artists_Variance_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
 /** columns and relationships of "album_media" */
 export type Album_Media = {
   __typename?: 'album_media';
   /** An object relationship */
   album: Albums;
   album_id: Scalars['uuid']['output'];
-  created_at: Scalars['timestamptz']['output'];
-  id: Scalars['uuid']['output'];
-  media_id: Scalars['uuid']['output'];
-  media_type?: Maybe<Scalars['String']['output']>;
-  media_url: Scalars['String']['output'];
-  uploaded_by: Scalars['uuid']['output'];
+  /** An object relationship */
+  file: Files;
+  file_id: Scalars['uuid']['output'];
 };
 
 /** aggregated selection of "album_media" */
@@ -711,17 +360,13 @@ export type Album_Media_Bool_Exp = {
   _or?: InputMaybe<Array<Album_Media_Bool_Exp>>;
   album?: InputMaybe<Albums_Bool_Exp>;
   album_id?: InputMaybe<Uuid_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  media_id?: InputMaybe<Uuid_Comparison_Exp>;
-  media_type?: InputMaybe<String_Comparison_Exp>;
-  media_url?: InputMaybe<String_Comparison_Exp>;
-  uploaded_by?: InputMaybe<Uuid_Comparison_Exp>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  file_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "album_media" */
 export enum Album_Media_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint on columns "file_id", "album_id" */
   AlbumMediaPkey = 'album_media_pkey'
 }
 
@@ -729,58 +374,34 @@ export enum Album_Media_Constraint {
 export type Album_Media_Insert_Input = {
   album?: InputMaybe<Albums_Obj_Rel_Insert_Input>;
   album_id?: InputMaybe<Scalars['uuid']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  media_type?: InputMaybe<Scalars['String']['input']>;
-  media_url?: InputMaybe<Scalars['String']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
 export type Album_Media_Max_Fields = {
   __typename?: 'album_media_max_fields';
   album_id?: Maybe<Scalars['uuid']['output']>;
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
-  media_type?: Maybe<Scalars['String']['output']>;
-  media_url?: Maybe<Scalars['String']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "album_media" */
 export type Album_Media_Max_Order_By = {
   album_id?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  media_type?: InputMaybe<Order_By>;
-  media_url?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Album_Media_Min_Fields = {
   __typename?: 'album_media_min_fields';
   album_id?: Maybe<Scalars['uuid']['output']>;
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
-  media_type?: Maybe<Scalars['String']['output']>;
-  media_url?: Maybe<Scalars['String']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "album_media" */
 export type Album_Media_Min_Order_By = {
   album_id?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  media_type?: InputMaybe<Order_By>;
-  media_url?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "album_media" */
@@ -803,17 +424,14 @@ export type Album_Media_On_Conflict = {
 export type Album_Media_Order_By = {
   album?: InputMaybe<Albums_Order_By>;
   album_id?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  media_type?: InputMaybe<Order_By>;
-  media_url?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
+  file?: InputMaybe<Files_Order_By>;
+  file_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: album_media */
 export type Album_Media_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
+  album_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "album_media" */
@@ -821,28 +439,13 @@ export enum Album_Media_Select_Column {
   /** column name */
   AlbumId = 'album_id',
   /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  MediaType = 'media_type',
-  /** column name */
-  MediaUrl = 'media_url',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  FileId = 'file_id'
 }
 
 /** input type for updating data in table "album_media" */
 export type Album_Media_Set_Input = {
   album_id?: InputMaybe<Scalars['uuid']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  media_type?: InputMaybe<Scalars['String']['input']>;
-  media_url?: InputMaybe<Scalars['String']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** Streaming cursor of the table "album_media" */
@@ -856,12 +459,7 @@ export type Album_Media_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Album_Media_Stream_Cursor_Value_Input = {
   album_id?: InputMaybe<Scalars['uuid']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  media_type?: InputMaybe<Scalars['String']['input']>;
-  media_url?: InputMaybe<Scalars['String']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "album_media" */
@@ -869,17 +467,7 @@ export enum Album_Media_Update_Column {
   /** column name */
   AlbumId = 'album_id',
   /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  MediaType = 'media_type',
-  /** column name */
-  MediaUrl = 'media_url',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  FileId = 'file_id'
 }
 
 export type Album_Media_Updates = {
@@ -893,14 +481,14 @@ export type Album_Media_Updates = {
 export type Albums = {
   __typename?: 'albums';
   /** An array relationship */
-  album_artists: Array<Album_Artists>;
-  /** An aggregate relationship */
-  album_artists_aggregate: Album_Artists_Aggregate;
-  /** An array relationship */
   album_media: Array<Album_Media>;
   /** An aggregate relationship */
   album_media_aggregate: Album_Media_Aggregate;
   artwork: Scalars['String']['output'];
+  /** An array relationship */
+  credits: Array<Credits>;
+  /** An aggregate relationship */
+  credits_aggregate: Credits_Aggregate;
   id: Scalars['uuid']['output'];
   name: Scalars['String']['output'];
   release_date?: Maybe<Scalars['date']['output']>;
@@ -911,26 +499,6 @@ export type Albums = {
   spotify_id?: Maybe<Scalars['String']['output']>;
   spotify_uri?: Maybe<Scalars['String']['output']>;
   type?: Maybe<Scalars['String']['output']>;
-};
-
-
-/** columns and relationships of "albums" */
-export type AlbumsAlbum_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-
-/** columns and relationships of "albums" */
-export type AlbumsAlbum_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
 };
 
 
@@ -951,6 +519,26 @@ export type AlbumsAlbum_Media_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Album_Media_Order_By>>;
   where?: InputMaybe<Album_Media_Bool_Exp>;
+};
+
+
+/** columns and relationships of "albums" */
+export type AlbumsCreditsArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "albums" */
+export type AlbumsCredits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
 };
 
 
@@ -1000,11 +588,11 @@ export type Albums_Bool_Exp = {
   _and?: InputMaybe<Array<Albums_Bool_Exp>>;
   _not?: InputMaybe<Albums_Bool_Exp>;
   _or?: InputMaybe<Array<Albums_Bool_Exp>>;
-  album_artists?: InputMaybe<Album_Artists_Bool_Exp>;
-  album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Bool_Exp>;
   album_media?: InputMaybe<Album_Media_Bool_Exp>;
   album_media_aggregate?: InputMaybe<Album_Media_Aggregate_Bool_Exp>;
   artwork?: InputMaybe<String_Comparison_Exp>;
+  credits?: InputMaybe<Credits_Bool_Exp>;
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   release_date?: InputMaybe<Date_Comparison_Exp>;
@@ -1025,9 +613,9 @@ export enum Albums_Constraint {
 
 /** input type for inserting data into table "albums" */
 export type Albums_Insert_Input = {
-  album_artists?: InputMaybe<Album_Artists_Arr_Rel_Insert_Input>;
   album_media?: InputMaybe<Album_Media_Arr_Rel_Insert_Input>;
   artwork?: InputMaybe<Scalars['String']['input']>;
+  credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   release_date?: InputMaybe<Scalars['date']['input']>;
@@ -1086,9 +674,9 @@ export type Albums_On_Conflict = {
 
 /** Ordering options when selecting data from "albums". */
 export type Albums_Order_By = {
-  album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Order_By>;
   album_media_aggregate?: InputMaybe<Album_Media_Aggregate_Order_By>;
   artwork?: InputMaybe<Order_By>;
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   release_date?: InputMaybe<Order_By>;
@@ -4056,7 +3644,31 @@ export type Book_Availability_Types_Updates = {
 /** columns and relationships of "book_genre_types" */
 export type Book_Genre_Types = {
   __typename?: 'book_genre_types';
+  /** An array relationship */
+  book_genres: Array<Book_Genres>;
+  /** An aggregate relationship */
+  book_genres_aggregate: Book_Genres_Aggregate;
   type: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "book_genre_types" */
+export type Book_Genre_TypesBook_GenresArgs = {
+  distinct_on?: InputMaybe<Array<Book_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Book_Genres_Order_By>>;
+  where?: InputMaybe<Book_Genres_Bool_Exp>;
+};
+
+
+/** columns and relationships of "book_genre_types" */
+export type Book_Genre_TypesBook_Genres_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Book_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Book_Genres_Order_By>>;
+  where?: InputMaybe<Book_Genres_Bool_Exp>;
 };
 
 /** aggregated selection of "book_genre_types" */
@@ -4086,6 +3698,8 @@ export type Book_Genre_Types_Bool_Exp = {
   _and?: InputMaybe<Array<Book_Genre_Types_Bool_Exp>>;
   _not?: InputMaybe<Book_Genre_Types_Bool_Exp>;
   _or?: InputMaybe<Array<Book_Genre_Types_Bool_Exp>>;
+  book_genres?: InputMaybe<Book_Genres_Bool_Exp>;
+  book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Bool_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -4175,6 +3789,7 @@ export type Book_Genre_Types_Enum_Comparison_Exp = {
 
 /** input type for inserting data into table "book_genre_types" */
 export type Book_Genre_Types_Insert_Input = {
+  book_genres?: InputMaybe<Book_Genres_Arr_Rel_Insert_Input>;
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -4215,6 +3830,7 @@ export type Book_Genre_Types_On_Conflict = {
 
 /** Ordering options when selecting data from "book_genre_types". */
 export type Book_Genre_Types_Order_By = {
+  book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Order_By>;
   type?: InputMaybe<Order_By>;
 };
 
@@ -4278,6 +3894,17 @@ export type Book_Genres_Aggregate = {
   nodes: Array<Book_Genres>;
 };
 
+export type Book_Genres_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Book_Genres_Aggregate_Bool_Exp_Count>;
+};
+
+export type Book_Genres_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Book_Genres_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Book_Genres_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "book_genres" */
 export type Book_Genres_Aggregate_Fields = {
   __typename?: 'book_genres_aggregate_fields';
@@ -4291,6 +3918,20 @@ export type Book_Genres_Aggregate_Fields = {
 export type Book_Genres_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Book_Genres_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "book_genres" */
+export type Book_Genres_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Book_Genres_Max_Order_By>;
+  min?: InputMaybe<Book_Genres_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "book_genres" */
+export type Book_Genres_Arr_Rel_Insert_Input = {
+  data: Array<Book_Genres_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Book_Genres_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "book_genres". All fields are combined with a logical 'AND'. */
@@ -4324,10 +3965,20 @@ export type Book_Genres_Max_Fields = {
   book_id?: Maybe<Scalars['uuid']['output']>;
 };
 
+/** order by max() on columns of table "book_genres" */
+export type Book_Genres_Max_Order_By = {
+  book_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Book_Genres_Min_Fields = {
   __typename?: 'book_genres_min_fields';
   book_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "book_genres" */
+export type Book_Genres_Min_Order_By = {
+  book_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "book_genres" */
@@ -4591,11 +4242,9 @@ export type Book_Media = {
   /** An object relationship */
   book: Books;
   book_id: Scalars['uuid']['output'];
-  bucket: Scalars['String']['output'];
-  file_url: Scalars['String']['output'];
-  id: Scalars['uuid']['output'];
-  media_id: Scalars['uuid']['output'];
-  uploaded_by: Scalars['uuid']['output'];
+  /** An object relationship */
+  file: Files;
+  file_id: Scalars['uuid']['output'];
 };
 
 /** aggregated selection of "book_media" */
@@ -4652,16 +4301,13 @@ export type Book_Media_Bool_Exp = {
   _or?: InputMaybe<Array<Book_Media_Bool_Exp>>;
   book?: InputMaybe<Books_Bool_Exp>;
   book_id?: InputMaybe<Uuid_Comparison_Exp>;
-  bucket?: InputMaybe<String_Comparison_Exp>;
-  file_url?: InputMaybe<String_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  media_id?: InputMaybe<Uuid_Comparison_Exp>;
-  uploaded_by?: InputMaybe<Uuid_Comparison_Exp>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  file_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "book_media" */
 export enum Book_Media_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint on columns "book_id", "file_id" */
   BookMediaPkey = 'book_media_pkey'
 }
 
@@ -4669,53 +4315,34 @@ export enum Book_Media_Constraint {
 export type Book_Media_Insert_Input = {
   book?: InputMaybe<Books_Obj_Rel_Insert_Input>;
   book_id?: InputMaybe<Scalars['uuid']['input']>;
-  bucket?: InputMaybe<Scalars['String']['input']>;
-  file_url?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
 export type Book_Media_Max_Fields = {
   __typename?: 'book_media_max_fields';
   book_id?: Maybe<Scalars['uuid']['output']>;
-  bucket?: Maybe<Scalars['String']['output']>;
-  file_url?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "book_media" */
 export type Book_Media_Max_Order_By = {
   book_id?: InputMaybe<Order_By>;
-  bucket?: InputMaybe<Order_By>;
-  file_url?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Book_Media_Min_Fields = {
   __typename?: 'book_media_min_fields';
   book_id?: Maybe<Scalars['uuid']['output']>;
-  bucket?: Maybe<Scalars['String']['output']>;
-  file_url?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "book_media" */
 export type Book_Media_Min_Order_By = {
   book_id?: InputMaybe<Order_By>;
-  bucket?: InputMaybe<Order_By>;
-  file_url?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "book_media" */
@@ -4738,16 +4365,14 @@ export type Book_Media_On_Conflict = {
 export type Book_Media_Order_By = {
   book?: InputMaybe<Books_Order_By>;
   book_id?: InputMaybe<Order_By>;
-  bucket?: InputMaybe<Order_By>;
-  file_url?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
+  file?: InputMaybe<Files_Order_By>;
+  file_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: book_media */
 export type Book_Media_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
+  book_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "book_media" */
@@ -4755,25 +4380,13 @@ export enum Book_Media_Select_Column {
   /** column name */
   BookId = 'book_id',
   /** column name */
-  Bucket = 'bucket',
-  /** column name */
-  FileUrl = 'file_url',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  FileId = 'file_id'
 }
 
 /** input type for updating data in table "book_media" */
 export type Book_Media_Set_Input = {
   book_id?: InputMaybe<Scalars['uuid']['input']>;
-  bucket?: InputMaybe<Scalars['String']['input']>;
-  file_url?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** Streaming cursor of the table "book_media" */
@@ -4787,11 +4400,7 @@ export type Book_Media_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Book_Media_Stream_Cursor_Value_Input = {
   book_id?: InputMaybe<Scalars['uuid']['input']>;
-  bucket?: InputMaybe<Scalars['String']['input']>;
-  file_url?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "book_media" */
@@ -4799,15 +4408,7 @@ export enum Book_Media_Update_Column {
   /** column name */
   BookId = 'book_id',
   /** column name */
-  Bucket = 'bucket',
-  /** column name */
-  FileUrl = 'file_url',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  FileId = 'file_id'
 }
 
 export type Book_Media_Updates = {
@@ -5008,6 +4609,10 @@ export type Books = {
   /** An object relationship */
   book_availability?: Maybe<Book_Availabilities>;
   /** An array relationship */
+  book_genres: Array<Book_Genres>;
+  /** An aggregate relationship */
+  book_genres_aggregate: Book_Genres_Aggregate;
+  /** An array relationship */
   book_keywords: Array<Book_Keywords>;
   /** An aggregate relationship */
   book_keywords_aggregate: Book_Keywords_Aggregate;
@@ -5024,8 +4629,8 @@ export type Books = {
   credits: Array<Credits>;
   /** An aggregate relationship */
   credits_aggregate: Credits_Aggregate;
+  googlebooks_id?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
-  openlibrary_id?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
   publish_date?: Maybe<Scalars['date']['output']>;
   read_time?: Maybe<Scalars['Int']['output']>;
@@ -5059,6 +4664,26 @@ export type BooksBook_Alternative_Titles_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Book_Alternative_Titles_Order_By>>;
   where?: InputMaybe<Book_Alternative_Titles_Bool_Exp>;
+};
+
+
+/** columns and relationships of "books" */
+export type BooksBook_GenresArgs = {
+  distinct_on?: InputMaybe<Array<Book_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Book_Genres_Order_By>>;
+  where?: InputMaybe<Book_Genres_Bool_Exp>;
+};
+
+
+/** columns and relationships of "books" */
+export type BooksBook_Genres_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Book_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Book_Genres_Order_By>>;
+  where?: InputMaybe<Book_Genres_Bool_Exp>;
 };
 
 
@@ -5231,6 +4856,8 @@ export type Books_Bool_Exp = {
   book_alternative_titles?: InputMaybe<Book_Alternative_Titles_Bool_Exp>;
   book_alternative_titles_aggregate?: InputMaybe<Book_Alternative_Titles_Aggregate_Bool_Exp>;
   book_availability?: InputMaybe<Book_Availabilities_Bool_Exp>;
+  book_genres?: InputMaybe<Book_Genres_Bool_Exp>;
+  book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Bool_Exp>;
   book_keywords?: InputMaybe<Book_Keywords_Bool_Exp>;
   book_keywords_aggregate?: InputMaybe<Book_Keywords_Aggregate_Bool_Exp>;
   book_media?: InputMaybe<Book_Media_Bool_Exp>;
@@ -5241,8 +4868,8 @@ export type Books_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   credits?: InputMaybe<Credits_Bool_Exp>;
   credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
+  googlebooks_id?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  openlibrary_id?: InputMaybe<String_Comparison_Exp>;
   overview?: InputMaybe<String_Comparison_Exp>;
   publish_date?: InputMaybe<Date_Comparison_Exp>;
   read_time?: InputMaybe<Int_Comparison_Exp>;
@@ -5258,7 +4885,7 @@ export type Books_Bool_Exp = {
 
 /** unique or primary key constraints on table "books" */
 export enum Books_Constraint {
-  /** unique or primary key constraint on columns "openlibrary_id" */
+  /** unique or primary key constraint on columns "googlebooks_id" */
   BooksOpenlibraryIdKey = 'books_openlibrary_id_key',
   /** unique or primary key constraint on columns "id" */
   BooksPkey = 'books_pkey'
@@ -5277,6 +4904,7 @@ export type Books_Inc_Input = {
 export type Books_Insert_Input = {
   book_alternative_titles?: InputMaybe<Book_Alternative_Titles_Arr_Rel_Insert_Input>;
   book_availability?: InputMaybe<Book_Availabilities_Obj_Rel_Insert_Input>;
+  book_genres?: InputMaybe<Book_Genres_Arr_Rel_Insert_Input>;
   book_keywords?: InputMaybe<Book_Keywords_Arr_Rel_Insert_Input>;
   book_media?: InputMaybe<Book_Media_Arr_Rel_Insert_Input>;
   book_release_status_type?: InputMaybe<Book_Release_Status_Types_Obj_Rel_Insert_Input>;
@@ -5284,8 +4912,8 @@ export type Books_Insert_Input = {
   cover?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
+  googlebooks_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
   publish_date?: InputMaybe<Scalars['date']['input']>;
   read_time?: InputMaybe<Scalars['Int']['input']>;
@@ -5304,8 +4932,8 @@ export type Books_Max_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   cover?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  googlebooks_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  openlibrary_id?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
   publish_date?: Maybe<Scalars['date']['output']>;
   read_time?: Maybe<Scalars['Int']['output']>;
@@ -5321,8 +4949,8 @@ export type Books_Max_Order_By = {
   content_score?: InputMaybe<Order_By>;
   cover?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  googlebooks_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  openlibrary_id?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   publish_date?: InputMaybe<Order_By>;
   read_time?: InputMaybe<Order_By>;
@@ -5339,8 +4967,8 @@ export type Books_Min_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   cover?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  googlebooks_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  openlibrary_id?: Maybe<Scalars['String']['output']>;
   overview?: Maybe<Scalars['String']['output']>;
   publish_date?: Maybe<Scalars['date']['output']>;
   read_time?: Maybe<Scalars['Int']['output']>;
@@ -5356,8 +4984,8 @@ export type Books_Min_Order_By = {
   content_score?: InputMaybe<Order_By>;
   cover?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  googlebooks_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  openlibrary_id?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   publish_date?: InputMaybe<Order_By>;
   read_time?: InputMaybe<Order_By>;
@@ -5395,6 +5023,7 @@ export type Books_On_Conflict = {
 export type Books_Order_By = {
   book_alternative_titles_aggregate?: InputMaybe<Book_Alternative_Titles_Aggregate_Order_By>;
   book_availability?: InputMaybe<Book_Availabilities_Order_By>;
+  book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Order_By>;
   book_keywords_aggregate?: InputMaybe<Book_Keywords_Aggregate_Order_By>;
   book_media_aggregate?: InputMaybe<Book_Media_Aggregate_Order_By>;
   book_release_status_type?: InputMaybe<Book_Release_Status_Types_Order_By>;
@@ -5402,8 +5031,8 @@ export type Books_Order_By = {
   cover?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
+  googlebooks_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  openlibrary_id?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   publish_date?: InputMaybe<Order_By>;
   read_time?: InputMaybe<Order_By>;
@@ -5430,9 +5059,9 @@ export enum Books_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
-  Id = 'id',
+  GooglebooksId = 'googlebooks_id',
   /** column name */
-  OpenlibraryId = 'openlibrary_id',
+  Id = 'id',
   /** column name */
   Overview = 'overview',
   /** column name */
@@ -5458,8 +5087,8 @@ export type Books_Set_Input = {
   content_score?: InputMaybe<Scalars['Float']['input']>;
   cover?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  googlebooks_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
   publish_date?: InputMaybe<Scalars['date']['input']>;
   read_time?: InputMaybe<Scalars['Int']['input']>;
@@ -5541,8 +5170,8 @@ export type Books_Stream_Cursor_Value_Input = {
   content_score?: InputMaybe<Scalars['Float']['input']>;
   cover?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  googlebooks_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   overview?: InputMaybe<Scalars['String']['input']>;
   publish_date?: InputMaybe<Scalars['date']['input']>;
   read_time?: InputMaybe<Scalars['Int']['input']>;
@@ -5582,9 +5211,9 @@ export enum Books_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
-  Id = 'id',
+  GooglebooksId = 'googlebooks_id',
   /** column name */
-  OpenlibraryId = 'openlibrary_id',
+  Id = 'id',
   /** column name */
   Overview = 'overview',
   /** column name */
@@ -6037,14 +5666,192 @@ export type Citext_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['citext']['input']>;
 };
 
+/** columns and relationships of "credit_types" */
+export type Credit_Types = {
+  __typename?: 'credit_types';
+  /** An array relationship */
+  credits: Array<Credits>;
+  /** An aggregate relationship */
+  credits_aggregate: Credits_Aggregate;
+  type: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "credit_types" */
+export type Credit_TypesCreditsArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "credit_types" */
+export type Credit_TypesCredits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+/** aggregated selection of "credit_types" */
+export type Credit_Types_Aggregate = {
+  __typename?: 'credit_types_aggregate';
+  aggregate?: Maybe<Credit_Types_Aggregate_Fields>;
+  nodes: Array<Credit_Types>;
+};
+
+/** aggregate fields of "credit_types" */
+export type Credit_Types_Aggregate_Fields = {
+  __typename?: 'credit_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Credit_Types_Max_Fields>;
+  min?: Maybe<Credit_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "credit_types" */
+export type Credit_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "credit_types". All fields are combined with a logical 'AND'. */
+export type Credit_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Credit_Types_Bool_Exp>>;
+  _not?: InputMaybe<Credit_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Credit_Types_Bool_Exp>>;
+  credits?: InputMaybe<Credits_Bool_Exp>;
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "credit_types" */
+export enum Credit_Types_Constraint {
+  /** unique or primary key constraint on columns "type" */
+  CreditTypesPkey = 'credit_types_pkey'
+}
+
+export enum Credit_Types_Enum {
+  Artist = 'artist',
+  Author = 'author',
+  Cast = 'cast',
+  Crew = 'crew'
+}
+
+/** Boolean expression to compare columns of type "credit_types_enum". All fields are combined with logical 'AND'. */
+export type Credit_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Credit_Types_Enum>;
+  _in?: InputMaybe<Array<Credit_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Credit_Types_Enum>;
+  _nin?: InputMaybe<Array<Credit_Types_Enum>>;
+};
+
+/** input type for inserting data into table "credit_types" */
+export type Credit_Types_Insert_Input = {
+  credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Credit_Types_Max_Fields = {
+  __typename?: 'credit_types_max_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Credit_Types_Min_Fields = {
+  __typename?: 'credit_types_min_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "credit_types" */
+export type Credit_Types_Mutation_Response = {
+  __typename?: 'credit_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Credit_Types>;
+};
+
+/** input type for inserting object relation for remote table "credit_types" */
+export type Credit_Types_Obj_Rel_Insert_Input = {
+  data: Credit_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Credit_Types_On_Conflict>;
+};
+
+/** on_conflict condition type for table "credit_types" */
+export type Credit_Types_On_Conflict = {
+  constraint: Credit_Types_Constraint;
+  update_columns?: Array<Credit_Types_Update_Column>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "credit_types". */
+export type Credit_Types_Order_By = {
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: credit_types */
+export type Credit_Types_Pk_Columns_Input = {
+  type: Scalars['String']['input'];
+};
+
+/** select columns of table "credit_types" */
+export enum Credit_Types_Select_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "credit_types" */
+export type Credit_Types_Set_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "credit_types" */
+export type Credit_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Credit_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Credit_Types_Stream_Cursor_Value_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "credit_types" */
+export enum Credit_Types_Update_Column {
+  /** column name */
+  Type = 'type'
+}
+
+export type Credit_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Credit_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Credit_Types_Bool_Exp;
+};
+
 /** columns and relationships of "credits" */
 export type Credits = {
   __typename?: 'credits';
   /** An object relationship */
   book_credit?: Maybe<Books>;
-  credit_type: Scalars['String']['output'];
+  character?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  creditTypeByCreditType: Credit_Types;
+  credit_type: Credit_Types_Enum;
+  department?: Maybe<Scalars['String']['output']>;
   details: Scalars['jsonb']['output'];
   id: Scalars['uuid']['output'];
+  job?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   movie_credit?: Maybe<Movies>;
   object_id: Scalars['uuid']['output'];
@@ -6053,7 +5860,6 @@ export type Credits = {
   /** An object relationship */
   person: People;
   person_id: Scalars['uuid']['output'];
-  role: Scalars['String']['output'];
   /** An object relationship */
   song_credit?: Maybe<Songs>;
 };
@@ -6149,16 +5955,19 @@ export type Credits_Bool_Exp = {
   _not?: InputMaybe<Credits_Bool_Exp>;
   _or?: InputMaybe<Array<Credits_Bool_Exp>>;
   book_credit?: InputMaybe<Books_Bool_Exp>;
-  credit_type?: InputMaybe<String_Comparison_Exp>;
+  character?: InputMaybe<String_Comparison_Exp>;
+  creditTypeByCreditType?: InputMaybe<Credit_Types_Bool_Exp>;
+  credit_type?: InputMaybe<Credit_Types_Enum_Comparison_Exp>;
+  department?: InputMaybe<String_Comparison_Exp>;
   details?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  job?: InputMaybe<String_Comparison_Exp>;
   movie_credit?: InputMaybe<Movies_Bool_Exp>;
   object_id?: InputMaybe<Uuid_Comparison_Exp>;
   object_type?: InputMaybe<String_Comparison_Exp>;
   order?: InputMaybe<Float_Comparison_Exp>;
   person?: InputMaybe<People_Bool_Exp>;
   person_id?: InputMaybe<Uuid_Comparison_Exp>;
-  role?: InputMaybe<String_Comparison_Exp>;
   song_credit?: InputMaybe<Songs_Bool_Exp>;
 };
 
@@ -6191,7 +6000,8 @@ export type Credits_Inc_Input = {
 /** input type for inserting data into table "credits" */
 export type Credits_Insert_Input = {
   book_credit?: InputMaybe<Books_Obj_Rel_Insert_Input>;
-  credit_type?: InputMaybe<Scalars['String']['input']>;
+  creditTypeByCreditType?: InputMaybe<Credit_Types_Obj_Rel_Insert_Input>;
+  credit_type?: InputMaybe<Credit_Types_Enum>;
   details?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_credit?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
@@ -6200,54 +6010,57 @@ export type Credits_Insert_Input = {
   order?: InputMaybe<Scalars['Float']['input']>;
   person?: InputMaybe<People_Obj_Rel_Insert_Input>;
   person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
   song_credit?: InputMaybe<Songs_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
 export type Credits_Max_Fields = {
   __typename?: 'credits_max_fields';
-  credit_type?: Maybe<Scalars['String']['output']>;
+  character?: Maybe<Scalars['String']['output']>;
+  department?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  job?: Maybe<Scalars['String']['output']>;
   object_id?: Maybe<Scalars['uuid']['output']>;
   object_type?: Maybe<Scalars['String']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
   person_id?: Maybe<Scalars['uuid']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "credits" */
 export type Credits_Max_Order_By = {
-  credit_type?: InputMaybe<Order_By>;
+  character?: InputMaybe<Order_By>;
+  department?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  job?: InputMaybe<Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
   person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Credits_Min_Fields = {
   __typename?: 'credits_min_fields';
-  credit_type?: Maybe<Scalars['String']['output']>;
+  character?: Maybe<Scalars['String']['output']>;
+  department?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  job?: Maybe<Scalars['String']['output']>;
   object_id?: Maybe<Scalars['uuid']['output']>;
   object_type?: Maybe<Scalars['String']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
   person_id?: Maybe<Scalars['uuid']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "credits" */
 export type Credits_Min_Order_By = {
-  credit_type?: InputMaybe<Order_By>;
+  character?: InputMaybe<Order_By>;
+  department?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  job?: InputMaybe<Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
   person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "credits" */
@@ -6269,16 +6082,19 @@ export type Credits_On_Conflict = {
 /** Ordering options when selecting data from "credits". */
 export type Credits_Order_By = {
   book_credit?: InputMaybe<Books_Order_By>;
+  character?: InputMaybe<Order_By>;
+  creditTypeByCreditType?: InputMaybe<Credit_Types_Order_By>;
   credit_type?: InputMaybe<Order_By>;
+  department?: InputMaybe<Order_By>;
   details?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  job?: InputMaybe<Order_By>;
   movie_credit?: InputMaybe<Movies_Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
   person?: InputMaybe<People_Order_By>;
   person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
   song_credit?: InputMaybe<Songs_Order_By>;
 };
 
@@ -6295,11 +6111,17 @@ export type Credits_Prepend_Input = {
 /** select columns of table "credits" */
 export enum Credits_Select_Column {
   /** column name */
+  Character = 'character',
+  /** column name */
   CreditType = 'credit_type',
+  /** column name */
+  Department = 'department',
   /** column name */
   Details = 'details',
   /** column name */
   Id = 'id',
+  /** column name */
+  Job = 'job',
   /** column name */
   ObjectId = 'object_id',
   /** column name */
@@ -6307,21 +6129,18 @@ export enum Credits_Select_Column {
   /** column name */
   Order = 'order',
   /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  Role = 'role'
+  PersonId = 'person_id'
 }
 
 /** input type for updating data in table "credits" */
 export type Credits_Set_Input = {
-  credit_type?: InputMaybe<Scalars['String']['input']>;
+  credit_type?: InputMaybe<Credit_Types_Enum>;
   details?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_type?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<Scalars['Float']['input']>;
   person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
@@ -6367,14 +6186,16 @@ export type Credits_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Credits_Stream_Cursor_Value_Input = {
-  credit_type?: InputMaybe<Scalars['String']['input']>;
+  character?: InputMaybe<Scalars['String']['input']>;
+  credit_type?: InputMaybe<Credit_Types_Enum>;
+  department?: InputMaybe<Scalars['String']['input']>;
   details?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  job?: InputMaybe<Scalars['String']['input']>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_type?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<Scalars['Float']['input']>;
   person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -6403,9 +6224,7 @@ export enum Credits_Update_Column {
   /** column name */
   Order = 'order',
   /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  Role = 'role'
+  PersonId = 'person_id'
 }
 
 export type Credits_Updates = {
@@ -6988,6 +6807,178 @@ export type Files_Variance_Fields = {
 /** order by variance() on columns of table "storage.files" */
 export type Files_Variance_Order_By = {
   size?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "gender_types" */
+export type Gender_Types = {
+  __typename?: 'gender_types';
+  /** An array relationship */
+  people: Array<People>;
+  /** An aggregate relationship */
+  people_aggregate: People_Aggregate;
+  type: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "gender_types" */
+export type Gender_TypesPeopleArgs = {
+  distinct_on?: InputMaybe<Array<People_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<People_Order_By>>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+
+/** columns and relationships of "gender_types" */
+export type Gender_TypesPeople_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<People_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<People_Order_By>>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+/** aggregated selection of "gender_types" */
+export type Gender_Types_Aggregate = {
+  __typename?: 'gender_types_aggregate';
+  aggregate?: Maybe<Gender_Types_Aggregate_Fields>;
+  nodes: Array<Gender_Types>;
+};
+
+/** aggregate fields of "gender_types" */
+export type Gender_Types_Aggregate_Fields = {
+  __typename?: 'gender_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Gender_Types_Max_Fields>;
+  min?: Maybe<Gender_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "gender_types" */
+export type Gender_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Gender_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "gender_types". All fields are combined with a logical 'AND'. */
+export type Gender_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Gender_Types_Bool_Exp>>;
+  _not?: InputMaybe<Gender_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Gender_Types_Bool_Exp>>;
+  people?: InputMaybe<People_Bool_Exp>;
+  people_aggregate?: InputMaybe<People_Aggregate_Bool_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "gender_types" */
+export enum Gender_Types_Constraint {
+  /** unique or primary key constraint on columns "type" */
+  GenderTypesPkey = 'gender_types_pkey'
+}
+
+export enum Gender_Types_Enum {
+  Female = 'female',
+  Male = 'male',
+  Other = 'other'
+}
+
+/** Boolean expression to compare columns of type "gender_types_enum". All fields are combined with logical 'AND'. */
+export type Gender_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Gender_Types_Enum>;
+  _in?: InputMaybe<Array<Gender_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Gender_Types_Enum>;
+  _nin?: InputMaybe<Array<Gender_Types_Enum>>;
+};
+
+/** input type for inserting data into table "gender_types" */
+export type Gender_Types_Insert_Input = {
+  people?: InputMaybe<People_Arr_Rel_Insert_Input>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Gender_Types_Max_Fields = {
+  __typename?: 'gender_types_max_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Gender_Types_Min_Fields = {
+  __typename?: 'gender_types_min_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "gender_types" */
+export type Gender_Types_Mutation_Response = {
+  __typename?: 'gender_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Gender_Types>;
+};
+
+/** input type for inserting object relation for remote table "gender_types" */
+export type Gender_Types_Obj_Rel_Insert_Input = {
+  data: Gender_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Gender_Types_On_Conflict>;
+};
+
+/** on_conflict condition type for table "gender_types" */
+export type Gender_Types_On_Conflict = {
+  constraint: Gender_Types_Constraint;
+  update_columns?: Array<Gender_Types_Update_Column>;
+  where?: InputMaybe<Gender_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "gender_types". */
+export type Gender_Types_Order_By = {
+  people_aggregate?: InputMaybe<People_Aggregate_Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: gender_types */
+export type Gender_Types_Pk_Columns_Input = {
+  type: Scalars['String']['input'];
+};
+
+/** select columns of table "gender_types" */
+export enum Gender_Types_Select_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "gender_types" */
+export type Gender_Types_Set_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "gender_types" */
+export type Gender_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Gender_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Gender_Types_Stream_Cursor_Value_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "gender_types" */
+export enum Gender_Types_Update_Column {
+  /** column name */
+  Type = 'type'
+}
+
+export type Gender_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Gender_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Gender_Types_Bool_Exp;
 };
 
 /** columns and relationships of "genre_types" */
@@ -8931,15 +8922,12 @@ export type Movie_Keywords_Updates = {
 /** columns and relationships of "movie_media" */
 export type Movie_Media = {
   __typename?: 'movie_media';
-  bucket?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  file_url: Scalars['String']['output'];
-  id: Scalars['uuid']['output'];
-  media_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  file: Files;
+  file_id: Scalars['uuid']['output'];
   /** An object relationship */
   movie: Movies;
   movie_id: Scalars['uuid']['output'];
-  uploaded_by: Scalars['uuid']['output'];
 };
 
 /** aggregated selection of "movie_media" */
@@ -8994,78 +8982,50 @@ export type Movie_Media_Bool_Exp = {
   _and?: InputMaybe<Array<Movie_Media_Bool_Exp>>;
   _not?: InputMaybe<Movie_Media_Bool_Exp>;
   _or?: InputMaybe<Array<Movie_Media_Bool_Exp>>;
-  bucket?: InputMaybe<String_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  file_url?: InputMaybe<String_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  media_id?: InputMaybe<Uuid_Comparison_Exp>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  file_id?: InputMaybe<Uuid_Comparison_Exp>;
   movie?: InputMaybe<Movies_Bool_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
-  uploaded_by?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "movie_media" */
 export enum Movie_Media_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint on columns "movie_id", "file_id" */
   MovieMediaPkey = 'movie_media_pkey'
 }
 
 /** input type for inserting data into table "movie_media" */
 export type Movie_Media_Insert_Input = {
-  bucket?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  file_url?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
   movie?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
 export type Movie_Media_Max_Fields = {
   __typename?: 'movie_media_max_fields';
-  bucket?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  file_url?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "movie_media" */
 export type Movie_Media_Max_Order_By = {
-  bucket?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  file_url?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Movie_Media_Min_Fields = {
   __typename?: 'movie_media_min_fields';
-  bucket?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  file_url?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "movie_media" */
 export type Movie_Media_Min_Order_By = {
-  bucket?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  file_url?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "movie_media" */
@@ -9086,48 +9046,30 @@ export type Movie_Media_On_Conflict = {
 
 /** Ordering options when selecting data from "movie_media". */
 export type Movie_Media_Order_By = {
-  bucket?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  file_url?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
+  file?: InputMaybe<Files_Order_By>;
+  file_id?: InputMaybe<Order_By>;
   movie?: InputMaybe<Movies_Order_By>;
   movie_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: movie_media */
 export type Movie_Media_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  movie_id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "movie_media" */
 export enum Movie_Media_Select_Column {
   /** column name */
-  Bucket = 'bucket',
+  FileId = 'file_id',
   /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  FileUrl = 'file_url',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  MovieId = 'movie_id',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  MovieId = 'movie_id'
 }
 
 /** input type for updating data in table "movie_media" */
 export type Movie_Media_Set_Input = {
-  bucket?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  file_url?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** Streaming cursor of the table "movie_media" */
@@ -9140,31 +9082,16 @@ export type Movie_Media_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movie_Media_Stream_Cursor_Value_Input = {
-  bucket?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  file_url?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "movie_media" */
 export enum Movie_Media_Update_Column {
   /** column name */
-  Bucket = 'bucket',
+  FileId = 'file_id',
   /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  FileUrl = 'file_url',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  MovieId = 'movie_id',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  MovieId = 'movie_id'
 }
 
 export type Movie_Media_Updates = {
@@ -9655,6 +9582,8 @@ export enum Movie_Release_Status_Types_Constraint {
 export enum Movie_Release_Status_Types_Enum {
   Cancelled = 'cancelled',
   InProduction = 'in_production',
+  Planned = 'planned',
+  PostProduction = 'post_production',
   Released = 'released',
   Rumoured = 'rumoured'
 }
@@ -11059,10 +10988,6 @@ export type Mutation_Root = {
   delete_activity_types?: Maybe<Activity_Types_Mutation_Response>;
   /** delete single row from the table: "activity_types" */
   delete_activity_types_by_pk?: Maybe<Activity_Types>;
-  /** delete data from the table: "album_artists" */
-  delete_album_artists?: Maybe<Album_Artists_Mutation_Response>;
-  /** delete single row from the table: "album_artists" */
-  delete_album_artists_by_pk?: Maybe<Album_Artists>;
   /** delete data from the table: "album_media" */
   delete_album_media?: Maybe<Album_Media_Mutation_Response>;
   /** delete single row from the table: "album_media" */
@@ -11115,10 +11040,18 @@ export type Mutation_Root = {
   delete_books?: Maybe<Books_Mutation_Response>;
   /** delete single row from the table: "books" */
   delete_books_by_pk?: Maybe<Books>;
+  /** delete data from the table: "credit_types" */
+  delete_credit_types?: Maybe<Credit_Types_Mutation_Response>;
+  /** delete single row from the table: "credit_types" */
+  delete_credit_types_by_pk?: Maybe<Credit_Types>;
   /** delete data from the table: "credits" */
   delete_credits?: Maybe<Credits_Mutation_Response>;
   /** delete single row from the table: "credits" */
   delete_credits_by_pk?: Maybe<Credits>;
+  /** delete data from the table: "gender_types" */
+  delete_gender_types?: Maybe<Gender_Types_Mutation_Response>;
+  /** delete single row from the table: "gender_types" */
+  delete_gender_types_by_pk?: Maybe<Gender_Types>;
   /** delete data from the table: "genre_types" */
   delete_genre_types?: Maybe<Genre_Types_Mutation_Response>;
   /** delete single row from the table: "genre_types" */
@@ -11207,10 +11140,6 @@ export type Mutation_Root = {
   delete_reports?: Maybe<Reports_Mutation_Response>;
   /** delete single row from the table: "reports" */
   delete_reports_by_pk?: Maybe<Reports>;
-  /** delete data from the table: "song_artists" */
-  delete_song_artists?: Maybe<Song_Artists_Mutation_Response>;
-  /** delete single row from the table: "song_artists" */
-  delete_song_artists_by_pk?: Maybe<Song_Artists>;
   /** delete data from the table: "song_changes" */
   delete_song_changes?: Maybe<Song_Changes_Mutation_Response>;
   /** delete single row from the table: "song_changes" */
@@ -11303,10 +11232,6 @@ export type Mutation_Root = {
   insert_activity_types?: Maybe<Activity_Types_Mutation_Response>;
   /** insert a single row into the table: "activity_types" */
   insert_activity_types_one?: Maybe<Activity_Types>;
-  /** insert data into the table: "album_artists" */
-  insert_album_artists?: Maybe<Album_Artists_Mutation_Response>;
-  /** insert a single row into the table: "album_artists" */
-  insert_album_artists_one?: Maybe<Album_Artists>;
   /** insert data into the table: "album_media" */
   insert_album_media?: Maybe<Album_Media_Mutation_Response>;
   /** insert a single row into the table: "album_media" */
@@ -11359,10 +11284,18 @@ export type Mutation_Root = {
   insert_books?: Maybe<Books_Mutation_Response>;
   /** insert a single row into the table: "books" */
   insert_books_one?: Maybe<Books>;
+  /** insert data into the table: "credit_types" */
+  insert_credit_types?: Maybe<Credit_Types_Mutation_Response>;
+  /** insert a single row into the table: "credit_types" */
+  insert_credit_types_one?: Maybe<Credit_Types>;
   /** insert data into the table: "credits" */
   insert_credits?: Maybe<Credits_Mutation_Response>;
   /** insert a single row into the table: "credits" */
   insert_credits_one?: Maybe<Credits>;
+  /** insert data into the table: "gender_types" */
+  insert_gender_types?: Maybe<Gender_Types_Mutation_Response>;
+  /** insert a single row into the table: "gender_types" */
+  insert_gender_types_one?: Maybe<Gender_Types>;
   /** insert data into the table: "genre_types" */
   insert_genre_types?: Maybe<Genre_Types_Mutation_Response>;
   /** insert a single row into the table: "genre_types" */
@@ -11451,10 +11384,6 @@ export type Mutation_Root = {
   insert_reports?: Maybe<Reports_Mutation_Response>;
   /** insert a single row into the table: "reports" */
   insert_reports_one?: Maybe<Reports>;
-  /** insert data into the table: "song_artists" */
-  insert_song_artists?: Maybe<Song_Artists_Mutation_Response>;
-  /** insert a single row into the table: "song_artists" */
-  insert_song_artists_one?: Maybe<Song_Artists>;
   /** insert data into the table: "song_changes" */
   insert_song_changes?: Maybe<Song_Changes_Mutation_Response>;
   /** insert a single row into the table: "song_changes" */
@@ -11549,12 +11478,6 @@ export type Mutation_Root = {
   update_activity_types_by_pk?: Maybe<Activity_Types>;
   /** update multiples rows of table: "activity_types" */
   update_activity_types_many?: Maybe<Array<Maybe<Activity_Types_Mutation_Response>>>;
-  /** update data of the table: "album_artists" */
-  update_album_artists?: Maybe<Album_Artists_Mutation_Response>;
-  /** update single row of the table: "album_artists" */
-  update_album_artists_by_pk?: Maybe<Album_Artists>;
-  /** update multiples rows of table: "album_artists" */
-  update_album_artists_many?: Maybe<Array<Maybe<Album_Artists_Mutation_Response>>>;
   /** update data of the table: "album_media" */
   update_album_media?: Maybe<Album_Media_Mutation_Response>;
   /** update single row of the table: "album_media" */
@@ -11651,6 +11574,12 @@ export type Mutation_Root = {
   update_books_many?: Maybe<Array<Maybe<Books_Mutation_Response>>>;
   /** update multiples rows of table: "storage.buckets" */
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
+  /** update data of the table: "credit_types" */
+  update_credit_types?: Maybe<Credit_Types_Mutation_Response>;
+  /** update single row of the table: "credit_types" */
+  update_credit_types_by_pk?: Maybe<Credit_Types>;
+  /** update multiples rows of table: "credit_types" */
+  update_credit_types_many?: Maybe<Array<Maybe<Credit_Types_Mutation_Response>>>;
   /** update data of the table: "credits" */
   update_credits?: Maybe<Credits_Mutation_Response>;
   /** update single row of the table: "credits" */
@@ -11659,6 +11588,12 @@ export type Mutation_Root = {
   update_credits_many?: Maybe<Array<Maybe<Credits_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
+  /** update data of the table: "gender_types" */
+  update_gender_types?: Maybe<Gender_Types_Mutation_Response>;
+  /** update single row of the table: "gender_types" */
+  update_gender_types_by_pk?: Maybe<Gender_Types>;
+  /** update multiples rows of table: "gender_types" */
+  update_gender_types_many?: Maybe<Array<Maybe<Gender_Types_Mutation_Response>>>;
   /** update data of the table: "genre_types" */
   update_genre_types?: Maybe<Genre_Types_Mutation_Response>;
   /** update single row of the table: "genre_types" */
@@ -11791,12 +11726,6 @@ export type Mutation_Root = {
   update_reports_by_pk?: Maybe<Reports>;
   /** update multiples rows of table: "reports" */
   update_reports_many?: Maybe<Array<Maybe<Reports_Mutation_Response>>>;
-  /** update data of the table: "song_artists" */
-  update_song_artists?: Maybe<Song_Artists_Mutation_Response>;
-  /** update single row of the table: "song_artists" */
-  update_song_artists_by_pk?: Maybe<Song_Artists>;
-  /** update multiples rows of table: "song_artists" */
-  update_song_artists_many?: Maybe<Array<Maybe<Song_Artists_Mutation_Response>>>;
   /** update data of the table: "song_changes" */
   update_song_changes?: Maybe<Song_Changes_Mutation_Response>;
   /** update single row of the table: "song_changes" */
@@ -12021,18 +11950,6 @@ export type Mutation_RootDelete_Activity_Types_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Album_ArtistsArgs = {
-  where: Album_Artists_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Album_Artists_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_Album_MediaArgs = {
   where: Album_Media_Bool_Exp;
 };
@@ -12040,7 +11957,8 @@ export type Mutation_RootDelete_Album_MediaArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Album_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  album_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 
@@ -12163,7 +12081,8 @@ export type Mutation_RootDelete_Book_MediaArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Book_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  book_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 
@@ -12192,6 +12111,18 @@ export type Mutation_RootDelete_Books_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Credit_TypesArgs = {
+  where: Credit_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Credit_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_CreditsArgs = {
   where: Credits_Bool_Exp;
 };
@@ -12200,6 +12131,18 @@ export type Mutation_RootDelete_CreditsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Credits_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Gender_TypesArgs = {
+  where: Gender_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Gender_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
 };
 
 
@@ -12322,7 +12265,8 @@ export type Mutation_RootDelete_Movie_MediaArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Movie_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  movie_id: Scalars['uuid']['input'];
 };
 
 
@@ -12442,7 +12386,8 @@ export type Mutation_RootDelete_Person_MediaArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Person_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  person_id: Scalars['uuid']['input'];
 };
 
 
@@ -12466,18 +12411,6 @@ export type Mutation_RootDelete_ReportsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Reports_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Song_ArtistsArgs = {
-  where: Song_Artists_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Song_Artists_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -12789,20 +12722,6 @@ export type Mutation_RootInsert_Activity_Types_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Album_ArtistsArgs = {
-  objects: Array<Album_Artists_Insert_Input>;
-  on_conflict?: InputMaybe<Album_Artists_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Album_Artists_OneArgs = {
-  object: Album_Artists_Insert_Input;
-  on_conflict?: InputMaybe<Album_Artists_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_Album_MediaArgs = {
   objects: Array<Album_Media_Insert_Input>;
   on_conflict?: InputMaybe<Album_Media_On_Conflict>;
@@ -12985,6 +12904,20 @@ export type Mutation_RootInsert_Books_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Credit_TypesArgs = {
+  objects: Array<Credit_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Credit_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Credit_Types_OneArgs = {
+  object: Credit_Types_Insert_Input;
+  on_conflict?: InputMaybe<Credit_Types_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_CreditsArgs = {
   objects: Array<Credits_Insert_Input>;
   on_conflict?: InputMaybe<Credits_On_Conflict>;
@@ -12995,6 +12928,20 @@ export type Mutation_RootInsert_CreditsArgs = {
 export type Mutation_RootInsert_Credits_OneArgs = {
   object: Credits_Insert_Input;
   on_conflict?: InputMaybe<Credits_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Gender_TypesArgs = {
+  objects: Array<Gender_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Gender_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Gender_Types_OneArgs = {
+  object: Gender_Types_Insert_Input;
+  on_conflict?: InputMaybe<Gender_Types_On_Conflict>;
 };
 
 
@@ -13303,20 +13250,6 @@ export type Mutation_RootInsert_ReportsArgs = {
 export type Mutation_RootInsert_Reports_OneArgs = {
   object: Reports_Insert_Input;
   on_conflict?: InputMaybe<Reports_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Song_ArtistsArgs = {
-  objects: Array<Song_Artists_Insert_Input>;
-  on_conflict?: InputMaybe<Song_Artists_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Song_Artists_OneArgs = {
-  object: Song_Artists_Insert_Input;
-  on_conflict?: InputMaybe<Song_Artists_On_Conflict>;
 };
 
 
@@ -13705,28 +13638,6 @@ export type Mutation_RootUpdate_Activity_Types_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Album_ArtistsArgs = {
-  _inc?: InputMaybe<Album_Artists_Inc_Input>;
-  _set?: InputMaybe<Album_Artists_Set_Input>;
-  where: Album_Artists_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Album_Artists_By_PkArgs = {
-  _inc?: InputMaybe<Album_Artists_Inc_Input>;
-  _set?: InputMaybe<Album_Artists_Set_Input>;
-  pk_columns: Album_Artists_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Album_Artists_ManyArgs = {
-  updates: Array<Album_Artists_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Album_MediaArgs = {
   _set?: InputMaybe<Album_Media_Set_Input>;
   where: Album_Media_Bool_Exp;
@@ -14055,6 +13966,26 @@ export type Mutation_RootUpdate_Buckets_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Credit_TypesArgs = {
+  _set?: InputMaybe<Credit_Types_Set_Input>;
+  where: Credit_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Credit_Types_By_PkArgs = {
+  _set?: InputMaybe<Credit_Types_Set_Input>;
+  pk_columns: Credit_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Credit_Types_ManyArgs = {
+  updates: Array<Credit_Types_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_CreditsArgs = {
   _append?: InputMaybe<Credits_Append_Input>;
   _delete_at_path?: InputMaybe<Credits_Delete_At_Path_Input>;
@@ -14089,6 +14020,26 @@ export type Mutation_RootUpdate_Credits_ManyArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Files_ManyArgs = {
   updates: Array<Files_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gender_TypesArgs = {
+  _set?: InputMaybe<Gender_Types_Set_Input>;
+  where: Gender_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gender_Types_By_PkArgs = {
+  _set?: InputMaybe<Gender_Types_Set_Input>;
+  pk_columns: Gender_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gender_Types_ManyArgs = {
+  updates: Array<Gender_Types_Updates>;
 };
 
 
@@ -14537,28 +14488,6 @@ export type Mutation_RootUpdate_Reports_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Reports_ManyArgs = {
   updates: Array<Reports_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Song_ArtistsArgs = {
-  _inc?: InputMaybe<Song_Artists_Inc_Input>;
-  _set?: InputMaybe<Song_Artists_Set_Input>;
-  where: Song_Artists_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Song_Artists_By_PkArgs = {
-  _inc?: InputMaybe<Song_Artists_Inc_Input>;
-  _set?: InputMaybe<Song_Artists_Set_Input>;
-  pk_columns: Song_Artists_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Song_Artists_ManyArgs = {
-  updates: Array<Song_Artists_Updates>;
 };
 
 
@@ -15102,6 +15031,7 @@ export enum Object_Types_Constraint {
 }
 
 export enum Object_Types_Enum {
+  Album = 'album',
   Book = 'book',
   Game = 'game',
   Movie = 'movie',
@@ -15227,10 +15157,6 @@ export enum Order_By {
 /** columns and relationships of "people" */
 export type People = {
   __typename?: 'people';
-  /** An array relationship */
-  album_artists: Array<Album_Artists>;
-  /** An aggregate relationship */
-  album_artists_aggregate: Album_Artists_Aggregate;
   backdrop: Scalars['String']['output'];
   bio?: Maybe<Scalars['String']['output']>;
   birth_date?: Maybe<Scalars['date']['output']>;
@@ -15241,7 +15167,9 @@ export type People = {
   /** An aggregate relationship */
   credits_aggregate: Credits_Aggregate;
   death_date?: Maybe<Scalars['date']['output']>;
-  gender?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Gender_Types_Enum>;
+  /** An object relationship */
+  gender_type?: Maybe<Gender_Types>;
   headshot: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
   /** A computed field, executes function "top_department_for" */
@@ -15249,7 +15177,6 @@ export type People = {
   /** A computed field, executes function "top_role_for" */
   known_for_role?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
-  openlibrary_id?: Maybe<Scalars['String']['output']>;
   /** An array relationship */
   person_changes: Array<Person_Changes>;
   /** An aggregate relationship */
@@ -15258,33 +15185,9 @@ export type People = {
   person_media: Array<Person_Media>;
   /** An aggregate relationship */
   person_media_aggregate: Person_Media_Aggregate;
-  /** An array relationship */
-  song_artists: Array<Song_Artists>;
-  /** An aggregate relationship */
-  song_artists_aggregate: Song_Artists_Aggregate;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
-};
-
-
-/** columns and relationships of "people" */
-export type PeopleAlbum_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-
-/** columns and relationships of "people" */
-export type PeopleAlbum_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
 };
 
 
@@ -15347,31 +15250,22 @@ export type PeoplePerson_Media_AggregateArgs = {
   where?: InputMaybe<Person_Media_Bool_Exp>;
 };
 
-
-/** columns and relationships of "people" */
-export type PeopleSong_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
-
-/** columns and relationships of "people" */
-export type PeopleSong_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
 /** aggregated selection of "people" */
 export type People_Aggregate = {
   __typename?: 'people_aggregate';
   aggregate?: Maybe<People_Aggregate_Fields>;
   nodes: Array<People>;
+};
+
+export type People_Aggregate_Bool_Exp = {
+  count?: InputMaybe<People_Aggregate_Bool_Exp_Count>;
+};
+
+export type People_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<People_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<People_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "people" */
@@ -15397,6 +15291,28 @@ export type People_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "people" */
+export type People_Aggregate_Order_By = {
+  avg?: InputMaybe<People_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<People_Max_Order_By>;
+  min?: InputMaybe<People_Min_Order_By>;
+  stddev?: InputMaybe<People_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<People_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<People_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<People_Sum_Order_By>;
+  var_pop?: InputMaybe<People_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<People_Var_Samp_Order_By>;
+  variance?: InputMaybe<People_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "people" */
+export type People_Arr_Rel_Insert_Input = {
+  data: Array<People_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<People_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type People_Avg_Fields = {
   __typename?: 'people_avg_fields';
@@ -15404,13 +15320,17 @@ export type People_Avg_Fields = {
   view_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by avg() on columns of table "people" */
+export type People_Avg_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "people". All fields are combined with a logical 'AND'. */
 export type People_Bool_Exp = {
   _and?: InputMaybe<Array<People_Bool_Exp>>;
   _not?: InputMaybe<People_Bool_Exp>;
   _or?: InputMaybe<Array<People_Bool_Exp>>;
-  album_artists?: InputMaybe<Album_Artists_Bool_Exp>;
-  album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Bool_Exp>;
   backdrop?: InputMaybe<String_Comparison_Exp>;
   bio?: InputMaybe<String_Comparison_Exp>;
   birth_date?: InputMaybe<Date_Comparison_Exp>;
@@ -15419,19 +15339,17 @@ export type People_Bool_Exp = {
   credits?: InputMaybe<Credits_Bool_Exp>;
   credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
   death_date?: InputMaybe<Date_Comparison_Exp>;
-  gender?: InputMaybe<String_Comparison_Exp>;
+  gender?: InputMaybe<Gender_Types_Enum_Comparison_Exp>;
+  gender_type?: InputMaybe<Gender_Types_Bool_Exp>;
   headshot?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   known_for_department?: InputMaybe<String_Comparison_Exp>;
   known_for_role?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
-  openlibrary_id?: InputMaybe<String_Comparison_Exp>;
   person_changes?: InputMaybe<Person_Changes_Bool_Exp>;
   person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Bool_Exp>;
   person_media?: InputMaybe<Person_Media_Bool_Exp>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Bool_Exp>;
-  song_artists?: InputMaybe<Song_Artists_Bool_Exp>;
-  song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Bool_Exp>;
   spotify_id?: InputMaybe<String_Comparison_Exp>;
   tmdb_id?: InputMaybe<String_Comparison_Exp>;
   view_count?: InputMaybe<Int_Comparison_Exp>;
@@ -15439,8 +15357,6 @@ export type People_Bool_Exp = {
 
 /** unique or primary key constraints on table "people" */
 export enum People_Constraint {
-  /** unique or primary key constraint on columns "openlibrary_id" */
-  PeopleOpenlibraryIdKey = 'people_openlibrary_id_key',
   /** unique or primary key constraint on columns "id" */
   PeoplePkey = 'people_pkey',
   /** unique or primary key constraint on columns "spotify_id" */
@@ -15457,7 +15373,6 @@ export type People_Inc_Input = {
 
 /** input type for inserting data into table "people" */
 export type People_Insert_Input = {
-  album_artists?: InputMaybe<Album_Artists_Arr_Rel_Insert_Input>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   bio?: InputMaybe<Scalars['String']['input']>;
   birth_date?: InputMaybe<Scalars['date']['input']>;
@@ -15465,14 +15380,13 @@ export type People_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
   death_date?: InputMaybe<Scalars['date']['input']>;
-  gender?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender_Types_Enum>;
+  gender_type?: InputMaybe<Gender_Types_Obj_Rel_Insert_Input>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   person_changes?: InputMaybe<Person_Changes_Arr_Rel_Insert_Input>;
   person_media?: InputMaybe<Person_Media_Arr_Rel_Insert_Input>;
-  song_artists?: InputMaybe<Song_Artists_Arr_Rel_Insert_Input>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
@@ -15487,7 +15401,6 @@ export type People_Max_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   death_date?: Maybe<Scalars['date']['output']>;
-  gender?: Maybe<Scalars['String']['output']>;
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   /** A computed field, executes function "top_department_for" */
@@ -15495,10 +15408,25 @@ export type People_Max_Fields = {
   /** A computed field, executes function "top_role_for" */
   known_for_role?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  openlibrary_id?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by max() on columns of table "people" */
+export type People_Max_Order_By = {
+  backdrop?: InputMaybe<Order_By>;
+  bio?: InputMaybe<Order_By>;
+  birth_date?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  death_date?: InputMaybe<Order_By>;
+  headshot?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  spotify_id?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -15510,7 +15438,6 @@ export type People_Min_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   death_date?: Maybe<Scalars['date']['output']>;
-  gender?: Maybe<Scalars['String']['output']>;
   headshot?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   /** A computed field, executes function "top_department_for" */
@@ -15518,10 +15445,25 @@ export type People_Min_Fields = {
   /** A computed field, executes function "top_role_for" */
   known_for_role?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  openlibrary_id?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by min() on columns of table "people" */
+export type People_Min_Order_By = {
+  backdrop?: InputMaybe<Order_By>;
+  bio?: InputMaybe<Order_By>;
+  birth_date?: InputMaybe<Order_By>;
+  content_score?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  death_date?: InputMaybe<Order_By>;
+  headshot?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  spotify_id?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "people" */
@@ -15549,7 +15491,6 @@ export type People_On_Conflict = {
 
 /** Ordering options when selecting data from "people". */
 export type People_Order_By = {
-  album_artists_aggregate?: InputMaybe<Album_Artists_Aggregate_Order_By>;
   backdrop?: InputMaybe<Order_By>;
   bio?: InputMaybe<Order_By>;
   birth_date?: InputMaybe<Order_By>;
@@ -15558,15 +15499,14 @@ export type People_Order_By = {
   credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
   death_date?: InputMaybe<Order_By>;
   gender?: InputMaybe<Order_By>;
+  gender_type?: InputMaybe<Gender_Types_Order_By>;
   headshot?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   known_for_department?: InputMaybe<Order_By>;
   known_for_role?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
-  openlibrary_id?: InputMaybe<Order_By>;
   person_changes_aggregate?: InputMaybe<Person_Changes_Aggregate_Order_By>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Order_By>;
-  song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Order_By>;
   spotify_id?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
@@ -15600,8 +15540,6 @@ export enum People_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  OpenlibraryId = 'openlibrary_id',
-  /** column name */
   SpotifyId = 'spotify_id',
   /** column name */
   TmdbId = 'tmdb_id',
@@ -15617,11 +15555,10 @@ export type People_Set_Input = {
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   death_date?: InputMaybe<Scalars['date']['input']>;
-  gender?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender_Types_Enum>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
@@ -15634,6 +15571,12 @@ export type People_Stddev_Fields = {
   view_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "people" */
+export type People_Stddev_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type People_Stddev_Pop_Fields = {
   __typename?: 'people_stddev_pop_fields';
@@ -15641,11 +15584,23 @@ export type People_Stddev_Pop_Fields = {
   view_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "people" */
+export type People_Stddev_Pop_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type People_Stddev_Samp_Fields = {
   __typename?: 'people_stddev_samp_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "people" */
+export type People_Stddev_Samp_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "people" */
@@ -15664,11 +15619,10 @@ export type People_Stream_Cursor_Value_Input = {
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   death_date?: InputMaybe<Scalars['date']['input']>;
-  gender?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender_Types_Enum>;
   headshot?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  openlibrary_id?: InputMaybe<Scalars['String']['input']>;
   spotify_id?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
@@ -15679,6 +15633,12 @@ export type People_Sum_Fields = {
   __typename?: 'people_sum_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "people" */
+export type People_Sum_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "people" */
@@ -15704,8 +15664,6 @@ export enum People_Update_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  OpenlibraryId = 'openlibrary_id',
-  /** column name */
   SpotifyId = 'spotify_id',
   /** column name */
   TmdbId = 'tmdb_id',
@@ -15729,6 +15687,12 @@ export type People_Var_Pop_Fields = {
   view_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "people" */
+export type People_Var_Pop_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type People_Var_Samp_Fields = {
   __typename?: 'people_var_samp_fields';
@@ -15736,11 +15700,23 @@ export type People_Var_Samp_Fields = {
   view_count?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "people" */
+export type People_Var_Samp_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type People_Variance_Fields = {
   __typename?: 'people_variance_fields';
   content_score?: Maybe<Scalars['Float']['output']>;
   view_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "people" */
+export type People_Variance_Order_By = {
+  content_score?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "person_changes" */
@@ -15969,15 +15945,12 @@ export type Person_Changes_Updates = {
 /** columns and relationships of "person_media" */
 export type Person_Media = {
   __typename?: 'person_media';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id: Scalars['uuid']['output'];
-  media_id: Scalars['uuid']['output'];
-  media_type?: Maybe<Scalars['String']['output']>;
-  media_url: Scalars['String']['output'];
+  /** An object relationship */
+  file: Files;
+  file_id: Scalars['uuid']['output'];
   /** An object relationship */
   person: People;
   person_id: Scalars['uuid']['output'];
-  uploaded_by: Scalars['uuid']['output'];
 };
 
 /** aggregated selection of "person_media" */
@@ -16032,78 +16005,50 @@ export type Person_Media_Bool_Exp = {
   _and?: InputMaybe<Array<Person_Media_Bool_Exp>>;
   _not?: InputMaybe<Person_Media_Bool_Exp>;
   _or?: InputMaybe<Array<Person_Media_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  media_id?: InputMaybe<Uuid_Comparison_Exp>;
-  media_type?: InputMaybe<String_Comparison_Exp>;
-  media_url?: InputMaybe<String_Comparison_Exp>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  file_id?: InputMaybe<Uuid_Comparison_Exp>;
   person?: InputMaybe<People_Bool_Exp>;
   person_id?: InputMaybe<Uuid_Comparison_Exp>;
-  uploaded_by?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "person_media" */
 export enum Person_Media_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint on columns "person_id", "file_id" */
   PersonMediaPkey = 'person_media_pkey'
 }
 
 /** input type for inserting data into table "person_media" */
 export type Person_Media_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  media_type?: InputMaybe<Scalars['String']['input']>;
-  media_url?: InputMaybe<Scalars['String']['input']>;
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
   person?: InputMaybe<People_Obj_Rel_Insert_Input>;
   person_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
 export type Person_Media_Max_Fields = {
   __typename?: 'person_media_max_fields';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
-  media_type?: Maybe<Scalars['String']['output']>;
-  media_url?: Maybe<Scalars['String']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
   person_id?: Maybe<Scalars['uuid']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "person_media" */
 export type Person_Media_Max_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  media_type?: InputMaybe<Order_By>;
-  media_url?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
   person_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Person_Media_Min_Fields = {
   __typename?: 'person_media_min_fields';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  media_id?: Maybe<Scalars['uuid']['output']>;
-  media_type?: Maybe<Scalars['String']['output']>;
-  media_url?: Maybe<Scalars['String']['output']>;
+  file_id?: Maybe<Scalars['uuid']['output']>;
   person_id?: Maybe<Scalars['uuid']['output']>;
-  uploaded_by?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "person_media" */
 export type Person_Media_Min_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  media_type?: InputMaybe<Order_By>;
-  media_url?: InputMaybe<Order_By>;
+  file_id?: InputMaybe<Order_By>;
   person_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "person_media" */
@@ -16124,48 +16069,30 @@ export type Person_Media_On_Conflict = {
 
 /** Ordering options when selecting data from "person_media". */
 export type Person_Media_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  media_id?: InputMaybe<Order_By>;
-  media_type?: InputMaybe<Order_By>;
-  media_url?: InputMaybe<Order_By>;
+  file?: InputMaybe<Files_Order_By>;
+  file_id?: InputMaybe<Order_By>;
   person?: InputMaybe<People_Order_By>;
   person_id?: InputMaybe<Order_By>;
-  uploaded_by?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: person_media */
 export type Person_Media_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  person_id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "person_media" */
 export enum Person_Media_Select_Column {
   /** column name */
-  CreatedAt = 'created_at',
+  FileId = 'file_id',
   /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  MediaType = 'media_type',
-  /** column name */
-  MediaUrl = 'media_url',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  PersonId = 'person_id'
 }
 
 /** input type for updating data in table "person_media" */
 export type Person_Media_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  media_type?: InputMaybe<Scalars['String']['input']>;
-  media_url?: InputMaybe<Scalars['String']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
   person_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** Streaming cursor of the table "person_media" */
@@ -16178,31 +16105,16 @@ export type Person_Media_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Person_Media_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  media_id?: InputMaybe<Scalars['uuid']['input']>;
-  media_type?: InputMaybe<Scalars['String']['input']>;
-  media_url?: InputMaybe<Scalars['String']['input']>;
+  file_id?: InputMaybe<Scalars['uuid']['input']>;
   person_id?: InputMaybe<Scalars['uuid']['input']>;
-  uploaded_by?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "person_media" */
 export enum Person_Media_Update_Column {
   /** column name */
-  CreatedAt = 'created_at',
+  FileId = 'file_id',
   /** column name */
-  Id = 'id',
-  /** column name */
-  MediaId = 'media_id',
-  /** column name */
-  MediaType = 'media_type',
-  /** column name */
-  MediaUrl = 'media_url',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  UploadedBy = 'uploaded_by'
+  PersonId = 'person_id'
 }
 
 export type Person_Media_Updates = {
@@ -16220,12 +16132,6 @@ export type Query_Root = {
   activity_types_aggregate: Activity_Types_Aggregate;
   /** fetch data from the table: "activity_types" using primary key columns */
   activity_types_by_pk?: Maybe<Activity_Types>;
-  /** An array relationship */
-  album_artists: Array<Album_Artists>;
-  /** An aggregate relationship */
-  album_artists_aggregate: Album_Artists_Aggregate;
-  /** fetch data from the table: "album_artists" using primary key columns */
-  album_artists_by_pk?: Maybe<Album_Artists>;
   /** An array relationship */
   album_media: Array<Album_Media>;
   /** An aggregate relationship */
@@ -16322,9 +16228,9 @@ export type Query_Root = {
   book_genre_types_aggregate: Book_Genre_Types_Aggregate;
   /** fetch data from the table: "book_genre_types" using primary key columns */
   book_genre_types_by_pk?: Maybe<Book_Genre_Types>;
-  /** fetch data from the table: "book_genres" */
+  /** An array relationship */
   book_genres: Array<Book_Genres>;
-  /** fetch aggregated fields from the table: "book_genres" */
+  /** An aggregate relationship */
   book_genres_aggregate: Book_Genres_Aggregate;
   /** fetch data from the table: "book_genres" using primary key columns */
   book_genres_by_pk?: Maybe<Book_Genres>;
@@ -16358,6 +16264,12 @@ export type Query_Root = {
   buckets: Array<Buckets>;
   /** fetch aggregated fields from the table: "storage.buckets" */
   bucketsAggregate: Buckets_Aggregate;
+  /** fetch data from the table: "credit_types" */
+  credit_types: Array<Credit_Types>;
+  /** fetch aggregated fields from the table: "credit_types" */
+  credit_types_aggregate: Credit_Types_Aggregate;
+  /** fetch data from the table: "credit_types" using primary key columns */
+  credit_types_by_pk?: Maybe<Credit_Types>;
   /** An array relationship */
   credits: Array<Credits>;
   /** An aggregate relationship */
@@ -16370,6 +16282,12 @@ export type Query_Root = {
   files: Array<Files>;
   /** fetch aggregated fields from the table: "storage.files" */
   filesAggregate: Files_Aggregate;
+  /** fetch data from the table: "gender_types" */
+  gender_types: Array<Gender_Types>;
+  /** fetch aggregated fields from the table: "gender_types" */
+  gender_types_aggregate: Gender_Types_Aggregate;
+  /** fetch data from the table: "gender_types" using primary key columns */
+  gender_types_by_pk?: Maybe<Gender_Types>;
   /** An array relationship */
   genre_types: Array<Genre_Types>;
   /** An aggregate relationship */
@@ -16472,9 +16390,9 @@ export type Query_Root = {
   object_types_aggregate: Object_Types_Aggregate;
   /** fetch data from the table: "object_types" using primary key columns */
   object_types_by_pk?: Maybe<Object_Types>;
-  /** fetch data from the table: "people" */
+  /** An array relationship */
   people: Array<People>;
-  /** fetch aggregated fields from the table: "people" */
+  /** An aggregate relationship */
   people_aggregate: People_Aggregate;
   /** fetch data from the table: "people" using primary key columns */
   people_by_pk?: Maybe<People>;
@@ -16502,12 +16420,6 @@ export type Query_Root = {
   reports_aggregate: Reports_Aggregate;
   /** fetch data from the table: "reports" using primary key columns */
   reports_by_pk?: Maybe<Reports>;
-  /** An array relationship */
-  song_artists: Array<Song_Artists>;
-  /** An aggregate relationship */
-  song_artists_aggregate: Song_Artists_Aggregate;
-  /** fetch data from the table: "song_artists" using primary key columns */
-  song_artists_by_pk?: Maybe<Song_Artists>;
   /** An array relationship */
   song_changes: Array<Song_Changes>;
   /** An aggregate relationship */
@@ -16606,29 +16518,6 @@ export type Query_RootActivity_Types_By_PkArgs = {
 };
 
 
-export type Query_RootAlbum_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-
-export type Query_RootAlbum_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-
-export type Query_RootAlbum_Artists_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
 export type Query_RootAlbum_MediaArgs = {
   distinct_on?: InputMaybe<Array<Album_Media_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -16648,7 +16537,8 @@ export type Query_RootAlbum_Media_AggregateArgs = {
 
 
 export type Query_RootAlbum_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  album_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 
@@ -17065,7 +16955,8 @@ export type Query_RootBook_Media_AggregateArgs = {
 
 
 export type Query_RootBook_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  book_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 
@@ -17138,6 +17029,29 @@ export type Query_RootBucketsAggregateArgs = {
 };
 
 
+export type Query_RootCredit_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Query_RootCredit_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Query_RootCredit_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
 export type Query_RootCreditsArgs = {
   distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -17181,6 +17095,29 @@ export type Query_RootFilesAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Files_Order_By>>;
   where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Query_RootGender_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Gender_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Gender_Types_Order_By>>;
+  where?: InputMaybe<Gender_Types_Bool_Exp>;
+};
+
+
+export type Query_RootGender_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Gender_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Gender_Types_Order_By>>;
+  where?: InputMaybe<Gender_Types_Bool_Exp>;
+};
+
+
+export type Query_RootGender_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
 };
 
 
@@ -17413,7 +17350,8 @@ export type Query_RootMovie_Media_AggregateArgs = {
 
 
 export type Query_RootMovie_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  movie_id: Scalars['uuid']['input'];
 };
 
 
@@ -17643,7 +17581,8 @@ export type Query_RootPerson_Media_AggregateArgs = {
 
 
 export type Query_RootPerson_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  person_id: Scalars['uuid']['input'];
 };
 
 
@@ -17689,29 +17628,6 @@ export type Query_RootReports_AggregateArgs = {
 
 
 export type Query_RootReports_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootSong_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
-
-export type Query_RootSong_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
-
-export type Query_RootSong_Artists_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -18611,354 +18527,6 @@ export type Smallint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['smallint']['input']>>;
 };
 
-/** columns and relationships of "song_artists" */
-export type Song_Artists = {
-  __typename?: 'song_artists';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id: Scalars['uuid']['output'];
-  order?: Maybe<Scalars['Int']['output']>;
-  /** An object relationship */
-  person: People;
-  person_id: Scalars['uuid']['output'];
-  role?: Maybe<Scalars['String']['output']>;
-  /** An object relationship */
-  song: Songs;
-  song_id: Scalars['uuid']['output'];
-};
-
-/** aggregated selection of "song_artists" */
-export type Song_Artists_Aggregate = {
-  __typename?: 'song_artists_aggregate';
-  aggregate?: Maybe<Song_Artists_Aggregate_Fields>;
-  nodes: Array<Song_Artists>;
-};
-
-export type Song_Artists_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Song_Artists_Aggregate_Bool_Exp_Count>;
-};
-
-export type Song_Artists_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Song_Artists_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "song_artists" */
-export type Song_Artists_Aggregate_Fields = {
-  __typename?: 'song_artists_aggregate_fields';
-  avg?: Maybe<Song_Artists_Avg_Fields>;
-  count: Scalars['Int']['output'];
-  max?: Maybe<Song_Artists_Max_Fields>;
-  min?: Maybe<Song_Artists_Min_Fields>;
-  stddev?: Maybe<Song_Artists_Stddev_Fields>;
-  stddev_pop?: Maybe<Song_Artists_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Song_Artists_Stddev_Samp_Fields>;
-  sum?: Maybe<Song_Artists_Sum_Fields>;
-  var_pop?: Maybe<Song_Artists_Var_Pop_Fields>;
-  var_samp?: Maybe<Song_Artists_Var_Samp_Fields>;
-  variance?: Maybe<Song_Artists_Variance_Fields>;
-};
-
-
-/** aggregate fields of "song_artists" */
-export type Song_Artists_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "song_artists" */
-export type Song_Artists_Aggregate_Order_By = {
-  avg?: InputMaybe<Song_Artists_Avg_Order_By>;
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Song_Artists_Max_Order_By>;
-  min?: InputMaybe<Song_Artists_Min_Order_By>;
-  stddev?: InputMaybe<Song_Artists_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<Song_Artists_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Song_Artists_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Song_Artists_Sum_Order_By>;
-  var_pop?: InputMaybe<Song_Artists_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Song_Artists_Var_Samp_Order_By>;
-  variance?: InputMaybe<Song_Artists_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "song_artists" */
-export type Song_Artists_Arr_Rel_Insert_Input = {
-  data: Array<Song_Artists_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Song_Artists_On_Conflict>;
-};
-
-/** aggregate avg on columns */
-export type Song_Artists_Avg_Fields = {
-  __typename?: 'song_artists_avg_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by avg() on columns of table "song_artists" */
-export type Song_Artists_Avg_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "song_artists". All fields are combined with a logical 'AND'. */
-export type Song_Artists_Bool_Exp = {
-  _and?: InputMaybe<Array<Song_Artists_Bool_Exp>>;
-  _not?: InputMaybe<Song_Artists_Bool_Exp>;
-  _or?: InputMaybe<Array<Song_Artists_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  order?: InputMaybe<Int_Comparison_Exp>;
-  person?: InputMaybe<People_Bool_Exp>;
-  person_id?: InputMaybe<Uuid_Comparison_Exp>;
-  role?: InputMaybe<String_Comparison_Exp>;
-  song?: InputMaybe<Songs_Bool_Exp>;
-  song_id?: InputMaybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "song_artists" */
-export enum Song_Artists_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  SongArtistsPkey = 'song_artists_pkey'
-}
-
-/** input type for incrementing numeric columns in table "song_artists" */
-export type Song_Artists_Inc_Input = {
-  order?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** input type for inserting data into table "song_artists" */
-export type Song_Artists_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  order?: InputMaybe<Scalars['Int']['input']>;
-  person?: InputMaybe<People_Obj_Rel_Insert_Input>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-  song?: InputMaybe<Songs_Obj_Rel_Insert_Input>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate max on columns */
-export type Song_Artists_Max_Fields = {
-  __typename?: 'song_artists_max_fields';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  order?: Maybe<Scalars['Int']['output']>;
-  person_id?: Maybe<Scalars['uuid']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
-  song_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by max() on columns of table "song_artists" */
-export type Song_Artists_Max_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  order?: InputMaybe<Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
-  song_id?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Song_Artists_Min_Fields = {
-  __typename?: 'song_artists_min_fields';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  order?: Maybe<Scalars['Int']['output']>;
-  person_id?: Maybe<Scalars['uuid']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
-  song_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by min() on columns of table "song_artists" */
-export type Song_Artists_Min_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  order?: InputMaybe<Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
-  song_id?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "song_artists" */
-export type Song_Artists_Mutation_Response = {
-  __typename?: 'song_artists_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Song_Artists>;
-};
-
-/** on_conflict condition type for table "song_artists" */
-export type Song_Artists_On_Conflict = {
-  constraint: Song_Artists_Constraint;
-  update_columns?: Array<Song_Artists_Update_Column>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "song_artists". */
-export type Song_Artists_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  order?: InputMaybe<Order_By>;
-  person?: InputMaybe<People_Order_By>;
-  person_id?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
-  song?: InputMaybe<Songs_Order_By>;
-  song_id?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: song_artists */
-export type Song_Artists_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "song_artists" */
-export enum Song_Artists_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Order = 'order',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  Role = 'role',
-  /** column name */
-  SongId = 'song_id'
-}
-
-/** input type for updating data in table "song_artists" */
-export type Song_Artists_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  order?: InputMaybe<Scalars['Int']['input']>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Song_Artists_Stddev_Fields = {
-  __typename?: 'song_artists_stddev_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev() on columns of table "song_artists" */
-export type Song_Artists_Stddev_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Song_Artists_Stddev_Pop_Fields = {
-  __typename?: 'song_artists_stddev_pop_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_pop() on columns of table "song_artists" */
-export type Song_Artists_Stddev_Pop_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Song_Artists_Stddev_Samp_Fields = {
-  __typename?: 'song_artists_stddev_samp_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_samp() on columns of table "song_artists" */
-export type Song_Artists_Stddev_Samp_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** Streaming cursor of the table "song_artists" */
-export type Song_Artists_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Song_Artists_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Song_Artists_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  order?: InputMaybe<Scalars['Int']['input']>;
-  person_id?: InputMaybe<Scalars['uuid']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-  song_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Song_Artists_Sum_Fields = {
-  __typename?: 'song_artists_sum_fields';
-  order?: Maybe<Scalars['Int']['output']>;
-};
-
-/** order by sum() on columns of table "song_artists" */
-export type Song_Artists_Sum_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** update columns of table "song_artists" */
-export enum Song_Artists_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Order = 'order',
-  /** column name */
-  PersonId = 'person_id',
-  /** column name */
-  Role = 'role',
-  /** column name */
-  SongId = 'song_id'
-}
-
-export type Song_Artists_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Song_Artists_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Song_Artists_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Song_Artists_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Song_Artists_Var_Pop_Fields = {
-  __typename?: 'song_artists_var_pop_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_pop() on columns of table "song_artists" */
-export type Song_Artists_Var_Pop_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate var_samp on columns */
-export type Song_Artists_Var_Samp_Fields = {
-  __typename?: 'song_artists_var_samp_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_samp() on columns of table "song_artists" */
-export type Song_Artists_Var_Samp_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
-/** aggregate variance on columns */
-export type Song_Artists_Variance_Fields = {
-  __typename?: 'song_artists_variance_fields';
-  order?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by variance() on columns of table "song_artists" */
-export type Song_Artists_Variance_Order_By = {
-  order?: InputMaybe<Order_By>;
-};
-
 /** columns and relationships of "song_changes" */
 export type Song_Changes = {
   __typename?: 'song_changes';
@@ -19555,6 +19123,10 @@ export type Songs = {
   apple_music_id?: Maybe<Scalars['String']['output']>;
   content_score: Scalars['Float']['output'];
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  /** An array relationship */
+  credits: Array<Credits>;
+  /** An aggregate relationship */
+  credits_aggregate: Credits_Aggregate;
   disc_number?: Maybe<Scalars['Int']['output']>;
   duration?: Maybe<Scalars['interval']['output']>;
   explicit?: Maybe<Scalars['Boolean']['output']>;
@@ -19564,10 +19136,6 @@ export type Songs = {
   /** An aggregate relationship */
   movie_soundtracks_aggregate: Movie_Soundtrack_Aggregate;
   name: Scalars['String']['output'];
-  /** An array relationship */
-  song_artists: Array<Song_Artists>;
-  /** An aggregate relationship */
-  song_artists_aggregate: Song_Artists_Aggregate;
   /** An array relationship */
   song_changes: Array<Song_Changes>;
   /** An aggregate relationship */
@@ -19588,6 +19156,26 @@ export type Songs = {
 
 
 /** columns and relationships of "songs" */
+export type SongsCreditsArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "songs" */
+export type SongsCredits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "songs" */
 export type SongsMovie_SoundtracksArgs = {
   distinct_on?: InputMaybe<Array<Movie_Soundtrack_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -19604,26 +19192,6 @@ export type SongsMovie_Soundtracks_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Movie_Soundtrack_Order_By>>;
   where?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
-};
-
-
-/** columns and relationships of "songs" */
-export type SongsSong_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
-
-/** columns and relationships of "songs" */
-export type SongsSong_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
 };
 
 
@@ -19790,6 +19358,8 @@ export type Songs_Bool_Exp = {
   apple_music_id?: InputMaybe<String_Comparison_Exp>;
   content_score?: InputMaybe<Float_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  credits?: InputMaybe<Credits_Bool_Exp>;
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
   disc_number?: InputMaybe<Int_Comparison_Exp>;
   duration?: InputMaybe<Interval_Comparison_Exp>;
   explicit?: InputMaybe<Boolean_Comparison_Exp>;
@@ -19797,8 +19367,6 @@ export type Songs_Bool_Exp = {
   movie_soundtracks?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
   movie_soundtracks_aggregate?: InputMaybe<Movie_Soundtrack_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
-  song_artists?: InputMaybe<Song_Artists_Bool_Exp>;
-  song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Bool_Exp>;
   song_changes?: InputMaybe<Song_Changes_Bool_Exp>;
   song_changes_aggregate?: InputMaybe<Song_Changes_Aggregate_Bool_Exp>;
   song_genres?: InputMaybe<Song_Genres_Bool_Exp>;
@@ -19831,13 +19399,13 @@ export type Songs_Insert_Input = {
   apple_music_id?: InputMaybe<Scalars['String']['input']>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
   disc_number?: InputMaybe<Scalars['Int']['input']>;
   duration?: InputMaybe<Scalars['interval']['input']>;
   explicit?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_soundtracks?: InputMaybe<Movie_Soundtrack_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
-  song_artists?: InputMaybe<Song_Artists_Arr_Rel_Insert_Input>;
   song_changes?: InputMaybe<Song_Changes_Arr_Rel_Insert_Input>;
   song_genres?: InputMaybe<Song_Genres_Arr_Rel_Insert_Input>;
   song_keywords?: InputMaybe<Song_Keywords_Arr_Rel_Insert_Input>;
@@ -19939,13 +19507,13 @@ export type Songs_Order_By = {
   apple_music_id?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
   disc_number?: InputMaybe<Order_By>;
   duration?: InputMaybe<Order_By>;
   explicit?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   movie_soundtracks_aggregate?: InputMaybe<Movie_Soundtrack_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
-  song_artists_aggregate?: InputMaybe<Song_Artists_Aggregate_Order_By>;
   song_changes_aggregate?: InputMaybe<Song_Changes_Aggregate_Order_By>;
   song_genres_aggregate?: InputMaybe<Song_Genres_Aggregate_Order_By>;
   song_keywords_aggregate?: InputMaybe<Song_Keywords_Aggregate_Order_By>;
@@ -20394,14 +19962,6 @@ export type Subscription_Root = {
   /** fetch data from the table in a streaming manner: "activity_types" */
   activity_types_stream: Array<Activity_Types>;
   /** An array relationship */
-  album_artists: Array<Album_Artists>;
-  /** An aggregate relationship */
-  album_artists_aggregate: Album_Artists_Aggregate;
-  /** fetch data from the table: "album_artists" using primary key columns */
-  album_artists_by_pk?: Maybe<Album_Artists>;
-  /** fetch data from the table in a streaming manner: "album_artists" */
-  album_artists_stream: Array<Album_Artists>;
-  /** An array relationship */
   album_media: Array<Album_Media>;
   /** An aggregate relationship */
   album_media_aggregate: Album_Media_Aggregate;
@@ -20529,9 +20089,9 @@ export type Subscription_Root = {
   book_genre_types_by_pk?: Maybe<Book_Genre_Types>;
   /** fetch data from the table in a streaming manner: "book_genre_types" */
   book_genre_types_stream: Array<Book_Genre_Types>;
-  /** fetch data from the table: "book_genres" */
+  /** An array relationship */
   book_genres: Array<Book_Genres>;
-  /** fetch aggregated fields from the table: "book_genres" */
+  /** An aggregate relationship */
   book_genres_aggregate: Book_Genres_Aggregate;
   /** fetch data from the table: "book_genres" using primary key columns */
   book_genres_by_pk?: Maybe<Book_Genres>;
@@ -20577,6 +20137,14 @@ export type Subscription_Root = {
   bucketsAggregate: Buckets_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.buckets" */
   buckets_stream: Array<Buckets>;
+  /** fetch data from the table: "credit_types" */
+  credit_types: Array<Credit_Types>;
+  /** fetch aggregated fields from the table: "credit_types" */
+  credit_types_aggregate: Credit_Types_Aggregate;
+  /** fetch data from the table: "credit_types" using primary key columns */
+  credit_types_by_pk?: Maybe<Credit_Types>;
+  /** fetch data from the table in a streaming manner: "credit_types" */
+  credit_types_stream: Array<Credit_Types>;
   /** An array relationship */
   credits: Array<Credits>;
   /** An aggregate relationship */
@@ -20593,6 +20161,14 @@ export type Subscription_Root = {
   filesAggregate: Files_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.files" */
   files_stream: Array<Files>;
+  /** fetch data from the table: "gender_types" */
+  gender_types: Array<Gender_Types>;
+  /** fetch aggregated fields from the table: "gender_types" */
+  gender_types_aggregate: Gender_Types_Aggregate;
+  /** fetch data from the table: "gender_types" using primary key columns */
+  gender_types_by_pk?: Maybe<Gender_Types>;
+  /** fetch data from the table in a streaming manner: "gender_types" */
+  gender_types_stream: Array<Gender_Types>;
   /** An array relationship */
   genre_types: Array<Genre_Types>;
   /** An aggregate relationship */
@@ -20729,9 +20305,9 @@ export type Subscription_Root = {
   object_types_by_pk?: Maybe<Object_Types>;
   /** fetch data from the table in a streaming manner: "object_types" */
   object_types_stream: Array<Object_Types>;
-  /** fetch data from the table: "people" */
+  /** An array relationship */
   people: Array<People>;
-  /** fetch aggregated fields from the table: "people" */
+  /** An aggregate relationship */
   people_aggregate: People_Aggregate;
   /** fetch data from the table: "people" using primary key columns */
   people_by_pk?: Maybe<People>;
@@ -20769,14 +20345,6 @@ export type Subscription_Root = {
   reports_by_pk?: Maybe<Reports>;
   /** fetch data from the table in a streaming manner: "reports" */
   reports_stream: Array<Reports>;
-  /** An array relationship */
-  song_artists: Array<Song_Artists>;
-  /** An aggregate relationship */
-  song_artists_aggregate: Song_Artists_Aggregate;
-  /** fetch data from the table: "song_artists" using primary key columns */
-  song_artists_by_pk?: Maybe<Song_Artists>;
-  /** fetch data from the table in a streaming manner: "song_artists" */
-  song_artists_stream: Array<Song_Artists>;
   /** An array relationship */
   song_changes: Array<Song_Changes>;
   /** An aggregate relationship */
@@ -20906,36 +20474,6 @@ export type Subscription_RootActivity_Types_StreamArgs = {
 };
 
 
-export type Subscription_RootAlbum_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-
-export type Subscription_RootAlbum_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Album_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Album_Artists_Order_By>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-
-export type Subscription_RootAlbum_Artists_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootAlbum_Artists_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Album_Artists_Stream_Cursor_Input>>;
-  where?: InputMaybe<Album_Artists_Bool_Exp>;
-};
-
-
 export type Subscription_RootAlbum_MediaArgs = {
   distinct_on?: InputMaybe<Array<Album_Media_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -20955,7 +20493,8 @@ export type Subscription_RootAlbum_Media_AggregateArgs = {
 
 
 export type Subscription_RootAlbum_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  album_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 
@@ -21498,7 +21037,8 @@ export type Subscription_RootBook_Media_AggregateArgs = {
 
 
 export type Subscription_RootBook_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  book_id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
 };
 
 
@@ -21599,6 +21139,36 @@ export type Subscription_RootBuckets_StreamArgs = {
 };
 
 
+export type Subscription_RootCredit_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootCredit_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootCredit_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootCredit_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Credit_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
 export type Subscription_RootCreditsArgs = {
   distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -21656,6 +21226,36 @@ export type Subscription_RootFiles_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Files_Stream_Cursor_Input>>;
   where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Subscription_RootGender_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Gender_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Gender_Types_Order_By>>;
+  where?: InputMaybe<Gender_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootGender_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Gender_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Gender_Types_Order_By>>;
+  where?: InputMaybe<Gender_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootGender_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootGender_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Gender_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Gender_Types_Bool_Exp>;
 };
 
 
@@ -21951,7 +21551,8 @@ export type Subscription_RootMovie_Media_AggregateArgs = {
 
 
 export type Subscription_RootMovie_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  movie_id: Scalars['uuid']['input'];
 };
 
 
@@ -22251,7 +21852,8 @@ export type Subscription_RootPerson_Media_AggregateArgs = {
 
 
 export type Subscription_RootPerson_Media_By_PkArgs = {
-  id: Scalars['uuid']['input'];
+  file_id: Scalars['uuid']['input'];
+  person_id: Scalars['uuid']['input'];
 };
 
 
@@ -22319,36 +21921,6 @@ export type Subscription_RootReports_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Reports_Stream_Cursor_Input>>;
   where?: InputMaybe<Reports_Bool_Exp>;
-};
-
-
-export type Subscription_RootSong_ArtistsArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
-
-export type Subscription_RootSong_Artists_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Song_Artists_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Song_Artists_Order_By>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
-};
-
-
-export type Subscription_RootSong_Artists_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootSong_Artists_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Song_Artists_Stream_Cursor_Input>>;
-  where?: InputMaybe<Song_Artists_Bool_Exp>;
 };
 
 
@@ -25295,12 +24867,12 @@ export type GetAuditLogsQueryVariables = Exact<{
 
 export type GetAuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, diff: any, operation: string, pk: any, table_name: string, created_at: any, user: { __typename?: 'users', avatarUrl: string, displayName: string } }> };
 
-export type GetBookByOpenLibrary_IdQueryVariables = Exact<{
-  openlibrary_id?: InputMaybe<Scalars['String']['input']>;
+export type GetBookByGoogleBooksIdQueryVariables = Exact<{
+  googlebooks_id?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetBookByOpenLibrary_IdQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', openlibrary_id?: string | null }> };
+export type GetBookByGoogleBooksIdQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', googlebooks_id?: string | null }> };
 
 export type GetBooksQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Books_Select_Column> | Books_Select_Column>;
@@ -25329,7 +24901,7 @@ export type GetCreditsQueryVariables = Exact<{
 }>;
 
 
-export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, order: number, role: string, person: { __typename?: 'people', id: any, name: string, headshot: string } }> };
+export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }> };
 
 export type GetFilesQueryVariables = Exact<{
   where?: InputMaybe<Files_Bool_Exp>;
@@ -25361,14 +24933,14 @@ export type GetMovieForContentQualityCheckQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, order: number, role: string, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Status_Types_Enum | null, updated_at: any }>, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, song_artists: Array<{ __typename?: 'song_artists', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Status_Types_Enum | null, updated_at: any }>, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -25441,12 +25013,12 @@ export type GetPersonByTmdb_IdQueryVariables = Exact<{
 
 export type GetPersonByTmdb_IdQuery = { __typename?: 'query_root', people: Array<{ __typename?: 'people', tmdb_id?: string | null }> };
 
-export type GetPersonRolesQueryVariables = Exact<{
+export type GetPersonDetailsQueryVariables = Exact<{
   pid: Scalars['uuid']['input'];
 }>;
 
 
-export type GetPersonRolesQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', role: string }> };
+export type GetPersonDetailsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', department?: string | null }> };
 
 export type GetPersonQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -25458,7 +25030,7 @@ export type GetPersonQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: string | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: string, details: any, object_id: any, object_type: string, role: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album: { __typename?: 'albums', artwork: string } } | null }> } | null };
+export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album: { __typename?: 'albums', artwork: string } } | null }> } | null };
 
 export type InsertPersonMutationVariables = Exact<{
   object: People_Insert_Input;
@@ -25488,7 +25060,7 @@ export type GetSongQueryVariables = Exact<{
 }>;
 
 
-export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, duration?: any | null, content_score: number, spotify_id?: string | null, apple_music_id?: string | null, album_id: any, track_number?: number | null, explicit?: boolean | null, type?: string | null, spotify_uri?: string | null, disc_number?: number | null, album: { __typename?: 'albums', id: any, name: string, artwork: string, release_date?: any | null, type?: string | null }, song_artists: Array<{ __typename?: 'song_artists', id: any, order?: number | null, person: { __typename?: 'people', name: string } }> } | null };
+export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, duration?: any | null, content_score: number, spotify_id?: string | null, apple_music_id?: string | null, album_id: any, track_number?: number | null, explicit?: boolean | null, type?: string | null, spotify_uri?: string | null, disc_number?: number | null, album: { __typename?: 'albums', id: any, name: string, artwork: string, release_date?: any | null, type?: string | null }, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } | null };
 
 export type GetSongsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Songs_Select_Column> | Songs_Select_Column>;
@@ -25594,44 +25166,44 @@ export const useInfiniteGetAuditLogsQuery = <
   })()
     )};
 
-export const GetBookByOpenLibrary_IdDocument = `
-    query GetBookByOpenLibrary_ID($openlibrary_id: String) {
-  books(where: {openlibrary_id: {_eq: $openlibrary_id}}) {
-    openlibrary_id
+export const GetBookByGoogleBooksIdDocument = `
+    query GetBookByGoogleBooksId($googlebooks_id: String) {
+  books(where: {googlebooks_id: {_eq: $googlebooks_id}}) {
+    googlebooks_id
   }
 }
     `;
 
-export const useGetBookByOpenLibrary_IdQuery = <
-      TData = GetBookByOpenLibrary_IdQuery,
+export const useGetBookByGoogleBooksIdQuery = <
+      TData = GetBookByGoogleBooksIdQuery,
       TError = unknown
     >(
-      variables?: GetBookByOpenLibrary_IdQueryVariables,
-      options?: Omit<UseQueryOptions<GetBookByOpenLibrary_IdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBookByOpenLibrary_IdQuery, TError, TData>['queryKey'] }
+      variables?: GetBookByGoogleBooksIdQueryVariables,
+      options?: Omit<UseQueryOptions<GetBookByGoogleBooksIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBookByGoogleBooksIdQuery, TError, TData>['queryKey'] }
     ) => {
     
-    return useQuery<GetBookByOpenLibrary_IdQuery, TError, TData>(
+    return useQuery<GetBookByGoogleBooksIdQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['GetBookByOpenLibrary_ID'] : ['GetBookByOpenLibrary_ID', variables],
-    queryFn: fetcher<GetBookByOpenLibrary_IdQuery, GetBookByOpenLibrary_IdQueryVariables>(GetBookByOpenLibrary_IdDocument, variables),
+    queryKey: variables === undefined ? ['GetBookByGoogleBooksId'] : ['GetBookByGoogleBooksId', variables],
+    queryFn: fetcher<GetBookByGoogleBooksIdQuery, GetBookByGoogleBooksIdQueryVariables>(GetBookByGoogleBooksIdDocument, variables),
     ...options
   }
     )};
 
-export const useInfiniteGetBookByOpenLibrary_IdQuery = <
-      TData = InfiniteData<GetBookByOpenLibrary_IdQuery>,
+export const useInfiniteGetBookByGoogleBooksIdQuery = <
+      TData = InfiniteData<GetBookByGoogleBooksIdQuery>,
       TError = unknown
     >(
-      variables: GetBookByOpenLibrary_IdQueryVariables,
-      options: Omit<UseInfiniteQueryOptions<GetBookByOpenLibrary_IdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetBookByOpenLibrary_IdQuery, TError, TData>['queryKey'] }
+      variables: GetBookByGoogleBooksIdQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetBookByGoogleBooksIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetBookByGoogleBooksIdQuery, TError, TData>['queryKey'] }
     ) => {
     
-    return useInfiniteQuery<GetBookByOpenLibrary_IdQuery, TError, TData>(
+    return useInfiniteQuery<GetBookByGoogleBooksIdQuery, TError, TData>(
       (() => {
     const { queryKey: optionsQueryKey, ...restOptions } = options;
     return {
-      queryKey: optionsQueryKey ?? variables === undefined ? ['GetBookByOpenLibrary_ID.infinite'] : ['GetBookByOpenLibrary_ID.infinite', variables],
-      queryFn: (metaData) => fetcher<GetBookByOpenLibrary_IdQuery, GetBookByOpenLibrary_IdQueryVariables>(GetBookByOpenLibrary_IdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetBookByGoogleBooksId.infinite'] : ['GetBookByGoogleBooksId.infinite', variables],
+      queryFn: (metaData) => fetcher<GetBookByGoogleBooksIdQuery, GetBookByGoogleBooksIdQueryVariables>(GetBookByGoogleBooksIdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -25722,7 +25294,6 @@ export const GetCreditsDocument = `
     credit_type
     details
     order
-    role
     person {
       id
       name
@@ -25935,7 +25506,6 @@ export const GetMovieForContentQualityCheckDocument = `
       credit_type
       details
       order
-      role
       person {
         id
         name
@@ -26045,7 +25615,7 @@ export const GetMovieDocument = `
       id
       song {
         name
-        song_artists {
+        credits {
           id
           person {
             name
@@ -26382,48 +25952,48 @@ export const useInfiniteGetPersonByTmdb_IdQuery = <
   })()
     )};
 
-export const GetPersonRolesDocument = `
-    query GetPersonRoles($pid: uuid!) {
+export const GetPersonDetailsDocument = `
+    query GetPersonDetails($pid: uuid!) {
   credits(
     where: {person_id: {_eq: $pid}}
-    distinct_on: role
-    order_by: {role: asc}
+    distinct_on: department
+    order_by: {department: asc}
   ) {
-    role
+    department
   }
 }
     `;
 
-export const useGetPersonRolesQuery = <
-      TData = GetPersonRolesQuery,
+export const useGetPersonDetailsQuery = <
+      TData = GetPersonDetailsQuery,
       TError = unknown
     >(
-      variables: GetPersonRolesQueryVariables,
-      options?: Omit<UseQueryOptions<GetPersonRolesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPersonRolesQuery, TError, TData>['queryKey'] }
+      variables: GetPersonDetailsQueryVariables,
+      options?: Omit<UseQueryOptions<GetPersonDetailsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPersonDetailsQuery, TError, TData>['queryKey'] }
     ) => {
     
-    return useQuery<GetPersonRolesQuery, TError, TData>(
+    return useQuery<GetPersonDetailsQuery, TError, TData>(
       {
-    queryKey: ['GetPersonRoles', variables],
-    queryFn: fetcher<GetPersonRolesQuery, GetPersonRolesQueryVariables>(GetPersonRolesDocument, variables),
+    queryKey: ['GetPersonDetails', variables],
+    queryFn: fetcher<GetPersonDetailsQuery, GetPersonDetailsQueryVariables>(GetPersonDetailsDocument, variables),
     ...options
   }
     )};
 
-export const useInfiniteGetPersonRolesQuery = <
-      TData = InfiniteData<GetPersonRolesQuery>,
+export const useInfiniteGetPersonDetailsQuery = <
+      TData = InfiniteData<GetPersonDetailsQuery>,
       TError = unknown
     >(
-      variables: GetPersonRolesQueryVariables,
-      options: Omit<UseInfiniteQueryOptions<GetPersonRolesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetPersonRolesQuery, TError, TData>['queryKey'] }
+      variables: GetPersonDetailsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetPersonDetailsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetPersonDetailsQuery, TError, TData>['queryKey'] }
     ) => {
     
-    return useInfiniteQuery<GetPersonRolesQuery, TError, TData>(
+    return useInfiniteQuery<GetPersonDetailsQuery, TError, TData>(
       (() => {
     const { queryKey: optionsQueryKey, ...restOptions } = options;
     return {
-      queryKey: optionsQueryKey ?? ['GetPersonRoles.infinite', variables],
-      queryFn: (metaData) => fetcher<GetPersonRolesQuery, GetPersonRolesQueryVariables>(GetPersonRolesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      queryKey: optionsQueryKey ?? ['GetPersonDetails.infinite', variables],
+      queryFn: (metaData) => fetcher<GetPersonDetailsQuery, GetPersonDetailsQueryVariables>(GetPersonDetailsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -26450,7 +26020,6 @@ export const GetPersonDocument = `
       details
       object_id
       object_type
-      role
       movie_credit {
         title
         poster
@@ -26619,12 +26188,11 @@ export const GetSongDocument = `
       release_date
       type
     }
-    song_artists(order_by: {order: asc}) {
+    credits {
       id
       person {
         name
       }
-      order
     }
   }
 }

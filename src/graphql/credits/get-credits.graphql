@@ -10,7 +10,6 @@ query GetCredits(
         credit_type
         details
         order
-        role
         person {
             id
             name

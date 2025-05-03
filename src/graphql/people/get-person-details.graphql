@@ -1,0 +1,5 @@
+query GetPersonDetails($pid: uuid!) {
+    credits(where: { person_id: { _eq: $pid } }, distinct_on: department, order_by: { department: asc }) {
+        department
+    }
+}

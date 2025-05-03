@@ -1,0 +1,5 @@
+query GetBookByGoogleBooksId($googlebooks_id: String) {
+    books(where: { googlebooks_id: { _eq: $googlebooks_id } }) {
+        googlebooks_id
+    }
+}

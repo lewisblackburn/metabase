@@ -21,7 +21,8 @@ const nextConfig: NextConfig = {
             'i.scdn.co',
             'placehold.co',
             'lwmecktyyhputyqkdigy.storage.eu-west-2.nhost.run',
-            'www.gravatar.com'
+            'www.gravatar.com',
+            'books.google.com'
         ]
     }
 };

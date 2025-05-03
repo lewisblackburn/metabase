@@ -5,49 +5,81 @@ import { DataTable } from '@/components/ui/data-table';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
-import { openLibraryBookImporterService } from '@/services/openlibrary/openlibrary-book-importer.service';
-import { OpenLibraryDoc, OpenLibraryWork } from '@/types/openlibrary.type';
+import { importBookFromGoogleBooks } from '@/services/googlebooks/googlebooks-import-book.service';
+import { googleBooksService } from '@/services/googlebooks/googlebooks.service';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Loader2, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-type BookRow = OpenLibraryDoc & { id: string };
+dayjs.extend(advancedFormat);
 
-export default function OpenLibraryBookImportTable() {
+interface GoogleBooksSearchResult {
+    id: string;
+    volumeInfo: {
+        title: string;
+        authors?: string[];
+        publishedDate?: string;
+        imageLinks?: {
+            thumbnail?: string;
+            smallThumbnail?: string;
+        };
+    };
+}
+
+interface GoogleBooksSearchResponse {
+    items: GoogleBooksSearchResult[];
+    totalItems: number;
+}
+
+type BookRow = GoogleBooksSearchResult & { id: string };
+
+export default function GoogleBooksBookImportTable() {
     const [pageIndex, setPageIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
     const debouncedQuery = useDebounce(searchQuery, 500);
 
     const fetchBooks = useCallback(async (page: number, query: string) => {
-        const res = await openLibraryBookImporterService.searchBooks(query, page + 1);
+        const res = await googleBooksService.search<GoogleBooksSearchResponse>(query, page + 1, 20);
         return {
-            data: res?.docs.map((b) => ({ ...b, id: b.key })) ?? [],
-            total: res.numFound
+            data: res?.items.map((b) => ({ ...b, id: b.id })) ?? [],
+            total: res?.totalItems ?? 0
         };
     }, []);
 
     const { data, isLoading, isError, refetch, isFetching } = useQuery({
-        queryKey: ['openlibrary-books', debouncedQuery, pageIndex],
+        queryKey: ['googlebooks-books', debouncedQuery, pageIndex],
         queryFn: () => fetchBooks(pageIndex, debouncedQuery),
         enabled: !!debouncedQuery
     });
 
     const importMutation = useMutation({
-        mutationFn: (bookId: OpenLibraryWork['key']) => openLibraryBookImporterService.import(bookId),
+        mutationFn: (googleBooksId: string) => importBookFromGoogleBooks(googleBooksId),
         onSuccess: (response) => {
-            if (response === true) toast.success('Book already exists');
-            else if (response === false) toast.error('Book not found');
-            else toast.success(`${response.insert_books_one?.title} Imported`);
+            if (!response) {
+                toast.error('No response received from import');
+                return;
+            }
+
+            if ('message' in response) {
+                if (response.message.includes('already exists')) {
+                    toast.success('Book already exists');
+                } else {
+                    toast.error(response.message);
+                }
+            } else {
+                toast.success(`${response.title} Imported`);
+            }
         },
         onError: (error: any) => toast.error(error.message)
     });
 
     const handleImport = useCallback(async () => {
         const ids = Object.keys(rowSelection);
-        console.log(ids);
         await Promise.all(ids.map((id) => importMutation.mutateAsync(id)));
         setRowSelection({});
     }, [rowSelection, importMutation]);
@@ -60,24 +92,38 @@ export default function OpenLibraryBookImportTable() {
                 accessorFn: (row) => row,
                 cell: ({ row }) => {
                     const b = row.original;
-                    const title = b.title;
-                    if (!title || !b.author_name) return null;
+                    const title = b.volumeInfo.title;
+                    if (!title) return null;
 
-                    return (
-                        <div className='flex items-center gap-2'>
-                            {/* <ImageWithSkeleton
-                                src={b.album.images[0]?.url ?? ''}
-                                alt={name}
-                                width={75}
-                                height={75}
-                                wrapperClassName='relative h-16 w-16 overflow-hidden rounded-md'
-                                className='absolute inset-0 h-full w-full object-cover'
-                            /> */}
-                            <div className='flex flex-col'>
-                                <span className='truncate font-medium'>{title}</span>
-                                <span className='text-muted-foreground text-sm'>{b.author_name}</span>
-                            </div>
+                    const metadata = (
+                        <div className='flex flex-col'>
+                            <span className='font-medium'>{title}</span>
+                            {b.volumeInfo.authors && (
+                                <span className='text-muted-foreground text-sm'>{b.volumeInfo.authors.join(', ')}</span>
+                            )}
+                            {b.volumeInfo.publishedDate && (
+                                <span className='text-muted-foreground text-sm'>
+                                    {dayjs(b.volumeInfo.publishedDate).format('MMMM Do, YYYY')}
+                                </span>
+                            )}
                         </div>
+                    );
+
+                    const thumbnailUrl = googleBooksService.getThumbnailImage(b.volumeInfo.imageLinks);
+                    return thumbnailUrl ? (
+                        <div className='flex items-center gap-4'>
+                            <ImageWithSkeleton
+                                src={thumbnailUrl}
+                                alt={title}
+                                width={75}
+                                height={112.5}
+                                wrapperClassName='relative h-16 w-12 overflow-hidden rounded-md'
+                                className='absolute inset-0 h-full w-full object-cover'
+                            />
+                            {metadata}
+                        </div>
+                    ) : (
+                        metadata
                     );
                 }
             }
@@ -134,8 +180,8 @@ export default function OpenLibraryBookImportTable() {
                 data={(data?.data as BookRow[]) ?? []}
                 pageIndex={pageIndex}
                 totalRows={data?.total ?? 0}
-                pageSize={100}
-                pageSizeOptions={[100]}
+                pageSize={20}
+                pageSizeOptions={[20]}
                 rowSelection={rowSelection}
                 isLoading={isLoading || isFetching || importMutation.isPending}
                 onPageChange={setPageIndex}

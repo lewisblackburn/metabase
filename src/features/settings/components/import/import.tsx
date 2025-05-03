@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york-v4/ui/tabs';
 
-import OpenLibraryBookImportTable from './openlibrary-book-import-table';
-import SpotifySongImportTable from './spotify-song-import-table';
+import GoogleBooksBookImportTable from './googlebooks-book-import-table';
+import SpotifySongImportTable from './spotify-song-import.table';
 import TMDBMovieImportTable from './tmdb-movie-import-table';
 
 export default function Import() {
@@ -10,7 +10,7 @@ export default function Import() {
             <TabsList>
                 <TabsTrigger value='tmdb-movie'>The Movie Database (Movie)</TabsTrigger>
                 <TabsTrigger value='spotify-song'>Spotify (Song)</TabsTrigger>
-                <TabsTrigger value='openlibrary-book'>Open Library (Book)</TabsTrigger>
+                <TabsTrigger value='googlebooks-book'>Google Books (Book)</TabsTrigger>
             </TabsList>
             <TabsContent value='tmdb-movie'>
                 <TMDBMovieImportTable />
@@ -18,8 +18,8 @@ export default function Import() {
             <TabsContent value='spotify-song'>
                 <SpotifySongImportTable />
             </TabsContent>
-            <TabsContent value='openlibrary-book'>
-                <OpenLibraryBookImportTable />
+            <TabsContent value='googlebooks-book'>
+                <GoogleBooksBookImportTable />
             </TabsContent>
         </Tabs>
     );

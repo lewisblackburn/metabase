@@ -20,7 +20,7 @@ import MovieStatusPicker from '@/features/movies/components/movie-status-picker'
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import { movieCertificationLabels, movieReleaseStatusLabels } from '@/features/movies/constants/movie-enums';
-import { Movie_Release_Statuses_Enum, Object_Types_Enum } from '@/generated/graphql';
+import { Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
@@ -158,9 +158,9 @@ function MoviePageContent() {
                                         {movie.view_count || 0}
                                     </ItemInformation>
 
-                                    <ItemInformation icon={TrendingUp} label='Content Score'>
-                                        <MovieContentScore />
-                                    </ItemInformation>
+                                    {/* <ItemInformation icon={TrendingUp} label='Content Score'> */}
+                                    {/* <MovieContentScore /> */}
+                                    {/* </ItemInformation> */}
                                 </div>
                             </ResponsiveDialog>
                         </div>

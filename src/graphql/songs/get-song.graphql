@@ -19,12 +19,11 @@ query GetSong($id: uuid!) {
             release_date
             type
         }
-        song_artists(order_by: { order: asc }) {
+        credits {
             id
             person {
                 name
             }
-            order
         }
     }
 }

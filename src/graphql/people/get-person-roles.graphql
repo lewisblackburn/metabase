@@ -1,5 +1,0 @@
-query GetPersonRoles($pid: uuid!) {
-    credits(where: { person_id: { _eq: $pid } }, distinct_on: role, order_by: { role: asc }) {
-        role
-    }
-}

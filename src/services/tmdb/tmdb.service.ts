@@ -1,5 +1,4 @@
 import { TMDB_BACKDROP_URL, TMDB_LOGO_URL, TMDB_POSTER_URL, TMDB_PROFILE_URL } from '@/constants/tmdb.constant';
-import { TMDBSearchResultType } from '@/types/tmdb.type';
 
 export class TMDBService {
     private readonly TMDB_URL_V3 = 'https://api.themoviedb.org/3';
@@ -51,11 +50,11 @@ export class TMDBService {
         return response.json();
     }
 
-    public async getEntity<T>(type: TMDBSearchResultType, id: string | number, appendToResponse = ''): Promise<T> {
+    public async getEntity<T>(type: string, id: string | number, appendToResponse = ''): Promise<T> {
         return this.fetcher<T>(this.TMDB_ENTITY_URL(type, id, appendToResponse));
     }
 
-    public async search<T>(query: string, pageIndex: number, type: TMDBSearchResultType): Promise<T> {
+    public async search<T>(query: string, pageIndex: number, type: string): Promise<T> {
         return this.fetcher<T>(this.TMDB_SEARCH_URL(query, pageIndex, type));
     }
 }

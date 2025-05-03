@@ -1,34 +1,26 @@
-import { BucketType } from '@/constants/media.constant';
-import { GetFilesDocument } from '@/generated/graphql';
+import { GetFilesDocument, useGetFilesQuery } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
 
-export class FileService {
-    static async computeFileHash(file: File) {
-        const buffer = await file.arrayBuffer();
-        const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-        return Array.from(new Uint8Array(hashBuffer))
-            .map((b) => b.toString(16).padStart(2, '0'))
-            .join('');
-    }
-    static async uploadImage(path: string | null | undefined, type: BucketType, urlFn: (path: string) => string) {
-        if (!path) return Promise.resolve(null);
-        return FileService.uploadFile(urlFn.call(this, path), type);
-    }
+import crypto from 'crypto';
 
-    static async uploadFile(path: string, type: string): Promise<{ url: string; id: string } | null> {
-        const response = await fetch(path);
-        if (!response.ok) return null;
+export interface UploadFileOptions {
+    url: string;
+    bucketId?: string;
+    fileName?: string;
+}
+
+export const uploadFile = async ({ url, bucketId = 'default', fileName }: UploadFileOptions) => {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch file from URL: ${response.statusText}`);
+        }
 
         const blob = await response.blob();
-        const mimeType = blob.type;
-        const extension = mimeType.split('/')[1];
-        const file = new File([blob], `${path}.${extension}`, {
-            type: mimeType
-        });
+        const buffer = await blob.arrayBuffer();
+        const hash = crypto.createHash('sha256').update(Buffer.from(buffer)).digest('hex');
+        const finalFileName = hash;
 
-        const hash = await this.computeFileHash(file);
-
-        // NOTE: Do not upload the same file multiple times
         const existingFile = await nhost.graphql.request(GetFilesDocument, {
             where: {
                 name: {
@@ -37,23 +29,26 @@ export class FileService {
             }
         });
 
-        if (existingFile.data.files.length > 0) {
-            const url = nhost.storage.getPublicUrl({
-                fileId: existingFile.data.files[0].id
-            });
-
-            return { url, id: existingFile.data.files[0].id };
-        } else {
-            const { fileMetadata } = await nhost.storage.upload({
-                bucketId: type,
-                name: hash,
-                file
-            });
-
-            if (!fileMetadata) return null;
-
-            const url = nhost.storage.getPublicUrl({ fileId: fileMetadata.id });
-            return { url, id: fileMetadata.id };
+        if (existingFile?.data?.files && existingFile.data.files.length > 0) {
+            return existingFile.data.files[0];
         }
+
+        const file = new File([blob], finalFileName, {
+            type: blob.type
+        });
+
+        const { fileMetadata, error: uploadError } = await nhost.storage.upload({
+            file,
+            bucketId
+        });
+
+        if (uploadError) {
+            throw uploadError;
+        }
+
+        return fileMetadata;
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        throw error;
     }
-}
+};

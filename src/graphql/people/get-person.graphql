@@ -25,7 +25,6 @@ query GetPerson(
             details
             object_id
             object_type
-            role
             movie_credit {
                 title
                 poster

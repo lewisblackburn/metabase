@@ -6,7 +6,8 @@ import { useParams } from 'next/navigation';
 import Artwork from '@/components/shared/artwork';
 import Grid from '@/components/shared/grid';
 import Poster from '@/components/shared/poster';
-import { useGetPersonRolesQuery } from '@/generated/graphql';
+import { OBJECT_TYPE } from '@/constants/objects.constant';
+import { Credits, Object_Types_Enum, People, useGetPersonDetailsQuery } from '@/generated/graphql';
 import {
     Select,
     SelectContent,
@@ -24,22 +25,22 @@ function MediaSkeleton() {
         .map((_, i) => <div key={i} className='aspect-[2/3] w-full animate-pulse rounded bg-gray-200' />);
 }
 
-function MediaItem({ credit }) {
-    if (credit.type === 'movie') {
+function MediaItem({ credit }: { credit: Credits }) {
+    if (credit.object_type === Object_Types_Enum.Movie) {
         return (
             <div key={credit.id}>
-                <Link href={`/dashboard/movies/${credit.media_id}`} scroll={false}>
-                    <Poster image={credit.image} title={credit.title} />
+                <Link href={`/dashboard/${OBJECT_TYPE.movie.path}/${credit.object_id}`} scroll={false}>
+                    <Poster image={credit.movie_credit?.poster ?? ''} title={credit.movie_credit?.title ?? ''} />
                 </Link>
             </div>
         );
     }
 
-    if (credit.type === 'song') {
+    if (credit.object_type === Object_Types_Enum.Song) {
         return (
             <div key={credit.id}>
-                <Link href={`/dashboard/music/${credit.media_id}`} scroll={false}>
-                    <Artwork image={credit.image} title={credit.title} />
+                <Link href={`/dashboard/${OBJECT_TYPE.song.path}/${credit.object_id}`} scroll={false}>
+                    <Artwork image={credit.song_credit?.album?.artwork ?? ''} title={credit.song_credit?.name ?? ''} />
                 </Link>
             </div>
         );
@@ -50,57 +51,50 @@ function MediaItem({ credit }) {
 
 export default function PersonMedia() {
     const params = useParams<{ id: string }>();
-    const [creditRole, setCreditRole] = useState('');
+    const [creditDepartment, setCreditDepartment] = useState('');
     const [isFirstLoad, setIsFirstLoad] = useState(true);
 
     const { person, isLoading: isPersonLoading } = usePerson({
         id: params?.id,
         credit_where: {
-            role: {
-                _eq: creditRole
+            department: {
+                _eq: creditDepartment
             }
         }
     });
 
-    const { data: roles, isLoading: isRolesLoading } = useGetPersonRolesQuery(
+    const { data: credits, isLoading: isDepartmentsLoading } = useGetPersonDetailsQuery(
         { pid: person?.id },
         { enabled: !!person?.id }
     );
 
-    const isLoading = isPersonLoading || isRolesLoading;
+    const isLoading = isPersonLoading || isDepartmentsLoading;
 
     useEffect(() => {
-        if (roles && roles.credits.length > 0 && isFirstLoad) {
-            setCreditRole(roles.credits[0]?.role);
+        if (credits && credits.credits.length > 0 && isFirstLoad) {
+            setCreditDepartment(credits.credits[0]?.department ?? '');
             setIsFirstLoad(false);
         }
-    }, [roles, isFirstLoad]);
+    }, [credits, isFirstLoad]);
 
-    const flattenedRoles = roles?.credits.flat() || [];
+    const flattenedCredits = credits?.credits.flat().filter((credit) => credit.department !== null) || [];
 
-    const allCredits =
-        person?.credits.map((credit) => ({
-            id: credit.id,
-            media_id: credit.media_id,
-            title: credit.movie_credit?.title ?? credit.song_credit?.name,
-            image: credit.movie_credit?.poster ?? credit.song_credit?.album.artwork,
-            type: credit.movie_credit ? 'movie' : credit.song_credit ? 'song' : 'unknown'
-        })) || [];
-
-    function RoleSelector() {
+    function DepartmentSelector() {
         return (
             <Select
-                value={creditRole}
-                onValueChange={setCreditRole}
-                disabled={isLoading || flattenedRoles.length === 0}>
+                value={creditDepartment}
+                onValueChange={setCreditDepartment}
+                disabled={isLoading || flattenedCredits.length === 0}>
                 <SelectTrigger className='w-[180px] capitalize'>
-                    <SelectValue placeholder={isRolesLoading ? 'Loading roles...' : 'Select a role'} />
+                    <SelectValue
+                        placeholder={isDepartmentsLoading ? 'Loading departments...' : 'Select a department'}
+                    />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
-                        {flattenedRoles.map((role) => (
-                            <SelectItem key={role.role} value={role.role}>
-                                <span className='capitalize'>{role.role}</span>
+                        {flattenedCredits.map((credit) => (
+                            <SelectItem key={credit.department} value={credit.department!}>
+                                <span className='capitalize'>{credit.department}</span>
                             </SelectItem>
                         ))}
                     </SelectGroup>
@@ -114,12 +108,12 @@ export default function PersonMedia() {
             return <MediaSkeleton />;
         }
 
-        return allCredits.map((credit) => <MediaItem key={credit.id} credit={credit} />);
+        return person?.credits?.map((credit) => <MediaItem key={credit.id} credit={credit} />);
     }
 
     return (
         <div className='flex flex-col gap-4'>
-            <RoleSelector />
+            <DepartmentSelector />
             <Grid>
                 <MediaContent />
             </Grid>
