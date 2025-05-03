@@ -12,6 +12,7 @@ query GetAuditLogs(
         pk
         table_name
         user {
+            id
             avatarUrl
             displayName
         }

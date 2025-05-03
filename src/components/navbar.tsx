@@ -10,7 +10,7 @@ import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { toggleCommandPanelOpenState } from '@/features/command-panel/store/command-panel.slice';
 import { ShortcutDisplay } from '@/features/shortcuts/components/shortcut-display';
 import { useShortcut } from '@/features/shortcuts/hooks/useShortcut';
-import { Order_By, useGetMoviesQuery, useGetSongsQuery } from '@/generated/graphql';
+import { useGetFeaturedItemsQuery } from '@/generated/graphql';
 import { cn } from '@/lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -27,6 +27,7 @@ import { useUserData } from '@nhost/nextjs';
 
 import { NavUser } from './nav-user';
 import Artwork, { ArtworkSkeleton } from './shared/artwork';
+import Cover, { CoverSkeleton } from './shared/cover';
 import ImageWithSkeleton from './shared/image-with-skeleton';
 import Poster, { PosterSkeleton } from './shared/poster';
 import { Container } from './ui/container';
@@ -69,31 +70,16 @@ const Navbar: React.FC = () => {
     const dispatch = useDispatch();
     const searchShortcut = useShortcut('openCommandPanel');
 
-    const { data: featuredMovieData, isLoading: isFeaturedMovieLoading } = useGetMoviesQuery(
+    const { data: featuredItemsData, isLoading: isFeaturedItemsLoading } = useGetFeaturedItemsQuery(
+        {},
         {
-            order_by: {
-                view_count: Order_By.Desc
-            },
-            limit: 1
-        },
-        {
-            queryKey: ['featuredMovie']
-        }
-    );
-    const { data: featuredSongData, isLoading: isFeaturedSongLoading } = useGetSongsQuery(
-        {
-            order_by: {
-                // view_count: Order_By.Desc
-            },
-            limit: 1
-        },
-        {
-            queryKey: ['featuredSong']
+            queryKey: ['featuredItems']
         }
     );
 
-    const featuredMovie = featuredMovieData?.movies[0];
-    const featuredSong = featuredSongData?.songs[0];
+    const featuredMovie = featuredItemsData?.featuredMovie[0];
+    const featuredSong = featuredItemsData?.featuredSong[0];
+    const featuredBook = featuredItemsData?.featuredBook[0];
 
     const handleOpenCommandPanel = () => {
         dispatch(toggleCommandPanelOpenState());
@@ -142,7 +128,7 @@ const Navbar: React.FC = () => {
                                         <div className='grid grid-cols-[.75fr_1fr_1fr] gap-2'>
                                             <div className='col-span-1 row-span-3'>
                                                 <div className='p-1'>
-                                                    {featuredMovie && !isFeaturedMovieLoading ? (
+                                                    {featuredMovie && !isFeaturedItemsLoading ? (
                                                         <Link
                                                             href={`/dashboard/movies/${featuredMovie.id}`}
                                                             className='block h-full'>
@@ -246,7 +232,18 @@ const Navbar: React.FC = () => {
                                         <div className='grid grid-cols-[.75fr_1fr_1fr] gap-2'>
                                             <div className='col-span-1 row-span-3'>
                                                 <div className='p-1'>
-                                                    <PosterSkeleton />
+                                                    {featuredBook && !isFeaturedItemsLoading ? (
+                                                        <Link
+                                                            href={`/dashboard/books/${featuredBook.id}`}
+                                                            className='block h-full'>
+                                                            <Cover
+                                                                image={featuredBook.cover}
+                                                                title={featuredBook.title}
+                                                            />
+                                                        </Link>
+                                                    ) : (
+                                                        <CoverSkeleton />
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className='col-span-2'>
@@ -277,7 +274,7 @@ const Navbar: React.FC = () => {
                                         <div className='grid grid-cols-[.75fr_1fr_1fr] gap-2'>
                                             <div className='col-span-1 row-span-3'>
                                                 <div className='p-1'>
-                                                    {featuredSong && !isFeaturedSongLoading ? (
+                                                    {featuredSong && !isFeaturedItemsLoading ? (
                                                         <Link
                                                             href={`/dashboard/${OBJECT_TYPE.song.path}/${featuredSong.id}`}
                                                             className='block h-full'>

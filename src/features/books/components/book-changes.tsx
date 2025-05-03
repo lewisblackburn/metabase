@@ -9,7 +9,7 @@ import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 import isLastIndex from '@/utils/is-last-index';
 
-import { useMovie } from './movie-provider';
+import { useBook } from './book-provider';
 import { useInView } from 'react-intersection-observer';
 
 function ChangesSkeleton() {
@@ -38,15 +38,15 @@ function ChangesSkeleton() {
     );
 }
 
-export default function MovieChanges() {
-    const { movie } = useMovie();
+export default function BookChanges() {
+    const { book } = useBook();
     const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetAuditLogsQuery(
         {
             where: {
-                table_name: { _eq: 'movies' },
+                table_name: { _eq: 'books' },
                 pk: {
                     _eq: {
-                        id: movie?.id
+                        id: book?.id
                     }
                 }
             },
@@ -63,7 +63,7 @@ export default function MovieChanges() {
                 const nextOffset = pages.length * MAX_LIMIT;
                 return lastPage.audit_logs.length === MAX_LIMIT ? { offset: nextOffset } : undefined;
             },
-            enabled: !!movie?.id,
+            enabled: !!book?.id,
             staleTime: 0,
             gcTime: 0
         }

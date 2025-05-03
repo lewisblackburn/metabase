@@ -3,7 +3,6 @@ query GetMovie($id: uuid!) {
         id
         title
         overview
-        average_rating
         backdrop
         budget
         content_score
@@ -18,7 +17,6 @@ query GetMovie($id: uuid!) {
         tagline
         tmdb_id
         trailer
-        updated_at
         view_count
         vote_average
         vote_count

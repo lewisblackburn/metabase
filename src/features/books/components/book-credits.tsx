@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
+import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import SmallAvatar from '@/components/shared/small-avatar';
 import { useGetCreditsQuery } from '@/generated/graphql';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
@@ -63,7 +64,7 @@ function CreditsSection({ title, members, isLoading }: { title: string; members?
     );
 }
 
-export default function MovieCredits() {
+export default function BookCredits() {
     const params = useParams<{ id: string }>();
     const { data, isLoading } = useGetCreditsQuery(
         {
@@ -79,13 +80,6 @@ export default function MovieCredits() {
     );
 
     const { credits } = data || {};
-    const cast = credits?.filter((credit) => credit.credit_type === 'cast');
-    const crew = credits?.filter((credit) => credit.credit_type === 'crew');
 
-    return (
-        <div className='grid grid-cols-1 gap-10 lg:grid-cols-2'>
-            <CreditsSection title='Cast' members={cast} isLoading={isLoading} />
-            <CreditsSection title='Crew' members={crew} isLoading={isLoading} />
-        </div>
-    );
+    return <CreditsSection title='Author' members={credits} isLoading={isLoading} />;
 }

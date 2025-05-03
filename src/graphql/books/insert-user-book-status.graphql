@@ -1,0 +1,9 @@
+mutation InsertUserBookStatus($object: user_book_statuses_insert_input!, $on_conflict: user_book_statuses_on_conflict) {
+    insert_user_book_statuses_one(object: $object, on_conflict: $on_conflict) {
+        favourited
+        rating
+        review
+        status
+        updated_at
+    }
+}

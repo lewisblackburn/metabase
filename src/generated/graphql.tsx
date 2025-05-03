@@ -4637,7 +4637,6 @@ export type Books = {
   reading_time?: Maybe<Scalars['Int']['output']>;
   status?: Maybe<Book_Release_Status_Types_Enum>;
   title: Scalars['String']['output'];
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
   /** An array relationship */
   user_book_statuses: Array<User_Book_Statuses>;
   /** An aggregate relationship */
@@ -4877,7 +4876,6 @@ export type Books_Bool_Exp = {
   reading_time?: InputMaybe<Int_Comparison_Exp>;
   status?: InputMaybe<Book_Release_Status_Types_Enum_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user_book_statuses?: InputMaybe<User_Book_Statuses_Bool_Exp>;
   user_book_statuses_aggregate?: InputMaybe<User_Book_Statuses_Aggregate_Bool_Exp>;
   view_count?: InputMaybe<Int_Comparison_Exp>;
@@ -4922,7 +4920,6 @@ export type Books_Insert_Input = {
   reading_time?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user_book_statuses?: InputMaybe<User_Book_Statuses_Arr_Rel_Insert_Input>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
@@ -4942,7 +4939,6 @@ export type Books_Max_Fields = {
   publish_date?: Maybe<Scalars['date']['output']>;
   reading_time?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Int']['output']>;
@@ -4960,7 +4956,6 @@ export type Books_Max_Order_By = {
   publish_date?: InputMaybe<Order_By>;
   reading_time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -4979,7 +4974,6 @@ export type Books_Min_Fields = {
   publish_date?: Maybe<Scalars['date']['output']>;
   reading_time?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Int']['output']>;
@@ -4997,7 +4991,6 @@ export type Books_Min_Order_By = {
   publish_date?: InputMaybe<Order_By>;
   reading_time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -5046,7 +5039,6 @@ export type Books_Order_By = {
   reading_time?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   user_book_statuses_aggregate?: InputMaybe<User_Book_Statuses_Aggregate_Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
@@ -5083,8 +5075,6 @@ export enum Books_Select_Column {
   /** column name */
   Title = 'title',
   /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
   ViewCount = 'view_count',
   /** column name */
   VoteAverage = 'vote_average',
@@ -5105,7 +5095,6 @@ export type Books_Set_Input = {
   reading_time?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
   vote_count?: InputMaybe<Scalars['Int']['input']>;
@@ -5189,7 +5178,6 @@ export type Books_Stream_Cursor_Value_Input = {
   reading_time?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Book_Release_Status_Types_Enum>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
   vote_count?: InputMaybe<Scalars['Int']['input']>;
@@ -5238,8 +5226,6 @@ export enum Books_Update_Column {
   Status = 'status',
   /** column name */
   Title = 'title',
-  /** column name */
-  UpdatedAt = 'updated_at',
   /** column name */
   ViewCount = 'view_count',
   /** column name */
@@ -9940,7 +9926,6 @@ export type Movie_Soundtrack_Updates = {
 /** columns and relationships of "movies" */
 export type Movies = {
   __typename?: 'movies';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop: Scalars['String']['output'];
   budget?: Maybe<Scalars['money']['output']>;
   certification?: Maybe<Movie_Certification_Types_Enum>;
@@ -10002,7 +9987,6 @@ export type Movies = {
   title: Scalars['String']['output'];
   tmdb_id?: Maybe<Scalars['String']['output']>;
   trailer?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
   /** An array relationship */
   user_movie_statuses: Array<User_Movie_Statuses>;
   /** An aggregate relationship */
@@ -10278,7 +10262,6 @@ export type Movies_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Movies_Avg_Fields = {
   __typename?: 'movies_avg_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['Float']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -10290,7 +10273,6 @@ export type Movies_Avg_Fields = {
 
 /** order by avg() on columns of table "movies" */
 export type Movies_Avg_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -10305,7 +10287,6 @@ export type Movies_Bool_Exp = {
   _and?: InputMaybe<Array<Movies_Bool_Exp>>;
   _not?: InputMaybe<Movies_Bool_Exp>;
   _or?: InputMaybe<Array<Movies_Bool_Exp>>;
-  average_rating?: InputMaybe<Float_Comparison_Exp>;
   backdrop?: InputMaybe<String_Comparison_Exp>;
   budget?: InputMaybe<Money_Comparison_Exp>;
   certification?: InputMaybe<Movie_Certification_Types_Enum_Comparison_Exp>;
@@ -10346,7 +10327,6 @@ export type Movies_Bool_Exp = {
   title?: InputMaybe<String_Comparison_Exp>;
   tmdb_id?: InputMaybe<String_Comparison_Exp>;
   trailer?: InputMaybe<String_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user_movie_statuses?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
   user_movie_statuses_aggregate?: InputMaybe<User_Movie_Statuses_Aggregate_Bool_Exp>;
   view_count?: InputMaybe<Int_Comparison_Exp>;
@@ -10366,7 +10346,6 @@ export enum Movies_Constraint {
 
 /** input type for incrementing numeric columns in table "movies" */
 export type Movies_Inc_Input = {
-  average_rating?: InputMaybe<Scalars['Float']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
   content_score?: InputMaybe<Scalars['Float']['input']>;
   revenue?: InputMaybe<Scalars['money']['input']>;
@@ -10378,7 +10357,6 @@ export type Movies_Inc_Input = {
 
 /** input type for inserting data into table "movies" */
 export type Movies_Insert_Input = {
-  average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
   certification?: InputMaybe<Movie_Certification_Types_Enum>;
@@ -10409,7 +10387,6 @@ export type Movies_Insert_Input = {
   title?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
   trailer?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user_movie_statuses?: InputMaybe<User_Movie_Statuses_Arr_Rel_Insert_Input>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
@@ -10419,7 +10396,6 @@ export type Movies_Insert_Input = {
 /** aggregate max on columns */
 export type Movies_Max_Fields = {
   __typename?: 'movies_max_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
@@ -10439,7 +10415,6 @@ export type Movies_Max_Fields = {
   title?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
   trailer?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Int']['output']>;
@@ -10447,7 +10422,6 @@ export type Movies_Max_Fields = {
 
 /** order by max() on columns of table "movies" */
 export type Movies_Max_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
@@ -10465,7 +10439,6 @@ export type Movies_Max_Order_By = {
   title?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
   trailer?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -10474,7 +10447,6 @@ export type Movies_Max_Order_By = {
 /** aggregate min on columns */
 export type Movies_Min_Fields = {
   __typename?: 'movies_min_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   backdrop?: Maybe<Scalars['String']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
@@ -10494,7 +10466,6 @@ export type Movies_Min_Fields = {
   title?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
   trailer?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
   vote_count?: Maybe<Scalars['Int']['output']>;
@@ -10502,7 +10473,6 @@ export type Movies_Min_Fields = {
 
 /** order by min() on columns of table "movies" */
 export type Movies_Min_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
@@ -10520,7 +10490,6 @@ export type Movies_Min_Order_By = {
   title?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
   trailer?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -10551,7 +10520,6 @@ export type Movies_On_Conflict = {
 
 /** Ordering options when selecting data from "movies". */
 export type Movies_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   backdrop?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   certification?: InputMaybe<Order_By>;
@@ -10583,7 +10551,6 @@ export type Movies_Order_By = {
   title?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
   trailer?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   user_movie_statuses_aggregate?: InputMaybe<User_Movie_Statuses_Aggregate_Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
@@ -10597,8 +10564,6 @@ export type Movies_Pk_Columns_Input = {
 
 /** select columns of table "movies" */
 export enum Movies_Select_Column {
-  /** column name */
-  AverageRating = 'average_rating',
   /** column name */
   Backdrop = 'backdrop',
   /** column name */
@@ -10638,8 +10603,6 @@ export enum Movies_Select_Column {
   /** column name */
   Trailer = 'trailer',
   /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
   ViewCount = 'view_count',
   /** column name */
   VoteAverage = 'vote_average',
@@ -10649,7 +10612,6 @@ export enum Movies_Select_Column {
 
 /** input type for updating data in table "movies" */
 export type Movies_Set_Input = {
-  average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
   certification?: InputMaybe<Movie_Certification_Types_Enum>;
@@ -10669,7 +10631,6 @@ export type Movies_Set_Input = {
   title?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
   trailer?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
   vote_count?: InputMaybe<Scalars['Int']['input']>;
@@ -10678,7 +10639,6 @@ export type Movies_Set_Input = {
 /** aggregate stddev on columns */
 export type Movies_Stddev_Fields = {
   __typename?: 'movies_stddev_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['Float']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -10690,7 +10650,6 @@ export type Movies_Stddev_Fields = {
 
 /** order by stddev() on columns of table "movies" */
 export type Movies_Stddev_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -10703,7 +10662,6 @@ export type Movies_Stddev_Order_By = {
 /** aggregate stddev_pop on columns */
 export type Movies_Stddev_Pop_Fields = {
   __typename?: 'movies_stddev_pop_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['Float']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -10715,7 +10673,6 @@ export type Movies_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "movies" */
 export type Movies_Stddev_Pop_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -10728,7 +10685,6 @@ export type Movies_Stddev_Pop_Order_By = {
 /** aggregate stddev_samp on columns */
 export type Movies_Stddev_Samp_Fields = {
   __typename?: 'movies_stddev_samp_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['Float']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -10740,7 +10696,6 @@ export type Movies_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "movies" */
 export type Movies_Stddev_Samp_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -10760,7 +10715,6 @@ export type Movies_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movies_Stream_Cursor_Value_Input = {
-  average_rating?: InputMaybe<Scalars['Float']['input']>;
   backdrop?: InputMaybe<Scalars['String']['input']>;
   budget?: InputMaybe<Scalars['money']['input']>;
   certification?: InputMaybe<Movie_Certification_Types_Enum>;
@@ -10780,7 +10734,6 @@ export type Movies_Stream_Cursor_Value_Input = {
   title?: InputMaybe<Scalars['String']['input']>;
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
   trailer?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
   vote_count?: InputMaybe<Scalars['Int']['input']>;
@@ -10789,7 +10742,6 @@ export type Movies_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type Movies_Sum_Fields = {
   __typename?: 'movies_sum_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['money']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['money']['output']>;
@@ -10801,7 +10753,6 @@ export type Movies_Sum_Fields = {
 
 /** order by sum() on columns of table "movies" */
 export type Movies_Sum_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -10813,8 +10764,6 @@ export type Movies_Sum_Order_By = {
 
 /** update columns of table "movies" */
 export enum Movies_Update_Column {
-  /** column name */
-  AverageRating = 'average_rating',
   /** column name */
   Backdrop = 'backdrop',
   /** column name */
@@ -10853,8 +10802,6 @@ export enum Movies_Update_Column {
   TmdbId = 'tmdb_id',
   /** column name */
   Trailer = 'trailer',
-  /** column name */
-  UpdatedAt = 'updated_at',
   /** column name */
   ViewCount = 'view_count',
   /** column name */
@@ -10875,7 +10822,6 @@ export type Movies_Updates = {
 /** aggregate var_pop on columns */
 export type Movies_Var_Pop_Fields = {
   __typename?: 'movies_var_pop_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['Float']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -10887,7 +10833,6 @@ export type Movies_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "movies" */
 export type Movies_Var_Pop_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -10900,7 +10845,6 @@ export type Movies_Var_Pop_Order_By = {
 /** aggregate var_samp on columns */
 export type Movies_Var_Samp_Fields = {
   __typename?: 'movies_var_samp_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['Float']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -10912,7 +10856,6 @@ export type Movies_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "movies" */
 export type Movies_Var_Samp_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -10925,7 +10868,6 @@ export type Movies_Var_Samp_Order_By = {
 /** aggregate variance on columns */
 export type Movies_Variance_Fields = {
   __typename?: 'movies_variance_fields';
-  average_rating?: Maybe<Scalars['Float']['output']>;
   budget?: Maybe<Scalars['Float']['output']>;
   content_score?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -10937,7 +10879,6 @@ export type Movies_Variance_Fields = {
 
 /** order by variance() on columns of table "movies" */
 export type Movies_Variance_Order_By = {
-  average_rating?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   content_score?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -18510,6 +18451,7 @@ export type Songs = {
   spotify_uri?: Maybe<Scalars['String']['output']>;
   track_number?: Maybe<Scalars['Int']['output']>;
   type?: Maybe<Scalars['String']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 
@@ -18677,6 +18619,7 @@ export type Songs_Avg_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Float']['output']>;
   track_number?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by avg() on columns of table "songs" */
@@ -18684,6 +18627,7 @@ export type Songs_Avg_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "songs". All fields are combined with a logical 'AND'. */
@@ -18713,6 +18657,7 @@ export type Songs_Bool_Exp = {
   spotify_uri?: InputMaybe<String_Comparison_Exp>;
   track_number?: InputMaybe<Int_Comparison_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
+  view_count?: InputMaybe<Int_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "songs" */
@@ -18726,6 +18671,7 @@ export type Songs_Inc_Input = {
   content_score?: InputMaybe<Scalars['Float']['input']>;
   disc_number?: InputMaybe<Scalars['Int']['input']>;
   track_number?: InputMaybe<Scalars['Int']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** input type for inserting data into table "songs" */
@@ -18748,6 +18694,7 @@ export type Songs_Insert_Input = {
   spotify_uri?: InputMaybe<Scalars['String']['input']>;
   track_number?: InputMaybe<Scalars['Int']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate max on columns */
@@ -18764,6 +18711,7 @@ export type Songs_Max_Fields = {
   spotify_uri?: Maybe<Scalars['String']['output']>;
   track_number?: Maybe<Scalars['Int']['output']>;
   type?: Maybe<Scalars['String']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by max() on columns of table "songs" */
@@ -18779,6 +18727,7 @@ export type Songs_Max_Order_By = {
   spotify_uri?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -18795,6 +18744,7 @@ export type Songs_Min_Fields = {
   spotify_uri?: Maybe<Scalars['String']['output']>;
   track_number?: Maybe<Scalars['Int']['output']>;
   type?: Maybe<Scalars['String']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by min() on columns of table "songs" */
@@ -18810,6 +18760,7 @@ export type Songs_Min_Order_By = {
   spotify_uri?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "songs" */
@@ -18855,6 +18806,7 @@ export type Songs_Order_By = {
   spotify_uri?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: songs */
@@ -18889,7 +18841,9 @@ export enum Songs_Select_Column {
   /** column name */
   TrackNumber = 'track_number',
   /** column name */
-  Type = 'type'
+  Type = 'type',
+  /** column name */
+  ViewCount = 'view_count'
 }
 
 /** select "songs_aggregate_bool_exp_bool_and_arguments_columns" columns of table "songs" */
@@ -18919,6 +18873,7 @@ export type Songs_Set_Input = {
   spotify_uri?: InputMaybe<Scalars['String']['input']>;
   track_number?: InputMaybe<Scalars['Int']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate stddev on columns */
@@ -18927,6 +18882,7 @@ export type Songs_Stddev_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Float']['output']>;
   track_number?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev() on columns of table "songs" */
@@ -18934,6 +18890,7 @@ export type Songs_Stddev_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -18942,6 +18899,7 @@ export type Songs_Stddev_Pop_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Float']['output']>;
   track_number?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_pop() on columns of table "songs" */
@@ -18949,6 +18907,7 @@ export type Songs_Stddev_Pop_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -18957,6 +18916,7 @@ export type Songs_Stddev_Samp_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Float']['output']>;
   track_number?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_samp() on columns of table "songs" */
@@ -18964,6 +18924,7 @@ export type Songs_Stddev_Samp_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "songs" */
@@ -18989,6 +18950,7 @@ export type Songs_Stream_Cursor_Value_Input = {
   spotify_uri?: InputMaybe<Scalars['String']['input']>;
   track_number?: InputMaybe<Scalars['Int']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
+  view_count?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -18997,6 +18959,7 @@ export type Songs_Sum_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Int']['output']>;
   track_number?: Maybe<Scalars['Int']['output']>;
+  view_count?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by sum() on columns of table "songs" */
@@ -19004,6 +18967,7 @@ export type Songs_Sum_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "songs" */
@@ -19033,7 +18997,9 @@ export enum Songs_Update_Column {
   /** column name */
   TrackNumber = 'track_number',
   /** column name */
-  Type = 'type'
+  Type = 'type',
+  /** column name */
+  ViewCount = 'view_count'
 }
 
 export type Songs_Updates = {
@@ -19051,6 +19017,7 @@ export type Songs_Var_Pop_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Float']['output']>;
   track_number?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_pop() on columns of table "songs" */
@@ -19058,6 +19025,7 @@ export type Songs_Var_Pop_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -19066,6 +19034,7 @@ export type Songs_Var_Samp_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Float']['output']>;
   track_number?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_samp() on columns of table "songs" */
@@ -19073,6 +19042,7 @@ export type Songs_Var_Samp_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -19081,6 +19051,7 @@ export type Songs_Variance_Fields = {
   content_score?: Maybe<Scalars['Float']['output']>;
   disc_number?: Maybe<Scalars['Float']['output']>;
   track_number?: Maybe<Scalars['Float']['output']>;
+  view_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by variance() on columns of table "songs" */
@@ -19088,6 +19059,7 @@ export type Songs_Variance_Order_By = {
   content_score?: InputMaybe<Order_By>;
   disc_number?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
+  view_count?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "storage.schema_migrations" */
@@ -24067,7 +24039,7 @@ export type GetAuditLogsQueryVariables = Exact<{
 }>;
 
 
-export type GetAuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, diff: any, operation: string, pk: any, table_name: string, created_at: any, user: { __typename?: 'users', avatarUrl: string, displayName: string } }> };
+export type GetAuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, diff: any, operation: string, pk: any, table_name: string, created_at: any, user: { __typename?: 'users', id: any, avatarUrl: string, displayName: string } }> };
 
 export type GetBookByGoogleBooksIdQueryVariables = Exact<{
   googlebooks_id?: InputMaybe<Scalars['String']['input']>;
@@ -24075,6 +24047,13 @@ export type GetBookByGoogleBooksIdQueryVariables = Exact<{
 
 
 export type GetBookByGoogleBooksIdQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', googlebooks_id?: string | null }> };
+
+export type GetBookQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetBookQuery = { __typename?: 'query_root', books_by_pk?: { __typename?: 'books', id: any, title: string, overview?: string | null, cover: string, content_score?: number | null, created_at?: any | null, language?: string | null, publish_date?: any | null, reading_time?: number | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, status?: Book_Release_Status_Types_Enum | null, user_book_statuses: Array<{ __typename?: 'user_book_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Book_Status_Types_Enum | null, updated_at: any }>, book_availabilities?: { __typename?: 'book_availabilities', availability: Book_Availability_Types_Enum } | null, book_genres: Array<{ __typename?: 'book_genres', genre: Book_Genre_Types_Enum }>, book_keywords: Array<{ __typename?: 'book_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetBooksQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Books_Select_Column> | Books_Select_Column>;
@@ -24100,6 +24079,14 @@ export type InsertBookMutationVariables = Exact<{
 
 
 export type InsertBookMutation = { __typename?: 'mutation_root', insert_books_one?: { __typename?: 'books', id: any, title: string } | null };
+
+export type InsertUserBookStatusMutationVariables = Exact<{
+  object: User_Book_Statuses_Insert_Input;
+  on_conflict?: InputMaybe<User_Book_Statuses_On_Conflict>;
+}>;
+
+
+export type InsertUserBookStatusMutation = { __typename?: 'mutation_root', insert_user_book_statuses_one?: { __typename?: 'user_book_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Book_Status_Types_Enum | null, updated_at: any } | null };
 
 export type GetCreditsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Credits_Select_Column> | Credits_Select_Column>;
@@ -24130,6 +24117,11 @@ export type GetGenresQueryVariables = Exact<{
 
 export type GetGenresQuery = { __typename?: 'query_root', genres: Array<{ __typename?: 'genres', id: any, name: string }> };
 
+export type GetFeaturedItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFeaturedItemsQuery = { __typename?: 'query_root', featuredMovie: Array<{ __typename?: 'movies', id: any, title: string, poster: string }>, featuredSong: Array<{ __typename?: 'songs', id: any, name: string, album: { __typename?: 'albums', artwork: string } }>, featuredBook: Array<{ __typename?: 'books', id: any, title: string, cover: string }> };
+
 export type GetMovieByTmdb_IdQueryVariables = Exact<{
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -24142,14 +24134,14 @@ export type GetMovieForContentQualityCheckQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, average_rating?: number | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, updated_at?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Status_Types_Enum | null, updated_at: any }>, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Status_Types_Enum | null, updated_at: any }>, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: { __typename?: 'genres', name: string } }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -24332,6 +24324,7 @@ export const GetAuditLogsDocument = `
     pk
     table_name
     user {
+      id
       avatarUrl
       displayName
     }
@@ -24413,6 +24406,79 @@ export const useInfiniteGetBookByGoogleBooksIdQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetBookByGoogleBooksId.infinite'] : ['GetBookByGoogleBooksId.infinite', variables],
       queryFn: (metaData) => fetcher<GetBookByGoogleBooksIdQuery, GetBookByGoogleBooksIdQueryVariables>(GetBookByGoogleBooksIdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetBookDocument = `
+    query GetBook($id: uuid!) {
+  books_by_pk(id: $id) {
+    id
+    title
+    overview
+    cover
+    content_score
+    created_at
+    language
+    publish_date
+    reading_time
+    view_count
+    vote_average
+    vote_count
+    user_book_statuses {
+      favourited
+      rating
+      review
+      status
+      updated_at
+    }
+    status
+    book_availabilities {
+      availability
+    }
+    book_genres {
+      genre
+    }
+    book_keywords {
+      keyword {
+        keyword
+      }
+    }
+  }
+}
+    `;
+
+export const useGetBookQuery = <
+      TData = GetBookQuery,
+      TError = unknown
+    >(
+      variables: GetBookQueryVariables,
+      options?: Omit<UseQueryOptions<GetBookQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBookQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBookQuery, TError, TData>(
+      {
+    queryKey: ['GetBook', variables],
+    queryFn: fetcher<GetBookQuery, GetBookQueryVariables>(GetBookDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetBookQuery = <
+      TData = InfiniteData<GetBookQuery>,
+      TError = unknown
+    >(
+      variables: GetBookQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetBookQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetBookQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetBookQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetBook.infinite', variables],
+      queryFn: (metaData) => fetcher<GetBookQuery, GetBookQueryVariables>(GetBookDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -24509,6 +24575,31 @@ export const useInsertBookMutation = <
       {
     mutationKey: ['InsertBook'],
     mutationFn: (variables?: InsertBookMutationVariables) => fetcher<InsertBookMutation, InsertBookMutationVariables>(InsertBookDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertUserBookStatusDocument = `
+    mutation InsertUserBookStatus($object: user_book_statuses_insert_input!, $on_conflict: user_book_statuses_on_conflict) {
+  insert_user_book_statuses_one(object: $object, on_conflict: $on_conflict) {
+    favourited
+    rating
+    review
+    status
+    updated_at
+  }
+}
+    `;
+
+export const useInsertUserBookStatusMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertUserBookStatusMutation, TError, InsertUserBookStatusMutationVariables, TContext>) => {
+    
+    return useMutation<InsertUserBookStatusMutation, TError, InsertUserBookStatusMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertUserBookStatus'],
+    mutationFn: (variables?: InsertUserBookStatusMutationVariables) => fetcher<InsertUserBookStatusMutation, InsertUserBookStatusMutationVariables>(InsertUserBookStatusDocument, variables)(),
     ...options
   }
     )};
@@ -24664,6 +24755,63 @@ export const useInfiniteGetGenresQuery = <
   })()
     )};
 
+export const GetFeaturedItemsDocument = `
+    query GetFeaturedItems {
+  featuredMovie: movies(limit: 1, order_by: {view_count: desc}) {
+    id
+    title
+    poster
+  }
+  featuredSong: songs(limit: 1, order_by: {view_count: desc}) {
+    id
+    name
+    album {
+      artwork
+    }
+  }
+  featuredBook: books(limit: 1, order_by: {view_count: desc}) {
+    id
+    title
+    cover
+  }
+}
+    `;
+
+export const useGetFeaturedItemsQuery = <
+      TData = GetFeaturedItemsQuery,
+      TError = unknown
+    >(
+      variables?: GetFeaturedItemsQueryVariables,
+      options?: Omit<UseQueryOptions<GetFeaturedItemsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetFeaturedItemsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetFeaturedItemsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetFeaturedItems'] : ['GetFeaturedItems', variables],
+    queryFn: fetcher<GetFeaturedItemsQuery, GetFeaturedItemsQueryVariables>(GetFeaturedItemsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetFeaturedItemsQuery = <
+      TData = InfiniteData<GetFeaturedItemsQuery>,
+      TError = unknown
+    >(
+      variables: GetFeaturedItemsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetFeaturedItemsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetFeaturedItemsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetFeaturedItemsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetFeaturedItems.infinite'] : ['GetFeaturedItems.infinite', variables],
+      queryFn: (metaData) => fetcher<GetFeaturedItemsQuery, GetFeaturedItemsQueryVariables>(GetFeaturedItemsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
 export const GetMovieByTmdb_IdDocument = `
     query GetMovieByTMDB_ID($tmdb_id: String) {
   movies(where: {tmdb_id: {_eq: $tmdb_id}}) {
@@ -24713,7 +24861,6 @@ export const GetMovieForContentQualityCheckDocument = `
     id
     title
     overview
-    average_rating
     backdrop
     budget
     content_score
@@ -24728,7 +24875,6 @@ export const GetMovieForContentQualityCheckDocument = `
     tagline
     tmdb_id
     trailer
-    updated_at
     view_count
     vote_average
     vote_count
@@ -24801,7 +24947,6 @@ export const GetMovieDocument = `
     id
     title
     overview
-    average_rating
     backdrop
     budget
     content_score
@@ -24816,7 +24961,6 @@ export const GetMovieDocument = `
     tagline
     tmdb_id
     trailer
-    updated_at
     view_count
     vote_average
     vote_count

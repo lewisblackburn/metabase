@@ -36,6 +36,16 @@ function MediaItem({ credit }: { credit: Credits }) {
         );
     }
 
+    if (credit.object_type === Object_Types_Enum.Book) {
+        return (
+            <div key={credit.id}>
+                <Link href={`/dashboard/${OBJECT_TYPE.book.path}/${credit.object_id}`} scroll={false}>
+                    <Poster image={credit.book_credit?.cover ?? ''} title={credit.book_credit?.title ?? ''} />
+                </Link>
+            </div>
+        );
+    }
+
     if (credit.object_type === Object_Types_Enum.Song) {
         return (
             <div key={credit.id}>

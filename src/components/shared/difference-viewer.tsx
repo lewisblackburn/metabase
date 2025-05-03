@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Link from 'next/link';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 
 import { UserIcon } from 'lucide-react';
@@ -8,9 +10,10 @@ interface DifferenceViewerProps {
     diff: Record<string, [string, string]>;
     avatarUrl?: string;
     displayName?: string;
+    userId?: string;
 }
 
-const DifferenceViewer: React.FC<DifferenceViewerProps> = ({ diff, avatarUrl, displayName }) => {
+const DifferenceViewer: React.FC<DifferenceViewerProps> = ({ diff, avatarUrl, displayName, userId }) => {
     const formattedDiff = Object.entries(diff).reduce(
         (acc, [field, [oldVal, newVal]]) => {
             acc[field] = {
@@ -60,7 +63,10 @@ const DifferenceViewer: React.FC<DifferenceViewerProps> = ({ diff, avatarUrl, di
                         </AvatarFallback>
                     </Avatar>
                     <span className='text-xs text-gray-500'>
-                        Modified by <span className='font-medium text-gray-700'>{displayName}</span>
+                        Modified by{' '}
+                        <Link href={`/dashboard/users/${userId}`} className='font-medium text-gray-700'>
+                            {displayName}
+                        </Link>
                     </span>
                 </div>
             </div>

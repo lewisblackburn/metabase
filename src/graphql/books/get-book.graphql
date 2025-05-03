@@ -1,0 +1,35 @@
+query GetBook($id: uuid!) {
+    books_by_pk(id: $id) {
+        id
+        title
+        overview
+        cover
+        content_score
+        created_at
+        language
+        publish_date
+        reading_time
+        view_count
+        vote_average
+        vote_count
+        user_book_statuses {
+            favourited
+            rating
+            review
+            status
+            updated_at
+        }
+        status
+        book_availabilities {
+            availability
+        }
+        book_genres {
+            genre
+        }
+        book_keywords {
+            keyword {
+                keyword
+            }
+        }
+    }
+}

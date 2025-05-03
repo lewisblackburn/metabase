@@ -1,34 +1,30 @@
 'use client';
 
-import Link from 'next/link';
-
 import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
 import ItemInformation from '@/components/shared/item-information';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
+import BookChanges from '@/features/books/components/book-changes';
+import BookCredits from '@/features/books/components/book-credits';
+import BookFavouriteButton from '@/features/books/components/book-favourite-button';
+import BookLayout from '@/features/books/components/book-layout';
+import { BookProvider, useBook } from '@/features/books/components/book-provider';
+import BookStatusPicker from '@/features/books/components/book-status-picker';
+import ReviewBookDialog from '@/features/books/components/review-book-dialog';
+import { bookReleaseStatusLabels } from '@/features/books/constants/book-enums';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieChanges from '@/features/movies/components/movie-changes';
-import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieCredits from '@/features/movies/components/movie-credits';
-import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
-import MovieLayout from '@/features/movies/components/movie-layout';
 import ObjectOverview from '@/features/movies/components/movie-overview';
-import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
-import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
-import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
-import SoundtrackTable from '@/features/movies/components/soundtrack-table';
-import { movieCertificationLabels, movieReleaseStatusLabels } from '@/features/movies/constants/movie-enums';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Button } from '@/registry/new-york-v4/ui/button';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
 import {
     Calendar,
-    CreditCard,
     Edit,
     Eye,
     Image,
@@ -36,21 +32,19 @@ import {
     Languages,
     Layers2,
     Music,
-    Play,
     Star,
     Timer,
-    TrendingUp,
     Trophy,
     User,
     Video
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
-export default function MoviePage() {
+export default function BookPage() {
     return (
-        <MovieProvider>
-            <MoviePageContent />
-        </MovieProvider>
+        <BookProvider>
+            <BookPageContent />
+        </BookProvider>
     );
 }
 
@@ -58,75 +52,59 @@ const tabItems = [
     { value: 'reviews', icon: Star, label: 'Reviews' },
     { value: 'where-to-watch', icon: Layers2, label: 'Where to Watch' },
     { value: 'credits', icon: User, label: 'Credits' },
-    { value: 'soundtrack', icon: Music, label: 'Soundtrack' },
     { value: 'awards', icon: Trophy, label: 'Awards' },
     { value: 'images', icon: Image, label: 'Images' },
     { value: 'videos', icon: Video, label: 'Videos' },
     { value: 'changes', icon: Edit, label: 'Changes' }
 ];
 
-function MoviePageContent() {
+function BookPageContent() {
     const dispatch = useDispatch();
-    const { movie } = useMovie();
+    const { book } = useBook();
 
-    if (!movie) return <NotFound />;
+    if (!book) return <NotFound />;
 
     const tabContents = {
         reviews: {
             content: 'No reviews available.'
         },
         'where-to-watch': { content: 'No where to watch information available.' },
-        credits: { content: <MovieCredits /> },
-        soundtrack: { content: <SoundtrackTable /> },
+        credits: { content: <BookCredits /> },
         awards: { content: 'No awards available' },
         images: { content: 'No images available.' },
         videos: { content: 'No videos available.' },
-        changes: { content: <MovieChanges /> }
+        changes: { content: <BookChanges /> }
     };
 
     return (
-        <MovieLayout
-            backdropAlt={movie.title}
-            backdropImage={movie.backdrop}
-            posterAlt={movie.title}
-            posterImage={movie.poster}>
+        <BookLayout posterAlt={book.title} posterImage={book.cover}>
             {{
                 mainContent: (
                     <div className='space-y-4'>
                         <div>
                             <div className='flex items-start justify-between'>
-                                <h2>{movie.title}</h2>
+                                <h2>{book.title}</h2>
                             </div>
-                            {movie.tagline && (
-                                <p className='text-muted-foreground mt-1 text-sm italic'>{movie.tagline}</p>
+                            {book.book_genres.length > 0 && (
+                                <div className='mt-3 flex flex-wrap gap-2'>
+                                    {book.book_genres.map((genre) => (
+                                        <Badge key={genre.genre} variant='outline'>
+                                            {genre.genre}
+                                        </Badge>
+                                    ))}
+                                </div>
                             )}
-
-                            <div className='mt-3 flex flex-wrap gap-2'>
-                                {movie.movie_genres.map((genre) => (
-                                    <Badge key={genre.genre.name} variant='outline'>
-                                        {genre.genre.name}
-                                    </Badge>
-                                ))}
-                            </div>
                         </div>
 
                         <div className='text-muted-foreground flex flex-wrap gap-x-6 gap-y-2 text-sm'>
                             <span className='flex items-center gap-1'>
                                 <Calendar className='h-4 w-4' />
-                                {dayjs(movie.release_date).format('MMMM Do, YYYY')}
+                                {dayjs(book.publish_date).format('MMMM Do, YYYY')}
                             </span>
                             <span className='flex items-center gap-1'>
                                 <Timer className='h-4 w-4' />
-                                {movie.formatted_runtime}
+                                {book.reading_time}
                             </span>
-                            {movie.certification && (
-                                <span className='flex items-center gap-1'>
-                                    <User className='h-4 w-4' />
-                                    {movie.certification && (
-                                        <>{movieCertificationLabels[movie.certification] || 'Unknown'}</>
-                                    )}
-                                </span>
-                            )}
                             <ResponsiveDialog
                                 title='More Information'
                                 hasVisibleTitle
@@ -138,23 +116,15 @@ function MoviePageContent() {
                                 }>
                                 <div className='flex flex-col gap-4'>
                                     <ItemInformation icon={Languages} label='Language'>
-                                        {LANGUAGES.find((lang) => lang.code === movie.language)?.label || 'Unknown'}
+                                        {LANGUAGES.find((lang) => lang.code === book.language)?.label || 'Unknown'}
                                     </ItemInformation>
 
                                     <ItemInformation icon={Info} label='Status'>
-                                        {movie.status && <>{movieReleaseStatusLabels[movie.status] || 'Unknown'}</>}
-                                    </ItemInformation>
-
-                                    <ItemInformation icon={CreditCard} label='Budget'>
-                                        {movie.budget || 'Not available'}
-                                    </ItemInformation>
-
-                                    <ItemInformation icon={TrendingUp} label='Revenue'>
-                                        {movie.revenue || 'Not available'}
+                                        {book.status && <>{bookReleaseStatusLabels[book.status] || 'Unknown'}</>}
                                     </ItemInformation>
 
                                     <ItemInformation icon={Eye} label='View Count'>
-                                        {movie.view_count || 0}
+                                        {book.view_count || 0}
                                     </ItemInformation>
 
                                     {/* <ItemInformation icon={TrendingUp} label='Content Score'> */}
@@ -164,28 +134,20 @@ function MoviePageContent() {
                             </ResponsiveDialog>
                         </div>
 
-                        {movie.overview && <ObjectOverview title={movie.title} text={movie.overview} />}
+                        {book.overview && <ObjectOverview title={book.title} text={book.overview} />}
 
                         <div className='flex flex-wrap items-center gap-2'>
-                            <MovieFavouriteButton />
-                            {movie.trailer && (
-                                <Link href={movie.trailer ?? ''} target='_blank'>
-                                    <Button variant='outline' size='sm'>
-                                        <Play className='mr-1 h-4 w-4' />
-                                        Play Trailer
-                                    </Button>
-                                </Link>
-                            )}
-                            <ReviewMovieDialog />
-                            <MovieStatusPicker />
+                            <BookFavouriteButton />
+                            <ReviewBookDialog />
+                            <BookStatusPicker />
                             <ActionButton
                                 icon={Edit}
                                 size='sm'
                                 onClick={() =>
                                     dispatch(
                                         toggleEditDialogOpenState({
-                                            objectType: Object_Types_Enum.Movie,
-                                            objectId: movie.id
+                                            objectType: Object_Types_Enum.Book,
+                                            objectId: book.id
                                         })
                                     )
                                 }>
@@ -204,6 +166,6 @@ function MoviePageContent() {
                     </ScrollableTabs>
                 )
             }}
-        </MovieLayout>
+        </BookLayout>
     );
 }

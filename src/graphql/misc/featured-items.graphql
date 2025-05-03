@@ -1,0 +1,19 @@
+query GetFeaturedItems {
+    featuredMovie: movies(limit: 1, order_by: { view_count: desc }) {
+        id
+        title
+        poster
+    }
+    featuredSong: songs(limit: 1, order_by: { view_count: desc }) {
+        id
+        name
+        album {
+            artwork
+        }
+    }
+    featuredBook: books(limit: 1, order_by: { view_count: desc }) {
+        id
+        title
+        cover
+    }
+}
