@@ -1,6 +1,6 @@
 import { useNhostClient } from '@nhost/nextjs';
 
-import { nhost } from './nhost';
+import { nhostPublic } from './nhost-public';
 import { ClientError, GraphQLClient } from 'graphql-request';
 
 export const fetcher = <TData, TVariables>(
@@ -14,11 +14,11 @@ export const fetcher = <TData, TVariables>(
             ...customHeaders
         };
 
-        if (nhost.auth.isAuthenticated()) {
-            headers['Authorization'] = `Bearer ${nhost.auth.getAccessToken()}`;
+        if (nhostPublic.auth.isAuthenticated()) {
+            headers['Authorization'] = `Bearer ${nhostPublic.auth.getAccessToken()}`;
         }
 
-        const client = new GraphQLClient(nhost.graphql.httpUrl, { headers });
+        const client = new GraphQLClient(nhostPublic.graphql.httpUrl, { headers });
         try {
             const data = await client.request<TData>(query, variables || {});
             return data;

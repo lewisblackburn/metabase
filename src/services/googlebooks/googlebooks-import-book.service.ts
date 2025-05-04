@@ -1,5 +1,5 @@
 import { BUCKET } from '@/constants/media.constant';
-import { nhost } from '@/lib/nhost';
+import { nhostAdmin } from '@/lib/nhost-admin.server';
 
 import {
     Book_Media_Constraint,
@@ -85,7 +85,7 @@ export async function importBookFromGoogleBooks(
             publish_date: bookData.volumeInfo.publishedDate ? new Date(bookData.volumeInfo.publishedDate) : undefined,
             // page_count: bookData.volumeInfo.pageCount,
             // language: bookData.volumeInfo.language,
-            cover: cover ? nhost.storage.getPublicUrl({ fileId: cover.id }) : undefined,
+            cover: cover ? nhostAdmin.storage.getPublicUrl({ fileId: cover.id }) : undefined,
             book_media: {
                 data: [
                     {

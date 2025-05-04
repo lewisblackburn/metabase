@@ -1,5 +1,5 @@
 import { BUCKET } from '@/constants/media.constant';
-import { nhost } from '@/lib/nhost';
+import { nhostAdmin } from '@/lib/nhost-admin.server';
 
 import {
     Credit_Types_Enum,
@@ -136,7 +136,9 @@ export async function importMovieFromTmdb(
                         tmdb_id: String(cast.id),
                         name: cast.name,
                         gender: TMDB_GENDER_MAP[cast.gender as keyof typeof TMDB_GENDER_MAP],
-                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
+                        headshot: headshotFile
+                            ? nhostAdmin.storage.getPublicUrl({ fileId: headshotFile.id })
+                            : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
@@ -180,7 +182,9 @@ export async function importMovieFromTmdb(
                         tmdb_id: String(crew.id),
                         name: crew.name,
                         gender: TMDB_GENDER_MAP[crew.gender as keyof typeof TMDB_GENDER_MAP],
-                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
+                        headshot: headshotFile
+                            ? nhostAdmin.storage.getPublicUrl({ fileId: headshotFile.id })
+                            : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
@@ -225,8 +229,8 @@ export async function importMovieFromTmdb(
             homepage: tmdbMovieData.homepage,
             status: TMDB_RELEASE_STATUS_MAP[tmdbMovieData.status as keyof typeof TMDB_RELEASE_STATUS_MAP] || undefined,
             language: tmdbMovieData.original_language,
-            backdrop: backdrop ? nhost.storage.getPublicUrl({ fileId: backdrop.id }) : undefined,
-            poster: poster ? nhost.storage.getPublicUrl({ fileId: poster.id }) : undefined,
+            backdrop: backdrop ? nhostAdmin.storage.getPublicUrl({ fileId: backdrop.id }) : undefined,
+            poster: poster ? nhostAdmin.storage.getPublicUrl({ fileId: poster.id }) : undefined,
             movie_media: {
                 data: [
                     {

@@ -10,7 +10,7 @@ const config: CodegenConfig = {
         {
             'https://lwmecktyyhputyqkdigy.hasura.eu-west-2.nhost.run/v1/graphql': {
                 headers: {
-                    'x-hasura-admin-secret': process.env.NEXT_PUBLIC_NHOST_ADMIN_SECRET || ''
+                    'x-hasura-admin-secret': process.env.NHOST_ADMIN_SECRET || ''
                 }
             }
         }
