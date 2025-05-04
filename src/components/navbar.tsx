@@ -26,6 +26,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/re
 import { useUserData } from '@nhost/nextjs';
 
 import { NavUser } from './nav-user';
+import Notifications from './notifications/notifications';
 import Artwork, { ArtworkSkeleton } from './shared/artwork';
 import Cover, { CoverSkeleton } from './shared/cover';
 import ImageWithSkeleton from './shared/image-with-skeleton';
@@ -348,6 +349,8 @@ const Navbar: React.FC = () => {
                         <span className='font-mono text-xs'>Search anything</span>
                         <ShortcutDisplay combo={searchShortcut.key} />
                     </Button>
+
+                    <Notifications />
 
                     <div className='hidden lg:block'>
                         <NavUser user={user} />

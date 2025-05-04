@@ -14677,13 +14677,18 @@ export type Mutation_RootUpdate_Virus_ManyArgs = {
 /** columns and relationships of "notifications" */
 export type Notifications = {
   __typename?: 'notifications';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id: Scalars['uuid']['output'];
-  is_read?: Maybe<Scalars['Boolean']['output']>;
-  message: Scalars['String']['output'];
+  activity_id: Scalars['uuid']['output'];
   /** An object relationship */
-  user: Users;
-  user_id: Scalars['uuid']['output'];
+  actor: Users;
+  actor_id: Scalars['uuid']['output'];
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['uuid']['output'];
+  is_read: Scalars['Boolean']['output'];
+  /** An object relationship */
+  recipient: Users;
+  recipient_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  user_activity?: Maybe<User_Activities>;
 };
 
 /** aggregated selection of "notifications" */
@@ -14691,33 +14696,6 @@ export type Notifications_Aggregate = {
   __typename?: 'notifications_aggregate';
   aggregate?: Maybe<Notifications_Aggregate_Fields>;
   nodes: Array<Notifications>;
-};
-
-export type Notifications_Aggregate_Bool_Exp = {
-  bool_and?: InputMaybe<Notifications_Aggregate_Bool_Exp_Bool_And>;
-  bool_or?: InputMaybe<Notifications_Aggregate_Bool_Exp_Bool_Or>;
-  count?: InputMaybe<Notifications_Aggregate_Bool_Exp_Count>;
-};
-
-export type Notifications_Aggregate_Bool_Exp_Bool_And = {
-  arguments: Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Notifications_Bool_Exp>;
-  predicate: Boolean_Comparison_Exp;
-};
-
-export type Notifications_Aggregate_Bool_Exp_Bool_Or = {
-  arguments: Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Notifications_Bool_Exp>;
-  predicate: Boolean_Comparison_Exp;
-};
-
-export type Notifications_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Notifications_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Notifications_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "notifications" */
@@ -14735,31 +14713,20 @@ export type Notifications_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** order by aggregate values of table "notifications" */
-export type Notifications_Aggregate_Order_By = {
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Notifications_Max_Order_By>;
-  min?: InputMaybe<Notifications_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "notifications" */
-export type Notifications_Arr_Rel_Insert_Input = {
-  data: Array<Notifications_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Notifications_On_Conflict>;
-};
-
 /** Boolean expression to filter rows from the table "notifications". All fields are combined with a logical 'AND'. */
 export type Notifications_Bool_Exp = {
   _and?: InputMaybe<Array<Notifications_Bool_Exp>>;
   _not?: InputMaybe<Notifications_Bool_Exp>;
   _or?: InputMaybe<Array<Notifications_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  activity_id?: InputMaybe<Uuid_Comparison_Exp>;
+  actor?: InputMaybe<Users_Bool_Exp>;
+  actor_id?: InputMaybe<Uuid_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   is_read?: InputMaybe<Boolean_Comparison_Exp>;
-  message?: InputMaybe<String_Comparison_Exp>;
-  user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+  recipient?: InputMaybe<Users_Bool_Exp>;
+  recipient_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_activity?: InputMaybe<User_Activities_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "notifications" */
@@ -14770,46 +14737,35 @@ export enum Notifications_Constraint {
 
 /** input type for inserting data into table "notifications" */
 export type Notifications_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  activity_id?: InputMaybe<Scalars['uuid']['input']>;
+  actor?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  actor_id?: InputMaybe<Scalars['uuid']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   is_read?: InputMaybe<Scalars['Boolean']['input']>;
-  message?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipient?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  recipient_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_activity?: InputMaybe<User_Activities_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
 export type Notifications_Max_Fields = {
   __typename?: 'notifications_max_fields';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
+  activity_id?: Maybe<Scalars['uuid']['output']>;
+  actor_id?: Maybe<Scalars['uuid']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  message?: Maybe<Scalars['String']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by max() on columns of table "notifications" */
-export type Notifications_Max_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  message?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
+  recipient_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** aggregate min on columns */
 export type Notifications_Min_Fields = {
   __typename?: 'notifications_min_fields';
-  created_at?: Maybe<Scalars['timestamp']['output']>;
+  activity_id?: Maybe<Scalars['uuid']['output']>;
+  actor_id?: Maybe<Scalars['uuid']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  message?: Maybe<Scalars['String']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by min() on columns of table "notifications" */
-export type Notifications_Min_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  message?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
+  recipient_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** response of any mutation on the table "notifications" */
@@ -14830,12 +14786,15 @@ export type Notifications_On_Conflict = {
 
 /** Ordering options when selecting data from "notifications". */
 export type Notifications_Order_By = {
+  activity_id?: InputMaybe<Order_By>;
+  actor?: InputMaybe<Users_Order_By>;
+  actor_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   is_read?: InputMaybe<Order_By>;
-  message?: InputMaybe<Order_By>;
-  user?: InputMaybe<Users_Order_By>;
-  user_id?: InputMaybe<Order_By>;
+  recipient?: InputMaybe<Users_Order_By>;
+  recipient_id?: InputMaybe<Order_By>;
+  user_activity?: InputMaybe<User_Activities_Order_By>;
 };
 
 /** primary key columns input for table: notifications */
@@ -14846,36 +14805,27 @@ export type Notifications_Pk_Columns_Input = {
 /** select columns of table "notifications" */
 export enum Notifications_Select_Column {
   /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  ActorId = 'actor_id',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
   /** column name */
   IsRead = 'is_read',
   /** column name */
-  Message = 'message',
-  /** column name */
-  UserId = 'user_id'
-}
-
-/** select "notifications_aggregate_bool_exp_bool_and_arguments_columns" columns of table "notifications" */
-export enum Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
-  /** column name */
-  IsRead = 'is_read'
-}
-
-/** select "notifications_aggregate_bool_exp_bool_or_arguments_columns" columns of table "notifications" */
-export enum Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
-  /** column name */
-  IsRead = 'is_read'
+  RecipientId = 'recipient_id'
 }
 
 /** input type for updating data in table "notifications" */
 export type Notifications_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  activity_id?: InputMaybe<Scalars['uuid']['input']>;
+  actor_id?: InputMaybe<Scalars['uuid']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   is_read?: InputMaybe<Scalars['Boolean']['input']>;
-  message?: InputMaybe<Scalars['String']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipient_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** Streaming cursor of the table "notifications" */
@@ -14888,15 +14838,20 @@ export type Notifications_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Notifications_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  activity_id?: InputMaybe<Scalars['uuid']['input']>;
+  actor_id?: InputMaybe<Scalars['uuid']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   is_read?: InputMaybe<Scalars['Boolean']['input']>;
-  message?: InputMaybe<Scalars['String']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipient_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "notifications" */
 export enum Notifications_Update_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  ActorId = 'actor_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -14904,9 +14859,7 @@ export enum Notifications_Update_Column {
   /** column name */
   IsRead = 'is_read',
   /** column name */
-  Message = 'message',
-  /** column name */
-  UserId = 'user_id'
+  RecipientId = 'recipient_id'
 }
 
 export type Notifications_Updates = {
@@ -16081,9 +16034,9 @@ export type Query_Root = {
   movies_aggregate: Movies_Aggregate;
   /** fetch data from the table: "movies" using primary key columns */
   movies_by_pk?: Maybe<Movies>;
-  /** An array relationship */
+  /** fetch data from the table: "notifications" */
   notifications: Array<Notifications>;
-  /** An aggregate relationship */
+  /** fetch aggregated fields from the table: "notifications" */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
@@ -19710,9 +19663,9 @@ export type Subscription_Root = {
   movies_by_pk?: Maybe<Movies>;
   /** fetch data from the table in a streaming manner: "movies" */
   movies_stream: Array<Movies>;
-  /** An array relationship */
+  /** fetch data from the table: "notifications" */
   notifications: Array<Notifications>;
-  /** An aggregate relationship */
+  /** fetch aggregated fields from the table: "notifications" */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
@@ -21837,6 +21790,13 @@ export type User_Activities_Mutation_Response = {
   returning: Array<User_Activities>;
 };
 
+/** input type for inserting object relation for remote table "user_activities" */
+export type User_Activities_Obj_Rel_Insert_Input = {
+  data: User_Activities_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Activities_On_Conflict>;
+};
+
 /** on_conflict condition type for table "user_activities" */
 export type User_Activities_On_Conflict = {
   constraint: User_Activities_Constraint;
@@ -23118,10 +23078,6 @@ export type Users = {
   locale: Scalars['String']['output'];
   metadata?: Maybe<Scalars['jsonb']['output']>;
   newEmail?: Maybe<Scalars['citext']['output']>;
-  /** An array relationship */
-  notifications: Array<Notifications>;
-  /** An aggregate relationship */
-  notifications_aggregate: Notifications_Aggregate;
   otpHash?: Maybe<Scalars['String']['output']>;
   otpHashExpiresAt: Scalars['timestamptz']['output'];
   otpMethodLastUsed?: Maybe<Scalars['String']['output']>;
@@ -23234,26 +23190,6 @@ export type UsersFollowers_AggregateArgs = {
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersMetadataArgs = {
   path?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
-export type UsersNotificationsArgs = {
-  distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Notifications_Order_By>>;
-  where?: InputMaybe<Notifications_Bool_Exp>;
-};
-
-
-/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
-export type UsersNotifications_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Notifications_Order_By>>;
-  where?: InputMaybe<Notifications_Bool_Exp>;
 };
 
 
@@ -23532,8 +23468,6 @@ export type Users_Bool_Exp = {
   locale?: InputMaybe<String_Comparison_Exp>;
   metadata?: InputMaybe<Jsonb_Comparison_Exp>;
   newEmail?: InputMaybe<Citext_Comparison_Exp>;
-  notifications?: InputMaybe<Notifications_Bool_Exp>;
-  notifications_aggregate?: InputMaybe<Notifications_Aggregate_Bool_Exp>;
   otpHash?: InputMaybe<String_Comparison_Exp>;
   otpHashExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   otpMethodLastUsed?: InputMaybe<String_Comparison_Exp>;
@@ -23610,7 +23544,6 @@ export type Users_Insert_Input = {
   locale?: InputMaybe<Scalars['String']['input']>;
   metadata?: InputMaybe<Scalars['jsonb']['input']>;
   newEmail?: InputMaybe<Scalars['citext']['input']>;
-  notifications?: InputMaybe<Notifications_Arr_Rel_Insert_Input>;
   otpHash?: InputMaybe<Scalars['String']['input']>;
   otpHashExpiresAt?: InputMaybe<Scalars['timestamptz']['input']>;
   otpMethodLastUsed?: InputMaybe<Scalars['String']['input']>;
@@ -23775,7 +23708,6 @@ export type Users_Order_By = {
   locale?: InputMaybe<Order_By>;
   metadata?: InputMaybe<Order_By>;
   newEmail?: InputMaybe<Order_By>;
-  notifications_aggregate?: InputMaybe<Notifications_Aggregate_Order_By>;
   otpHash?: InputMaybe<Order_By>;
   otpHashExpiresAt?: InputMaybe<Order_By>;
   otpMethodLastUsed?: InputMaybe<Order_By>;
@@ -24477,6 +24409,13 @@ export type UpdateMovieMutationVariables = Exact<{
 
 export type UpdateMovieMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any } | null };
 
+export type OnNotificationsSubscriptionVariables = Exact<{
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type OnNotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string }, user_activity?: { __typename?: 'user_activities', object_type: Object_Types_Enum, object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
+
 export type GetPeopleQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<People_Select_Column> | People_Select_Column>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -24569,13 +24508,6 @@ export type DeleteFollowMutationVariables = Exact<{
 
 
 export type DeleteFollowMutation = { __typename?: 'mutation_root', delete_follows_by_pk?: { __typename?: 'follows', followee_id: any, follower_id: any } | null };
-
-export type FolloweeActivitiesSubscriptionVariables = Exact<{
-  id: Scalars['uuid']['input'];
-}>;
-
-
-export type FolloweeActivitiesSubscription = { __typename?: 'subscription_root', user?: { __typename?: 'users', followees: Array<{ __typename?: 'follows', followee: { __typename?: 'users', user_activities: Array<{ __typename?: 'user_activities', id: any, object_type: Object_Types_Enum, object_id: any, object_title: string, details: any, activity_type: Activity_Types_Enum, created_at: any, user: { __typename?: 'users', avatarUrl: string, displayName: string } }> } }> } | null };
 
 export type GetFolloweesQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -25509,6 +25441,29 @@ export const useUpdateMovieMutation = <
   }
     )};
 
+export const OnNotificationsDocument = `
+    subscription OnNotifications($user_id: uuid!) {
+  notifications(
+    where: {recipient_id: {_eq: $user_id}}
+    order_by: {created_at: desc}
+  ) {
+    id
+    actor {
+      id
+      displayName
+    }
+    user_activity {
+      object_type
+      object_title
+      activity_type
+      details
+      created_at
+    }
+    is_read
+    created_at
+  }
+}
+    `;
 export const GetPeopleDocument = `
     query GetPeople($distinct_on: [people_select_column!], $limit: Int, $offset: Int, $order_by: [people_order_by!], $where: people_bool_exp) {
   people(
@@ -25981,29 +25936,6 @@ export const useDeleteFollowMutation = <
   }
     )};
 
-export const FolloweeActivitiesDocument = `
-    subscription FolloweeActivities($id: uuid!) {
-  user(id: $id) {
-    followees {
-      followee {
-        user_activities {
-          id
-          object_type
-          object_id
-          object_title
-          details
-          activity_type
-          user {
-            avatarUrl
-            displayName
-          }
-          created_at
-        }
-      }
-    }
-  }
-}
-    `;
 export const GetFolloweesDocument = `
     query GetFollowees($id: uuid!, $followees_limit: Int, $followees_offset: Int) {
   user(id: $id) {
