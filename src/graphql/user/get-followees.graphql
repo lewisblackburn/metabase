@@ -1,5 +1,5 @@
-query GetFollowees($id: uuid!, $followees_limit: Int, $followees_offset: Int) {
-    user(id: $id) {
+query GetFollowees($user_id: uuid!, $followees_limit: Int, $followees_offset: Int) {
+    user(id: $user_id) {
         followees(order_by: { created_at: desc }, limit: $followees_limit, offset: $followees_offset) {
             followee {
                 id

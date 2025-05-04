@@ -6324,6 +6324,607 @@ export type Credits_Variance_Order_By = {
   order?: InputMaybe<Order_By>;
 };
 
+/** columns and relationships of "cron.job" */
+export type Cron_Job = {
+  __typename?: 'cron_job';
+  active: Scalars['Boolean']['output'];
+  command: Scalars['String']['output'];
+  database: Scalars['String']['output'];
+  jobid: Scalars['bigint']['output'];
+  jobname?: Maybe<Scalars['String']['output']>;
+  nodename: Scalars['String']['output'];
+  nodeport: Scalars['Int']['output'];
+  schedule: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
+/** aggregated selection of "cron.job" */
+export type Cron_Job_Aggregate = {
+  __typename?: 'cron_job_aggregate';
+  aggregate?: Maybe<Cron_Job_Aggregate_Fields>;
+  nodes: Array<Cron_Job>;
+};
+
+/** aggregate fields of "cron.job" */
+export type Cron_Job_Aggregate_Fields = {
+  __typename?: 'cron_job_aggregate_fields';
+  avg?: Maybe<Cron_Job_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Cron_Job_Max_Fields>;
+  min?: Maybe<Cron_Job_Min_Fields>;
+  stddev?: Maybe<Cron_Job_Stddev_Fields>;
+  stddev_pop?: Maybe<Cron_Job_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Cron_Job_Stddev_Samp_Fields>;
+  sum?: Maybe<Cron_Job_Sum_Fields>;
+  var_pop?: Maybe<Cron_Job_Var_Pop_Fields>;
+  var_samp?: Maybe<Cron_Job_Var_Samp_Fields>;
+  variance?: Maybe<Cron_Job_Variance_Fields>;
+};
+
+
+/** aggregate fields of "cron.job" */
+export type Cron_Job_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Cron_Job_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Cron_Job_Avg_Fields = {
+  __typename?: 'cron_job_avg_fields';
+  jobid?: Maybe<Scalars['Float']['output']>;
+  nodeport?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "cron.job". All fields are combined with a logical 'AND'. */
+export type Cron_Job_Bool_Exp = {
+  _and?: InputMaybe<Array<Cron_Job_Bool_Exp>>;
+  _not?: InputMaybe<Cron_Job_Bool_Exp>;
+  _or?: InputMaybe<Array<Cron_Job_Bool_Exp>>;
+  active?: InputMaybe<Boolean_Comparison_Exp>;
+  command?: InputMaybe<String_Comparison_Exp>;
+  database?: InputMaybe<String_Comparison_Exp>;
+  jobid?: InputMaybe<Bigint_Comparison_Exp>;
+  jobname?: InputMaybe<String_Comparison_Exp>;
+  nodename?: InputMaybe<String_Comparison_Exp>;
+  nodeport?: InputMaybe<Int_Comparison_Exp>;
+  schedule?: InputMaybe<String_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "cron.job" */
+export enum Cron_Job_Constraint {
+  /** unique or primary key constraint on columns "jobid" */
+  JobPkey = 'job_pkey',
+  /** unique or primary key constraint on columns "jobname", "username" */
+  JobnameUsernameUniq = 'jobname_username_uniq'
+}
+
+/** input type for incrementing numeric columns in table "cron.job" */
+export type Cron_Job_Inc_Input = {
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  nodeport?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "cron.job" */
+export type Cron_Job_Insert_Input = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  command?: InputMaybe<Scalars['String']['input']>;
+  database?: InputMaybe<Scalars['String']['input']>;
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  jobname?: InputMaybe<Scalars['String']['input']>;
+  nodename?: InputMaybe<Scalars['String']['input']>;
+  nodeport?: InputMaybe<Scalars['Int']['input']>;
+  schedule?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Cron_Job_Max_Fields = {
+  __typename?: 'cron_job_max_fields';
+  command?: Maybe<Scalars['String']['output']>;
+  database?: Maybe<Scalars['String']['output']>;
+  jobid?: Maybe<Scalars['bigint']['output']>;
+  jobname?: Maybe<Scalars['String']['output']>;
+  nodename?: Maybe<Scalars['String']['output']>;
+  nodeport?: Maybe<Scalars['Int']['output']>;
+  schedule?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Cron_Job_Min_Fields = {
+  __typename?: 'cron_job_min_fields';
+  command?: Maybe<Scalars['String']['output']>;
+  database?: Maybe<Scalars['String']['output']>;
+  jobid?: Maybe<Scalars['bigint']['output']>;
+  jobname?: Maybe<Scalars['String']['output']>;
+  nodename?: Maybe<Scalars['String']['output']>;
+  nodeport?: Maybe<Scalars['Int']['output']>;
+  schedule?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "cron.job" */
+export type Cron_Job_Mutation_Response = {
+  __typename?: 'cron_job_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Cron_Job>;
+};
+
+/** on_conflict condition type for table "cron.job" */
+export type Cron_Job_On_Conflict = {
+  constraint: Cron_Job_Constraint;
+  update_columns?: Array<Cron_Job_Update_Column>;
+  where?: InputMaybe<Cron_Job_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "cron.job". */
+export type Cron_Job_Order_By = {
+  active?: InputMaybe<Order_By>;
+  command?: InputMaybe<Order_By>;
+  database?: InputMaybe<Order_By>;
+  jobid?: InputMaybe<Order_By>;
+  jobname?: InputMaybe<Order_By>;
+  nodename?: InputMaybe<Order_By>;
+  nodeport?: InputMaybe<Order_By>;
+  schedule?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: cron.job */
+export type Cron_Job_Pk_Columns_Input = {
+  jobid: Scalars['bigint']['input'];
+};
+
+/** columns and relationships of "cron.job_run_details" */
+export type Cron_Job_Run_Details = {
+  __typename?: 'cron_job_run_details';
+  command?: Maybe<Scalars['String']['output']>;
+  database?: Maybe<Scalars['String']['output']>;
+  end_time?: Maybe<Scalars['timestamptz']['output']>;
+  job_pid?: Maybe<Scalars['Int']['output']>;
+  jobid?: Maybe<Scalars['bigint']['output']>;
+  return_message?: Maybe<Scalars['String']['output']>;
+  runid: Scalars['bigint']['output'];
+  start_time?: Maybe<Scalars['timestamptz']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregated selection of "cron.job_run_details" */
+export type Cron_Job_Run_Details_Aggregate = {
+  __typename?: 'cron_job_run_details_aggregate';
+  aggregate?: Maybe<Cron_Job_Run_Details_Aggregate_Fields>;
+  nodes: Array<Cron_Job_Run_Details>;
+};
+
+/** aggregate fields of "cron.job_run_details" */
+export type Cron_Job_Run_Details_Aggregate_Fields = {
+  __typename?: 'cron_job_run_details_aggregate_fields';
+  avg?: Maybe<Cron_Job_Run_Details_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Cron_Job_Run_Details_Max_Fields>;
+  min?: Maybe<Cron_Job_Run_Details_Min_Fields>;
+  stddev?: Maybe<Cron_Job_Run_Details_Stddev_Fields>;
+  stddev_pop?: Maybe<Cron_Job_Run_Details_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Cron_Job_Run_Details_Stddev_Samp_Fields>;
+  sum?: Maybe<Cron_Job_Run_Details_Sum_Fields>;
+  var_pop?: Maybe<Cron_Job_Run_Details_Var_Pop_Fields>;
+  var_samp?: Maybe<Cron_Job_Run_Details_Var_Samp_Fields>;
+  variance?: Maybe<Cron_Job_Run_Details_Variance_Fields>;
+};
+
+
+/** aggregate fields of "cron.job_run_details" */
+export type Cron_Job_Run_Details_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Cron_Job_Run_Details_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Cron_Job_Run_Details_Avg_Fields = {
+  __typename?: 'cron_job_run_details_avg_fields';
+  job_pid?: Maybe<Scalars['Float']['output']>;
+  jobid?: Maybe<Scalars['Float']['output']>;
+  runid?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "cron.job_run_details". All fields are combined with a logical 'AND'. */
+export type Cron_Job_Run_Details_Bool_Exp = {
+  _and?: InputMaybe<Array<Cron_Job_Run_Details_Bool_Exp>>;
+  _not?: InputMaybe<Cron_Job_Run_Details_Bool_Exp>;
+  _or?: InputMaybe<Array<Cron_Job_Run_Details_Bool_Exp>>;
+  command?: InputMaybe<String_Comparison_Exp>;
+  database?: InputMaybe<String_Comparison_Exp>;
+  end_time?: InputMaybe<Timestamptz_Comparison_Exp>;
+  job_pid?: InputMaybe<Int_Comparison_Exp>;
+  jobid?: InputMaybe<Bigint_Comparison_Exp>;
+  return_message?: InputMaybe<String_Comparison_Exp>;
+  runid?: InputMaybe<Bigint_Comparison_Exp>;
+  start_time?: InputMaybe<Timestamptz_Comparison_Exp>;
+  status?: InputMaybe<String_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "cron.job_run_details" */
+export enum Cron_Job_Run_Details_Constraint {
+  /** unique or primary key constraint on columns "runid" */
+  JobRunDetailsPkey = 'job_run_details_pkey'
+}
+
+/** input type for incrementing numeric columns in table "cron.job_run_details" */
+export type Cron_Job_Run_Details_Inc_Input = {
+  job_pid?: InputMaybe<Scalars['Int']['input']>;
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  runid?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** input type for inserting data into table "cron.job_run_details" */
+export type Cron_Job_Run_Details_Insert_Input = {
+  command?: InputMaybe<Scalars['String']['input']>;
+  database?: InputMaybe<Scalars['String']['input']>;
+  end_time?: InputMaybe<Scalars['timestamptz']['input']>;
+  job_pid?: InputMaybe<Scalars['Int']['input']>;
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  return_message?: InputMaybe<Scalars['String']['input']>;
+  runid?: InputMaybe<Scalars['bigint']['input']>;
+  start_time?: InputMaybe<Scalars['timestamptz']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Cron_Job_Run_Details_Max_Fields = {
+  __typename?: 'cron_job_run_details_max_fields';
+  command?: Maybe<Scalars['String']['output']>;
+  database?: Maybe<Scalars['String']['output']>;
+  end_time?: Maybe<Scalars['timestamptz']['output']>;
+  job_pid?: Maybe<Scalars['Int']['output']>;
+  jobid?: Maybe<Scalars['bigint']['output']>;
+  return_message?: Maybe<Scalars['String']['output']>;
+  runid?: Maybe<Scalars['bigint']['output']>;
+  start_time?: Maybe<Scalars['timestamptz']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Cron_Job_Run_Details_Min_Fields = {
+  __typename?: 'cron_job_run_details_min_fields';
+  command?: Maybe<Scalars['String']['output']>;
+  database?: Maybe<Scalars['String']['output']>;
+  end_time?: Maybe<Scalars['timestamptz']['output']>;
+  job_pid?: Maybe<Scalars['Int']['output']>;
+  jobid?: Maybe<Scalars['bigint']['output']>;
+  return_message?: Maybe<Scalars['String']['output']>;
+  runid?: Maybe<Scalars['bigint']['output']>;
+  start_time?: Maybe<Scalars['timestamptz']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "cron.job_run_details" */
+export type Cron_Job_Run_Details_Mutation_Response = {
+  __typename?: 'cron_job_run_details_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Cron_Job_Run_Details>;
+};
+
+/** on_conflict condition type for table "cron.job_run_details" */
+export type Cron_Job_Run_Details_On_Conflict = {
+  constraint: Cron_Job_Run_Details_Constraint;
+  update_columns?: Array<Cron_Job_Run_Details_Update_Column>;
+  where?: InputMaybe<Cron_Job_Run_Details_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "cron.job_run_details". */
+export type Cron_Job_Run_Details_Order_By = {
+  command?: InputMaybe<Order_By>;
+  database?: InputMaybe<Order_By>;
+  end_time?: InputMaybe<Order_By>;
+  job_pid?: InputMaybe<Order_By>;
+  jobid?: InputMaybe<Order_By>;
+  return_message?: InputMaybe<Order_By>;
+  runid?: InputMaybe<Order_By>;
+  start_time?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: cron.job_run_details */
+export type Cron_Job_Run_Details_Pk_Columns_Input = {
+  runid: Scalars['bigint']['input'];
+};
+
+/** select columns of table "cron.job_run_details" */
+export enum Cron_Job_Run_Details_Select_Column {
+  /** column name */
+  Command = 'command',
+  /** column name */
+  Database = 'database',
+  /** column name */
+  EndTime = 'end_time',
+  /** column name */
+  JobPid = 'job_pid',
+  /** column name */
+  Jobid = 'jobid',
+  /** column name */
+  ReturnMessage = 'return_message',
+  /** column name */
+  Runid = 'runid',
+  /** column name */
+  StartTime = 'start_time',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  Username = 'username'
+}
+
+/** input type for updating data in table "cron.job_run_details" */
+export type Cron_Job_Run_Details_Set_Input = {
+  command?: InputMaybe<Scalars['String']['input']>;
+  database?: InputMaybe<Scalars['String']['input']>;
+  end_time?: InputMaybe<Scalars['timestamptz']['input']>;
+  job_pid?: InputMaybe<Scalars['Int']['input']>;
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  return_message?: InputMaybe<Scalars['String']['input']>;
+  runid?: InputMaybe<Scalars['bigint']['input']>;
+  start_time?: InputMaybe<Scalars['timestamptz']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Cron_Job_Run_Details_Stddev_Fields = {
+  __typename?: 'cron_job_run_details_stddev_fields';
+  job_pid?: Maybe<Scalars['Float']['output']>;
+  jobid?: Maybe<Scalars['Float']['output']>;
+  runid?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Cron_Job_Run_Details_Stddev_Pop_Fields = {
+  __typename?: 'cron_job_run_details_stddev_pop_fields';
+  job_pid?: Maybe<Scalars['Float']['output']>;
+  jobid?: Maybe<Scalars['Float']['output']>;
+  runid?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Cron_Job_Run_Details_Stddev_Samp_Fields = {
+  __typename?: 'cron_job_run_details_stddev_samp_fields';
+  job_pid?: Maybe<Scalars['Float']['output']>;
+  jobid?: Maybe<Scalars['Float']['output']>;
+  runid?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "cron_job_run_details" */
+export type Cron_Job_Run_Details_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Cron_Job_Run_Details_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Cron_Job_Run_Details_Stream_Cursor_Value_Input = {
+  command?: InputMaybe<Scalars['String']['input']>;
+  database?: InputMaybe<Scalars['String']['input']>;
+  end_time?: InputMaybe<Scalars['timestamptz']['input']>;
+  job_pid?: InputMaybe<Scalars['Int']['input']>;
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  return_message?: InputMaybe<Scalars['String']['input']>;
+  runid?: InputMaybe<Scalars['bigint']['input']>;
+  start_time?: InputMaybe<Scalars['timestamptz']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Cron_Job_Run_Details_Sum_Fields = {
+  __typename?: 'cron_job_run_details_sum_fields';
+  job_pid?: Maybe<Scalars['Int']['output']>;
+  jobid?: Maybe<Scalars['bigint']['output']>;
+  runid?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** update columns of table "cron.job_run_details" */
+export enum Cron_Job_Run_Details_Update_Column {
+  /** column name */
+  Command = 'command',
+  /** column name */
+  Database = 'database',
+  /** column name */
+  EndTime = 'end_time',
+  /** column name */
+  JobPid = 'job_pid',
+  /** column name */
+  Jobid = 'jobid',
+  /** column name */
+  ReturnMessage = 'return_message',
+  /** column name */
+  Runid = 'runid',
+  /** column name */
+  StartTime = 'start_time',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  Username = 'username'
+}
+
+export type Cron_Job_Run_Details_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Cron_Job_Run_Details_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Cron_Job_Run_Details_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Cron_Job_Run_Details_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Cron_Job_Run_Details_Var_Pop_Fields = {
+  __typename?: 'cron_job_run_details_var_pop_fields';
+  job_pid?: Maybe<Scalars['Float']['output']>;
+  jobid?: Maybe<Scalars['Float']['output']>;
+  runid?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Cron_Job_Run_Details_Var_Samp_Fields = {
+  __typename?: 'cron_job_run_details_var_samp_fields';
+  job_pid?: Maybe<Scalars['Float']['output']>;
+  jobid?: Maybe<Scalars['Float']['output']>;
+  runid?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Cron_Job_Run_Details_Variance_Fields = {
+  __typename?: 'cron_job_run_details_variance_fields';
+  job_pid?: Maybe<Scalars['Float']['output']>;
+  jobid?: Maybe<Scalars['Float']['output']>;
+  runid?: Maybe<Scalars['Float']['output']>;
+};
+
+/** select columns of table "cron.job" */
+export enum Cron_Job_Select_Column {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  Command = 'command',
+  /** column name */
+  Database = 'database',
+  /** column name */
+  Jobid = 'jobid',
+  /** column name */
+  Jobname = 'jobname',
+  /** column name */
+  Nodename = 'nodename',
+  /** column name */
+  Nodeport = 'nodeport',
+  /** column name */
+  Schedule = 'schedule',
+  /** column name */
+  Username = 'username'
+}
+
+/** input type for updating data in table "cron.job" */
+export type Cron_Job_Set_Input = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  command?: InputMaybe<Scalars['String']['input']>;
+  database?: InputMaybe<Scalars['String']['input']>;
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  jobname?: InputMaybe<Scalars['String']['input']>;
+  nodename?: InputMaybe<Scalars['String']['input']>;
+  nodeport?: InputMaybe<Scalars['Int']['input']>;
+  schedule?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Cron_Job_Stddev_Fields = {
+  __typename?: 'cron_job_stddev_fields';
+  jobid?: Maybe<Scalars['Float']['output']>;
+  nodeport?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Cron_Job_Stddev_Pop_Fields = {
+  __typename?: 'cron_job_stddev_pop_fields';
+  jobid?: Maybe<Scalars['Float']['output']>;
+  nodeport?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Cron_Job_Stddev_Samp_Fields = {
+  __typename?: 'cron_job_stddev_samp_fields';
+  jobid?: Maybe<Scalars['Float']['output']>;
+  nodeport?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "cron_job" */
+export type Cron_Job_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Cron_Job_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Cron_Job_Stream_Cursor_Value_Input = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  command?: InputMaybe<Scalars['String']['input']>;
+  database?: InputMaybe<Scalars['String']['input']>;
+  jobid?: InputMaybe<Scalars['bigint']['input']>;
+  jobname?: InputMaybe<Scalars['String']['input']>;
+  nodename?: InputMaybe<Scalars['String']['input']>;
+  nodeport?: InputMaybe<Scalars['Int']['input']>;
+  schedule?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Cron_Job_Sum_Fields = {
+  __typename?: 'cron_job_sum_fields';
+  jobid?: Maybe<Scalars['bigint']['output']>;
+  nodeport?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "cron.job" */
+export enum Cron_Job_Update_Column {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  Command = 'command',
+  /** column name */
+  Database = 'database',
+  /** column name */
+  Jobid = 'jobid',
+  /** column name */
+  Jobname = 'jobname',
+  /** column name */
+  Nodename = 'nodename',
+  /** column name */
+  Nodeport = 'nodeport',
+  /** column name */
+  Schedule = 'schedule',
+  /** column name */
+  Username = 'username'
+}
+
+export type Cron_Job_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Cron_Job_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Cron_Job_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Cron_Job_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Cron_Job_Var_Pop_Fields = {
+  __typename?: 'cron_job_var_pop_fields';
+  jobid?: Maybe<Scalars['Float']['output']>;
+  nodeport?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Cron_Job_Var_Samp_Fields = {
+  __typename?: 'cron_job_var_samp_fields';
+  jobid?: Maybe<Scalars['Float']['output']>;
+  nodeport?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Cron_Job_Variance_Fields = {
+  __typename?: 'cron_job_variance_fields';
+  jobid?: Maybe<Scalars['Float']['output']>;
+  nodeport?: Maybe<Scalars['Float']['output']>;
+};
+
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
@@ -11121,6 +11722,14 @@ export type Mutation_Root = {
   delete_credits?: Maybe<Credits_Mutation_Response>;
   /** delete single row from the table: "credits" */
   delete_credits_by_pk?: Maybe<Credits>;
+  /** delete data from the table: "cron.job" */
+  delete_cron_job?: Maybe<Cron_Job_Mutation_Response>;
+  /** delete single row from the table: "cron.job" */
+  delete_cron_job_by_pk?: Maybe<Cron_Job>;
+  /** delete data from the table: "cron.job_run_details" */
+  delete_cron_job_run_details?: Maybe<Cron_Job_Run_Details_Mutation_Response>;
+  /** delete single row from the table: "cron.job_run_details" */
+  delete_cron_job_run_details_by_pk?: Maybe<Cron_Job_Run_Details>;
   /** delete data from the table: "follows" */
   delete_follows?: Maybe<Follows_Mutation_Response>;
   /** delete single row from the table: "follows" */
@@ -11187,6 +11796,10 @@ export type Mutation_Root = {
   delete_movies_by_pk?: Maybe<Movies>;
   /** delete data from the table: "notifications" */
   delete_notifications?: Maybe<Notifications_Mutation_Response>;
+  /** delete data from the table: "notifications_archive" */
+  delete_notifications_archive?: Maybe<Notifications_Archive_Mutation_Response>;
+  /** delete single row from the table: "notifications_archive" */
+  delete_notifications_archive_by_pk?: Maybe<Notifications_Archive>;
   /** delete single row from the table: "notifications" */
   delete_notifications_by_pk?: Maybe<Notifications>;
   /** delete data from the table: "object_types" */
@@ -11357,6 +11970,14 @@ export type Mutation_Root = {
   insert_credits?: Maybe<Credits_Mutation_Response>;
   /** insert a single row into the table: "credits" */
   insert_credits_one?: Maybe<Credits>;
+  /** insert data into the table: "cron.job" */
+  insert_cron_job?: Maybe<Cron_Job_Mutation_Response>;
+  /** insert a single row into the table: "cron.job" */
+  insert_cron_job_one?: Maybe<Cron_Job>;
+  /** insert data into the table: "cron.job_run_details" */
+  insert_cron_job_run_details?: Maybe<Cron_Job_Run_Details_Mutation_Response>;
+  /** insert a single row into the table: "cron.job_run_details" */
+  insert_cron_job_run_details_one?: Maybe<Cron_Job_Run_Details>;
   /** insert data into the table: "follows" */
   insert_follows?: Maybe<Follows_Mutation_Response>;
   /** insert a single row into the table: "follows" */
@@ -11423,6 +12044,10 @@ export type Mutation_Root = {
   insert_movies_one?: Maybe<Movies>;
   /** insert data into the table: "notifications" */
   insert_notifications?: Maybe<Notifications_Mutation_Response>;
+  /** insert data into the table: "notifications_archive" */
+  insert_notifications_archive?: Maybe<Notifications_Archive_Mutation_Response>;
+  /** insert a single row into the table: "notifications_archive" */
+  insert_notifications_archive_one?: Maybe<Notifications_Archive>;
   /** insert a single row into the table: "notifications" */
   insert_notifications_one?: Maybe<Notifications>;
   /** insert data into the table: "object_types" */
@@ -11643,6 +12268,18 @@ export type Mutation_Root = {
   update_credits_by_pk?: Maybe<Credits>;
   /** update multiples rows of table: "credits" */
   update_credits_many?: Maybe<Array<Maybe<Credits_Mutation_Response>>>;
+  /** update data of the table: "cron.job" */
+  update_cron_job?: Maybe<Cron_Job_Mutation_Response>;
+  /** update single row of the table: "cron.job" */
+  update_cron_job_by_pk?: Maybe<Cron_Job>;
+  /** update multiples rows of table: "cron.job" */
+  update_cron_job_many?: Maybe<Array<Maybe<Cron_Job_Mutation_Response>>>;
+  /** update data of the table: "cron.job_run_details" */
+  update_cron_job_run_details?: Maybe<Cron_Job_Run_Details_Mutation_Response>;
+  /** update single row of the table: "cron.job_run_details" */
+  update_cron_job_run_details_by_pk?: Maybe<Cron_Job_Run_Details>;
+  /** update multiples rows of table: "cron.job_run_details" */
+  update_cron_job_run_details_many?: Maybe<Array<Maybe<Cron_Job_Run_Details_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
   /** update data of the table: "follows" */
@@ -11743,6 +12380,12 @@ export type Mutation_Root = {
   update_movies_many?: Maybe<Array<Maybe<Movies_Mutation_Response>>>;
   /** update data of the table: "notifications" */
   update_notifications?: Maybe<Notifications_Mutation_Response>;
+  /** update data of the table: "notifications_archive" */
+  update_notifications_archive?: Maybe<Notifications_Archive_Mutation_Response>;
+  /** update single row of the table: "notifications_archive" */
+  update_notifications_archive_by_pk?: Maybe<Notifications_Archive>;
+  /** update multiples rows of table: "notifications_archive" */
+  update_notifications_archive_many?: Maybe<Array<Maybe<Notifications_Archive_Mutation_Response>>>;
   /** update single row of the table: "notifications" */
   update_notifications_by_pk?: Maybe<Notifications>;
   /** update multiples rows of table: "notifications" */
@@ -12180,6 +12823,30 @@ export type Mutation_RootDelete_Credits_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Cron_JobArgs = {
+  where: Cron_Job_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Cron_Job_By_PkArgs = {
+  jobid: Scalars['bigint']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Cron_Job_Run_DetailsArgs = {
+  where: Cron_Job_Run_Details_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Cron_Job_Run_Details_By_PkArgs = {
+  runid: Scalars['bigint']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_FollowsArgs = {
   where: Follows_Bool_Exp;
 };
@@ -12379,6 +13046,18 @@ export type Mutation_RootDelete_Movies_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootDelete_NotificationsArgs = {
   where: Notifications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Notifications_ArchiveArgs = {
+  where: Notifications_Archive_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Notifications_Archive_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -12954,6 +13633,34 @@ export type Mutation_RootInsert_Credits_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Cron_JobArgs = {
+  objects: Array<Cron_Job_Insert_Input>;
+  on_conflict?: InputMaybe<Cron_Job_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Cron_Job_OneArgs = {
+  object: Cron_Job_Insert_Input;
+  on_conflict?: InputMaybe<Cron_Job_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Cron_Job_Run_DetailsArgs = {
+  objects: Array<Cron_Job_Run_Details_Insert_Input>;
+  on_conflict?: InputMaybe<Cron_Job_Run_Details_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Cron_Job_Run_Details_OneArgs = {
+  object: Cron_Job_Run_Details_Insert_Input;
+  on_conflict?: InputMaybe<Cron_Job_Run_Details_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_FollowsArgs = {
   objects: Array<Follows_Insert_Input>;
   on_conflict?: InputMaybe<Follows_On_Conflict>;
@@ -13181,6 +13888,20 @@ export type Mutation_RootInsert_Movies_OneArgs = {
 export type Mutation_RootInsert_NotificationsArgs = {
   objects: Array<Notifications_Insert_Input>;
   on_conflict?: InputMaybe<Notifications_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Notifications_ArchiveArgs = {
+  objects: Array<Notifications_Archive_Insert_Input>;
+  on_conflict?: InputMaybe<Notifications_Archive_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Notifications_Archive_OneArgs = {
+  object: Notifications_Archive_Insert_Input;
+  on_conflict?: InputMaybe<Notifications_Archive_On_Conflict>;
 };
 
 
@@ -14012,6 +14733,50 @@ export type Mutation_RootUpdate_Credits_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Cron_JobArgs = {
+  _inc?: InputMaybe<Cron_Job_Inc_Input>;
+  _set?: InputMaybe<Cron_Job_Set_Input>;
+  where: Cron_Job_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Cron_Job_By_PkArgs = {
+  _inc?: InputMaybe<Cron_Job_Inc_Input>;
+  _set?: InputMaybe<Cron_Job_Set_Input>;
+  pk_columns: Cron_Job_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Cron_Job_ManyArgs = {
+  updates: Array<Cron_Job_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Cron_Job_Run_DetailsArgs = {
+  _inc?: InputMaybe<Cron_Job_Run_Details_Inc_Input>;
+  _set?: InputMaybe<Cron_Job_Run_Details_Set_Input>;
+  where: Cron_Job_Run_Details_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Cron_Job_Run_Details_By_PkArgs = {
+  _inc?: InputMaybe<Cron_Job_Run_Details_Inc_Input>;
+  _set?: InputMaybe<Cron_Job_Run_Details_Set_Input>;
+  pk_columns: Cron_Job_Run_Details_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Cron_Job_Run_Details_ManyArgs = {
+  updates: Array<Cron_Job_Run_Details_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Files_ManyArgs = {
   updates: Array<Files_Updates>;
 };
@@ -14345,6 +15110,26 @@ export type Mutation_RootUpdate_Movies_ManyArgs = {
 export type Mutation_RootUpdate_NotificationsArgs = {
   _set?: InputMaybe<Notifications_Set_Input>;
   where: Notifications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Notifications_ArchiveArgs = {
+  _set?: InputMaybe<Notifications_Archive_Set_Input>;
+  where: Notifications_Archive_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Notifications_Archive_By_PkArgs = {
+  _set?: InputMaybe<Notifications_Archive_Set_Input>;
+  pk_columns: Notifications_Archive_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Notifications_Archive_ManyArgs = {
+  updates: Array<Notifications_Archive_Updates>;
 };
 
 
@@ -14711,6 +15496,186 @@ export type Notifications_Aggregate_Fields = {
 export type Notifications_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Notifications_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** columns and relationships of "notifications_archive" */
+export type Notifications_Archive = {
+  __typename?: 'notifications_archive';
+  activity_id: Scalars['uuid']['output'];
+  actor_id: Scalars['uuid']['output'];
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['uuid']['output'];
+  is_read: Scalars['Boolean']['output'];
+  recipient_id: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "notifications_archive" */
+export type Notifications_Archive_Aggregate = {
+  __typename?: 'notifications_archive_aggregate';
+  aggregate?: Maybe<Notifications_Archive_Aggregate_Fields>;
+  nodes: Array<Notifications_Archive>;
+};
+
+/** aggregate fields of "notifications_archive" */
+export type Notifications_Archive_Aggregate_Fields = {
+  __typename?: 'notifications_archive_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Notifications_Archive_Max_Fields>;
+  min?: Maybe<Notifications_Archive_Min_Fields>;
+};
+
+
+/** aggregate fields of "notifications_archive" */
+export type Notifications_Archive_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Notifications_Archive_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "notifications_archive". All fields are combined with a logical 'AND'. */
+export type Notifications_Archive_Bool_Exp = {
+  _and?: InputMaybe<Array<Notifications_Archive_Bool_Exp>>;
+  _not?: InputMaybe<Notifications_Archive_Bool_Exp>;
+  _or?: InputMaybe<Array<Notifications_Archive_Bool_Exp>>;
+  activity_id?: InputMaybe<Uuid_Comparison_Exp>;
+  actor_id?: InputMaybe<Uuid_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  is_read?: InputMaybe<Boolean_Comparison_Exp>;
+  recipient_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "notifications_archive" */
+export enum Notifications_Archive_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  NotificationsArchivePkey = 'notifications_archive_pkey'
+}
+
+/** input type for inserting data into table "notifications_archive" */
+export type Notifications_Archive_Insert_Input = {
+  activity_id?: InputMaybe<Scalars['uuid']['input']>;
+  actor_id?: InputMaybe<Scalars['uuid']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  is_read?: InputMaybe<Scalars['Boolean']['input']>;
+  recipient_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Notifications_Archive_Max_Fields = {
+  __typename?: 'notifications_archive_max_fields';
+  activity_id?: Maybe<Scalars['uuid']['output']>;
+  actor_id?: Maybe<Scalars['uuid']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  recipient_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type Notifications_Archive_Min_Fields = {
+  __typename?: 'notifications_archive_min_fields';
+  activity_id?: Maybe<Scalars['uuid']['output']>;
+  actor_id?: Maybe<Scalars['uuid']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  recipient_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** response of any mutation on the table "notifications_archive" */
+export type Notifications_Archive_Mutation_Response = {
+  __typename?: 'notifications_archive_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Notifications_Archive>;
+};
+
+/** on_conflict condition type for table "notifications_archive" */
+export type Notifications_Archive_On_Conflict = {
+  constraint: Notifications_Archive_Constraint;
+  update_columns?: Array<Notifications_Archive_Update_Column>;
+  where?: InputMaybe<Notifications_Archive_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "notifications_archive". */
+export type Notifications_Archive_Order_By = {
+  activity_id?: InputMaybe<Order_By>;
+  actor_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  is_read?: InputMaybe<Order_By>;
+  recipient_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: notifications_archive */
+export type Notifications_Archive_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "notifications_archive" */
+export enum Notifications_Archive_Select_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  ActorId = 'actor_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsRead = 'is_read',
+  /** column name */
+  RecipientId = 'recipient_id'
+}
+
+/** input type for updating data in table "notifications_archive" */
+export type Notifications_Archive_Set_Input = {
+  activity_id?: InputMaybe<Scalars['uuid']['input']>;
+  actor_id?: InputMaybe<Scalars['uuid']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  is_read?: InputMaybe<Scalars['Boolean']['input']>;
+  recipient_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "notifications_archive" */
+export type Notifications_Archive_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Notifications_Archive_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Notifications_Archive_Stream_Cursor_Value_Input = {
+  activity_id?: InputMaybe<Scalars['uuid']['input']>;
+  actor_id?: InputMaybe<Scalars['uuid']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  is_read?: InputMaybe<Scalars['Boolean']['input']>;
+  recipient_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "notifications_archive" */
+export enum Notifications_Archive_Update_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  ActorId = 'actor_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsRead = 'is_read',
+  /** column name */
+  RecipientId = 'recipient_id'
+}
+
+export type Notifications_Archive_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Notifications_Archive_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Notifications_Archive_Bool_Exp;
 };
 
 /** Boolean expression to filter rows from the table "notifications". All fields are combined with a logical 'AND'. */
@@ -15932,6 +16897,18 @@ export type Query_Root = {
   credits_aggregate: Credits_Aggregate;
   /** fetch data from the table: "credits" using primary key columns */
   credits_by_pk?: Maybe<Credits>;
+  /** fetch data from the table: "cron.job" */
+  cron_job: Array<Cron_Job>;
+  /** fetch aggregated fields from the table: "cron.job" */
+  cron_job_aggregate: Cron_Job_Aggregate;
+  /** fetch data from the table: "cron.job" using primary key columns */
+  cron_job_by_pk?: Maybe<Cron_Job>;
+  /** fetch data from the table: "cron.job_run_details" */
+  cron_job_run_details: Array<Cron_Job_Run_Details>;
+  /** fetch aggregated fields from the table: "cron.job_run_details" */
+  cron_job_run_details_aggregate: Cron_Job_Run_Details_Aggregate;
+  /** fetch data from the table: "cron.job_run_details" using primary key columns */
+  cron_job_run_details_by_pk?: Maybe<Cron_Job_Run_Details>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -16038,6 +17015,12 @@ export type Query_Root = {
   notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "notifications" */
   notifications_aggregate: Notifications_Aggregate;
+  /** fetch data from the table: "notifications_archive" */
+  notifications_archive: Array<Notifications_Archive>;
+  /** fetch aggregated fields from the table: "notifications_archive" */
+  notifications_archive_aggregate: Notifications_Archive_Aggregate;
+  /** fetch data from the table: "notifications_archive" using primary key columns */
+  notifications_archive_by_pk?: Maybe<Notifications_Archive>;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
   /** fetch data from the table: "object_types" */
@@ -16719,6 +17702,52 @@ export type Query_RootCredits_By_PkArgs = {
 };
 
 
+export type Query_RootCron_JobArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Order_By>>;
+  where?: InputMaybe<Cron_Job_Bool_Exp>;
+};
+
+
+export type Query_RootCron_Job_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Order_By>>;
+  where?: InputMaybe<Cron_Job_Bool_Exp>;
+};
+
+
+export type Query_RootCron_Job_By_PkArgs = {
+  jobid: Scalars['bigint']['input'];
+};
+
+
+export type Query_RootCron_Job_Run_DetailsArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Run_Details_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Run_Details_Order_By>>;
+  where?: InputMaybe<Cron_Job_Run_Details_Bool_Exp>;
+};
+
+
+export type Query_RootCron_Job_Run_Details_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Run_Details_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Run_Details_Order_By>>;
+  where?: InputMaybe<Cron_Job_Run_Details_Bool_Exp>;
+};
+
+
+export type Query_RootCron_Job_Run_Details_By_PkArgs = {
+  runid: Scalars['bigint']['input'];
+};
+
+
 export type Query_RootFileArgs = {
   id: Scalars['uuid']['input'];
 };
@@ -17130,6 +18159,29 @@ export type Query_RootNotifications_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Notifications_Order_By>>;
   where?: InputMaybe<Notifications_Bool_Exp>;
+};
+
+
+export type Query_RootNotifications_ArchiveArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Archive_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Archive_Order_By>>;
+  where?: InputMaybe<Notifications_Archive_Bool_Exp>;
+};
+
+
+export type Query_RootNotifications_Archive_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Archive_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Archive_Order_By>>;
+  where?: InputMaybe<Notifications_Archive_Bool_Exp>;
+};
+
+
+export type Query_RootNotifications_Archive_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -19527,6 +20579,22 @@ export type Subscription_Root = {
   credits_by_pk?: Maybe<Credits>;
   /** fetch data from the table in a streaming manner: "credits" */
   credits_stream: Array<Credits>;
+  /** fetch data from the table: "cron.job" */
+  cron_job: Array<Cron_Job>;
+  /** fetch aggregated fields from the table: "cron.job" */
+  cron_job_aggregate: Cron_Job_Aggregate;
+  /** fetch data from the table: "cron.job" using primary key columns */
+  cron_job_by_pk?: Maybe<Cron_Job>;
+  /** fetch data from the table: "cron.job_run_details" */
+  cron_job_run_details: Array<Cron_Job_Run_Details>;
+  /** fetch aggregated fields from the table: "cron.job_run_details" */
+  cron_job_run_details_aggregate: Cron_Job_Run_Details_Aggregate;
+  /** fetch data from the table: "cron.job_run_details" using primary key columns */
+  cron_job_run_details_by_pk?: Maybe<Cron_Job_Run_Details>;
+  /** fetch data from the table in a streaming manner: "cron.job_run_details" */
+  cron_job_run_details_stream: Array<Cron_Job_Run_Details>;
+  /** fetch data from the table in a streaming manner: "cron.job" */
+  cron_job_stream: Array<Cron_Job>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -19667,6 +20735,14 @@ export type Subscription_Root = {
   notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "notifications" */
   notifications_aggregate: Notifications_Aggregate;
+  /** fetch data from the table: "notifications_archive" */
+  notifications_archive: Array<Notifications_Archive>;
+  /** fetch aggregated fields from the table: "notifications_archive" */
+  notifications_archive_aggregate: Notifications_Archive_Aggregate;
+  /** fetch data from the table: "notifications_archive" using primary key columns */
+  notifications_archive_by_pk?: Maybe<Notifications_Archive>;
+  /** fetch data from the table in a streaming manner: "notifications_archive" */
+  notifications_archive_stream: Array<Notifications_Archive>;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
   /** fetch data from the table in a streaming manner: "notifications" */
@@ -20557,6 +21633,66 @@ export type Subscription_RootCredits_StreamArgs = {
 };
 
 
+export type Subscription_RootCron_JobArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Order_By>>;
+  where?: InputMaybe<Cron_Job_Bool_Exp>;
+};
+
+
+export type Subscription_RootCron_Job_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Order_By>>;
+  where?: InputMaybe<Cron_Job_Bool_Exp>;
+};
+
+
+export type Subscription_RootCron_Job_By_PkArgs = {
+  jobid: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootCron_Job_Run_DetailsArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Run_Details_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Run_Details_Order_By>>;
+  where?: InputMaybe<Cron_Job_Run_Details_Bool_Exp>;
+};
+
+
+export type Subscription_RootCron_Job_Run_Details_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cron_Job_Run_Details_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cron_Job_Run_Details_Order_By>>;
+  where?: InputMaybe<Cron_Job_Run_Details_Bool_Exp>;
+};
+
+
+export type Subscription_RootCron_Job_Run_Details_By_PkArgs = {
+  runid: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootCron_Job_Run_Details_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Cron_Job_Run_Details_Stream_Cursor_Input>>;
+  where?: InputMaybe<Cron_Job_Run_Details_Bool_Exp>;
+};
+
+
+export type Subscription_RootCron_Job_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Cron_Job_Stream_Cursor_Input>>;
+  where?: InputMaybe<Cron_Job_Bool_Exp>;
+};
+
+
 export type Subscription_RootFileArgs = {
   id: Scalars['uuid']['input'];
 };
@@ -21087,6 +22223,36 @@ export type Subscription_RootNotifications_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Notifications_Order_By>>;
   where?: InputMaybe<Notifications_Bool_Exp>;
+};
+
+
+export type Subscription_RootNotifications_ArchiveArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Archive_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Archive_Order_By>>;
+  where?: InputMaybe<Notifications_Archive_Bool_Exp>;
+};
+
+
+export type Subscription_RootNotifications_Archive_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Archive_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Archive_Order_By>>;
+  where?: InputMaybe<Notifications_Archive_Bool_Exp>;
+};
+
+
+export type Subscription_RootNotifications_Archive_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootNotifications_Archive_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Notifications_Archive_Stream_Cursor_Input>>;
+  where?: InputMaybe<Notifications_Archive_Bool_Exp>;
 };
 
 
@@ -24416,6 +25582,13 @@ export type OnNotificationsSubscriptionVariables = Exact<{
 
 export type OnNotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string }, user_activity?: { __typename?: 'user_activities', object_type: Object_Types_Enum, object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
 
+export type UpsertNotificationsMutationVariables = Exact<{
+  objects: Array<Notifications_Insert_Input> | Notifications_Insert_Input;
+}>;
+
+
+export type UpsertNotificationsMutation = { __typename?: 'mutation_root', insert_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number } | null };
+
 export type GetPeopleQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<People_Select_Column> | People_Select_Column>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -24510,7 +25683,7 @@ export type DeleteFollowMutationVariables = Exact<{
 export type DeleteFollowMutation = { __typename?: 'mutation_root', delete_follows_by_pk?: { __typename?: 'follows', followee_id: any, follower_id: any } | null };
 
 export type GetFolloweesQueryVariables = Exact<{
-  id: Scalars['uuid']['input'];
+  user_id: Scalars['uuid']['input'];
   followees_limit?: InputMaybe<Scalars['Int']['input']>;
   followees_offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -24519,7 +25692,7 @@ export type GetFolloweesQueryVariables = Exact<{
 export type GetFolloweesQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followees: Array<{ __typename?: 'follows', followee: { __typename?: 'users', id: any, displayName: string, email?: any | null, avatarUrl: string, createdAt: any } }>, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
 export type GetFollowersQueryVariables = Exact<{
-  id: Scalars['uuid']['input'];
+  user_id: Scalars['uuid']['input'];
   followers_limit?: InputMaybe<Scalars['Int']['input']>;
   followers_offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -25464,6 +26637,30 @@ export const OnNotificationsDocument = `
   }
 }
     `;
+export const UpsertNotificationsDocument = `
+    mutation UpsertNotifications($objects: [notifications_insert_input!]!) {
+  insert_notifications(
+    objects: $objects
+    on_conflict: {constraint: notifications_pkey, update_columns: []}
+  ) {
+    affected_rows
+  }
+}
+    `;
+
+export const useUpsertNotificationsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpsertNotificationsMutation, TError, UpsertNotificationsMutationVariables, TContext>) => {
+    
+    return useMutation<UpsertNotificationsMutation, TError, UpsertNotificationsMutationVariables, TContext>(
+      {
+    mutationKey: ['UpsertNotifications'],
+    mutationFn: (variables?: UpsertNotificationsMutationVariables) => fetcher<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(UpsertNotificationsDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const GetPeopleDocument = `
     query GetPeople($distinct_on: [people_select_column!], $limit: Int, $offset: Int, $order_by: [people_order_by!], $where: people_bool_exp) {
   people(
@@ -25937,8 +27134,8 @@ export const useDeleteFollowMutation = <
     )};
 
 export const GetFolloweesDocument = `
-    query GetFollowees($id: uuid!, $followees_limit: Int, $followees_offset: Int) {
-  user(id: $id) {
+    query GetFollowees($user_id: uuid!, $followees_limit: Int, $followees_offset: Int) {
+  user(id: $user_id) {
     followees(
       order_by: {created_at: desc}
       limit: $followees_limit
@@ -25997,8 +27194,8 @@ export const useInfiniteGetFolloweesQuery = <
     )};
 
 export const GetFollowersDocument = `
-    query GetFollowers($id: uuid!, $followers_limit: Int, $followers_offset: Int) {
-  user(id: $id) {
+    query GetFollowers($user_id: uuid!, $followers_limit: Int, $followers_offset: Int) {
+  user(id: $user_id) {
     followers(
       order_by: {created_at: desc}
       limit: $followers_limit
