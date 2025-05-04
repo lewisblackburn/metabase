@@ -6,12 +6,15 @@ import { UpsertNotificationsDocument, UpsertNotificationsMutation } from '@/gene
 import { Request, Response } from 'express';
 import { GraphQLClient, gql } from 'graphql-request';
 
-const client = new GraphQLClient(`${process.env.NHOST_SUBDOMAIN}.graphql.${process.env.NHOST_REGION}.nhost.run/v1`, {
-    headers: {
-        'Content-Type': 'application/json',
-        'x-hasura-admin-secret': process.env.NHOST_ADMIN_SECRET!
+const client = new GraphQLClient(
+    `https://${process.env.NHOST_SUBDOMAIN}.graphql.${process.env.NHOST_REGION}.nhost.run/v1`,
+    {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-hasura-admin-secret': process.env.NHOST_ADMIN_SECRET!
+        }
     }
-});
+);
 
 const FOLLOWERS_QUERY = gql`
     query GetFollowers($user_id: uuid!) {
