@@ -6,7 +6,7 @@ import {
     UpsertNotificationsMutation,
     UpsertNotificationsMutationVariables
 } from '@/generated/graphql';
-import { nhostAdmin } from '@/lib/nhost-admin.server';
+import { nhostAdmin } from '@/lib/nhost-admin';
 
 import { Request, Response } from 'express';
 import { gql } from 'graphql-request';

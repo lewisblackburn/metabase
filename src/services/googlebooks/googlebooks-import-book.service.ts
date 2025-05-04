@@ -1,5 +1,5 @@
 import { BUCKET } from '@/constants/media.constant';
-import { nhostAdmin } from '@/lib/nhost-admin.server';
+import { nhostAdmin } from '@/lib/nhost-admin';
 
 import {
     Book_Media_Constraint,

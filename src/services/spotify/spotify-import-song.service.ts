@@ -21,7 +21,7 @@ import {
     Songs_Insert_Input
 } from '@/generated/graphql';
 import { fetcher } from '@/lib/graphql-client';
-import { nhostAdmin } from '@/lib/nhost-admin.server';
+import { nhostAdmin } from '@/lib/nhost-admin';
 import { SpotifyTrack } from '@/types/spotify.types';
 
 import { uploadFile } from '../file.service';
