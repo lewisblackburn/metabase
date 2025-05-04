@@ -36,19 +36,18 @@ export default async (req: Request, res: Response) => {
         activity_id: activity.id
     }));
 
-    res.status(200).send(JSON.stringify(notifications));
-
     if (!notifications) {
         res.status(200).send('No notifications to insert');
         return;
     }
 
-    await nhost.graphql.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
+    const response = await nhost.graphql.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
         UpsertNotificationsDocument,
         {
             objects: notifications
         }
     );
+    res.status(200).send(JSON.stringify(response));
 
-    res.status(200).send('OK');
+    // res.status(200).send('OK');
 };
