@@ -34,9 +34,7 @@ query GetMovie($id: uuid!) {
             availability
         }
         movie_genres {
-            genre {
-                name
-            }
+            genre
         }
         movie_keywords {
             keyword {

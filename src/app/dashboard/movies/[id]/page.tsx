@@ -103,8 +103,8 @@ function MoviePageContent() {
 
                             <div className='mt-3 flex flex-wrap gap-2'>
                                 {movie.movie_genres.map((genre) => (
-                                    <Badge key={genre.genre.name} variant='outline'>
-                                        {genre.genre.name}
+                                    <Badge key={genre.genre} variant='outline'>
+                                        {genre.genre}
                                     </Badge>
                                 ))}
                             </div>

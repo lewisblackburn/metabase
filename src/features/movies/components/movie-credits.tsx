@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import SmallAvatar from '@/components/shared/small-avatar';
-import { useGetCreditsQuery } from '@/generated/graphql';
+import { Credit_Types_Enum, useGetCreditsQuery } from '@/generated/graphql';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
 type CreditMemberProps = {
@@ -79,8 +79,8 @@ export default function MovieCredits() {
     );
 
     const { credits } = data || {};
-    const cast = credits?.filter((credit) => credit.credit_type === 'cast');
-    const crew = credits?.filter((credit) => credit.credit_type === 'crew');
+    const cast = credits?.filter((credit) => credit.credit_type === Credit_Types_Enum.Cast);
+    const crew = credits?.filter((credit) => credit.credit_type === Credit_Types_Enum.Crew);
 
     return (
         <div className='grid grid-cols-1 gap-10 lg:grid-cols-2'>

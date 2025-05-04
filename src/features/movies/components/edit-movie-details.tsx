@@ -65,8 +65,6 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
     });
 
     async function onSubmit(values: MovieDetails) {
-        console.log(values.availabilities);
-
         await updateMovie(
             {
                 id: movieId,

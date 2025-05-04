@@ -10,7 +10,6 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { Object_Types_Enum, useGetGenresQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
@@ -21,7 +20,7 @@ import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
 import { RootState } from '@/store/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { bookAvailabilityOptions, bookReleaseStatusOptions } from '../constants/book-enums';
+import { bookAvailabilityOptions, bookGenresOptions, bookReleaseStatusOptions } from '../constants/book-enums';
 import { booksFilterSchema } from '../schemas/books-filter.schema';
 import { BooksFilter } from '../schemas/books-filter.schema';
 import { resetBooksFilter } from '../store/books-filter.slice';
@@ -43,21 +42,6 @@ export default function BooksSidebar() {
         resolver: zodResolver(booksFilterSchema),
         defaultValues: booksFilter
     });
-
-    const { data: genres } = useGetGenresQuery(
-        {
-            where: {
-                genre_types: {
-                    type: {
-                        _eq: Object_Types_Enum.Book
-                    }
-                }
-            }
-        },
-        {
-            queryKey: ['book-genres']
-        }
-    );
 
     useEffect(() => {
         form.reset(booksFilter);
@@ -214,12 +198,7 @@ export default function BooksSidebar() {
                                                     <FormItem>
                                                         <BaseFormLayout label='Genres'>
                                                             <CheckboxGroupField
-                                                                options={
-                                                                    genres?.genres.map((genre) => ({
-                                                                        value: genre.id,
-                                                                        label: genre.name
-                                                                    })) ?? []
-                                                                }
+                                                                options={bookGenresOptions}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>

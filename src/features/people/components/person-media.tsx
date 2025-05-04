@@ -29,7 +29,7 @@ function MediaItem({ credit }: { credit: Credits }) {
     if (credit.object_type === Object_Types_Enum.Movie) {
         return (
             <div key={credit.id}>
-                <Link href={`/dashboard/${OBJECT_TYPE.movie.path}/${credit.object_id}`} scroll={false}>
+                <Link href={`/dashboard/${OBJECT_TYPE.MOVIE.path}/${credit.object_id}`} scroll={false}>
                     <Poster image={credit.movie_credit?.poster ?? ''} title={credit.movie_credit?.title ?? ''} />
                 </Link>
             </div>
@@ -39,7 +39,7 @@ function MediaItem({ credit }: { credit: Credits }) {
     if (credit.object_type === Object_Types_Enum.Book) {
         return (
             <div key={credit.id}>
-                <Link href={`/dashboard/${OBJECT_TYPE.book.path}/${credit.object_id}`} scroll={false}>
+                <Link href={`/dashboard/${OBJECT_TYPE.BOOK.path}/${credit.object_id}`} scroll={false}>
                     <Poster image={credit.book_credit?.cover ?? ''} title={credit.book_credit?.title ?? ''} />
                 </Link>
             </div>
@@ -49,7 +49,7 @@ function MediaItem({ credit }: { credit: Credits }) {
     if (credit.object_type === Object_Types_Enum.Song) {
         return (
             <div key={credit.id}>
-                <Link href={`/dashboard/${OBJECT_TYPE.song.path}/${credit.object_id}`} scroll={false}>
+                <Link href={`/dashboard/${OBJECT_TYPE.SONG.path}/${credit.object_id}`} scroll={false}>
                     <Artwork image={credit.song_credit?.album?.artwork ?? ''} title={credit.song_credit?.name ?? ''} />
                 </Link>
             </div>

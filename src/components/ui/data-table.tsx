@@ -63,7 +63,7 @@ function DraggableTableRow({ row, itemId }: { row: any; itemId: string }) {
             style={style}
             className={isDragging ? 'bg-muted/40' : 'hover:bg-muted/20 transition-colors'}>
             {row.getVisibleCells().map((cell: any) => (
-                <TableCell key={cell.id} className='px-4 py-4'>
+                <TableCell key={cell.id} className='max-w-[300px] overflow-hidden px-4 py-4 text-ellipsis'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
             ))}
@@ -234,7 +234,9 @@ export function DataTable<TData extends { id: string }>({
                                     data-state={row.getIsSelected() && 'selected'}
                                     className='hover:bg-muted/20 transition-colors'>
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className='px-4 py-4'>
+                                        <TableCell
+                                            key={cell.id}
+                                            className='max-w-[300px] truncate overflow-hidden px-4 py-4 text-ellipsis'>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}

@@ -120,8 +120,8 @@ const Navbar: React.FC = () => {
 
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className='flex items-center gap-1.5'>
-                                    <OBJECT_TYPE.movie.icon className='mt-0.5 size-3' />
-                                    <span>{OBJECT_TYPE.movie.plural}</span>
+                                    <OBJECT_TYPE.MOVIE.icon className='mt-0.5 size-3' />
+                                    <span>{OBJECT_TYPE.MOVIE.plural}</span>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <div className='w-[700px] p-2'>
@@ -162,8 +162,8 @@ const Navbar: React.FC = () => {
 
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className='flex items-center gap-1.5'>
-                                    <OBJECT_TYPE.tv.icon className='mt-0.5 size-3' />
-                                    <span>{OBJECT_TYPE.tv.plural}</span>
+                                    <OBJECT_TYPE.TV.icon className='mt-0.5 size-3' />
+                                    <span>{OBJECT_TYPE.TV.plural}</span>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <div className='w-[700px] p-2'>
@@ -193,8 +193,8 @@ const Navbar: React.FC = () => {
 
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className='flex items-center gap-1.5'>
-                                    <OBJECT_TYPE.person.icon className='mt-0.5 size-3' />
-                                    <span>{OBJECT_TYPE.person.plural}</span>
+                                    <OBJECT_TYPE.PERSON.icon className='mt-0.5 size-3' />
+                                    <span>{OBJECT_TYPE.PERSON.plural}</span>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <div className='w-[700px] p-2'>
@@ -224,8 +224,8 @@ const Navbar: React.FC = () => {
 
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className='flex items-center gap-1.5'>
-                                    <OBJECT_TYPE.book.icon className='mt-0.5 size-3' />
-                                    <span>{OBJECT_TYPE.book.plural}</span>
+                                    <OBJECT_TYPE.BOOK.icon className='mt-0.5 size-3' />
+                                    <span>{OBJECT_TYPE.BOOK.plural}</span>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <div className='w-[700px] p-2'>
@@ -266,8 +266,8 @@ const Navbar: React.FC = () => {
 
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className='flex items-center gap-1.5'>
-                                    <OBJECT_TYPE.song.icon className='mt-0.5 size-3' />
-                                    <span>{OBJECT_TYPE.song.plural}</span>
+                                    <OBJECT_TYPE.SONG.icon className='mt-0.5 size-3' />
+                                    <span>{OBJECT_TYPE.SONG.plural}</span>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <div className='w-[700px] p-2'>
@@ -276,7 +276,7 @@ const Navbar: React.FC = () => {
                                                 <div className='p-1'>
                                                     {featuredSong && !isFeaturedItemsLoading ? (
                                                         <Link
-                                                            href={`/dashboard/${OBJECT_TYPE.song.path}/${featuredSong.id}`}
+                                                            href={`/dashboard/${OBJECT_TYPE.SONG.path}/${featuredSong.id}`}
                                                             className='block h-full'>
                                                             <Artwork
                                                                 image={featuredSong.album.artwork}
@@ -307,8 +307,8 @@ const Navbar: React.FC = () => {
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className='flex items-center gap-1.5'>
-                                    <OBJECT_TYPE.game.icon className='mt-0.5 size-3' />
-                                    <span>{OBJECT_TYPE.game.plural}</span>
+                                    <OBJECT_TYPE.GAME.icon className='mt-0.5 size-3' />
+                                    <span>{OBJECT_TYPE.GAME.plural}</span>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <div className='w-[700px] p-2'>
@@ -389,8 +389,8 @@ const Navbar: React.FC = () => {
                                     <AccordionItem value='movies' className='border-b-0'>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
-                                                <OBJECT_TYPE.movie.icon className='mr-2 size-4' />
-                                                {OBJECT_TYPE.movie.plural}
+                                                <OBJECT_TYPE.MOVIE.icon className='mr-2 size-4' />
+                                                {OBJECT_TYPE.MOVIE.plural}
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
@@ -410,8 +410,8 @@ const Navbar: React.FC = () => {
                                     <AccordionItem value='tv' className='border-b-0'>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
-                                                <OBJECT_TYPE.tv.icon className='mr-2 size-4' />
-                                                {OBJECT_TYPE.tv.plural}
+                                                <OBJECT_TYPE.TV.icon className='mr-2 size-4' />
+                                                {OBJECT_TYPE.TV.plural}
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
@@ -433,8 +433,8 @@ const Navbar: React.FC = () => {
                                     <AccordionItem value='person' className='border-b-0'>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
-                                                <OBJECT_TYPE.person.icon className='mr-2 size-4' />
-                                                {OBJECT_TYPE.person.plural}
+                                                <OBJECT_TYPE.PERSON.icon className='mr-2 size-4' />
+                                                {OBJECT_TYPE.PERSON.plural}
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
@@ -454,8 +454,8 @@ const Navbar: React.FC = () => {
                                     <AccordionItem value='book' className='border-b-0'>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
-                                                <OBJECT_TYPE.book.icon className='mr-2 size-4' />
-                                                {OBJECT_TYPE.book.plural}
+                                                <OBJECT_TYPE.BOOK.icon className='mr-2 size-4' />
+                                                {OBJECT_TYPE.BOOK.plural}
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
@@ -475,8 +475,8 @@ const Navbar: React.FC = () => {
                                     <AccordionItem value='song' className='border-b-0'>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
-                                                <OBJECT_TYPE.song.icon className='mr-2 size-4' />
-                                                {OBJECT_TYPE.song.plural}
+                                                <OBJECT_TYPE.SONG.icon className='mr-2 size-4' />
+                                                {OBJECT_TYPE.SONG.plural}
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
@@ -496,8 +496,8 @@ const Navbar: React.FC = () => {
                                     <AccordionItem value='game' className='border-b-0'>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
-                                                <OBJECT_TYPE.game.icon className='mr-2 size-4' />
-                                                {OBJECT_TYPE.game.plural}
+                                                <OBJECT_TYPE.GAME.icon className='mr-2 size-4' />
+                                                {OBJECT_TYPE.GAME.plural}
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent>

@@ -9,19 +9,14 @@ import { toggleSettingsDialogOpenState } from '@/features/settings/store/setting
 import { ShortcutDisplay } from '@/features/shortcuts/components/shortcut-display';
 import { useShortcut } from '@/features/shortcuts/hooks/useShortcut';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
-import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
     DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger
 } from '@/registry/new-york-v4/ui/dropdown-menu';
 import { User, useSignOut } from '@nhost/nextjs';
@@ -80,7 +75,7 @@ export function NavUser({ user }: { user: User | null }) {
                 {user ? (
                     <>
                         <DropdownMenuLabel>
-                            <Link href='/dashboard/profile' className='flex items-center gap-2'>
+                            <Link href={`/dashboard/profile/${user.id}`} className='flex items-center gap-2'>
                                 <Avatar className='size-6'>
                                     <AvatarImage src={user.avatarUrl} alt={`@${user.displayName ?? 'user'}`} />
                                     <AvatarFallback>

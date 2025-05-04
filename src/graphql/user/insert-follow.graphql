@@ -1,0 +1,6 @@
+mutation InsertFollow($object: follows_insert_input!, $on_conflict: follows_on_conflict) {
+    insert_follows_one(object: $object, on_conflict: $on_conflict) {
+        followee_id
+        follower_id
+    }
+}

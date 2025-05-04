@@ -94,6 +94,7 @@ export default function MovieChanges() {
                         avatarUrl={change.user.avatarUrl}
                         displayName={change.user.displayName}
                         userId={change.user.id}
+                        createdAt={change.user.createdAt}
                     />
                     {!isLastIndex(index, allChanges) && <Separator />}
                 </div>

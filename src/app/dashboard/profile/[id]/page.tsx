@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import InstagramIcon from '@/components/icons/instagram.icon';
 import XIcon from '@/components/icons/x.icon';
@@ -11,6 +12,7 @@ import DefaultLoading from '@/components/shared/default-loading';
 import HeroCardLayout from '@/components/shared/hero-layout';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import Collections from '@/features/profile/components/collections/collections';
+import FollowButton from '@/features/profile/components/follow-button';
 import UserActivity from '@/features/profile/components/user-activity';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
@@ -20,7 +22,7 @@ import { useUserId } from '@nhost/nextjs';
 import { TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
 
 import { format, formatDistanceToNow } from 'date-fns';
-import { Activity, Crown, Folder, Lightbulb, List, Star, Verified } from 'lucide-react';
+import { Activity, Crown, Folder, Lightbulb, List, Pencil, Star, Verified } from 'lucide-react';
 
 const VerifiedBadge = () => (
     <Tooltip>
@@ -58,9 +60,12 @@ const tabContents = {
 };
 
 export default function ProfilePage() {
-    const userId = useUserId();
+    const params = useParams<{ id: string }>();
+    const userId = params?.id;
+    const currentUserId = useUserId();
+    const isCurrentUser = currentUserId === userId;
     const { data, isLoading } = useGetProfileQuery(
-        { id: userId },
+        { id: userId || '' },
         {
             queryKey: ['profile', userId],
             enabled: !!userId
@@ -70,7 +75,8 @@ export default function ProfilePage() {
     const userInfo = useMemo(() => {
         if (!data?.user) return null;
 
-        const { displayName, avatarUrl, createdAt, emailVerified } = data.user;
+        const { displayName, avatarUrl, createdAt, emailVerified, followers_aggregate, followees_aggregate } =
+            data.user;
         const joined = createdAt ? format(new Date(createdAt), 'MMMM do, yyyy') : 'Unknown';
         const joinedAgo = createdAt ? formatDistanceToNow(new Date(createdAt), { addSuffix: true }) : '';
 
@@ -79,7 +85,9 @@ export default function ProfilePage() {
             avatarUrl,
             joined,
             joinedAgo,
-            emailVerified
+            emailVerified,
+            followersCount: followers_aggregate?.aggregate?.count || 0,
+            followingCount: followees_aggregate?.aggregate?.count || 0
         };
     }, [data]);
 
@@ -109,7 +117,20 @@ export default function ProfilePage() {
                         be rich and sober at 90 and nobody remembered who I was."
                     </p>
 
-                    <div className='mt-2 flex flex-col gap-2 sm:mt-3 sm:gap-3'>
+                    <div className='flex flex-col space-y-2'>
+                        <div className='mb-4 flex items-center gap-4'>
+                            <div className='flex items-center gap-1'>
+                                <span className='font-semibold'>{userInfo.followersCount}</span>
+                                <span className='text-muted-foreground text-sm'>Followers</span>
+                            </div>
+                            <div className='flex items-center gap-1'>
+                                <span className='font-semibold'>{userInfo.followingCount}</span>
+                                <span className='text-muted-foreground text-sm'>Following</span>
+                            </div>
+                            {!isCurrentUser && (
+                                <FollowButton userId={userId || ''} isFollowing={data?.user?.is_following || false} />
+                            )}
+                        </div>
                         <ProBadge />
                         <div className='flex flex-wrap items-center gap-2'>
                             <Link href=''>

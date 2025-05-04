@@ -1,6 +1,7 @@
 import {
     Movie_Availability_Types_Enum,
     Movie_Certification_Types_Enum,
+    Movie_Genre_Types_Enum,
     Movie_Release_Status_Types_Enum
 } from '@/generated/graphql';
 
@@ -21,7 +22,7 @@ export const moviesFilterSchema = z.object({
             to: z.date().optional()
         })
         .optional(),
-    genres: z.array(z.string().uuid()).optional(),
+    genres: z.array(z.nativeEnum(Movie_Genre_Types_Enum)).optional(),
     statuses: z.array(z.nativeEnum(Movie_Release_Status_Types_Enum)).optional(),
     certifications: z.array(z.nativeEnum(Movie_Certification_Types_Enum)).optional(),
     availabilities: z.array(z.nativeEnum(Movie_Availability_Types_Enum)).optional(),

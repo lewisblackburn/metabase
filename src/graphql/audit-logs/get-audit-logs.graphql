@@ -15,6 +15,7 @@ query GetAuditLogs(
             id
             avatarUrl
             displayName
+            createdAt
         }
         created_at
     }

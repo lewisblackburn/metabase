@@ -10,7 +10,6 @@ import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
 import { LANGUAGES } from '@/constants/languages.constant';
-import { Object_Types_Enum, useGetGenresQuery } from '@/generated/graphql';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
@@ -30,6 +29,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
     movieAvailabilityOptions,
     movieCertificationOptions,
+    movieGenresOptions,
     movieReleaseStatusOptions
 } from '../constants/movie-enums';
 import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
@@ -51,21 +51,6 @@ export default function MoviesSidebar() {
         resolver: zodResolver(moviesFilterSchema),
         defaultValues: moviesFilter
     });
-
-    const { data: genres } = useGetGenresQuery(
-        {
-            where: {
-                genre_types: {
-                    type: {
-                        _eq: Object_Types_Enum.Movie
-                    }
-                }
-            }
-        },
-        {
-            queryKey: ['movie-genres']
-        }
-    );
 
     useEffect(() => {
         form.reset(moviesFilter);
@@ -222,12 +207,7 @@ export default function MoviesSidebar() {
                                                     <FormItem>
                                                         <BaseFormLayout label='Genres'>
                                                             <CheckboxGroupField
-                                                                options={
-                                                                    genres?.genres.map((genre) => ({
-                                                                        value: genre.id,
-                                                                        label: genre.name
-                                                                    })) ?? []
-                                                                }
+                                                                options={movieGenresOptions}
                                                                 {...field}
                                                             />
                                                         </BaseFormLayout>

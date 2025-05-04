@@ -1,6 +1,6 @@
 import { Object_Types_Enum } from '@/generated/graphql';
 
-import { Book, Clapperboard, Gamepad, Headphones, LucideIcon, Tv, User } from 'lucide-react';
+import { Book, Clapperboard, Gamepad, Headphones, LucideIcon, Music, Tv, User } from 'lucide-react';
 
 export type ObjectType = (typeof OBJECT_TYPE)[keyof typeof OBJECT_TYPE];
 export type ObjectTypeKey = keyof typeof OBJECT_TYPE;
@@ -17,7 +17,7 @@ interface ObjectTypeData {
 }
 
 export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {
-    movie: {
+    MOVIE: {
         type: Object_Types_Enum.Movie,
         name: 'Movie',
         plural: 'Movies',
@@ -27,7 +27,7 @@ export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {
         border: 'border-green-400/60',
         icon: Clapperboard
     },
-    tv: {
+    TV: {
         type: Object_Types_Enum.Tv,
         name: 'TV Show',
         plural: 'TV Shows',
@@ -37,7 +37,17 @@ export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {
         border: 'border-blue-400/60',
         icon: Tv
     },
-    person: {
+    ALBUM: {
+        type: Object_Types_Enum.Album,
+        name: 'Album',
+        plural: 'Albums',
+        path: 'albums',
+        background: 'bg-purple-300/20',
+        foreground: 'text-purple-800',
+        border: 'border-purple-400/60',
+        icon: Music
+    },
+    PERSON: {
         type: Object_Types_Enum.Person,
         name: 'Person',
         plural: 'People',
@@ -47,7 +57,7 @@ export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {
         border: 'border-purple-400/60',
         icon: User
     },
-    song: {
+    SONG: {
         type: Object_Types_Enum.Song,
         name: 'Song',
         plural: 'Songs',
@@ -57,7 +67,7 @@ export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {
         border: 'border-teal-400/60',
         icon: Headphones
     },
-    book: {
+    BOOK: {
         type: Object_Types_Enum.Book,
         name: 'Book',
         plural: 'Books',
@@ -67,7 +77,7 @@ export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {
         border: 'border-indigo-400/60',
         icon: Book
     },
-    game: {
+    GAME: {
         type: Object_Types_Enum.Game,
         name: 'Game',
         plural: 'Games',

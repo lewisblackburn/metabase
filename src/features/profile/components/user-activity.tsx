@@ -3,26 +3,24 @@
 import { useEffect, useMemo } from 'react';
 
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import Rating from '@/components/shared/rating';
 import { MAX_LIMIT } from '@/constants/api.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import {
-    Activity_Types,
     Activity_Types_Enum,
     GetUserActivitiesQuery,
     Order_By,
-    User_Activities,
     useInfiniteGetUserActivitiesQuery
 } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 import { useUserId } from '@nhost/nextjs';
-import { InfiniteData } from '@tanstack/react-query';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Activity, UserIcon } from 'lucide-react';
+import { UserIcon } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 
 dayjs.extend(relativeTime);
@@ -46,7 +44,8 @@ function ActivitySkeleton() {
 }
 
 export default function UserActivity() {
-    const userId = useUserId();
+    const params = useParams<{ id: string }>();
+    const userId = params?.id;
     const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetUserActivitiesQuery(
         {
             where: { user_id: { _eq: userId } },

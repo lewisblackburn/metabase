@@ -9,5 +9,16 @@ query GetProfile($id: uuid!) {
         emailVerified
         disabled
         locale
+        followers_aggregate {
+            aggregate {
+                count
+            }
+        }
+        followees_aggregate {
+            aggregate {
+                count
+            }
+        }
+        is_following
     }
 }

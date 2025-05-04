@@ -40,10 +40,10 @@ export const NAVIGATION = {
                 disabled: true
             }
         ],
-        type: OBJECT_TYPE.movie
+        type: OBJECT_TYPE.MOVIE
     },
     series: {
-        type: OBJECT_TYPE.tv,
+        type: OBJECT_TYPE.TV,
         cards: [
             {
                 icon: Sparkles,
@@ -63,7 +63,7 @@ export const NAVIGATION = {
                 path: ''
             }
         ],
-        type: OBJECT_TYPE.person
+        type: OBJECT_TYPE.PERSON
     },
     songs: {
         cards: [
@@ -95,10 +95,10 @@ export const NAVIGATION = {
                 disabled: true
             }
         ],
-        type: OBJECT_TYPE.song
+        type: OBJECT_TYPE.SONG
     },
     books: {
-        type: OBJECT_TYPE.book,
+        type: OBJECT_TYPE.BOOK,
         cards: [
             {
                 icon: Sparkles,
@@ -111,7 +111,7 @@ export const NAVIGATION = {
     },
     games: {
         id: 'games',
-        type: OBJECT_TYPE.game,
+        type: OBJECT_TYPE.GAME,
         cards: [
             {
                 icon: Sparkles,

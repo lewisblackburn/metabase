@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
-import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import SmallAvatar from '@/components/shared/small-avatar';
 import { useGetCreditsQuery } from '@/generated/graphql';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';

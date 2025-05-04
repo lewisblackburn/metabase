@@ -6,8 +6,6 @@ import {
     Credits_Constraint,
     Credits_Insert_Input,
     Gender_Types_Enum,
-    Genres_Constraint,
-    Genres_Update_Column,
     GetMovieByTmdb_IdDocument,
     GetMovieByTmdb_IdQuery,
     GetMovieByTmdb_IdQueryVariables,
@@ -18,6 +16,7 @@ import {
     Movie_Alternative_Titles_Constraint,
     Movie_Alternative_Titles_Insert_Input,
     Movie_Alternative_Titles_Update_Column,
+    Movie_Genre_Types_Enum,
     Movie_Genres_Insert_Input,
     Movie_Keywords_Insert_Input,
     Movie_Media_Constraint,
@@ -50,7 +49,28 @@ const TMDB_RELEASE_STATUS_MAP = {
     Canceled: Movie_Release_Status_Types_Enum.Cancelled
 };
 
-// map gender to gender_types
+const TMDB_GENRE_MAP = {
+    Action: Movie_Genre_Types_Enum.Action,
+    Adventure: Movie_Genre_Types_Enum.Adventure,
+    Animation: Movie_Genre_Types_Enum.Animation,
+    Comedy: Movie_Genre_Types_Enum.Comedy,
+    Crime: Movie_Genre_Types_Enum.Crime,
+    Documentary: Movie_Genre_Types_Enum.Documentary,
+    Drama: Movie_Genre_Types_Enum.Drama,
+    Family: Movie_Genre_Types_Enum.Family,
+    Fantasy: Movie_Genre_Types_Enum.Fantasy,
+    History: Movie_Genre_Types_Enum.History,
+    Horror: Movie_Genre_Types_Enum.Horror,
+    Music: Movie_Genre_Types_Enum.Music,
+    Mystery: Movie_Genre_Types_Enum.Mystery,
+    Romance: Movie_Genre_Types_Enum.Romance,
+    ScienceFiction: Movie_Genre_Types_Enum.ScienceFiction,
+    TVMovie: Movie_Genre_Types_Enum.TvMovie,
+    Thriller: Movie_Genre_Types_Enum.Thriller,
+    War: Movie_Genre_Types_Enum.War,
+    Western: Movie_Genre_Types_Enum.Western
+};
+
 const TMDB_GENDER_MAP = {
     0: Gender_Types_Enum.Male,
     1: Gender_Types_Enum.Female,
@@ -224,16 +244,9 @@ export async function importMovieFromTmdb(
             movie_genres: {
                 data:
                     tmdbMovieData.genres?.map(
-                        (genre): Movie_Genres_Insert_Input => ({
-                            genre: {
-                                data: {
-                                    name: genre.name
-                                },
-                                on_conflict: {
-                                    constraint: Genres_Constraint.GenresNameKey,
-                                    update_columns: [Genres_Update_Column.Name]
-                                }
-                            }
+                        (genre, index): Movie_Genres_Insert_Input => ({
+                            genre: TMDB_GENRE_MAP[genre.name as keyof typeof TMDB_GENRE_MAP],
+                            order: index + 1
                         })
                     ) || []
             },

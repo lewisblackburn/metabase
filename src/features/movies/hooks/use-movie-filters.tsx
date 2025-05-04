@@ -93,7 +93,7 @@ export function useMovieFilters(): {
         }
 
         if (genres?.length) {
-            clauses.push({ movie_genres: { genre: { id: { _in: genres } } } });
+            clauses.push({ movie_genres: { genre: { _in: genres } } });
         }
 
         if (certifications?.length) {

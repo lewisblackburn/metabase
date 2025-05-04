@@ -1,0 +1,16 @@
+query GetFollowers($id: uuid!) {
+    user(id: $id) {
+        followers {
+            follower {
+                id
+                displayName
+                email
+            }
+        }
+        followers_aggregate {
+            aggregate {
+                count
+            }
+        }
+    }
+}

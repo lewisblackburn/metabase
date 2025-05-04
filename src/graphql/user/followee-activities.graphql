@@ -1,0 +1,21 @@
+subscription FolloweeActivities($id: uuid!) {
+    user(id: $id) {
+        followees {
+            followee {
+                user_activities {
+                    id
+                    object_type
+                    object_id
+                    object_title
+                    details
+                    activity_type
+                    user {
+                        avatarUrl
+                        displayName
+                    }
+                    created_at
+                }
+            }
+        }
+    }
+}
