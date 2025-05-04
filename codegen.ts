@@ -1,3 +1,4 @@
+import { bookGenresLabels } from '@/features/books/constants/book-enums';
 import { CodegenConfig } from '@graphql-codegen/cli';
 
 import { loadEnvFile } from 'process';

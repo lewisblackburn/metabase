@@ -1,0 +1,5 @@
+mutation MarkNotificationAsRead($id: uuid!, $recipient_id: uuid!) {
+    update_notifications(where: { id: { _eq: $id }, recipient_id: { _eq: $recipient_id } }, _set: { is_read: true }) {
+        affected_rows
+    }
+}

@@ -137,6 +137,9 @@ importers:
       graphql-request:
         specifier: ^7.1.2
         version: 7.1.2(graphql@16.8.1)
+      graphql-ws:
+        specifier: ^6.0.4
+        version: 6.0.4(graphql@16.8.1)(ws@8.18.1)
       hotkeys-js:
         specifier: ^3.13.9
         version: 3.13.9
@@ -201,6 +204,9 @@ importers:
       '@graphql-codegen/cli':
         specifier: ^5.0.5
         version: 5.0.5(@parcel/watcher@2.5.1)(@types/node@22.13.10)(encoding@0.1.13)(graphql-sock@1.0.1(graphql@16.8.1))(graphql@16.8.1)(typescript@5.8.2)
+      '@graphql-codegen/client-preset':
+        specifier: ^4.8.0
+        version: 4.8.0(encoding@0.1.13)(graphql-sock@1.0.1(graphql@16.8.1))(graphql@16.8.1)
       '@graphql-codegen/schema-ast':
         specifier: ^4.1.0
         version: 4.1.0(graphql@16.8.1)
@@ -5899,7 +5905,7 @@ snapshots:
   '@graphql-codegen/client-preset@4.8.0(encoding@0.1.13)(graphql-sock@1.0.1(graphql@16.8.1))(graphql@16.8.1)':
     dependencies:
       '@babel/helper-plugin-utils': 7.26.5
-      '@babel/template': 7.26.9
+      '@babel/template': 7.27.0
       '@graphql-codegen/add': 5.0.3(graphql@16.8.1)
       '@graphql-codegen/gql-tag-operations': 4.0.17(encoding@0.1.13)(graphql@16.8.1)
       '@graphql-codegen/plugin-helpers': 5.1.0(graphql@16.8.1)

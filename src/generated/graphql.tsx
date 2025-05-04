@@ -15483,6 +15483,33 @@ export type Notifications_Aggregate = {
   nodes: Array<Notifications>;
 };
 
+export type Notifications_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Notifications_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Notifications_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Notifications_Aggregate_Bool_Exp_Count>;
+};
+
+export type Notifications_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Notifications_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Notifications_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Notifications_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Notifications_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Notifications_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Notifications_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "notifications" */
 export type Notifications_Aggregate_Fields = {
   __typename?: 'notifications_aggregate_fields';
@@ -15496,6 +15523,13 @@ export type Notifications_Aggregate_Fields = {
 export type Notifications_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Notifications_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "notifications" */
+export type Notifications_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Notifications_Max_Order_By>;
+  min?: InputMaybe<Notifications_Min_Order_By>;
 };
 
 /** columns and relationships of "notifications_archive" */
@@ -15678,6 +15712,13 @@ export type Notifications_Archive_Updates = {
   where: Notifications_Archive_Bool_Exp;
 };
 
+/** input type for inserting array relation for remote table "notifications" */
+export type Notifications_Arr_Rel_Insert_Input = {
+  data: Array<Notifications_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Notifications_On_Conflict>;
+};
+
 /** Boolean expression to filter rows from the table "notifications". All fields are combined with a logical 'AND'. */
 export type Notifications_Bool_Exp = {
   _and?: InputMaybe<Array<Notifications_Bool_Exp>>;
@@ -15725,6 +15766,15 @@ export type Notifications_Max_Fields = {
   recipient_id?: Maybe<Scalars['uuid']['output']>;
 };
 
+/** order by max() on columns of table "notifications" */
+export type Notifications_Max_Order_By = {
+  activity_id?: InputMaybe<Order_By>;
+  actor_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  recipient_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Notifications_Min_Fields = {
   __typename?: 'notifications_min_fields';
@@ -15733,6 +15783,15 @@ export type Notifications_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   recipient_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "notifications" */
+export type Notifications_Min_Order_By = {
+  activity_id?: InputMaybe<Order_By>;
+  actor_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  recipient_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "notifications" */
@@ -15783,6 +15842,18 @@ export enum Notifications_Select_Column {
   IsRead = 'is_read',
   /** column name */
   RecipientId = 'recipient_id'
+}
+
+/** select "notifications_aggregate_bool_exp_bool_and_arguments_columns" columns of table "notifications" */
+export enum Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsRead = 'is_read'
+}
+
+/** select "notifications_aggregate_bool_exp_bool_or_arguments_columns" columns of table "notifications" */
+export enum Notifications_Select_Column_Notifications_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsRead = 'is_read'
 }
 
 /** input type for updating data in table "notifications" */
@@ -17013,9 +17084,9 @@ export type Query_Root = {
   movies_aggregate: Movies_Aggregate;
   /** fetch data from the table: "movies" using primary key columns */
   movies_by_pk?: Maybe<Movies>;
-  /** fetch data from the table: "notifications" */
+  /** An array relationship */
   notifications: Array<Notifications>;
-  /** fetch aggregated fields from the table: "notifications" */
+  /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications_archive" */
   notifications_archive: Array<Notifications_Archive>;
@@ -20733,9 +20804,9 @@ export type Subscription_Root = {
   movies_by_pk?: Maybe<Movies>;
   /** fetch data from the table in a streaming manner: "movies" */
   movies_stream: Array<Movies>;
-  /** fetch data from the table: "notifications" */
+  /** An array relationship */
   notifications: Array<Notifications>;
-  /** fetch aggregated fields from the table: "notifications" */
+  /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications_archive" */
   notifications_archive: Array<Notifications_Archive>;
@@ -24246,6 +24317,14 @@ export type Users = {
   locale: Scalars['String']['output'];
   metadata?: Maybe<Scalars['jsonb']['output']>;
   newEmail?: Maybe<Scalars['citext']['output']>;
+  /** An array relationship */
+  notifications: Array<Notifications>;
+  /** An array relationship */
+  notificationsByRecipientId: Array<Notifications>;
+  /** An aggregate relationship */
+  notificationsByRecipientId_aggregate: Notifications_Aggregate;
+  /** An aggregate relationship */
+  notifications_aggregate: Notifications_Aggregate;
   otpHash?: Maybe<Scalars['String']['output']>;
   otpHashExpiresAt: Scalars['timestamptz']['output'];
   otpMethodLastUsed?: Maybe<Scalars['String']['output']>;
@@ -24358,6 +24437,46 @@ export type UsersFollowers_AggregateArgs = {
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersMetadataArgs = {
   path?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersNotificationsArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Order_By>>;
+  where?: InputMaybe<Notifications_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersNotificationsByRecipientIdArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Order_By>>;
+  where?: InputMaybe<Notifications_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersNotificationsByRecipientId_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Order_By>>;
+  where?: InputMaybe<Notifications_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersNotifications_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Notifications_Order_By>>;
+  where?: InputMaybe<Notifications_Bool_Exp>;
 };
 
 
@@ -24636,6 +24755,10 @@ export type Users_Bool_Exp = {
   locale?: InputMaybe<String_Comparison_Exp>;
   metadata?: InputMaybe<Jsonb_Comparison_Exp>;
   newEmail?: InputMaybe<Citext_Comparison_Exp>;
+  notifications?: InputMaybe<Notifications_Bool_Exp>;
+  notificationsByRecipientId?: InputMaybe<Notifications_Bool_Exp>;
+  notificationsByRecipientId_aggregate?: InputMaybe<Notifications_Aggregate_Bool_Exp>;
+  notifications_aggregate?: InputMaybe<Notifications_Aggregate_Bool_Exp>;
   otpHash?: InputMaybe<String_Comparison_Exp>;
   otpHashExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   otpMethodLastUsed?: InputMaybe<String_Comparison_Exp>;
@@ -24712,6 +24835,8 @@ export type Users_Insert_Input = {
   locale?: InputMaybe<Scalars['String']['input']>;
   metadata?: InputMaybe<Scalars['jsonb']['input']>;
   newEmail?: InputMaybe<Scalars['citext']['input']>;
+  notifications?: InputMaybe<Notifications_Arr_Rel_Insert_Input>;
+  notificationsByRecipientId?: InputMaybe<Notifications_Arr_Rel_Insert_Input>;
   otpHash?: InputMaybe<Scalars['String']['input']>;
   otpHashExpiresAt?: InputMaybe<Scalars['timestamptz']['input']>;
   otpMethodLastUsed?: InputMaybe<Scalars['String']['input']>;
@@ -24876,6 +25001,8 @@ export type Users_Order_By = {
   locale?: InputMaybe<Order_By>;
   metadata?: InputMaybe<Order_By>;
   newEmail?: InputMaybe<Order_By>;
+  notificationsByRecipientId_aggregate?: InputMaybe<Notifications_Aggregate_Order_By>;
+  notifications_aggregate?: InputMaybe<Notifications_Aggregate_Order_By>;
   otpHash?: InputMaybe<Order_By>;
   otpHashExpiresAt?: InputMaybe<Order_By>;
   otpMethodLastUsed?: InputMaybe<Order_By>;
@@ -25577,12 +25704,36 @@ export type UpdateMovieMutationVariables = Exact<{
 
 export type UpdateMovieMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any } | null };
 
+export type GetNotificationsQueryVariables = Exact<{
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetNotificationsQuery = { __typename?: 'query_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
+
+export type MarkAllNotificationsAsReadMutationVariables = Exact<{
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type MarkAllNotificationsAsReadMutation = { __typename?: 'mutation_root', update_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number } | null };
+
+export type MarkNotificationAsReadMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+  recipient_id: Scalars['uuid']['input'];
+}>;
+
+
+export type MarkNotificationAsReadMutation = { __typename?: 'mutation_root', update_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number } | null };
+
+export type NotificationFragment = { __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null };
+
 export type OnNotificationsSubscriptionVariables = Exact<{
   user_id: Scalars['uuid']['input'];
 }>;
 
 
-export type OnNotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string }, user_activity?: { __typename?: 'user_activities', object_type: Object_Types_Enum, object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
+export type OnNotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
 
 export type UpsertNotificationsMutationVariables = Exact<{
   objects: Array<Notifications_Insert_Input> | Notifications_Insert_Input;
@@ -25737,7 +25888,24 @@ export type InsertUserActivityMutationVariables = Exact<{
 export type InsertUserActivityMutation = { __typename?: 'mutation_root', insert_user_activities_one?: { __typename?: 'user_activities', id: any } | null };
 
 
-
+export const NotificationFragmentDoc = `
+    fragment Notification on notifications {
+  id
+  actor {
+    id
+    displayName
+    avatarUrl
+  }
+  user_activity {
+    object_title
+    activity_type
+    details
+    created_at
+  }
+  is_read
+  created_at
+}
+    `;
 export const GetAuditLogsDocument = `
     query GetAuditLogs($distinct_on: [audit_logs_select_column!], $limit: Int, $offset: Int, $order_by: [audit_logs_order_by!], $where: audit_logs_bool_exp) {
   audit_logs(
@@ -26616,29 +26784,112 @@ export const useUpdateMovieMutation = <
   }
     )};
 
-export const OnNotificationsDocument = `
-    subscription OnNotifications($user_id: uuid!) {
+export const GetNotificationsDocument = `
+    query GetNotifications($user_id: uuid!) {
   notifications(
-    where: {recipient_id: {_eq: $user_id}}
+    where: {recipient_id: {_eq: $user_id}, is_read: {_eq: false}}
     order_by: {created_at: desc}
+    limit: 20
   ) {
-    id
-    actor {
-      id
-      displayName
+    ...Notification
+  }
+}
+    ${NotificationFragmentDoc}`;
+
+export const useGetNotificationsQuery = <
+      TData = GetNotificationsQuery,
+      TError = unknown
+    >(
+      variables: GetNotificationsQueryVariables,
+      options?: Omit<UseQueryOptions<GetNotificationsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetNotificationsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetNotificationsQuery, TError, TData>(
+      {
+    queryKey: ['GetNotifications', variables],
+    queryFn: fetcher<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetNotificationsQuery = <
+      TData = InfiniteData<GetNotificationsQuery>,
+      TError = unknown
+    >(
+      variables: GetNotificationsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetNotificationsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetNotificationsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetNotificationsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetNotifications.infinite', variables],
+      queryFn: (metaData) => fetcher<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
     }
-    user_activity {
-      object_type
-      object_title
-      activity_type
-      details
-      created_at
-    }
-    is_read
-    created_at
+  })()
+    )};
+
+export const MarkAllNotificationsAsReadDocument = `
+    mutation MarkAllNotificationsAsRead($user_id: uuid!) {
+  update_notifications(
+    where: {recipient_id: {_eq: $user_id}, is_read: {_eq: false}}
+    _set: {is_read: true}
+  ) {
+    affected_rows
   }
 }
     `;
+
+export const useMarkAllNotificationsAsReadMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<MarkAllNotificationsAsReadMutation, TError, MarkAllNotificationsAsReadMutationVariables, TContext>) => {
+    
+    return useMutation<MarkAllNotificationsAsReadMutation, TError, MarkAllNotificationsAsReadMutationVariables, TContext>(
+      {
+    mutationKey: ['MarkAllNotificationsAsRead'],
+    mutationFn: (variables?: MarkAllNotificationsAsReadMutationVariables) => fetcher<MarkAllNotificationsAsReadMutation, MarkAllNotificationsAsReadMutationVariables>(MarkAllNotificationsAsReadDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const MarkNotificationAsReadDocument = `
+    mutation MarkNotificationAsRead($id: uuid!, $recipient_id: uuid!) {
+  update_notifications(
+    where: {id: {_eq: $id}, recipient_id: {_eq: $recipient_id}}
+    _set: {is_read: true}
+  ) {
+    affected_rows
+  }
+}
+    `;
+
+export const useMarkNotificationAsReadMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<MarkNotificationAsReadMutation, TError, MarkNotificationAsReadMutationVariables, TContext>) => {
+    
+    return useMutation<MarkNotificationAsReadMutation, TError, MarkNotificationAsReadMutationVariables, TContext>(
+      {
+    mutationKey: ['MarkNotificationAsRead'],
+    mutationFn: (variables?: MarkNotificationAsReadMutationVariables) => fetcher<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>(MarkNotificationAsReadDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const OnNotificationsDocument = `
+    subscription OnNotifications($user_id: uuid!) {
+  notifications(
+    where: {recipient_id: {_eq: $user_id}, is_read: {_eq: false}}
+    order_by: {created_at: desc}
+    limit: 20
+  ) {
+    ...Notification
+  }
+}
+    ${NotificationFragmentDoc}`;
 export const UpsertNotificationsDocument = `
     mutation UpsertNotifications($objects: [notifications_insert_input!]!) {
   insert_notifications(

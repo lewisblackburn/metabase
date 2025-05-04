@@ -350,7 +350,7 @@ const Navbar: React.FC = () => {
                         <ShortcutDisplay combo={searchShortcut.key} />
                     </Button>
 
-                    <Notifications />
+                    {user && <Notifications />}
 
                     <div className='hidden lg:block'>
                         <NavUser user={user} />

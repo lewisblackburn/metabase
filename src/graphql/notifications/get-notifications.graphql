@@ -1,4 +1,4 @@
-subscription OnNotifications($user_id: uuid!) {
+query GetNotifications($user_id: uuid!) {
     notifications(
         where: { recipient_id: { _eq: $user_id }, is_read: { _eq: false } }
         order_by: { created_at: desc }

@@ -26,7 +26,7 @@ export default function FollowersDialog({ trigger }: FollowersDialogProps) {
 
     const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetFollowersQuery(
         {
-            id: userId,
+            user_id: userId,
             followers_limit: MAX_LIMIT
         },
         {

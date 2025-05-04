@@ -1,88 +1,65 @@
 'use client';
 
-import { useState } from 'react';
-
+import {
+    useGetNotificationsQuery,
+    useMarkAllNotificationsAsReadMutation,
+    useMarkNotificationAsReadMutation
+} from '@/generated/graphql';
+import { useNotificationsSubscription } from '@/hooks/use-notifications-subscription';
+import { queryClient } from '@/lib/query-client';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
+import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
+import { useUserId } from '@nhost/nextjs';
 
 import Notification from './notification';
-import { Badge, BellIcon } from 'lucide-react';
-
-const initialNotifications = [
-    {
-        id: 1,
-        image: '/avatar-80-01.jpg',
-        user: 'Chris Tompson',
-        action: 'requested review on',
-        target: 'PR #42: Feature implementation',
-        timestamp: '15 minutes ago',
-        unread: true
-    },
-    {
-        id: 2,
-        image: '/avatar-80-02.jpg',
-        user: 'Emma Davis',
-        action: 'shared',
-        target: 'New component library',
-        timestamp: '45 minutes ago',
-        unread: true
-    },
-    {
-        id: 3,
-        image: '/avatar-80-03.jpg',
-        user: 'James Wilson',
-        action: 'assigned you to',
-        target: 'API integration task',
-        timestamp: '4 hours ago',
-        unread: false
-    },
-    {
-        id: 4,
-        image: '/avatar-80-04.jpg',
-        user: 'Alex Morgan',
-        action: 'replied to your comment in',
-        target: 'Authentication flow',
-        timestamp: '12 hours ago',
-        unread: false
-    },
-    {
-        id: 5,
-        image: '/avatar-80-05.jpg',
-        user: 'Sarah Chen',
-        action: 'commented on',
-        target: 'Dashboard redesign',
-        timestamp: '2 days ago',
-        unread: false
-    },
-    {
-        id: 6,
-        image: '/avatar-80-06.jpg',
-        user: 'Miky Derya',
-        action: 'mentioned you in',
-        target: 'Origin UI open graph image',
-        timestamp: '2 weeks ago',
-        unread: false
-    }
-];
+import { BellIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function Notifications() {
-    const [notifications, setNotifications] = useState(initialNotifications);
-    const unreadCount = notifications.filter((n) => n.unread).length;
+    const userId = useUserId();
+    useNotificationsSubscription();
+    const { data, isLoading } = useGetNotificationsQuery(
+        {
+            user_id: userId
+        },
+        {
+            queryKey: ['notifications', userId]
+        }
+    );
 
-    const handleMarkAllAsRead = () => {
-        setNotifications(
-            notifications.map((notification) => ({
-                ...notification,
-                unread: false
-            }))
+    const notifications = data?.notifications;
+    const unreadCount = notifications?.filter((n) => n.is_read === false).length ?? 0;
+
+    const { mutateAsync: markAllAsRead } = useMarkAllNotificationsAsReadMutation();
+    const { mutateAsync: markAsRead } = useMarkNotificationAsReadMutation();
+
+    const handleMarkAllAsRead = async () => {
+        await markAllAsRead(
+            { user_id: userId },
+            {
+                onSuccess: () => {
+                    queryClient.invalidateQueries({ queryKey: ['notifications', userId] });
+                },
+                onError: () => {
+                    toast.error('Failed to mark all notifications as read');
+                }
+            }
         );
     };
 
-    const handleNotificationClick = (id: number) => {
-        setNotifications(
-            notifications.map((notification) =>
-                notification.id === id ? { ...notification, unread: false } : notification
-            )
+    const handleNotificationClick = async (id: string) => {
+        await markAsRead(
+            { id, recipient_id: userId },
+            {
+                onSuccess: () => {
+                    queryClient.invalidateQueries({ queryKey: ['notifications', userId] });
+                },
+                onError: () => {
+                    toast.error('Failed to mark notification as read');
+                }
+            }
         );
     };
 
@@ -108,13 +85,28 @@ export default function Notifications() {
                     )}
                 </div>
                 <div role='separator' aria-orientation='horizontal' className='bg-border -mx-1 my-1 h-px'></div>
-                {notifications.map((notification) => (
-                    <Notification
-                        key={notification.id}
-                        notification={notification}
-                        onClick={() => handleNotificationClick(notification.id)}
-                    />
-                ))}
+                {isLoading
+                    ? Array.from({ length: 3 }).map((_, i) => (
+                          <div key={i} className='px-3 py-2'>
+                              <div className='flex items-start gap-3'>
+                                  <Skeleton className='size-9 rounded-md' />
+                                  <div className='flex-1 space-y-2'>
+                                      <Skeleton className='h-4 w-3/4' />
+                                      <Skeleton className='h-3 w-1/2' />
+                                  </div>
+                              </div>
+                          </div>
+                      ))
+                    : notifications?.map((notification) => (
+                          <Notification
+                              key={notification.id}
+                              notification={notification}
+                              onClick={() => handleNotificationClick(notification.id)}
+                          />
+                      ))}
+                {!isLoading && (!notifications || notifications.length === 0) && (
+                    <div className='text-muted-foreground px-3 py-4 text-center text-sm'>No notifications yet</div>
+                )}
             </PopoverContent>
         </Popover>
     );

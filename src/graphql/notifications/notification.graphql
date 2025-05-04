@@ -1,0 +1,16 @@
+fragment Notification on notifications {
+    id
+    actor {
+        id
+        displayName
+        avatarUrl
+    }
+    user_activity {
+        object_title
+        activity_type
+        details
+        created_at
+    }
+    is_read
+    created_at
+}
