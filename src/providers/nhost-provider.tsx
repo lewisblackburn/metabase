@@ -2,9 +2,9 @@
 
 import { ReactNode } from 'react';
 
-import { nhostPublic } from '@/lib/nhost-public';
+import { nhost } from '@/lib/nhost';
 import { NhostProvider } from '@nhost/nextjs';
 
 export default function CustomNhostProvider({ children }: { children: ReactNode }) {
-    return <NhostProvider nhost={nhostPublic}>{children}</NhostProvider>;
+    return <NhostProvider nhost={nhost}>{children}</NhostProvider>;
 }

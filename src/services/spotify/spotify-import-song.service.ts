@@ -21,7 +21,7 @@ import {
     Songs_Insert_Input
 } from '@/generated/graphql';
 import { fetcher } from '@/lib/graphql-client';
-import { nhostPublic } from '@/lib/nhost-public';
+import { nhost } from '@/lib/nhost';
 import { SpotifyTrack } from '@/types/spotify.types';
 
 import { uploadFile } from '../file.service';
@@ -80,9 +80,7 @@ export async function importSongFromSpotify(
                     data: {
                         spotify_id: artist.id,
                         name: artist.name,
-                        headshot: headshotFile
-                            ? nhostPublic.storage.getPublicUrl({ fileId: headshotFile.id })
-                            : undefined,
+                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
@@ -121,9 +119,7 @@ export async function importSongFromSpotify(
                     data: {
                         spotify_id: artist.id,
                         name: artist.name,
-                        headshot: headshotFile
-                            ? nhostPublic.storage.getPublicUrl({ fileId: headshotFile.id })
-                            : undefined,
+                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
@@ -168,7 +164,7 @@ export async function importSongFromSpotify(
                 data: {
                     name: songData.album.name,
                     release_date: songData.album.release_date,
-                    artwork: artworkFile ? nhostPublic.storage.getPublicUrl({ fileId: artworkFile.id }) : undefined,
+                    artwork: artworkFile ? nhost.storage.getPublicUrl({ fileId: artworkFile.id }) : undefined,
                     type: songData.album.album_type,
                     spotify_id: songData.album.id.toString(),
                     spotify_uri: songData.album.external_urls.spotify,

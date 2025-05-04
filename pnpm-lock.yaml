@@ -26,9 +26,6 @@ importers:
       '@nhost/nextjs':
         specifier: ^2.2.6
         version: 2.2.6(@types/react@19.0.10)(encoding@0.1.13)(next@15.2.1(@babel/core@7.26.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@nhost/nhost-js':
-        specifier: ^3.2.8
-        version: 3.2.8(encoding@0.1.13)(graphql@16.8.1)
       '@radix-ui/react-accordion':
         specifier: ^1.2.3
         version: 1.2.3(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1200,14 +1197,8 @@ packages:
   '@nhost/hasura-auth-js@2.11.0':
     resolution: {integrity: sha512-edEWLI4OLL9F5fjaxKD78aUF+s3QP1WC8Qjx80iB2+YGCO0QSwkqeP7oQ57SVo7oHN3PuUHAe/2457lo1GqnaQ==}
 
-  '@nhost/hasura-auth-js@2.11.1':
-    resolution: {integrity: sha512-UUgbZ6tEPJ9W7PXe80CNt4yjQy9ju4EZzGSx4A5roFFXW5UaGfaD9SmOh9U4VU/SSgywZUatyWBnehTrPYlHaw==}
-
   '@nhost/hasura-storage-js@2.7.0':
     resolution: {integrity: sha512-idP3d71GB5V5fXU6rWVpiaL3kJr7qs9P48DZMPtpI4xoAxY7t0RgJHwlsbYsNIY6n1f2qJRgAiWGQClAQ8eyKA==}
-
-  '@nhost/hasura-storage-js@2.7.1':
-    resolution: {integrity: sha512-VYXpI9mOMdz0Kqi0S4XNS1PRjx5tRCig8xX3A1PzW8fF96UtwwFFxPjHzLVv0fHCZ6FiXlLuycEqhGMeb90nJQ==}
 
   '@nhost/nextjs@2.2.6':
     resolution: {integrity: sha512-AvGk5ce66TC/7Y6y+1PfmELw8yXmsLPidanZiEUkQWsFEjTM3ro+PAUYB5zWOFPV7sQFSfoCFQwHYwvGUeoagg==}
@@ -1218,11 +1209,6 @@ packages:
 
   '@nhost/nhost-js@3.2.7':
     resolution: {integrity: sha512-5ZVRv8cUW3aCYRBQzDXHtDJdQYyYd3OcjCd47Pu8DRczyeV/3CUwp2HraIrLrk6//KfzW/l00zllUl8otpg1/w==}
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-
-  '@nhost/nhost-js@3.2.8':
-    resolution: {integrity: sha512-wa3rQ0Ta0qJXibUGaUnGQGWJEOeFMJnn1uKwJJpxutuQBwbXbpuEU6n2leuJhgSVfDKp5qVT+FrC74iR11RO+g==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
 
@@ -6535,26 +6521,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@nhost/hasura-auth-js@2.11.1(encoding@0.1.13)':
-    dependencies:
-      '@simplewebauthn/browser': 9.0.1
-      fetch-ponyfill: 7.1.0(encoding@0.1.13)
-      js-cookie: 3.0.5
-      jwt-decode: 4.0.0
-      xstate: 4.38.3
-    transitivePeerDependencies:
-      - encoding
-
   '@nhost/hasura-storage-js@2.7.0(encoding@0.1.13)':
-    dependencies:
-      fetch-ponyfill: 7.1.0(encoding@0.1.13)
-      form-data: 4.0.2
-      graphql: 16.8.1
-      xstate: 4.38.3
-    transitivePeerDependencies:
-      - encoding
-
-  '@nhost/hasura-storage-js@2.7.1(encoding@0.1.13)':
     dependencies:
       fetch-ponyfill: 7.1.0(encoding@0.1.13)
       form-data: 4.0.2
@@ -6583,16 +6550,6 @@ snapshots:
       '@nhost/graphql-js': 0.3.0(encoding@0.1.13)(graphql@16.8.1)
       '@nhost/hasura-auth-js': 2.11.0(encoding@0.1.13)
       '@nhost/hasura-storage-js': 2.7.0(encoding@0.1.13)
-      graphql: 16.8.1
-      isomorphic-unfetch: 3.1.0(encoding@0.1.13)
-    transitivePeerDependencies:
-      - encoding
-
-  '@nhost/nhost-js@3.2.8(encoding@0.1.13)(graphql@16.8.1)':
-    dependencies:
-      '@nhost/graphql-js': 0.3.0(encoding@0.1.13)(graphql@16.8.1)
-      '@nhost/hasura-auth-js': 2.11.1(encoding@0.1.13)
-      '@nhost/hasura-storage-js': 2.7.1(encoding@0.1.13)
       graphql: 16.8.1
       isomorphic-unfetch: 3.1.0(encoding@0.1.13)
     transitivePeerDependencies:
