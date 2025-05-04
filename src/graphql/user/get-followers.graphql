@@ -1,10 +1,12 @@
-query GetFollowers($id: uuid!) {
+query GetFollowers($id: uuid!, $followers_limit: Int, $followers_offset: Int) {
     user(id: $id) {
-        followers {
+        followers(order_by: { created_at: desc }, limit: $followers_limit, offset: $followers_offset) {
             follower {
                 id
                 displayName
                 email
+                avatarUrl
+                createdAt
             }
         }
         followers_aggregate {

@@ -13,6 +13,8 @@ import HeroCardLayout from '@/components/shared/hero-layout';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import Collections from '@/features/profile/components/collections/collections';
 import FollowButton from '@/features/profile/components/follow-button';
+import FollowersDialog from '@/features/profile/components/followers-dialog';
+import FollowingDialog from '@/features/profile/components/following-dialog';
 import UserActivity from '@/features/profile/components/user-activity';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
@@ -119,16 +121,28 @@ export default function ProfilePage() {
 
                     <div className='flex flex-col space-y-2'>
                         <div className='mb-4 flex items-center gap-4'>
-                            <div className='flex items-center gap-1'>
-                                <span className='font-semibold'>{userInfo.followersCount}</span>
-                                <span className='text-muted-foreground text-sm'>Followers</span>
-                            </div>
-                            <div className='flex items-center gap-1'>
-                                <span className='font-semibold'>{userInfo.followingCount}</span>
-                                <span className='text-muted-foreground text-sm'>Following</span>
-                            </div>
+                            <FollowersDialog
+                                trigger={
+                                    <div className='flex cursor-pointer items-center gap-1 hover:underline'>
+                                        <span className='font-semibold'>{userInfo.followersCount}</span>
+                                        <span className='text-muted-foreground text-sm'>Followers</span>
+                                    </div>
+                                }
+                            />
+                            <FollowingDialog
+                                trigger={
+                                    <div className='flex cursor-pointer items-center gap-1 hover:underline'>
+                                        <span className='font-semibold'>{userInfo.followingCount}</span>
+                                        <span className='text-muted-foreground text-sm'>Following</span>
+                                    </div>
+                                }
+                            />
                             {!isCurrentUser && (
-                                <FollowButton userId={userId || ''} isFollowing={data?.user?.is_following || false} />
+                                <FollowButton
+                                    isFollowing={data?.user?.is_following || false}
+                                    userId={userId || ''}
+                                    currentUserId={currentUserId || ''}
+                                />
                             )}
                         </div>
                         <ProBadge />

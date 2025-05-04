@@ -5,7 +5,6 @@ import {
     useDeleteFollowMutation,
     useInsertFollowMutation
 } from '@/generated/graphql';
-import { useUserId } from '@nhost/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { UserMinus, UserPlus } from 'lucide-react';
@@ -14,10 +13,10 @@ import { toast } from 'sonner';
 interface FollowButtonProps {
     userId: string;
     isFollowing: boolean;
+    currentUserId: string;
 }
 
-export default function FollowButton({ userId, isFollowing }: FollowButtonProps) {
-    const currentUserId = useUserId();
+export default function FollowButton({ userId, isFollowing, currentUserId }: FollowButtonProps) {
     const queryClient = useQueryClient();
 
     const { mutateAsync: insertFollow } = useInsertFollowMutation({

@@ -16,7 +16,6 @@ import {
 } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
-import { useUserId } from '@nhost/nextjs';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';

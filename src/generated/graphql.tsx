@@ -24579,17 +24579,21 @@ export type FolloweeActivitiesSubscription = { __typename?: 'subscription_root',
 
 export type GetFolloweesQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
+  followees_limit?: InputMaybe<Scalars['Int']['input']>;
+  followees_offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetFolloweesQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followees: Array<{ __typename?: 'follows', followee: { __typename?: 'users', id: any, displayName: string, email?: any | null } }>, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
+export type GetFolloweesQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followees: Array<{ __typename?: 'follows', followee: { __typename?: 'users', id: any, displayName: string, email?: any | null, avatarUrl: string, createdAt: any } }>, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
 export type GetFollowersQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
+  followers_limit?: InputMaybe<Scalars['Int']['input']>;
+  followers_offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetFollowersQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followers: Array<{ __typename?: 'follows', follower: { __typename?: 'users', id: any, displayName: string, email?: any | null } }>, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
+export type GetFollowersQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followers: Array<{ __typename?: 'follows', follower: { __typename?: 'users', id: any, displayName: string, email?: any | null, avatarUrl: string, createdAt: any } }>, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
 export type GetProfileQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -26001,13 +26005,19 @@ export const FolloweeActivitiesDocument = `
 }
     `;
 export const GetFolloweesDocument = `
-    query GetFollowees($id: uuid!) {
+    query GetFollowees($id: uuid!, $followees_limit: Int, $followees_offset: Int) {
   user(id: $id) {
-    followees {
+    followees(
+      order_by: {created_at: desc}
+      limit: $followees_limit
+      offset: $followees_offset
+    ) {
       followee {
         id
         displayName
         email
+        avatarUrl
+        createdAt
       }
     }
     followees_aggregate {
@@ -26055,13 +26065,19 @@ export const useInfiniteGetFolloweesQuery = <
     )};
 
 export const GetFollowersDocument = `
-    query GetFollowers($id: uuid!) {
+    query GetFollowers($id: uuid!, $followers_limit: Int, $followers_offset: Int) {
   user(id: $id) {
-    followers {
+    followers(
+      order_by: {created_at: desc}
+      limit: $followers_limit
+      offset: $followers_offset
+    ) {
       follower {
         id
         displayName
         email
+        avatarUrl
+        createdAt
       }
     }
     followers_aggregate {
