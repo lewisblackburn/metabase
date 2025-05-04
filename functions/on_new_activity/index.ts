@@ -15,9 +15,7 @@ const followersQuery = gql`
         user(id: $user_id) {
             followers {
                 follower {
-                    user_activities {
-                        id
-                    }
+                    id
                 }
             }
         }
@@ -32,7 +30,7 @@ export default async (req: Request, res: Response) => {
     });
 
     const notifications = followers.data?.user?.followers.map((follower: any) => ({
-        recipient_id: follower.user_activities.id,
+        recipient_id: follower.follower.id,
         actor_id: activity.user_id,
         activity_id: activity.id
     }));
