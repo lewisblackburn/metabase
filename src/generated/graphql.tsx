@@ -15697,7 +15697,9 @@ export type Notifications_Bool_Exp = {
 /** unique or primary key constraints on table "notifications" */
 export enum Notifications_Constraint {
   /** unique or primary key constraint on columns "id" */
-  NotificationsPkey = 'notifications_pkey'
+  NotificationsPkey = 'notifications_pkey',
+  /** unique or primary key constraint on columns "recipient_id", "activity_id" */
+  NotificationsRecipientIdActivityIdKey = 'notifications_recipient_id_activity_id_key'
 }
 
 /** input type for inserting data into table "notifications" */
@@ -26641,7 +26643,7 @@ export const UpsertNotificationsDocument = `
     mutation UpsertNotifications($objects: [notifications_insert_input!]!) {
   insert_notifications(
     objects: $objects
-    on_conflict: {constraint: notifications_pkey, update_columns: []}
+    on_conflict: {constraint: notifications_recipient_id_activity_id_key, update_columns: []}
   ) {
     affected_rows
   }

@@ -1,5 +1,8 @@
 mutation UpsertNotifications($objects: [notifications_insert_input!]!) {
-    insert_notifications(objects: $objects, on_conflict: { constraint: notifications_pkey, update_columns: [] }) {
+    insert_notifications(
+        objects: $objects
+        on_conflict: { constraint: notifications_recipient_id_activity_id_key, update_columns: [] }
+    ) {
         affected_rows
     }
 }

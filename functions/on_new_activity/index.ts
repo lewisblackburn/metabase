@@ -1,5 +1,10 @@
 // https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/on_new_activity
 // NOTE: This function is triggered when a new activity is inserted into the database by a Hasura event trigger.
+import {
+    UpsertNotificationsDocument,
+    UpsertNotificationsMutation,
+    UpsertNotificationsMutationVariables
+} from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
 
 import { Request, Response } from 'express';
@@ -26,27 +31,23 @@ export default async (req: Request, res: Response) => {
         user_id: activity.user_id
     });
 
-    res.status(200).send(JSON.stringify(followers));
+    const notifications = followers.data?.user?.followers.map((follower: any) => ({
+        recipient_id: follower.user_activities.id,
+        actor_id: activity.user_id,
+        activity_id: activity.id
+    }));
 
-    // const notifications = followers.data?.user?.followers.map((follower: any) => ({
-    //     recipient_id: follower.follower.id,
-    //     actor_id: activity.user_id,
-    //     activity_id: activity.id
-    // }));
+    if (!notifications) {
+        res.status(200).send('No notifications to insert');
+        return;
+    }
 
-    // res.status(200).send(JSON.stringify(notifications));
+    await nhost.graphql.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
+        UpsertNotificationsDocument,
+        {
+            objects: notifications
+        }
+    );
 
-    // if (!notifications) {
-    //     res.status(200).send('No notifications to insert');
-    //     return;
-    // }
-
-    // await nhost.graphql.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
-    //     UpsertNotificationsDocument,
-    //     {
-    //         objects: notifications
-    //     }
-    // );
-
-    // res.status(200).send('OK');
+    res.status(200).send('OK');
 };
