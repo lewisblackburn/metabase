@@ -21,7 +21,7 @@ import {
     Songs_Insert_Input
 } from '@/generated/graphql';
 import { fetcher } from '@/lib/graphql-client';
-import { nhostAdmin } from '@/lib/nhost-admin';
+import { nhostPublic } from '@/lib/nhost-public';
 import { SpotifyTrack } from '@/types/spotify.types';
 
 import { uploadFile } from '../file.service';
@@ -81,7 +81,7 @@ export async function importSongFromSpotify(
                         spotify_id: artist.id,
                         name: artist.name,
                         headshot: headshotFile
-                            ? nhostAdmin.storage.getPublicUrl({ fileId: headshotFile.id })
+                            ? nhostPublic.storage.getPublicUrl({ fileId: headshotFile.id })
                             : undefined,
                         person_media: headshotFile
                             ? {
@@ -122,7 +122,7 @@ export async function importSongFromSpotify(
                         spotify_id: artist.id,
                         name: artist.name,
                         headshot: headshotFile
-                            ? nhostAdmin.storage.getPublicUrl({ fileId: headshotFile.id })
+                            ? nhostPublic.storage.getPublicUrl({ fileId: headshotFile.id })
                             : undefined,
                         person_media: headshotFile
                             ? {
@@ -168,7 +168,7 @@ export async function importSongFromSpotify(
                 data: {
                     name: songData.album.name,
                     release_date: songData.album.release_date,
-                    artwork: artworkFile ? nhostAdmin.storage.getPublicUrl({ fileId: artworkFile.id }) : undefined,
+                    artwork: artworkFile ? nhostPublic.storage.getPublicUrl({ fileId: artworkFile.id }) : undefined,
                     type: songData.album.album_type,
                     spotify_id: songData.album.id.toString(),
                     spotify_uri: songData.album.external_urls.spotify,

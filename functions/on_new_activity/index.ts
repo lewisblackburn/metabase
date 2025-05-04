@@ -7,6 +7,7 @@ import {
     UpsertNotificationsMutationVariables
 } from '@/generated/graphql';
 import { nhostAdmin } from '@/lib/nhost-admin';
+import { nhostPublic } from '@/lib/nhost-public';
 
 import { Request, Response } from 'express';
 import { gql } from 'graphql-request';
@@ -26,7 +27,7 @@ const followersQuery = gql`
 export default async (req: Request, res: Response) => {
     const activity = req.body.event.data.new;
 
-    const followers = await nhostAdmin.graphql.request(followersQuery, {
+    const followers = await nhostPublic.graphql.request(followersQuery, {
         user_id: activity.user_id
     });
 
@@ -41,12 +42,14 @@ export default async (req: Request, res: Response) => {
         return;
     }
 
-    await nhostAdmin.graphql.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
-        UpsertNotificationsDocument,
-        {
-            objects: notifications
-        }
-    );
+    const response = await nhostAdmin.graphql.request<
+        UpsertNotificationsMutation,
+        UpsertNotificationsMutationVariables
+    >(UpsertNotificationsDocument, {
+        objects: notifications
+    });
 
-    res.status(200).send('OK');
+    res.status(200).send(response);
+
+    // res.status(200).send('OK');
 };

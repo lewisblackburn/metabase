@@ -1,5 +1,6 @@
 import { GetFilesDocument, useGetFilesQuery } from '@/generated/graphql';
 import { nhostAdmin } from '@/lib/nhost-admin';
+import { nhostPublic } from '@/lib/nhost-public';
 
 import crypto from 'crypto';
 
@@ -21,7 +22,7 @@ export const uploadFile = async ({ url, bucketId = 'default', fileName }: Upload
         const hash = crypto.createHash('sha256').update(Buffer.from(buffer)).digest('hex');
         const finalFileName = hash;
 
-        const existingFile = await nhostAdmin.graphql.request(GetFilesDocument, {
+        const existingFile = await nhostPublic.graphql.request(GetFilesDocument, {
             where: {
                 name: {
                     _eq: hash
@@ -37,7 +38,7 @@ export const uploadFile = async ({ url, bucketId = 'default', fileName }: Upload
             type: blob.type
         });
 
-        const { fileMetadata, error: uploadError } = await nhostAdmin.storage.upload({
+        const { fileMetadata, error: uploadError } = await nhostPublic.storage.upload({
             file,
             bucketId
         });

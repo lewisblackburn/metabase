@@ -1,5 +1,5 @@
 import { BUCKET } from '@/constants/media.constant';
-import { nhostAdmin } from '@/lib/nhost-admin';
+import { nhostPublic } from '@/lib/nhost-public';
 
 import {
     Credit_Types_Enum,
@@ -137,7 +137,7 @@ export async function importMovieFromTmdb(
                         name: cast.name,
                         gender: TMDB_GENDER_MAP[cast.gender as keyof typeof TMDB_GENDER_MAP],
                         headshot: headshotFile
-                            ? nhostAdmin.storage.getPublicUrl({ fileId: headshotFile.id })
+                            ? nhostPublic.storage.getPublicUrl({ fileId: headshotFile.id })
                             : undefined,
                         person_media: headshotFile
                             ? {
@@ -183,7 +183,7 @@ export async function importMovieFromTmdb(
                         name: crew.name,
                         gender: TMDB_GENDER_MAP[crew.gender as keyof typeof TMDB_GENDER_MAP],
                         headshot: headshotFile
-                            ? nhostAdmin.storage.getPublicUrl({ fileId: headshotFile.id })
+                            ? nhostPublic.storage.getPublicUrl({ fileId: headshotFile.id })
                             : undefined,
                         person_media: headshotFile
                             ? {
@@ -229,8 +229,8 @@ export async function importMovieFromTmdb(
             homepage: tmdbMovieData.homepage,
             status: TMDB_RELEASE_STATUS_MAP[tmdbMovieData.status as keyof typeof TMDB_RELEASE_STATUS_MAP] || undefined,
             language: tmdbMovieData.original_language,
-            backdrop: backdrop ? nhostAdmin.storage.getPublicUrl({ fileId: backdrop.id }) : undefined,
-            poster: poster ? nhostAdmin.storage.getPublicUrl({ fileId: poster.id }) : undefined,
+            backdrop: backdrop ? nhostPublic.storage.getPublicUrl({ fileId: backdrop.id }) : undefined,
+            poster: poster ? nhostPublic.storage.getPublicUrl({ fileId: poster.id }) : undefined,
             movie_media: {
                 data: [
                     {
