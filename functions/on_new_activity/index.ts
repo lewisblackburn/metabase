@@ -1,4 +1,5 @@
 // https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/on_new_activity
+// NOTE: This function is triggered when a new activity is inserted into the database by a Hasura event trigger.
 import {
     GetFollowersDocument,
     GetFollowersQuery,
@@ -24,17 +25,19 @@ export default async (req: Request, res: Response) => {
         activity_id: activity.id
     }));
 
-    if (!notifications) {
-        res.status(200).send('No notifications to insert');
-        return;
-    }
+    res.status(200).send(JSON.stringify(notifications));
 
-    await nhost.graphql.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
-        UpsertNotificationsDocument,
-        {
-            objects: notifications
-        }
-    );
+    // if (!notifications) {
+    //     res.status(200).send('No notifications to insert');
+    //     return;
+    // }
 
-    res.status(200).send('OK');
+    // await nhost.graphql.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
+    //     UpsertNotificationsDocument,
+    //     {
+    //         objects: notifications
+    //     }
+    // );
+
+    // res.status(200).send('OK');
 };
