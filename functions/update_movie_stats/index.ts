@@ -67,13 +67,9 @@ export default async function (req: Request, res: Response) {
             movie_id: movieId
         });
 
-        if (!user_movie_statuses || user_movie_statuses.length === 0) {
-            return res.status(200).json({ success: true, message: 'No ratings found' });
-        }
-
         const validRatings = user_movie_statuses.map((r) => r.rating);
         const voteCount = validRatings.length;
-        const voteAverage = validRatings.reduce((sum, rating) => sum + rating, 0) / voteCount;
+        const voteAverage = voteCount > 0 ? validRatings.reduce((sum, rating) => sum + rating, 0) / voteCount : 0;
 
         const result = await client.request<UpdateMovieStatsResponse>(UPDATE_MOVIE_STATS, {
             movie_id: movieId,
