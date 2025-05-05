@@ -1,7 +1,11 @@
 // https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/on_new_activity
 // NOTE: This function is triggered when a new activity is inserted into the database by a Hasura event trigger.
 // NOTE: It is used to create notifications for the followers of the user who created the activity.
-import { UpsertNotificationsDocument, UpsertNotificationsMutation } from '@/generated/graphql';
+import {
+    UpsertNotificationsDocument,
+    UpsertNotificationsMutation,
+    UpsertNotificationsMutationVariables
+} from '@/generated/graphql';
 
 import { Request, Response } from 'express';
 import { GraphQLClient, gql } from 'graphql-request';
@@ -42,9 +46,12 @@ export default async (req: Request, res: Response) => {
             activity_id: activity.id
         }));
 
-        const upsertResult = await client.request<UpsertNotificationsMutation>(UpsertNotificationsDocument, {
-            objects: notifications
-        });
+        const upsertResult = await client.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
+            UpsertNotificationsDocument,
+            {
+                objects: notifications
+            }
+        );
 
         return res.status(200).json({
             success: true,

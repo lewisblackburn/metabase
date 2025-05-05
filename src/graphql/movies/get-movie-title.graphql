@@ -1,0 +1,5 @@
+query GetMovieTitle($movie_id: uuid!) {
+    movies(where: { id: { _eq: $movie_id } }) {
+        title
+    }
+}
