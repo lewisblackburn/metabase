@@ -8,6 +8,7 @@ query GetMovies(
     movies(distinct_on: $distinct_on, limit: $limit, offset: $offset, order_by: $order_by, where: $where) {
         id
         title
+        overview
         poster
     }
 }

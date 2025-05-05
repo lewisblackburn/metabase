@@ -3,18 +3,13 @@ import commandPanelReducer from '@/features/command-panel/store/command-panel.sl
 import editDialogReducer from '@/features/edit-dailog/store/edit-dialog.slice';
 import movieEditReducer from '@/features/movies/store/movie-edit.slice';
 import moviesFilterReducer from '@/features/movies/store/movies-filter.slice';
+import viewModeReducer from '@/features/movies/store/view-mode.slice';
 import personEditReducer from '@/features/people/store/person-edit.slice';
 import settingsReducer from '@/features/settings/store/settings.slice';
 import shortcutsReducer from '@/features/shortcuts/store/shortcuts.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import storage from './storage';
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from 'redux-persist';
-
-const shortcutsPersistConfig = {
-    key: 'shortcuts',
-    storage
-};
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 
 const rootReducer = combineReducers({
     commandPanel: commandPanelReducer,
@@ -24,7 +19,8 @@ const rootReducer = combineReducers({
     moviesFilter: moviesFilterReducer,
     booksFilter: booksFilterReducer,
     settings: settingsReducer,
-    shortcuts: persistReducer(shortcutsPersistConfig, shortcutsReducer)
+    shortcuts: shortcutsReducer,
+    viewMode: viewModeReducer
 });
 
 export const makeStore = () => {

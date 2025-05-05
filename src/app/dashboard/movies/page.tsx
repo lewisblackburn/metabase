@@ -1,21 +1,28 @@
 'use client';
 
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import Grid from '@/components/shared/grid';
+import List from '@/components/shared/list';
 import Poster from '@/components/shared/poster';
 import { MAX_LIMIT } from '@/constants/api.constant';
 import MoviesSidebar from '@/features/movies/components/movies-sidebar';
+import MoviesSkeleton from '@/features/movies/components/movies-skeleton';
 import { useIncrementMovieViews } from '@/features/movies/hooks/use-increment-movie-views';
 import { useMovieFilters } from '@/features/movies/hooks/use-movie-filters';
+import { setViewMode } from '@/features/movies/store/view-mode.slice';
 import { GetMoviesQuery, useInfiniteGetMoviesQuery } from '@/generated/graphql';
+import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york-v4/ui/toggle-group';
+import { RootState } from '@/store/store';
 
+import { LayoutGrid, List as ListIcon } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import { useDispatch, useSelector } from 'react-redux';
 
-function MovieCard({ movie }: { movie: GetMoviesQuery['movies'][number] }) {
+function MovieCard({ movie, viewMode }: { movie: GetMoviesQuery['movies'][number]; viewMode: 'grid' | 'list' }) {
     const router = useRouter();
     const { mutate: bumpViews } = useIncrementMovieViews(movie.id);
 
@@ -27,6 +34,24 @@ function MovieCard({ movie }: { movie: GetMoviesQuery['movies'][number] }) {
         router.push(`movies/${movie.id}`);
     };
 
+    if (viewMode === 'list') {
+        return (
+            <Link href={`movies/${movie.id}`} scroll={false} onClick={handleClick}>
+                <div className='hover:bg-muted/50 flex items-center gap-4 rounded-lg border p-4 transition-colors'>
+                    <div className='relative aspect-[2/3] w-24 shrink-0 overflow-hidden rounded-md'>
+                        <Poster title={movie.title} image={movie.poster} />
+                    </div>
+                    <div className='min-w-0 flex-1'>
+                        <h3 className='truncate text-lg font-semibold'>{movie.title}</h3>
+                        {movie.overview && (
+                            <p className='text-muted-foreground mt-1 line-clamp-2 text-sm'>{movie.overview}</p>
+                        )}
+                    </div>
+                </div>
+            </Link>
+        );
+    }
+
     return (
         <Link href={`movies/${movie.id}`} scroll={false} onClick={handleClick}>
             <Poster title={movie.title} image={movie.poster} />
@@ -35,6 +60,8 @@ function MovieCard({ movie }: { movie: GetMoviesQuery['movies'][number] }) {
 }
 
 export default function MoviesPage() {
+    const dispatch = useDispatch();
+    const viewMode = useSelector((state: RootState) => state.viewMode.mode);
     const { where, order_by } = useMovieFilters();
 
     const vars = useMemo(() => ({ where, order_by, limit: MAX_LIMIT }), [where, order_by]);
@@ -65,25 +92,38 @@ export default function MoviesPage() {
         return data?.pages.flatMap((page) => page.movies) || [];
     }, [data]);
 
-    // NOTE: This is handle by the poster component
-    if (isLoading) return null;
+    const Container = viewMode === 'list' ? List : Grid;
 
     return (
-        <Fragment>
-            <div className='mb-5 flex items-center justify-between'>
-                <div>
-                    <h2 className='text-2xl font-bold'>Discover</h2>
-                    <p>Explore a wide-range of movies with filters and sorting options.</p>
+        <div className='container mx-auto py-6'>
+            <div className='mb-6 flex items-center justify-between'>
+                <h1 className='text-2xl font-bold'>Movies</h1>
+                <div className='flex items-center gap-4'>
+                    <ToggleGroup
+                        type='single'
+                        value={viewMode}
+                        onValueChange={(value) => value && dispatch(setViewMode(value as 'grid' | 'list'))}
+                        className='bg-muted p-1'>
+                        <ToggleGroupItem value='grid' aria-label='Grid view' className='data-[state=on]:bg-background'>
+                            <LayoutGrid className='h-4 w-4' />
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value='list' aria-label='List view' className='data-[state=on]:bg-background'>
+                            <ListIcon className='h-4 w-4' />
+                        </ToggleGroupItem>
+                    </ToggleGroup>
+                    <MoviesSidebar />
                 </div>
-                <MoviesSidebar />
             </div>
-
-            <Grid>
-                {allMovies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                ))}
-            </Grid>
+            {isLoading ? (
+                <MoviesSkeleton viewMode={viewMode} />
+            ) : (
+                <Container>
+                    {allMovies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} viewMode={viewMode} />
+                    ))}
+                </Container>
+            )}
             <div ref={loadMoreRef} />
-        </Fragment>
+        </div>
     );
 }

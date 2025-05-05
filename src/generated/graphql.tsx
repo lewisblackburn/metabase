@@ -25745,7 +25745,7 @@ export type GetMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, poster: string }> };
+export type GetMoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, overview?: string | null, poster: string }> };
 
 export type GetUserMovieStatusQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<User_Movie_Statuses_Select_Column> | User_Movie_Statuses_Select_Column>;
@@ -26866,6 +26866,7 @@ export const GetMoviesDocument = `
   ) {
     id
     title
+    overview
     poster
   }
 }
