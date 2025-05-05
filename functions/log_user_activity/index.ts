@@ -23,106 +23,118 @@ const client = new GraphQLClient(
     }
 );
 
-export default async (req: Request, res: Response) => {
-    try {
-        const { event } = req.body;
+type DataRow = {
+    movie_id: string;
+    user_id: string;
+    rating: number | null;
+    status: string | null;
+    review: string | null;
+    favourited: boolean;
+};
 
-        const { op, new: newData, old: oldData } = event;
+export default async function logUserActivity(req: Request, res: Response) {
+    try {
+        const {
+            payload: {
+                event: {
+                    data: { new: newData, old: oldData }
+                }
+            }
+        } = req.body as {
+            payload: {
+                event: {
+                    data: { new: DataRow; old?: DataRow };
+                };
+            };
+        };
+
+        const old: DataRow = oldData ?? {
+            movie_id: newData.movie_id,
+            user_id: newData.user_id,
+            rating: null,
+            status: null,
+            review: null,
+            favourited: false
+        };
 
         const { movies } = await client.request<GetMovieTitleQuery, GetMovieTitleQueryVariables>(
             GetMovieTitleDocument,
-            {
-                movie_id: newData.movie_id
-            }
+            { movie_id: newData.movie_id }
         );
+        const movieTitle = movies[0]?.title;
+        if (!movieTitle) return res.status(404).json({ error: 'Movie not found' });
 
-        const movie_title = movies[0].title;
-        if (!movie_title) throw new Error('Movie not found');
-
-        let activity_type: Activity_Types_Enum | null = null;
-
-        if (op === 'INSERT') {
-            switch (true) {
-                case newData.rating !== null:
-                    activity_type = Activity_Types_Enum.RatingAdded;
-                    break;
-                case newData.status !== null:
-                    activity_type = Activity_Types_Enum.StatusAdded;
-                    break;
-                case newData.review !== null:
-                    activity_type = Activity_Types_Enum.ReviewAdded;
-                    break;
-                case newData.favourited:
-                    activity_type = Activity_Types_Enum.Favourited;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        if (op === 'UPDATE') {
-            switch (true) {
-                case newData.rating !== null && oldData.rating === null:
-                    activity_type = Activity_Types_Enum.RatingAdded;
-                    break;
-                case newData.rating !== null && oldData.rating !== null:
-                    activity_type = Activity_Types_Enum.RatingChanged;
-                    break;
-                case newData.rating === null && oldData.rating !== null:
-                    activity_type = Activity_Types_Enum.RatingDeleted;
-                    break;
-                case newData.status !== null && oldData.status === null:
-                    activity_type = Activity_Types_Enum.StatusAdded;
-                    break;
-                case newData.status !== null && oldData.status !== null:
-                    activity_type = Activity_Types_Enum.StatusChanged;
-                    break;
-                case newData.status === null && oldData.status !== null:
-                    activity_type = Activity_Types_Enum.StatusDeleted;
-                    break;
-                case newData.review !== null && oldData.review === null:
-                    activity_type = Activity_Types_Enum.ReviewAdded;
-                    break;
-                case newData.review !== null && oldData.review !== null:
-                    activity_type = Activity_Types_Enum.ReviewChanged;
-                    break;
-                case newData.review === null && oldData.review !== null:
-                    activity_type = Activity_Types_Enum.ReviewDeleted;
-                    break;
-                case newData.favourited !== oldData.favourited:
-                    activity_type = Activity_Types_Enum.Favourited;
-                    break;
-                case newData.favourited === null && oldData.favourited !== null:
-                    activity_type = Activity_Types_Enum.Unfavourited;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        if (!activity_type) throw new Error('Activity type not found');
-
-        await client.request<InsertUserActivityMutation, InsertUserActivityMutationVariables>(
-            InsertUserActivityDocument,
+        const changeDefinitions: {
+            name: keyof Pick<DataRow, 'rating' | 'status' | 'review' | 'favourited'>;
+            getType: (oldV: DataRow[keyof DataRow], newV: DataRow[keyof DataRow]) => Activity_Types_Enum | null;
+        }[] = [
             {
-                object: {
-                    object_id: newData.movie_id,
-                    activity_type,
-                    details: {
-                        rating: newData.rating,
-                        review: newData.review,
-                        status: newData.status
-                    },
-                    object_title: movie_title,
-                    object_type: Object_Types_Enum.Movie,
-                    user_id: newData.user_id
+                name: 'rating',
+                getType: (oldV, newV) => {
+                    if (oldV === newV) return null;
+                    if (oldV == null) return Activity_Types_Enum.RatingAdded;
+                    if (newV == null) return Activity_Types_Enum.RatingDeleted;
+                    return Activity_Types_Enum.RatingChanged;
+                }
+            },
+            {
+                name: 'status',
+                getType: (oldV, newV) => {
+                    if (oldV === newV) return null;
+                    if (oldV == null) return Activity_Types_Enum.StatusAdded;
+                    if (newV == null) return Activity_Types_Enum.StatusDeleted;
+                    return Activity_Types_Enum.StatusChanged;
+                }
+            },
+            {
+                name: 'review',
+                getType: (oldV, newV) => {
+                    if (oldV === newV) return null;
+                    if (oldV == null) return Activity_Types_Enum.ReviewAdded;
+                    if (newV == null) return Activity_Types_Enum.ReviewDeleted;
+                    return Activity_Types_Enum.ReviewChanged;
+                }
+            },
+            {
+                name: 'favourited',
+                getType: (oldV, newV) => {
+                    if (oldV === newV) return null;
+                    return newV ? Activity_Types_Enum.Favourited : Activity_Types_Enum.Unfavourited;
                 }
             }
-        );
+        ];
 
-        res.status(200).json({ success: true, event });
+        const activitiesToLog = changeDefinitions
+            .map(({ name, getType }) => getType(old[name], newData[name]))
+            .filter((t): t is Activity_Types_Enum => t !== null);
+
+        if (activitiesToLog.length === 0) {
+            return res.status(200).json({ success: true, message: 'No user-visible changes.' });
+        }
+
+        for (const activityType of activitiesToLog) {
+            await client.request<InsertUserActivityMutation, InsertUserActivityMutationVariables>(
+                InsertUserActivityDocument,
+                {
+                    object: {
+                        object_id: newData.movie_id,
+                        object_title: movieTitle,
+                        object_type: Object_Types_Enum.Movie,
+                        user_id: newData.user_id,
+                        activity_type: activityType,
+                        details: {
+                            rating: newData.rating,
+                            status: newData.status,
+                            review: newData.review
+                        }
+                    }
+                }
+            );
+        }
+
+        return res.status(200).json({ success: true, logged: activitiesToLog.length });
     } catch (err: any) {
         console.error('log_user_activity error:', err);
         return res.status(500).json({ error: err.message || 'Internal Error' });
     }
-};
+}
