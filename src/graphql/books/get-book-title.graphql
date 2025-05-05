@@ -1,0 +1,5 @@
+query GetBookTitle($book_id: uuid!) {
+    books(where: { id: { _eq: $book_id } }) {
+        title
+    }
+}

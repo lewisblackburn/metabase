@@ -93,7 +93,7 @@ export default function UserActivity() {
                         <span className='text-muted-foreground shrink-0'>rated</span>
                         {baseLink}
                         <div className='ml-1 shrink-0'>
-                            <Rating rating={details.to} />
+                            <Rating rating={details.rating} />
                         </div>
                     </>
                 );
@@ -104,12 +104,41 @@ export default function UserActivity() {
                         {baseLink}
                     </>
                 );
+            case Activity_Types_Enum.ReviewAdded:
+                return (
+                    <>
+                        <span className='text-muted-foreground shrink-0'>added a review for</span>
+                        {baseLink}
+                    </>
+                );
+            case Activity_Types_Enum.ReviewChanged:
+                return (
+                    <>
+                        <span className='text-muted-foreground shrink-0'>updated their review of</span>
+                        {baseLink}
+                    </>
+                );
+            case Activity_Types_Enum.ReviewDeleted:
+                return (
+                    <>
+                        <span className='text-muted-foreground shrink-0'>deleted their review of</span>
+                        {baseLink}
+                    </>
+                );
+            case Activity_Types_Enum.StatusAdded:
+                return (
+                    <>
+                        <span className='text-muted-foreground shrink-0'>marked</span>
+                        {baseLink}
+                        <span className='text-muted-foreground shrink-0'>as {details.status}</span>
+                    </>
+                );
             case Activity_Types_Enum.StatusChanged:
                 return (
                     <>
                         <span className='text-muted-foreground shrink-0'>marked</span>
                         {baseLink}
-                        <span className='text-muted-foreground shrink-0'>as {details.to}</span>
+                        <span className='text-muted-foreground shrink-0'>as {details.status}</span>
                     </>
                 );
             case Activity_Types_Enum.StatusDeleted:
@@ -134,27 +163,7 @@ export default function UserActivity() {
                         <span className='text-muted-foreground shrink-0'>from favourites</span>
                     </>
                 );
-            case Activity_Types_Enum.ReviewAdded:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>added a review for</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.ReviewUpdated:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>updated their review of</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.ReviewDeleted:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>deleted their review of</span>
-                        {baseLink}
-                    </>
-                );
+
             default:
                 return (
                     <>

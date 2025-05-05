@@ -25564,6 +25564,13 @@ export type GetBookByGoogleBooksIdQueryVariables = Exact<{
 
 export type GetBookByGoogleBooksIdQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', googlebooks_id?: string | null }> };
 
+export type GetBookTitleQueryVariables = Exact<{
+  book_id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetBookTitleQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', title: string }> };
+
 export type GetBookQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
@@ -26012,6 +26019,49 @@ export const useInfiniteGetBookByGoogleBooksIdQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetBookByGoogleBooksId.infinite'] : ['GetBookByGoogleBooksId.infinite', variables],
       queryFn: (metaData) => fetcher<GetBookByGoogleBooksIdQuery, GetBookByGoogleBooksIdQueryVariables>(GetBookByGoogleBooksIdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetBookTitleDocument = `
+    query GetBookTitle($book_id: uuid!) {
+  books(where: {id: {_eq: $book_id}}) {
+    title
+  }
+}
+    `;
+
+export const useGetBookTitleQuery = <
+      TData = GetBookTitleQuery,
+      TError = unknown
+    >(
+      variables: GetBookTitleQueryVariables,
+      options?: Omit<UseQueryOptions<GetBookTitleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBookTitleQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBookTitleQuery, TError, TData>(
+      {
+    queryKey: ['GetBookTitle', variables],
+    queryFn: fetcher<GetBookTitleQuery, GetBookTitleQueryVariables>(GetBookTitleDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetBookTitleQuery = <
+      TData = InfiniteData<GetBookTitleQuery>,
+      TError = unknown
+    >(
+      variables: GetBookTitleQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetBookTitleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetBookTitleQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetBookTitleQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetBookTitle.infinite', variables],
+      queryFn: (metaData) => fetcher<GetBookTitleQuery, GetBookTitleQueryVariables>(GetBookTitleDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

@@ -1,4 +1,4 @@
-// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/log_user_activity
+// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/log_user_movie_status_activity
 import {
     Activity_Types_Enum,
     GetMovieTitleDocument,
@@ -33,7 +33,7 @@ type DataRow = {
     favourited: boolean;
 };
 
-export default async function logUserActivity(req: Request, res: Response) {
+export default async function (req: Request, res: Response) {
     try {
         const {
             event: {
@@ -135,7 +135,7 @@ export default async function logUserActivity(req: Request, res: Response) {
 
         return res.status(200).json({ success: true, logged: activitiesToLog.length });
     } catch (err: any) {
-        console.error('log_user_activity error:', err);
+        console.error('log_user_movie_status_activity error:', err);
         return res.status(500).json({ error: err.message || 'Internal Error' });
     }
 }
