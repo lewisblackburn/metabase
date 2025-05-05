@@ -1,7 +1,12 @@
 // https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/on_follow
 // NOTE: This function is triggered when a new follow is inserted into the database by a Hasura event trigger.
-// NOTE: It creates a notification for the user being followed e.g. the follower.
+// It inserts a follow activity into the user_activities table and creates a notification for the user being followed e.g. the follower.
 import {
+    Activity_Types_Enum,
+    InsertUserActivityDocument,
+    InsertUserActivityMutation,
+    InsertUserActivityMutationVariables,
+    Object_Types_Enum,
     UpsertNotificationsDocument,
     UpsertNotificationsMutation,
     UpsertNotificationsMutationVariables
@@ -23,6 +28,19 @@ const client = new GraphQLClient(
 export default async function (req: Request, res: Response) {
     try {
         const follow = req.body.event.data.new;
+
+        await client.request<InsertUserActivityMutation, InsertUserActivityMutationVariables>(
+            InsertUserActivityDocument,
+            {
+                object: {
+                    user_id: follow.followee_id,
+                    object_id: follow.follower_id,
+                    object_type: Object_Types_Enum.User,
+                    object_title: follow.follower.displayName,
+                    activity_type: Activity_Types_Enum.Follow
+                }
+            }
+        );
 
         const notification = {
             recipient_id: follow.followee_id,

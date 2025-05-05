@@ -95,6 +95,13 @@ export function ActivityRenderer({ activity, baseLink }: ActivityRendererProps) 
                     <span className='text-muted-foreground shrink-0'>from favourites</span>
                 </>
             );
+        case Activity_Types_Enum.Follow:
+            return (
+                <>
+                    <span className='text-muted-foreground shrink-0'>followed</span>
+                    {link}
+                </>
+            );
         default:
             return (
                 <>

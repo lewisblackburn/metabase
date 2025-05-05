@@ -186,6 +186,7 @@ export enum Activity_Types_Constraint {
 
 export enum Activity_Types_Enum {
   Favourited = 'FAVOURITED',
+  Follow = 'FOLLOW',
   RatingAdded = 'RATING_ADDED',
   RatingChanged = 'RATING_CHANGED',
   RatingDeleted = 'RATING_DELETED',
@@ -195,6 +196,7 @@ export enum Activity_Types_Enum {
   StatusAdded = 'STATUS_ADDED',
   StatusChanged = 'STATUS_CHANGED',
   StatusDeleted = 'STATUS_DELETED',
+  System = 'SYSTEM',
   Unfavourited = 'UNFAVOURITED'
 }
 
@@ -15983,7 +15985,8 @@ export enum Object_Types_Enum {
   Movie = 'MOVIE',
   Person = 'PERSON',
   Song = 'SONG',
-  Tv = 'TV'
+  Tv = 'TV',
+  User = 'USER'
 }
 
 /** Boolean expression to compare columns of type "object_types_enum". All fields are combined with logical 'AND'. */

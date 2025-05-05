@@ -30,13 +30,13 @@ export default function Notification({
                         <AvatarImage src={notification.actor.avatarUrl} alt={notification.actor.displayName} />
                         <AvatarFallback>{notification.actor.displayName.slice(0, 2).toUpperCase()}</AvatarFallback>
                     </Avatar>
-                    <div className='flex-1 space-y-1'>
-                        <div className='flex flex-wrap items-start gap-1 sm:items-center'>
+                    <div className='flex-1'>
+                        <div className='flex flex-wrap items-start space-x-1 sm:items-center'>
                             <span className='shrink-0'>{notification.actor.displayName}</span>
 
                             {notification.user_activity && <ActivityRenderer activity={notification.user_activity} />}
 
-                            <span className='text-muted-foreground mt-1 w-full text-xs'>
+                            <span className='text-muted-foreground w-full text-xs'>
                                 {dayjs(notification.created_at).fromNow()}
                             </span>
                         </div>

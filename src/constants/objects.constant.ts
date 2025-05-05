@@ -86,5 +86,15 @@ export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {
         foreground: 'text-red-800',
         border: 'border-red-400/60',
         icon: Gamepad
+    },
+    USER: {
+        type: Object_Types_Enum.User,
+        name: 'User',
+        plural: 'Users',
+        path: 'users',
+        background: 'bg-gray-300/20',
+        foreground: 'text-gray-800',
+        border: 'border-gray-400/60',
+        icon: User
     }
 };
