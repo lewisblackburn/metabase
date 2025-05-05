@@ -25945,6 +25945,13 @@ export type GetProfileQueryVariables = Exact<{
 
 export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, email?: any | null, lastSeen?: any | null, createdAt: any, avatarUrl: string, emailVerified: boolean, disabled: boolean, locale: string, is_following?: boolean | null, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null }, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
+export type GetUserDisplayNameQueryVariables = Exact<{
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetUserDisplayNameQuery = { __typename?: 'query_root', user?: { __typename?: 'users', displayName: string } | null };
+
 export type InsertFollowMutationVariables = Exact<{
   object: Follows_Insert_Input;
   on_conflict?: InputMaybe<Follows_On_Conflict>;
@@ -27821,6 +27828,49 @@ export const useInfiniteGetProfileQuery = <
     return {
       queryKey: optionsQueryKey ?? ['GetProfile.infinite', variables],
       queryFn: (metaData) => fetcher<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetUserDisplayNameDocument = `
+    query GetUserDisplayName($user_id: uuid!) {
+  user(id: $user_id) {
+    displayName
+  }
+}
+    `;
+
+export const useGetUserDisplayNameQuery = <
+      TData = GetUserDisplayNameQuery,
+      TError = unknown
+    >(
+      variables: GetUserDisplayNameQueryVariables,
+      options?: Omit<UseQueryOptions<GetUserDisplayNameQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetUserDisplayNameQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetUserDisplayNameQuery, TError, TData>(
+      {
+    queryKey: ['GetUserDisplayName', variables],
+    queryFn: fetcher<GetUserDisplayNameQuery, GetUserDisplayNameQueryVariables>(GetUserDisplayNameDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetUserDisplayNameQuery = <
+      TData = InfiniteData<GetUserDisplayNameQuery>,
+      TError = unknown
+    >(
+      variables: GetUserDisplayNameQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetUserDisplayNameQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetUserDisplayNameQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetUserDisplayNameQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetUserDisplayName.infinite', variables],
+      queryFn: (metaData) => fetcher<GetUserDisplayNameQuery, GetUserDisplayNameQueryVariables>(GetUserDisplayNameDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

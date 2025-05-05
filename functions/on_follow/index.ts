@@ -3,6 +3,9 @@
 // It inserts a follow activity into the user_activities table and creates a notification for the user being followed e.g. the follower.
 import {
     Activity_Types_Enum,
+    GetUserDisplayNameDocument,
+    GetUserDisplayNameQuery,
+    GetUserDisplayNameQueryVariables,
     InsertUserActivityDocument,
     InsertUserActivityMutation,
     InsertUserActivityMutationVariables,
@@ -27,12 +30,22 @@ export default async function (req: Request, res: Response) {
     try {
         const follow = req.body.event.data.new;
 
+        const { user } = await client.request<GetUserDisplayNameQuery, GetUserDisplayNameQueryVariables>(
+            GetUserDisplayNameDocument,
+            {
+                user_id: follow.follower_id
+            }
+        );
+        const userName = user?.displayName;
+        if (!userName) return res.status(404).json({ error: 'User not found' });
+
         const result = await client.request<InsertUserActivityMutation, InsertUserActivityMutationVariables>(
             InsertUserActivityDocument,
             {
                 object: {
                     user_id: follow.followee_id,
                     object_id: follow.follower_id,
+                    object_title: userName,
                     object_type: Object_Types_Enum.User,
                     activity_type: Activity_Types_Enum.Follow,
                     hidden: true
