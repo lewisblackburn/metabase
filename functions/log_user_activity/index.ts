@@ -7,7 +7,8 @@ import {
     InsertUserActivityDocument,
     InsertUserActivityMutation,
     InsertUserActivityMutationVariables,
-    Object_Types_Enum
+    Object_Types_Enum,
+    User_Activities_Constraint
 } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
@@ -123,6 +124,10 @@ export default async function logUserActivity(req: Request, res: Response) {
                             status: newData.status,
                             review: newData.review
                         }
+                    },
+                    on_conflict: {
+                        constraint: User_Activities_Constraint.UserActivityPkey,
+                        update_columns: []
                     }
                 }
             );
