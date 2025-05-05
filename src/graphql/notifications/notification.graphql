@@ -6,6 +6,9 @@ fragment Notification on notifications {
         avatarUrl
     }
     user_activity {
+        id
+        object_type
+        object_id
         object_title
         activity_type
         details

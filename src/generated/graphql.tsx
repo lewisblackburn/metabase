@@ -25753,7 +25753,7 @@ export type GetNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type GetNotificationsQuery = { __typename?: 'query_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
+export type GetNotificationsQuery = { __typename?: 'query_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', id: any, object_type: Object_Types_Enum, object_id: any, object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
 
 export type MarkAllNotificationsAsReadMutationVariables = Exact<{
   user_id: Scalars['uuid']['input'];
@@ -25770,14 +25770,14 @@ export type MarkNotificationAsReadMutationVariables = Exact<{
 
 export type MarkNotificationAsReadMutation = { __typename?: 'mutation_root', update_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number } | null };
 
-export type NotificationFragment = { __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null };
+export type NotificationFragment = { __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', id: any, object_type: Object_Types_Enum, object_id: any, object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null };
 
 export type OnNotificationsSubscriptionVariables = Exact<{
   user_id: Scalars['uuid']['input'];
 }>;
 
 
-export type OnNotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
+export type OnNotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: any, is_read: boolean, created_at: any, actor: { __typename?: 'users', id: any, displayName: string, avatarUrl: string }, user_activity?: { __typename?: 'user_activities', id: any, object_type: Object_Types_Enum, object_id: any, object_title: string, activity_type: Activity_Types_Enum, details: any, created_at: any } | null }> };
 
 export type UpsertNotificationsMutationVariables = Exact<{
   objects: Array<Notifications_Insert_Input> | Notifications_Insert_Input;
@@ -25941,6 +25941,9 @@ export const NotificationFragmentDoc = `
     avatarUrl
   }
   user_activity {
+    id
+    object_type
+    object_id
     object_title
     activity_type
     details

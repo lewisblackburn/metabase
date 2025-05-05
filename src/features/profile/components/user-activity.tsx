@@ -2,21 +2,14 @@
 
 import { useEffect, useMemo } from 'react';
 
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
-import Rating from '@/components/shared/rating';
 import { MAX_LIMIT } from '@/constants/api.constant';
-import { OBJECT_TYPE } from '@/constants/objects.constant';
-import {
-    Activity_Types_Enum,
-    GetUserActivitiesQuery,
-    Order_By,
-    useInfiniteGetUserActivitiesQuery
-} from '@/generated/graphql';
+import { Order_By, useInfiniteGetUserActivitiesQuery } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
+import { ActivityRenderer } from './activity-renderer';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { UserIcon } from 'lucide-react';
@@ -77,103 +70,6 @@ export default function UserActivity() {
 
     if (isLoading) return <ActivitySkeleton />;
 
-    const renderActivity = (activity: GetUserActivitiesQuery['user_activities'][number]) => {
-        const { activity_type: type, details, object_type, object_id, object_title } = activity;
-        const baseLink = (
-            <Link href={`/dashboard/${OBJECT_TYPE[object_type].path}/${object_id}`} className='min-w-0 truncate'>
-                <span className='truncate'>{object_title}</span>
-            </Link>
-        );
-
-        switch (type) {
-            case Activity_Types_Enum.RatingAdded:
-            case Activity_Types_Enum.RatingChanged:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>rated</span>
-                        {baseLink}
-                        <div className='ml-1 shrink-0'>
-                            <Rating rating={details.rating} />
-                        </div>
-                    </>
-                );
-            case Activity_Types_Enum.RatingDeleted:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>removed their rating from</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.ReviewAdded:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>added a review for</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.ReviewChanged:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>updated their review of</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.ReviewDeleted:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>deleted their review of</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.StatusAdded:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>marked</span>
-                        {baseLink}
-                        <span className='text-muted-foreground shrink-0'>as {details.status}</span>
-                    </>
-                );
-            case Activity_Types_Enum.StatusChanged:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>marked</span>
-                        {baseLink}
-                        <span className='text-muted-foreground shrink-0'>as {details.status}</span>
-                    </>
-                );
-            case Activity_Types_Enum.StatusDeleted:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>removed their status from</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.Favourited:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>favourited</span>
-                        {baseLink}
-                    </>
-                );
-            case Activity_Types_Enum.Unfavourited:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>removed</span>
-                        {baseLink}
-                        <span className='text-muted-foreground shrink-0'>from favourites</span>
-                    </>
-                );
-
-            default:
-                return (
-                    <>
-                        <span className='text-muted-foreground shrink-0'>did something with</span>
-                        {baseLink}
-                    </>
-                );
-        }
-    };
-
     return (
         <div className='flex flex-col gap-2 text-sm'>
             {allActivities.map((activity) => (
@@ -188,7 +84,7 @@ export default function UserActivity() {
 
                     <span className='shrink-0'>{activity.user.displayName}</span>
 
-                    {renderActivity(activity)}
+                    <ActivityRenderer activity={activity} />
 
                     <span className='text-muted-foreground mt-1 w-full text-xs sm:mt-0 sm:ml-auto sm:w-auto'>
                         {dayjs(activity.created_at).fromNow()}
