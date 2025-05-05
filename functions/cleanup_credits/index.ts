@@ -8,7 +8,7 @@ import {
 } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
-import { GraphQLClient, gql } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 const client = new GraphQLClient(
     `https://${process.env.NHOST_SUBDOMAIN}.graphql.${process.env.NHOST_REGION}.nhost.run/v1`,
