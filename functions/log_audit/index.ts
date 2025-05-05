@@ -1,4 +1,6 @@
-// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/log_audit
+// https://<YOUR_NHOST>.functions.${process.env.NHOST_REGION}.nhost.run/v1/log_audit
+// NOTE: This function is triggered when an UPDATE occurs on movies, people, or books.
+// NOTE: It computes a JSON diff (excluding `view_count` for movies/books) and writes to `audit_logs`.
 import {
     InsertAuditLogsDocument,
     InsertAuditLogsMutation,
@@ -6,7 +8,7 @@ import {
 } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
-import { GraphQLClient } from 'graphql-request';
+import { GraphQLClient, gql } from 'graphql-request';
 
 const client = new GraphQLClient(
     `https://${process.env.NHOST_SUBDOMAIN}.graphql.${process.env.NHOST_REGION}.nhost.run/v1`,
@@ -20,14 +22,14 @@ const client = new GraphQLClient(
 
 export default async function (req: Request, res: Response) {
     try {
-        const { event, session_variables } = req.body;
-        const {
-            table: { name: tableName },
-            data,
-            op
-        } = event;
+        const { event } = req.body;
+        const op = event.op;
+        const table = event.table;
+        const data = event.data;
         const OLD = data.old || {};
         const NEW = data.new;
+
+        const tableName = table.name;
 
         const diff: Record<string, [any, any]> = {};
         const keys = new Set<string>([...Object.keys(OLD), ...Object.keys(NEW)]);
@@ -50,7 +52,8 @@ export default async function (req: Request, res: Response) {
         // NOTE: At the moment, we assume that the primary key is `id`, not a composite key
         const pk = { id: NEW.id ?? OLD.id };
 
-        const userId = session_variables['x-hasura-user-id'] || null;
+        const sessionVars = event.session_variables || {};
+        const userId = sessionVars['x-hasura-user-id'] || null;
 
         const objects = [
             {
