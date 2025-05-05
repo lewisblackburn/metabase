@@ -38,7 +38,6 @@ export default async function (req: Request, res: Response) {
                     user_id: follow.followee_id,
                     object_id: follow.follower_id,
                     object_type: Object_Types_Enum.User,
-                    object_title: follow.follower.displayName,
                     activity_type: Activity_Types_Enum.Follow
                 }
             }
