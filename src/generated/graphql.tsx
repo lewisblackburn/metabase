@@ -25618,6 +25618,13 @@ export type InsertUserBookStatusMutationVariables = Exact<{
 
 export type InsertUserBookStatusMutation = { __typename?: 'mutation_root', insert_user_book_statuses_one?: { __typename?: 'user_book_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Book_Status_Types_Enum | null, updated_at: any } | null };
 
+export type DeleteCreditsMutationVariables = Exact<{
+  where: Credits_Bool_Exp;
+}>;
+
+
+export type DeleteCreditsMutation = { __typename?: 'mutation_root', delete_credits?: { __typename?: 'credits_mutation_response', affected_rows: number } | null };
+
 export type GetCreditsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Credits_Select_Column> | Credits_Select_Column>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -26291,6 +26298,27 @@ export const useInsertUserBookStatusMutation = <
       {
     mutationKey: ['InsertUserBookStatus'],
     mutationFn: (variables?: InsertUserBookStatusMutationVariables) => fetcher<InsertUserBookStatusMutation, InsertUserBookStatusMutationVariables>(InsertUserBookStatusDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteCreditsDocument = `
+    mutation DeleteCredits($where: credits_bool_exp!) {
+  delete_credits(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteCreditsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCreditsMutation, TError, DeleteCreditsMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCreditsMutation, TError, DeleteCreditsMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteCredits'],
+    mutationFn: (variables?: DeleteCreditsMutationVariables) => fetcher<DeleteCreditsMutation, DeleteCreditsMutationVariables>(DeleteCreditsDocument, variables)(),
     ...options
   }
     )};

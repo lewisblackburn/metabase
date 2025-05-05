@@ -1,0 +1,5 @@
+mutation DeleteCredits($where: credits_bool_exp!) {
+    delete_credits(where: $where) {
+        affected_rows
+    }
+}
