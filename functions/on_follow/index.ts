@@ -33,7 +33,7 @@ export default async function (req: Request, res: Response) {
         const { user } = await client.request<GetUserDisplayNameQuery, GetUserDisplayNameQueryVariables>(
             GetUserDisplayNameDocument,
             {
-                user_id: follow.follower_id
+                user_id: follow.followee_id
             }
         );
         const userName = user?.displayName;
@@ -43,8 +43,8 @@ export default async function (req: Request, res: Response) {
             InsertUserActivityDocument,
             {
                 object: {
-                    user_id: follow.followee_id,
-                    object_id: follow.follower_id,
+                    user_id: follow.follower_id,
+                    object_id: follow.followee_id,
                     object_title: userName,
                     object_type: Object_Types_Enum.User,
                     activity_type: Activity_Types_Enum.Follow,
