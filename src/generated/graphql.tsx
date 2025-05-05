@@ -25557,6 +25557,13 @@ export type GetAuditLogsQueryVariables = Exact<{
 
 export type GetAuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, diff: any, operation: string, pk: any, table_name: string, created_at: any, user: { __typename?: 'users', id: any, avatarUrl: string, displayName: string, createdAt: any } }> };
 
+export type InsertAuditLogsMutationVariables = Exact<{
+  objects: Array<Audit_Logs_Insert_Input> | Audit_Logs_Insert_Input;
+}>;
+
+
+export type InsertAuditLogsMutation = { __typename?: 'mutation_root', insert_audit_logs?: { __typename?: 'audit_logs_mutation_response', affected_rows: number } | null };
+
 export type GetBookByGoogleBooksIdQueryVariables = Exact<{
   googlebooks_id?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -25979,6 +25986,27 @@ export const useInfiniteGetAuditLogsQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const InsertAuditLogsDocument = `
+    mutation InsertAuditLogs($objects: [audit_logs_insert_input!]!) {
+  insert_audit_logs(objects: $objects) {
+    affected_rows
+  }
+}
+    `;
+
+export const useInsertAuditLogsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertAuditLogsMutation, TError, InsertAuditLogsMutationVariables, TContext>) => {
+    
+    return useMutation<InsertAuditLogsMutation, TError, InsertAuditLogsMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertAuditLogs'],
+    mutationFn: (variables?: InsertAuditLogsMutationVariables) => fetcher<InsertAuditLogsMutation, InsertAuditLogsMutationVariables>(InsertAuditLogsDocument, variables)(),
+    ...options
+  }
     )};
 
 export const GetBookByGoogleBooksIdDocument = `

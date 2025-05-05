@@ -1,0 +1,78 @@
+// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/log_audit
+import {
+    InsertAuditLogsDocument,
+    InsertAuditLogsMutation,
+    InsertAuditLogsMutationVariables
+} from '@/generated/graphql';
+
+import { Request, Response } from 'express';
+import { GraphQLClient } from 'graphql-request';
+
+const client = new GraphQLClient(
+    `https://${process.env.NHOST_SUBDOMAIN}.graphql.${process.env.NHOST_REGION}.nhost.run/v1`,
+    {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-hasura-admin-secret': process.env.NHOST_ADMIN_SECRET!
+        }
+    }
+);
+
+export default async function (req: Request, res: Response) {
+    try {
+        const { event, session_variables } = req.body;
+        const {
+            table: { name: tableName },
+            data,
+            op
+        } = event;
+        const OLD = data.old || {};
+        const NEW = data.new;
+
+        const diff: Record<string, [any, any]> = {};
+        const keys = new Set<string>([...Object.keys(OLD), ...Object.keys(NEW)]);
+        for (const key of keys) {
+            // NOTE: We don't want to log changes to view_count
+            if (key === 'view_count') {
+                continue;
+            }
+            const oldVal = OLD[key];
+            const newVal = NEW[key];
+            if (oldVal !== newVal) {
+                diff[key] = [oldVal, newVal];
+            }
+        }
+
+        if (Object.keys(diff).length === 0) {
+            return res.status(200).json({ skipped: 'only view_count changed or no change' });
+        }
+
+        // NOTE: At the moment, we assume that the primary key is `id`, not a composite key
+        const pk = { id: NEW.id ?? OLD.id };
+
+        const userId = session_variables['x-hasura-user-id'] || null;
+
+        const objects = [
+            {
+                table_name: tableName,
+                pk,
+                operation: op,
+                user_id: userId,
+                diff
+            }
+        ];
+
+        const result = await client.request<InsertAuditLogsMutation, InsertAuditLogsMutationVariables>(
+            InsertAuditLogsDocument,
+            { objects }
+        );
+
+        return res.status(200).json({
+            success: true,
+            inserted: result.insert_audit_logs?.affected_rows
+        });
+    } catch (err: any) {
+        console.error('log_audit error:', err);
+        return res.status(500).json({ error: err.message || 'Internal Error' });
+    }
+}

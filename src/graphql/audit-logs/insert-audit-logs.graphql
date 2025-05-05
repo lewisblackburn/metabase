@@ -1,0 +1,5 @@
+mutation InsertAuditLogs($objects: [audit_logs_insert_input!]!) {
+    insert_audit_logs(objects: $objects) {
+        affected_rows
+    }
+}
