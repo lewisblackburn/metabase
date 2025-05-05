@@ -6,6 +6,8 @@ import {
     InsertUserActivityDocument,
     InsertUserActivityMutation,
     InsertUserActivityMutationVariables,
+    Mutation_RootInsert_NotificationsArgs,
+    NotificationFragment,
     Object_Types_Enum,
     UpsertNotificationsDocument,
     UpsertNotificationsMutation,
@@ -42,9 +44,10 @@ export default async function (req: Request, res: Response) {
             }
         );
 
-        const notification = {
+        const notification: Mutation_RootInsert_NotificationsArgs['objects'][number] = {
             recipient_id: follow.followee_id,
-            actor_id: follow.follower_id
+            actor_id: follow.follower_id,
+            activity_id: follow.id
         };
 
         const result = await client.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
