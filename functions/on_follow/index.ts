@@ -6,7 +6,8 @@ import {
     InsertUserActivityDocument,
     InsertUserActivityMutation,
     InsertUserActivityMutationVariables,
-    Object_Types_Enum
+    Object_Types_Enum,
+    User_Activities_Constraint
 } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
@@ -35,6 +36,10 @@ export default async function (req: Request, res: Response) {
                     object_type: Object_Types_Enum.User,
                     activity_type: Activity_Types_Enum.Follow,
                     hidden: true
+                },
+                on_conflict: {
+                    constraint: User_Activities_Constraint.UserActivityPkey,
+                    update_columns: []
                 }
             }
         );
