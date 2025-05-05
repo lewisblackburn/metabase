@@ -1,7 +1,9 @@
-// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/cleanup_file_for_deleted_media
+// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/cleanup_files_for_deleted_media
 // NOTE: This function is triggered when a DELETE occurs on any *_media table.
 // NOTE: It deletes the corresponding storage.files row for OLD.file_id.
-import { DeleteFilesDocument, DeleteFilesMutation, DeleteFilesMutationVariables } from '@/generated/graphql';
+import { DeleteFileMutation } from '@/generated/graphql';
+import { DeleteFileDocument } from '@/generated/graphql';
+import { DeleteFileMutationVariables } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
 import { GraphQLClient } from 'graphql-request';
@@ -32,7 +34,7 @@ export default async function handler(req: Request, res: Response) {
             return res.status(200).json({ skipped: 'no file_id to delete' });
         }
 
-        await client.request<DeleteFilesMutation, DeleteFilesMutationVariables>(DeleteFilesDocument, { ids: [fileId] });
+        await client.request<DeleteFileMutation, DeleteFileMutationVariables>(DeleteFileDocument, { id: fileId });
 
         return res.status(200).json({ success: true, deleted_file_id: fileId });
     } catch (err: any) {

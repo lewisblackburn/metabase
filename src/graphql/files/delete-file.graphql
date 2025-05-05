@@ -1,0 +1,5 @@
+mutation DeleteFile($id: uuid!) {
+    deleteFile(id: $id) {
+        id
+    }
+}
