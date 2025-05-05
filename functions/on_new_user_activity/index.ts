@@ -1,4 +1,4 @@
-// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/on_new_activity
+// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/on_new_user_activity
 // NOTE: This function is triggered when a new activity is inserted into the database by a Hasura event trigger.
 // NOTE: It is used to create notifications for the followers of the user who created the activity.
 import {
@@ -28,7 +28,7 @@ const FOLLOWERS_QUERY = gql`
     }
 `;
 
-export default async (req: Request, res: Response) => {
+export default async function (req: Request, res: Response) {
     try {
         const activity = req.body.event.data.new;
 
@@ -59,7 +59,7 @@ export default async (req: Request, res: Response) => {
             upserted: upsertResult.insert_notifications?.affected_rows
         });
     } catch (err: any) {
-        console.error('on_new_activity error:', err);
+        console.error('on_new_user_activity error:', err);
         return res.status(500).json({ error: err.message || 'Internal Error' });
     }
-};
+}
