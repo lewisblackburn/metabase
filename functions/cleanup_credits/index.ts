@@ -20,11 +20,10 @@ const client = new GraphQLClient(
     }
 );
 
-export default async function handler(req: Request, res: Response) {
+export default async function (req: Request, res: Response) {
     try {
         const payload = req.body as {
             event: {
-                op: string;
                 data: { old?: Record<string, any> };
             };
         };

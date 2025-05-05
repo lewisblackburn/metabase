@@ -1,0 +1,5 @@
+mutation UpdateBook($pk_columns: books_pk_columns_input!, $inc: books_inc_input) {
+    update_books_by_pk(pk_columns: $pk_columns, _inc: $inc) {
+        id
+    }
+}

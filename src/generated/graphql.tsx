@@ -25618,6 +25618,14 @@ export type InsertUserBookStatusMutationVariables = Exact<{
 
 export type InsertUserBookStatusMutation = { __typename?: 'mutation_root', insert_user_book_statuses_one?: { __typename?: 'user_book_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Book_Status_Types_Enum | null, updated_at: any } | null };
 
+export type UpdateBookMutationVariables = Exact<{
+  pk_columns: Books_Pk_Columns_Input;
+  inc?: InputMaybe<Books_Inc_Input>;
+}>;
+
+
+export type UpdateBookMutation = { __typename?: 'mutation_root', update_books_by_pk?: { __typename?: 'books', id: any } | null };
+
 export type DeleteCreditsMutationVariables = Exact<{
   where: Credits_Bool_Exp;
 }>;
@@ -26298,6 +26306,27 @@ export const useInsertUserBookStatusMutation = <
       {
     mutationKey: ['InsertUserBookStatus'],
     mutationFn: (variables?: InsertUserBookStatusMutationVariables) => fetcher<InsertUserBookStatusMutation, InsertUserBookStatusMutationVariables>(InsertUserBookStatusDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const UpdateBookDocument = `
+    mutation UpdateBook($pk_columns: books_pk_columns_input!, $inc: books_inc_input) {
+  update_books_by_pk(pk_columns: $pk_columns, _inc: $inc) {
+    id
+  }
+}
+    `;
+
+export const useUpdateBookMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateBookMutation, TError, UpdateBookMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateBookMutation, TError, UpdateBookMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateBook'],
+    mutationFn: (variables?: UpdateBookMutationVariables) => fetcher<UpdateBookMutation, UpdateBookMutationVariables>(UpdateBookDocument, variables)(),
     ...options
   }
     )};

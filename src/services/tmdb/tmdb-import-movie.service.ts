@@ -72,10 +72,9 @@ const TMDB_GENRE_MAP = {
 };
 
 const TMDB_GENDER_MAP = {
-    0: Gender_Types_Enum.Male,
+    0: Gender_Types_Enum.Other,
     1: Gender_Types_Enum.Female,
-    2: Gender_Types_Enum.Other,
-    3: Gender_Types_Enum.Other
+    2: Gender_Types_Enum.Male
 };
 
 export async function importMovieFromTmdb(
