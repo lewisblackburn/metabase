@@ -11,7 +11,7 @@ import {
 } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
-import { GraphQLClient, gql } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 const client = new GraphQLClient(
     `https://${process.env.NHOST_SUBDOMAIN}.graphql.${process.env.NHOST_REGION}.nhost.run/v1`,
@@ -47,7 +47,7 @@ export default async (req: Request, res: Response) => {
                     activity_type = Activity_Types_Enum.RatingAdded;
                     break;
                 case newData.status !== null:
-                    activity_type = Activity_Types_Enum.StatusChanged;
+                    activity_type = Activity_Types_Enum.StatusAdded;
                     break;
                 case newData.review !== null:
                     activity_type = Activity_Types_Enum.ReviewAdded;
@@ -62,17 +62,38 @@ export default async (req: Request, res: Response) => {
 
         if (op === 'UPDATE') {
             switch (true) {
-                case newData.rating !== oldData.rating:
+                case newData.rating !== null && oldData.rating === null:
                     activity_type = Activity_Types_Enum.RatingAdded;
                     break;
-                case newData.status !== oldData.status:
+                case newData.rating !== null && oldData.rating !== null:
+                    activity_type = Activity_Types_Enum.RatingChanged;
+                    break;
+                case newData.rating === null && oldData.rating !== null:
+                    activity_type = Activity_Types_Enum.RatingDeleted;
+                    break;
+                case newData.status !== null && oldData.status === null:
+                    activity_type = Activity_Types_Enum.StatusAdded;
+                    break;
+                case newData.status !== null && oldData.status !== null:
                     activity_type = Activity_Types_Enum.StatusChanged;
                     break;
-                case newData.review !== oldData.review:
+                case newData.status === null && oldData.status !== null:
+                    activity_type = Activity_Types_Enum.StatusDeleted;
+                    break;
+                case newData.review !== null && oldData.review === null:
                     activity_type = Activity_Types_Enum.ReviewAdded;
+                    break;
+                case newData.review !== null && oldData.review !== null:
+                    activity_type = Activity_Types_Enum.ReviewChanged;
+                    break;
+                case newData.review === null && oldData.review !== null:
+                    activity_type = Activity_Types_Enum.ReviewDeleted;
                     break;
                 case newData.favourited !== oldData.favourited:
                     activity_type = Activity_Types_Enum.Favourited;
+                    break;
+                case newData.favourited === null && oldData.favourited !== null:
+                    activity_type = Activity_Types_Enum.Unfavourited;
                     break;
                 default:
                     break;

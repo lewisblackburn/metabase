@@ -190,8 +190,9 @@ export enum Activity_Types_Enum {
   RatingChanged = 'RATING_CHANGED',
   RatingDeleted = 'RATING_DELETED',
   ReviewAdded = 'REVIEW_ADDED',
+  ReviewChanged = 'REVIEW_CHANGED',
   ReviewDeleted = 'REVIEW_DELETED',
-  ReviewUpdated = 'REVIEW_UPDATED',
+  StatusAdded = 'STATUS_ADDED',
   StatusChanged = 'STATUS_CHANGED',
   StatusDeleted = 'STATUS_DELETED',
   Unfavourited = 'UNFAVOURITED'
