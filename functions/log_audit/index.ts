@@ -1,4 +1,4 @@
-// https://<YOUR_NHOST>.functions.${process.env.NHOST_REGION}.nhost.run/v1/log_audit
+// https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/log_audit
 // NOTE: This function is triggered when an UPDATE occurs on movies, people, or books.
 // NOTE: It computes a JSON diff (excluding `view_count` for movies/books) and writes to `audit_logs`.
 import {
@@ -8,7 +8,7 @@ import {
 } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
-import { GraphQLClient, gql } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 const client = new GraphQLClient(
     `https://${process.env.NHOST_SUBDOMAIN}.graphql.${process.env.NHOST_REGION}.nhost.run/v1`,
@@ -22,13 +22,19 @@ const client = new GraphQLClient(
 
 export default async function (req: Request, res: Response) {
     try {
-        const { event } = req.body;
-        const op = event.op;
-        const table = event.table;
-        const data = event.data;
+        const payload = req.body as {
+            event: {
+                op: string;
+                data: { old?: Record<string, any>; new: Record<string, any> };
+                session_variables?: Record<string, string>;
+            };
+            table: { name: string; schema: string };
+        };
+
+        const { event, table } = payload;
+        const { op, data } = event;
         const OLD = data.old || {};
         const NEW = data.new;
-
         const tableName = table.name;
 
         const diff: Record<string, [any, any]> = {};
