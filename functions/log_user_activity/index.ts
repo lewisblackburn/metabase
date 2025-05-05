@@ -35,16 +35,12 @@ type DataRow = {
 export default async function logUserActivity(req: Request, res: Response) {
     try {
         const {
-            payload: {
-                event: {
-                    data: { new: newData, old: oldData }
-                }
+            event: {
+                data: { new: newData, old: oldData }
             }
         } = req.body as {
-            payload: {
-                event: {
-                    data: { new: DataRow; old?: DataRow };
-                };
+            event: {
+                data: { new: DataRow; old?: DataRow };
             };
         };
 
