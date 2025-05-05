@@ -20,6 +20,7 @@ import {
     DropdownMenuTrigger
 } from '@/registry/new-york-v4/ui/dropdown-menu';
 import { User, useSignOut } from '@nhost/nextjs';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
     BadgeCheck,
@@ -52,8 +53,11 @@ export function NavUser({ user }: { user: User | null }) {
     const dispatch = useDispatch();
     const toggleSettings = useShortcut('toggleSettings');
     const router = useRouter();
+    const queryClient = useQueryClient();
+
     const handleLogout = async () => {
         await signOut();
+        queryClient.clear();
     };
 
     React.useEffect(() => {
@@ -75,7 +79,7 @@ export function NavUser({ user }: { user: User | null }) {
                 {user ? (
                     <>
                         <DropdownMenuLabel>
-                            <Link href={`/dashboard/profile/${user.id}`} className='flex items-center gap-2'>
+                            <Link href={`/dashboard/users/${user.id}`} className='flex items-center gap-2'>
                                 <Avatar className='size-6'>
                                     <AvatarImage src={user.avatarUrl} alt={`@${user.displayName ?? 'user'}`} />
                                     <AvatarFallback>

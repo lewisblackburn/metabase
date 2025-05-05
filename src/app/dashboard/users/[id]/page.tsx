@@ -11,12 +11,12 @@ import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
 import HeroCardLayout from '@/components/shared/hero-layout';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
-import Collections from '@/features/profile/components/collections/collections';
-import FollowButton from '@/features/profile/components/follow-button';
-import FollowersDialog from '@/features/profile/components/followers-dialog';
-import FollowingDialog from '@/features/profile/components/following-dialog';
-import UserActivity from '@/features/profile/components/user-activity';
-import { useGetProfileQuery } from '@/generated/graphql';
+import Collections from '@/features/users/components/collections/collections';
+import FollowButton from '@/features/users/components/follow-button';
+import FollowersDialog from '@/features/users/components/followers-dialog';
+import FollowingDialog from '@/features/users/components/following-dialog';
+import UserActivity from '@/features/users/components/user-activity';
+import { Cron_Job_Select_Column, useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 import { Tooltip } from '@/registry/new-york-v4/ui/tooltip';
@@ -24,7 +24,7 @@ import { useUserId } from '@nhost/nextjs';
 import { TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
 
 import { format, formatDistanceToNow } from 'date-fns';
-import { Activity, Crown, Folder, Lightbulb, List, Pencil, Star, Verified } from 'lucide-react';
+import { Activity, Crown, Folder, Lightbulb, List, Star, Verified } from 'lucide-react';
 
 const VerifiedBadge = () => (
     <Tooltip>

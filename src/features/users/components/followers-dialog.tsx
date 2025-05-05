@@ -71,7 +71,7 @@ export default function FollowersDialog({ trigger }: FollowersDialogProps) {
                             const user = item.follower;
                             return (
                                 <Link
-                                    href={`/dashboard/profile/${user.id}`}
+                                    href={`/dashboard/users/${user.id}`}
                                     key={user.id}
                                     className='flex items-center gap-4'>
                                     <Avatar>

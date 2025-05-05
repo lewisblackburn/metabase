@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { ActivityRenderer } from '@/features/profile/components/activity-renderer';
+import { NotificationRenderer } from '@/components/notifications/notification-renderer';
 import { NotificationFragment } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 
-import dayjs from 'dayjs';
+import { formatDistanceToNow } from 'date-fns';
 import { Dot } from 'lucide-react';
 
 export default function Notification({
@@ -19,7 +19,7 @@ export default function Notification({
     const handleClick = async (e: React.MouseEvent) => {
         e.preventDefault();
         onClick();
-        router.push(`/dashboard/profile/${notification.actor.id}`);
+        router.push(`/dashboard/users/${notification.actor.id}`);
     };
 
     return (
@@ -34,10 +34,12 @@ export default function Notification({
                         <div className='flex flex-wrap items-start space-x-1 sm:items-center'>
                             <span className='shrink-0'>{notification.actor.displayName}</span>
 
-                            {notification.user_activity && <ActivityRenderer activity={notification.user_activity} />}
+                            {notification.user_activity && (
+                                <NotificationRenderer notification={notification.user_activity} />
+                            )}
 
                             <span className='text-muted-foreground w-full text-xs'>
-                                {dayjs(notification.created_at).fromNow()}
+                                {formatDistanceToNow(notification.created_at)}
                             </span>
                         </div>
                     </div>

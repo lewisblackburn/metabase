@@ -40,7 +40,7 @@ export default function UserActivity() {
     const userId = params?.id;
     const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetUserActivitiesQuery(
         {
-            where: { user_id: { _eq: userId } },
+            where: { user_id: { _eq: userId }, hidden: { _eq: false } },
             order_by: { created_at: Order_By.Desc },
             limit: MAX_LIMIT
         },

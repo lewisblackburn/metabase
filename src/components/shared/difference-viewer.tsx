@@ -73,7 +73,7 @@ const DifferenceViewer: React.FC<DifferenceViewerProps> = ({ diff, avatarUrl, di
                                 avatarUrl: avatarUrl || '',
                                 createdAt: createdAt || new Date().toISOString()
                             }}>
-                            <Link href={`/dashboard/profile/${userId}`} className='font-medium text-gray-700'>
+                            <Link href={`/dashboard/users/${userId}`} className='font-medium text-gray-700'>
                                 {displayName}
                             </Link>
                         </UserHoverCard>
