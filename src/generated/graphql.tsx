@@ -25629,6 +25629,13 @@ export type GetCreditsQueryVariables = Exact<{
 
 export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }> };
 
+export type DeleteFilesMutationVariables = Exact<{
+  ids: Array<Scalars['uuid']['input']> | Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteFilesMutation = { __typename?: 'mutation_root', deleteFiles?: { __typename?: 'files_mutation_response', affected_rows: number } | null };
+
 export type GetFilesQueryVariables = Exact<{
   where?: InputMaybe<Files_Bool_Exp>;
   order_by?: InputMaybe<Array<Files_Order_By> | Files_Order_By>;
@@ -26343,6 +26350,27 @@ export const useInfiniteGetCreditsQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const DeleteFilesDocument = `
+    mutation DeleteFiles($ids: [uuid!]!) {
+  deleteFiles(where: {id: {_in: $ids}}) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteFilesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteFilesMutation, TError, DeleteFilesMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteFilesMutation, TError, DeleteFilesMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteFiles'],
+    mutationFn: (variables?: DeleteFilesMutationVariables) => fetcher<DeleteFilesMutation, DeleteFilesMutationVariables>(DeleteFilesDocument, variables)(),
+    ...options
+  }
     )};
 
 export const GetFilesDocument = `

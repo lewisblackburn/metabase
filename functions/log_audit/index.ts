@@ -1,5 +1,5 @@
 // https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/log_audit
-// NOTE: This function is triggered when an UPDATE occurs on movies, people, or books.
+// NOTE: This function is triggered when an UPDATE occurs on movies, people, books, etc.
 // NOTE: It computes a JSON diff (excluding `view_count` for movies/books) and writes to `audit_logs`.
 import {
     InsertAuditLogsDocument,
