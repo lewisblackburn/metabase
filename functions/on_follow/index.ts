@@ -6,12 +6,7 @@ import {
     InsertUserActivityDocument,
     InsertUserActivityMutation,
     InsertUserActivityMutationVariables,
-    Mutation_RootInsert_NotificationsArgs,
-    NotificationFragment,
-    Object_Types_Enum,
-    UpsertNotificationsDocument,
-    UpsertNotificationsMutation,
-    UpsertNotificationsMutationVariables
+    Object_Types_Enum
 } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
@@ -31,35 +26,20 @@ export default async function (req: Request, res: Response) {
     try {
         const follow = req.body.event.data.new;
 
-        await client.request<InsertUserActivityMutation, InsertUserActivityMutationVariables>(
+        const result = await client.request<InsertUserActivityMutation, InsertUserActivityMutationVariables>(
             InsertUserActivityDocument,
             {
                 object: {
                     user_id: follow.followee_id,
                     object_id: follow.follower_id,
                     object_type: Object_Types_Enum.User,
-                    activity_type: Activity_Types_Enum.Follow
+                    activity_type: Activity_Types_Enum.Follow,
+                    hidden: true
                 }
             }
         );
 
-        const notification: Mutation_RootInsert_NotificationsArgs['objects'][number] = {
-            recipient_id: follow.followee_id,
-            actor_id: follow.follower_id,
-            activity_id: follow.id
-        };
-
-        const result = await client.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
-            UpsertNotificationsDocument,
-            {
-                objects: [notification]
-            }
-        );
-
-        return res.status(200).json({
-            success: true,
-            inserted: result.insert_notifications?.affected_rows
-        });
+        return res.status(200).json({ success: true, inserted: result.insert_user_activities_one?.id });
     } catch (err: any) {
         console.error('on_follow error:', err);
         return res.status(500).json({ error: err.message || 'Internal Error' });

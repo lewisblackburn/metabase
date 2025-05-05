@@ -22863,6 +22863,7 @@ export type User_Activities = {
   activity_type: Activity_Types_Enum;
   created_at: Scalars['timestamptz']['output'];
   details: Scalars['jsonb']['output'];
+  hidden?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['uuid']['output'];
   /** An object relationship */
   objectTypeByObjectType: Object_Types;
@@ -22888,7 +22889,23 @@ export type User_Activities_Aggregate = {
 };
 
 export type User_Activities_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<User_Activities_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<User_Activities_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<User_Activities_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Activities_Aggregate_Bool_Exp_Bool_And = {
+  arguments: User_Activities_Select_Column_User_Activities_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Activities_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Activities_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: User_Activities_Select_Column_User_Activities_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Activities_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type User_Activities_Aggregate_Bool_Exp_Count = {
@@ -22941,6 +22958,7 @@ export type User_Activities_Bool_Exp = {
   activity_type?: InputMaybe<Activity_Types_Enum_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   details?: InputMaybe<Jsonb_Comparison_Exp>;
+  hidden?: InputMaybe<Boolean_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   objectTypeByObjectType?: InputMaybe<Object_Types_Bool_Exp>;
   object_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -22977,6 +22995,7 @@ export type User_Activities_Insert_Input = {
   activity_type?: InputMaybe<Activity_Types_Enum>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   details?: InputMaybe<Scalars['jsonb']['input']>;
+  hidden?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   objectTypeByObjectType?: InputMaybe<Object_Types_Obj_Rel_Insert_Input>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -23053,6 +23072,7 @@ export type User_Activities_Order_By = {
   activity_type?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   details?: InputMaybe<Order_By>;
+  hidden?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   objectTypeByObjectType?: InputMaybe<Object_Types_Order_By>;
   object_id?: InputMaybe<Order_By>;
@@ -23081,6 +23101,8 @@ export enum User_Activities_Select_Column {
   /** column name */
   Details = 'details',
   /** column name */
+  Hidden = 'hidden',
+  /** column name */
   Id = 'id',
   /** column name */
   ObjectId = 'object_id',
@@ -23092,11 +23114,24 @@ export enum User_Activities_Select_Column {
   UserId = 'user_id'
 }
 
+/** select "user_activities_aggregate_bool_exp_bool_and_arguments_columns" columns of table "user_activities" */
+export enum User_Activities_Select_Column_User_Activities_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Hidden = 'hidden'
+}
+
+/** select "user_activities_aggregate_bool_exp_bool_or_arguments_columns" columns of table "user_activities" */
+export enum User_Activities_Select_Column_User_Activities_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Hidden = 'hidden'
+}
+
 /** input type for updating data in table "user_activities" */
 export type User_Activities_Set_Input = {
   activity_type?: InputMaybe<Activity_Types_Enum>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   details?: InputMaybe<Scalars['jsonb']['input']>;
+  hidden?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_title?: InputMaybe<Scalars['String']['input']>;
@@ -23117,6 +23152,7 @@ export type User_Activities_Stream_Cursor_Value_Input = {
   activity_type?: InputMaybe<Activity_Types_Enum>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   details?: InputMaybe<Scalars['jsonb']['input']>;
+  hidden?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_title?: InputMaybe<Scalars['String']['input']>;
@@ -23132,6 +23168,8 @@ export enum User_Activities_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   Details = 'details',
+  /** column name */
+  Hidden = 'hidden',
   /** column name */
   Id = 'id',
   /** column name */
