@@ -32,7 +32,7 @@ const Avatar = ({ image, alt }: { image: string; alt: string }) => (
             alt={alt}
             fill
             wrapperClassName='absolute inset-0'
-            imageClassName='object-cover object-center border-2 border-white rounded-full'
+            imageClassName='object-cover object-center border-2 border-white rounded-md'
         />
     </div>
 );

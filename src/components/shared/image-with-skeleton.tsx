@@ -29,7 +29,14 @@ export default function ImageWithSkeleton({
 
     return (
         <div className={wrapperClassName}>
-            {isLoading && <Skeleton className='absolute inset-0 h-full w-full rounded-md' />}
+            {isLoading && (
+                <Skeleton
+                    className={[
+                        'absolute inset-0 h-full w-full',
+                        imageClassName.includes('rounded-full') ? 'rounded-full' : 'rounded-md'
+                    ].join(' ')}
+                />
+            )}
             <NextImage
                 {...nextImageProps}
                 src={src}

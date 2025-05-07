@@ -25960,6 +25960,14 @@ export type InsertFollowMutationVariables = Exact<{
 
 export type InsertFollowMutation = { __typename?: 'mutation_root', insert_follows_one?: { __typename?: 'follows', followee_id: any, follower_id: any } | null };
 
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+  set?: InputMaybe<Users_Set_Input>;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename?: 'users', id: any } | null };
+
 export type GetUserActivitiesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<User_Activities_Select_Column> | User_Activities_Select_Column>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -27892,6 +27900,27 @@ export const useInsertFollowMutation = <
       {
     mutationKey: ['InsertFollow'],
     mutationFn: (variables?: InsertFollowMutationVariables) => fetcher<InsertFollowMutation, InsertFollowMutationVariables>(InsertFollowDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const UpdateUserDocument = `
+    mutation UpdateUser($id: uuid!, $set: users_set_input) {
+  updateUser(_set: $set, pk_columns: {id: $id}) {
+    id
+  }
+}
+    `;
+
+export const useUpdateUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateUserMutation, TError, UpdateUserMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateUserMutation, TError, UpdateUserMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateUser'],
+    mutationFn: (variables?: UpdateUserMutationVariables) => fetcher<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, variables)(),
     ...options
   }
     )};
