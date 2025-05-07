@@ -23,6 +23,7 @@ export default function BookStatusPicker() {
         onSuccess: () => {
             toast.success('Book status updated successfully');
             queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
+            queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
         },
         onError: (error) => toast.error((error as Error).message)
     });

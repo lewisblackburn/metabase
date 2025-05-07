@@ -7,7 +7,7 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { importBookFromGoogleBooks } from '@/services/googlebooks/googlebooks-import-book.service';
 import { googleBooksService } from '@/services/googlebooks/googlebooks.service';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
 import dayjs from 'dayjs';
@@ -41,6 +41,7 @@ export default function GoogleBooksBookImportTable() {
     const [pageIndex, setPageIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+    const queryClient = useQueryClient();
     const debouncedQuery = useDebounce(searchQuery, 500);
 
     const fetchBooks = useCallback(async (page: number, query: string) => {
@@ -74,6 +75,8 @@ export default function GoogleBooksBookImportTable() {
             } else {
                 toast.success(`${response.title} Imported`);
             }
+
+            queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
         },
         onError: (error: any) => toast.error(error.message)
     });

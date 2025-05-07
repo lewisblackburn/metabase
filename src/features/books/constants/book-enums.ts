@@ -1,3 +1,4 @@
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import {
     Book_Availability_Types_Enum,
     Book_Genre_Types_Enum,
@@ -6,7 +7,7 @@ import {
 } from '@/generated/graphql';
 import { buildEnumOptions, createOptionSchema } from '@/utils/enum-to-options';
 
-import { CheckCircle, List, Loader, LucideIcon, X } from 'lucide-react';
+import { CheckCircle, List, Loader, X } from 'lucide-react';
 
 // Book Release Status
 export const bookReleaseStatusLabels: Record<Book_Release_Status_Types_Enum, string> = {
@@ -43,7 +44,7 @@ export const userBookStatusLabels: Record<User_Book_Status_Types_Enum, string> =
     [User_Book_Status_Types_Enum.Readlist]: 'Readlist',
     [User_Book_Status_Types_Enum.Dropped]: 'Dropped'
 };
-export const userBookStatusIcons: Record<User_Book_Status_Types_Enum, LucideIcon> = {
+export const userBookStatusIcons: Record<User_Book_Status_Types_Enum, LucideIconOrFC> = {
     [User_Book_Status_Types_Enum.Read]: CheckCircle,
     [User_Book_Status_Types_Enum.Reading]: Loader,
     [User_Book_Status_Types_Enum.Readlist]: List,

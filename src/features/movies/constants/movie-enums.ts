@@ -1,3 +1,4 @@
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import {
     Movie_Availability_Types_Enum,
     Movie_Certification_Types_Enum,
@@ -7,7 +8,7 @@ import {
 } from '@/generated/graphql';
 import { buildEnumOptions, createOptionSchema } from '@/utils/enum-to-options';
 
-import { CheckCircle, List, Loader, LucideIcon, X } from 'lucide-react';
+import { CheckCircle, List, Loader, X } from 'lucide-react';
 
 // Movie Release Status
 export const movieReleaseStatusLabels: Record<Movie_Release_Status_Types_Enum, string> = {
@@ -55,7 +56,7 @@ export const userMovieStatusLabels: Record<User_Movie_Status_Types_Enum, string>
     [User_Movie_Status_Types_Enum.Watchlist]: 'Watchlist',
     [User_Movie_Status_Types_Enum.Dropped]: 'Dropped'
 };
-export const userMovieStatusIcons: Record<User_Movie_Status_Types_Enum, LucideIcon> = {
+export const userMovieStatusIcons: Record<User_Movie_Status_Types_Enum, LucideIconOrFC> = {
     [User_Movie_Status_Types_Enum.Watched]: CheckCircle,
     [User_Movie_Status_Types_Enum.Watching]: Loader,
     [User_Movie_Status_Types_Enum.Watchlist]: List,

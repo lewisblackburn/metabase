@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
@@ -14,13 +15,13 @@ import {
 } from '@/registry/new-york-v4/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
-import { Check, ChevronsUpDown, Loader, LucideIcon } from 'lucide-react';
+import { Check, ChevronsUpDown, Loader } from 'lucide-react';
 
 export interface SelectOption {
     value: string;
     label: string;
     secondaryLabel?: string;
-    prefixIcon?: string | LucideIcon;
+    prefixIcon?: string | LucideIconOrFC;
 }
 
 interface SelectFieldProps {

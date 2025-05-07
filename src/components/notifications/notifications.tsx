@@ -85,28 +85,30 @@ export default function Notifications() {
                     )}
                 </div>
                 <div role='separator' aria-orientation='horizontal' className='bg-border -mx-1 my-1 h-px'></div>
-                {isLoading
-                    ? Array.from({ length: 3 }).map((_, i) => (
-                          <div key={i} className='px-3 py-2'>
-                              <div className='flex items-start gap-3'>
-                                  <Skeleton className='size-9 rounded-md' />
-                                  <div className='flex-1 space-y-2'>
-                                      <Skeleton className='h-4 w-3/4' />
-                                      <Skeleton className='h-3 w-1/2' />
+                <div className='max-h-[300px] overflow-y-auto'>
+                    {isLoading
+                        ? Array.from({ length: 3 }).map((_, i) => (
+                              <div key={i} className='px-3 py-2'>
+                                  <div className='flex items-start gap-3'>
+                                      <Skeleton className='size-9 rounded-md' />
+                                      <div className='flex-1 space-y-2'>
+                                          <Skeleton className='h-4 w-3/4' />
+                                          <Skeleton className='h-3 w-1/2' />
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      ))
-                    : notifications?.map((notification) => (
-                          <Notification
-                              key={notification.id}
-                              notification={notification}
-                              onClick={() => handleNotificationClick(notification.id)}
-                          />
-                      ))}
-                {!isLoading && (!notifications || notifications.length === 0) && (
-                    <div className='text-muted-foreground px-3 py-4 text-center text-sm'>No notifications yet</div>
-                )}
+                          ))
+                        : notifications?.map((notification) => (
+                              <Notification
+                                  key={notification.id}
+                                  notification={notification}
+                                  onClick={() => handleNotificationClick(notification.id)}
+                              />
+                          ))}
+                    {!isLoading && (!notifications || notifications.length === 0) && (
+                        <div className='text-muted-foreground px-3 py-4 text-center text-sm'>No notifications yet</div>
+                    )}
+                </div>
             </PopoverContent>
         </Popover>
     );

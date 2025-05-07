@@ -1,11 +1,10 @@
 import React from 'react';
 
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 
-import { LucideIcon } from 'lucide-react';
-
 type InformationItemProps = {
-    icon?: LucideIcon;
+    icon?: LucideIconOrFC;
     label: string;
     badges?: string | string[] | undefined;
 };

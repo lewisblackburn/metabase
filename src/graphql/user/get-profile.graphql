@@ -2,7 +2,6 @@ query GetProfile($id: uuid!) {
     user(id: $id) {
         id
         displayName
-        email
         lastSeen
         createdAt
         avatarUrl

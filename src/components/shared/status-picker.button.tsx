@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
@@ -15,14 +16,14 @@ import {
 import { ButtonProps } from '@/types/button.types';
 
 import ActionButton from './action-button';
-import { Check, CircleHelp, LucideIcon } from 'lucide-react';
+import { Check, CircleHelp } from 'lucide-react';
 
 interface StatusButtonProps<T extends string | number> {
     currentStatus?: T;
     statuses?: {
         value: T;
         label: string;
-        icon: LucideIcon | React.FC<React.SVGProps<SVGSVGElement>> | undefined;
+        icon: LucideIconOrFC | undefined;
     }[];
     onStatusChange?: (value: T | null) => void;
     defaultStatus?: T;

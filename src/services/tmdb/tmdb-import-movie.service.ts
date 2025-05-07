@@ -1,4 +1,5 @@
 import { BUCKET } from '@/constants/media.constant';
+import { TMDB_GENDER_MAP } from '@/constants/tmdb.constant';
 import { nhost } from '@/lib/nhost';
 
 import {
@@ -40,7 +41,7 @@ import { TmdbMovieDetails } from '../../types/tmdb.types';
 import { uploadFile } from '../file.service';
 import { tmdbService } from './tmdb.service';
 
-const TMDB_RELEASE_STATUS_MAP = {
+const TMDB_MOVIE_RELEASE_STATUS_MAP = {
     Rumored: Movie_Release_Status_Types_Enum.Rumoured,
     Planned: Movie_Release_Status_Types_Enum.Planned,
     'In Production': Movie_Release_Status_Types_Enum.InProduction,
@@ -49,7 +50,7 @@ const TMDB_RELEASE_STATUS_MAP = {
     Canceled: Movie_Release_Status_Types_Enum.Cancelled
 };
 
-const TMDB_GENRE_MAP = {
+const TMDB_MOIVE_GENRE_MAP = {
     Action: Movie_Genre_Types_Enum.Action,
     Adventure: Movie_Genre_Types_Enum.Adventure,
     Animation: Movie_Genre_Types_Enum.Animation,
@@ -69,12 +70,6 @@ const TMDB_GENRE_MAP = {
     Thriller: Movie_Genre_Types_Enum.Thriller,
     War: Movie_Genre_Types_Enum.War,
     Western: Movie_Genre_Types_Enum.Western
-};
-
-const TMDB_GENDER_MAP = {
-    0: Gender_Types_Enum.Other,
-    1: Gender_Types_Enum.Female,
-    2: Gender_Types_Enum.Male
 };
 
 export async function importMovieFromTmdb(
@@ -222,7 +217,9 @@ export async function importMovieFromTmdb(
             budget: tmdbMovieData.budget,
             revenue: tmdbMovieData.revenue,
             homepage: tmdbMovieData.homepage,
-            status: TMDB_RELEASE_STATUS_MAP[tmdbMovieData.status as keyof typeof TMDB_RELEASE_STATUS_MAP] || undefined,
+            status:
+                TMDB_MOVIE_RELEASE_STATUS_MAP[tmdbMovieData.status as keyof typeof TMDB_MOVIE_RELEASE_STATUS_MAP] ||
+                undefined,
             language: tmdbMovieData.original_language,
             backdrop: backdrop ? nhost.storage.getPublicUrl({ fileId: backdrop.id }) : undefined,
             poster: poster ? nhost.storage.getPublicUrl({ fileId: poster.id }) : undefined,
@@ -244,7 +241,7 @@ export async function importMovieFromTmdb(
                 data:
                     tmdbMovieData.genres?.map(
                         (genre, index): Movie_Genres_Insert_Input => ({
-                            genre: TMDB_GENRE_MAP[genre.name as keyof typeof TMDB_GENRE_MAP],
+                            genre: TMDB_MOIVE_GENRE_MAP[genre.name as keyof typeof TMDB_MOIVE_GENRE_MAP],
                             order: index + 1
                         })
                     ) || []

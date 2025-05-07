@@ -21,6 +21,7 @@ export default function MovieFavouriteButton() {
         onSuccess: () => {
             toast.success('Movie status updated successfully');
             queryClient.invalidateQueries({ queryKey: ['movie', movie?.id] });
+            queryClient.invalidateQueries({ queryKey: ['GetMovies.infinite'] });
         },
         onError: (error) => toast.error((error as Error).message)
     });

@@ -1,46 +1,72 @@
-// 'use client';
+import React, { useState } from 'react';
 
-// import { Button } from '@/registry/new-york-v4/ui/button';
-// import { tmdbPersonImporterService } from '@/services/tmdb/tmdb-person-import.service';
-// import { TMDBPerson } from '@/types/tmdb.type';
-// import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useGetPersonQuery } from '@/generated/graphql';
+import { Button } from '@/registry/new-york-v4/ui/button';
+import { importPersonFromTmdb } from '@/services/tmdb/tmdb-import-person.service';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-// import { PersonProvider, usePerson } from './person-provider';
-// import { toast } from 'sonner';
+import { Loader2, Plus } from 'lucide-react';
+import { toast } from 'sonner';
 
-// export default function ImportPerson() {
-//     return (
-//         <PersonProvider>
-//             <ImportPersonContent />
-//         </PersonProvider>
-//     );
-// }
+interface ImportPersonFromTMDBProps {
+    personId: string;
+}
 
-// export function ImportPersonContent() {
-//     const queryClient = useQueryClient();
-//     const { person } = usePerson();
-//     if (!person) return null;
+export default function ImportPersonFromTMDB({ personId }: ImportPersonFromTMDBProps) {
+    const [isImporting, setIsImporting] = useState(false);
+    const queryClient = useQueryClient();
 
-//     const importPersonFromTMDBMutation = useMutation({
-//         mutationFn: (tmdbPersonId: TMDBPerson['id']) => tmdbPersonImporterService.import(tmdbPersonId, true),
-//         onSuccess: (response) => {
-//             if (response === true) toast.success('Person already exists');
-//             else if (response === false) toast.error('Person not found');
-//             else toast.success(`${response.insert_people_one?.name} imported`);
+    const { data } = useGetPersonQuery(
+        { id: personId },
+        {
+            queryKey: ['person', personId]
+        }
+    );
 
-//             queryClient.invalidateQueries({ queryKey: ['person', person.id] });
-//         },
-//         onError: (error: any) => toast.error(error.message)
-//     });
+    const tmdbPersonId = data?.people_by_pk?.tmdb_id;
 
-//     const handleImportPersonFromTMDB = async () => {
-//         if (person?.tmdb_id) await importPersonFromTMDBMutation.mutate(parseInt(person.tmdb_id));
-//         else toast.error('This person does not have a TMDB ID');
-//     };
+    if (!tmdbPersonId) return null;
 
-//     return (
-//         <div className='flex flex-col gap-4'>
-//             <Button onClick={handleImportPersonFromTMDB}>Import Person from TMDB</Button>
-//         </div>
-//     );
-// }
+    const importMutation = useMutation({
+        mutationFn: (id: number) => importPersonFromTmdb(id, true),
+        onSuccess: (response) => {
+            if (!response) {
+                toast.error('No response received from import');
+                return;
+            }
+
+            if ('message' in response) {
+                if (response.message.includes('already exists')) {
+                    toast.success('Person already exists');
+                } else {
+                    toast.error(response.message);
+                }
+            } else if ('name' in response) {
+                toast.success(`${response.name} Imported`);
+            }
+
+            queryClient.invalidateQueries({ queryKey: ['person', personId] });
+        },
+        onError: (error: any) => toast.error(error.message)
+    });
+
+    const handleImport = async () => {
+        setIsImporting(true);
+        try {
+            await importMutation.mutateAsync(parseInt(tmdbPersonId));
+        } finally {
+            setIsImporting(false);
+        }
+    };
+
+    return (
+        <Button variant='outline' size='sm' onClick={handleImport} disabled={importMutation.isPending || isImporting}>
+            {importMutation.isPending || isImporting ? (
+                <Loader2 className='h-4 w-4 animate-spin' />
+            ) : (
+                <Plus className='h-4 w-4' />
+            )}
+            {importMutation.isPending || isImporting ? 'Importing...' : 'Import Person'}
+        </Button>
+    );
+}

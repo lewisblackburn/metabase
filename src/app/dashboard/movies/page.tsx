@@ -15,10 +15,11 @@ import { useIncrementMovieViews } from '@/features/movies/hooks/use-increment-mo
 import { useMovieFilters } from '@/features/movies/hooks/use-movie-filters';
 import { setViewMode } from '@/features/movies/store/view-mode.slice';
 import { GetMoviesQuery, useInfiniteGetMoviesQuery } from '@/generated/graphql';
+import { Button } from '@/registry/new-york-v4/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york-v4/ui/toggle-group';
 import { RootState } from '@/store/store';
 
-import { LayoutGrid, List as ListIcon } from 'lucide-react';
+import { FlipHorizontalIcon, FlipVerticalIcon, LayoutGrid, List as ListIcon } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -102,13 +103,26 @@ export default function MoviesPage() {
                     <ToggleGroup
                         type='single'
                         value={viewMode}
-                        onValueChange={(value) => value && dispatch(setViewMode(value as 'grid' | 'list'))}
-                        className='bg-muted p-1'>
-                        <ToggleGroupItem value='grid' aria-label='Grid view' className='data-[state=on]:bg-background'>
-                            <LayoutGrid className='h-4 w-4' />
+                        className='inline-flex -space-x-px rounded-md shadow-xs rtl:space-x-reverse'>
+                        <ToggleGroupItem value='grid' asChild>
+                            <Button
+                                className='rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10'
+                                variant='outline'
+                                size='icon'
+                                aria-label='Grid view'
+                                onClick={() => dispatch(setViewMode('grid'))}>
+                                <LayoutGrid size={16} aria-hidden='true' />
+                            </Button>
                         </ToggleGroupItem>
-                        <ToggleGroupItem value='list' aria-label='List view' className='data-[state=on]:bg-background'>
-                            <ListIcon className='h-4 w-4' />
+                        <ToggleGroupItem value='list' asChild>
+                            <Button
+                                className='rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10'
+                                variant='outline'
+                                size='icon'
+                                aria-label='List view'
+                                onClick={() => dispatch(setViewMode('list'))}>
+                                <ListIcon size={16} aria-hidden='true' />
+                            </Button>
                         </ToggleGroupItem>
                     </ToggleGroup>
                     <MoviesSidebar />

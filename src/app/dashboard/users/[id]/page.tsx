@@ -68,7 +68,7 @@ export default function ProfilePage() {
     const { data, isLoading } = useGetProfileQuery(
         { id: userId || '' },
         {
-            queryKey: ['profile', userId],
+            queryKey: ['user', userId],
             enabled: !!userId
         }
     );

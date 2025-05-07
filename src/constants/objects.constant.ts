@@ -1,6 +1,7 @@
 import { Object_Types_Enum } from '@/generated/graphql';
 
-import { Book, Clapperboard, Gamepad, Headphones, LucideIcon, Music, Tv, User } from 'lucide-react';
+import { LucideIconOrFC } from './icons.constant';
+import { Book, Clapperboard, Gamepad, Headphones, Music, Tv, User } from 'lucide-react';
 
 export type ObjectType = (typeof OBJECT_TYPE)[keyof typeof OBJECT_TYPE];
 export type ObjectTypeKey = keyof typeof OBJECT_TYPE;
@@ -13,7 +14,7 @@ interface ObjectTypeData {
     background: string;
     foreground: string;
     border: string;
-    icon: LucideIcon;
+    icon: LucideIconOrFC;
 }
 
 export const OBJECT_TYPE: Record<Object_Types_Enum, ObjectTypeData> = {

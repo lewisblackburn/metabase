@@ -27,9 +27,9 @@ const CheckboxGroupField = ({
     };
 
     return (
-        <div className={cn('grid grid-cols-2 gap-2', className)}>
+        <div className={cn('grid grid-cols-2 gap-2 space-y-1', className)}>
             {options.map(({ label, value: optionValue }) => (
-                <div key={optionValue} className='mt-1 flex items-center space-x-2'>
+                <div key={optionValue} className='flex items-center space-x-2'>
                     <Checkbox
                         id={optionValue}
                         checked={value.includes(optionValue)}

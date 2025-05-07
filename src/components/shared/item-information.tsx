@@ -1,12 +1,13 @@
+import { LucideIconOrFC } from '@/constants/icons.constant';
+
 import { CustomBadge } from '../ui/custom-badge';
-import { LucideIcon } from 'lucide-react';
 
 export default function ItemInformation({
     icon: Icon,
     label,
     children
 }: {
-    icon: LucideIcon;
+    icon: LucideIconOrFC;
     label: string;
     children: React.ReactNode;
 }) {

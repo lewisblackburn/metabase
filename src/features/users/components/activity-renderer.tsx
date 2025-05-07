@@ -4,6 +4,8 @@ import Rating from '@/components/shared/rating';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { Activity_Types_Enum, GetUserActivitiesQuery } from '@/generated/graphql';
 
+import { Heart } from 'lucide-react';
+
 type Activity = Omit<GetUserActivitiesQuery['user_activities'][number], 'user'> & {
     user?: GetUserActivitiesQuery['user_activities'][number]['user'];
 };
@@ -98,8 +100,7 @@ export function ActivityRenderer({ activity, baseLink }: ActivityRendererProps) 
         case Activity_Types_Enum.Follow:
             return (
                 <>
-                    <span className='text-muted-foreground shrink-0'>followed</span>
-                    {link}
+                    <span className='text-muted-foreground shrink-0'>followed you</span>
                 </>
             );
         default:

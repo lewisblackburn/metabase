@@ -4,7 +4,6 @@ query GetFollowees($user_id: uuid!, $followees_limit: Int, $followees_offset: In
             followee {
                 id
                 displayName
-                email
                 avatarUrl
                 createdAt
             }

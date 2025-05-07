@@ -47,6 +47,7 @@ export default function ReviewBookDialog() {
                 onSuccess: () => {
                     toast.success('Book reviewed successfully');
                     queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
+                    queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
                 }
             }
         );

@@ -52,5 +52,6 @@ export const ICONS = {
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconType = keyof typeof ICONS;
+export type LucideIconOrFC = LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>;
 
 export const getIconComponent = (icon: IconType): LucideIcon => ICONS[icon];

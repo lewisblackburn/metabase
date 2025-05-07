@@ -158,3 +158,31 @@ interface TMDBSearchResponse {
     results: TMDBSearchResult[];
     total_results: number;
 }
+
+export interface TmdbPersonDetails {
+    adult: boolean;
+    also_known_as: string[];
+    biography: string;
+    birthday: string | null;
+    deathday: string | null;
+    gender: number;
+    homepage: string | null;
+    id: number;
+    imdb_id: string | null;
+    known_for_department: string;
+    name: string;
+    place_of_birth: string | null;
+    popularity: number;
+    profile_path: string | null;
+    movie_credits?: {
+        cast: TmdbCastMember[];
+        crew: TmdbCrewMember[];
+    };
+    tv_credits?: {
+        cast: TmdbCastMember[];
+        crew: TmdbCrewMember[];
+    };
+    images?: {
+        profiles: TmdbImage[];
+    };
+}

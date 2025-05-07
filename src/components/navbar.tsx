@@ -5,6 +5,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import { NAVIGATION } from '@/constants/navigation.constant';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { toggleCommandPanelOpenState } from '@/features/command-panel/store/command-panel.slice';
@@ -32,11 +33,11 @@ import Cover, { CoverSkeleton } from './shared/cover';
 import ImageWithSkeleton from './shared/image-with-skeleton';
 import Poster, { PosterSkeleton } from './shared/poster';
 import { Container } from './ui/container';
-import { Home, LucideIcon, MenuIcon, Search } from 'lucide-react';
+import { Home, MenuIcon, Search } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
 interface ListItemProps extends React.ComponentPropsWithoutRef<'a'> {
-    icon: LucideIcon;
+    icon: LucideIconOrFC;
     title: string;
 }
 

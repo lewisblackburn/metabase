@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
@@ -14,12 +15,12 @@ import {
 } from '@/registry/new-york-v4/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
-import { ArrowDown, ArrowUp, LucideIcon } from 'lucide-react';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 
 export type OrderOption = {
     value: string;
     label: string;
-    icon?: LucideIcon;
+    icon?: LucideIconOrFC;
 };
 
 interface OrderSelectFieldProps {

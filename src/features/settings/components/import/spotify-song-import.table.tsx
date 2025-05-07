@@ -8,7 +8,7 @@ import { Input } from '@/registry/new-york-v4/ui/input';
 import { importSongFromSpotify } from '@/services/spotify/spotify-import-song.service';
 import { spotifyService } from '@/services/spotify/spotify.service';
 import { SpotifyTrack } from '@/types/spotify.types';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 
 import dayjs from 'dayjs';
@@ -33,6 +33,7 @@ interface SpotifySearchResult {
 type SongRow = SpotifySearchResult & { id: string };
 
 export default function SpotifySongImportTable() {
+    const queryClient = useQueryClient();
     const [pageIndex, setPageIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
@@ -69,6 +70,8 @@ export default function SpotifySongImportTable() {
             } else {
                 toast.success(`${response.name} Imported`);
             }
+
+            queryClient.invalidateQueries({ queryKey: ['GetSongs.infinite'] });
         },
         onError: (error: any) => toast.error(error.message)
     });

@@ -22,8 +22,8 @@ export default function FollowButton({ userId, isFollowing, currentUserId }: Fol
     const { mutateAsync: insertFollow } = useInsertFollowMutation({
         onSuccess: () => {
             toast.success('Followed successfully');
-            queryClient.invalidateQueries({ queryKey: ['profile', userId] });
-            queryClient.invalidateQueries({ queryKey: ['followers', userId] });
+            queryClient.invalidateQueries({ queryKey: ['user', userId] });
+            queryClient.invalidateQueries({ queryKey: ['user', 'followers', userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });
@@ -31,8 +31,8 @@ export default function FollowButton({ userId, isFollowing, currentUserId }: Fol
     const { mutateAsync: deleteFollow } = useDeleteFollowMutation({
         onSuccess: () => {
             toast.success('Unfollowed successfully');
-            queryClient.invalidateQueries({ queryKey: ['profile', userId] });
-            queryClient.invalidateQueries({ queryKey: ['followers', userId] });
+            queryClient.invalidateQueries({ queryKey: ['user', userId] });
+            queryClient.invalidateQueries({ queryKey: ['user', 'followers', userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });

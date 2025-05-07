@@ -9,6 +9,7 @@ import { RootState } from '@/store/store';
 import { setActiveItemId } from '../store/person-edit.slice';
 import EditPersonDetails from './edit-person.details';
 import ImportPerson from './import-person-from-tmdb';
+import ImportPersonFromTMDB from './import-person-from-tmdb';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EditPersonDialogProps {
@@ -23,7 +24,7 @@ export function EditPersonDialog({ id, isOpen, onOpenChange }: EditPersonDialogP
 
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
         details: () => <EditPersonDetails personId={id} />,
-        import: () => <ImportPerson />
+        import: () => <ImportPersonFromTMDB personId={id} />
     };
 
     const config: DialogConfig = {

@@ -17,7 +17,7 @@ import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 
 import { format } from 'date-fns';
-import { Calendar, Edit, LucideIcon, TrendingUp, User, UserCheck, VenusAndMars } from 'lucide-react';
+import { Calendar, Edit, TrendingUp, User, UserCheck, VenusAndMars } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
 export default function PersonPage() {

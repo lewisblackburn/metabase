@@ -1,11 +1,10 @@
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { ButtonProps } from '@/types/button.types';
 
-import { LucideIcon } from 'lucide-react';
-
 interface ActionButtonProps extends ButtonProps {
-    icon: LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>;
+    icon: LucideIconOrFC;
     iconClassName?: string;
 }
 

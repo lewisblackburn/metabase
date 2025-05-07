@@ -50,6 +50,7 @@ export default function ReviewMovieDialog() {
                 onSuccess: () => {
                     toast.success('Movie reviewed successfully');
                     queryClient.invalidateQueries({ queryKey: ['movie', movie?.id] });
+                    queryClient.invalidateQueries({ queryKey: ['GetMovies.infinite'] });
                 }
             }
         );

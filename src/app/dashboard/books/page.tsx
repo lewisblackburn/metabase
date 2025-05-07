@@ -9,6 +9,7 @@ import Cover from '@/components/shared/cover';
 import Grid from '@/components/shared/grid';
 import { MAX_LIMIT } from '@/constants/api.constant';
 import BooksSidebar from '@/features/books/components/books-sidebar';
+import BooksSkeleton from '@/features/books/components/books-skeleton';
 import { useBookFilters } from '@/features/books/hooks/use-book-filters';
 import { useIncrementBookViews } from '@/features/books/hooks/use-increment-book-views';
 import { GetBooksQuery, useInfiniteGetBooksQuery } from '@/generated/graphql';
@@ -65,7 +66,7 @@ export default function BooksPage() {
         return data?.pages.flatMap((page) => page.books) || [];
     }, [data]);
 
-    // if (isLoading) return <BooksSkeleton />;
+    if (isLoading) return <BooksSkeleton />;
 
     return (
         <Fragment>

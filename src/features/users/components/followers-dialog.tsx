@@ -29,7 +29,6 @@ export default function FollowersDialog({ trigger }: FollowersDialogProps) {
             followers_limit: MAX_LIMIT
         },
         {
-            queryKey: ['followers', userId, MAX_LIMIT],
             initialPageParam: { followers_offset: 0 },
             getNextPageParam: (lastPage, pages) => {
                 const nextOffset = pages.length * MAX_LIMIT;

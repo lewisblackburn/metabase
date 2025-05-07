@@ -1,9 +1,8 @@
 import { ReactNode } from 'react';
 
+import { LucideIconOrFC } from '@/constants/icons.constant';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
-
-import { LucideIcon } from 'lucide-react';
 
 export const CustomBadge = ({
     icon: Icon,
@@ -13,7 +12,7 @@ export const CustomBadge = ({
     border,
     className
 }: {
-    icon: LucideIcon;
+    icon: LucideIconOrFC;
     children: ReactNode;
     background?: string;
     foreground?: string;

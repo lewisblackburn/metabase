@@ -25927,7 +25927,7 @@ export type GetFolloweesQueryVariables = Exact<{
 }>;
 
 
-export type GetFolloweesQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followees: Array<{ __typename?: 'follows', followee: { __typename?: 'users', id: any, displayName: string, email?: any | null, avatarUrl: string, createdAt: any } }>, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
+export type GetFolloweesQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followees: Array<{ __typename?: 'follows', followee: { __typename?: 'users', id: any, displayName: string, avatarUrl: string, createdAt: any } }>, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
 export type GetFollowersQueryVariables = Exact<{
   user_id: Scalars['uuid']['input'];
@@ -25936,14 +25936,14 @@ export type GetFollowersQueryVariables = Exact<{
 }>;
 
 
-export type GetFollowersQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followers: Array<{ __typename?: 'follows', follower: { __typename?: 'users', id: any, displayName: string, email?: any | null, avatarUrl: string, createdAt: any } }>, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
+export type GetFollowersQuery = { __typename?: 'query_root', user?: { __typename?: 'users', followers: Array<{ __typename?: 'follows', follower: { __typename?: 'users', id: any, displayName: string, avatarUrl: string, createdAt: any } }>, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
 export type GetProfileQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
 
-export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, email?: any | null, lastSeen?: any | null, createdAt: any, avatarUrl: string, emailVerified: boolean, disabled: boolean, locale: string, is_following?: boolean | null, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null }, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
+export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, lastSeen?: any | null, createdAt: any, avatarUrl: string, emailVerified: boolean, disabled: boolean, locale: string, is_following?: boolean | null, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null }, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
 export type GetUserDisplayNameQueryVariables = Exact<{
   user_id: Scalars['uuid']['input'];
@@ -27663,7 +27663,6 @@ export const GetFolloweesDocument = `
       followee {
         id
         displayName
-        email
         avatarUrl
         createdAt
       }
@@ -27723,7 +27722,6 @@ export const GetFollowersDocument = `
       follower {
         id
         displayName
-        email
         avatarUrl
         createdAt
       }
@@ -27777,7 +27775,6 @@ export const GetProfileDocument = `
   user(id: $id) {
     id
     displayName
-    email
     lastSeen
     createdAt
     avatarUrl
