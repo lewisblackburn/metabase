@@ -1,9 +1,7 @@
 // https://lwmecktyyhputyqkdigy.functions.eu-west-2.nhost.run/v1/cleanup_files_for_deleted_media
 // NOTE: This function is triggered when a DELETE occurs on any *_media table.
 // NOTE: It deletes the corresponding storage.files row for OLD.file_id.
-import { DeleteFileMutation } from '@/generated/graphql';
-import { DeleteFileDocument } from '@/generated/graphql';
-import { DeleteFileMutationVariables } from '@/generated/graphql';
+import { DeleteFileDocument, DeleteFileMutation, DeleteFileMutationVariables } from '@/generated/graphql';
 
 import { Request, Response } from 'express';
 import { GraphQLClient } from 'graphql-request';
