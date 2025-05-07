@@ -36,7 +36,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
     });
 
     const onSubmit = async (data: LoginValues) => {
-        await signInEmailPassword(data.email, data.password);
+        const { error } = await signInEmailPassword(data.email, data.password);
+        if (error) toast.error(error.message);
     };
 
     React.useEffect(() => {

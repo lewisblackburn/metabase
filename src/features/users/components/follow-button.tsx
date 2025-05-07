@@ -23,6 +23,7 @@ export default function FollowButton({ userId, isFollowing, currentUserId }: Fol
         onSuccess: () => {
             toast.success('Followed successfully');
             queryClient.invalidateQueries({ queryKey: ['profile', userId] });
+            queryClient.invalidateQueries({ queryKey: ['followers', userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });
@@ -31,6 +32,7 @@ export default function FollowButton({ userId, isFollowing, currentUserId }: Fol
         onSuccess: () => {
             toast.success('Unfollowed successfully');
             queryClient.invalidateQueries({ queryKey: ['profile', userId] });
+            queryClient.invalidateQueries({ queryKey: ['followers', userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });

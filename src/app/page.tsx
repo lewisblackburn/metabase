@@ -5,7 +5,7 @@ import Integrations from '@/features/landing/components/integrations';
 
 const Page = () => {
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col items-center'>
             <Hero />
             <Features />
             <Integrations />

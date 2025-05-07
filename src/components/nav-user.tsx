@@ -67,7 +67,7 @@ export function NavUser({ user }: { user: User | null }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Avatar className='size-8 cursor-pointer'>
+                <Avatar className='size-8 cursor-pointer border'>
                     <AvatarImage src={user?.avatarUrl} alt={`@${user?.displayName ?? 'user'}`} />
                     <AvatarFallback>
                         <UserIcon className='size-3.5' />
@@ -80,7 +80,7 @@ export function NavUser({ user }: { user: User | null }) {
                     <>
                         <DropdownMenuLabel>
                             <Link href={`/dashboard/users/${user.id}`} className='flex items-center gap-2'>
-                                <Avatar className='size-6'>
+                                <Avatar className='size-6 border'>
                                     <AvatarImage src={user.avatarUrl} alt={`@${user.displayName ?? 'user'}`} />
                                     <AvatarFallback>
                                         <UserIcon className='size-3.5' />

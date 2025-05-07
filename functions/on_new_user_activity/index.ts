@@ -2,6 +2,7 @@
 // NOTE: This function is triggered when a new activity is inserted into the database by a Hasura event trigger.
 // NOTE: It is used to create notifications for the followers of the user who created the activity.
 import {
+    Activity_Types_Enum,
     UpsertNotificationsDocument,
     UpsertNotificationsMutation,
     UpsertNotificationsMutationVariables
@@ -32,9 +33,29 @@ export default async function (req: Request, res: Response) {
     try {
         const activity = req.body.event.data.new;
 
-        const { follows } = await client.request<{
-            follows: { follower_id: string }[];
-        }>(FOLLOWERS_QUERY, { user_id: activity.user_id });
+        if (activity.activity_type === Activity_Types_Enum.Follow) {
+            const { insert_notifications } = await client.request<
+                UpsertNotificationsMutation,
+                UpsertNotificationsMutationVariables
+            >(UpsertNotificationsDocument, {
+                objects: [
+                    {
+                        recipient_id: activity.object_id,
+                        actor_id: activity.user_id,
+                        activity_id: activity.id
+                    }
+                ]
+            });
+
+            return res.status(200).json({
+                success: true,
+                inserted: insert_notifications?.affected_rows ?? 0
+            });
+        }
+
+        const { follows } = await client.request<{ follows: { follower_id: string }[] }>(FOLLOWERS_QUERY, {
+            user_id: activity.user_id
+        });
 
         if (follows.length === 0) {
             return res.status(200).json({ success: true, inserted: 0 });
@@ -48,15 +69,12 @@ export default async function (req: Request, res: Response) {
 
         const upsertResult = await client.request<UpsertNotificationsMutation, UpsertNotificationsMutationVariables>(
             UpsertNotificationsDocument,
-            {
-                objects: notifications
-            }
+            { objects: notifications }
         );
 
         return res.status(200).json({
             success: true,
-            inserted: notifications.length,
-            upserted: upsertResult.insert_notifications?.affected_rows
+            inserted: upsertResult.insert_notifications?.affected_rows ?? 0
         });
     } catch (err: any) {
         console.error('on_new_user_activity error:', err);

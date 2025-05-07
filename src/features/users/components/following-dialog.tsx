@@ -6,14 +6,13 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
+import { MAX_LIMIT } from '@/constants/api.constant';
 import { useInfiniteGetFolloweesQuery } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
 import { useInView } from 'react-intersection-observer';
-
-const MAX_LIMIT = 20;
 
 interface FollowingDialogProps {
     trigger: React.ReactNode;

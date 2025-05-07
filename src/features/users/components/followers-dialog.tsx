@@ -6,14 +6,13 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
+import { MAX_LIMIT } from '@/constants/api.constant';
 import { useInfiniteGetFollowersQuery } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
 import { useInView } from 'react-intersection-observer';
-
-const MAX_LIMIT = 20;
 
 interface FollowersDialogProps {
     trigger: React.ReactNode;
@@ -30,6 +29,7 @@ export default function FollowersDialog({ trigger }: FollowersDialogProps) {
             followers_limit: MAX_LIMIT
         },
         {
+            queryKey: ['followers', userId, MAX_LIMIT],
             initialPageParam: { followers_offset: 0 },
             getNextPageParam: (lastPage, pages) => {
                 const nextOffset = pages.length * MAX_LIMIT;
@@ -74,7 +74,7 @@ export default function FollowersDialog({ trigger }: FollowersDialogProps) {
                                     href={`/dashboard/users/${user.id}`}
                                     key={user.id}
                                     className='flex items-center gap-4'>
-                                    <Avatar>
+                                    <Avatar className='border'>
                                         <AvatarImage src={user.avatarUrl || undefined} alt={user.displayName} />
                                         <AvatarFallback>{user.displayName?.[0]?.toUpperCase()}</AvatarFallback>
                                     </Avatar>
