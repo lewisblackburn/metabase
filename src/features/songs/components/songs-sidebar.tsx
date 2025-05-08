@@ -78,26 +78,24 @@ export default function SongsSidebar({ children }: SongsSidebarProps) {
                                     control={form.control}
                                     name='orderBy'
                                     render={({ field }) => (
-                                        <FormItem>
-                                            <BaseFormLayout>
-                                                <OrderSelectField
-                                                    options={[
-                                                        { value: 'popularity', label: 'Popularity', icon: Flame },
-                                                        {
-                                                            value: 'release-date',
-                                                            label: 'Release Date',
-                                                            icon: Calendar
-                                                        },
-                                                        {
-                                                            value: 'duration',
-                                                            label: 'Duration',
-                                                            icon: Timer
-                                                        }
-                                                    ]}
-                                                    {...field}
-                                                />
-                                            </BaseFormLayout>
-                                        </FormItem>
+                                        <BaseFormLayout>
+                                            <OrderSelectField
+                                                options={[
+                                                    { value: 'popularity', label: 'Popularity', icon: Flame },
+                                                    {
+                                                        value: 'release-date',
+                                                        label: 'Release Date',
+                                                        icon: Calendar
+                                                    },
+                                                    {
+                                                        value: 'duration',
+                                                        label: 'Duration',
+                                                        icon: Timer
+                                                    }
+                                                ]}
+                                                {...field}
+                                            />
+                                        </BaseFormLayout>
                                     )}
                                 />
                             </div>
@@ -113,13 +111,9 @@ export default function SongsSidebar({ children }: SongsSidebarProps) {
                                                 control={form.control}
                                                 name='duration'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout
-                                                            label='Duration'
-                                                            description='Measured in seconds'>
-                                                            <TooltipSliderField min={0} max={10000} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Duration' description='Measured in seconds'>
+                                                        <TooltipSliderField min={0} max={10000} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>

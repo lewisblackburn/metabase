@@ -3,7 +3,7 @@ import { Movie_Certification_Types_Enum, Movie_Release_Status_Types_Enum } from 
 import { movieAvailabilityOptionsSchema } from '../constants/movie-enums';
 import { z } from 'zod';
 
-export const movieDetailsSchema = z.object({
+export const editMovieSchema = z.object({
     title: z.string().min(1, 'The title is required'),
     tagline: z.string().max(255, 'The tagline must be less than 255 characters'),
     overview: z.string().max(1000, 'The overview must be less than 1000 characters'),
@@ -21,4 +21,4 @@ export const movieDetailsSchema = z.object({
     homepage: z.string().url().optional().or(z.literal(''))
 });
 
-export type MovieDetails = z.infer<typeof movieDetailsSchema>;
+export type EditMovieSchema = z.infer<typeof editMovieSchema>;

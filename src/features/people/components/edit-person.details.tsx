@@ -5,7 +5,7 @@ import InputField from '@/components/form/input';
 import { useGetPersonQuery, useUpdatePersonMutation } from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
-import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { PersonDetails, personDetailsSchema } from '../schemas/person-details.schema';
@@ -64,11 +64,9 @@ export default function EditPersonDetails({ personId }: EditPersonDetailsProps) 
                     control={form.control}
                     name='name'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Name'>
-                                <InputField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Name'>
+                            <InputField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
 

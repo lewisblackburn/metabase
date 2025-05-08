@@ -75,22 +75,20 @@ export default function PeopleSidebar({ children }: PeopleSidebarProps) {
                                     control={form.control}
                                     name='orderBy'
                                     render={({ field }) => (
-                                        <FormItem>
-                                            <BaseFormLayout>
-                                                <OrderSelectField
-                                                    options={[
-                                                        { value: 'popularity', label: 'Popularity', icon: Flame },
-                                                        {
-                                                            value: 'name',
-                                                            label: 'Name',
-                                                            icon: Text
-                                                        },
-                                                        { value: 'age', label: 'Age', icon: Timer }
-                                                    ]}
-                                                    {...field}
-                                                />
-                                            </BaseFormLayout>
-                                        </FormItem>
+                                        <BaseFormLayout>
+                                            <OrderSelectField
+                                                options={[
+                                                    { value: 'popularity', label: 'Popularity', icon: Flame },
+                                                    {
+                                                        value: 'name',
+                                                        label: 'Name',
+                                                        icon: Text
+                                                    },
+                                                    { value: 'age', label: 'Age', icon: Timer }
+                                                ]}
+                                                {...field}
+                                            />
+                                        </BaseFormLayout>
                                     )}
                                 />
                             </div>
@@ -106,11 +104,9 @@ export default function PeopleSidebar({ children }: PeopleSidebarProps) {
                                                 control={form.control}
                                                 name='age'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Age'>
-                                                            <TooltipSliderField min={0} max={120} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Age'>
+                                                        <TooltipSliderField min={0} max={120} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>

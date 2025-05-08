@@ -12,7 +12,7 @@ import MetaIcon from '@/components/icons/meta.icon';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Card, CardContent } from '@/registry/new-york-v4/ui/card';
-import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignInEmailPassword } from '@nhost/nextjs';
 
@@ -61,11 +61,9 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                         control={form.control}
                         name='email'
                         render={({ field }) => (
-                            <FormItem>
-                                <BaseFormLayout label='Email'>
-                                    <InputField {...field} />
-                                </BaseFormLayout>
-                            </FormItem>
+                            <BaseFormLayout label='Email'>
+                                <InputField {...field} />
+                            </BaseFormLayout>
                         )}
                     />
 
@@ -73,11 +71,9 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                         control={form.control}
                         name='password'
                         render={({ field }) => (
-                            <FormItem>
-                                <BaseFormLayout label='Password'>
-                                    <InputField type='password' {...field} />
-                                </BaseFormLayout>
-                            </FormItem>
+                            <BaseFormLayout label='Password'>
+                                <InputField type='password' {...field} />
+                            </BaseFormLayout>
                         )}
                     />
 

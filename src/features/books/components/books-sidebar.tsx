@@ -99,22 +99,20 @@ export default function BooksSidebar() {
                                 control={form.control}
                                 name='orderBy'
                                 render={({ field }) => (
-                                    <FormItem className='w-full'>
-                                        <BaseFormLayout>
-                                            <OrderSelectField
-                                                options={[
-                                                    { value: 'popularity', label: 'Popularity', icon: Flame },
-                                                    {
-                                                        value: 'publish-date',
-                                                        label: 'Publish Date',
-                                                        icon: Calendar
-                                                    },
-                                                    { value: 'rating', label: 'Rating', icon: Star }
-                                                ]}
-                                                {...field}
-                                            />
-                                        </BaseFormLayout>
-                                    </FormItem>
+                                    <BaseFormLayout className='w-full'>
+                                        <OrderSelectField
+                                            options={[
+                                                { value: 'popularity', label: 'Popularity', icon: Flame },
+                                                {
+                                                    value: 'publish-date',
+                                                    label: 'Publish Date',
+                                                    icon: Calendar
+                                                },
+                                                { value: 'rating', label: 'Rating', icon: Star }
+                                            ]}
+                                            {...field}
+                                        />
+                                    </BaseFormLayout>
                                 )}
                             />
                         </div>
@@ -136,21 +134,19 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='showMe'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Show Me'>
-                                                            <RadioGroupField
-                                                                options={[
-                                                                    { value: 'everything', label: 'Everything' },
-                                                                    {
-                                                                        value: 'not-read',
-                                                                        label: "Books I Haven't Read"
-                                                                    },
-                                                                    { value: 'read', label: 'Books I Have Read' }
-                                                                ]}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Show Me'>
+                                                        <RadioGroupField
+                                                            options={[
+                                                                { value: 'everything', label: 'Everything' },
+                                                                {
+                                                                    value: 'not-read',
+                                                                    label: "Books I Haven't Read"
+                                                                },
+                                                                { value: 'read', label: 'Books I Have Read' }
+                                                            ]}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -160,14 +156,12 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='availabilities'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Availabilities'>
-                                                            <CheckboxGroupField
-                                                                options={bookAvailabilityOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Availabilities'>
+                                                        <CheckboxGroupField
+                                                            options={bookAvailabilityOptions}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -177,15 +171,13 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='publishDates'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Publish Dates'>
-                                                            <DateRangePickerField
-                                                                placeholder='Pick a date'
-                                                                modal
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Publish Dates'>
+                                                        <DateRangePickerField
+                                                            placeholder='Pick a date'
+                                                            modal
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -195,14 +187,9 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='genres'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Genres'>
-                                                            <CheckboxGroupField
-                                                                options={bookGenresOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Genres'>
+                                                        <CheckboxGroupField options={bookGenresOptions} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -212,14 +199,12 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='statuses'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Statuses'>
-                                                            <CheckboxGroupField
-                                                                options={bookReleaseStatusOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Statuses'>
+                                                        <CheckboxGroupField
+                                                            options={bookReleaseStatusOptions}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -229,17 +214,15 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='language'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Language'>
-                                                            <SelectField
-                                                                options={LANGUAGES.map((language) => ({
-                                                                    value: language.code,
-                                                                    label: language.label
-                                                                }))}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Language'>
+                                                        <SelectField
+                                                            options={LANGUAGES.map((language) => ({
+                                                                value: language.code,
+                                                                label: language.label
+                                                            }))}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -249,11 +232,9 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='userScore'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='User Score'>
-                                                            <TooltipSliderField min={0} max={10} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='User Score'>
+                                                        <TooltipSliderField min={0} max={10} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -263,11 +244,9 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='minVotes'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Minimum User Votes'>
-                                                            <TooltipSliderField min={0} max={500} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Minimum User Votes'>
+                                                        <TooltipSliderField min={0} max={500} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -276,11 +255,9 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='readingTime'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Reading Time'>
-                                                            <TooltipSliderField min={0} max={400} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Reading Time'>
+                                                        <TooltipSliderField min={0} max={400} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -290,34 +267,32 @@ export default function BooksSidebar() {
                                                 control={form.control}
                                                 name='keywords'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Keywords'>
-                                                            <TagInput
-                                                                tags={field.value || keywords}
-                                                                setTags={(keywords) => {
-                                                                    setKeywords(keywords);
-                                                                    field.onChange(keywords);
-                                                                }}
-                                                                placeholder='Add a keyword'
-                                                                activeTagIndex={activeKeywordIndex}
-                                                                setActiveTagIndex={setActiveKeywordIndex}
-                                                                inlineTags={false}
-                                                                inputFieldPosition='top'
-                                                                styleClasses={{
-                                                                    tagList: {
-                                                                        container: 'gap-1'
-                                                                    },
-                                                                    input: 'rounded-md transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
-                                                                    tag: {
-                                                                        body: 'relative h-7 bg-background border border-input hover:bg-background rounded-md font-medium text-xs ps-2 pe-7',
-                                                                        closeButton:
-                                                                            'absolute -inset-y-px -end-px p-0 rounded-s-none rounded-e-md flex size-7 transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-muted-foreground/80 hover:text-foreground'
-                                                                    }
-                                                                }}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Keywords'>
+                                                        <TagInput
+                                                            tags={field.value || keywords}
+                                                            setTags={(keywords) => {
+                                                                setKeywords(keywords);
+                                                                field.onChange(keywords);
+                                                            }}
+                                                            placeholder='Add a keyword'
+                                                            activeTagIndex={activeKeywordIndex}
+                                                            setActiveTagIndex={setActiveKeywordIndex}
+                                                            inlineTags={false}
+                                                            inputFieldPosition='top'
+                                                            styleClasses={{
+                                                                tagList: {
+                                                                    container: 'gap-1'
+                                                                },
+                                                                input: 'rounded-md transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                                                                tag: {
+                                                                    body: 'relative h-7 bg-background border border-input hover:bg-background rounded-md font-medium text-xs ps-2 pe-7',
+                                                                    closeButton:
+                                                                        'absolute -inset-y-px -end-px p-0 rounded-s-none rounded-e-md flex size-7 transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-muted-foreground/80 hover:text-foreground'
+                                                                }
+                                                            }}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>

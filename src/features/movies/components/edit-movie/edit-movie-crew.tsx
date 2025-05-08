@@ -25,7 +25,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from '@/registry/new-york-v4/ui/dropdown-menu';
-import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
@@ -35,7 +35,7 @@ import {
     EditCrewMemberSchema,
     addCrewMemberSchema,
     editCrewMemberSchema
-} from '../schemas/movie-crew-member.schema';
+} from '../../schemas/movie-crew-member.schema';
 import { Eye, MoreHorizontal, Pencil, Plus, Trash, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
@@ -295,48 +295,42 @@ const AddCrewMemberDialog = () => {
                             control={form.control}
                             name='person'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Person'>
-                                        <AsyncSelect
-                                            options={options}
-                                            isLoading={isLoading}
-                                            error={error}
-                                            placeholder='Select a person'
-                                            emptyMessage='No people found'
-                                            onSearch={handleSearch}
-                                            createable={true}
-                                            {...field}
-                                        />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Person'>
+                                    <AsyncSelect
+                                        options={options}
+                                        isLoading={isLoading}
+                                        error={error}
+                                        placeholder='Select a person'
+                                        emptyMessage='No people found'
+                                        onSearch={handleSearch}
+                                        createable={true}
+                                        {...field}
+                                    />
+                                </BaseFormLayout>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name='job'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Job'>
-                                        <SelectField
-                                            options={allJobs.map((job) => ({ value: job.id, label: job.name }))}
-                                            {...field}
-                                        />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Job'>
+                                    <SelectField
+                                        options={allJobs.map((job) => ({ value: job.id, label: job.name }))}
+                                        {...field}
+                                    />
+                                </BaseFormLayout>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name='role'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Role'>
-                                        <SelectField
-                                            options={allRoles.map((role) => ({ value: role.id, label: role.name }))}
-                                            {...field}
-                                        />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Role'>
+                                    <SelectField
+                                        options={allRoles.map((role) => ({ value: role.id, label: role.name }))}
+                                        {...field}
+                                    />
+                                </BaseFormLayout>
                             )}
                         />
                         <div className='flex justify-end gap-2'>
@@ -379,28 +373,24 @@ const EditCrewMemberDialog = ({ crewMember, onClose }: { crewMember: CrewMember;
                             control={form.control}
                             name='job'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Job'>
-                                        <SelectField
-                                            options={allJobs.map((job) => ({ value: job.id, label: job.name }))}
-                                            {...field}
-                                        />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Job'>
+                                    <SelectField
+                                        options={allJobs.map((job) => ({ value: job.id, label: job.name }))}
+                                        {...field}
+                                    />
+                                </BaseFormLayout>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name='role'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Role'>
-                                        <SelectField
-                                            options={allRoles.map((role) => ({ value: role.id, label: role.name }))}
-                                            {...field}
-                                        />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Role'>
+                                    <SelectField
+                                        options={allRoles.map((role) => ({ value: role.id, label: role.name }))}
+                                        {...field}
+                                    />
+                                </BaseFormLayout>
                             )}
                         />
 

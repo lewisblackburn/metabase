@@ -108,22 +108,20 @@ export default function MoviesSidebar() {
                                 control={form.control}
                                 name='orderBy'
                                 render={({ field }) => (
-                                    <FormItem className='w-full'>
-                                        <BaseFormLayout>
-                                            <OrderSelectField
-                                                options={[
-                                                    { value: 'popularity', label: 'Popularity', icon: Flame },
-                                                    {
-                                                        value: 'release-date',
-                                                        label: 'Release Date',
-                                                        icon: Calendar
-                                                    },
-                                                    { value: 'rating', label: 'Rating', icon: Star }
-                                                ]}
-                                                {...field}
-                                            />
-                                        </BaseFormLayout>
-                                    </FormItem>
+                                    <BaseFormLayout className='w-full'>
+                                        <OrderSelectField
+                                            options={[
+                                                { value: 'popularity', label: 'Popularity', icon: Flame },
+                                                {
+                                                    value: 'release-date',
+                                                    label: 'Release Date',
+                                                    icon: Calendar
+                                                },
+                                                { value: 'rating', label: 'Rating', icon: Star }
+                                            ]}
+                                            {...field}
+                                        />
+                                    </BaseFormLayout>
                                 )}
                             />
                         </div>
@@ -145,21 +143,19 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='showMe'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Show Me'>
-                                                            <RadioGroupField
-                                                                options={[
-                                                                    { value: 'everything', label: 'Everything' },
-                                                                    {
-                                                                        value: 'not-seen',
-                                                                        label: "Movies I Haven't Seen"
-                                                                    },
-                                                                    { value: 'seen', label: 'Movies I Have Seen' }
-                                                                ]}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Show Me'>
+                                                        <RadioGroupField
+                                                            options={[
+                                                                { value: 'everything', label: 'Everything' },
+                                                                {
+                                                                    value: 'not-seen',
+                                                                    label: "Movies I Haven't Seen"
+                                                                },
+                                                                { value: 'seen', label: 'Movies I Have Seen' }
+                                                            ]}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -169,14 +165,12 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='availabilities'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Availabilities'>
-                                                            <CheckboxGroupField
-                                                                options={movieAvailabilityOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Availabilities'>
+                                                        <CheckboxGroupField
+                                                            options={movieAvailabilityOptions}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -186,15 +180,13 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='releaseDates'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Release Dates'>
-                                                            <DateRangePickerField
-                                                                placeholder='Pick a date'
-                                                                modal
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Release Dates'>
+                                                        <DateRangePickerField
+                                                            placeholder='Pick a date'
+                                                            modal
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -204,14 +196,9 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='genres'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Genres'>
-                                                            <CheckboxGroupField
-                                                                options={movieGenresOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Genres'>
+                                                        <CheckboxGroupField options={movieGenresOptions} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -221,14 +208,12 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='certifications'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Certifications'>
-                                                            <CheckboxGroupField
-                                                                options={movieCertificationOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Certifications'>
+                                                        <CheckboxGroupField
+                                                            options={movieCertificationOptions}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -238,14 +223,12 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='statuses'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Statuses'>
-                                                            <CheckboxGroupField
-                                                                options={movieReleaseStatusOptions}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Statuses'>
+                                                        <CheckboxGroupField
+                                                            options={movieReleaseStatusOptions}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -255,17 +238,15 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='language'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Language'>
-                                                            <SelectField
-                                                                options={LANGUAGES.map((language) => ({
-                                                                    value: language.code,
-                                                                    label: language.label
-                                                                }))}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Language'>
+                                                        <SelectField
+                                                            options={LANGUAGES.map((language) => ({
+                                                                value: language.code,
+                                                                label: language.label
+                                                            }))}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -275,11 +256,9 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='userScore'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='User Score'>
-                                                            <TooltipSliderField min={0} max={10} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='User Score'>
+                                                        <TooltipSliderField min={0} max={10} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -289,11 +268,9 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='minVotes'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Minimum User Votes'>
-                                                            <TooltipSliderField min={0} max={500} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Minimum User Votes'>
+                                                        <TooltipSliderField min={0} max={500} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -302,11 +279,9 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='runtime'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Runtime'>
-                                                            <TooltipSliderField min={0} max={400} {...field} />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Runtime'>
+                                                        <TooltipSliderField min={0} max={400} {...field} />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>
@@ -316,34 +291,32 @@ export default function MoviesSidebar() {
                                                 control={form.control}
                                                 name='keywords'
                                                 render={({ field }) => (
-                                                    <FormItem>
-                                                        <BaseFormLayout label='Keywords'>
-                                                            <TagInput
-                                                                tags={field.value || keywords}
-                                                                setTags={(keywords) => {
-                                                                    setKeywords(keywords);
-                                                                    field.onChange(keywords);
-                                                                }}
-                                                                placeholder='Add a keyword'
-                                                                activeTagIndex={activeKeywordIndex}
-                                                                setActiveTagIndex={setActiveKeywordIndex}
-                                                                inlineTags={false}
-                                                                inputFieldPosition='top'
-                                                                styleClasses={{
-                                                                    tagList: {
-                                                                        container: 'gap-1'
-                                                                    },
-                                                                    input: 'rounded-md transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
-                                                                    tag: {
-                                                                        body: 'relative h-7 bg-background border border-input hover:bg-background rounded-md font-medium text-xs ps-2 pe-7',
-                                                                        closeButton:
-                                                                            'absolute -inset-y-px -end-px p-0 rounded-s-none rounded-e-md flex size-7 transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-muted-foreground/80 hover:text-foreground'
-                                                                    }
-                                                                }}
-                                                                {...field}
-                                                            />
-                                                        </BaseFormLayout>
-                                                    </FormItem>
+                                                    <BaseFormLayout label='Keywords'>
+                                                        <TagInput
+                                                            tags={field.value || keywords}
+                                                            setTags={(keywords) => {
+                                                                setKeywords(keywords);
+                                                                field.onChange(keywords);
+                                                            }}
+                                                            placeholder='Add a keyword'
+                                                            activeTagIndex={activeKeywordIndex}
+                                                            setActiveTagIndex={setActiveKeywordIndex}
+                                                            inlineTags={false}
+                                                            inputFieldPosition='top'
+                                                            styleClasses={{
+                                                                tagList: {
+                                                                    container: 'gap-1'
+                                                                },
+                                                                input: 'rounded-md transition-[color,box-shadow] placeholder:text-muted-foreground/70 focus-visible:border-ring outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                                                                tag: {
+                                                                    body: 'relative h-7 bg-background border border-input hover:bg-background rounded-md font-medium text-xs ps-2 pe-7',
+                                                                    closeButton:
+                                                                        'absolute -inset-y-px -end-px p-0 rounded-s-none rounded-e-md flex size-7 transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-muted-foreground/80 hover:text-foreground'
+                                                                }
+                                                            }}
+                                                            {...field}
+                                                        />
+                                                    </BaseFormLayout>
                                                 )}
                                             />
                                         </FilterSection>

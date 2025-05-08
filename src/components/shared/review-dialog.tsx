@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/registry/new-york-v4/ui/dialog';
-import { Form, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField, FormMessage } from '@/registry/new-york-v4/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/registry/new-york-v4/ui/radio-group';
 import {
     Sheet,
@@ -76,27 +76,25 @@ const ReviewForm = ({ defaultValues, onSubmit, onCancel, onDelete }: ReviewFormP
                     control={form.control}
                     name='rating'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Rating'>
-                                <RadioGroup
-                                    onValueChange={(val) => field.onChange(parseInt(val, 10))}
-                                    value={field.value?.toString()}
-                                    className='flex gap-0 -space-x-px rounded-md shadow-xs'>
-                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
-                                        <label
-                                            key={number}
-                                            className='border-input has-data-[state=checked]:border-primary/50 has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative flex size-9 flex-1 cursor-pointer flex-col items-center justify-center gap-3 border text-center text-sm transition-[color,box-shadow] outline-none first:rounded-s-md last:rounded-e-md has-focus-visible:ring-[3px] has-data-disabled:cursor-not-allowed has-data-disabled:opacity-50 has-data-[state=checked]:z-10'>
-                                            <RadioGroupItem
-                                                id={`radio-${number}`}
-                                                value={number.toString()}
-                                                className='sr-only after:absolute after:inset-0'
-                                            />
-                                            {number}
-                                        </label>
-                                    ))}
-                                </RadioGroup>
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Rating'>
+                            <RadioGroup
+                                onValueChange={(val) => field.onChange(parseInt(val, 10))}
+                                value={field.value?.toString()}
+                                className='flex gap-0 -space-x-px rounded-md shadow-xs'>
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+                                    <label
+                                        key={number}
+                                        className='border-input has-data-[state=checked]:border-primary/50 has-focus-visible:border-ring has-focus-visible:ring-ring/50 relative flex size-9 flex-1 cursor-pointer flex-col items-center justify-center gap-3 border text-center text-sm transition-[color,box-shadow] outline-none first:rounded-s-md last:rounded-e-md has-focus-visible:ring-[3px] has-data-disabled:cursor-not-allowed has-data-disabled:opacity-50 has-data-[state=checked]:z-10'>
+                                        <RadioGroupItem
+                                            id={`radio-${number}`}
+                                            value={number.toString()}
+                                            className='sr-only after:absolute after:inset-0'
+                                        />
+                                        {number}
+                                    </label>
+                                ))}
+                            </RadioGroup>
+                        </BaseFormLayout>
                     )}
                 />
 
@@ -104,16 +102,14 @@ const ReviewForm = ({ defaultValues, onSubmit, onCancel, onDelete }: ReviewFormP
                     control={form.control}
                     name='review'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Review'>
-                                <Textarea
-                                    id='review'
-                                    {...field}
-                                    placeholder='Write your review here...'
-                                    className='min-h-32'
-                                />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Review'>
+                            <Textarea
+                                id='review'
+                                {...field}
+                                placeholder='Write your review here...'
+                                className='min-h-32'
+                            />
+                        </BaseFormLayout>
                     )}
                 />
                 <div className='flex items-center justify-between'>

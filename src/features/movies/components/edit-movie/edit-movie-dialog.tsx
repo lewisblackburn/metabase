@@ -6,7 +6,7 @@ import { DialogConfig, DialogManager } from '@/components/shared/dialog-manager'
 import { SidebarItem } from '@/components/shared/sidebar-dialog';
 import { RootState } from '@/store/store';
 
-import { setActiveItemId } from '../store/movie-edit.slice';
+import { setActiveItemId } from '../../store/movie-edit.slice';
 import EditMovieCast from './edit-movie-cast';
 import EditMovieCrew from './edit-movie-crew';
 import EditMovieDetails from './edit-movie-details';

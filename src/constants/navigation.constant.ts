@@ -1,5 +1,5 @@
 import { OBJECT_TYPE } from './objects.constant';
-import { Calendar, Heart, Play, Sparkle, Sparkles, Star } from 'lucide-react';
+import { Calendar, Heart, Play, Plus, Sparkle, Sparkles, Star } from 'lucide-react';
 
 export const NAVIGATION = {
     home: {},
@@ -38,6 +38,12 @@ export const NAVIGATION = {
                 description: "See what's most popular.",
                 path: '',
                 disabled: true
+            },
+            {
+                icon: Plus,
+                name: 'Add New',
+                description: 'Add a new movie to the database.',
+                path: '/dashboard/movies/new'
             }
         ],
         type: OBJECT_TYPE.MOVIE

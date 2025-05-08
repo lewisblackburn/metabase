@@ -1,66 +1,53 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+'use client';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/registry/new-york-v4/ui/button';
-import { Calendar } from '@/registry/new-york-v4/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
+import React from 'react';
 
-import { format } from 'date-fns';
+import { Calendar } from '@/registry/new-york-v4/ui/calendar-rac';
+import { DateInput } from '@/registry/new-york-v4/ui/datefield-rac';
+import { parseDate } from '@internationalized/date';
+
 import { CalendarIcon } from 'lucide-react';
+import { Button, DatePicker, Dialog, Group, Label, Popover } from 'react-aria-components';
 
-interface DatePickerFieldProps {
+export interface DatePickerFieldProps {
+    name: string;
     value?: Date;
-    onChange?: (date: Date | undefined) => void;
-    placeholder?: string;
-    className?: string;
-    disabled?: boolean;
-    modal?: boolean;
+    onChange: (date: Date) => void;
+    onBlur?: (e: React.FocusEvent) => void;
 }
 
-export function DatePickerField({
-    value,
-    onChange,
-    placeholder = 'Select a date',
-    className,
-    disabled = false,
-    modal = false
-}: DatePickerFieldProps) {
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>(value);
+const DatePickerField = React.forwardRef<HTMLDivElement, DatePickerFieldProps>(
+    ({ name, value, onChange, onBlur }, ref) => {
+        const handleChange = (date: any) => {
+            onChange(new Date(date.toString()));
+        };
 
-    useEffect(() => {
-        setSelectedDate(value);
-    }, [value]);
+        return (
+            <DatePicker
+                className='*:not-first:mt-2'
+                name={name}
+                value={value ? parseDate(value.toISOString().split('T')[0]) : undefined}
+                onChange={handleChange}
+                onBlur={onBlur}
+                ref={ref}>
+                <div className='flex'>
+                    <Group className='w-full'>
+                        <DateInput className='pe-9' />
+                    </Group>
+                    <Button className='text-muted-foreground/80 hover:text-foreground data-focus-visible:border-ring data-focus-visible:ring-ring/50 z-10 -ms-9 -me-px flex w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none data-focus-visible:ring-[3px]'>
+                        <CalendarIcon size={16} />
+                    </Button>
+                    <Popover
+                        className='bg-background text-popover-foreground data-entering:animate-in data-exiting:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 z-50 rounded-lg border shadow-lg outline-hidden'
+                        offset={4}>
+                        <Dialog className='max-h-[inherit] overflow-auto p-2'>
+                            <Calendar />
+                        </Dialog>
+                    </Popover>
+                </div>
+            </DatePicker>
+        );
+    }
+);
 
-    const handleDateChange = (date: Date | undefined) => {
-        setSelectedDate(date);
-        onChange?.(date);
-    };
-
-    return (
-        <Popover modal={modal}>
-            <PopoverTrigger asChild>
-                <Button
-                    variant='outline'
-                    disabled={disabled}
-                    className={cn(
-                        'w-full justify-start text-left font-normal',
-                        !selectedDate && 'text-muted-foreground',
-                        className
-                    )}>
-                    <CalendarIcon className='size-4' />
-                    {selectedDate ? format(selectedDate, 'LLL dd, y') : placeholder}
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent className='w-auto p-0' align='start'>
-                <Calendar
-                    initialFocus
-                    mode='single'
-                    selected={selectedDate}
-                    onSelect={handleDateChange}
-                    numberOfMonths={1}
-                />
-            </PopoverContent>
-        </Popover>
-    );
-}
+export default DatePickerField;

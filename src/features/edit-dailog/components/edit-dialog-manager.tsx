@@ -1,6 +1,6 @@
 'use client';
 
-import { EditMovieDialog } from '@/features/movies/components/edit-movie-dialog';
+import { EditMovieDialog } from '@/features/movies/components/edit-movie/edit-movie-dialog';
 import { EditPersonDialog } from '@/features/people/components/edit-person.dialog';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { RootState } from '@/store/store';

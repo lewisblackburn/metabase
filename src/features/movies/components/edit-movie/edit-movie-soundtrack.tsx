@@ -5,12 +5,17 @@ import Link from 'next/link';
 import { AsyncSelect, AsyncSelectOption } from '@/components/form/async-select';
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
-import PersonSelect from '@/components/form/person-select';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
+import {
+    AddMovieSoundtrackSong,
+    EditMovieSoundtrackSong,
+    addMovieSoundtrackSongSchema,
+    editMovieSoundtrackSongSchema
+} from '@/features/movies/schemas/movie-soundtrack.schema';
 import { useDebounce } from '@/hooks/use-debounce';
-import { CastMember, allPeople } from '@/lib/data';
+import { Artist, MovieSoundtrackSong, Song, allPeople } from '@/lib/data';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -26,22 +31,16 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from '@/registry/new-york-v4/ui/dropdown-menu';
-import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import {
-    AddCastMemberSchema,
-    EditCastMemberSchema,
-    addCastMemberSchema,
-    editCastMemberSchema
-} from '../schemas/movie-cast-member.schema';
 import { Eye, MoreHorizontal, Pencil, Plus, Trash, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
-export default function EditMovieCast() {
-    const [data, setData] = useState<CastMember[]>([]);
+export default function EditMovieSoundtrack() {
+    const [data, setData] = useState<MovieSoundtrackSong[]>([]);
     const [totalRows, setTotalRows] = useState(0);
     const [pageIndex, setPageIndex] = useState(0); // 0-based page index
     const [pageSize, setPageSize] = useState(5);
@@ -49,7 +48,7 @@ export default function EditMovieCast() {
     const [rowSelection, setRowSelection] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [editingCastMember, setEditingCastMember] = useState<CastMember | null>(null);
+    const [editingSong, setEditingSong] = useState<MovieSoundtrackSong | null>(null);
     const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
     // NOTE: Reset page index when search query changes
@@ -57,10 +56,10 @@ export default function EditMovieCast() {
         setPageIndex(0);
     }, [debouncedSearchQuery]);
 
-    const columns = React.useMemo<ColumnDef<CastMember, any>[]>(
+    const columns = React.useMemo<ColumnDef<MovieSoundtrackSong, any>[]>(
         () => [
             {
-                accessorKey: 'name',
+                accessorKey: 'song.name',
                 header: ({ column }) => (
                     <button
                         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
@@ -72,16 +71,32 @@ export default function EditMovieCast() {
                 cell: (info) => info.getValue<string>()
             },
             {
-                accessorKey: 'character',
+                accessorKey: 'song.artists',
                 header: ({ column }) => (
                     <button
                         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                         className='inline-flex cursor-pointer items-center font-medium'>
-                        Character
+                        Artists
                         <SortingArrows column={column} />
                     </button>
                 ),
-                cell: (info) => info.getValue<string>()
+                cell: (info) =>
+                    info
+                        .getValue<Artist[]>()
+                        .map((artist) => artist.name)
+                        .join(', ')
+            },
+            {
+                accessorKey: 'timestamps',
+                header: ({ column }) => (
+                    <button
+                        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                        className='inline-flex cursor-pointer items-center font-medium'>
+                        Timestamps
+                        <SortingArrows column={column} />
+                    </button>
+                ),
+                cell: (info) => info.getValue<Song[]>().join(', ')
             }
         ],
         []
@@ -102,7 +117,7 @@ export default function EditMovieCast() {
                     sortDesc: String(sortDesc),
                     query: query
                 });
-                const res = await fetch(`/api/cast-members?${params.toString()}`);
+                const res = await fetch(`/api/movie-soundtrack?${params.toString()}`);
                 const result = await res.json();
                 setData(result.data);
                 setTotalRows(result.total);
@@ -115,7 +130,7 @@ export default function EditMovieCast() {
         fetchData();
     }, [pageIndex, pageSize, sorting, debouncedSearchQuery]);
 
-    const renderRowActions = React.useCallback((castMember: CastMember) => {
+    const renderRowActions = React.useCallback((song: MovieSoundtrackSong) => {
         return (
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -125,13 +140,13 @@ export default function EditMovieCast() {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
-                    <Link href={`/dashboard/${OBJECT_TYPE.person.path}/${castMember.personId}`}>
+                    <Link href={`/dashboard/${OBJECT_TYPE.SONG.path}/${song.song.id}`}>
                         <DropdownMenuItem>
                             <Eye className='mr-2 h-4 w-4' />
                             View
                         </DropdownMenuItem>
                     </Link>
-                    <DropdownMenuItem onClick={() => setEditingCastMember(castMember)}>
+                    <DropdownMenuItem onClick={() => setEditingSong(song)}>
                         <Pencil className='mr-2 h-4 w-4' />
                         Edit
                     </DropdownMenuItem>
@@ -140,7 +155,7 @@ export default function EditMovieCast() {
         );
     }, []);
 
-    const handleRowOrderChange = (newData: CastMember[]) => {
+    const handleRowOrderChange = (newData: MovieSoundtrackSong[]) => {
         setData(newData);
         console.log(
             'New row order:',
@@ -163,7 +178,7 @@ export default function EditMovieCast() {
         <div className='overflow-x-auto'>
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
-                    placeholder='Search by name or character...'
+                    placeholder='Search by song name or artist...'
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
@@ -175,9 +190,9 @@ export default function EditMovieCast() {
                         Reset
                     </Button>
                 )}
-                <AddCastMemberDialog />
-                {editingCastMember && (
-                    <EditCastMemberDialog castMember={editingCastMember} onClose={() => setEditingCastMember(null)} />
+                <AddMovieSoundtrackSongDialog />
+                {editingSong && (
+                    <EditMovieSoundtrackSongDialog song={editingSong} onClose={() => setEditingSong(null)} />
                 )}
                 {Object.keys(rowSelection).length > 0 && (
                     <Button variant='destructive' size='sm' onClick={handleDelete}>
@@ -207,21 +222,57 @@ export default function EditMovieCast() {
     );
 }
 
-const AddCastMemberDialog = () => {
-    const form = useForm<AddCastMemberSchema>({
-        resolver: zodResolver(addCastMemberSchema),
-        defaultValues: {
-            person: 'a7a56353-e6b8-44d9-a33e-5786c55c5918',
-            character: 'testing 123'
-        }
+const AddMovieSoundtrackSongDialog = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [options, setOptions] = useState<AsyncSelectOption[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const form = useForm<AddMovieSoundtrackSong>({
+        resolver: zodResolver(addMovieSoundtrackSongSchema)
     });
 
-    const onSubmit = async (data: AddCastMemberSchema) => {
+    const onSubmit = async (data: AddMovieSoundtrackSong) => {
         console.log(data);
     };
 
+    const handleCancel = () => {
+        form.reset();
+        setIsOpen(false);
+    };
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+    };
+
+    React.useEffect(() => {
+        const fetchOptions = async () => {
+            setIsLoading(true);
+            setError(null);
+
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 500));
+
+                const mockOptions = allPeople;
+
+                const filteredOptions = searchQuery
+                    ? mockOptions.filter((option) => option.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    : mockOptions;
+
+                setOptions(filteredOptions.map((option) => ({ value: option.id, label: option.name })));
+            } catch (err) {
+                setError('Failed to load options. Please try again.');
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchOptions();
+    }, [searchQuery]);
+
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button variant='outline' size='sm'>
                     <Plus className='size-4' />
@@ -229,43 +280,45 @@ const AddCastMemberDialog = () => {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add Cast Member</DialogTitle>
+                    <DialogTitle>Add Song</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Add a new cast member to the movie.</DialogDescription>
+                <DialogDescription>Add a new song to the movie soundtrack.</DialogDescription>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
                             control={form.control}
-                            name='person'
+                            name='song'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Person'>
-                                        <PersonSelect
-                                            onValueChange={(value) => field.onChange(value)}
-                                            defaultValue={field.value}
-                                        />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Song'>
+                                    <AsyncSelect
+                                        options={options}
+                                        isLoading={isLoading}
+                                        error={error}
+                                        placeholder='Select a song'
+                                        emptyMessage='No songs found'
+                                        onSearch={handleSearch}
+                                        createable={true}
+                                        {...field}
+                                    />
+                                </BaseFormLayout>
                             )}
                         />
                         <FormField
                             control={form.control}
-                            name='character'
+                            name='timestamps'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Character'>
-                                        <InputField {...field} />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Timestamps'>
+                                    <InputField {...field} />
+                                </BaseFormLayout>
                             )}
                         />
                         <div className='flex justify-end gap-2'>
-                            <Button variant='outline' type='button' className='mr-2'>
+                            <Button variant='outline' type='button' className='mr-2' onClick={handleCancel}>
                                 <X className='size-4' />
                                 Cancel
                             </Button>
                             <Button type='submit' onClick={() => console.log(form.formState.errors)}>
-                                Add Cast Member
+                                Add Song
                             </Button>
                         </div>
                     </form>
@@ -275,15 +328,15 @@ const AddCastMemberDialog = () => {
     );
 };
 
-const EditCastMemberDialog = ({ castMember, onClose }: { castMember: CastMember; onClose: () => void }) => {
-    const form = useForm<EditCastMemberSchema>({
-        resolver: zodResolver(editCastMemberSchema),
+const EditMovieSoundtrackSongDialog = ({ song, onClose }: { song: MovieSoundtrackSong; onClose: () => void }) => {
+    const form = useForm<EditMovieSoundtrackSong>({
+        resolver: zodResolver(editMovieSoundtrackSongSchema),
         defaultValues: {
-            character: castMember.character
+            timestamps: song.timestamps.join(', ')
         }
     });
 
-    const onSubmit = async (data: EditCastMemberSchema) => {
+    const onSubmit = async (data: EditMovieSoundtrackSong) => {
         console.log(data);
     };
 
@@ -291,20 +344,18 @@ const EditCastMemberDialog = ({ castMember, onClose }: { castMember: CastMember;
         <Dialog open onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Edit Cast Member</DialogTitle>
+                    <DialogTitle>Edit Song</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Edit the cast member.</DialogDescription>
+                <DialogDescription>Edit the song.</DialogDescription>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
                             control={form.control}
-                            name='character'
+                            name='timestamps'
                             render={({ field }) => (
-                                <FormItem>
-                                    <BaseFormLayout label='Character'>
-                                        <InputField {...field} />
-                                    </BaseFormLayout>
-                                </FormItem>
+                                <BaseFormLayout label='Timestamps'>
+                                    <InputField {...field} />
+                                </BaseFormLayout>
                             )}
                         />
                         <div className='flex justify-end gap-2'>

@@ -1,7 +1,7 @@
 'use client';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
-import { DatePickerField } from '@/components/form/date-picker';
+import DatePickerField from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
 import SelectField from '@/components/form/select';
 import TextareaField from '@/components/form/textarea';
@@ -9,7 +9,7 @@ import { LANGUAGES } from '@/constants/languages.constant';
 import { useGetMovieQuery, useUpdateMovieMutation } from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
-import { Form, FormField, FormItem } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -17,8 +17,8 @@ import {
     movieAvailabilityOptions,
     movieCertificationOptions,
     movieReleaseStatusOptions
-} from '../constants/movie-enums';
-import { MovieDetails, movieDetailsSchema } from '../schemas/movie-details.schema';
+} from '../../constants/movie-enums';
+import { EditMovieSchema, editMovieSchema } from '../../schemas/edit-movie.schema';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -40,8 +40,8 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
 
     if (!movie) return null;
 
-    const form = useForm<MovieDetails>({
-        resolver: zodResolver(movieDetailsSchema),
+    const form = useForm<EditMovieSchema>({
+        resolver: zodResolver(editMovieSchema),
         defaultValues: {
             title: movie.title,
             tagline: movie.tagline ?? '',
@@ -64,7 +64,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
         }
     });
 
-    async function onSubmit(values: MovieDetails) {
+    async function onSubmit(values: EditMovieSchema) {
         await updateMovie(
             {
                 id: movieId,
@@ -104,170 +104,145 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     control={form.control}
                     name='title'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Title'>
-                                <InputField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Title'>
+                            <InputField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='tagline'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Tagline'>
-                                <InputField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Tagline'>
+                            <InputField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='overview'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Overview'>
-                                <TextareaField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Overview'>
+                            <TextareaField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='releaseDate'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Release Date'>
-                                <DatePickerField {...field} modal />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Release Date'>
+                            <DatePickerField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='runtime'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Runtime'>
-                                <InputField type='number' {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Runtime'>
+                            <InputField type='number' {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='budget'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Budget'>
-                                <InputField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Budget'>
+                            <InputField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='revenue'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Revenue'>
-                                <InputField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Revenue'>
+                            <InputField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='language'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Language'>
-                                <SelectField
-                                    options={LANGUAGES.map((language) => ({
-                                        value: language.code,
-                                        label: language.label,
-                                        secondaryLabel: language.englishLabel
-                                    }))}
-                                    modal
-                                    {...field}
-                                />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Language'>
+                            <SelectField
+                                options={LANGUAGES.map((language) => ({
+                                    value: language.code,
+                                    label: language.label,
+                                    secondaryLabel: language.englishLabel
+                                }))}
+                                modal
+                                {...field}
+                            />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='status'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Status'>
-                                <SelectField options={movieReleaseStatusOptions} modal {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Status'>
+                            <SelectField options={movieReleaseStatusOptions} modal {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='certification'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Age Certification'>
-                                <SelectField options={movieCertificationOptions} modal {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Age Certification'>
+                            <SelectField options={movieCertificationOptions} modal {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='availabilities'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Availabilities'>
-                                <MultipleSelector
-                                    commandProps={{
-                                        label: 'Select Availabilities'
-                                    }}
-                                    defaultOptions={movieAvailabilityOptions}
-                                    placeholder='Select Availabilities'
-                                    emptyIndicator='No availabilities found'
-                                    {...field}
-                                />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Availabilities'>
+                            <MultipleSelector
+                                commandProps={{
+                                    label: 'Select Availabilities'
+                                }}
+                                defaultOptions={movieAvailabilityOptions.map((option) => ({
+                                    label: option.label,
+                                    value: option.value
+                                }))}
+                                placeholder='Select Availabilities'
+                                emptyIndicator='No availabilities found'
+                                {...field}
+                            />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='imdbId'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='IMDB ID'>
-                                <InputField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='IMDB ID'>
+                            <InputField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='tmdbId'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='TMDB ID'>
-                                <InputField type='number' {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='TMDB ID'>
+                            <InputField type='number' {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name='homepage'
                     render={({ field }) => (
-                        <FormItem>
-                            <BaseFormLayout label='Homepage'>
-                                <InputField {...field} />
-                            </BaseFormLayout>
-                        </FormItem>
+                        <BaseFormLayout label='Homepage'>
+                            <InputField {...field} />
+                        </BaseFormLayout>
                     )}
                 />
                 <div className='flex justify-end gap-2'>
