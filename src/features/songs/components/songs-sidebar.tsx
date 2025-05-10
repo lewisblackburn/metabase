@@ -2,14 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import CheckboxGroupField from '@/components/form/checkbox-group';
-import DateRangePickerField from '@/components/form/date-range-picker';
 import OrderSelectField from '@/components/form/order-select';
-import RadioGroupField from '@/components/form/radio-group';
-import SelectField from '@/components/form/select';
 import TooltipSliderField from '@/components/form/tooltip-slider';
 import FilterSection from '@/components/shared/filter-section';
 import SidebarAccordionItem from '@/components/shared/sidebar-accordian-item';
-import { LANGUAGES } from '@/constants/languages.constant';
 import { Accordion } from '@/registry/new-york-v4/ui/accordion';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/registry/new-york-v4/ui/form';
@@ -20,42 +16,41 @@ import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
 import { RootState } from '@/store/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { bookAvailabilityOptions, bookGenresOptions, bookReleaseStatusOptions } from '../constants/song-enums';
-import { booksFilterSchema } from '../schemas/songs-filter.schema';
-import { BooksFilter } from '../schemas/songs-filter.schema';
-import { resetBooksFilter } from '../store/songs-filter.slice';
-import { setBooksFilter } from '../store/songs-filter.slice';
+import { songAvailabilityOptions, songGenresOptions } from '../constants/song-enums';
+import { SongsFilterType, songsFilterSchema } from '../schemas/songs-filter.schema';
+import { resetSongsFilter } from '../store/songs-filter.slice';
+import { setSongsFilter } from '../store/songs-filter.slice';
 import { Tag, TagInput } from 'emblor';
 import { Calendar, Flame, Settings2, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
-export default function BooksSidebar() {
+export default function SongsSidebar() {
     const [keywords, setKeywords] = useState<Tag[]>([]);
     const [activeKeywordIndex, setActiveKeywordIndex] = useState<number | null>(null);
 
-    const booksFilter = useSelector((state: RootState) => state.booksFilter);
+    const songsFilter = useSelector((state: RootState) => state.songsFilter);
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
-    const form = useForm<BooksFilter>({
-        resolver: zodResolver(booksFilterSchema),
-        defaultValues: booksFilter
+    const form = useForm<SongsFilterType>({
+        resolver: zodResolver(songsFilterSchema),
+        defaultValues: songsFilter
     });
 
     useEffect(() => {
-        form.reset(booksFilter);
-    }, [booksFilter, form]);
+        form.reset(songsFilter);
+    }, [songsFilter, form]);
 
-    function onSubmit(values: BooksFilter) {
-        dispatch(setBooksFilter(values));
+    function onSubmit(values: SongsFilterType) {
+        dispatch(setSongsFilter(values));
         setOpen(false);
         toast.success('Filters Applied');
     }
 
     function onReset() {
         form.reset();
-        dispatch(resetBooksFilter());
+        dispatch(resetSongsFilter());
         setOpen(false);
         toast.info('Filters Reset');
     }
@@ -84,7 +79,7 @@ export default function BooksSidebar() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
-                                            <SidebarInput placeholder='Search books...' {...field} />
+                                            <SidebarInput placeholder='Search songs...' {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -132,49 +127,11 @@ export default function BooksSidebar() {
                                         <FilterSection>
                                             <FormField
                                                 control={form.control}
-                                                name='showMe'
-                                                render={({ field }) => (
-                                                    <BaseFormLayout label='Show Me'>
-                                                        <RadioGroupField
-                                                            options={[
-                                                                { value: 'everything', label: 'Everything' },
-                                                                {
-                                                                    value: 'not-read',
-                                                                    label: "Books I Haven't Read"
-                                                                },
-                                                                { value: 'read', label: 'Books I Have Read' }
-                                                            ]}
-                                                            {...field}
-                                                        />
-                                                    </BaseFormLayout>
-                                                )}
-                                            />
-                                        </FilterSection>
-
-                                        <FilterSection>
-                                            <FormField
-                                                control={form.control}
                                                 name='availabilities'
                                                 render={({ field }) => (
                                                     <BaseFormLayout label='Availabilities'>
                                                         <CheckboxGroupField
-                                                            options={bookAvailabilityOptions}
-                                                            {...field}
-                                                        />
-                                                    </BaseFormLayout>
-                                                )}
-                                            />
-                                        </FilterSection>
-
-                                        <FilterSection>
-                                            <FormField
-                                                control={form.control}
-                                                name='publishDates'
-                                                render={({ field }) => (
-                                                    <BaseFormLayout label='Publish Dates'>
-                                                        <DateRangePickerField
-                                                            placeholder='Pick a date'
-                                                            modal
+                                                            options={songAvailabilityOptions}
                                                             {...field}
                                                         />
                                                     </BaseFormLayout>
@@ -188,40 +145,7 @@ export default function BooksSidebar() {
                                                 name='genres'
                                                 render={({ field }) => (
                                                     <BaseFormLayout label='Genres'>
-                                                        <CheckboxGroupField options={bookGenresOptions} {...field} />
-                                                    </BaseFormLayout>
-                                                )}
-                                            />
-                                        </FilterSection>
-
-                                        <FilterSection>
-                                            <FormField
-                                                control={form.control}
-                                                name='statuses'
-                                                render={({ field }) => (
-                                                    <BaseFormLayout label='Statuses'>
-                                                        <CheckboxGroupField
-                                                            options={bookReleaseStatusOptions}
-                                                            {...field}
-                                                        />
-                                                    </BaseFormLayout>
-                                                )}
-                                            />
-                                        </FilterSection>
-
-                                        <FilterSection>
-                                            <FormField
-                                                control={form.control}
-                                                name='language'
-                                                render={({ field }) => (
-                                                    <BaseFormLayout label='Language'>
-                                                        <SelectField
-                                                            options={LANGUAGES.map((language) => ({
-                                                                value: language.code,
-                                                                label: language.label
-                                                            }))}
-                                                            {...field}
-                                                        />
+                                                        <CheckboxGroupField options={songGenresOptions} {...field} />
                                                     </BaseFormLayout>
                                                 )}
                                             />
@@ -250,12 +174,13 @@ export default function BooksSidebar() {
                                                 )}
                                             />
                                         </FilterSection>
+
                                         <FilterSection>
                                             <FormField
                                                 control={form.control}
-                                                name='readingTime'
+                                                name='duration'
                                                 render={({ field }) => (
-                                                    <BaseFormLayout label='Reading Time'>
+                                                    <BaseFormLayout label='Duration'>
                                                         <TooltipSliderField min={0} max={400} {...field} />
                                                     </BaseFormLayout>
                                                 )}

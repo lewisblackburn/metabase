@@ -2,6 +2,18 @@ query GetSong($id: uuid!) {
     songs_by_pk(id: $id) {
         id
         name
+        content_score
+        created_at
+        duration
+        view_count
+        vote_average
+        vote_count
+        user_song_statuses {
+            favourited
+            rating
+            review
+            updated_at
+        }
         album {
             artwork
             release_date
@@ -9,12 +21,6 @@ query GetSong($id: uuid!) {
             name
             id
         }
-        content_score
-        created_at
-        duration
-        view_count
-        vote_average
-        vote_count
         song_availabilities {
             availability
         }

@@ -6,43 +6,27 @@ import ItemInformation from '@/components/shared/item-information';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
-import BookChanges from '@/features/books/components/book-changes';
-import BookCredits from '@/features/books/components/book-credits';
-import BookFavouriteButton from '@/features/books/components/book-favourite-button';
-import BookLayout from '@/features/books/components/book-layout';
-import { BookProvider, useBook } from '@/features/books/components/book-provider';
-import BookStatusPicker from '@/features/books/components/book-status-picker';
-import ReviewBookDialog from '@/features/books/components/review-book-dialog';
-import { bookReleaseStatusLabels } from '@/features/books/constants/book-enums';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import ObjectOverview from '@/features/movies/components/movie-overview';
+import ReviewSongDialog from '@/features/songs/components/review-song-dialog';
+import SongChanges from '@/features/songs/components/song-changes';
+import SongCredits from '@/features/songs/components/song-credits';
+import SongFavouriteButton from '@/features/songs/components/song-favourite-button';
+import SongLayout from '@/features/songs/components/song-layout';
+import { SongProvider, useSong } from '@/features/songs/components/song-provider';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
-import {
-    Calendar,
-    Edit,
-    Eye,
-    Image,
-    Info,
-    Languages,
-    Layers2,
-    Music,
-    Star,
-    Timer,
-    Trophy,
-    User,
-    Video
-} from 'lucide-react';
+import { Calendar, Edit, Eye, Image, Info, Layers2, Star, Timer, Trophy, User, Video } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
-export default function BookPage() {
+export default function SongPage() {
     return (
-        <BookProvider>
-            <BookPageContent />
-        </BookProvider>
+        <SongProvider>
+            <SongPageContent />
+        </SongProvider>
     );
 }
 
@@ -56,36 +40,36 @@ const tabItems = [
     { value: 'changes', icon: Edit, label: 'Changes' }
 ];
 
-function BookPageContent() {
+function SongPageContent() {
     const dispatch = useDispatch();
-    const { book } = useBook();
+    const { song } = useSong();
 
-    if (!book) return <NotFound />;
+    if (!song) return <NotFound />;
 
     const tabContents = {
         reviews: {
             content: 'No reviews available.'
         },
         'where-to-watch': { content: 'No where to watch information available.' },
-        credits: { content: <BookCredits /> },
+        credits: { content: <SongCredits /> },
         awards: { content: 'No awards available' },
         images: { content: 'No images available.' },
         videos: { content: 'No videos available.' },
-        changes: { content: <BookChanges /> }
+        changes: { content: <SongChanges /> }
     };
 
     return (
-        <BookLayout posterAlt={book.title} posterImage={book.cover}>
+        <SongLayout artworkAlt={song.name} artworkImage={song.album.artwork}>
             {{
                 mainContent: (
                     <div className='space-y-4'>
                         <div>
                             <div className='flex items-start justify-between'>
-                                <h2>{book.title}</h2>
+                                <h2>{song.name}</h2>
                             </div>
-                            {book.book_genres.length > 0 && (
+                            {song.song_genres.length > 0 && (
                                 <div className='mt-3 flex flex-wrap gap-2'>
-                                    {book.book_genres.map((genre) => (
+                                    {song.song_genres.map((genre) => (
                                         <Badge key={genre.genre} variant='outline'>
                                             {genre.genre}
                                         </Badge>
@@ -97,11 +81,11 @@ function BookPageContent() {
                         <div className='text-muted-foreground flex flex-wrap gap-x-6 gap-y-2 text-sm'>
                             <span className='flex items-center gap-1'>
                                 <Calendar className='h-4 w-4' />
-                                {dayjs(book.published_date).format('MMMM Do, YYYY')}
+                                {dayjs(song.album.release_date).format('MMMM Do, YYYY')}
                             </span>
                             <span className='flex items-center gap-1'>
                                 <Timer className='h-4 w-4' />
-                                {book.reading_time}
+                                {song.duration}
                             </span>
                             <ResponsiveDialog
                                 title='More Information'
@@ -113,16 +97,8 @@ function BookPageContent() {
                                     </span>
                                 }>
                                 <div className='flex flex-col gap-4'>
-                                    <ItemInformation icon={Languages} label='Language'>
-                                        {LANGUAGES.find((lang) => lang.code === book.language)?.label || 'Unknown'}
-                                    </ItemInformation>
-
-                                    <ItemInformation icon={Info} label='Status'>
-                                        {book.status && <>{bookReleaseStatusLabels[book.status] || 'Unknown'}</>}
-                                    </ItemInformation>
-
                                     <ItemInformation icon={Eye} label='View Count'>
-                                        {book.view_count || 0}
+                                        {song.view_count || 0}
                                     </ItemInformation>
 
                                     {/* <ItemInformation icon={TrendingUp} label='Content Score'> */}
@@ -132,20 +108,17 @@ function BookPageContent() {
                             </ResponsiveDialog>
                         </div>
 
-                        {book.overview && <ObjectOverview title={book.title} text={book.overview} />}
-
                         <div className='flex flex-wrap items-center gap-2'>
-                            <BookFavouriteButton />
-                            <ReviewBookDialog />
-                            <BookStatusPicker />
+                            <SongFavouriteButton />
+                            <ReviewSongDialog />
                             <ActionButton
                                 icon={Edit}
                                 size='sm'
                                 onClick={() =>
                                     dispatch(
                                         toggleEditDialogOpenState({
-                                            objectType: Object_Types_Enum.Book,
-                                            objectId: book.id
+                                            objectType: Object_Types_Enum.Song,
+                                            objectId: song.id
                                         })
                                     )
                                 }>
@@ -164,6 +137,6 @@ function BookPageContent() {
                     </ScrollableTabs>
                 )
             }}
-        </BookLayout>
+        </SongLayout>
     );
 }

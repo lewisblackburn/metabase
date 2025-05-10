@@ -28,7 +28,6 @@ type DataRow = {
     song_id: string;
     user_id: string;
     rating: number | null;
-    status: string | null;
     review: string | null;
     favourited: boolean;
 };
@@ -49,7 +48,6 @@ export default async function (req: Request, res: Response) {
             song_id: newData.song_id,
             user_id: newData.user_id,
             rating: null,
-            status: null,
             review: null,
             favourited: false
         };
@@ -61,7 +59,7 @@ export default async function (req: Request, res: Response) {
         if (!songName) return res.status(404).json({ error: 'Song not found' });
 
         const changeDefinitions: {
-            name: keyof Pick<DataRow, 'rating' | 'status' | 'review' | 'favourited'>;
+            name: keyof Pick<DataRow, 'rating' | 'review' | 'favourited'>;
             getType: (oldV: DataRow[keyof DataRow], newV: DataRow[keyof DataRow]) => Activity_Types_Enum | null;
         }[] = [
             {
@@ -71,15 +69,6 @@ export default async function (req: Request, res: Response) {
                     if (oldV == null) return Activity_Types_Enum.RatingAdded;
                     if (newV == null) return Activity_Types_Enum.RatingDeleted;
                     return Activity_Types_Enum.RatingChanged;
-                }
-            },
-            {
-                name: 'status',
-                getType: (oldV, newV) => {
-                    if (oldV === newV) return null;
-                    if (oldV == null) return Activity_Types_Enum.StatusAdded;
-                    if (newV == null) return Activity_Types_Enum.StatusDeleted;
-                    return Activity_Types_Enum.StatusChanged;
                 }
             },
             {
@@ -120,7 +109,6 @@ export default async function (req: Request, res: Response) {
                         activity_type: activityType,
                         details: {
                             rating: newData.rating,
-                            status: newData.status,
                             review: newData.review
                         }
                     },

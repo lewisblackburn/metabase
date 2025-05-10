@@ -1,17 +1,16 @@
-import { CoverSkeleton } from '@/components/shared/cover';
+import { ArtworkSkeleton } from '@/components/shared/artwork';
 import Grid from '@/components/shared/grid';
 import List from '@/components/shared/list';
-import { PosterSkeleton } from '@/components/shared/poster';
 import { MAX_LIMIT } from '@/constants/api.constant';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
-function BookListSkeleton() {
+function SongListSkeleton() {
     return (
         <List>
             {Array.from({ length: MAX_LIMIT }).map((_, index) => (
                 <div key={index} className='flex items-center gap-4 rounded-lg border p-4'>
                     <div className='relative aspect-[2/3] w-24 shrink-0 overflow-hidden rounded-md'>
-                        <PosterSkeleton />
+                        <ArtworkSkeleton />
                     </div>
                     <div className='min-w-0 flex-1'>
                         <Skeleton className='h-6 w-48' />
@@ -24,15 +23,15 @@ function BookListSkeleton() {
     );
 }
 
-export default function BooksSkeleton({ viewMode = 'grid' }: { viewMode?: 'grid' | 'list' }) {
+export default function SongsSkeleton({ viewMode = 'grid' }: { viewMode?: 'grid' | 'list' }) {
     if (viewMode === 'list') {
-        return <BookListSkeleton />;
+        return <SongListSkeleton />;
     }
 
     return (
         <Grid>
             {Array.from({ length: MAX_LIMIT }).map((_, index) => (
-                <CoverSkeleton key={index} />
+                <ArtworkSkeleton key={index} />
             ))}
         </Grid>
     );

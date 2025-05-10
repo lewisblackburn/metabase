@@ -40,8 +40,15 @@ export default async function (req: Request, res: Response) {
         const diff: Record<string, [any, any]> = {};
         const keys = new Set<string>([...Object.keys(OLD), ...Object.keys(NEW)]);
         for (const key of keys) {
-            // NOTE: We don't want to log changes to view_count
+            // NOTE: We don't want to log changes to view_count, vote_count, or vote_average
+            // NOTE: These are done automatically and do not have a user associated with them
             if (key === 'view_count') {
+                continue;
+            }
+            if (key === 'vote_count') {
+                continue;
+            }
+            if (key === 'vote_average') {
                 continue;
             }
             const oldVal = OLD[key];

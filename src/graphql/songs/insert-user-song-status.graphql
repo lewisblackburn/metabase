@@ -1,0 +1,8 @@
+mutation InsertUserSongStatus($object: user_song_statuses_insert_input!, $on_conflict: user_song_statuses_on_conflict) {
+    insert_user_song_statuses_one(object: $object, on_conflict: $on_conflict) {
+        favourited
+        rating
+        review
+        updated_at
+    }
+}

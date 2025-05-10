@@ -5,9 +5,12 @@ import { Fragment, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import Cover from '@/components/shared/cover';
+import Artwork from '@/components/shared/artwork';
 import Grid from '@/components/shared/grid';
 import { MAX_LIMIT } from '@/constants/api.constant';
+import SongsSidebar from '@/features/songs/components/songs-sidebar';
+import SongsSkeleton from '@/features/songs/components/songs-skeleton';
+import { useSongFilters } from '@/features/songs/hooks/use-song-filters';
 import { GetSongsQuery, useIncrementSongViewsMutation, useInfiniteGetSongsQuery } from '@/generated/graphql';
 
 import { useInView } from 'react-intersection-observer';
@@ -26,7 +29,7 @@ function SongCard({ song }: { song: GetSongsQuery['songs'][number] }) {
 
     return (
         <Link href={`songs/${song.id}`} scroll={false} onClick={handleClick}>
-            <Cover title={song.name} image={song.album.artwork} />
+            <Artwork title={song.name} image={song.album.artwork} />
         </Link>
     );
 }

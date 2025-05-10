@@ -63,7 +63,7 @@ function CreditsSection({ title, members, isLoading }: { title: string; members?
     );
 }
 
-export default function BookCredits() {
+export default function SongCredits() {
     const params = useParams<{ id: string }>();
     const { data, isLoading } = useGetCreditsQuery(
         {
@@ -80,5 +80,5 @@ export default function BookCredits() {
 
     const { credits } = data || {};
 
-    return <CreditsSection title='Author' members={credits} isLoading={isLoading} />;
+    return <CreditsSection title='Artists' members={credits} isLoading={isLoading} />;
 }

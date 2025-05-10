@@ -3,11 +3,10 @@
 import { ReactNode } from 'react';
 
 import Cover from '@/components/shared/cover';
-import Poster from '@/components/shared/poster';
 
 interface BookLayoutProps {
-    posterImage: string;
-    posterAlt: string;
+    coverImage: string;
+    coverAlt: string;
     children: {
         mainContent?: ReactNode;
         sideContent?: ReactNode;
@@ -15,14 +14,14 @@ interface BookLayoutProps {
     };
 }
 
-export default function BookLayout({ posterImage, posterAlt, children }: BookLayoutProps) {
+export default function BookLayout({ coverImage, coverAlt, children }: BookLayoutProps) {
     return (
         <div className='relative'>
             {/* Mobile Layout */}
             <div className='block md:hidden'>
                 <div className='mb-6 flex'>
                     <div className='w-40'>
-                        <Poster image={posterImage} title={posterAlt} />
+                        <Cover image={coverImage} title={coverAlt} />
                     </div>
                 </div>
                 <div className='mb-6'>{children.mainContent}</div>
@@ -33,7 +32,7 @@ export default function BookLayout({ posterImage, posterAlt, children }: BookLay
             <div className='hidden md:block'>
                 <div className='flex gap-6'>
                     <div className='w-1/3 lg:w-1/6'>
-                        <Cover image={posterImage} title={posterAlt} />
+                        <Cover image={coverImage} title={coverAlt} />
                     </div>
                     <div className='flex w-2/3 flex-col justify-end lg:w-5/6'>{children.mainContent}</div>
                 </div>

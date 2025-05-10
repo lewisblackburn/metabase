@@ -78,6 +78,7 @@ export const NAVIGATION = {
         type: OBJECT_TYPE.PERSON
     },
     songs: {
+        type: OBJECT_TYPE.SONG,
         cards: [
             {
                 icon: Sparkles,
@@ -86,28 +87,12 @@ export const NAVIGATION = {
                 path: '/dashboard/songs'
             },
             {
-                icon: Heart,
-                name: 'Popular',
-                description: "See what's trending right now.",
-                path: '',
-                disabled: true
-            },
-            {
-                icon: Play,
-                name: 'In the Charts',
-                description: "See what's playing in theaters now.",
-                path: '',
-                disabled: true
-            },
-            {
-                icon: Star,
-                name: 'Top Rated',
-                description: "See what's most popular.",
-                path: '',
-                disabled: true
+                icon: Plus,
+                name: 'Add New',
+                description: 'Add a new song to the database.',
+                path: '/dashboard/songs/new'
             }
-        ],
-        type: OBJECT_TYPE.SONG
+        ]
     },
     books: {
         type: OBJECT_TYPE.BOOK,

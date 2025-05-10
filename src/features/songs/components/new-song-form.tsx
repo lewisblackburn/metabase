@@ -1,41 +1,35 @@
 'use client';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
-import DatePickerField from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
-import TextareaField from '@/components/form/textarea';
-import { useInsertBookMutation } from '@/generated/graphql';
+import { useInsertSongMutation } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { bookGenresOptions } from '../constants/song-enums';
-import { NewBookSchema, newBookSchema } from '../schemas/new-song.schema';
+import { songGenresOptions } from '../constants/song-enums';
+import { NewSongSchemaType, newSongSchema } from '../schemas/new-song.schema';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-export function NewBookForm() {
-    const form = useForm<NewBookSchema>({
-        resolver: zodResolver(newBookSchema),
+export function NewSongForm() {
+    const form = useForm<NewSongSchemaType>({
+        resolver: zodResolver(newSongSchema),
         defaultValues: {
-            title: '',
-            overview: '',
-            publishedDate: undefined,
+            name: '',
             genres: []
         }
     });
-    const { mutateAsync: insertBook, isPending } = useInsertBookMutation();
+    const { mutateAsync: insertSong, isPending } = useInsertSongMutation();
 
-    async function onSubmit(values: NewBookSchema) {
-        await insertBook(
+    async function onSubmit(values: NewSongSchemaType) {
+        await insertSong(
             {
                 object: {
-                    title: values.title,
-                    overview: values.overview,
-                    published_date: values.publishedDate,
-                    book_genres: {
+                    name: values.name,
+                    song_genres: {
                         data:
                             values.genres?.map((genre) => ({
                                 genre: genre.value
@@ -45,7 +39,7 @@ export function NewBookForm() {
             },
             {
                 onSuccess: () => {
-                    toast.success('Book created successfully');
+                    toast.success('Song created successfully');
                     form.reset();
                 },
                 onError: (error) => {
@@ -60,30 +54,10 @@ export function NewBookForm() {
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
                 <FormField
                     control={form.control}
-                    name='title'
+                    name='name'
                     render={({ field }) => (
-                        <BaseFormLayout label='Title'>
-                            <InputField placeholder='Enter book title' {...field} />
-                        </BaseFormLayout>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name='overview'
-                    render={({ field }) => (
-                        <BaseFormLayout label='Overview'>
-                            <TextareaField placeholder='Enter book overview' {...field} />
-                        </BaseFormLayout>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name='publishedDate'
-                    render={({ field }) => (
-                        <BaseFormLayout label='Published Date'>
-                            <DatePickerField {...field} />
+                        <BaseFormLayout label='Name'>
+                            <InputField placeholder='Enter song name' {...field} />
                         </BaseFormLayout>
                     )}
                 />
@@ -97,7 +71,7 @@ export function NewBookForm() {
                                 commandProps={{
                                     label: 'Select Genres'
                                 }}
-                                defaultOptions={bookGenresOptions.map((genre) => ({
+                                defaultOptions={songGenresOptions.map((genre) => ({
                                     label: genre.label,
                                     value: genre.value
                                 }))}

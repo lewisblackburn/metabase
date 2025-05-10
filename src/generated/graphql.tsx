@@ -17445,9 +17445,9 @@ export type Query_Root = {
   user_movie_statuses_aggregate: User_Movie_Statuses_Aggregate;
   /** fetch data from the table: "user_movie_statuses" using primary key columns */
   user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
-  /** fetch data from the table: "user_song_statuses" */
+  /** An array relationship */
   user_song_statuses: Array<User_Song_Statuses>;
-  /** fetch aggregated fields from the table: "user_song_statuses" */
+  /** An aggregate relationship */
   user_song_statuses_aggregate: User_Song_Statuses_Aggregate;
   /** fetch data from the table: "user_song_statuses" using primary key columns */
   user_song_statuses_by_pk?: Maybe<User_Song_Statuses>;
@@ -20592,6 +20592,10 @@ export type Songs = {
   spotify_uri?: Maybe<Scalars['String']['output']>;
   track_number?: Maybe<Scalars['Int']['output']>;
   type?: Maybe<Scalars['String']['output']>;
+  /** An array relationship */
+  user_song_statuses: Array<User_Song_Statuses>;
+  /** An aggregate relationship */
+  user_song_statuses_aggregate: User_Song_Statuses_Aggregate;
   verified?: Maybe<Scalars['Boolean']['output']>;
   view_count?: Maybe<Scalars['Int']['output']>;
   vote_average?: Maybe<Scalars['Float']['output']>;
@@ -20696,6 +20700,26 @@ export type SongsSong_Keywords_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Song_Keywords_Order_By>>;
   where?: InputMaybe<Song_Keywords_Bool_Exp>;
+};
+
+
+/** columns and relationships of "songs" */
+export type SongsUser_Song_StatusesArgs = {
+  distinct_on?: InputMaybe<Array<User_Song_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Song_Statuses_Order_By>>;
+  where?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+};
+
+
+/** columns and relationships of "songs" */
+export type SongsUser_Song_Statuses_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Song_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Song_Statuses_Order_By>>;
+  where?: InputMaybe<User_Song_Statuses_Bool_Exp>;
 };
 
 /** aggregated selection of "songs" */
@@ -20827,6 +20851,8 @@ export type Songs_Bool_Exp = {
   spotify_uri?: InputMaybe<String_Comparison_Exp>;
   track_number?: InputMaybe<Int_Comparison_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
+  user_song_statuses?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+  user_song_statuses_aggregate?: InputMaybe<User_Song_Statuses_Aggregate_Bool_Exp>;
   verified?: InputMaybe<Boolean_Comparison_Exp>;
   view_count?: InputMaybe<Int_Comparison_Exp>;
   vote_average?: InputMaybe<Float_Comparison_Exp>;
@@ -20870,6 +20896,7 @@ export type Songs_Insert_Input = {
   spotify_uri?: InputMaybe<Scalars['String']['input']>;
   track_number?: InputMaybe<Scalars['Int']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
+  user_song_statuses?: InputMaybe<User_Song_Statuses_Arr_Rel_Insert_Input>;
   verified?: InputMaybe<Scalars['Boolean']['input']>;
   view_count?: InputMaybe<Scalars['Int']['input']>;
   vote_average?: InputMaybe<Scalars['Float']['input']>;
@@ -20994,6 +21021,7 @@ export type Songs_Order_By = {
   spotify_uri?: InputMaybe<Order_By>;
   track_number?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
+  user_song_statuses_aggregate?: InputMaybe<User_Song_Statuses_Aggregate_Order_By>;
   verified?: InputMaybe<Order_By>;
   view_count?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
@@ -22006,9 +22034,9 @@ export type Subscription_Root = {
   user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
   /** fetch data from the table in a streaming manner: "user_movie_statuses" */
   user_movie_statuses_stream: Array<User_Movie_Statuses>;
-  /** fetch data from the table: "user_song_statuses" */
+  /** An array relationship */
   user_song_statuses: Array<User_Song_Statuses>;
-  /** fetch aggregated fields from the table: "user_song_statuses" */
+  /** An aggregate relationship */
   user_song_statuses_aggregate: User_Song_Statuses_Aggregate;
   /** fetch data from the table: "user_song_statuses" using primary key columns */
   user_song_statuses_by_pk?: Maybe<User_Song_Statuses>;
@@ -25541,6 +25569,33 @@ export type User_Song_Statuses_Aggregate = {
   nodes: Array<User_Song_Statuses>;
 };
 
+export type User_Song_Statuses_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<User_Song_Statuses_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<User_Song_Statuses_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<User_Song_Statuses_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Song_Statuses_Aggregate_Bool_Exp_Bool_And = {
+  arguments: User_Song_Statuses_Select_Column_User_Song_Statuses_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Song_Statuses_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: User_Song_Statuses_Select_Column_User_Song_Statuses_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Song_Statuses_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Song_Statuses_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "user_song_statuses" */
 export type User_Song_Statuses_Aggregate_Fields = {
   __typename?: 'user_song_statuses_aggregate_fields';
@@ -25564,10 +25619,37 @@ export type User_Song_Statuses_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "user_song_statuses" */
+export type User_Song_Statuses_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Song_Statuses_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Song_Statuses_Max_Order_By>;
+  min?: InputMaybe<User_Song_Statuses_Min_Order_By>;
+  stddev?: InputMaybe<User_Song_Statuses_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Song_Statuses_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Song_Statuses_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Song_Statuses_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Song_Statuses_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Song_Statuses_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Song_Statuses_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_song_statuses" */
+export type User_Song_Statuses_Arr_Rel_Insert_Input = {
+  data: Array<User_Song_Statuses_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Song_Statuses_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type User_Song_Statuses_Avg_Fields = {
   __typename?: 'user_song_statuses_avg_fields';
   rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Avg_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "user_song_statuses". All fields are combined with a logical 'AND'. */
@@ -25616,6 +25698,15 @@ export type User_Song_Statuses_Max_Fields = {
   user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
+/** order by max() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Max_Order_By = {
+  rating?: InputMaybe<Order_By>;
+  review?: InputMaybe<Order_By>;
+  song_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type User_Song_Statuses_Min_Fields = {
   __typename?: 'user_song_statuses_min_fields';
@@ -25624,6 +25715,15 @@ export type User_Song_Statuses_Min_Fields = {
   song_id?: Maybe<Scalars['uuid']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Min_Order_By = {
+  rating?: InputMaybe<Order_By>;
+  review?: InputMaybe<Order_By>;
+  song_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "user_song_statuses" */
@@ -25674,6 +25774,18 @@ export enum User_Song_Statuses_Select_Column {
   UserId = 'user_id'
 }
 
+/** select "user_song_statuses_aggregate_bool_exp_bool_and_arguments_columns" columns of table "user_song_statuses" */
+export enum User_Song_Statuses_Select_Column_User_Song_Statuses_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Favourited = 'favourited'
+}
+
+/** select "user_song_statuses_aggregate_bool_exp_bool_or_arguments_columns" columns of table "user_song_statuses" */
+export enum User_Song_Statuses_Select_Column_User_Song_Statuses_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Favourited = 'favourited'
+}
+
 /** input type for updating data in table "user_song_statuses" */
 export type User_Song_Statuses_Set_Input = {
   favourited?: InputMaybe<Scalars['Boolean']['input']>;
@@ -25690,16 +25802,31 @@ export type User_Song_Statuses_Stddev_Fields = {
   rating?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Stddev_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type User_Song_Statuses_Stddev_Pop_Fields = {
   __typename?: 'user_song_statuses_stddev_pop_fields';
   rating?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Stddev_Pop_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type User_Song_Statuses_Stddev_Samp_Fields = {
   __typename?: 'user_song_statuses_stddev_samp_fields';
   rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Stddev_Samp_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "user_song_statuses" */
@@ -25724,6 +25851,11 @@ export type User_Song_Statuses_Stream_Cursor_Value_Input = {
 export type User_Song_Statuses_Sum_Fields = {
   __typename?: 'user_song_statuses_sum_fields';
   rating?: Maybe<Scalars['smallint']['output']>;
+};
+
+/** order by sum() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Sum_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "user_song_statuses" */
@@ -25757,16 +25889,31 @@ export type User_Song_Statuses_Var_Pop_Fields = {
   rating?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Var_Pop_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type User_Song_Statuses_Var_Samp_Fields = {
   __typename?: 'user_song_statuses_var_samp_fields';
   rating?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Var_Samp_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type User_Song_Statuses_Variance_Fields = {
   __typename?: 'user_song_statuses_variance_fields';
   rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "user_song_statuses" */
+export type User_Song_Statuses_Variance_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
@@ -27343,7 +27490,7 @@ export type GetSongQueryVariables = Exact<{
 }>;
 
 
-export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, album: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any }, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, user_song_statuses: Array<{ __typename?: 'user_song_statuses', favourited: boolean, rating?: any | null, review?: string | null, updated_at: any }>, album: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any }, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetSongsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Songs_Select_Column> | Songs_Select_Column>;
@@ -27369,6 +27516,14 @@ export type InsertSongMutationVariables = Exact<{
 
 
 export type InsertSongMutation = { __typename?: 'mutation_root', insert_songs_one?: { __typename?: 'songs', id: any, name: string } | null };
+
+export type InsertUserSongStatusMutationVariables = Exact<{
+  object: User_Song_Statuses_Insert_Input;
+  on_conflict?: InputMaybe<User_Song_Statuses_On_Conflict>;
+}>;
+
+
+export type InsertUserSongStatusMutation = { __typename?: 'mutation_root', insert_user_song_statuses_one?: { __typename?: 'user_song_statuses', favourited: boolean, rating?: any | null, review?: string | null, updated_at: any } | null };
 
 export type UpdateSongMutationVariables = Exact<{
   pk_columns: Songs_Pk_Columns_Input;
@@ -29010,6 +29165,18 @@ export const GetSongDocument = `
   songs_by_pk(id: $id) {
     id
     name
+    content_score
+    created_at
+    duration
+    view_count
+    vote_average
+    vote_count
+    user_song_statuses {
+      favourited
+      rating
+      review
+      updated_at
+    }
     album {
       artwork
       release_date
@@ -29017,12 +29184,6 @@ export const GetSongDocument = `
       name
       id
     }
-    content_score
-    created_at
-    duration
-    view_count
-    vote_average
-    vote_count
     song_availabilities {
       availability
     }
@@ -29166,6 +29327,30 @@ export const useInsertSongMutation = <
       {
     mutationKey: ['InsertSong'],
     mutationFn: (variables?: InsertSongMutationVariables) => fetcher<InsertSongMutation, InsertSongMutationVariables>(InsertSongDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertUserSongStatusDocument = `
+    mutation InsertUserSongStatus($object: user_song_statuses_insert_input!, $on_conflict: user_song_statuses_on_conflict) {
+  insert_user_song_statuses_one(object: $object, on_conflict: $on_conflict) {
+    favourited
+    rating
+    review
+    updated_at
+  }
+}
+    `;
+
+export const useInsertUserSongStatusMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertUserSongStatusMutation, TError, InsertUserSongStatusMutationVariables, TContext>) => {
+    
+    return useMutation<InsertUserSongStatusMutation, TError, InsertUserSongStatusMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertUserSongStatus'],
+    mutationFn: (variables?: InsertUserSongStatusMutationVariables) => fetcher<InsertUserSongStatusMutation, InsertUserSongStatusMutationVariables>(InsertUserSongStatusDocument, variables)(),
     ...options
   }
     )};

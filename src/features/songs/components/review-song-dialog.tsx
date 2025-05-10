@@ -1,79 +1,79 @@
 import ReviewDialog, { ReviewFormValues } from '@/components/shared/review-dialog';
 import {
-    User_Book_Statuses_Constraint,
-    User_Book_Statuses_Update_Column,
-    useInsertUserBookStatusMutation
+    User_Song_Statuses_Constraint,
+    User_Song_Statuses_Update_Column,
+    useInsertUserSongStatusMutation
 } from '@/generated/graphql';
 import { useUserId } from '@nhost/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useBook } from './book-provider';
+import { useSong } from './song-provider';
 import { toast } from 'sonner';
 
-export default function ReviewBookDialog() {
+export default function ReviewSongDialog() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { book } = useBook();
+    const { song } = useSong();
 
-    const { mutateAsync: insertUserBookStatus } = useInsertUserBookStatusMutation({
+    const { mutateAsync: insertUserSongStatus } = useInsertUserSongStatusMutation({
         onError: (error) => toast.error((error as Error).message)
     });
 
-    if (!book) return null;
+    if (!song) return null;
 
     const defaultValues = {
-        rating: book.user_book_statuses[0]?.rating || 0,
-        review: book.user_book_statuses[0]?.review || ''
+        rating: song.user_song_statuses[0]?.rating || 0,
+        review: song.user_song_statuses[0]?.review || ''
     };
 
     const handleSubmitReview = async (reviewData: ReviewFormValues) => {
-        await insertUserBookStatus(
+        await insertUserSongStatus(
             {
                 object: {
-                    book_id: book.id,
+                    song_id: song.id,
                     rating: reviewData.rating,
                     review: !!reviewData?.review ? reviewData.review : null
                 },
                 on_conflict: {
-                    constraint: User_Book_Statuses_Constraint.UserBookStatusesPkey,
-                    update_columns: [User_Book_Statuses_Update_Column.Rating, User_Book_Statuses_Update_Column.Review],
+                    constraint: User_Song_Statuses_Constraint.UserSongStatusesPkey,
+                    update_columns: [User_Song_Statuses_Update_Column.Rating, User_Song_Statuses_Update_Column.Review],
                     where: {
                         user_id: { _eq: userId },
-                        book_id: { _eq: book.id }
+                        song_id: { _eq: song.id }
                     }
                 }
             },
             {
                 onSuccess: () => {
-                    toast.success('Book reviewed successfully');
-                    queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
-                    queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
+                    toast.success('Song reviewed successfully');
+                    queryClient.invalidateQueries({ queryKey: ['song', song?.id] });
+                    queryClient.invalidateQueries({ queryKey: ['GetSongs.infinite'] });
                 }
             }
         );
     };
 
     const handleDeleteReview = async () => {
-        await insertUserBookStatus(
+        await insertUserSongStatus(
             {
                 object: {
-                    book_id: book.id,
+                    song_id: song.id,
                     rating: null,
                     review: null
                 },
                 on_conflict: {
-                    constraint: User_Book_Statuses_Constraint.UserBookStatusesPkey,
-                    update_columns: [User_Book_Statuses_Update_Column.Rating, User_Book_Statuses_Update_Column.Review],
+                    constraint: User_Song_Statuses_Constraint.UserSongStatusesPkey,
+                    update_columns: [User_Song_Statuses_Update_Column.Rating, User_Song_Statuses_Update_Column.Review],
                     where: {
                         user_id: { _eq: userId },
-                        book_id: { _eq: book.id }
+                        song_id: { _eq: song.id }
                     }
                 }
             },
             {
                 onSuccess: () => {
-                    toast.success('Book review deleted successfully');
-                    queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
+                    toast.success('Song review deleted successfully');
+                    queryClient.invalidateQueries({ queryKey: ['song', song?.id] });
                 }
             }
         );

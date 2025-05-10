@@ -75,7 +75,7 @@ function BookPageContent() {
     };
 
     return (
-        <BookLayout posterAlt={book.title} posterImage={book.cover}>
+        <BookLayout coverAlt={book.title} coverImage={book.cover}>
             {{
                 mainContent: (
                     <div className='space-y-4'>

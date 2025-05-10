@@ -1,47 +1,47 @@
 import ActionButton from '@/components/shared/action-button';
 import {
-    User_Book_Statuses_Constraint,
-    User_Book_Statuses_Update_Column,
-    useInsertUserBookStatusMutation
+    User_Song_Statuses_Constraint,
+    User_Song_Statuses_Update_Column,
+    useInsertUserSongStatusMutation
 } from '@/generated/graphql';
 import { cn } from '@/lib/utils';
 import { useUserId } from '@nhost/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useBook } from './book-provider';
+import { useSong } from './song-provider';
 import { Heart } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function BookFavouriteButton() {
+export default function SongFavouriteButton() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { book } = useBook();
+    const { song } = useSong();
 
-    const { mutateAsync: insertUserBookStatus } = useInsertUserBookStatusMutation({
+    const { mutateAsync: insertUserSongStatus } = useInsertUserSongStatusMutation({
         onSuccess: () => {
-            toast.success('Book status updated successfully');
-            queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
-            queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
+            toast.success('Song status updated successfully');
+            queryClient.invalidateQueries({ queryKey: ['song', song?.id] });
+            queryClient.invalidateQueries({ queryKey: ['GetSongs.infinite'] });
         },
         onError: (error) => toast.error((error as Error).message)
     });
 
-    if (!book) return null;
+    if (!song) return null;
 
-    const isFavourited = book.user_book_statuses[0]?.favourited || false;
+    const isFavourited = song.user_song_statuses[0]?.favourited || false;
 
     const handleClick = async () => {
-        await insertUserBookStatus({
+        await insertUserSongStatus({
             object: {
-                book_id: book.id,
+                song_id: song.id,
                 favourited: !isFavourited
             },
             on_conflict: {
-                constraint: User_Book_Statuses_Constraint.UserBookStatusesPkey,
-                update_columns: [User_Book_Statuses_Update_Column.Favourited],
+                constraint: User_Song_Statuses_Constraint.UserSongStatusesPkey,
+                update_columns: [User_Song_Statuses_Update_Column.Favourited],
                 where: {
                     user_id: { _eq: userId },
-                    book_id: { _eq: book.id }
+                    song_id: { _eq: song.id }
                 }
             }
         });
