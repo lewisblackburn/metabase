@@ -8,4 +8,4 @@ export const newMovieSchema = z.object({
     genres: z.array(movieGenresOptionsSchema).optional()
 });
 
-export type NewMovieSchema = z.infer<typeof newMovieSchema>;
+export type NewMovieSchemaType = z.infer<typeof newMovieSchema>;

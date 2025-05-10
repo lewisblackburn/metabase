@@ -1,0 +1,6 @@
+mutation IncrementSongViews($id: uuid!) {
+    update_songs_by_pk(pk_columns: { id: $id }, _inc: { view_count: 1 }) {
+        id
+        view_count
+    }
+}

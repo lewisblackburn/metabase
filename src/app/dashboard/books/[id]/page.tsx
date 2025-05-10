@@ -15,8 +15,6 @@ import BookStatusPicker from '@/features/books/components/book-status-picker';
 import ReviewBookDialog from '@/features/books/components/review-book-dialog';
 import { bookReleaseStatusLabels } from '@/features/books/constants/book-enums';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
-import MovieChanges from '@/features/movies/components/movie-changes';
-import MovieCredits from '@/features/movies/components/movie-credits';
 import ObjectOverview from '@/features/movies/components/movie-overview';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
@@ -99,7 +97,7 @@ function BookPageContent() {
                         <div className='text-muted-foreground flex flex-wrap gap-x-6 gap-y-2 text-sm'>
                             <span className='flex items-center gap-1'>
                                 <Calendar className='h-4 w-4' />
-                                {dayjs(book.publish_date).format('MMMM Do, YYYY')}
+                                {dayjs(book.published_date).format('MMMM Do, YYYY')}
                             </span>
                             <span className='flex items-center gap-1'>
                                 <Timer className='h-4 w-4' />

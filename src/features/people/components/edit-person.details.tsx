@@ -8,7 +8,7 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { PersonDetails, personDetailsSchema } from '../schemas/person-details.schema';
+import { EditPersonSchemaType, editPersonSchema } from '../schemas/edit-person.schema';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -30,14 +30,14 @@ export default function EditPersonDetails({ personId }: EditPersonDetailsProps) 
 
     if (!person) return null;
 
-    const form = useForm<PersonDetails>({
-        resolver: zodResolver(personDetailsSchema),
+    const form = useForm<EditPersonSchemaType>({
+        resolver: zodResolver(editPersonSchema),
         defaultValues: {
             name: person.name
         }
     });
 
-    async function onSubmit(values: PersonDetails) {
+    async function onSubmit(values: EditPersonSchemaType) {
         await updatePerson(
             {
                 id: personId,

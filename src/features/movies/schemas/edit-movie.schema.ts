@@ -21,4 +21,4 @@ export const editMovieSchema = z.object({
     homepage: z.string().url().optional().or(z.literal(''))
 });
 
-export type EditMovieSchema = z.infer<typeof editMovieSchema>;
+export type EditMovieSchemaType = z.infer<typeof editMovieSchema>;

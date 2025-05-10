@@ -82,7 +82,7 @@ export async function importBookFromGoogleBooks(
             googlebooks_id: bookData.id,
             overview: bookData.volumeInfo.description,
             // publisher: bookData.volumeInfo.publisher,
-            publish_date: bookData.volumeInfo.publishedDate ? new Date(bookData.volumeInfo.publishedDate) : undefined,
+            published_date: bookData.volumeInfo.publishedDate ? new Date(bookData.volumeInfo.publishedDate) : undefined,
             // page_count: bookData.volumeInfo.pageCount,
             // language: bookData.volumeInfo.language,
             cover: cover ? nhost.storage.getPublicUrl({ fileId: cover.id }) : undefined,

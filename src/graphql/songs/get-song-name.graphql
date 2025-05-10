@@ -1,0 +1,5 @@
+query GetSongName($song_id: uuid!) {
+    songs(where: { id: { _eq: $song_id } }) {
+        name
+    }
+}

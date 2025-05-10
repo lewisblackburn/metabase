@@ -67,6 +67,12 @@ export const NAVIGATION = {
                 name: 'Discover',
                 description: 'Explore a wide-range of people with filters and sorting options.',
                 path: ''
+            },
+            {
+                icon: Plus,
+                name: 'Add New',
+                description: 'Add a new person to the database.',
+                path: '/dashboard/people/new'
             }
         ],
         type: OBJECT_TYPE.PERSON
@@ -111,6 +117,12 @@ export const NAVIGATION = {
                 name: 'Discover',
                 description: 'Explore a wide-range of books with filters and sorting options.',
                 path: '/dashboard/books'
+            },
+            {
+                icon: Plus,
+                name: 'Add New',
+                description: 'Add a new book to the database.',
+                path: '/dashboard/books/new'
             }
         ],
         disabled: true

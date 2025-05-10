@@ -163,7 +163,7 @@ const Navbar: React.FC = () => {
                             </NavigationMenuItem>
 
                             <NavigationMenuItem>
-                                <NavigationMenuTrigger className='flex items-center gap-1.5'>
+                                <NavigationMenuTrigger className='flex items-center gap-1.5' disabled={true}>
                                     <OBJECT_TYPE.TV.icon className='mt-0.5 size-3' />
                                     <span>{OBJECT_TYPE.TV.plural}</span>
                                 </NavigationMenuTrigger>
@@ -308,7 +308,7 @@ const Navbar: React.FC = () => {
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
-                                <NavigationMenuTrigger className='flex items-center gap-1.5'>
+                                <NavigationMenuTrigger className='flex items-center gap-1.5' disabled={true}>
                                     <OBJECT_TYPE.GAME.icon className='mt-0.5 size-3' />
                                     <span>{OBJECT_TYPE.GAME.plural}</span>
                                 </NavigationMenuTrigger>
@@ -411,7 +411,7 @@ const Navbar: React.FC = () => {
                                         </AccordionContent>
                                     </AccordionItem>
 
-                                    <AccordionItem value='tv' className='border-b-0'>
+                                    <AccordionItem value='tv' className='border-b-0' disabled={true}>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
                                                 <OBJECT_TYPE.TV.icon className='mr-2 size-4' />
@@ -497,7 +497,7 @@ const Navbar: React.FC = () => {
                                         </AccordionContent>
                                     </AccordionItem>
 
-                                    <AccordionItem value='game' className='border-b-0'>
+                                    <AccordionItem value='game' className='border-b-0' disabled={true}>
                                         <AccordionTrigger className='hover:bg-muted/50 rounded-md px-4 py-2 hover:no-underline'>
                                             <div className='flex items-center'>
                                                 <OBJECT_TYPE.GAME.icon className='mr-2 size-4' />

@@ -38,7 +38,15 @@ export default async function (req: Request, res: Response) {
         }
 
         const object_type =
-            table === 'movies' ? Object_Types_Enum.Movie : table === 'books' ? Object_Types_Enum.Book : null;
+            table === 'movies'
+                ? Object_Types_Enum.Movie
+                : table === 'books'
+                  ? Object_Types_Enum.Book
+                  : table === 'songs'
+                    ? Object_Types_Enum.Song
+                    : table === 'albums'
+                      ? Object_Types_Enum.Album
+                      : null;
 
         if (!object_type) {
             return res.status(200).json({ skipped: `unsupported table ${table}` });

@@ -18,7 +18,7 @@ import {
     movieCertificationOptions,
     movieReleaseStatusOptions
 } from '../../constants/movie-enums';
-import { EditMovieSchema, editMovieSchema } from '../../schemas/edit-movie.schema';
+import { EditMovieSchemaType, editMovieSchema } from '../../schemas/edit-movie.schema';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -40,7 +40,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
 
     if (!movie) return null;
 
-    const form = useForm<EditMovieSchema>({
+    const form = useForm<EditMovieSchemaType>({
         resolver: zodResolver(editMovieSchema),
         defaultValues: {
             title: movie.title,
@@ -64,7 +64,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
         }
     });
 
-    async function onSubmit(values: EditMovieSchema) {
+    async function onSubmit(values: EditMovieSchemaType) {
         await updateMovie(
             {
                 id: movieId,

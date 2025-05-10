@@ -2,27 +2,28 @@ query GetSong($id: uuid!) {
     songs_by_pk(id: $id) {
         id
         name
-        duration
-        content_score
-        spotify_id
-        apple_music_id
-        album_id
-        track_number
-        explicit
-        type
-        spotify_uri
-        disc_number
         album {
-            id
-            name
             artwork
             release_date
-            type
-        }
-        credits {
+            artwork
+            name
             id
-            person {
-                name
+        }
+        content_score
+        created_at
+        duration
+        view_count
+        vote_average
+        vote_count
+        song_availabilities {
+            availability
+        }
+        song_genres {
+            genre
+        }
+        song_keywords {
+            keyword {
+                keyword
             }
         }
     }

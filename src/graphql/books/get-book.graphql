@@ -7,7 +7,7 @@ query GetBook($id: uuid!) {
         content_score
         created_at
         language
-        publish_date
+        published_date
         reading_time
         view_count
         vote_average
