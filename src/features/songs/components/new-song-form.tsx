@@ -19,7 +19,8 @@ export function NewSongForm() {
         resolver: zodResolver(newSongSchema),
         defaultValues: {
             name: '',
-            genres: []
+            genres: [],
+            duration: ''
         }
     });
     const { mutateAsync: insertSong, isPending } = useInsertSongMutation();
@@ -34,7 +35,8 @@ export function NewSongForm() {
                             values.genres?.map((genre) => ({
                                 genre: genre.value
                             })) ?? []
-                    }
+                    },
+                    duration: values.duration
                 }
             },
             {
@@ -79,6 +81,16 @@ export function NewSongForm() {
                                 emptyIndicator='No genres found'
                                 {...field}
                             />
+                        </BaseFormLayout>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name='duration'
+                    render={({ field }) => (
+                        <BaseFormLayout label='Duration'>
+                            <InputField placeholder='Enter song duration (e.g. 1 minute 30 seconds)' {...field} />
                         </BaseFormLayout>
                     )}
                 />

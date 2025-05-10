@@ -1,9 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
-import NextImage from 'next/image';
-
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
 import ImageWithSkeleton from './image-with-skeleton';

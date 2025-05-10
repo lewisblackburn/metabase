@@ -29,7 +29,7 @@ function SongCard({ song }: { song: GetSongsQuery['songs'][number] }) {
 
     return (
         <Link href={`songs/${song.id}`} scroll={false} onClick={handleClick}>
-            <Artwork title={song.name} image={song.album.artwork} />
+            <Artwork title={song.name} image={song.album?.artwork ?? 'https://placehold.co/450x450x.png'} />
         </Link>
     );
 }

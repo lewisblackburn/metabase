@@ -79,9 +79,9 @@ const Navbar: React.FC = () => {
         }
     );
 
-    const featuredMovie = featuredItemsData?.featuredMovie[0];
-    const featuredSong = featuredItemsData?.featuredSong[0];
-    const featuredBook = featuredItemsData?.featuredBook[0];
+    const featuredMovie = featuredItemsData?.featuredMovie[0] ?? null;
+    const featuredSong = featuredItemsData?.featuredSong[0] ?? null;
+    const featuredBook = featuredItemsData?.featuredBook[0] ?? null;
 
     const handleOpenCommandPanel = () => {
         dispatch(toggleCommandPanelOpenState());
@@ -281,7 +281,10 @@ const Navbar: React.FC = () => {
                                                             href={`/dashboard/${OBJECT_TYPE.SONG.path}/${featuredSong.id}`}
                                                             className='block h-full'>
                                                             <Artwork
-                                                                image={featuredSong.album.artwork}
+                                                                image={
+                                                                    featuredSong.album?.artwork ??
+                                                                    'https://placehold.co/128x128.png'
+                                                                }
                                                                 title={featuredSong.name}
                                                             />
                                                         </Link>

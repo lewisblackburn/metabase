@@ -59,7 +59,7 @@ function SongPageContent() {
     };
 
     return (
-        <SongLayout artworkAlt={song.name} artworkImage={song.album.artwork}>
+        <SongLayout artworkAlt={song.name} artworkImage={song.album?.artwork ?? 'https://placehold.co/450x450x.png'}>
             {{
                 mainContent: (
                     <div className='space-y-4'>
@@ -81,7 +81,7 @@ function SongPageContent() {
                         <div className='text-muted-foreground flex flex-wrap gap-x-6 gap-y-2 text-sm'>
                             <span className='flex items-center gap-1'>
                                 <Calendar className='h-4 w-4' />
-                                {dayjs(song.album.release_date).format('MMMM Do, YYYY')}
+                                {dayjs(song.album?.release_date).format('MMMM Do, YYYY')}
                             </span>
                             <span className='flex items-center gap-1'>
                                 <Timer className='h-4 w-4' />
