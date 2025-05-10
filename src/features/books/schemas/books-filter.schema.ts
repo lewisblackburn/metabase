@@ -32,4 +32,4 @@ export const booksFilterSchema = z.object({
     keywords: z.array(z.object({ id: z.string(), text: z.string() })).optional()
 });
 
-export type BooksFilter = z.infer<typeof booksFilterSchema>;
+export type BooksFilterType = z.infer<typeof booksFilterSchema>;

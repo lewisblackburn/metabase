@@ -20,11 +20,11 @@ import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
 import { RootState } from '@/store/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { bookAvailabilityOptions, bookGenresOptions, bookReleaseStatusOptions } from '../constants/book-enums';
-import { booksFilterSchema } from '../schemas/books-filter.schema';
-import { BooksFilterType } from '../schemas/books-filter.schema';
-import { resetBooksFilter } from '../store/books-filter.slice';
-import { setBooksFilter } from '../store/books-filter.slice';
+import { bookAvailabilityOptions, bookGenresOptions, bookReleaseStatusOptions } from '../constants/song-enums';
+import { booksFilterSchema } from '../schemas/songs-filter.schema';
+import { BooksFilter } from '../schemas/songs-filter.schema';
+import { resetBooksFilter } from '../store/songs-filter.slice';
+import { setBooksFilter } from '../store/songs-filter.slice';
 import { Tag, TagInput } from 'emblor';
 import { Calendar, Flame, Settings2, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -38,7 +38,7 @@ export default function BooksSidebar() {
     const booksFilter = useSelector((state: RootState) => state.booksFilter);
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
-    const form = useForm<BooksFilterType>({
+    const form = useForm<BooksFilter>({
         resolver: zodResolver(booksFilterSchema),
         defaultValues: booksFilter
     });
@@ -47,7 +47,7 @@ export default function BooksSidebar() {
         form.reset(booksFilter);
     }, [booksFilter, form]);
 
-    function onSubmit(values: BooksFilterType) {
+    function onSubmit(values: BooksFilter) {
         dispatch(setBooksFilter(values));
         setOpen(false);
         toast.success('Filters Applied');

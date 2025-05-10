@@ -8,4 +8,4 @@ export const newBookSchema = z.object({
     genres: z.array(bookGenresOptionsSchema).optional()
 });
 
-export type NewBookSchema = z.infer<typeof newBookSchema>;
+export type NewBookSchemaType = z.infer<typeof newBookSchema>;

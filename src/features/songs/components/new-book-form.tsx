@@ -10,14 +10,14 @@ import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { bookGenresOptions } from '../constants/book-enums';
-import { NewBookSchemaType, newBookSchema } from '../schemas/new-book.schema';
+import { bookGenresOptions } from '../constants/song-enums';
+import { NewBookSchema, newBookSchema } from '../schemas/new-song.schema';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export function NewBookForm() {
-    const form = useForm<NewBookSchemaType>({
+    const form = useForm<NewBookSchema>({
         resolver: zodResolver(newBookSchema),
         defaultValues: {
             title: '',
@@ -28,7 +28,7 @@ export function NewBookForm() {
     });
     const { mutateAsync: insertBook, isPending } = useInsertBookMutation();
 
-    async function onSubmit(values: NewBookSchemaType) {
+    async function onSubmit(values: NewBookSchema) {
         await insertBook(
             {
                 object: {

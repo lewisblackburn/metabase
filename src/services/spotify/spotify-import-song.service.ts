@@ -7,9 +7,9 @@ import {
     Credit_Types_Enum,
     Credits_Constraint,
     Credits_Insert_Input,
-    GetSongBySpotify_IdDocument,
-    GetSongBySpotify_IdQuery,
-    GetSongBySpotify_IdQueryVariables,
+    GetSongBySpotifyIdDocument,
+    GetSongBySpotifyIdQuery,
+    GetSongBySpotifyIdQueryVariables,
     InsertSongDocument,
     InsertSongMutation,
     InsertSongMutationVariables,
@@ -31,8 +31,8 @@ export async function importSongFromSpotify(
     spotifyId: string
 ): Promise<InsertSongMutation['insert_songs_one'] | { message: string }> {
     try {
-        const existingSong = await fetcher<GetSongBySpotify_IdQuery, GetSongBySpotify_IdQueryVariables>(
-            GetSongBySpotify_IdDocument,
+        const existingSong = await fetcher<GetSongBySpotifyIdQuery, GetSongBySpotifyIdQueryVariables>(
+            GetSongBySpotifyIdDocument,
             { spotify_id: spotifyId }
         )();
 

@@ -1,104 +1,169 @@
 'use client';
 
-import { useState } from 'react';
-
-import Image from 'next/image';
-
+import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
-import Artwork from '@/components/shared/artwork';
-import AwardTable from '@/components/shared/award-table';
-import { CustomBadge } from '@/components/ui/custom-badge';
-import { SONG_DATA } from '@/constants/fakedb.constant';
-import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { cn } from '@/lib/utils';
-import { Separator } from '@/registry/new-york-v4/ui/separator';
+import ItemInformation from '@/components/shared/item-information';
+import ResponsiveDialog from '@/components/shared/responsive-dailog';
+import ScrollableTabs from '@/components/shared/scrollable-tabs';
+import { LANGUAGES } from '@/constants/languages.constant';
+import BookChanges from '@/features/books/components/book-changes';
+import BookCredits from '@/features/books/components/book-credits';
+import BookFavouriteButton from '@/features/books/components/book-favourite-button';
+import BookLayout from '@/features/books/components/book-layout';
+import { BookProvider, useBook } from '@/features/books/components/book-provider';
+import BookStatusPicker from '@/features/books/components/book-status-picker';
+import ReviewBookDialog from '@/features/books/components/review-book-dialog';
+import { bookReleaseStatusLabels } from '@/features/books/constants/book-enums';
+import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
+import ObjectOverview from '@/features/movies/components/movie-overview';
+import { Object_Types_Enum } from '@/generated/graphql';
+import { Badge } from '@/registry/new-york-v4/ui/badge';
+import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
 import {
-    Bookmark,
     Calendar,
-    Heart,
-    MapPin,
+    Edit,
+    Eye,
+    Image,
+    Info,
+    Languages,
+    Layers2,
     Music,
-    Play,
-    Skull,
     Star,
     Timer,
-    TrendingUp,
-    Users,
-    VenusAndMars
+    Trophy,
+    User,
+    Video
 } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 
-export default function SongPage() {
-    const [isFavourite, setIsFavourite] = useState(false);
+export default function BookPage() {
+    return (
+        <BookProvider>
+            <BookPageContent />
+        </BookProvider>
+    );
+}
+
+const tabItems = [
+    { value: 'reviews', icon: Star, label: 'Reviews' },
+    { value: 'where-to-watch', icon: Layers2, label: 'Where to Watch' },
+    { value: 'credits', icon: User, label: 'Credits' },
+    { value: 'awards', icon: Trophy, label: 'Awards' },
+    { value: 'images', icon: Image, label: 'Images' },
+    { value: 'videos', icon: Video, label: 'Videos' },
+    { value: 'changes', icon: Edit, label: 'Changes' }
+];
+
+function BookPageContent() {
+    const dispatch = useDispatch();
+    const { book } = useBook();
+
+    if (!book) return <NotFound />;
+
+    const tabContents = {
+        reviews: {
+            content: 'No reviews available.'
+        },
+        'where-to-watch': { content: 'No where to watch information available.' },
+        credits: { content: <BookCredits /> },
+        awards: { content: 'No awards available' },
+        images: { content: 'No images available.' },
+        videos: { content: 'No videos available.' },
+        changes: { content: <BookChanges /> }
+    };
 
     return (
-        <div className='flex flex-col gap-5'>
-            <div className='flex items-center gap-2'>
-                <CustomBadge
-                    icon={OBJECT_TYPE.song.icon}
-                    background={OBJECT_TYPE.song.background}
-                    foreground={OBJECT_TYPE.song.foreground}
-                    border={OBJECT_TYPE.song.border}>
-                    {OBJECT_TYPE.song.name}
-                </CustomBadge>
-                {/* <CustomBadge
-                    icon={OBJECT_TYPE.ALBUM.icon}
-                    background={OBJECT_TYPE.ALBUM.background}
-                    foreground={OBJECT_TYPE.ALBUM.foreground}
-                    border={OBJECT_TYPE.ALBUM.border}>
-                    {SONG_DATA.album}
-                </CustomBadge> */}
-            </div>
-            <div className='grid grid-cols-1 gap-5 md:grid-cols-[250px_1fr]'>
-                <div className='flex flex-col gap-5'>
-                    <Artwork title={SONG_DATA.title} image={SONG_DATA.artwork} />
-                </div>
-                <div className='flex flex-col gap-5'>
-                    <div className='flex flex-col gap-2'>
-                        <h2 className=''>{SONG_DATA.title}</h2>
-                        <p>{SONG_DATA.description}</p>
-                    </div>
-                    <div className='flex flex-wrap gap-2'>
-                        <CustomBadge icon={Users}>{SONG_DATA.artists.join(', ')}</CustomBadge>
-                        {SONG_DATA.releaseDate && (
-                            <CustomBadge icon={Calendar}>
-                                {dayjs(SONG_DATA.releaseDate).format('MMMM Do, YYYY')}
-                            </CustomBadge>
-                        )}
-                        {SONG_DATA.formattedDuration && (
-                            <CustomBadge icon={Timer}>{SONG_DATA.formattedDuration}</CustomBadge>
-                        )}
-                        {SONG_DATA.genres && <CustomBadge icon={Music}>{SONG_DATA.genres.join(', ')}</CustomBadge>}
-                        <div>{/* <ProgressItem label='Content Score' score={SONG_DATA.contentScore} /> */}</div>
-                    </div>
-                    <Separator />
-                    <div className='flex flex-wrap'>
-                        <div className='grid grid-cols-2 gap-2'>
+        <BookLayout posterAlt={book.title} posterImage={book.cover}>
+            {{
+                mainContent: (
+                    <div className='space-y-4'>
+                        <div>
+                            <div className='flex items-start justify-between'>
+                                <h2>{book.title}</h2>
+                            </div>
+                            {book.book_genres.length > 0 && (
+                                <div className='mt-3 flex flex-wrap gap-2'>
+                                    {book.book_genres.map((genre) => (
+                                        <Badge key={genre.genre} variant='outline'>
+                                            {genre.genre}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className='text-muted-foreground flex flex-wrap gap-x-6 gap-y-2 text-sm'>
+                            <span className='flex items-center gap-1'>
+                                <Calendar className='h-4 w-4' />
+                                {dayjs(book.published_date).format('MMMM Do, YYYY')}
+                            </span>
+                            <span className='flex items-center gap-1'>
+                                <Timer className='h-4 w-4' />
+                                {book.reading_time}
+                            </span>
+                            <ResponsiveDialog
+                                title='More Information'
+                                hasVisibleTitle
+                                trigger={
+                                    <span className='flex cursor-pointer items-center gap-1'>
+                                        <Info className='size-3' />
+                                        View More
+                                    </span>
+                                }>
+                                <div className='flex flex-col gap-4'>
+                                    <ItemInformation icon={Languages} label='Language'>
+                                        {LANGUAGES.find((lang) => lang.code === book.language)?.label || 'Unknown'}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={Info} label='Status'>
+                                        {book.status && <>{bookReleaseStatusLabels[book.status] || 'Unknown'}</>}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={Eye} label='View Count'>
+                                        {book.view_count || 0}
+                                    </ItemInformation>
+
+                                    {/* <ItemInformation icon={TrendingUp} label='Content Score'> */}
+                                    {/* <MovieContentScore /> */}
+                                    {/* </ItemInformation> */}
+                                </div>
+                            </ResponsiveDialog>
+                        </div>
+
+                        {book.overview && <ObjectOverview title={book.title} text={book.overview} />}
+
+                        <div className='flex flex-wrap items-center gap-2'>
+                            <BookFavouriteButton />
+                            <ReviewBookDialog />
+                            <BookStatusPicker />
                             <ActionButton
-                                icon={Heart}
-                                iconClassName={cn({ 'fill-red-500 text-red-500': isFavourite })}
-                                onClick={() => setIsFavourite((prev) => !prev)}>
-                                Favourite
+                                icon={Edit}
+                                size='sm'
+                                onClick={() =>
+                                    dispatch(
+                                        toggleEditDialogOpenState({
+                                            objectType: Object_Types_Enum.Book,
+                                            objectId: book.id
+                                        })
+                                    )
+                                }>
+                                Edit
                             </ActionButton>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div className='flex flex-col gap-10 md:py-5'>
-                <Separator />
-                <div className='flex flex-col gap-2'>
-                    {/* <CustomBadge
-                        icon={OBJECT_TYPE.AWARD.icon}
-                        background={OBJECT_TYPE.AWARD.background}
-                        foreground={OBJECT_TYPE.AWARD.foreground}
-                        border={OBJECT_TYPE.AWARD.border}>
-                        {OBJECT_TYPE.AWARD.plural}
-                    </CustomBadge> */}
-                    <AwardTable awards={SONG_DATA.awards} />
-                </div>
-            </div>
-        </div>
+                ),
+                bottomContent: (
+                    <ScrollableTabs defaultValue='reviews' tabs={tabItems}>
+                        {Object.entries(tabContents).map(([key, { content }]) => (
+                            <TabsContent key={key} value={key} className='px-1'>
+                                {content}
+                            </TabsContent>
+                        ))}
+                    </ScrollableTabs>
+                )
+            }}
+        </BookLayout>
     );
 }

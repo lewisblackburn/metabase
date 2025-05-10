@@ -7,6 +7,7 @@ import viewModeReducer from '@/features/movies/store/view-mode.slice';
 import personEditReducer from '@/features/people/store/person-edit.slice';
 import settingsReducer from '@/features/settings/store/settings.slice';
 import shortcutsReducer from '@/features/shortcuts/store/shortcuts.slice';
+import songsFilterReducer from '@/features/songs/store/songs-filter.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     personEdit: personEditReducer,
     moviesFilter: moviesFilterReducer,
     booksFilter: booksFilterReducer,
+    songsFilter: songsFilterReducer,
     settings: settingsReducer,
     shortcuts: shortcutsReducer,
     viewMode: viewModeReducer

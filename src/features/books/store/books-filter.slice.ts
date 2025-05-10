@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { BooksFilter } from '../schemas/books-filter.schema';
+import { BooksFilterType } from '../schemas/books-filter.schema';
 
-const initialState: BooksFilter = {
+const initialState: BooksFilterType = {
     orderBy: {
         orderBy: 'popularity',
         order: 'desc'
