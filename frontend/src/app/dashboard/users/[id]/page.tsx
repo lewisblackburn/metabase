@@ -10,39 +10,22 @@ import XIcon from '@/components/icons/x.icon';
 import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
 import HeroCardLayout from '@/components/shared/hero-layout';
+import ProBadge from '@/components/shared/pro-badge';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
+import VerifiedBadge from '@/components/shared/verified-badge';
 import Collections from '@/features/users/components/collections/collections';
 import FollowButton from '@/features/users/components/follow-button';
 import FollowersDialog from '@/features/users/components/followers-dialog';
 import FollowingDialog from '@/features/users/components/following-dialog';
+import { Recommendations } from '@/features/users/components/recommendations/recommendations';
 import UserActivity from '@/features/users/components/user-activity';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
 import { useUserId } from '@nhost/nextjs';
 
 import { format, formatDistanceToNow } from 'date-fns';
 import { Activity, Crown, Folder, Lightbulb, List, Star, Verified } from 'lucide-react';
-
-const VerifiedBadge = () => (
-    <Tooltip>
-        <TooltipTrigger>
-            <Verified className='mt-0.5 size-4 fill-green-500 text-white sm:size-5' />
-        </TooltipTrigger>
-        <TooltipContent className='flex items-center gap-2 rounded-md border bg-white p-1'>
-            <Verified className='size-5 fill-green-500 text-white' />
-            <span className='text-sm font-semibold'>Verified</span>
-        </TooltipContent>
-    </Tooltip>
-);
-
-const ProBadge = () => (
-    <Badge variant='outline' className='w-fit gap-1 px-2 py-1 transition-colors delay-0 duration-75'>
-        <Crown className='mb-0.5 !size-3 text-yellow-600 sm:!size-3.5' />
-        <span>PRO</span>
-    </Badge>
-);
 
 const tabItems = [
     { value: 'activity', icon: Activity, label: 'Activity' },
@@ -57,7 +40,7 @@ const tabContents = {
     collections: { content: <Collections /> },
     lists: { content: "You haven't created any lists yet." },
     reviews: { content: "You haven't written any reviews yet." },
-    recommendations: { content: 'No recommendations available.' }
+    recommendations: { content: <Recommendations /> }
 };
 
 export default function ProfilePage() {

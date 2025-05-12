@@ -21,13 +21,6 @@ query GetMovie($id: uuid!) {
         vote_average
         vote_count
         homepage
-        user_movie_statuses {
-            favourited
-            rating
-            review
-            status
-            updated_at
-        }
         status
         certification
         movie_availabilities {

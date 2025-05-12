@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 export default function ReviewMovieDialog() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { movie } = useMovie();
+    const { movie, status: userMovieStatus } = useMovie();
 
     const { mutateAsync: insertUserMovieStatus } = useInsertUserMovieStatusMutation({
         onError: (error) => toast.error((error as Error).message)
@@ -22,8 +22,8 @@ export default function ReviewMovieDialog() {
     if (!movie) return null;
 
     const defaultValues = {
-        rating: movie.user_movie_statuses[0]?.rating || 0,
-        review: movie.user_movie_statuses[0]?.review || ''
+        rating: userMovieStatus?.rating || 0,
+        review: userMovieStatus?.review || ''
     };
 
     const handleSubmitReview = async (reviewData: ReviewFormValues) => {
@@ -49,8 +49,7 @@ export default function ReviewMovieDialog() {
             {
                 onSuccess: () => {
                     toast.success('Movie reviewed successfully');
-                    queryClient.invalidateQueries({ queryKey: ['movie', movie?.id] });
-                    queryClient.invalidateQueries({ queryKey: ['GetMovies.infinite'] });
+                    queryClient.invalidateQueries({ queryKey: ['movie-status', movie?.id, userId] });
                 }
             }
         );

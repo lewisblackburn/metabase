@@ -15,20 +15,19 @@ import { toast } from 'sonner';
 export default function MovieFavouriteButton() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { movie } = useMovie();
+    const { movie, status: userMovieStatus } = useMovie();
 
     const { mutateAsync: insertUserMovieStatus } = useInsertUserMovieStatusMutation({
         onSuccess: () => {
             toast.success('Movie status updated successfully');
-            queryClient.invalidateQueries({ queryKey: ['movie', movie?.id] });
-            queryClient.invalidateQueries({ queryKey: ['GetMovies.infinite'] });
+            queryClient.invalidateQueries({ queryKey: ['movie-status', movie?.id, userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });
 
     if (!movie) return null;
 
-    const isFavourited = movie.user_movie_statuses[0]?.favourited || false;
+    const isFavourited = userMovieStatus?.favourited || false;
 
     const handleClick = async () => {
         await insertUserMovieStatus({

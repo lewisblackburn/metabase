@@ -17,20 +17,19 @@ import { toast } from 'sonner';
 export default function MovieStatusPicker() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { movie } = useMovie();
+    const { movie, status: userMovieStatus } = useMovie();
 
     const { mutateAsync: insertUserMovieStatus } = useInsertUserMovieStatusMutation({
         onSuccess: () => {
             toast.success('Movie status updated successfully');
-            queryClient.invalidateQueries({ queryKey: ['movie', movie?.id] });
-            queryClient.invalidateQueries({ queryKey: ['GetMovies.infinite'] });
+            queryClient.invalidateQueries({ queryKey: ['movie-status', movie?.id, userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });
 
     if (!movie) return null;
 
-    const initialStatus = movie.user_movie_statuses[0]?.status || undefined;
+    const initialStatus = userMovieStatus?.status || undefined;
 
     const handleStatusChange = async (status: User_Movie_Status_Types_Enum | null) => {
         await insertUserMovieStatus({

@@ -12,13 +12,6 @@ query GetBook($id: uuid!) {
         view_count
         vote_average
         vote_count
-        user_book_statuses {
-            favourited
-            rating
-            review
-            status
-            updated_at
-        }
         status
         book_availabilities {
             availability

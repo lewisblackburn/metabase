@@ -27225,7 +27225,7 @@ export type GetBookQueryVariables = Exact<{
 }>;
 
 
-export type GetBookQuery = { __typename?: 'query_root', books_by_pk?: { __typename?: 'books', id: any, title: string, overview?: string | null, cover: string, content_score?: number | null, created_at?: any | null, language?: string | null, published_date?: any | null, reading_time?: number | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, status?: Book_Release_Status_Types_Enum | null, user_book_statuses: Array<{ __typename?: 'user_book_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Book_Status_Types_Enum | null, updated_at: any }>, book_availabilities?: { __typename?: 'book_availabilities', availability: Book_Availability_Types_Enum } | null, book_genres: Array<{ __typename?: 'book_genres', genre: Book_Genre_Types_Enum }>, book_keywords: Array<{ __typename?: 'book_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetBookQuery = { __typename?: 'query_root', books_by_pk?: { __typename?: 'books', id: any, title: string, overview?: string | null, cover: string, content_score?: number | null, created_at?: any | null, language?: string | null, published_date?: any | null, reading_time?: number | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, status?: Book_Release_Status_Types_Enum | null, book_availabilities?: { __typename?: 'book_availabilities', availability: Book_Availability_Types_Enum } | null, book_genres: Array<{ __typename?: 'book_genres', genre: Book_Genre_Types_Enum }>, book_keywords: Array<{ __typename?: 'book_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetBooksQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Books_Select_Column> | Books_Select_Column>;
@@ -27237,6 +27237,17 @@ export type GetBooksQueryVariables = Exact<{
 
 
 export type GetBooksQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', id: any, title: string, cover: string }> };
+
+export type GetUserBookStatusQueryVariables = Exact<{
+  distinct_on?: InputMaybe<Array<User_Book_Statuses_Select_Column> | User_Book_Statuses_Select_Column>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Book_Statuses_Order_By> | User_Book_Statuses_Order_By>;
+  where?: InputMaybe<User_Book_Statuses_Bool_Exp>;
+}>;
+
+
+export type GetUserBookStatusQuery = { __typename?: 'query_root', user_book_statuses: Array<{ __typename?: 'user_book_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Book_Status_Types_Enum | null, updated_at: any }> };
 
 export type IncrementBookViewsMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -27340,7 +27351,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Status_Types_Enum | null, updated_at: any }>, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -27505,7 +27516,7 @@ export type GetSongQueryVariables = Exact<{
 }>;
 
 
-export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, user_song_statuses: Array<{ __typename?: 'user_song_statuses', favourited: boolean, rating?: any | null, review?: string | null, updated_at: any }>, album?: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any } | null, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, album?: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any } | null, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetSongsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Songs_Select_Column> | Songs_Select_Column>;
@@ -27517,6 +27528,17 @@ export type GetSongsQueryVariables = Exact<{
 
 
 export type GetSongsQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null }> };
+
+export type GetUserSongStatusQueryVariables = Exact<{
+  distinct_on?: InputMaybe<Array<User_Song_Statuses_Select_Column> | User_Song_Statuses_Select_Column>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Song_Statuses_Order_By> | User_Song_Statuses_Order_By>;
+  where?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+}>;
+
+
+export type GetUserSongStatusQuery = { __typename?: 'query_root', user_song_statuses: Array<{ __typename?: 'user_song_statuses', favourited: boolean, rating?: any | null, review?: string | null, updated_at: any }> };
 
 export type IncrementSongViewsMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -27827,13 +27849,6 @@ export const GetBookDocument = `
     view_count
     vote_average
     vote_count
-    user_book_statuses {
-      favourited
-      rating
-      review
-      status
-      updated_at
-    }
     status
     book_availabilities {
       availability
@@ -27931,6 +27946,59 @@ export const useInfiniteGetBooksQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetBooks.infinite'] : ['GetBooks.infinite', variables],
       queryFn: (metaData) => fetcher<GetBooksQuery, GetBooksQueryVariables>(GetBooksDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetUserBookStatusDocument = `
+    query GetUserBookStatus($distinct_on: [user_book_statuses_select_column!], $limit: Int, $offset: Int, $order_by: [user_book_statuses_order_by!], $where: user_book_statuses_bool_exp) {
+  user_book_statuses(
+    distinct_on: $distinct_on
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+    where: $where
+  ) {
+    favourited
+    rating
+    review
+    status
+    updated_at
+  }
+}
+    `;
+
+export const useGetUserBookStatusQuery = <
+      TData = GetUserBookStatusQuery,
+      TError = unknown
+    >(
+      variables?: GetUserBookStatusQueryVariables,
+      options?: Omit<UseQueryOptions<GetUserBookStatusQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetUserBookStatusQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetUserBookStatusQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetUserBookStatus'] : ['GetUserBookStatus', variables],
+    queryFn: fetcher<GetUserBookStatusQuery, GetUserBookStatusQueryVariables>(GetUserBookStatusDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetUserBookStatusQuery = <
+      TData = InfiniteData<GetUserBookStatusQuery>,
+      TError = unknown
+    >(
+      variables: GetUserBookStatusQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetUserBookStatusQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetUserBookStatusQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetUserBookStatusQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetUserBookStatus.infinite'] : ['GetUserBookStatus.infinite', variables],
+      queryFn: (metaData) => fetcher<GetUserBookStatusQuery, GetUserBookStatusQueryVariables>(GetUserBookStatusDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -28495,13 +28563,6 @@ export const GetMovieDocument = `
     vote_average
     vote_count
     homepage
-    user_movie_statuses {
-      favourited
-      rating
-      review
-      status
-      updated_at
-    }
     status
     certification
     movie_availabilities {
@@ -29255,12 +29316,6 @@ export const GetSongDocument = `
     view_count
     vote_average
     vote_count
-    user_song_statuses {
-      favourited
-      rating
-      review
-      updated_at
-    }
     album {
       artwork
       release_date
@@ -29366,6 +29421,58 @@ export const useInfiniteGetSongsQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetSongs.infinite'] : ['GetSongs.infinite', variables],
       queryFn: (metaData) => fetcher<GetSongsQuery, GetSongsQueryVariables>(GetSongsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetUserSongStatusDocument = `
+    query GetUserSongStatus($distinct_on: [user_song_statuses_select_column!], $limit: Int, $offset: Int, $order_by: [user_song_statuses_order_by!], $where: user_song_statuses_bool_exp) {
+  user_song_statuses(
+    distinct_on: $distinct_on
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+    where: $where
+  ) {
+    favourited
+    rating
+    review
+    updated_at
+  }
+}
+    `;
+
+export const useGetUserSongStatusQuery = <
+      TData = GetUserSongStatusQuery,
+      TError = unknown
+    >(
+      variables?: GetUserSongStatusQueryVariables,
+      options?: Omit<UseQueryOptions<GetUserSongStatusQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetUserSongStatusQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetUserSongStatusQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetUserSongStatus'] : ['GetUserSongStatus', variables],
+    queryFn: fetcher<GetUserSongStatusQuery, GetUserSongStatusQueryVariables>(GetUserSongStatusDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetUserSongStatusQuery = <
+      TData = InfiniteData<GetUserSongStatusQuery>,
+      TError = unknown
+    >(
+      variables: GetUserSongStatusQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetUserSongStatusQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetUserSongStatusQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetUserSongStatusQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetUserSongStatus.infinite'] : ['GetUserSongStatus.infinite', variables],
+      queryFn: (metaData) => fetcher<GetUserSongStatusQuery, GetUserSongStatusQueryVariables>(GetUserSongStatusDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

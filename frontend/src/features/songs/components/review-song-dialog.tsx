@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 export default function ReviewSongDialog() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { song } = useSong();
+    const { song, status } = useSong();
 
     const { mutateAsync: insertUserSongStatus } = useInsertUserSongStatusMutation({
         onError: (error) => toast.error((error as Error).message)
@@ -22,8 +22,8 @@ export default function ReviewSongDialog() {
     if (!song) return null;
 
     const defaultValues = {
-        rating: song.user_song_statuses[0]?.rating || 0,
-        review: song.user_song_statuses[0]?.review || ''
+        rating: status?.rating || 0,
+        review: status?.review || ''
     };
 
     const handleSubmitReview = async (reviewData: ReviewFormValues) => {
@@ -46,8 +46,7 @@ export default function ReviewSongDialog() {
             {
                 onSuccess: () => {
                     toast.success('Song reviewed successfully');
-                    queryClient.invalidateQueries({ queryKey: ['song', song?.id] });
-                    queryClient.invalidateQueries({ queryKey: ['GetSongs.infinite'] });
+                    queryClient.invalidateQueries({ queryKey: ['song-status', song?.id, userId] });
                 }
             }
         );
@@ -73,7 +72,7 @@ export default function ReviewSongDialog() {
             {
                 onSuccess: () => {
                     toast.success('Song review deleted successfully');
-                    queryClient.invalidateQueries({ queryKey: ['song', song?.id] });
+                    queryClient.invalidateQueries({ queryKey: ['song-status', song?.id, userId] });
                 }
             }
         );

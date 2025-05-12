@@ -4,10 +4,12 @@ import { ReactNode, createContext, useContext } from 'react';
 
 import { useParams } from 'next/navigation';
 
-import { GetBookQuery, useGetBookQuery } from '@/generated/graphql';
+import { GetBookQuery, GetUserBookStatusQuery, useGetBookQuery, useGetUserBookStatusQuery } from '@/generated/graphql';
+import { useUserId } from '@nhost/nextjs';
 
 interface BookContextType {
     book: GetBookQuery['books_by_pk'];
+    status: GetUserBookStatusQuery['user_book_statuses'][0] | null;
     isLoading: boolean;
 }
 
@@ -15,7 +17,8 @@ const BookContext = createContext<BookContextType | undefined>(undefined);
 
 export function BookProvider({ children }: { children: ReactNode }) {
     const params = useParams<{ id: string }>();
-    const { data, isLoading } = useGetBookQuery(
+    const userId = useUserId();
+    const { data: bookData, isLoading: isBookLoading } = useGetBookQuery(
         { id: params?.id },
         {
             queryKey: ['book', params?.id],
@@ -23,9 +26,22 @@ export function BookProvider({ children }: { children: ReactNode }) {
         }
     );
 
-    const book = data?.books_by_pk;
+    const { data: userBookStatusData, isLoading: isUserBookStatusLoading } = useGetUserBookStatusQuery(
+        { where: { book_id: { _eq: params?.id }, user_id: { _eq: userId } } },
+        {
+            queryKey: ['book-status', params?.id, userId]
+        }
+    );
 
-    return <BookContext.Provider value={{ book, isLoading }}>{children}</BookContext.Provider>;
+    const book = bookData?.books_by_pk;
+    const userBookStatus = userBookStatusData?.user_book_statuses[0] ?? null;
+
+    return (
+        <BookContext.Provider
+            value={{ book, isLoading: isBookLoading || isUserBookStatusLoading, status: userBookStatus }}>
+            {children}
+        </BookContext.Provider>
+    );
 }
 
 export function useBook() {

@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 export default function ReviewBookDialog() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { book } = useBook();
+    const { book, status: userBookStatus } = useBook();
 
     const { mutateAsync: insertUserBookStatus } = useInsertUserBookStatusMutation({
         onError: (error) => toast.error((error as Error).message)
@@ -22,8 +22,8 @@ export default function ReviewBookDialog() {
     if (!book) return null;
 
     const defaultValues = {
-        rating: book.user_book_statuses[0]?.rating || 0,
-        review: book.user_book_statuses[0]?.review || ''
+        rating: userBookStatus?.rating || 0,
+        review: userBookStatus?.review || ''
     };
 
     const handleSubmitReview = async (reviewData: ReviewFormValues) => {
@@ -46,8 +46,7 @@ export default function ReviewBookDialog() {
             {
                 onSuccess: () => {
                     toast.success('Book reviewed successfully');
-                    queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
-                    queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
+                    queryClient.invalidateQueries({ queryKey: ['book-status', book?.id, userId] });
                 }
             }
         );

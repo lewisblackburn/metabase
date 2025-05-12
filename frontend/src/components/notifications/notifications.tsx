@@ -35,8 +35,6 @@ export default function Notifications() {
     const { mutateAsync: markAllAsRead } = useMarkAllNotificationsAsReadMutation();
     const { mutateAsync: markAsRead } = useMarkNotificationAsReadMutation();
 
-    console.log(notifications);
-
     const handleMarkAllAsRead = async () => {
         await markAllAsRead(
             { user_id: userId },

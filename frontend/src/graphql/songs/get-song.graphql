@@ -8,12 +8,6 @@ query GetSong($id: uuid!) {
         view_count
         vote_average
         vote_count
-        user_song_statuses {
-            favourited
-            rating
-            review
-            updated_at
-        }
         album {
             artwork
             release_date

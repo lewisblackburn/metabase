@@ -15,20 +15,19 @@ import { toast } from 'sonner';
 export default function SongFavouriteButton() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { song } = useSong();
+    const { song, status } = useSong();
 
     const { mutateAsync: insertUserSongStatus } = useInsertUserSongStatusMutation({
         onSuccess: () => {
             toast.success('Song status updated successfully');
-            queryClient.invalidateQueries({ queryKey: ['song', song?.id] });
-            queryClient.invalidateQueries({ queryKey: ['GetSongs.infinite'] });
+            queryClient.invalidateQueries({ queryKey: ['song-status', song?.id, userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });
 
     if (!song) return null;
 
-    const isFavourited = song.user_song_statuses[0]?.favourited || false;
+    const isFavourited = status?.favourited || false;
 
     const handleClick = async () => {
         await insertUserSongStatus({

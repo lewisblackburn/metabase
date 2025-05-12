@@ -17,20 +17,19 @@ import { toast } from 'sonner';
 export default function BookStatusPicker() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { book } = useBook();
+    const { book, status: userBookStatus } = useBook();
 
     const { mutateAsync: insertUserBookStatus } = useInsertUserBookStatusMutation({
         onSuccess: () => {
             toast.success('Book status updated successfully');
-            queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
-            queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
+            queryClient.invalidateQueries({ queryKey: ['book-status', book?.id, userId] });
         },
         onError: (error) => toast.error((error as Error).message)
     });
 
     if (!book) return null;
 
-    const initialStatus = book.user_book_statuses[0]?.status || undefined;
+    const initialStatus = userBookStatus?.status || undefined;
 
     const handleStatusChange = async (status: User_Book_Status_Types_Enum | null) => {
         await insertUserBookStatus({
