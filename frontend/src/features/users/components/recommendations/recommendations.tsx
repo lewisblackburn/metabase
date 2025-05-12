@@ -28,6 +28,7 @@ export function Recommendations() {
         error
     } = useQuery({
         queryKey: ['recommendations', userId],
+        throwOnError: false,
         queryFn: async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_RECOMMENDATION_API_URL}/recommend/${userId}`);
             if (!response.ok) throw new Error('Error fetching recommendations');
@@ -51,11 +52,8 @@ export function Recommendations() {
                 ))}
             </div>
         );
-    if (error)
-        return (
-            <div className='text-center text-red-500'>Error loading recommendations: {(error as Error).message}</div>
-        );
-    if (!recommendations?.length) return <div className='text-center text-gray-500'>No recommendations available</div>;
+    if (error) return <div className='text-red-500'>Error loading recommendations: {(error as Error).message}</div>;
+    if (!recommendations?.length) return <div className='text-gray-500'>No recommendations available</div>;
 
     return (
         <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>

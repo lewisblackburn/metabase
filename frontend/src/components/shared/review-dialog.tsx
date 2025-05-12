@@ -2,33 +2,31 @@
 
 import { useState } from 'react';
 
-import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/registry/new-york-v4/ui/dialog';
-import { Form, FormField, FormMessage } from '@/registry/new-york-v4/ui/form';
+import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/registry/new-york-v4/ui/radio-group';
-import {
-    Sheet,
-    SheetContent,
-    SheetContentWithoutClose,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from '@/registry/new-york-v4/ui/sheet';
 import { Textarea } from '@/registry/new-york-v4/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import BaseFormLayout from '../form/base-form-layout';
 import ActionButton from './action-button';
 import ResponsiveDialog from './responsive-dailog';
+import { Filter } from 'bad-words';
 import { Star, Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 const reviewSchema = z.object({
     rating: z.number().min(1, 'Rating is required').nullable(),
-    review: z.string().optional()
+    review: z
+        .string()
+        .optional()
+        .refine((val) => {
+            if (!val) return true;
+            const filter = new Filter();
+            return !filter.isProfane(val);
+        }, 'Your review contains inappropriate language')
 });
 
 export type ReviewFormValues = z.infer<typeof reviewSchema>;

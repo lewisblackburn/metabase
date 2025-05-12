@@ -78,7 +78,7 @@ export default function ReviewMovieDialog() {
             {
                 onSuccess: () => {
                     toast.success('Movie review deleted successfully');
-                    queryClient.invalidateQueries({ queryKey: ['movie', movie?.id] });
+                    queryClient.invalidateQueries({ queryKey: ['movie-status', movie?.id, userId] });
                 }
             }
         );

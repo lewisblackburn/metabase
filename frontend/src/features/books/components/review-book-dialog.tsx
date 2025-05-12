@@ -72,7 +72,7 @@ export default function ReviewBookDialog() {
             {
                 onSuccess: () => {
                     toast.success('Book review deleted successfully');
-                    queryClient.invalidateQueries({ queryKey: ['book', book?.id] });
+                    queryClient.invalidateQueries({ queryKey: ['book-status', book?.id, userId] });
                 }
             }
         );
