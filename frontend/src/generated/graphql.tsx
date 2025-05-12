@@ -20558,8 +20558,8 @@ export type Song_Keywords_Updates = {
 export type Songs = {
   __typename?: 'songs';
   /** An object relationship */
-  album: Albums;
-  album_id: Scalars['uuid']['output'];
+  album?: Maybe<Albums>;
+  album_id?: Maybe<Scalars['uuid']['output']>;
   apple_music_id?: Maybe<Scalars['String']['output']>;
   content_score: Scalars['Float']['output'];
   created_at?: Maybe<Scalars['timestamp']['output']>;
@@ -25557,8 +25557,12 @@ export type User_Song_Statuses = {
   favourited: Scalars['Boolean']['output'];
   rating?: Maybe<Scalars['smallint']['output']>;
   review?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  song: Songs;
   song_id: Scalars['uuid']['output'];
   updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid']['output'];
 };
 
@@ -25660,8 +25664,10 @@ export type User_Song_Statuses_Bool_Exp = {
   favourited?: InputMaybe<Boolean_Comparison_Exp>;
   rating?: InputMaybe<Smallint_Comparison_Exp>;
   review?: InputMaybe<String_Comparison_Exp>;
+  song?: InputMaybe<Songs_Bool_Exp>;
   song_id?: InputMaybe<Uuid_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
@@ -25683,8 +25689,10 @@ export type User_Song_Statuses_Insert_Input = {
   favourited?: InputMaybe<Scalars['Boolean']['input']>;
   rating?: InputMaybe<Scalars['smallint']['input']>;
   review?: InputMaybe<Scalars['String']['input']>;
+  song?: InputMaybe<Songs_Obj_Rel_Insert_Input>;
   song_id?: InputMaybe<Scalars['uuid']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
@@ -25747,8 +25755,10 @@ export type User_Song_Statuses_Order_By = {
   favourited?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   review?: InputMaybe<Order_By>;
+  song?: InputMaybe<Songs_Order_By>;
   song_id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -27297,7 +27307,12 @@ export type GetFilesQuery = { __typename?: 'query_root', files: Array<{ __typena
 export type GetFeaturedItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFeaturedItemsQuery = { __typename?: 'query_root', featuredMovie: Array<{ __typename?: 'movies', id: any, title: string, poster: string }>, featuredSong: Array<{ __typename?: 'songs', id: any, name: string, album: { __typename?: 'albums', artwork: string } }>, featuredBook: Array<{ __typename?: 'books', id: any, title: string, cover: string }> };
+export type GetFeaturedItemsQuery = { __typename?: 'query_root', featuredMovie: Array<{ __typename?: 'movies', id: any, title: string, poster: string }>, featuredSong: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null }>, featuredBook: Array<{ __typename?: 'books', id: any, title: string, cover: string }> };
+
+export type GetUserStatusesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserStatusesQuery = { __typename?: 'query_root', user_book_statuses: Array<{ __typename?: 'user_book_statuses', user_id: any, book_id: any, rating?: any | null, book: { __typename?: 'books', title: string, cover: string } }>, user_song_statuses: Array<{ __typename?: 'user_song_statuses', user_id: any, song_id: any, rating?: any | null, song: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } }>, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', user_id: any, movie_id: any, rating?: any | null, movie: { __typename?: 'movies', title: string, poster: string } }> };
 
 export type GetMovieByTmdb_IdQueryVariables = Exact<{
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -27453,7 +27468,7 @@ export type GetPersonQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album: { __typename?: 'albums', artwork: string } } | null }> } | null };
+export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } | null }> } | null };
 
 export type InsertPersonMutationVariables = Exact<{
   object: People_Insert_Input;
@@ -27490,7 +27505,7 @@ export type GetSongQueryVariables = Exact<{
 }>;
 
 
-export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, user_song_statuses: Array<{ __typename?: 'user_song_statuses', favourited: boolean, rating?: any | null, review?: string | null, updated_at: any }>, album: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any }, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, user_song_statuses: Array<{ __typename?: 'user_song_statuses', favourited: boolean, rating?: any | null, review?: string | null, updated_at: any }>, album?: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any } | null, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetSongsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Songs_Select_Column> | Songs_Select_Column>;
@@ -27501,7 +27516,7 @@ export type GetSongsQueryVariables = Exact<{
 }>;
 
 
-export type GetSongsQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', id: any, name: string, album: { __typename?: 'albums', artwork: string } }> };
+export type GetSongsQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null }> };
 
 export type IncrementSongViewsMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -28212,6 +28227,75 @@ export const useInfiniteGetFeaturedItemsQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetFeaturedItems.infinite'] : ['GetFeaturedItems.infinite', variables],
       queryFn: (metaData) => fetcher<GetFeaturedItemsQuery, GetFeaturedItemsQueryVariables>(GetFeaturedItemsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetUserStatusesDocument = `
+    query GetUserStatuses {
+  user_book_statuses(where: {rating: {_is_null: false}}) {
+    user_id
+    book_id
+    rating
+    book {
+      title
+      cover
+    }
+  }
+  user_song_statuses(where: {rating: {_is_null: false}}) {
+    user_id
+    song_id
+    rating
+    song {
+      name
+      album {
+        artwork
+      }
+    }
+  }
+  user_movie_statuses(where: {rating: {_is_null: false}}) {
+    user_id
+    movie_id
+    rating
+    movie {
+      title
+      poster
+    }
+  }
+}
+    `;
+
+export const useGetUserStatusesQuery = <
+      TData = GetUserStatusesQuery,
+      TError = unknown
+    >(
+      variables?: GetUserStatusesQueryVariables,
+      options?: Omit<UseQueryOptions<GetUserStatusesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetUserStatusesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetUserStatusesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetUserStatuses'] : ['GetUserStatuses', variables],
+    queryFn: fetcher<GetUserStatusesQuery, GetUserStatusesQueryVariables>(GetUserStatusesDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetUserStatusesQuery = <
+      TData = InfiniteData<GetUserStatusesQuery>,
+      TError = unknown
+    >(
+      variables: GetUserStatusesQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetUserStatusesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetUserStatusesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetUserStatusesQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetUserStatuses.infinite'] : ['GetUserStatuses.infinite', variables],
+      queryFn: (metaData) => fetcher<GetUserStatusesQuery, GetUserStatusesQueryVariables>(GetUserStatusesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
