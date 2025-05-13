@@ -56,10 +56,8 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
                                       }
                                   },
                                   {
-                                      details: {
-                                          _contains: {
-                                              character: debouncedSearchQuery
-                                          }
+                                      character: {
+                                          _ilike: `%${debouncedSearchQuery}%`
                                       }
                                   }
                               ]
@@ -139,14 +137,7 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
     const columns: ColumnDef<(typeof castMembers)[number]>[] = [
         {
             accessorKey: 'person',
-            header: ({ column }) => (
-                <button
-                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-                    className='inline-flex cursor-pointer items-center font-medium'>
-                    Actor
-                    <SortingArrows column={column} />
-                </button>
-            ),
+            header: 'Actor',
             cell: ({ row }) => {
                 const person = row.original.person;
                 return (
@@ -158,19 +149,8 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
             }
         },
         {
-            accessorKey: 'details',
-            header: ({ column }) => (
-                <button
-                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-                    className='inline-flex cursor-pointer items-center font-medium'>
-                    Character
-                    <SortingArrows column={column} />
-                </button>
-            ),
-            cell: ({ row }) => {
-                const details = row.original.details as { character: string };
-                return details.character;
-            }
+            accessorKey: 'character',
+            header: 'Character'
         }
     ];
 
@@ -197,7 +177,7 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
         <div className='overflow-x-auto'>
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
-                    placeholder='Search by actor name or character...'
+                    placeholder='Search by actor or character...'
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);

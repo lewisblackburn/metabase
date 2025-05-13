@@ -1,0 +1,5 @@
+mutation DeleteMovieSoundtrack($where: movie_soundtrack_bool_exp!) {
+    delete_movie_soundtrack(where: $where) {
+        affected_rows
+    }
+}

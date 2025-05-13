@@ -1,0 +1,5 @@
+mutation InsertMovieSoundtrack($object: movie_soundtrack_insert_input!) {
+    insert_movie_soundtrack_one(object: $object) {
+        id
+    }
+}

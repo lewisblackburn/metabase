@@ -1,0 +1,26 @@
+query GetMovieSoundtrack(
+    $where: movie_soundtrack_bool_exp
+    $limit: Int
+    $offset: Int
+    $order_by: [movie_soundtrack_order_by!]
+) {
+    movie_soundtrack(where: $where, limit: $limit, offset: $offset, order_by: $order_by) {
+        id
+        song {
+            id
+            name
+            credits {
+                person {
+                    name
+                }
+            }
+        }
+        timestamps
+        description
+    }
+    movie_soundtrack_aggregate(where: $where) {
+        aggregate {
+            count
+        }
+    }
+}

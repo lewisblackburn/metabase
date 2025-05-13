@@ -53,7 +53,7 @@ function CreditsSection({ title, members, isLoading }: { title: string; members?
                         id={member.person.id}
                         image={member.person.headshot}
                         name={member.person.name}
-                        description={member.details.character || member.details.job}
+                        description={member.character || member.job}
                     />
                 ))
             ) : (

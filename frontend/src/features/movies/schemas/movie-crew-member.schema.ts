@@ -1,14 +1,12 @@
-import { selectSchema } from '@/schemas/select.schema';
-
 import { z } from 'zod';
 
 export const addCrewMemberSchema = z.object({
-    person: selectSchema,
-    job: z.string().uuid(),
-    role: z.string().uuid()
+    person: z.string().uuid(),
+    department: z.string(),
+    job: z.string()
 });
 
 export const editCrewMemberSchema = addCrewMemberSchema.omit({ person: true });
 
-export type AddCrewMemberSchema = z.infer<typeof addCrewMemberSchema>;
-export type EditCrewMemberSchema = z.infer<typeof editCrewMemberSchema>;
+export type AddCrewMemberSchemaType = z.infer<typeof addCrewMemberSchema>;
+export type EditCrewMemberSchemaType = z.infer<typeof editCrewMemberSchema>;

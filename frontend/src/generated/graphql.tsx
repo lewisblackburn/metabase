@@ -27295,7 +27295,7 @@ export type GetCreditsQueryVariables = Exact<{
 }>;
 
 
-export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, credits_aggregate: { __typename?: 'credits_aggregate', aggregate?: { __typename?: 'credits_aggregate_fields', count: number } | null } };
+export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, job?: string | null, character?: string | null, department?: string | null, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, credits_aggregate: { __typename?: 'credits_aggregate', aggregate?: { __typename?: 'credits_aggregate_fields', count: number } | null } };
 
 export type InsertCreditsMutationVariables = Exact<{
   objects: Array<Credits_Insert_Input> | Credits_Insert_Input;
@@ -27368,6 +27368,13 @@ export type DeleteMovieKeywordsMutationVariables = Exact<{
 
 export type DeleteMovieKeywordsMutation = { __typename?: 'mutation_root', delete_movie_keywords?: { __typename?: 'movie_keywords_mutation_response', affected_rows: number } | null };
 
+export type DeleteMovieSoundtrackMutationVariables = Exact<{
+  where: Movie_Soundtrack_Bool_Exp;
+}>;
+
+
+export type DeleteMovieSoundtrackMutation = { __typename?: 'mutation_root', delete_movie_soundtrack?: { __typename?: 'movie_soundtrack_mutation_response', affected_rows: number } | null };
+
 export type GetMovieAlternativeTitlesQueryVariables = Exact<{
   where?: InputMaybe<Movie_Alternative_Titles_Bool_Exp>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -27391,6 +27398,16 @@ export type GetMovieForContentQualityCheckQueryVariables = Exact<{
 
 
 export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+
+export type GetMovieSoundtrackQueryVariables = Exact<{
+  where?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Soundtrack_Order_By> | Movie_Soundtrack_Order_By>;
+}>;
+
+
+export type GetMovieSoundtrackQuery = { __typename?: 'query_root', movie_soundtrack: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', id: any, name: string, credits: Array<{ __typename?: 'credits', person: { __typename?: 'people', name: string } }> } }>, movie_soundtrack_aggregate: { __typename?: 'movie_soundtrack_aggregate', aggregate?: { __typename?: 'movie_soundtrack_aggregate_fields', count: number } | null } };
 
 export type GetMovieTitleQueryVariables = Exact<{
   movie_id: Scalars['uuid']['input'];
@@ -27443,6 +27460,13 @@ export type InsertMovieAlternativeTitleMutationVariables = Exact<{
 
 export type InsertMovieAlternativeTitleMutation = { __typename?: 'mutation_root', insert_movie_alternative_titles_one?: { __typename?: 'movie_alternative_titles', id: any, alternative_title: string, country?: string | null, type?: string | null } | null };
 
+export type InsertMovieSoundtrackMutationVariables = Exact<{
+  object: Movie_Soundtrack_Insert_Input;
+}>;
+
+
+export type InsertMovieSoundtrackMutation = { __typename?: 'mutation_root', insert_movie_soundtrack_one?: { __typename?: 'movie_soundtrack', id: any } | null };
+
 export type InsertMovieMutationVariables = Exact<{
   object: Movies_Insert_Input;
   on_conflict?: InputMaybe<Movies_On_Conflict>;
@@ -27458,6 +27482,14 @@ export type InsertUserMovieStatusMutationVariables = Exact<{
 
 
 export type InsertUserMovieStatusMutation = { __typename?: 'mutation_root', insert_user_movie_statuses_one?: { __typename?: 'user_movie_statuses', favourited: boolean, rating?: any | null, review?: string | null, status?: User_Movie_Status_Types_Enum | null, updated_at: any } | null };
+
+export type UpdateMovieSoundtrackMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+  object: Movie_Soundtrack_Set_Input;
+}>;
+
+
+export type UpdateMovieSoundtrackMutation = { __typename?: 'mutation_root', update_movie_soundtrack_by_pk?: { __typename?: 'movie_soundtrack', id: any } | null };
 
 export type UpdateMovieMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -28188,7 +28220,9 @@ export const GetCreditsDocument = `
   ) {
     id
     credit_type
-    details
+    job
+    character
+    department
     order
     person {
       id
@@ -28577,6 +28611,27 @@ export const useDeleteMovieKeywordsMutation = <
   }
     )};
 
+export const DeleteMovieSoundtrackDocument = `
+    mutation DeleteMovieSoundtrack($where: movie_soundtrack_bool_exp!) {
+  delete_movie_soundtrack(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteMovieSoundtrackMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieSoundtrackMutation, TError, DeleteMovieSoundtrackMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieSoundtrackMutation, TError, DeleteMovieSoundtrackMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieSoundtrack'],
+    mutationFn: (variables?: DeleteMovieSoundtrackMutationVariables) => fetcher<DeleteMovieSoundtrackMutation, DeleteMovieSoundtrackMutationVariables>(DeleteMovieSoundtrackDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const GetMovieAlternativeTitlesDocument = `
     query GetMovieAlternativeTitles($where: movie_alternative_titles_bool_exp, $limit: Int, $offset: Int, $order_by: [movie_alternative_titles_order_by!]) {
   movie_alternative_titles(
@@ -28756,6 +28811,70 @@ export const useInfiniteGetMovieForContentQualityCheckQuery = <
     return {
       queryKey: optionsQueryKey ?? ['GetMovieForContentQualityCheck.infinite', variables],
       queryFn: (metaData) => fetcher<GetMovieForContentQualityCheckQuery, GetMovieForContentQualityCheckQueryVariables>(GetMovieForContentQualityCheckDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetMovieSoundtrackDocument = `
+    query GetMovieSoundtrack($where: movie_soundtrack_bool_exp, $limit: Int, $offset: Int, $order_by: [movie_soundtrack_order_by!]) {
+  movie_soundtrack(
+    where: $where
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+  ) {
+    id
+    song {
+      id
+      name
+      credits {
+        person {
+          name
+        }
+      }
+    }
+    timestamps
+    description
+  }
+  movie_soundtrack_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+export const useGetMovieSoundtrackQuery = <
+      TData = GetMovieSoundtrackQuery,
+      TError = unknown
+    >(
+      variables?: GetMovieSoundtrackQueryVariables,
+      options?: Omit<UseQueryOptions<GetMovieSoundtrackQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMovieSoundtrackQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMovieSoundtrackQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetMovieSoundtrack'] : ['GetMovieSoundtrack', variables],
+    queryFn: fetcher<GetMovieSoundtrackQuery, GetMovieSoundtrackQueryVariables>(GetMovieSoundtrackDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetMovieSoundtrackQuery = <
+      TData = InfiniteData<GetMovieSoundtrackQuery>,
+      TError = unknown
+    >(
+      variables: GetMovieSoundtrackQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetMovieSoundtrackQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetMovieSoundtrackQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetMovieSoundtrackQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetMovieSoundtrack.infinite'] : ['GetMovieSoundtrack.infinite', variables],
+      queryFn: (metaData) => fetcher<GetMovieSoundtrackQuery, GetMovieSoundtrackQueryVariables>(GetMovieSoundtrackDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -29045,6 +29164,27 @@ export const useInsertMovieAlternativeTitleMutation = <
   }
     )};
 
+export const InsertMovieSoundtrackDocument = `
+    mutation InsertMovieSoundtrack($object: movie_soundtrack_insert_input!) {
+  insert_movie_soundtrack_one(object: $object) {
+    id
+  }
+}
+    `;
+
+export const useInsertMovieSoundtrackMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieSoundtrackMutation, TError, InsertMovieSoundtrackMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieSoundtrackMutation, TError, InsertMovieSoundtrackMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieSoundtrack'],
+    mutationFn: (variables?: InsertMovieSoundtrackMutationVariables) => fetcher<InsertMovieSoundtrackMutation, InsertMovieSoundtrackMutationVariables>(InsertMovieSoundtrackDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const InsertMovieDocument = `
     mutation InsertMovie($object: movies_insert_input!, $on_conflict: movies_on_conflict) {
   insert_movies_one(object: $object, on_conflict: $on_conflict) {
@@ -29088,6 +29228,27 @@ export const useInsertUserMovieStatusMutation = <
       {
     mutationKey: ['InsertUserMovieStatus'],
     mutationFn: (variables?: InsertUserMovieStatusMutationVariables) => fetcher<InsertUserMovieStatusMutation, InsertUserMovieStatusMutationVariables>(InsertUserMovieStatusDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const UpdateMovieSoundtrackDocument = `
+    mutation UpdateMovieSoundtrack($id: uuid!, $object: movie_soundtrack_set_input!) {
+  update_movie_soundtrack_by_pk(pk_columns: {id: $id}, _set: $object) {
+    id
+  }
+}
+    `;
+
+export const useUpdateMovieSoundtrackMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateMovieSoundtrackMutation, TError, UpdateMovieSoundtrackMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateMovieSoundtrackMutation, TError, UpdateMovieSoundtrackMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateMovieSoundtrack'],
+    mutationFn: (variables?: UpdateMovieSoundtrackMutationVariables) => fetcher<UpdateMovieSoundtrackMutation, UpdateMovieSoundtrackMutationVariables>(UpdateMovieSoundtrackDocument, variables)(),
     ...options
   }
     )};
