@@ -8271,8 +8271,8 @@ export type Money_Comparison_Exp = {
 export type Movie_Alternative_Titles = {
   __typename?: 'movie_alternative_titles';
   alternative_title: Scalars['String']['output'];
+  country?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
-  language?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   movie: Movies;
   movie_id: Scalars['uuid']['output'];
@@ -8332,8 +8332,8 @@ export type Movie_Alternative_Titles_Bool_Exp = {
   _not?: InputMaybe<Movie_Alternative_Titles_Bool_Exp>;
   _or?: InputMaybe<Array<Movie_Alternative_Titles_Bool_Exp>>;
   alternative_title?: InputMaybe<String_Comparison_Exp>;
+  country?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  language?: InputMaybe<String_Comparison_Exp>;
   movie?: InputMaybe<Movies_Bool_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
@@ -8348,8 +8348,8 @@ export enum Movie_Alternative_Titles_Constraint {
 /** input type for inserting data into table "movie_alternative_titles" */
 export type Movie_Alternative_Titles_Insert_Input = {
   alternative_title?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  language?: InputMaybe<Scalars['String']['input']>;
   movie?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
@@ -8359,8 +8359,8 @@ export type Movie_Alternative_Titles_Insert_Input = {
 export type Movie_Alternative_Titles_Max_Fields = {
   __typename?: 'movie_alternative_titles_max_fields';
   alternative_title?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  language?: Maybe<Scalars['String']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
   type?: Maybe<Scalars['String']['output']>;
 };
@@ -8368,8 +8368,8 @@ export type Movie_Alternative_Titles_Max_Fields = {
 /** order by max() on columns of table "movie_alternative_titles" */
 export type Movie_Alternative_Titles_Max_Order_By = {
   alternative_title?: InputMaybe<Order_By>;
+  country?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  language?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
 };
@@ -8378,8 +8378,8 @@ export type Movie_Alternative_Titles_Max_Order_By = {
 export type Movie_Alternative_Titles_Min_Fields = {
   __typename?: 'movie_alternative_titles_min_fields';
   alternative_title?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  language?: Maybe<Scalars['String']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
   type?: Maybe<Scalars['String']['output']>;
 };
@@ -8387,8 +8387,8 @@ export type Movie_Alternative_Titles_Min_Fields = {
 /** order by min() on columns of table "movie_alternative_titles" */
 export type Movie_Alternative_Titles_Min_Order_By = {
   alternative_title?: InputMaybe<Order_By>;
+  country?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  language?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
 };
@@ -8412,8 +8412,8 @@ export type Movie_Alternative_Titles_On_Conflict = {
 /** Ordering options when selecting data from "movie_alternative_titles". */
 export type Movie_Alternative_Titles_Order_By = {
   alternative_title?: InputMaybe<Order_By>;
+  country?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  language?: InputMaybe<Order_By>;
   movie?: InputMaybe<Movies_Order_By>;
   movie_id?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
@@ -8429,9 +8429,9 @@ export enum Movie_Alternative_Titles_Select_Column {
   /** column name */
   AlternativeTitle = 'alternative_title',
   /** column name */
-  Id = 'id',
+  Country = 'country',
   /** column name */
-  Language = 'language',
+  Id = 'id',
   /** column name */
   MovieId = 'movie_id',
   /** column name */
@@ -8441,8 +8441,8 @@ export enum Movie_Alternative_Titles_Select_Column {
 /** input type for updating data in table "movie_alternative_titles" */
 export type Movie_Alternative_Titles_Set_Input = {
   alternative_title?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  language?: InputMaybe<Scalars['String']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
 };
@@ -8458,8 +8458,8 @@ export type Movie_Alternative_Titles_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Movie_Alternative_Titles_Stream_Cursor_Value_Input = {
   alternative_title?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  language?: InputMaybe<Scalars['String']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
 };
@@ -8469,9 +8469,9 @@ export enum Movie_Alternative_Titles_Update_Column {
   /** column name */
   AlternativeTitle = 'alternative_title',
   /** column name */
-  Id = 'id',
+  Country = 'country',
   /** column name */
-  Language = 'language',
+  Id = 'id',
   /** column name */
   MovieId = 'movie_id',
   /** column name */
@@ -27295,7 +27295,22 @@ export type GetCreditsQueryVariables = Exact<{
 }>;
 
 
-export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }> };
+export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, credits_aggregate: { __typename?: 'credits_aggregate', aggregate?: { __typename?: 'credits_aggregate_fields', count: number } | null } };
+
+export type InsertCreditsMutationVariables = Exact<{
+  objects: Array<Credits_Insert_Input> | Credits_Insert_Input;
+}>;
+
+
+export type InsertCreditsMutation = { __typename?: 'mutation_root', insert_credits?: { __typename?: 'credits_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }> } | null };
+
+export type UpdateCreditsMutationVariables = Exact<{
+  where: Credits_Bool_Exp;
+  _set: Credits_Set_Input;
+}>;
+
+
+export type UpdateCreditsMutation = { __typename?: 'mutation_root', update_credits?: { __typename?: 'credits_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'credits', id: any, order: number }> } | null };
 
 export type DeleteFileMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -27324,6 +27339,44 @@ export type GetUserStatusesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUserStatusesQuery = { __typename?: 'query_root', user_book_statuses: Array<{ __typename?: 'user_book_statuses', user_id: any, book_id: any, rating?: any | null, book: { __typename?: 'books', title: string, cover: string } }>, user_song_statuses: Array<{ __typename?: 'user_song_statuses', user_id: any, song_id: any, rating?: any | null, song: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } }>, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', user_id: any, movie_id: any, rating?: any | null, movie: { __typename?: 'movies', title: string, poster: string } }> };
+
+export type DeleteMovieAlternativeTitlesMutationVariables = Exact<{
+  where: Movie_Alternative_Titles_Bool_Exp;
+}>;
+
+
+export type DeleteMovieAlternativeTitlesMutation = { __typename?: 'mutation_root', delete_movie_alternative_titles?: { __typename?: 'movie_alternative_titles_mutation_response', affected_rows: number } | null };
+
+export type DeleteMovieAvailabilitiesMutationVariables = Exact<{
+  where: Movie_Availabilities_Bool_Exp;
+}>;
+
+
+export type DeleteMovieAvailabilitiesMutation = { __typename?: 'mutation_root', delete_movie_availabilities?: { __typename?: 'movie_availabilities_mutation_response', affected_rows: number } | null };
+
+export type DeleteMovieGenresMutationVariables = Exact<{
+  where: Movie_Genres_Bool_Exp;
+}>;
+
+
+export type DeleteMovieGenresMutation = { __typename?: 'mutation_root', delete_movie_genres?: { __typename?: 'movie_genres_mutation_response', affected_rows: number } | null };
+
+export type DeleteMovieKeywordsMutationVariables = Exact<{
+  where: Movie_Keywords_Bool_Exp;
+}>;
+
+
+export type DeleteMovieKeywordsMutation = { __typename?: 'mutation_root', delete_movie_keywords?: { __typename?: 'movie_keywords_mutation_response', affected_rows: number } | null };
+
+export type GetMovieAlternativeTitlesQueryVariables = Exact<{
+  where?: InputMaybe<Movie_Alternative_Titles_Bool_Exp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Alternative_Titles_Order_By> | Movie_Alternative_Titles_Order_By>;
+}>;
+
+
+export type GetMovieAlternativeTitlesQuery = { __typename?: 'query_root', movie_alternative_titles: Array<{ __typename?: 'movie_alternative_titles', id: any, alternative_title: string, country?: string | null, type?: string | null, movie_id: any }>, movie_alternative_titles_aggregate: { __typename?: 'movie_alternative_titles_aggregate', aggregate?: { __typename?: 'movie_alternative_titles_aggregate_fields', count: number } | null } };
 
 export type GetMovieByTmdb_IdQueryVariables = Exact<{
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -27382,8 +27435,17 @@ export type IncrementMovieViewsMutationVariables = Exact<{
 
 export type IncrementMovieViewsMutation = { __typename?: 'mutation_root', update_movies_by_pk?: { __typename?: 'movies', id: any, view_count?: number | null } | null };
 
+export type InsertMovieAlternativeTitleMutationVariables = Exact<{
+  object: Movie_Alternative_Titles_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Alternative_Titles_On_Conflict>;
+}>;
+
+
+export type InsertMovieAlternativeTitleMutation = { __typename?: 'mutation_root', insert_movie_alternative_titles_one?: { __typename?: 'movie_alternative_titles', id: any, alternative_title: string, country?: string | null, type?: string | null } | null };
+
 export type InsertMovieMutationVariables = Exact<{
   object: Movies_Insert_Input;
+  on_conflict?: InputMaybe<Movies_On_Conflict>;
 }>;
 
 
@@ -28134,6 +28196,11 @@ export const GetCreditsDocument = `
       headshot
     }
   }
+  credits_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
 }
     `;
 
@@ -28170,6 +28237,63 @@ export const useInfiniteGetCreditsQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const InsertCreditsDocument = `
+    mutation InsertCredits($objects: [credits_insert_input!]!) {
+  insert_credits(objects: $objects) {
+    affected_rows
+    returning {
+      id
+      credit_type
+      details
+      order
+      person {
+        id
+        name
+        headshot
+      }
+    }
+  }
+}
+    `;
+
+export const useInsertCreditsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertCreditsMutation, TError, InsertCreditsMutationVariables, TContext>) => {
+    
+    return useMutation<InsertCreditsMutation, TError, InsertCreditsMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertCredits'],
+    mutationFn: (variables?: InsertCreditsMutationVariables) => fetcher<InsertCreditsMutation, InsertCreditsMutationVariables>(InsertCreditsDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const UpdateCreditsDocument = `
+    mutation UpdateCredits($where: credits_bool_exp!, $_set: credits_set_input!) {
+  update_credits(where: $where, _set: $_set) {
+    affected_rows
+    returning {
+      id
+      order
+    }
+  }
+}
+    `;
+
+export const useUpdateCreditsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCreditsMutation, TError, UpdateCreditsMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateCreditsMutation, TError, UpdateCreditsMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateCredits'],
+    mutationFn: (variables?: UpdateCreditsMutationVariables) => fetcher<UpdateCreditsMutation, UpdateCreditsMutationVariables>(UpdateCreditsDocument, variables)(),
+    ...options
+  }
     )};
 
 export const DeleteFileDocument = `
@@ -28364,6 +28488,147 @@ export const useInfiniteGetUserStatusesQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetUserStatuses.infinite'] : ['GetUserStatuses.infinite', variables],
       queryFn: (metaData) => fetcher<GetUserStatusesQuery, GetUserStatusesQueryVariables>(GetUserStatusesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const DeleteMovieAlternativeTitlesDocument = `
+    mutation DeleteMovieAlternativeTitles($where: movie_alternative_titles_bool_exp!) {
+  delete_movie_alternative_titles(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteMovieAlternativeTitlesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieAlternativeTitlesMutation, TError, DeleteMovieAlternativeTitlesMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieAlternativeTitlesMutation, TError, DeleteMovieAlternativeTitlesMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieAlternativeTitles'],
+    mutationFn: (variables?: DeleteMovieAlternativeTitlesMutationVariables) => fetcher<DeleteMovieAlternativeTitlesMutation, DeleteMovieAlternativeTitlesMutationVariables>(DeleteMovieAlternativeTitlesDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteMovieAvailabilitiesDocument = `
+    mutation DeleteMovieAvailabilities($where: movie_availabilities_bool_exp!) {
+  delete_movie_availabilities(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteMovieAvailabilitiesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieAvailabilitiesMutation, TError, DeleteMovieAvailabilitiesMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieAvailabilitiesMutation, TError, DeleteMovieAvailabilitiesMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieAvailabilities'],
+    mutationFn: (variables?: DeleteMovieAvailabilitiesMutationVariables) => fetcher<DeleteMovieAvailabilitiesMutation, DeleteMovieAvailabilitiesMutationVariables>(DeleteMovieAvailabilitiesDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteMovieGenresDocument = `
+    mutation DeleteMovieGenres($where: movie_genres_bool_exp!) {
+  delete_movie_genres(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteMovieGenresMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieGenresMutation, TError, DeleteMovieGenresMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieGenresMutation, TError, DeleteMovieGenresMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieGenres'],
+    mutationFn: (variables?: DeleteMovieGenresMutationVariables) => fetcher<DeleteMovieGenresMutation, DeleteMovieGenresMutationVariables>(DeleteMovieGenresDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteMovieKeywordsDocument = `
+    mutation DeleteMovieKeywords($where: movie_keywords_bool_exp!) {
+  delete_movie_keywords(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteMovieKeywordsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieKeywordsMutation, TError, DeleteMovieKeywordsMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieKeywordsMutation, TError, DeleteMovieKeywordsMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieKeywords'],
+    mutationFn: (variables?: DeleteMovieKeywordsMutationVariables) => fetcher<DeleteMovieKeywordsMutation, DeleteMovieKeywordsMutationVariables>(DeleteMovieKeywordsDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const GetMovieAlternativeTitlesDocument = `
+    query GetMovieAlternativeTitles($where: movie_alternative_titles_bool_exp, $limit: Int, $offset: Int, $order_by: [movie_alternative_titles_order_by!]) {
+  movie_alternative_titles(
+    where: $where
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+  ) {
+    id
+    alternative_title
+    country
+    type
+    movie_id
+  }
+  movie_alternative_titles_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+export const useGetMovieAlternativeTitlesQuery = <
+      TData = GetMovieAlternativeTitlesQuery,
+      TError = unknown
+    >(
+      variables?: GetMovieAlternativeTitlesQueryVariables,
+      options?: Omit<UseQueryOptions<GetMovieAlternativeTitlesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMovieAlternativeTitlesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMovieAlternativeTitlesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetMovieAlternativeTitles'] : ['GetMovieAlternativeTitles', variables],
+    queryFn: fetcher<GetMovieAlternativeTitlesQuery, GetMovieAlternativeTitlesQueryVariables>(GetMovieAlternativeTitlesDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetMovieAlternativeTitlesQuery = <
+      TData = InfiniteData<GetMovieAlternativeTitlesQuery>,
+      TError = unknown
+    >(
+      variables: GetMovieAlternativeTitlesQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetMovieAlternativeTitlesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetMovieAlternativeTitlesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetMovieAlternativeTitlesQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetMovieAlternativeTitles.infinite'] : ['GetMovieAlternativeTitles.infinite', variables],
+      queryFn: (metaData) => fetcher<GetMovieAlternativeTitlesQuery, GetMovieAlternativeTitlesQueryVariables>(GetMovieAlternativeTitlesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -28756,9 +29021,33 @@ export const useIncrementMovieViewsMutation = <
   }
     )};
 
+export const InsertMovieAlternativeTitleDocument = `
+    mutation InsertMovieAlternativeTitle($object: movie_alternative_titles_insert_input!, $on_conflict: movie_alternative_titles_on_conflict) {
+  insert_movie_alternative_titles_one(object: $object, on_conflict: $on_conflict) {
+    id
+    alternative_title
+    country
+    type
+  }
+}
+    `;
+
+export const useInsertMovieAlternativeTitleMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieAlternativeTitleMutation, TError, InsertMovieAlternativeTitleMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieAlternativeTitleMutation, TError, InsertMovieAlternativeTitleMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieAlternativeTitle'],
+    mutationFn: (variables?: InsertMovieAlternativeTitleMutationVariables) => fetcher<InsertMovieAlternativeTitleMutation, InsertMovieAlternativeTitleMutationVariables>(InsertMovieAlternativeTitleDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const InsertMovieDocument = `
-    mutation InsertMovie($object: movies_insert_input!) {
-  insert_movies_one(object: $object) {
+    mutation InsertMovie($object: movies_insert_input!, $on_conflict: movies_on_conflict) {
+  insert_movies_one(object: $object, on_conflict: $on_conflict) {
     id
     title
   }

@@ -1,6 +1,8 @@
 import { Movie_Certification_Types_Enum, Movie_Release_Status_Types_Enum } from '@/generated/graphql';
+import { selectSchema } from '@/schemas/select.schema';
+import { createOptionSchema } from '@/utils/enum-to-options';
 
-import { movieAvailabilityOptionsSchema } from '../constants/movie-enums';
+import { movieAvailabilityOptionsSchema, movieGenresOptionsSchema } from '../constants/movie-enums';
 import { z } from 'zod';
 
 export const editMovieSchema = z.object({
@@ -15,7 +17,9 @@ export const editMovieSchema = z.object({
     language: z.string().optional(),
     status: z.nativeEnum(Movie_Release_Status_Types_Enum).optional(),
     certification: z.nativeEnum(Movie_Certification_Types_Enum).optional(),
+    genres: z.array(movieGenresOptionsSchema).optional(),
     availabilities: z.array(movieAvailabilityOptionsSchema).optional(),
+    keywords: z.array(selectSchema).optional(),
     imdbId: z.string().optional(),
     tmdbId: z.string().optional(),
     homepage: z.string().url().optional().or(z.literal(''))

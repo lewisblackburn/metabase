@@ -6,7 +6,6 @@ import {
     Credit_Types_Enum,
     Credits_Constraint,
     Credits_Insert_Input,
-    Gender_Types_Enum,
     GetMovieByTmdb_IdDocument,
     GetMovieByTmdb_IdQuery,
     GetMovieByTmdb_IdQueryVariables,
@@ -241,8 +240,7 @@ export async function importMovieFromTmdb(
                 data:
                     tmdbMovieData.genres?.map(
                         (genre, index): Movie_Genres_Insert_Input => ({
-                            genre: TMDB_MOIVE_GENRE_MAP[genre.name as keyof typeof TMDB_MOIVE_GENRE_MAP],
-                            order: index + 1
+                            genre: TMDB_MOIVE_GENRE_MAP[genre.name as keyof typeof TMDB_MOIVE_GENRE_MAP]
                         })
                     ) || []
             },
@@ -291,7 +289,7 @@ export async function importMovieFromTmdb(
                     tmdbMovieData.alternative_titles?.titles.map(
                         (altTitle): Movie_Alternative_Titles_Insert_Input => ({
                             alternative_title: altTitle.title,
-                            language: altTitle.iso_3166_1,
+                            country: altTitle.iso_3166_1,
                             type: altTitle.type
                         })
                     ) || [],

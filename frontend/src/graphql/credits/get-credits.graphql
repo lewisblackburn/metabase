@@ -16,4 +16,9 @@ query GetCredits(
             headshot
         }
     }
+    credits_aggregate(where: $where) {
+        aggregate {
+            count
+        }
+    }
 }

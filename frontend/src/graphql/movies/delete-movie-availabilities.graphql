@@ -1,0 +1,5 @@
+mutation DeleteMovieAvailabilities($where: movie_availabilities_bool_exp!) {
+    delete_movie_availabilities(where: $where) {
+        affected_rows
+    }
+}

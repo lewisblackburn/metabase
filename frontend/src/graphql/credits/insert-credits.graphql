@@ -1,0 +1,16 @@
+mutation InsertCredits($objects: [credits_insert_input!]!) {
+    insert_credits(objects: $objects) {
+        affected_rows
+        returning {
+            id
+            credit_type
+            details
+            order
+            person {
+                id
+                name
+                headshot
+            }
+        }
+    }
+}

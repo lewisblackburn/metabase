@@ -1,0 +1,5 @@
+mutation DeleteMovieGenres($where: movie_genres_bool_exp!) {
+    delete_movie_genres(where: $where) {
+        affected_rows
+    }
+}

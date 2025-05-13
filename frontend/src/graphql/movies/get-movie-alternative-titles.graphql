@@ -1,0 +1,19 @@
+query GetMovieAlternativeTitles(
+    $where: movie_alternative_titles_bool_exp
+    $limit: Int
+    $offset: Int
+    $order_by: [movie_alternative_titles_order_by!]
+) {
+    movie_alternative_titles(where: $where, limit: $limit, offset: $offset, order_by: $order_by) {
+        id
+        alternative_title
+        country
+        type
+        movie_id
+    }
+    movie_alternative_titles_aggregate(where: $where) {
+        aggregate {
+            count
+        }
+    }
+}

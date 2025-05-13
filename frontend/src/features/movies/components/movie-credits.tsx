@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import SmallAvatar from '@/components/shared/small-avatar';
-import { Credit_Types_Enum, useGetCreditsQuery } from '@/generated/graphql';
+import { Credit_Types_Enum, Order_By, useGetCreditsQuery } from '@/generated/graphql';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 
 type CreditMemberProps = {
@@ -71,9 +71,15 @@ export default function MovieCredits() {
                 object_id: {
                     _eq: params?.id
                 }
-            }
+            },
+            order_by: [
+                {
+                    order: Order_By.Asc
+                }
+            ]
         },
         {
+            queryKey: ['movie-credits', params?.id],
             enabled: !!params?.id
         }
     );

@@ -1,0 +1,5 @@
+mutation DeleteMovieAlternativeTitles($where: movie_alternative_titles_bool_exp!) {
+    delete_movie_alternative_titles(where: $where) {
+        affected_rows
+    }
+}

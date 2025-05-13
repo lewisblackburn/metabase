@@ -1,5 +1,3 @@
-import { selectSchema } from '@/schemas/select.schema';
-
 import { z } from 'zod';
 
 export const addCastMemberSchema = z.object({
@@ -9,5 +7,5 @@ export const addCastMemberSchema = z.object({
 
 export const editCastMemberSchema = addCastMemberSchema.omit({ person: true });
 
-export type AddCastMemberSchema = z.infer<typeof addCastMemberSchema>;
-export type EditCastMemberSchema = z.infer<typeof editCastMemberSchema>;
+export type AddCastMemberSchemaType = z.infer<typeof addCastMemberSchema>;
+export type EditCastMemberSchemaType = z.infer<typeof editCastMemberSchema>;

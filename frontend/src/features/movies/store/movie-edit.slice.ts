@@ -23,13 +23,7 @@ const initialState: MovieEditState = {
             description: 'Edit the alternative titles of the movie',
             iconColor: 'text-blue-500'
         },
-        {
-            id: 'availabilities',
-            name: 'Availabilities',
-            icon: 'Globe',
-            description: 'Edit the availability of the movie in different regions',
-            iconColor: 'text-blue-500'
-        },
+
         {
             id: 'cast',
             name: 'Cast',
@@ -50,20 +44,6 @@ const initialState: MovieEditState = {
             icon: 'Music',
             description: 'Edit the soundtrack of the movie',
             iconColor: 'text-blue-500'
-        },
-        {
-            id: 'genres',
-            name: 'Genres',
-            icon: 'Tags',
-            description: 'Edit the genres of the movie',
-            iconColor: 'text-red-500'
-        },
-        {
-            id: 'keywords',
-            name: 'Keywords',
-            icon: 'Hash',
-            description: 'Edit the keywords of the movie',
-            iconColor: 'text-orange-500'
         },
         {
             id: 'production_information',

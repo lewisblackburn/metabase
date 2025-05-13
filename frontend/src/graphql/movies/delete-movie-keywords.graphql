@@ -1,0 +1,5 @@
+mutation DeleteMovieKeywords($where: movie_keywords_bool_exp!) {
+    delete_movie_keywords(where: $where) {
+        affected_rows
+    }
+}

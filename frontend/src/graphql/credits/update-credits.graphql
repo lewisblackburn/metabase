@@ -1,0 +1,9 @@
+mutation UpdateCredits($where: credits_bool_exp!, $_set: credits_set_input!) {
+    update_credits(where: $where, _set: $_set) {
+        affected_rows
+        returning {
+            id
+            order
+        }
+    }
+}

@@ -1,0 +1,11 @@
+mutation InsertMovieAlternativeTitle(
+    $object: movie_alternative_titles_insert_input!
+    $on_conflict: movie_alternative_titles_on_conflict
+) {
+    insert_movie_alternative_titles_one(object: $object, on_conflict: $on_conflict) {
+        id
+        alternative_title
+        country
+        type
+    }
+}

@@ -2,27 +2,20 @@
 
 import { useState } from 'react';
 
-import SmallAvatar from '@/components/shared/small-avatar';
 import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
-import {
-    Credit_Types_Enum,
-    Order_By,
-    useDeleteCreditsMutation,
-    useGetCreditsQuery,
-    useUpdateCreditsMutation
-} from '@/generated/graphql';
+import { useDeleteMovieAlternativeTitlesMutation, useGetMovieAlternativeTitlesQuery } from '@/generated/graphql';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import AddCastMemberDialog from './add-cast-member-dialog';
+import AddAlternativeTitleDialog from './add-alternative-title-dialog';
 import { Trash, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function EditMovieCast({ movieId }: { movieId: string }) {
+export default function EditMovieAlternativeTitles({ movieId }: { movieId: string }) {
     const queryClient = useQueryClient();
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -31,35 +24,31 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
 
-    const { data, isLoading } = useGetCreditsQuery(
+    const { data, isLoading } = useGetMovieAlternativeTitlesQuery(
         {
             where: {
                 _and: [
                     {
-                        object_id: {
+                        movie_id: {
                             _eq: movieId
-                        }
-                    },
-                    {
-                        credit_type: {
-                            _eq: Credit_Types_Enum.Cast
                         }
                     },
                     debouncedSearchQuery
                         ? {
                               _or: [
                                   {
-                                      person: {
-                                          name: {
-                                              _ilike: `%${debouncedSearchQuery}%`
-                                          }
+                                      alternative_title: {
+                                          _ilike: `%${debouncedSearchQuery}%`
                                       }
                                   },
                                   {
-                                      details: {
-                                          _contains: {
-                                              character: debouncedSearchQuery
-                                          }
+                                      country: {
+                                          _ilike: `%${debouncedSearchQuery}%`
+                                      }
+                                  },
+                                  {
+                                      type: {
+                                          _ilike: `%${debouncedSearchQuery}%`
                                       }
                                   }
                               ]
@@ -69,108 +58,68 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
             },
             limit: pageSize,
             offset: pageIndex * pageSize,
-            order_by: [
-                {
-                    order: Order_By.Asc
-                }
-            ]
+            order_by:
+                sorting.length > 0
+                    ? sorting.map((sort) => ({
+                          [sort.id]: sort.desc ? 'desc' : 'asc'
+                      }))
+                    : undefined
         },
         {
-            queryKey: ['movie-cast', movieId, debouncedSearchQuery, pageIndex, pageSize, sorting]
+            queryKey: ['movie-alternative-titles', movieId, debouncedSearchQuery, pageIndex, pageSize, sorting]
         }
     );
 
-    const castMembers = data?.credits ?? [];
-    const totalRows = data?.credits_aggregate?.aggregate?.count ?? 0;
+    const alternativeTitles = data?.movie_alternative_titles ?? [];
+    const totalRows = data?.movie_alternative_titles_aggregate?.aggregate?.count ?? 0;
 
-    const { mutateAsync: deleteMovieCredits } = useDeleteCreditsMutation({
+    const { mutateAsync: deleteMovieAlternativeTitles } = useDeleteMovieAlternativeTitlesMutation({
         onSuccess: () => {
-            toast.success('Cast members deleted successfully');
-            queryClient.invalidateQueries({ queryKey: ['movie-cast', movieId] });
-            queryClient.invalidateQueries({ queryKey: ['movie-credits', movieId] });
+            toast.success('Alternative titles deleted successfully');
+            queryClient.invalidateQueries({ queryKey: ['movie-alternative-titles', movieId] });
         },
         onError: (error: Error) => {
             toast.error(error.message);
         }
     });
 
-    const { mutateAsync: updateCredits } = useUpdateCreditsMutation({
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['movie-cast', movieId] });
-            queryClient.invalidateQueries({ queryKey: ['movie-credits', movieId] });
-        },
-        onError: (error: Error) => {
-            toast.error(error.message);
-        }
-    });
-
-    const handleRowOrderChange = async (newData: typeof castMembers) => {
-        const movedItem = newData.find((item, index) => item.id !== castMembers[index]?.id);
-        if (!movedItem) return;
-
-        const movedIndex = newData.findIndex((item) => item.id === movedItem.id);
-        const prevItem = newData[movedIndex - 1];
-        const nextItem = newData[movedIndex + 1];
-
-        let newOrder: number;
-        if (!prevItem) {
-            // NOTE: If moved to the start, place it before the next item
-            newOrder = nextItem.order - 1;
-        } else if (!nextItem) {
-            // NOTE: If moved to the end, place it after the previous item
-            newOrder = prevItem.order + 1;
-        } else {
-            // NOTE: Place it between the previous and next items
-            newOrder = (prevItem.order + nextItem.order) / 2;
-        }
-
-        await updateCredits({
-            where: {
-                id: {
-                    _eq: movedItem.id
-                }
-            },
-            _set: {
-                order: newOrder
-            }
-        });
-    };
-
-    const columns: ColumnDef<(typeof castMembers)[number]>[] = [
+    const columns: ColumnDef<(typeof alternativeTitles)[number]>[] = [
         {
-            accessorKey: 'person',
+            accessorKey: 'alternative_title',
             header: ({ column }) => (
                 <button
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
-                    Actor
+                    Title
                     <SortingArrows column={column} />
                 </button>
-            ),
-            cell: ({ row }) => {
-                const person = row.original.person;
-                return (
-                    <div className='flex items-center gap-2'>
-                        <SmallAvatar image={person.headshot} alt={person.name} />
-                        <span>{person.name}</span>
-                    </div>
-                );
-            }
+            )
         },
         {
-            accessorKey: 'details',
+            accessorKey: 'country',
             header: ({ column }) => (
                 <button
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                     className='inline-flex cursor-pointer items-center font-medium'>
-                    Character
+                    Country
                     <SortingArrows column={column} />
                 </button>
             ),
             cell: ({ row }) => {
-                const details = row.original.details as { character: string };
-                return details.character;
+                const countryCode = row.original.country;
+                return countryCode ? new Intl.DisplayNames(['en'], { type: 'region' }).of(countryCode) : '';
             }
+        },
+        {
+            accessorKey: 'type',
+            header: ({ column }) => (
+                <button
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                    className='inline-flex cursor-pointer items-center font-medium'>
+                    Type
+                    <SortingArrows column={column} />
+                </button>
+            )
         }
     ];
 
@@ -178,7 +127,7 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
         const selectedIds = Object.keys(rowSelection);
         if (selectedIds.length === 0) return;
 
-        await deleteMovieCredits({
+        await deleteMovieAlternativeTitles({
             where: {
                 id: {
                     _in: selectedIds
@@ -197,7 +146,7 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
         <div className='overflow-x-auto'>
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
-                    placeholder='Search by actor name or character...'
+                    placeholder='Search by title, country, or type...'
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
@@ -209,7 +158,7 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
                         Reset
                     </Button>
                 )}
-                <AddCastMemberDialog movieId={movieId} />
+                <AddAlternativeTitleDialog movieId={movieId} />
 
                 {Object.keys(rowSelection).length > 0 && (
                     <Button variant='destructive' size='sm' onClick={handleDelete}>
@@ -220,7 +169,7 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
             <div className='xs:max-w-full max-w-xs'>
                 <DataTable
                     columns={columns}
-                    data={castMembers}
+                    data={alternativeTitles}
                     pageIndex={pageIndex}
                     pageSize={pageSize}
                     totalRows={totalRows}
@@ -231,7 +180,6 @@ export default function EditMovieCast({ movieId }: { movieId: string }) {
                     onPageChange={setPageIndex}
                     onPageSizeChange={handlePageSizeChange}
                     onRowSelectionChange={setRowSelection}
-                    onRowOrderChange={handleRowOrderChange}
                 />
             </div>
         </div>
