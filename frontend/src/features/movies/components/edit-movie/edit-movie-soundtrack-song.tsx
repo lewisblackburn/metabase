@@ -25,7 +25,7 @@ import { Pencil, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-interface EditSongDialogProps {
+interface EditMovieSoundtrackSongDialogProps {
     movieId: string;
     soundtrack: {
         id: string;
@@ -38,7 +38,7 @@ interface EditSongDialogProps {
     };
 }
 
-export default function EditSongDialog({ movieId, soundtrack }: EditSongDialogProps) {
+export default function EditMovieSoundtrackSongDialog({ movieId, soundtrack }: EditMovieSoundtrackSongDialogProps) {
     const [open, setOpen] = useState(false);
     const [resetKey, setResetKey] = useState(0);
     const queryClient = useQueryClient();

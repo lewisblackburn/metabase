@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Users } from '@/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/registry/new-york-v4/ui/hover-card';
@@ -19,7 +21,11 @@ export function UserHoverCard({ user, children }: UserHoverCardProps) {
 
     return (
         <HoverCard>
-            <HoverCardTrigger asChild>{children}</HoverCardTrigger>
+            <HoverCardTrigger asChild>
+                <Link href={`/dashboard/users/${user.id}`} className='cursor-pointer font-semibold'>
+                    {children}
+                </Link>
+            </HoverCardTrigger>
             <HoverCardContent className='w-80'>
                 <div className='flex space-x-3'>
                     <Avatar className='h-12 w-12'>

@@ -67,23 +67,6 @@ export type Int_Comparison_Exp = {
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
-export type String_Array_Comparison_Exp = {
-  /** is the array contained in the given array value */
-  _contained_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  /** does the array contain the given value */
-  _contains?: InputMaybe<Array<Scalars['String']['input']>>;
-  _eq?: InputMaybe<Array<Scalars['String']['input']>>;
-  _gt?: InputMaybe<Array<Scalars['String']['input']>>;
-  _gte?: InputMaybe<Array<Scalars['String']['input']>>;
-  _in?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
-  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Array<Scalars['String']['input']>>;
-  _lte?: InputMaybe<Array<Scalars['String']['input']>>;
-  _neq?: InputMaybe<Array<Scalars['String']['input']>>;
-  _nin?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
-};
-
-/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['String']['input']>;
   _gt?: InputMaybe<Scalars['String']['input']>;
@@ -7987,6 +7970,23 @@ export type Gender_Types_Updates = {
 };
 
 /** Boolean expression to compare columns of type "interval". All fields are combined with logical 'AND'. */
+export type Interval_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['interval']['input']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _eq?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _gt?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _gte?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _in?: InputMaybe<Array<Array<Scalars['interval']['input']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _lte?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _neq?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['interval']['input']>>>;
+};
+
+/** Boolean expression to compare columns of type "interval". All fields are combined with logical 'AND'. */
 export type Interval_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['interval']['input']>;
   _gt?: InputMaybe<Scalars['interval']['input']>;
@@ -10343,7 +10343,7 @@ export type Movie_Soundtrack = {
   /** An object relationship */
   song: Songs;
   song_id: Scalars['uuid']['output'];
-  timestamps?: Maybe<Array<Scalars['String']['output']>>;
+  timestamps?: Maybe<Array<Scalars['interval']['output']>>;
 };
 
 /** aggregated selection of "movie_soundtrack" */
@@ -10405,7 +10405,7 @@ export type Movie_Soundtrack_Bool_Exp = {
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
   song?: InputMaybe<Songs_Bool_Exp>;
   song_id?: InputMaybe<Uuid_Comparison_Exp>;
-  timestamps?: InputMaybe<String_Array_Comparison_Exp>;
+  timestamps?: InputMaybe<Interval_Array_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "movie_soundtrack" */
@@ -10423,7 +10423,7 @@ export type Movie_Soundtrack_Insert_Input = {
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
   song?: InputMaybe<Songs_Obj_Rel_Insert_Input>;
   song_id?: InputMaybe<Scalars['uuid']['input']>;
-  timestamps?: InputMaybe<Array<Scalars['String']['input']>>;
+  timestamps?: InputMaybe<Array<Scalars['interval']['input']>>;
 };
 
 /** aggregate max on columns */
@@ -10434,7 +10434,7 @@ export type Movie_Soundtrack_Max_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
   song_id?: Maybe<Scalars['uuid']['output']>;
-  timestamps?: Maybe<Array<Scalars['String']['output']>>;
+  timestamps?: Maybe<Array<Scalars['interval']['output']>>;
 };
 
 /** order by max() on columns of table "movie_soundtrack" */
@@ -10455,7 +10455,7 @@ export type Movie_Soundtrack_Min_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   movie_id?: Maybe<Scalars['uuid']['output']>;
   song_id?: Maybe<Scalars['uuid']['output']>;
-  timestamps?: Maybe<Array<Scalars['String']['output']>>;
+  timestamps?: Maybe<Array<Scalars['interval']['output']>>;
 };
 
 /** order by min() on columns of table "movie_soundtrack" */
@@ -10524,7 +10524,7 @@ export type Movie_Soundtrack_Set_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
   song_id?: InputMaybe<Scalars['uuid']['input']>;
-  timestamps?: InputMaybe<Array<Scalars['String']['input']>>;
+  timestamps?: InputMaybe<Array<Scalars['interval']['input']>>;
 };
 
 /** Streaming cursor of the table "movie_soundtrack" */
@@ -10542,7 +10542,7 @@ export type Movie_Soundtrack_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   movie_id?: InputMaybe<Scalars['uuid']['input']>;
   song_id?: InputMaybe<Scalars['uuid']['input']>;
-  timestamps?: InputMaybe<Array<Scalars['String']['input']>>;
+  timestamps?: InputMaybe<Array<Scalars['interval']['input']>>;
 };
 
 /** update columns of table "movie_soundtrack" */
@@ -27399,6 +27399,16 @@ export type GetMovieForContentQualityCheckQueryVariables = Exact<{
 
 export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
+export type GetMovieReviewsQueryVariables = Exact<{
+  where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<User_Movie_Statuses_Order_By> | User_Movie_Statuses_Order_By>;
+}>;
+
+
+export type GetMovieReviewsQuery = { __typename?: 'query_root', user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', user_id: any, rating?: any | null, review?: string | null, updated_at: any, user: { __typename?: 'users', displayName: string, avatarUrl: string, createdAt: any } }> };
+
 export type GetMovieSoundtrackQueryVariables = Exact<{
   where?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -27407,7 +27417,7 @@ export type GetMovieSoundtrackQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieSoundtrackQuery = { __typename?: 'query_root', movie_soundtrack: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', id: any, name: string, credits: Array<{ __typename?: 'credits', person: { __typename?: 'people', name: string } }> } }>, movie_soundtrack_aggregate: { __typename?: 'movie_soundtrack_aggregate', aggregate?: { __typename?: 'movie_soundtrack_aggregate_fields', count: number } | null } };
+export type GetMovieSoundtrackQuery = { __typename?: 'query_root', movie_soundtrack: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<any> | null, description?: string | null, song: { __typename?: 'songs', id: any, name: string, credits: Array<{ __typename?: 'credits', person: { __typename?: 'people', name: string } }> } }>, movie_soundtrack_aggregate: { __typename?: 'movie_soundtrack_aggregate', aggregate?: { __typename?: 'movie_soundtrack_aggregate_fields', count: number } | null } };
 
 export type GetMovieTitleQueryVariables = Exact<{
   movie_id: Scalars['uuid']['input'];
@@ -27421,7 +27431,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<string> | null, description?: string | null, song: { __typename?: 'songs', name: string, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
+export type GetMovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, movie_availabilities: Array<{ __typename?: 'movie_availabilities', availability: Movie_Availability_Types_Enum }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }>, movie_soundtracks: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<any> | null, description?: string | null, song: { __typename?: 'songs', name: string, credits: Array<{ __typename?: 'credits', id: any, person: { __typename?: 'people', name: string } }> } }> } | null };
 
 export type GetMoviesQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Movies_Select_Column> | Movies_Select_Column>;
@@ -28811,6 +28821,62 @@ export const useInfiniteGetMovieForContentQualityCheckQuery = <
     return {
       queryKey: optionsQueryKey ?? ['GetMovieForContentQualityCheck.infinite', variables],
       queryFn: (metaData) => fetcher<GetMovieForContentQualityCheckQuery, GetMovieForContentQualityCheckQueryVariables>(GetMovieForContentQualityCheckDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetMovieReviewsDocument = `
+    query GetMovieReviews($where: user_movie_statuses_bool_exp, $limit: Int, $offset: Int, $orderBy: [user_movie_statuses_order_by!]) {
+  user_movie_statuses(
+    where: $where
+    limit: $limit
+    offset: $offset
+    order_by: $orderBy
+  ) {
+    user_id
+    rating
+    review
+    updated_at
+    user {
+      displayName
+      avatarUrl
+      createdAt
+    }
+  }
+}
+    `;
+
+export const useGetMovieReviewsQuery = <
+      TData = GetMovieReviewsQuery,
+      TError = unknown
+    >(
+      variables?: GetMovieReviewsQueryVariables,
+      options?: Omit<UseQueryOptions<GetMovieReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMovieReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMovieReviewsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetMovieReviews'] : ['GetMovieReviews', variables],
+    queryFn: fetcher<GetMovieReviewsQuery, GetMovieReviewsQueryVariables>(GetMovieReviewsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetMovieReviewsQuery = <
+      TData = InfiniteData<GetMovieReviewsQuery>,
+      TError = unknown
+    >(
+      variables: GetMovieReviewsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetMovieReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetMovieReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetMovieReviewsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetMovieReviews.infinite'] : ['GetMovieReviews.infinite', variables],
+      queryFn: (metaData) => fetcher<GetMovieReviewsQuery, GetMovieReviewsQueryVariables>(GetMovieReviewsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

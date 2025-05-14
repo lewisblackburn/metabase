@@ -12,19 +12,19 @@ export default function Rating({ rating }: RatingProps) {
     const emptyStars = 5 - stars - (halfStar ? 1 : 0);
 
     return (
-        <div className='flex gap-1'>
+        <div className='flex gap-0.5 sm:gap-1'>
             {Array.from({ length: stars }).map((_, index) => (
-                <Star key={index} className='!size-4 fill-yellow-500 text-yellow-500' />
+                <Star key={index} className='!size-3 fill-yellow-500 text-yellow-500 sm:!size-4' />
             ))}
             {/* NOTE: StarHalf is literally a half star, there it has no full outline. This solves that. */}
             {halfStar && (
-                <div className='relative !size-4'>
-                    <Star className='absolute inset-0 !size-4 text-yellow-500' />
-                    <StarHalf className='absolute inset-0 !size-4 fill-yellow-500 text-yellow-500' />
+                <div className='relative !size-3 sm:!size-4'>
+                    <Star className='absolute inset-0 !size-3 text-yellow-500 sm:!size-4' />
+                    <StarHalf className='absolute inset-0 !size-3 fill-yellow-500 text-yellow-500 sm:!size-4' />
                 </div>
             )}
             {Array.from({ length: emptyStars }).map((_, index) => (
-                <Star key={index} className='!size-4 fill-transparent text-yellow-500' />
+                <Star key={index} className='!size-3 fill-transparent text-yellow-500 sm:!size-4' />
             ))}
         </div>
     );

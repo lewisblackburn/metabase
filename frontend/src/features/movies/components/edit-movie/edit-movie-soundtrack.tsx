@@ -11,8 +11,8 @@ import { Input } from '@/registry/new-york-v4/ui/input';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import AddSongDialog from './add-song-dialog';
-import EditSongDialog from './edit-song-dialog';
+import AddMovieSoundtrackSongDialog from './add-movie-soundtrack-song-dialog';
+import EditMovieSoundtrackSongDialog from './edit-movie-soundtrack-song';
 import { Pencil, Trash, X } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -118,7 +118,7 @@ export default function EditMovieSoundtrack({ movieId }: EditMovieSoundtrackProp
             description: row.description || null
         };
 
-        return <EditSongDialog movieId={movieId} soundtrack={soundtrack} />;
+        return <EditMovieSoundtrackSongDialog movieId={movieId} soundtrack={soundtrack} />;
     };
 
     return (
@@ -143,7 +143,7 @@ export default function EditMovieSoundtrack({ movieId }: EditMovieSoundtrackProp
                         <Trash className='size-4' />
                     </Button>
                 )}
-                <AddSongDialog movieId={movieId} />
+                <AddMovieSoundtrackSongDialog movieId={movieId} />
             </div>
             <div className='xs:max-w-full max-w-xs'>
                 <DataTable

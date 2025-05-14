@@ -50,6 +50,7 @@ export default function ReviewMovieDialog() {
                 onSuccess: () => {
                     toast.success('Movie reviewed successfully');
                     queryClient.invalidateQueries({ queryKey: ['movie-status', movie?.id, userId] });
+                    queryClient.invalidateQueries({ queryKey: ['GetMovieReviews.infinite'] });
                 }
             }
         );
@@ -79,6 +80,7 @@ export default function ReviewMovieDialog() {
                 onSuccess: () => {
                     toast.success('Movie review deleted successfully');
                     queryClient.invalidateQueries({ queryKey: ['movie-status', movie?.id, userId] });
+                    queryClient.invalidateQueries({ queryKey: ['GetMovieReviews.infinite'] });
                 }
             }
         );

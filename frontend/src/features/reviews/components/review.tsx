@@ -1,56 +1,69 @@
-import Link from 'next/link';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
-import { Card, CardDescription, CardHeader, CardTitle } from '@/registry/new-york-v4/ui/card';
+import { UserHoverCard } from '@/components/user-hover-card';
+import { Avatar, AvatarFallback } from '@/registry/new-york-v4/ui/avatar';
+import {
+    TimelineContent,
+    TimelineDate,
+    TimelineHeader,
+    TimelineIndicator,
+    TimelineItem,
+    TimelineSeparator,
+    TimelineTitle
+} from '@/registry/new-york-v4/ui/timeline';
 
 import Rating from './rating';
-import { VoteButtons, type VoteStatus } from './vote-buttons';
-import dayjs from 'dayjs';
+import { formatDistanceToNow } from 'date-fns';
 
 export type ReviewProps = {
     id: string;
     user: {
+        id: string;
         name: string;
         initials: string;
         avatar: string;
+        createdAt: Date;
     };
     rating: number;
     createdAt: Date;
     content: string;
-    votes: number;
-    voteStatus: VoteStatus;
 };
 
-export default function Review({ user, rating, createdAt, content, votes, voteStatus }: ReviewProps) {
+export default function Review({ user, rating, createdAt, content }: ReviewProps) {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className='flex items-center justify-between'>
-                    <Link href='' className='flex items-center gap-2'>
-                        <Avatar>
-                            <AvatarImage src={user.avatar} />
+        <TimelineItem
+            step={1}
+            className='group-data-[orientation=vertical]/timeline:ms-10 group-data-[orientation=vertical]/timeline:not-last:pb-8'>
+            <TimelineHeader>
+                <TimelineSeparator className='bg-border! group-data-[orientation=vertical]/timeline:-left-7 group-data-[orientation=vertical]/timeline:h-[calc(100%-1.5rem-0.25rem)] group-data-[orientation=vertical]/timeline:translate-y-6.5' />
+                <TimelineTitle className='mt-0.5 flex items-center gap-1'>
+                    <UserHoverCard
+                        user={{
+                            id: user.id,
+                            displayName: user.name,
+                            avatarUrl: user.avatar,
+                            createdAt: user.createdAt.toISOString(),
+                            email: ''
+                        }}>
+                        {user.name}
+                    </UserHoverCard>
+                    <span className='text-muted-foreground text-sm font-normal'>wrote a review</span>
+                </TimelineTitle>
+                <TimelineIndicator className='bg-primary/10 group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:text-primary-foreground flex size-6 items-center justify-center border-none group-data-[orientation=vertical]/timeline:-left-7'>
+                    {user.avatar ? (
+                        <img src={user.avatar} alt={user.name} className='size-6 rounded-full' />
+                    ) : (
+                        <Avatar className='size-6'>
                             <AvatarFallback>{user.initials}</AvatarFallback>
                         </Avatar>
-                        <div className='flex flex-col items-start gap-2 md:flex-row md:items-center'>
-                            <span>{user.name}</span>
-                            <span className='text-muted-foreground text-xs'>
-                                {dayjs(createdAt).format('MMMM D, YYYY')}
-                            </span>
-                        </div>
-                    </Link>
-                    <div className='flex items-center gap-5'>
-                        <Rating rating={rating} />
-                    </div>
-                </CardTitle>
-                <CardDescription className='mt-2 flex gap-5'>
-                    <p className='items-start'>{content}</p>
-                    <VoteButtons
-                        initialVotes={votes}
-                        initialStatus={voteStatus}
-                        onVote={(status) => console.log('Voted:', status)}
-                    />
-                </CardDescription>
-            </CardHeader>
-        </Card>
+                    )}
+                </TimelineIndicator>
+            </TimelineHeader>
+            <TimelineContent className='text-foreground mt-2 rounded-lg border px-4 py-3'>
+                <div className='flex items-start justify-between gap-2'>
+                    <p className='text-sm leading-relaxed'>{content}</p>
+                    <Rating rating={rating} />
+                </div>
+                <TimelineDate className='text-muted-foreground text-sm'>{formatDistanceToNow(createdAt)}</TimelineDate>
+            </TimelineContent>
+        </TimelineItem>
     );
 }

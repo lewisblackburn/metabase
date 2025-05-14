@@ -25,11 +25,11 @@ import { Plus, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-interface AddSongDialogProps {
+interface AddMovieSoundtrackSongDialogProps {
     movieId: string;
 }
 
-export default function AddSongDialog({ movieId }: AddSongDialogProps) {
+export default function AddMovieSoundtrackSongDialog({ movieId }: AddMovieSoundtrackSongDialogProps) {
     const [open, setOpen] = useState(false);
     const [resetKey, setResetKey] = useState(0);
     const queryClient = useQueryClient();

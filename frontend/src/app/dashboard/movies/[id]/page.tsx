@@ -15,9 +15,11 @@ import MovieFavouriteButton from '@/features/movies/components/movie-favourite-b
 import MovieLayout from '@/features/movies/components/movie-layout';
 import ObjectOverview from '@/features/movies/components/movie-overview';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
+import MovieReviews from '@/features/movies/components/movie-reviews';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
+import MovieSoundtrackTable from '@/features/movies/components/soundtrack-table';
 import { movieCertificationLabels, movieReleaseStatusLabels } from '@/features/movies/constants/movie-enums';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
@@ -72,11 +74,11 @@ function MoviePageContent() {
 
     const tabContents = {
         reviews: {
-            content: 'No reviews available.'
+            content: <MovieReviews />
         },
         'where-to-watch': { content: 'No where to watch information available.' },
         credits: { content: <MovieCredits /> },
-        soundtrack: { content: <SoundtrackTable /> },
+        soundtrack: { content: <MovieSoundtrackTable /> },
         awards: { content: 'No awards available' },
         images: { content: 'No images available.' },
         videos: { content: 'No videos available.' },
