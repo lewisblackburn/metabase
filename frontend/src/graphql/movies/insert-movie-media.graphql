@@ -1,0 +1,5 @@
+mutation InsertMovieMedia($objects: [movie_media_insert_input!]!) {
+    insert_movie_media(objects: $objects) {
+        affected_rows
+    }
+}

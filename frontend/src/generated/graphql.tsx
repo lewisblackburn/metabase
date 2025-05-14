@@ -27399,6 +27399,16 @@ export type GetMovieForContentQualityCheckQueryVariables = Exact<{
 
 export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
+export type GetMovieMediaQueryVariables = Exact<{
+  where?: InputMaybe<Movie_Media_Bool_Exp>;
+  order_by?: InputMaybe<Array<Movie_Media_Order_By> | Movie_Media_Order_By>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetMovieMediaQuery = { __typename?: 'query_root', movie_media: Array<{ __typename?: 'movie_media', file: { __typename?: 'files', name?: string | null, uploadedByUserId?: any | null, bucketId: string, id: any, size?: number | null, createdAt: any, mimeType?: string | null } }> };
+
 export type GetMovieReviewsQueryVariables = Exact<{
   where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -27469,6 +27479,13 @@ export type InsertMovieAlternativeTitleMutationVariables = Exact<{
 
 
 export type InsertMovieAlternativeTitleMutation = { __typename?: 'mutation_root', insert_movie_alternative_titles_one?: { __typename?: 'movie_alternative_titles', id: any, alternative_title: string, country?: string | null, type?: string | null } | null };
+
+export type InsertMovieMediaMutationVariables = Exact<{
+  objects: Array<Movie_Media_Insert_Input> | Movie_Media_Insert_Input;
+}>;
+
+
+export type InsertMovieMediaMutation = { __typename?: 'mutation_root', insert_movie_media?: { __typename?: 'movie_media_mutation_response', affected_rows: number } | null };
 
 export type InsertMovieSoundtrackMutationVariables = Exact<{
   object: Movie_Soundtrack_Insert_Input;
@@ -28826,6 +28843,57 @@ export const useInfiniteGetMovieForContentQualityCheckQuery = <
   })()
     )};
 
+export const GetMovieMediaDocument = `
+    query GetMovieMedia($where: movie_media_bool_exp, $order_by: [movie_media_order_by!], $limit: Int, $offset: Int) {
+  movie_media(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
+    file {
+      name
+      uploadedByUserId
+      bucketId
+      id
+      size
+      createdAt
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useGetMovieMediaQuery = <
+      TData = GetMovieMediaQuery,
+      TError = unknown
+    >(
+      variables?: GetMovieMediaQueryVariables,
+      options?: Omit<UseQueryOptions<GetMovieMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMovieMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMovieMediaQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetMovieMedia'] : ['GetMovieMedia', variables],
+    queryFn: fetcher<GetMovieMediaQuery, GetMovieMediaQueryVariables>(GetMovieMediaDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetMovieMediaQuery = <
+      TData = InfiniteData<GetMovieMediaQuery>,
+      TError = unknown
+    >(
+      variables: GetMovieMediaQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetMovieMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetMovieMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetMovieMediaQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetMovieMedia.infinite'] : ['GetMovieMedia.infinite', variables],
+      queryFn: (metaData) => fetcher<GetMovieMediaQuery, GetMovieMediaQueryVariables>(GetMovieMediaDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
 export const GetMovieReviewsDocument = `
     query GetMovieReviews($where: user_movie_statuses_bool_exp, $limit: Int, $offset: Int, $orderBy: [user_movie_statuses_order_by!]) {
   user_movie_statuses(
@@ -29226,6 +29294,27 @@ export const useInsertMovieAlternativeTitleMutation = <
       {
     mutationKey: ['InsertMovieAlternativeTitle'],
     mutationFn: (variables?: InsertMovieAlternativeTitleMutationVariables) => fetcher<InsertMovieAlternativeTitleMutation, InsertMovieAlternativeTitleMutationVariables>(InsertMovieAlternativeTitleDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertMovieMediaDocument = `
+    mutation InsertMovieMedia($objects: [movie_media_insert_input!]!) {
+  insert_movie_media(objects: $objects) {
+    affected_rows
+  }
+}
+    `;
+
+export const useInsertMovieMediaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieMediaMutation, TError, InsertMovieMediaMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieMediaMutation, TError, InsertMovieMediaMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieMedia'],
+    mutationFn: (variables?: InsertMovieMediaMutationVariables) => fetcher<InsertMovieMediaMutation, InsertMovieMediaMutationVariables>(InsertMovieMediaDocument, variables)(),
     ...options
   }
     )};

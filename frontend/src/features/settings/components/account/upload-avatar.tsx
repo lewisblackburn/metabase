@@ -2,8 +2,6 @@
 
 import { useRef, useState } from 'react';
 
-import Image from 'next/image';
-
 import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import { BUCKET } from '@/constants/media.constant';
 import { useGetFilesQuery, useUpdateUserMutation } from '@/generated/graphql';

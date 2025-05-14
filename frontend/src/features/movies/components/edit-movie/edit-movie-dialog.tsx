@@ -4,7 +4,6 @@ import * as React from 'react';
 
 import { DialogConfig, DialogManager } from '@/components/shared/dialog-manager';
 import { SidebarItem } from '@/components/shared/sidebar-dialog';
-import { Cron_Job_Select_Column } from '@/generated/graphql';
 import { RootState } from '@/store/store';
 
 import { setActiveItemId } from '../../store/movie-edit.slice';
@@ -12,6 +11,7 @@ import EditMovieAlternativeTitles from './edit-movie-alternative-titles';
 import EditMovieCast from './edit-movie-cast';
 import EditMovieCrew from './edit-movie-crew';
 import EditMovieDetails from './edit-movie-details';
+import EditMovieGallery from './edit-movie-gallery';
 import EditMovieSoundtrack from './edit-movie-soundtrack';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -32,7 +32,7 @@ export function EditMovieDialog({ id, isOpen, onOpenChange }: EditMovieDialogPro
         crew: () => <EditMovieCrew movieId={id} />,
         soundtrack: () => <EditMovieSoundtrack movieId={id} />,
         production_information: (item) => <div>production_information</div>,
-        gallery: (item) => <div>gallery</div>
+        gallery: (item) => <EditMovieGallery movieId={id} />
     };
 
     const config: DialogConfig = {
