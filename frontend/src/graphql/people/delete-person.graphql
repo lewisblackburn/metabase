@@ -1,0 +1,5 @@
+mutation DeletePerson($where: people_bool_exp!) {
+    delete_people(where: $where) {
+        affected_rows
+    }
+}

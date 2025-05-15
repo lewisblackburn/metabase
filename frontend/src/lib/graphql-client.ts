@@ -1,15 +1,17 @@
 import { nhost } from './nhost';
-import { ClientError, GraphQLClient } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
-export const fetcher = <TData, TVariables>(
+export const fetcher = <TData, TVariables = Record<string, any>>(
     query: string,
     variables?: TVariables,
     customHeaders?: Record<string, string>
 ): (() => Promise<TData>) => {
     return async () => {
+        const nhostHeaders = nhost.graphql.getHeaders();
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
-            ...customHeaders
+            ...nhostHeaders,
+            ...(customHeaders || {})
         };
 
         if (nhost.auth.isAuthenticated()) {
@@ -17,14 +19,7 @@ export const fetcher = <TData, TVariables>(
         }
 
         const client = new GraphQLClient(nhost.graphql.httpUrl, { headers });
-        try {
-            const data = await client.request<TData>(query, variables || {});
-            return data;
-        } catch (error: unknown) {
-            if (error instanceof ClientError) {
-                throw new Error(error.response?.errors?.[0]?.message || 'GraphQL fetching error');
-            }
-            throw error;
-        }
+
+        return client.request<TData>(query, variables || {});
     };
 };

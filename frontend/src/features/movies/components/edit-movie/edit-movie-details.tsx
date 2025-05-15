@@ -55,7 +55,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
         title: d.movies_by_pk?.title ?? '',
         tagline: d.movies_by_pk?.tagline ?? '',
         overview: d.movies_by_pk?.overview ?? '',
-        releaseDate: new Date(d.movies_by_pk?.release_date ?? '') ?? undefined,
+        releaseDate: d.movies_by_pk?.release_date ? new Date(d.movies_by_pk.release_date) : undefined,
         runtime: d.movies_by_pk?.runtime ?? 0,
         budget: d.movies_by_pk?.budget ?? 0,
         revenue: d.movies_by_pk?.revenue ?? 0,

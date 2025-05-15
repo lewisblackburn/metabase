@@ -5,6 +5,8 @@ import Link from 'next/link';
 import InstagramIcon from '@/components/icons/instagram.icon';
 import XIcon from '@/components/icons/x.icon';
 import ActionButton from '@/components/shared/action-button';
+import DefaultLoading from '@/components/shared/default-loading';
+import NotFound from '@/components/shared/default-not-found';
 import HeroCardLayout from '@/components/shared/hero-layout';
 import ItemInformation from '@/components/shared/item-information';
 import { CustomBadge } from '@/components/ui/custom-badge';
@@ -30,9 +32,10 @@ export default function PersonPage() {
 
 function PersonPageContent() {
     const dispatch = useDispatch();
-    const { person } = usePerson();
+    const { person, isLoading } = usePerson();
 
-    if (!person) return null;
+    if (isLoading) return <DefaultLoading />;
+    if (!person) return <NotFound />;
 
     return (
         <HeroCardLayout

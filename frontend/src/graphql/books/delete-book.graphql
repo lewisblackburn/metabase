@@ -1,0 +1,5 @@
+mutation DeleteBook($where: books_bool_exp!) {
+    delete_books(where: $where) {
+        affected_rows
+    }
+}

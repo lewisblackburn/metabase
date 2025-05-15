@@ -2,6 +2,7 @@
 
 import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
+import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
@@ -42,8 +43,9 @@ const tabItems = [
 
 function SongPageContent() {
     const dispatch = useDispatch();
-    const { song } = useSong();
+    const { song, isLoading } = useSong();
 
+    if (isLoading) return <DefaultLoading />;
     if (!song) return <NotFound />;
 
     const tabContents = {

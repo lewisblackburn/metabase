@@ -23,7 +23,6 @@ const initialState: MovieEditState = {
             description: 'Edit the alternative titles of the movie',
             iconColor: 'text-blue-500'
         },
-
         {
             id: 'cast',
             name: 'Cast',
@@ -58,6 +57,13 @@ const initialState: MovieEditState = {
             icon: 'Image',
             description: 'Edit the gallery of the movie',
             iconColor: 'text-pink-500'
+        },
+        {
+            id: 'danger_zone',
+            name: 'Danger Zone',
+            icon: 'CircleHelp',
+            description: 'Dangerous operations that cannot be undone',
+            iconColor: 'text-destructive'
         }
     ]
 };

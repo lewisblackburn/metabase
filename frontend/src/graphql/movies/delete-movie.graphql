@@ -1,0 +1,5 @@
+mutation DeleteMovie($id: uuid!) {
+    delete_movies_by_pk(id: $id) {
+        id
+    }
+}

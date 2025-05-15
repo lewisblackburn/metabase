@@ -10,6 +10,7 @@ import { setActiveItemId } from '../../store/movie-edit.slice';
 import EditMovieAlternativeTitles from './edit-movie-alternative-titles';
 import EditMovieCast from './edit-movie-cast';
 import EditMovieCrew from './edit-movie-crew';
+import EditMovieDangerZone from './edit-movie-danger-zone';
 import EditMovieDetails from './edit-movie-details';
 import EditMovieGallery from './edit-movie-gallery';
 import EditMovieProductionInformation from './edit-movie-production-information';
@@ -33,7 +34,8 @@ export function EditMovieDialog({ id, isOpen, onOpenChange }: EditMovieDialogPro
         crew: () => <EditMovieCrew movieId={id} />,
         soundtrack: () => <EditMovieSoundtrack movieId={id} />,
         production_information: () => <EditMovieProductionInformation movieId={id} />,
-        gallery: () => <EditMovieGallery movieId={id} />
+        gallery: () => <EditMovieGallery movieId={id} />,
+        danger_zone: () => <EditMovieDangerZone movieId={id} />
     };
 
     const config: DialogConfig = {

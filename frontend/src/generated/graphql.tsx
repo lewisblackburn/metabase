@@ -26016,6 +26016,10 @@ export type Users = {
   user_movie_statuses: Array<User_Movie_Statuses>;
   /** An aggregate relationship */
   user_movie_statuses_aggregate: User_Movie_Statuses_Aggregate;
+  /** An array relationship */
+  user_song_statuses: Array<User_Song_Statuses>;
+  /** An aggregate relationship */
+  user_song_statuses_aggregate: User_Song_Statuses_Aggregate;
 };
 
 
@@ -26304,6 +26308,26 @@ export type UsersUser_Movie_Statuses_AggregateArgs = {
   where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
 };
 
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersUser_Song_StatusesArgs = {
+  distinct_on?: InputMaybe<Array<User_Song_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Song_Statuses_Order_By>>;
+  where?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersUser_Song_Statuses_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Song_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Song_Statuses_Order_By>>;
+  where?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+};
+
 /** aggregated selection of "auth.users" */
 export type Users_Aggregate = {
   __typename?: 'users_aggregate';
@@ -26432,6 +26456,8 @@ export type Users_Bool_Exp = {
   user_book_statuses_aggregate?: InputMaybe<User_Book_Statuses_Aggregate_Bool_Exp>;
   user_movie_statuses?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
   user_movie_statuses_aggregate?: InputMaybe<User_Movie_Statuses_Aggregate_Bool_Exp>;
+  user_song_statuses?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+  user_song_statuses_aggregate?: InputMaybe<User_Song_Statuses_Aggregate_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "auth.users" */
@@ -26501,6 +26527,7 @@ export type Users_Insert_Input = {
   user_activities?: InputMaybe<User_Activities_Arr_Rel_Insert_Input>;
   user_book_statuses?: InputMaybe<User_Book_Statuses_Arr_Rel_Insert_Input>;
   user_movie_statuses?: InputMaybe<User_Movie_Statuses_Arr_Rel_Insert_Input>;
+  user_song_statuses?: InputMaybe<User_Song_Statuses_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -26667,6 +26694,7 @@ export type Users_Order_By = {
   user_activities_aggregate?: InputMaybe<User_Activities_Aggregate_Order_By>;
   user_book_statuses_aggregate?: InputMaybe<User_Book_Statuses_Aggregate_Order_By>;
   user_movie_statuses_aggregate?: InputMaybe<User_Movie_Statuses_Aggregate_Order_By>;
+  user_song_statuses_aggregate?: InputMaybe<User_Song_Statuses_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: auth.users */
@@ -27208,6 +27236,13 @@ export type InsertAuditLogsMutationVariables = Exact<{
 
 export type InsertAuditLogsMutation = { __typename?: 'mutation_root', insert_audit_logs?: { __typename?: 'audit_logs_mutation_response', affected_rows: number } | null };
 
+export type DeleteBookMutationVariables = Exact<{
+  where: Books_Bool_Exp;
+}>;
+
+
+export type DeleteBookMutation = { __typename?: 'mutation_root', delete_books?: { __typename?: 'books_mutation_response', affected_rows: number } | null };
+
 export type GetBookByGoogleBooksIdQueryVariables = Exact<{
   googlebooks_id?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -27390,6 +27425,13 @@ export type DeleteMovieSoundtrackMutationVariables = Exact<{
 
 
 export type DeleteMovieSoundtrackMutation = { __typename?: 'mutation_root', delete_movie_soundtrack?: { __typename?: 'movie_soundtrack_mutation_response', affected_rows: number } | null };
+
+export type DeleteMovieMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteMovieMutation = { __typename?: 'mutation_root', delete_movies_by_pk?: { __typename?: 'movies', id: any } | null };
 
 export type GetMovieAlternativeTitlesQueryVariables = Exact<{
   where?: InputMaybe<Movie_Alternative_Titles_Bool_Exp>;
@@ -27604,6 +27646,13 @@ export type UpsertNotificationsMutationVariables = Exact<{
 
 export type UpsertNotificationsMutation = { __typename?: 'mutation_root', insert_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number } | null };
 
+export type DeletePersonMutationVariables = Exact<{
+  where: People_Bool_Exp;
+}>;
+
+
+export type DeletePersonMutation = { __typename?: 'mutation_root', delete_people?: { __typename?: 'people_mutation_response', affected_rows: number } | null };
+
 export type GetPeopleQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<People_Select_Column> | People_Select_Column>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -27656,6 +27705,13 @@ export type UpdatePersonMutationVariables = Exact<{
 
 
 export type UpdatePersonMutation = { __typename?: 'mutation_root', update_people_by_pk?: { __typename?: 'people', id: any } | null };
+
+export type DeleteSongMutationVariables = Exact<{
+  where: Songs_Bool_Exp;
+}>;
+
+
+export type DeleteSongMutation = { __typename?: 'mutation_root', delete_songs?: { __typename?: 'songs_mutation_response', affected_rows: number } | null };
 
 export type GetSongBySpotifyIdQueryVariables = Exact<{
   spotify_id?: InputMaybe<Scalars['String']['input']>;
@@ -27904,6 +27960,27 @@ export const useInsertAuditLogsMutation = <
       {
     mutationKey: ['InsertAuditLogs'],
     mutationFn: (variables?: InsertAuditLogsMutationVariables) => fetcher<InsertAuditLogsMutation, InsertAuditLogsMutationVariables>(InsertAuditLogsDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteBookDocument = `
+    mutation DeleteBook($where: books_bool_exp!) {
+  delete_books(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteBookMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteBookMutation, TError, DeleteBookMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteBookMutation, TError, DeleteBookMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteBook'],
+    mutationFn: (variables?: DeleteBookMutationVariables) => fetcher<DeleteBookMutation, DeleteBookMutationVariables>(DeleteBookDocument, variables)(),
     ...options
   }
     )};
@@ -28736,6 +28813,27 @@ export const useDeleteMovieSoundtrackMutation = <
       {
     mutationKey: ['DeleteMovieSoundtrack'],
     mutationFn: (variables?: DeleteMovieSoundtrackMutationVariables) => fetcher<DeleteMovieSoundtrackMutation, DeleteMovieSoundtrackMutationVariables>(DeleteMovieSoundtrackDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteMovieDocument = `
+    mutation DeleteMovie($id: uuid!) {
+  delete_movies_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteMovieMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieMutation, TError, DeleteMovieMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieMutation, TError, DeleteMovieMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovie'],
+    mutationFn: (variables?: DeleteMovieMutationVariables) => fetcher<DeleteMovieMutation, DeleteMovieMutationVariables>(DeleteMovieDocument, variables)(),
     ...options
   }
     )};
@@ -29734,6 +29832,27 @@ export const useUpsertNotificationsMutation = <
   }
     )};
 
+export const DeletePersonDocument = `
+    mutation DeletePerson($where: people_bool_exp!) {
+  delete_people(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeletePersonMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeletePersonMutation, TError, DeletePersonMutationVariables, TContext>) => {
+    
+    return useMutation<DeletePersonMutation, TError, DeletePersonMutationVariables, TContext>(
+      {
+    mutationKey: ['DeletePerson'],
+    mutationFn: (variables?: DeletePersonMutationVariables) => fetcher<DeletePersonMutation, DeletePersonMutationVariables>(DeletePersonDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const GetPeopleDocument = `
     query GetPeople($distinct_on: [people_select_column!], $limit: Int, $offset: Int, $order_by: [people_order_by!], $where: people_bool_exp) {
   people(
@@ -29995,6 +30114,27 @@ export const useUpdatePersonMutation = <
       {
     mutationKey: ['UpdatePerson'],
     mutationFn: (variables?: UpdatePersonMutationVariables) => fetcher<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteSongDocument = `
+    mutation DeleteSong($where: songs_bool_exp!) {
+  delete_songs(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteSongMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteSongMutation, TError, DeleteSongMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteSongMutation, TError, DeleteSongMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteSong'],
+    mutationFn: (variables?: DeleteSongMutationVariables) => fetcher<DeleteSongMutation, DeleteSongMutationVariables>(DeleteSongDocument, variables)(),
     ...options
   }
     )};

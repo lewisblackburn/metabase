@@ -2,6 +2,7 @@
 
 import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
+import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
@@ -58,8 +59,9 @@ const tabItems = [
 
 function BookPageContent() {
     const dispatch = useDispatch();
-    const { book } = useBook();
+    const { book, isLoading } = useBook();
 
+    if (isLoading) return <DefaultLoading />;
     if (!book) return <NotFound />;
 
     const tabContents = {

@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
+import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
@@ -22,6 +24,7 @@ import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import MovieSoundtrackTable from '@/features/movies/components/soundtrack-table';
 import { movieCertificationLabels, movieReleaseStatusLabels } from '@/features/movies/constants/movie-enums';
 import { Object_Types_Enum } from '@/generated/graphql';
+import { useIsModerator } from '@/hooks/use-is-moderator';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
@@ -68,8 +71,9 @@ const tabItems = [
 
 function MoviePageContent() {
     const dispatch = useDispatch();
-    const { movie } = useMovie();
+    const { movie, isLoading } = useMovie();
 
+    if (isLoading) return <DefaultLoading />;
     if (!movie) return <NotFound />;
 
     const tabContents = {
@@ -157,10 +161,6 @@ function MoviePageContent() {
                                     <ItemInformation icon={Eye} label='View Count'>
                                         {movie.view_count || 0}
                                     </ItemInformation>
-
-                                    {/* <ItemInformation icon={TrendingUp} label='Content Score'> */}
-                                    {/* <MovieContentScore /> */}
-                                    {/* </ItemInformation> */}
                                 </div>
                             </ResponsiveDialog>
                         </div>

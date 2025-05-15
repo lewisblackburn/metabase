@@ -18,7 +18,7 @@ export interface DatePickerFieldProps {
 }
 
 const DatePickerField = React.forwardRef<HTMLDivElement, DatePickerFieldProps>(
-    ({ name, value = new Date(), onChange, onBlur }, ref) => {
+    ({ name, value, onChange, onBlur }, ref) => {
         const handleChange = (date: any) => {
             onChange(new Date(date.toString()));
         };
@@ -30,17 +30,11 @@ const DatePickerField = React.forwardRef<HTMLDivElement, DatePickerFieldProps>(
                         variant={'outline'}
                         className={cn('w-full justify-start text-left font-normal', !value && 'text-muted-foreground')}>
                         <CalendarIcon />
-                        {value ? format(value, 'PPP') : <span>Pick a date</span>}
+                        {value ? format(new Date(value), 'PPP') : <span>Pick a date</span>}
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className='w-auto p-0' align='start' style={{ zIndex: '1000 !important' }}>
-                    <Calendar
-                        mode='single'
-                        selected={value}
-                        onSelect={handleChange}
-                        initialFocus
-                        defaultMonth={value || new Date()}
-                    />
+                    <Calendar mode='single' selected={value} onSelect={handleChange} initialFocus />
                 </PopoverContent>
             </Popover>
         );

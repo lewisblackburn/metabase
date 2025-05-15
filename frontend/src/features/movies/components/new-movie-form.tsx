@@ -1,14 +1,17 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import BaseFormLayout from '@/components/form/base-form-layout';
 import DatePickerField from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
 import TextareaField from '@/components/form/textarea';
-import { useInsertMovieMutation } from '@/generated/graphql';
+import { Movies_Constraint, useInsertMovieMutation } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { movieGenresOptions } from '../constants/movie-enums';
 import { NewMovieSchemaType, newMovieSchema } from '../schemas/new-movie.schema';
@@ -17,6 +20,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export function NewMovieForm() {
+    const router = useRouter();
+    const queryClient = useQueryClient();
     const form = useForm<NewMovieSchemaType>({
         resolver: zodResolver(newMovieSchema),
         defaultValues: {
@@ -41,12 +46,17 @@ export function NewMovieForm() {
                                 genre: genre.value
                             })) ?? []
                     }
+                },
+                on_conflict: {
+                    constraint: Movies_Constraint.MoviesPkey
                 }
             },
             {
-                onSuccess: () => {
+                onSuccess: (data) => {
                     toast.success('Movie created successfully');
                     form.reset();
+                    queryClient.invalidateQueries({ queryKey: ['GetMovies.infinite'] });
+                    router.push(`/dashboard/movies/${data?.insert_movies_one?.id}`);
                 },
                 onError: (error) => {
                     toast.error((error as Error).message);
