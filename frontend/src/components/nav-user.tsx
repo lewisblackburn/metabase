@@ -58,6 +58,7 @@ export function NavUser({ user }: { user: User | null }) {
     const handleLogout = async () => {
         await signOut();
         queryClient.clear();
+        router.push('/authentication/login');
     };
 
     React.useEffect(() => {

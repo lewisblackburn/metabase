@@ -1,0 +1,5 @@
+mutation DeleteReportVote($where: report_votes_bool_exp!) {
+    delete_report_votes(where: $where) {
+        affected_rows
+    }
+}

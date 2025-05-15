@@ -16118,11 +16118,35 @@ export type Notifications_Updates = {
 /** columns and relationships of "object_types" */
 export type Object_Types = {
   __typename?: 'object_types';
+  /** An array relationship */
+  reports: Array<Reports>;
+  /** An aggregate relationship */
+  reports_aggregate: Reports_Aggregate;
   type: Scalars['String']['output'];
   /** An array relationship */
   user_activities: Array<User_Activities>;
   /** An aggregate relationship */
   user_activities_aggregate: User_Activities_Aggregate;
+};
+
+
+/** columns and relationships of "object_types" */
+export type Object_TypesReportsArgs = {
+  distinct_on?: InputMaybe<Array<Reports_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Reports_Order_By>>;
+  where?: InputMaybe<Reports_Bool_Exp>;
+};
+
+
+/** columns and relationships of "object_types" */
+export type Object_TypesReports_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Reports_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Reports_Order_By>>;
+  where?: InputMaybe<Reports_Bool_Exp>;
 };
 
 
@@ -16172,6 +16196,8 @@ export type Object_Types_Bool_Exp = {
   _and?: InputMaybe<Array<Object_Types_Bool_Exp>>;
   _not?: InputMaybe<Object_Types_Bool_Exp>;
   _or?: InputMaybe<Array<Object_Types_Bool_Exp>>;
+  reports?: InputMaybe<Reports_Bool_Exp>;
+  reports_aggregate?: InputMaybe<Reports_Aggregate_Bool_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
   user_activities?: InputMaybe<User_Activities_Bool_Exp>;
   user_activities_aggregate?: InputMaybe<User_Activities_Aggregate_Bool_Exp>;
@@ -16205,6 +16231,7 @@ export type Object_Types_Enum_Comparison_Exp = {
 
 /** input type for inserting data into table "object_types" */
 export type Object_Types_Insert_Input = {
+  reports?: InputMaybe<Reports_Arr_Rel_Insert_Input>;
   type?: InputMaybe<Scalars['String']['input']>;
   user_activities?: InputMaybe<User_Activities_Arr_Rel_Insert_Input>;
 };
@@ -16246,6 +16273,7 @@ export type Object_Types_On_Conflict = {
 
 /** Ordering options when selecting data from "object_types". */
 export type Object_Types_Order_By = {
+  reports_aggregate?: InputMaybe<Reports_Aggregate_Order_By>;
   type?: InputMaybe<Order_By>;
   user_activities_aggregate?: InputMaybe<User_Activities_Aggregate_Order_By>;
 };
@@ -19339,11 +19367,14 @@ export type Report_Votes_Variance_Order_By = {
 /** columns and relationships of "reports" */
 export type Reports = {
   __typename?: 'reports';
-  content_id: Scalars['uuid']['output'];
-  content_type: Scalars['String']['output'];
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  details: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
-  report_reason?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  objectTypeByObjectType: Object_Types;
+  object_id: Scalars['uuid']['output'];
+  object_type: Object_Types_Enum;
+  reason: Scalars['String']['output'];
   /** An array relationship */
   report_votes: Array<Report_Votes>;
   /** An aggregate relationship */
@@ -19425,11 +19456,13 @@ export type Reports_Bool_Exp = {
   _and?: InputMaybe<Array<Reports_Bool_Exp>>;
   _not?: InputMaybe<Reports_Bool_Exp>;
   _or?: InputMaybe<Array<Reports_Bool_Exp>>;
-  content_id?: InputMaybe<Uuid_Comparison_Exp>;
-  content_type?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  details?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  report_reason?: InputMaybe<String_Comparison_Exp>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Bool_Exp>;
+  object_id?: InputMaybe<Uuid_Comparison_Exp>;
+  object_type?: InputMaybe<Object_Types_Enum_Comparison_Exp>;
+  reason?: InputMaybe<String_Comparison_Exp>;
   report_votes?: InputMaybe<Report_Votes_Bool_Exp>;
   report_votes_aggregate?: InputMaybe<Report_Votes_Aggregate_Bool_Exp>;
   reporter_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -19444,11 +19477,13 @@ export enum Reports_Constraint {
 
 /** input type for inserting data into table "reports" */
 export type Reports_Insert_Input = {
-  content_id?: InputMaybe<Scalars['uuid']['input']>;
-  content_type?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  details?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  report_reason?: InputMaybe<Scalars['String']['input']>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Obj_Rel_Insert_Input>;
+  object_id?: InputMaybe<Scalars['uuid']['input']>;
+  object_type?: InputMaybe<Object_Types_Enum>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   report_votes?: InputMaybe<Report_Votes_Arr_Rel_Insert_Input>;
   reporter_id?: InputMaybe<Scalars['uuid']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -19457,42 +19492,42 @@ export type Reports_Insert_Input = {
 /** aggregate max on columns */
 export type Reports_Max_Fields = {
   __typename?: 'reports_max_fields';
-  content_id?: Maybe<Scalars['uuid']['output']>;
-  content_type?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  details?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  report_reason?: Maybe<Scalars['String']['output']>;
+  object_id?: Maybe<Scalars['uuid']['output']>;
+  reason?: Maybe<Scalars['String']['output']>;
   reporter_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "reports" */
 export type Reports_Max_Order_By = {
-  content_id?: InputMaybe<Order_By>;
-  content_type?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  details?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  report_reason?: InputMaybe<Order_By>;
+  object_id?: InputMaybe<Order_By>;
+  reason?: InputMaybe<Order_By>;
   reporter_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Reports_Min_Fields = {
   __typename?: 'reports_min_fields';
-  content_id?: Maybe<Scalars['uuid']['output']>;
-  content_type?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
+  details?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  report_reason?: Maybe<Scalars['String']['output']>;
+  object_id?: Maybe<Scalars['uuid']['output']>;
+  reason?: Maybe<Scalars['String']['output']>;
   reporter_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "reports" */
 export type Reports_Min_Order_By = {
-  content_id?: InputMaybe<Order_By>;
-  content_type?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  details?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  report_reason?: InputMaybe<Order_By>;
+  object_id?: InputMaybe<Order_By>;
+  reason?: InputMaybe<Order_By>;
   reporter_id?: InputMaybe<Order_By>;
 };
 
@@ -19521,11 +19556,13 @@ export type Reports_On_Conflict = {
 
 /** Ordering options when selecting data from "reports". */
 export type Reports_Order_By = {
-  content_id?: InputMaybe<Order_By>;
-  content_type?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  details?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  report_reason?: InputMaybe<Order_By>;
+  objectTypeByObjectType?: InputMaybe<Object_Types_Order_By>;
+  object_id?: InputMaybe<Order_By>;
+  object_type?: InputMaybe<Order_By>;
+  reason?: InputMaybe<Order_By>;
   report_votes_aggregate?: InputMaybe<Report_Votes_Aggregate_Order_By>;
   reporter_id?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
@@ -19539,26 +19576,29 @@ export type Reports_Pk_Columns_Input = {
 /** select columns of table "reports" */
 export enum Reports_Select_Column {
   /** column name */
-  ContentId = 'content_id',
-  /** column name */
-  ContentType = 'content_type',
-  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Details = 'details',
   /** column name */
   Id = 'id',
   /** column name */
-  ReportReason = 'report_reason',
+  ObjectId = 'object_id',
+  /** column name */
+  ObjectType = 'object_type',
+  /** column name */
+  Reason = 'reason',
   /** column name */
   ReporterId = 'reporter_id'
 }
 
 /** input type for updating data in table "reports" */
 export type Reports_Set_Input = {
-  content_id?: InputMaybe<Scalars['uuid']['input']>;
-  content_type?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  details?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  report_reason?: InputMaybe<Scalars['String']['input']>;
+  object_id?: InputMaybe<Scalars['uuid']['input']>;
+  object_type?: InputMaybe<Object_Types_Enum>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   reporter_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
@@ -19572,26 +19612,29 @@ export type Reports_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Reports_Stream_Cursor_Value_Input = {
-  content_id?: InputMaybe<Scalars['uuid']['input']>;
-  content_type?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  details?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  report_reason?: InputMaybe<Scalars['String']['input']>;
+  object_id?: InputMaybe<Scalars['uuid']['input']>;
+  object_type?: InputMaybe<Object_Types_Enum>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   reporter_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "reports" */
 export enum Reports_Update_Column {
   /** column name */
-  ContentId = 'content_id',
-  /** column name */
-  ContentType = 'content_type',
-  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Details = 'details',
   /** column name */
   Id = 'id',
   /** column name */
-  ReportReason = 'report_reason',
+  ObjectId = 'object_id',
+  /** column name */
+  ObjectType = 'object_type',
+  /** column name */
+  Reason = 'reason',
   /** column name */
   ReporterId = 'reporter_id'
 }
@@ -27706,6 +27749,46 @@ export type UpdatePersonMutationVariables = Exact<{
 
 export type UpdatePersonMutation = { __typename?: 'mutation_root', update_people_by_pk?: { __typename?: 'people', id: any } | null };
 
+export type DeleteReportVoteMutationVariables = Exact<{
+  where: Report_Votes_Bool_Exp;
+}>;
+
+
+export type DeleteReportVoteMutation = { __typename?: 'mutation_root', delete_report_votes?: { __typename?: 'report_votes_mutation_response', affected_rows: number } | null };
+
+export type DeleteReportMutationVariables = Exact<{
+  where: Reports_Bool_Exp;
+}>;
+
+
+export type DeleteReportMutation = { __typename?: 'mutation_root', delete_reports?: { __typename?: 'reports_mutation_response', affected_rows: number } | null };
+
+export type GetReportsQueryVariables = Exact<{
+  where?: InputMaybe<Reports_Bool_Exp>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Reports_Order_By> | Reports_Order_By>;
+}>;
+
+
+export type GetReportsQuery = { __typename?: 'query_root', reports: Array<{ __typename?: 'reports', id: any, object_id: any, object_type: Object_Types_Enum, reason: string, details: string, created_at?: any | null, report_votes: Array<{ __typename?: 'report_votes', vote: any }> }>, reports_aggregate: { __typename?: 'reports_aggregate', aggregate?: { __typename?: 'reports_aggregate_fields', count: number } | null } };
+
+export type InsertReportVoteMutationVariables = Exact<{
+  object: Report_Votes_Insert_Input;
+  on_conflict?: InputMaybe<Report_Votes_On_Conflict>;
+}>;
+
+
+export type InsertReportVoteMutation = { __typename?: 'mutation_root', insert_report_votes_one?: { __typename?: 'report_votes', id: any } | null };
+
+export type InsertReportMutationVariables = Exact<{
+  object: Reports_Insert_Input;
+  on_conflict?: InputMaybe<Reports_On_Conflict>;
+}>;
+
+
+export type InsertReportMutation = { __typename?: 'mutation_root', insert_reports_one?: { __typename?: 'reports', id: any } | null };
+
 export type DeleteSongMutationVariables = Exact<{
   where: Songs_Bool_Exp;
 }>;
@@ -30114,6 +30197,146 @@ export const useUpdatePersonMutation = <
       {
     mutationKey: ['UpdatePerson'],
     mutationFn: (variables?: UpdatePersonMutationVariables) => fetcher<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteReportVoteDocument = `
+    mutation DeleteReportVote($where: report_votes_bool_exp!) {
+  delete_report_votes(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteReportVoteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteReportVoteMutation, TError, DeleteReportVoteMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteReportVoteMutation, TError, DeleteReportVoteMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteReportVote'],
+    mutationFn: (variables?: DeleteReportVoteMutationVariables) => fetcher<DeleteReportVoteMutation, DeleteReportVoteMutationVariables>(DeleteReportVoteDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteReportDocument = `
+    mutation DeleteReport($where: reports_bool_exp!) {
+  delete_reports(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteReportMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteReportMutation, TError, DeleteReportMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteReportMutation, TError, DeleteReportMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteReport'],
+    mutationFn: (variables?: DeleteReportMutationVariables) => fetcher<DeleteReportMutation, DeleteReportMutationVariables>(DeleteReportDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const GetReportsDocument = `
+    query GetReports($where: reports_bool_exp, $offset: Int, $limit: Int, $order_by: [reports_order_by!]) {
+  reports(where: $where, offset: $offset, limit: $limit, order_by: $order_by) {
+    id
+    object_id
+    object_type
+    reason
+    details
+    created_at
+    report_votes {
+      vote
+    }
+  }
+  reports_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+export const useGetReportsQuery = <
+      TData = GetReportsQuery,
+      TError = unknown
+    >(
+      variables?: GetReportsQueryVariables,
+      options?: Omit<UseQueryOptions<GetReportsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetReportsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetReportsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetReports'] : ['GetReports', variables],
+    queryFn: fetcher<GetReportsQuery, GetReportsQueryVariables>(GetReportsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetReportsQuery = <
+      TData = InfiniteData<GetReportsQuery>,
+      TError = unknown
+    >(
+      variables: GetReportsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetReportsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetReportsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetReportsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetReports.infinite'] : ['GetReports.infinite', variables],
+      queryFn: (metaData) => fetcher<GetReportsQuery, GetReportsQueryVariables>(GetReportsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const InsertReportVoteDocument = `
+    mutation InsertReportVote($object: report_votes_insert_input!, $on_conflict: report_votes_on_conflict) {
+  insert_report_votes_one(object: $object, on_conflict: $on_conflict) {
+    id
+  }
+}
+    `;
+
+export const useInsertReportVoteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertReportVoteMutation, TError, InsertReportVoteMutationVariables, TContext>) => {
+    
+    return useMutation<InsertReportVoteMutation, TError, InsertReportVoteMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertReportVote'],
+    mutationFn: (variables?: InsertReportVoteMutationVariables) => fetcher<InsertReportVoteMutation, InsertReportVoteMutationVariables>(InsertReportVoteDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertReportDocument = `
+    mutation InsertReport($object: reports_insert_input!, $on_conflict: reports_on_conflict) {
+  insert_reports_one(object: $object, on_conflict: $on_conflict) {
+    id
+  }
+}
+    `;
+
+export const useInsertReportMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertReportMutation, TError, InsertReportMutationVariables, TContext>) => {
+    
+    return useMutation<InsertReportMutation, TError, InsertReportMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertReport'],
+    mutationFn: (variables?: InsertReportMutationVariables) => fetcher<InsertReportMutation, InsertReportMutationVariables>(InsertReportDocument, variables)(),
     ...options
   }
     )};

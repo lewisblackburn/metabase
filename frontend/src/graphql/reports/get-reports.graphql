@@ -1,0 +1,18 @@
+query GetReports($where: reports_bool_exp, $offset: Int, $limit: Int, $order_by: [reports_order_by!]) {
+    reports(where: $where, offset: $offset, limit: $limit, order_by: $order_by) {
+        id
+        object_id
+        object_type
+        reason
+        details
+        created_at
+        report_votes {
+            vote
+        }
+    }
+    reports_aggregate(where: $where) {
+        aggregate {
+            count
+        }
+    }
+}

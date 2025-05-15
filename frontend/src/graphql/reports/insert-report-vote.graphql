@@ -1,0 +1,5 @@
+mutation InsertReportVote($object: report_votes_insert_input!, $on_conflict: report_votes_on_conflict) {
+    insert_report_votes_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}

@@ -17,8 +17,10 @@ import MovieFavouriteButton from '@/features/movies/components/movie-favourite-b
 import MovieLayout from '@/features/movies/components/movie-layout';
 import ObjectOverview from '@/features/movies/components/movie-overview';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
+import MovieReports from '@/features/movies/components/movie-reports';
 import MovieReviews from '@/features/movies/components/movie-reviews';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
+import ReportMovieDialog from '@/features/movies/components/report-movie-dialog';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import SoundtrackTable from '@/features/movies/components/soundtrack-table';
 import MovieSoundtrackTable from '@/features/movies/components/soundtrack-table';
@@ -35,6 +37,7 @@ import {
     CreditCard,
     Edit,
     Eye,
+    Flag,
     Image,
     Info,
     Languages,
@@ -66,7 +69,8 @@ const tabItems = [
     { value: 'awards', icon: Trophy, label: 'Awards' },
     { value: 'images', icon: Image, label: 'Images' },
     { value: 'videos', icon: Video, label: 'Videos' },
-    { value: 'changes', icon: Edit, label: 'Changes' }
+    { value: 'changes', icon: Edit, label: 'Changes' },
+    { value: 'reports', icon: Flag, label: 'Reports' }
 ];
 
 function MoviePageContent() {
@@ -86,7 +90,8 @@ function MoviePageContent() {
         awards: { content: 'No awards available' },
         images: { content: 'No images available.' },
         videos: { content: 'No videos available.' },
-        changes: { content: <MovieChanges /> }
+        changes: { content: <MovieChanges /> },
+        reports: { content: <MovieReports /> }
     };
 
     return (
@@ -179,6 +184,7 @@ function MoviePageContent() {
                             )}
                             <ReviewMovieDialog />
                             <MovieStatusPicker />
+                            <ReportMovieDialog />
                             <ActionButton
                                 icon={Edit}
                                 size='sm'
