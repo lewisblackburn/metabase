@@ -6,6 +6,7 @@ import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
 import SongSelect from '@/components/form/song-select';
 import { useInsertMovieSoundtrackMutation } from '@/generated/graphql';
+import useHydratedForm from '@/hooks/use-hydrated-form';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -31,12 +32,11 @@ interface AddMovieSoundtrackSongDialogProps {
 
 export default function AddMovieSoundtrackSongDialog({ movieId }: AddMovieSoundtrackSongDialogProps) {
     const [open, setOpen] = useState(false);
-    const [resetKey, setResetKey] = useState(0);
     const queryClient = useQueryClient();
 
     const { mutateAsync: insertMovieSoundtrack } = useInsertMovieSoundtrackMutation();
 
-    const form = useForm<AddMovieSoundtrackSongSchemaType>({
+    const form = useForm({
         resolver: zodResolver(addMovieSoundtrackSongSchema),
         defaultValues: {
             song: '',
@@ -44,6 +44,8 @@ export default function AddMovieSoundtrackSongDialog({ movieId }: AddMovieSoundt
             description: ''
         }
     });
+
+    const { handleSubmit, control, reset } = form;
 
     const onSubmit = async (data: AddMovieSoundtrackSongSchemaType) => {
         try {
@@ -59,8 +61,7 @@ export default function AddMovieSoundtrackSongDialog({ movieId }: AddMovieSoundt
             toast.success('Song added successfully');
             queryClient.invalidateQueries({ queryKey: ['movie-soundtrack', movieId] });
             setOpen(false);
-            setResetKey((prev) => prev + 1);
-            form.reset();
+            reset();
         } catch (error) {
             toast.error('Failed to add song');
         }
@@ -71,22 +72,22 @@ export default function AddMovieSoundtrackSongDialog({ movieId }: AddMovieSoundt
             <DialogTrigger asChild>
                 <Button variant='outline' size='sm'>
                     <Plus className='size-4' />
+                    Add Song
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Add Song</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Add a new song to the movie soundtrack.</DialogDescription>
+                <DialogDescription>Add a song to the movie soundtrack.</DialogDescription>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='song'
                             render={({ field }) => (
                                 <BaseFormLayout label='Song'>
                                     <SongSelect
-                                        key={resetKey}
                                         onValueChange={(value) => field.onChange(value)}
                                         defaultValue={field.value}
                                     />
@@ -95,7 +96,7 @@ export default function AddMovieSoundtrackSongDialog({ movieId }: AddMovieSoundt
                         />
 
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='timestamps'
                             render={({ field }) => (
                                 <BaseFormLayout label='Timestamps'>
@@ -105,7 +106,7 @@ export default function AddMovieSoundtrackSongDialog({ movieId }: AddMovieSoundt
                         />
 
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='description'
                             render={({ field }) => (
                                 <BaseFormLayout label='Description'>

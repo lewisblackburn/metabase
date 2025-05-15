@@ -8,6 +8,7 @@ import PersonSelect from '@/components/form/person-select';
 import { AddCrewMemberSchemaType, addCrewMemberSchema } from '@/features/movies/schemas/movie-crew-member.schema';
 import { Object_Types_Enum, useInsertCreditsMutation } from '@/generated/graphql';
 import { Credit_Types_Enum } from '@/generated/graphql';
+import useHydratedForm from '@/hooks/use-hydrated-form';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -31,44 +32,45 @@ interface AddCrewMemberDialogProps {
 
 export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProps) {
     const [open, setOpen] = useState(false);
-    const [resetKey, setResetKey] = useState(0);
     const queryClient = useQueryClient();
-    const { mutateAsync: addCredit } = useInsertCreditsMutation({
-        onSuccess: () => {
-            toast.success('Crew member added successfully');
-            queryClient.invalidateQueries({ queryKey: ['movie-crew', movieId] });
-            form.reset();
-            setResetKey((prev) => prev + 1);
-        },
-        onError: (error: Error) => {
-            toast.error(error.message);
-        }
-    });
 
-    const form = useForm<AddCrewMemberSchemaType>({
+    const { mutateAsync: insertCredits } = useInsertCreditsMutation();
+
+    const form = useForm({
         resolver: zodResolver(addCrewMemberSchema),
         defaultValues: {
             person: '',
-            job: '',
-            department: ''
+            department: '',
+            job: ''
         }
     });
 
+    const { handleSubmit, control, reset } = form;
+
     const onSubmit = async (data: AddCrewMemberSchemaType) => {
-        await addCredit({
-            objects: [
-                {
-                    object_id: movieId,
-                    credit_type: Credit_Types_Enum.Crew,
-                    object_type: Object_Types_Enum.Movie,
-                    person_id: data.person,
-                    details: {
-                        department: data.department,
-                        job: data.job
+        try {
+            await insertCredits({
+                objects: [
+                    {
+                        object_id: movieId,
+                        person_id: data.person,
+                        details: {
+                            department: data.department,
+                            job: data.job
+                        },
+                        credit_type: Credit_Types_Enum.Crew,
+                        object_type: Object_Types_Enum.Movie
                     }
-                }
-            ]
-        });
+                ]
+            });
+
+            toast.success('Crew member added successfully');
+            queryClient.invalidateQueries({ queryKey: ['movie-crew', movieId] });
+            setOpen(false);
+            reset();
+        } catch (error) {
+            toast.error('Failed to add crew member');
+        }
     };
 
     return (
@@ -76,22 +78,22 @@ export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProp
             <DialogTrigger asChild>
                 <Button variant='outline' size='sm'>
                     <Plus className='size-4' />
+                    Add Crew Member
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Add Crew Member</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Add a new crew member to the movie.</DialogDescription>
+                <DialogDescription>Add a crew member to the movie.</DialogDescription>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='person'
                             render={({ field }) => (
                                 <BaseFormLayout label='Person'>
                                     <PersonSelect
-                                        key={resetKey}
                                         onValueChange={(value) => field.onChange(value)}
                                         defaultValue={field.value}
                                     />
@@ -100,21 +102,21 @@ export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProp
                         />
 
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='department'
                             render={({ field }) => (
                                 <BaseFormLayout label='Department'>
-                                    <InputField {...field} placeholder='e.g. Production, Directing, etc.' />
+                                    <InputField {...field} />
                                 </BaseFormLayout>
                             )}
                         />
 
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='job'
                             render={({ field }) => (
                                 <BaseFormLayout label='Job'>
-                                    <InputField {...field} placeholder='e.g. Director, Cinematographer, etc.' />
+                                    <InputField {...field} />
                                 </BaseFormLayout>
                             )}
                         />

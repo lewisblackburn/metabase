@@ -9818,8 +9818,8 @@ export type Movie_Production_Companies_Bool_Exp = {
 
 /** unique or primary key constraints on table "movie_production_companies" */
 export enum Movie_Production_Companies_Constraint {
-  /** unique or primary key constraint on columns "company_name" */
-  MovieProductionCompaniesCompanyNameKey = 'movie_production_companies_company_name_key',
+  /** unique or primary key constraint on columns "movie_id", "company_name" */
+  MovieProductionCompaniesMovieIdCompanyNameKey = 'movie_production_companies_movie_id_company_name_key',
   /** unique or primary key constraint on columns "id" */
   MovieProductionCompaniesPkey = 'movie_production_companies_pkey'
 }
@@ -10024,6 +10024,8 @@ export type Movie_Production_Countries_Bool_Exp = {
 
 /** unique or primary key constraints on table "movie_production_countries" */
 export enum Movie_Production_Countries_Constraint {
+  /** unique or primary key constraint on columns "movie_id", "country" */
+  MovieProductionCountriesMovieIdCountryKey = 'movie_production_countries_movie_id_country_key',
   /** unique or primary key constraint on columns "id" */
   MovieProductionCountriesPkey = 'movie_production_countries_pkey'
 }
@@ -27368,6 +27370,20 @@ export type DeleteMovieKeywordsMutationVariables = Exact<{
 
 export type DeleteMovieKeywordsMutation = { __typename?: 'mutation_root', delete_movie_keywords?: { __typename?: 'movie_keywords_mutation_response', affected_rows: number } | null };
 
+export type DeleteMovieProductionCompaniesMutationVariables = Exact<{
+  where: Movie_Production_Companies_Bool_Exp;
+}>;
+
+
+export type DeleteMovieProductionCompaniesMutation = { __typename?: 'mutation_root', delete_movie_production_companies?: { __typename?: 'movie_production_companies_mutation_response', affected_rows: number } | null };
+
+export type DeleteMovieProductionCountriesMutationVariables = Exact<{
+  where: Movie_Production_Countries_Bool_Exp;
+}>;
+
+
+export type DeleteMovieProductionCountriesMutation = { __typename?: 'mutation_root', delete_movie_production_countries?: { __typename?: 'movie_production_countries_mutation_response', affected_rows: number } | null };
+
 export type DeleteMovieSoundtrackMutationVariables = Exact<{
   where: Movie_Soundtrack_Bool_Exp;
 }>;
@@ -27408,6 +27424,13 @@ export type GetMovieMediaQueryVariables = Exact<{
 
 
 export type GetMovieMediaQuery = { __typename?: 'query_root', movie_media: Array<{ __typename?: 'movie_media', file: { __typename?: 'files', name?: string | null, uploadedByUserId?: any | null, bucketId: string, id: any, size?: number | null, createdAt: any, mimeType?: string | null } }> };
+
+export type GetMovieProductionInformationQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetMovieProductionInformationQuery = { __typename?: 'query_root', movie_production_companies: Array<{ __typename?: 'movie_production_companies', company_name: string }>, movie_production_countries: Array<{ __typename?: 'movie_production_countries', country: string }> };
 
 export type GetMovieReviewsQueryVariables = Exact<{
   where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
@@ -27486,6 +27509,22 @@ export type InsertMovieMediaMutationVariables = Exact<{
 
 
 export type InsertMovieMediaMutation = { __typename?: 'mutation_root', insert_movie_media?: { __typename?: 'movie_media_mutation_response', affected_rows: number } | null };
+
+export type InsertMovieProductionCompanyMutationVariables = Exact<{
+  object: Movie_Production_Companies_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Production_Companies_On_Conflict>;
+}>;
+
+
+export type InsertMovieProductionCompanyMutation = { __typename?: 'mutation_root', insert_movie_production_companies_one?: { __typename?: 'movie_production_companies', id: any } | null };
+
+export type InsertMovieProductionCountryMutationVariables = Exact<{
+  object: Movie_Production_Countries_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Production_Countries_On_Conflict>;
+}>;
+
+
+export type InsertMovieProductionCountryMutation = { __typename?: 'mutation_root', insert_movie_production_countries_one?: { __typename?: 'movie_production_countries', id: any } | null };
 
 export type InsertMovieSoundtrackMutationVariables = Exact<{
   object: Movie_Soundtrack_Insert_Input;
@@ -28638,6 +28677,48 @@ export const useDeleteMovieKeywordsMutation = <
   }
     )};
 
+export const DeleteMovieProductionCompaniesDocument = `
+    mutation DeleteMovieProductionCompanies($where: movie_production_companies_bool_exp!) {
+  delete_movie_production_companies(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteMovieProductionCompaniesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieProductionCompaniesMutation, TError, DeleteMovieProductionCompaniesMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieProductionCompaniesMutation, TError, DeleteMovieProductionCompaniesMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieProductionCompanies'],
+    mutationFn: (variables?: DeleteMovieProductionCompaniesMutationVariables) => fetcher<DeleteMovieProductionCompaniesMutation, DeleteMovieProductionCompaniesMutationVariables>(DeleteMovieProductionCompaniesDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteMovieProductionCountriesDocument = `
+    mutation DeleteMovieProductionCountries($where: movie_production_countries_bool_exp!) {
+  delete_movie_production_countries(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteMovieProductionCountriesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMovieProductionCountriesMutation, TError, DeleteMovieProductionCountriesMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteMovieProductionCountriesMutation, TError, DeleteMovieProductionCountriesMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteMovieProductionCountries'],
+    mutationFn: (variables?: DeleteMovieProductionCountriesMutationVariables) => fetcher<DeleteMovieProductionCountriesMutation, DeleteMovieProductionCountriesMutationVariables>(DeleteMovieProductionCountriesDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const DeleteMovieSoundtrackDocument = `
     mutation DeleteMovieSoundtrack($where: movie_soundtrack_bool_exp!) {
   delete_movie_soundtrack(where: $where) {
@@ -28889,6 +28970,52 @@ export const useInfiniteGetMovieMediaQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetMovieMedia.infinite'] : ['GetMovieMedia.infinite', variables],
       queryFn: (metaData) => fetcher<GetMovieMediaQuery, GetMovieMediaQueryVariables>(GetMovieMediaDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetMovieProductionInformationDocument = `
+    query GetMovieProductionInformation($id: uuid!) {
+  movie_production_companies(where: {movie_id: {_eq: $id}}) {
+    company_name
+  }
+  movie_production_countries(where: {movie_id: {_eq: $id}}) {
+    country
+  }
+}
+    `;
+
+export const useGetMovieProductionInformationQuery = <
+      TData = GetMovieProductionInformationQuery,
+      TError = unknown
+    >(
+      variables: GetMovieProductionInformationQueryVariables,
+      options?: Omit<UseQueryOptions<GetMovieProductionInformationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMovieProductionInformationQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMovieProductionInformationQuery, TError, TData>(
+      {
+    queryKey: ['GetMovieProductionInformation', variables],
+    queryFn: fetcher<GetMovieProductionInformationQuery, GetMovieProductionInformationQueryVariables>(GetMovieProductionInformationDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetMovieProductionInformationQuery = <
+      TData = InfiniteData<GetMovieProductionInformationQuery>,
+      TError = unknown
+    >(
+      variables: GetMovieProductionInformationQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetMovieProductionInformationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetMovieProductionInformationQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetMovieProductionInformationQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ['GetMovieProductionInformation.infinite', variables],
+      queryFn: (metaData) => fetcher<GetMovieProductionInformationQuery, GetMovieProductionInformationQueryVariables>(GetMovieProductionInformationDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -29315,6 +29442,54 @@ export const useInsertMovieMediaMutation = <
       {
     mutationKey: ['InsertMovieMedia'],
     mutationFn: (variables?: InsertMovieMediaMutationVariables) => fetcher<InsertMovieMediaMutation, InsertMovieMediaMutationVariables>(InsertMovieMediaDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertMovieProductionCompanyDocument = `
+    mutation InsertMovieProductionCompany($object: movie_production_companies_insert_input!, $on_conflict: movie_production_companies_on_conflict) {
+  insert_movie_production_companies_one(
+    object: $object
+    on_conflict: $on_conflict
+  ) {
+    id
+  }
+}
+    `;
+
+export const useInsertMovieProductionCompanyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieProductionCompanyMutation, TError, InsertMovieProductionCompanyMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieProductionCompanyMutation, TError, InsertMovieProductionCompanyMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieProductionCompany'],
+    mutationFn: (variables?: InsertMovieProductionCompanyMutationVariables) => fetcher<InsertMovieProductionCompanyMutation, InsertMovieProductionCompanyMutationVariables>(InsertMovieProductionCompanyDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertMovieProductionCountryDocument = `
+    mutation InsertMovieProductionCountry($object: movie_production_countries_insert_input!, $on_conflict: movie_production_countries_on_conflict) {
+  insert_movie_production_countries_one(
+    object: $object
+    on_conflict: $on_conflict
+  ) {
+    id
+  }
+}
+    `;
+
+export const useInsertMovieProductionCountryMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertMovieProductionCountryMutation, TError, InsertMovieProductionCountryMutationVariables, TContext>) => {
+    
+    return useMutation<InsertMovieProductionCountryMutation, TError, InsertMovieProductionCountryMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertMovieProductionCountry'],
+    mutationFn: (variables?: InsertMovieProductionCountryMutationVariables) => fetcher<InsertMovieProductionCountryMutation, InsertMovieProductionCountryMutationVariables>(InsertMovieProductionCountryDocument, variables)(),
     ...options
   }
     )};

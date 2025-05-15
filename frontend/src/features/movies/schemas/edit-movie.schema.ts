@@ -10,7 +10,7 @@ export const editMovieSchema = z.object({
     tagline: z.string().max(255, 'The tagline must be less than 255 characters'),
     overview: z.string().max(1000, 'The overview must be less than 1000 characters'),
     releaseDate: z.date().optional(),
-    runtime: z.preprocess((val) => (typeof val === 'string' ? parseFloat(val) : val), z.number()).optional(),
+    runtime: z.number().optional(),
     budget: z.string().optional(),
     revenue: z.string().optional(),
     // TODO : This needs to match the language code

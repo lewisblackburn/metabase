@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 
 export default function EditMovieAlternativeTitles({ movieId }: { movieId: string }) {
     const queryClient = useQueryClient();
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState<string>('');
     const debouncedSearchQuery = useDebounce(searchQuery, 300);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(5);
@@ -66,7 +66,8 @@ export default function EditMovieAlternativeTitles({ movieId }: { movieId: strin
                     : undefined
         },
         {
-            queryKey: ['movie-alternative-titles', movieId, debouncedSearchQuery, pageIndex, pageSize, sorting]
+            queryKey: ['movie-alternative-titles', movieId, pageIndex, pageSize, sorting],
+            enabled: !!movieId
         }
     );
 
@@ -147,7 +148,7 @@ export default function EditMovieAlternativeTitles({ movieId }: { movieId: strin
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
                     placeholder='Search by title, country, or type...'
-                    value={searchQuery}
+                    value={searchQuery || ''}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
                     }}

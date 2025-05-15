@@ -12,6 +12,7 @@ import EditMovieCast from './edit-movie-cast';
 import EditMovieCrew from './edit-movie-crew';
 import EditMovieDetails from './edit-movie-details';
 import EditMovieGallery from './edit-movie-gallery';
+import EditMovieProductionInformation from './edit-movie-production-information';
 import EditMovieSoundtrack from './edit-movie-soundtrack';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -31,8 +32,8 @@ export function EditMovieDialog({ id, isOpen, onOpenChange }: EditMovieDialogPro
         cast: () => <EditMovieCast movieId={id} />,
         crew: () => <EditMovieCrew movieId={id} />,
         soundtrack: () => <EditMovieSoundtrack movieId={id} />,
-        production_information: (item) => <div>production_information</div>,
-        gallery: (item) => <EditMovieGallery movieId={id} />
+        production_information: () => <EditMovieProductionInformation movieId={id} />,
+        gallery: () => <EditMovieGallery movieId={id} />
     };
 
     const config: DialogConfig = {

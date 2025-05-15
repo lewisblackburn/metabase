@@ -177,7 +177,7 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-day-picker:
-        specifier: ^8.10.1
+        specifier: 8.10.1
         version: 8.10.1(date-fns@4.1.0)(react@19.0.0)
       react-dom:
         specifier: 19.0.0

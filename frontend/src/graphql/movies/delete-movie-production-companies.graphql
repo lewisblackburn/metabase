@@ -1,0 +1,5 @@
+mutation DeleteMovieProductionCompanies($where: movie_production_companies_bool_exp!) {
+    delete_movie_production_companies(where: $where) {
+        affected_rows
+    }
+}

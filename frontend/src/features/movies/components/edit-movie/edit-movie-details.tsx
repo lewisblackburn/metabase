@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import BaseFormLayout from '@/components/form/base-form-layout';
 import DatePickerField from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
@@ -22,11 +24,11 @@ import {
     useGetMovieQuery,
     useInsertMovieMutation
 } from '@/generated/graphql';
+import useHydratedForm from '@/hooks/use-hydrated-form';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
     movieAvailabilityOptions,
@@ -35,7 +37,6 @@ import {
     movieReleaseStatusOptions
 } from '../../constants/movie-enums';
 import { EditMovieSchemaType, editMovieSchema } from '../../schemas/edit-movie.schema';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 interface EditMovieDetailsProps {
@@ -43,12 +44,46 @@ interface EditMovieDetailsProps {
 }
 
 export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
-    const { data } = useGetMovieQuery(
+    const { data, isLoading } = useGetMovieQuery(
         { id: movieId },
         {
             queryKey: ['movie', movieId]
         }
     );
+
+    const form = useHydratedForm(editMovieSchema, data, (d) => ({
+        title: d.movies_by_pk?.title ?? '',
+        tagline: d.movies_by_pk?.tagline ?? '',
+        overview: d.movies_by_pk?.overview ?? '',
+        releaseDate: new Date(d.movies_by_pk?.release_date ?? '') ?? undefined,
+        runtime: d.movies_by_pk?.runtime ?? 0,
+        budget: d.movies_by_pk?.budget ?? 0,
+        revenue: d.movies_by_pk?.revenue ?? 0,
+        language: d.movies_by_pk?.language ?? '',
+        status: d.movies_by_pk?.status ?? undefined,
+        certification: d.movies_by_pk?.certification ?? undefined,
+        genres:
+            d.movies_by_pk?.movie_genres.map((genre) => ({
+                value: genre.genre,
+                label: movieGenresOptions.find((option) => option.value === genre.genre)?.label ?? ''
+            })) ?? [],
+        availabilities:
+            d.movies_by_pk?.movie_availabilities.map((availability) => ({
+                value: availability.availability,
+                label:
+                    movieAvailabilityOptions.find((option) => option.value === availability.availability)?.label ?? ''
+            })) ?? [],
+        keywords:
+            d.movies_by_pk?.movie_keywords.map((keyword) => ({
+                value: keyword.keyword.keyword,
+                label: keyword.keyword.keyword
+            })) ?? [],
+        imdbId: d.movies_by_pk?.imdb_id ?? '',
+        tmdbId: d.movies_by_pk?.tmdb_id ?? '',
+        homepage: d.movies_by_pk?.homepage ?? ''
+    }));
+
+    const { handleSubmit, control, reset } = form;
 
     const { mutateAsync: insertMovie } = useInsertMovieMutation({
         onError: (error: Error) => {
@@ -76,50 +111,16 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
 
     const movie = data?.movies_by_pk;
 
-    if (!movie) return null;
-
-    const form = useForm<EditMovieSchemaType>({
-        resolver: zodResolver(editMovieSchema),
-        defaultValues: {
-            title: movie.title,
-            tagline: movie.tagline ?? '',
-            overview: movie.overview ?? '',
-            releaseDate: new Date(movie.release_date) ?? undefined,
-            runtime: movie.runtime ?? 0,
-            budget: movie.budget ?? 0,
-            revenue: movie.revenue ?? 0,
-            language: movie.language ?? '',
-            status: movie.status ?? undefined,
-            certification: movie.certification ?? undefined,
-            genres: movie.movie_genres.map((genre) => ({
-                value: genre.genre,
-                label: movieGenresOptions.find((option) => option.value === genre.genre)?.label ?? ''
-            })),
-            availabilities: movie.movie_availabilities.map((availability) => ({
-                value: availability.availability,
-                label:
-                    movieAvailabilityOptions.find((option) => option.value === availability.availability)?.label ?? ''
-            })),
-            keywords: movie.movie_keywords.map((keyword) => ({
-                value: keyword.keyword.keyword,
-                label: keyword.keyword.keyword
-            })),
-            imdbId: movie.imdb_id ?? '',
-            tmdbId: movie.tmdb_id ?? '',
-            homepage: movie.homepage ?? ''
-        }
-    });
+    if (isLoading || !movie) return null;
 
     async function onSubmit(values: EditMovieSchemaType) {
-        if (!movie) return;
-
-        const currentGenres = movie.movie_genres.map((genre) => genre.genre);
+        const currentGenres = movie?.movie_genres.map((genre) => genre.genre);
         const newGenres = values.genres?.map((genre) => genre.value) ?? [];
 
-        const currentAvailabilities = movie.movie_availabilities.map((avail) => avail.availability);
+        const currentAvailabilities = movie?.movie_availabilities.map((avail) => avail.availability);
         const newAvailabilities = values.availabilities?.map((avail) => avail.value) ?? [];
 
-        const currentKeywords = movie.movie_keywords.map((keyword) => keyword.keyword.keyword);
+        const currentKeywords = movie?.movie_keywords.map((keyword) => keyword.keyword.keyword);
         const newKeywords = values.keywords?.map((keyword) => keyword.value) ?? [];
 
         if (JSON.stringify(currentGenres) !== JSON.stringify(newGenres)) {
@@ -232,16 +233,9 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
 
     return (
         <Form {...form}>
-            <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className='space-y-8'
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
-                        e.preventDefault();
-                    }
-                }}>
+            <form onSubmit={handleSubmit(onSubmit)} onReset={() => reset()} className='space-y-8'>
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='title'
                     render={({ field }) => (
                         <BaseFormLayout label='Title'>
@@ -250,7 +244,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='tagline'
                     render={({ field }) => (
                         <BaseFormLayout label='Tagline'>
@@ -259,7 +253,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='overview'
                     render={({ field }) => (
                         <BaseFormLayout label='Overview'>
@@ -268,7 +262,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='releaseDate'
                     render={({ field }) => (
                         <BaseFormLayout label='Release Date'>
@@ -277,16 +271,21 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='runtime'
-                    render={({ field }) => (
+                    render={({ field: { value, onChange, ...field } }) => (
                         <BaseFormLayout label='Runtime'>
-                            <InputField type='number' {...field} />
+                            <InputField
+                                type='number'
+                                value={value ?? ''}
+                                onChange={(e) => onChange(e.target.value ? Number(e.target.value) : undefined)}
+                                {...field}
+                            />
                         </BaseFormLayout>
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='budget'
                     render={({ field }) => (
                         <BaseFormLayout label='Budget'>
@@ -295,7 +294,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='revenue'
                     render={({ field }) => (
                         <BaseFormLayout label='Revenue'>
@@ -304,7 +303,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='language'
                     render={({ field }) => (
                         <BaseFormLayout label='Language'>
@@ -321,7 +320,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='status'
                     render={({ field }) => (
                         <BaseFormLayout label='Status'>
@@ -330,7 +329,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='certification'
                     render={({ field }) => (
                         <BaseFormLayout label='Age Certification'>
@@ -339,7 +338,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='genres'
                     render={({ field }) => (
                         <BaseFormLayout label='Genres'>
@@ -360,7 +359,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                 />
 
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='availabilities'
                     render={({ field }) => (
                         <BaseFormLayout label='Availabilities'>
@@ -381,7 +380,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                 />
 
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='keywords'
                     render={({ field }) => (
                         <BaseFormLayout label='Keywords'>
@@ -399,7 +398,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                 />
 
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='imdbId'
                     render={({ field }) => (
                         <BaseFormLayout label='IMDB ID'>
@@ -408,7 +407,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='tmdbId'
                     render={({ field }) => (
                         <BaseFormLayout label='TMDB ID'>
@@ -417,7 +416,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='homepage'
                     render={({ field }) => (
                         <BaseFormLayout label='Homepage'>
@@ -426,10 +425,12 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                     )}
                 />
                 <div className='flex justify-end gap-2'>
-                    <Button variant='outline' type='button' onClick={() => form.reset()}>
+                    <Button variant='outline' type='button' size='sm'>
                         Reset
                     </Button>
-                    <Button type='submit'>Save</Button>
+                    <Button type='submit' size='sm'>
+                        Save Changes
+                    </Button>
                 </div>
             </form>
         </Form>

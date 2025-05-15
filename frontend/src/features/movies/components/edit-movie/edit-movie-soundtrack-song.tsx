@@ -6,6 +6,7 @@ import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
 import SongSelect from '@/components/form/song-select';
 import { useUpdateMovieSoundtrackMutation } from '@/generated/graphql';
+import useHydratedForm from '@/hooks/use-hydrated-form';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -16,13 +17,11 @@ import {
     DialogTrigger
 } from '@/registry/new-york-v4/ui/dialog';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { addMovieSoundtrackSongSchema } from '../../schemas/movie-soundtrack.schema';
 import { AddMovieSoundtrackSongSchemaType } from '../../schemas/movie-soundtrack.schema';
 import { Pencil, X } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 interface EditMovieSoundtrackSongDialogProps {
@@ -40,19 +39,17 @@ interface EditMovieSoundtrackSongDialogProps {
 
 export default function EditMovieSoundtrackSongDialog({ movieId, soundtrack }: EditMovieSoundtrackSongDialogProps) {
     const [open, setOpen] = useState(false);
-    const [resetKey, setResetKey] = useState(0);
     const queryClient = useQueryClient();
 
     const { mutateAsync: updateMovieSoundtrack } = useUpdateMovieSoundtrackMutation();
 
-    const form = useForm<AddMovieSoundtrackSongSchemaType>({
-        resolver: zodResolver(addMovieSoundtrackSongSchema),
-        defaultValues: {
-            song: soundtrack.song.id,
-            timestamps: soundtrack.timestamps.join(', '),
-            description: soundtrack.description || ''
-        }
-    });
+    const form = useHydratedForm(addMovieSoundtrackSongSchema, { soundtrack }, (d) => ({
+        song: d.soundtrack.song.id,
+        timestamps: d.soundtrack.timestamps.join(', '),
+        description: d.soundtrack.description || ''
+    }));
+
+    const { handleSubmit, control, reset } = form;
 
     const onSubmit = async (data: AddMovieSoundtrackSongSchemaType) => {
         try {
@@ -68,8 +65,7 @@ export default function EditMovieSoundtrackSongDialog({ movieId, soundtrack }: E
             toast.success('Song updated successfully');
             queryClient.invalidateQueries({ queryKey: ['movie-soundtrack', movieId] });
             setOpen(false);
-            setResetKey((prev) => prev + 1);
-            form.reset();
+            reset();
         } catch (error) {
             toast.error('Failed to update song');
         }
@@ -88,14 +84,13 @@ export default function EditMovieSoundtrackSongDialog({ movieId, soundtrack }: E
                 </DialogHeader>
                 <DialogDescription>Edit the song details in the movie soundtrack.</DialogDescription>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='song'
                             render={({ field }) => (
                                 <BaseFormLayout label='Song'>
                                     <SongSelect
-                                        key={resetKey}
                                         onValueChange={(value) => field.onChange(value)}
                                         defaultValue={field.value}
                                     />
@@ -104,7 +99,7 @@ export default function EditMovieSoundtrackSongDialog({ movieId, soundtrack }: E
                         />
 
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='timestamps'
                             render={({ field }) => (
                                 <BaseFormLayout label='Timestamps'>
@@ -114,7 +109,7 @@ export default function EditMovieSoundtrackSongDialog({ movieId, soundtrack }: E
                         />
 
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='description'
                             render={({ field }) => (
                                 <BaseFormLayout label='Description'>

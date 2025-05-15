@@ -1,0 +1,8 @@
+query GetMovieProductionInformation($id: uuid!) {
+    movie_production_companies(where: { movie_id: { _eq: $id } }) {
+        company_name
+    }
+    movie_production_countries(where: { movie_id: { _eq: $id } }) {
+        country
+    }
+}

@@ -2,12 +2,13 @@
 
 import React from 'react';
 
-import { Calendar } from '@/registry/new-york-v4/ui/calendar-rac';
-import { DateInput } from '@/registry/new-york-v4/ui/datefield-rac';
-import { parseDate } from '@internationalized/date';
+import { cn } from '@/lib/utils';
+import { Button } from '@/registry/new-york-v4/ui/button';
+import { Calendar } from '@/registry/new-york-v4/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york-v4/ui/popover';
 
+import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { Button, DatePicker, Dialog, Group, Label, Popover } from 'react-aria-components';
 
 export interface DatePickerFieldProps {
     name: string;
@@ -17,35 +18,31 @@ export interface DatePickerFieldProps {
 }
 
 const DatePickerField = React.forwardRef<HTMLDivElement, DatePickerFieldProps>(
-    ({ name, value, onChange, onBlur }, ref) => {
+    ({ name, value = new Date(), onChange, onBlur }, ref) => {
         const handleChange = (date: any) => {
             onChange(new Date(date.toString()));
         };
 
         return (
-            <DatePicker
-                className='*:not-first:mt-2'
-                name={name}
-                value={value ? parseDate(value.toISOString().split('T')[0]) : undefined}
-                onChange={handleChange}
-                onBlur={onBlur}
-                ref={ref}>
-                <div className='flex'>
-                    <Group className='w-full'>
-                        <DateInput className='pe-9' />
-                    </Group>
-                    <Button className='text-muted-foreground/80 hover:text-foreground data-focus-visible:border-ring data-focus-visible:ring-ring/50 z-10 -ms-9 -me-px flex w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none data-focus-visible:ring-[3px]'>
-                        <CalendarIcon size={16} />
+            <Popover modal>
+                <PopoverTrigger asChild>
+                    <Button
+                        variant={'outline'}
+                        className={cn('w-full justify-start text-left font-normal', !value && 'text-muted-foreground')}>
+                        <CalendarIcon />
+                        {value ? format(value, 'PPP') : <span>Pick a date</span>}
                     </Button>
-                    <Popover
-                        className='bg-background text-popover-foreground data-entering:animate-in data-exiting:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 z-50 rounded-lg border shadow-lg outline-hidden'
-                        offset={4}>
-                        <Dialog className='max-h-[inherit] overflow-auto p-2'>
-                            <Calendar />
-                        </Dialog>
-                    </Popover>
-                </div>
-            </DatePicker>
+                </PopoverTrigger>
+                <PopoverContent className='w-auto p-0' align='start' style={{ zIndex: '1000 !important' }}>
+                    <Calendar
+                        mode='single'
+                        selected={value}
+                        onSelect={handleChange}
+                        initialFocus
+                        defaultMonth={value || new Date()}
+                    />
+                </PopoverContent>
+            </Popover>
         );
     }
 );

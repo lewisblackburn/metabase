@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 export default function MovieStatusPicker() {
     const userId = useUserId();
     const queryClient = useQueryClient();
-    const { movie, status: userMovieStatus } = useMovie();
+    const { movie, status: userMovieStatus, isLoading } = useMovie();
 
     const { mutateAsync: insertUserMovieStatus } = useInsertUserMovieStatusMutation({
         onSuccess: () => {
@@ -27,7 +27,7 @@ export default function MovieStatusPicker() {
         onError: (error) => toast.error((error as Error).message)
     });
 
-    if (!movie) return null;
+    if (!movie || isLoading) return null;
 
     const initialStatus = userMovieStatus?.status || undefined;
 

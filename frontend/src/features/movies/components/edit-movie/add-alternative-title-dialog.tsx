@@ -7,6 +7,7 @@ import InputField from '@/components/form/input';
 import SelectField from '@/components/form/select';
 import { COUNTRIES } from '@/constants/countries.constant';
 import { Movie_Alternative_Titles_Constraint, useInsertMovieAlternativeTitleMutation } from '@/generated/graphql';
+import useHydratedForm from '@/hooks/use-hydrated-form';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/registry/new-york-v4/ui/dialog';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
@@ -26,7 +27,10 @@ interface AddAlternativeTitleDialogProps {
 export default function AddAlternativeTitleDialog({ movieId }: AddAlternativeTitleDialogProps) {
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
-    const form = useForm<MovieAlternativeTitleType>({
+
+    const { mutateAsync: insertMovieAlternativeTitle } = useInsertMovieAlternativeTitleMutation();
+
+    const form = useForm({
         resolver: zodResolver(movieAlternativeTitleSchema),
         defaultValues: {
             alternative_title: '',
@@ -35,29 +39,29 @@ export default function AddAlternativeTitleDialog({ movieId }: AddAlternativeTit
         }
     });
 
-    const { mutateAsync: insertMovieAlternativeTitle } = useInsertMovieAlternativeTitleMutation({
-        onSuccess: () => {
-            toast.success('Alternative title added successfully');
-            form.reset();
-            queryClient.invalidateQueries({ queryKey: ['movie-alternative-titles', movieId] });
-        },
-        onError: (error: Error) => {
-            toast.error(error.message);
-        }
-    });
+    const { handleSubmit, control, reset } = form;
 
-    const onSubmit = async (values: MovieAlternativeTitleType) => {
-        await insertMovieAlternativeTitle({
-            object: {
-                alternative_title: values.alternative_title,
-                country: values.country,
-                type: values.type,
-                movie_id: movieId
-            },
-            on_conflict: {
-                constraint: Movie_Alternative_Titles_Constraint.MovieAlternativeTitlesPkey
-            }
-        });
+    const onSubmit = async (data: MovieAlternativeTitleType) => {
+        try {
+            await insertMovieAlternativeTitle({
+                object: {
+                    movie_id: movieId,
+                    alternative_title: data.alternative_title,
+                    country: data.country,
+                    type: data.type
+                },
+                on_conflict: {
+                    constraint: Movie_Alternative_Titles_Constraint.MovieAlternativeTitlesPkey
+                }
+            });
+
+            toast.success('Alternative title added successfully');
+            queryClient.invalidateQueries({ queryKey: ['movie-alternative-titles', movieId] });
+            setOpen(false);
+            reset();
+        } catch (error) {
+            toast.error('Failed to add alternative title');
+        }
     };
 
     return (
@@ -65,17 +69,18 @@ export default function AddAlternativeTitleDialog({ movieId }: AddAlternativeTit
             <DialogTrigger asChild>
                 <Button variant='outline' size='sm'>
                     <Plus className='size-4' />
+                    Add Alternative Title
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Add Alternative Title</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Add a new alternative title to the movie.</DialogDescription>
+                <DialogDescription>Add an alternative title for the movie.</DialogDescription>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='alternative_title'
                             render={({ field }) => (
                                 <BaseFormLayout label='Alternative Title'>
@@ -85,16 +90,36 @@ export default function AddAlternativeTitleDialog({ movieId }: AddAlternativeTit
                         />
 
                         <FormField
-                            control={form.control}
+                            control={control}
                             name='country'
                             render={({ field }) => (
                                 <BaseFormLayout label='Country'>
                                     <SelectField
-                                        {...field}
                                         options={COUNTRIES.map((country) => ({
                                             value: country.code,
-                                            label: country.englishLabel
+                                            label: country.label,
+                                            secondaryLabel: country.englishLabel
                                         }))}
+                                        modal
+                                        {...field}
+                                    />
+                                </BaseFormLayout>
+                            )}
+                        />
+
+                        <FormField
+                            control={control}
+                            name='type'
+                            render={({ field }) => (
+                                <BaseFormLayout label='Type'>
+                                    <SelectField
+                                        options={[
+                                            { value: 'original', label: 'Original' },
+                                            { value: 'working', label: 'Working' },
+                                            { value: 'alternative', label: 'Alternative' }
+                                        ]}
+                                        modal
+                                        {...field}
                                     />
                                 </BaseFormLayout>
                             )}
@@ -105,7 +130,7 @@ export default function AddAlternativeTitleDialog({ movieId }: AddAlternativeTit
                                 <X className='size-4' />
                                 Cancel
                             </Button>
-                            <Button type='submit'>Add Alternative Title</Button>
+                            <Button type='submit'>Add Title</Button>
                         </div>
                     </form>
                 </Form>

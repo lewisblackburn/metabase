@@ -1,0 +1,8 @@
+mutation InsertMovieProductionCompany(
+    $object: movie_production_companies_insert_input!
+    $on_conflict: movie_production_companies_on_conflict
+) {
+    insert_movie_production_companies_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}

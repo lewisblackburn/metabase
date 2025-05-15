@@ -384,9 +384,18 @@ const MultipleSelector = ({
                 return value.toLowerCase().includes(search.toLowerCase()) ? 1 : -1;
             };
         }
-        // Using default filter in `cmdk`. We don&lsquo;t have to provide it.
-        return undefined;
-    }, [creatable, commandProps?.filter]);
+
+        // Search by both label and value
+        return (value: string, search: string) => {
+            const option = [...Object.values(options).flat()].find((opt) => opt.value === value);
+            if (!option) return -1;
+
+            const searchLower = search.toLowerCase();
+            return option.label.toLowerCase().includes(searchLower) || option.value.toLowerCase().includes(searchLower)
+                ? 1
+                : -1;
+        };
+    }, [creatable, commandProps?.filter, options]);
 
     return (
         <Command

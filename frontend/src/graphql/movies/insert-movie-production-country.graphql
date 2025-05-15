@@ -1,0 +1,8 @@
+mutation InsertMovieProductionCountry(
+    $object: movie_production_countries_insert_input!
+    $on_conflict: movie_production_countries_on_conflict
+) {
+    insert_movie_production_countries_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}
