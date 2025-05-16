@@ -7,7 +7,13 @@ import Artwork from '@/components/shared/artwork';
 import Grid from '@/components/shared/grid';
 import Poster from '@/components/shared/poster';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
-import { Credits, Object_Types_Enum, People, useGetPersonDetailsQuery } from '@/generated/graphql';
+import {
+    Credits,
+    Department_Types_Enum,
+    Object_Types_Enum,
+    People,
+    useGetPersonDetailsQuery
+} from '@/generated/graphql';
 import {
     Select,
     SelectContent,
@@ -25,7 +31,15 @@ function MediaSkeleton() {
         .map((_, i) => <div key={i} className='aspect-[2/3] w-full animate-pulse rounded bg-gray-200' />);
 }
 
-function MediaItem({ credit }: { credit: Credits }) {
+function MediaItem({
+    credit
+}: {
+    credit: Pick<Credits, 'id' | 'object_type' | 'object_id'> & {
+        movie_credit?: { title: string; poster: string } | null;
+        book_credit?: { title: string; cover: string } | null;
+        song_credit?: { name: string; album?: { artwork: string } | null } | null;
+    };
+}) {
     if (credit.object_type === Object_Types_Enum.Movie) {
         return (
             <div key={credit.id}>
@@ -61,7 +75,7 @@ function MediaItem({ credit }: { credit: Credits }) {
 
 export default function PersonMedia() {
     const params = useParams<{ id: string }>();
-    const [creditDepartment, setCreditDepartment] = useState('');
+    const [creditDepartment, setCreditDepartment] = useState<Department_Types_Enum>();
     const [isFirstLoad, setIsFirstLoad] = useState(true);
 
     const { person, isLoading: isPersonLoading } = usePerson({
@@ -82,7 +96,7 @@ export default function PersonMedia() {
 
     useEffect(() => {
         if (credits && credits.credits.length > 0 && isFirstLoad) {
-            setCreditDepartment(credits.credits[0]?.department ?? '');
+            setCreditDepartment(credits.credits[0]?.department ?? undefined);
             setIsFirstLoad(false);
         }
     }, [credits, isFirstLoad]);
@@ -93,7 +107,7 @@ export default function PersonMedia() {
         return (
             <Select
                 value={creditDepartment}
-                onValueChange={setCreditDepartment}
+                onValueChange={(value) => setCreditDepartment(value as Department_Types_Enum)}
                 disabled={isLoading || flattenedCredits.length === 0}>
                 <SelectTrigger className='w-[180px] capitalize'>
                     <SelectValue
@@ -116,6 +130,10 @@ export default function PersonMedia() {
     function MediaContent() {
         if (isLoading) {
             return <MediaSkeleton />;
+        }
+
+        if (!creditDepartment) {
+            return null;
         }
 
         return person?.credits?.map((credit) => <MediaItem key={credit.id} credit={credit} />);

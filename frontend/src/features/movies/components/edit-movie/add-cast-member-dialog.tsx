@@ -6,9 +6,8 @@ import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
 import PersonSelect from '@/components/form/person-select';
 import { AddCastMemberSchemaType, addCastMemberSchema } from '@/features/movies/schemas/movie-cast-member.schema';
-import { Object_Types_Enum, useInsertCreditsMutation } from '@/generated/graphql';
+import { Department_Types_Enum, Object_Types_Enum, useInsertCreditsMutation } from '@/generated/graphql';
 import { Credit_Types_Enum } from '@/generated/graphql';
-import useHydratedForm from '@/hooks/use-hydrated-form';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -53,9 +52,7 @@ export default function AddCastMemberDialog({ movieId }: AddCastMemberDialogProp
                     {
                         object_id: movieId,
                         person_id: data.person,
-                        details: {
-                            character: data.character
-                        },
+                        character: data.character,
                         credit_type: Credit_Types_Enum.Cast,
                         object_type: Object_Types_Enum.Movie
                     }

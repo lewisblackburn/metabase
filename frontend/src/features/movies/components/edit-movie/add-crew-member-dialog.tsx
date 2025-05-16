@@ -3,12 +3,16 @@
 import { useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
-import InputField from '@/components/form/input';
 import PersonSelect from '@/components/form/person-select';
+import SelectField from '@/components/form/select';
 import { AddCrewMemberSchemaType, addCrewMemberSchema } from '@/features/movies/schemas/movie-crew-member.schema';
-import { Object_Types_Enum, useInsertCreditsMutation } from '@/generated/graphql';
+import {
+    Department_Types_Enum,
+    Job_Types_Enum,
+    Object_Types_Enum,
+    useInsertCreditsMutation
+} from '@/generated/graphql';
 import { Credit_Types_Enum } from '@/generated/graphql';
-import useHydratedForm from '@/hooks/use-hydrated-form';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
     Dialog,
@@ -40,8 +44,8 @@ export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProp
         resolver: zodResolver(addCrewMemberSchema),
         defaultValues: {
             person: '',
-            department: '',
-            job: ''
+            department: Department_Types_Enum.Crew,
+            job: Job_Types_Enum.Other
         }
     });
 
@@ -54,10 +58,8 @@ export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProp
                     {
                         object_id: movieId,
                         person_id: data.person,
-                        details: {
-                            department: data.department,
-                            job: data.job
-                        },
+                        department: data.department,
+                        job: data.job,
                         credit_type: Credit_Types_Enum.Crew,
                         object_type: Object_Types_Enum.Movie
                     }
@@ -106,7 +108,13 @@ export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProp
                             name='department'
                             render={({ field }) => (
                                 <BaseFormLayout label='Department'>
-                                    <InputField {...field} />
+                                    <SelectField
+                                        options={Object.values(Department_Types_Enum).map((department) => ({
+                                            label: department,
+                                            value: department
+                                        }))}
+                                        {...field}
+                                    />
                                 </BaseFormLayout>
                             )}
                         />
@@ -116,7 +124,13 @@ export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProp
                             name='job'
                             render={({ field }) => (
                                 <BaseFormLayout label='Job'>
-                                    <InputField {...field} />
+                                    <SelectField
+                                        options={Object.values(Job_Types_Enum).map((job) => ({
+                                            label: job,
+                                            value: job
+                                        }))}
+                                        {...field}
+                                    />
                                 </BaseFormLayout>
                             )}
                         />

@@ -4,7 +4,9 @@ mutation InsertCredits($objects: [credits_insert_input!]!) {
         returning {
             id
             credit_type
-            details
+            department
+            job
+            character
             order
             person {
                 id

@@ -24,7 +24,9 @@ query GetMovieForContentQualityCheck($id: uuid!) {
         credits {
             id
             credit_type
-            details
+            department
+            job
+            character
             order
             person {
                 id

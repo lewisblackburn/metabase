@@ -7,12 +7,14 @@ import {
     Credit_Types_Enum,
     Credits_Constraint,
     Credits_Insert_Input,
+    Department_Types_Enum,
     GetSongBySpotifyIdDocument,
     GetSongBySpotifyIdQuery,
     GetSongBySpotifyIdQueryVariables,
     InsertSongDocument,
     InsertSongMutation,
     InsertSongMutationVariables,
+    Job_Types_Enum,
     Object_Types_Enum,
     People_Constraint,
     People_Update_Column,
@@ -73,7 +75,8 @@ export async function importSongFromSpotify(
 
             return {
                 object_type: Object_Types_Enum.Song,
-                details: { department: 'Singing', job: 'Singer' },
+                department: Department_Types_Enum.Singing,
+                job: Job_Types_Enum.Singer,
                 credit_type: Credit_Types_Enum.Artist,
                 order: index + 1,
                 person: {
@@ -112,7 +115,8 @@ export async function importSongFromSpotify(
 
             return {
                 object_type: Object_Types_Enum.Album,
-                details: { department: 'Singing', job: 'Singer' },
+                department: Department_Types_Enum.Singing,
+                job: Job_Types_Enum.Singer,
                 credit_type: Credit_Types_Enum.Artist,
                 order: index + 1,
                 person: {

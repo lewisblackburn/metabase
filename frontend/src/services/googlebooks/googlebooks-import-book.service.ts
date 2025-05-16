@@ -7,12 +7,14 @@ import {
     Books_Insert_Input,
     Credit_Types_Enum,
     Credits_Insert_Input,
+    Department_Types_Enum,
     GetBookByGoogleBooksIdDocument,
     GetBookByGoogleBooksIdQuery,
     GetBookByGoogleBooksIdQueryVariables,
     InsertBookDocument,
     InsertBookMutation,
     InsertBookMutationVariables,
+    Job_Types_Enum,
     Object_Types_Enum
 } from '../../generated/graphql';
 import { fetcher } from '../../lib/graphql-client';
@@ -59,7 +61,8 @@ export async function importBookFromGoogleBooks(
         bookData.volumeInfo.authors?.map(async (author, index) => {
             return {
                 object_type: Object_Types_Enum.Book,
-                details: { department: 'Writing', job: 'Writer' },
+                department: Department_Types_Enum.Writing,
+                job: Job_Types_Enum.Writer,
                 credit_type: Credit_Types_Enum.Author,
                 order: index + 1,
                 person: {

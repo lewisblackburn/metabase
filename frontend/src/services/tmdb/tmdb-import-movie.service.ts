@@ -1,16 +1,20 @@
 import { BUCKET } from '@/constants/media.constant';
 import { TMDB_GENDER_MAP } from '@/constants/tmdb.constant';
 import { nhost } from '@/lib/nhost';
+import { fuzzyEnumMap } from '@/lib/utils';
 
 import {
     Credit_Types_Enum,
     Credits_Constraint,
     Credits_Insert_Input,
+    Department_Types_Enum,
     GetMovieByTmdb_IdDocument,
     GetMovieByTmdb_IdQuery,
     GetMovieByTmdb_IdQueryVariables,
     InsertMovieDocument,
     InsertMovieMutation,
+    InsertMovieMutationVariables,
+    Job_Types_Enum,
     Keywords_Constraint,
     Keywords_Update_Column,
     Movie_Alternative_Titles_Constraint,
@@ -28,6 +32,7 @@ import {
     Movie_Production_Countries_Insert_Input,
     Movie_Production_Countries_Update_Column,
     Movie_Release_Status_Types_Enum,
+    Movies_Constraint,
     Movies_Insert_Input,
     Object_Types_Enum,
     People_Constraint,
@@ -39,37 +44,6 @@ import { fetcher } from '../../lib/graphql-client';
 import { TmdbMovieDetails } from '../../types/tmdb.types';
 import { uploadFile } from '../file.service';
 import { tmdbService } from './tmdb.service';
-
-const TMDB_MOVIE_RELEASE_STATUS_MAP = {
-    Rumored: Movie_Release_Status_Types_Enum.Rumoured,
-    Planned: Movie_Release_Status_Types_Enum.Planned,
-    'In Production': Movie_Release_Status_Types_Enum.InProduction,
-    'Post Production': Movie_Release_Status_Types_Enum.PostProduction,
-    Released: Movie_Release_Status_Types_Enum.Released,
-    Canceled: Movie_Release_Status_Types_Enum.Cancelled
-};
-
-const TMDB_MOIVE_GENRE_MAP = {
-    Action: Movie_Genre_Types_Enum.Action,
-    Adventure: Movie_Genre_Types_Enum.Adventure,
-    Animation: Movie_Genre_Types_Enum.Animation,
-    Comedy: Movie_Genre_Types_Enum.Comedy,
-    Crime: Movie_Genre_Types_Enum.Crime,
-    Documentary: Movie_Genre_Types_Enum.Documentary,
-    Drama: Movie_Genre_Types_Enum.Drama,
-    Family: Movie_Genre_Types_Enum.Family,
-    Fantasy: Movie_Genre_Types_Enum.Fantasy,
-    History: Movie_Genre_Types_Enum.History,
-    Horror: Movie_Genre_Types_Enum.Horror,
-    Music: Movie_Genre_Types_Enum.Music,
-    Mystery: Movie_Genre_Types_Enum.Mystery,
-    Romance: Movie_Genre_Types_Enum.Romance,
-    ScienceFiction: Movie_Genre_Types_Enum.ScienceFiction,
-    TVMovie: Movie_Genre_Types_Enum.TvMovie,
-    Thriller: Movie_Genre_Types_Enum.Thriller,
-    War: Movie_Genre_Types_Enum.War,
-    Western: Movie_Genre_Types_Enum.Western
-};
 
 export async function importMovieFromTmdb(
     tmdbId: number
@@ -121,7 +95,9 @@ export async function importMovieFromTmdb(
 
             return {
                 object_type: Object_Types_Enum.Movie,
-                details: { character: cast.character, department: 'Acting', job: 'Actor' },
+                character: cast.character,
+                department: Department_Types_Enum.Acting,
+                job: Job_Types_Enum.Actor,
                 credit_type: Credit_Types_Enum.Cast,
                 order: index + 1,
                 person: {
@@ -165,7 +141,14 @@ export async function importMovieFromTmdb(
 
             return {
                 object_type: Object_Types_Enum.Movie,
-                details: { department: crew.department, job: crew.job },
+                department: fuzzyEnumMap(crew.department, Department_Types_Enum, {
+                    fallback: Department_Types_Enum.Crew,
+                    threshold: 0.3
+                }),
+                job: fuzzyEnumMap(crew.job, Job_Types_Enum, {
+                    fallback: Job_Types_Enum.Other,
+                    threshold: 0.3
+                }),
                 credit_type: Credit_Types_Enum.Crew,
                 order: index + 1,
                 person: {
@@ -216,9 +199,10 @@ export async function importMovieFromTmdb(
             budget: tmdbMovieData.budget,
             revenue: tmdbMovieData.revenue,
             homepage: tmdbMovieData.homepage,
-            status:
-                TMDB_MOVIE_RELEASE_STATUS_MAP[tmdbMovieData.status as keyof typeof TMDB_MOVIE_RELEASE_STATUS_MAP] ||
-                undefined,
+            status: fuzzyEnumMap(tmdbMovieData.status, Movie_Release_Status_Types_Enum, {
+                fallback: Movie_Release_Status_Types_Enum.Released,
+                threshold: 0.3
+            }),
             language: tmdbMovieData.original_language,
             backdrop: backdrop ? nhost.storage.getPublicUrl({ fileId: backdrop.id }) : undefined,
             poster: poster ? nhost.storage.getPublicUrl({ fileId: poster.id }) : undefined,
@@ -239,8 +223,11 @@ export async function importMovieFromTmdb(
             movie_genres: {
                 data:
                     tmdbMovieData.genres?.map(
-                        (genre, index): Movie_Genres_Insert_Input => ({
-                            genre: TMDB_MOIVE_GENRE_MAP[genre.name as keyof typeof TMDB_MOIVE_GENRE_MAP]
+                        (genre): Movie_Genres_Insert_Input => ({
+                            genre: fuzzyEnumMap(genre.name, Movie_Genre_Types_Enum, {
+                                fallback: undefined,
+                                threshold: 0.3
+                            })
                         })
                     ) || []
             },
@@ -268,7 +255,7 @@ export async function importMovieFromTmdb(
                         })
                     ) || [],
                 on_conflict: {
-                    constraint: Movie_Production_Companies_Constraint.MovieProductionCompaniesCompanyNameKey,
+                    constraint: Movie_Production_Companies_Constraint.MovieProductionCompaniesMovieIdCompanyNameKey,
                     update_columns: [Movie_Production_Companies_Update_Column.CompanyName]
                 }
             },
@@ -307,8 +294,11 @@ export async function importMovieFromTmdb(
             }
         };
 
-        const result = await fetcher<InsertMovieMutation, { object: Movies_Insert_Input }>(InsertMovieDocument, {
-            object: movieInsertInput
+        const result = await fetcher<InsertMovieMutation, InsertMovieMutationVariables>(InsertMovieDocument, {
+            object: movieInsertInput,
+            on_conflict: {
+                constraint: Movies_Constraint.MoviesTmdbIdKey
+            }
         })();
 
         console.log(`Successfully imported movie: ${result.insert_movies_one?.title}`);

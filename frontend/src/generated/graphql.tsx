@@ -5927,10 +5927,13 @@ export type Credits = {
   /** An object relationship */
   creditTypeByCreditType: Credit_Types;
   credit_type: Credit_Types_Enum;
-  department?: Maybe<Scalars['String']['output']>;
-  details: Scalars['jsonb']['output'];
+  department?: Maybe<Department_Types_Enum>;
+  /** An object relationship */
+  department_type?: Maybe<Department_Types>;
   id: Scalars['uuid']['output'];
-  job?: Maybe<Scalars['String']['output']>;
+  job?: Maybe<Job_Types_Enum>;
+  /** An object relationship */
+  job_type?: Maybe<Job_Types>;
   /** An object relationship */
   movie_credit?: Maybe<Movies>;
   object_id: Scalars['uuid']['output'];
@@ -5941,12 +5944,6 @@ export type Credits = {
   person_id: Scalars['uuid']['output'];
   /** An object relationship */
   song_credit?: Maybe<Songs>;
-};
-
-
-/** columns and relationships of "credits" */
-export type CreditsDetailsArgs = {
-  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregated selection of "credits" */
@@ -6005,11 +6002,6 @@ export type Credits_Aggregate_Order_By = {
   variance?: InputMaybe<Credits_Variance_Order_By>;
 };
 
-/** append existing jsonb value of filtered columns with new jsonb value */
-export type Credits_Append_Input = {
-  details?: InputMaybe<Scalars['jsonb']['input']>;
-};
-
 /** input type for inserting array relation for remote table "credits" */
 export type Credits_Arr_Rel_Insert_Input = {
   data: Array<Credits_Insert_Input>;
@@ -6037,10 +6029,11 @@ export type Credits_Bool_Exp = {
   character?: InputMaybe<String_Comparison_Exp>;
   creditTypeByCreditType?: InputMaybe<Credit_Types_Bool_Exp>;
   credit_type?: InputMaybe<Credit_Types_Enum_Comparison_Exp>;
-  department?: InputMaybe<String_Comparison_Exp>;
-  details?: InputMaybe<Jsonb_Comparison_Exp>;
+  department?: InputMaybe<Department_Types_Enum_Comparison_Exp>;
+  department_type?: InputMaybe<Department_Types_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  job?: InputMaybe<String_Comparison_Exp>;
+  job?: InputMaybe<Job_Types_Enum_Comparison_Exp>;
+  job_type?: InputMaybe<Job_Types_Bool_Exp>;
   movie_credit?: InputMaybe<Movies_Bool_Exp>;
   object_id?: InputMaybe<Uuid_Comparison_Exp>;
   object_type?: InputMaybe<String_Comparison_Exp>;
@@ -6056,21 +6049,6 @@ export enum Credits_Constraint {
   CreditsPkey = 'credits_pkey'
 }
 
-/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Credits_Delete_At_Path_Input = {
-  details?: InputMaybe<Array<Scalars['String']['input']>>;
-};
-
-/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Credits_Delete_Elem_Input = {
-  details?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Credits_Delete_Key_Input = {
-  details?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** input type for incrementing numeric columns in table "credits" */
 export type Credits_Inc_Input = {
   order?: InputMaybe<Scalars['Float']['input']>;
@@ -6079,10 +6057,14 @@ export type Credits_Inc_Input = {
 /** input type for inserting data into table "credits" */
 export type Credits_Insert_Input = {
   book_credit?: InputMaybe<Books_Obj_Rel_Insert_Input>;
+  character?: InputMaybe<Scalars['String']['input']>;
   creditTypeByCreditType?: InputMaybe<Credit_Types_Obj_Rel_Insert_Input>;
   credit_type?: InputMaybe<Credit_Types_Enum>;
-  details?: InputMaybe<Scalars['jsonb']['input']>;
+  department?: InputMaybe<Department_Types_Enum>;
+  department_type?: InputMaybe<Department_Types_Obj_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  job?: InputMaybe<Job_Types_Enum>;
+  job_type?: InputMaybe<Job_Types_Obj_Rel_Insert_Input>;
   movie_credit?: InputMaybe<Movies_Obj_Rel_Insert_Input>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_type?: InputMaybe<Scalars['String']['input']>;
@@ -6096,9 +6078,7 @@ export type Credits_Insert_Input = {
 export type Credits_Max_Fields = {
   __typename?: 'credits_max_fields';
   character?: Maybe<Scalars['String']['output']>;
-  department?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  job?: Maybe<Scalars['String']['output']>;
   object_id?: Maybe<Scalars['uuid']['output']>;
   object_type?: Maybe<Scalars['String']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -6108,9 +6088,7 @@ export type Credits_Max_Fields = {
 /** order by max() on columns of table "credits" */
 export type Credits_Max_Order_By = {
   character?: InputMaybe<Order_By>;
-  department?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  job?: InputMaybe<Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -6121,9 +6099,7 @@ export type Credits_Max_Order_By = {
 export type Credits_Min_Fields = {
   __typename?: 'credits_min_fields';
   character?: Maybe<Scalars['String']['output']>;
-  department?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
-  job?: Maybe<Scalars['String']['output']>;
   object_id?: Maybe<Scalars['uuid']['output']>;
   object_type?: Maybe<Scalars['String']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
@@ -6133,9 +6109,7 @@ export type Credits_Min_Fields = {
 /** order by min() on columns of table "credits" */
 export type Credits_Min_Order_By = {
   character?: InputMaybe<Order_By>;
-  department?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  job?: InputMaybe<Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -6165,9 +6139,10 @@ export type Credits_Order_By = {
   creditTypeByCreditType?: InputMaybe<Credit_Types_Order_By>;
   credit_type?: InputMaybe<Order_By>;
   department?: InputMaybe<Order_By>;
-  details?: InputMaybe<Order_By>;
+  department_type?: InputMaybe<Department_Types_Order_By>;
   id?: InputMaybe<Order_By>;
   job?: InputMaybe<Order_By>;
+  job_type?: InputMaybe<Job_Types_Order_By>;
   movie_credit?: InputMaybe<Movies_Order_By>;
   object_id?: InputMaybe<Order_By>;
   object_type?: InputMaybe<Order_By>;
@@ -6182,11 +6157,6 @@ export type Credits_Pk_Columns_Input = {
   id: Scalars['uuid']['input'];
 };
 
-/** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Credits_Prepend_Input = {
-  details?: InputMaybe<Scalars['jsonb']['input']>;
-};
-
 /** select columns of table "credits" */
 export enum Credits_Select_Column {
   /** column name */
@@ -6195,8 +6165,6 @@ export enum Credits_Select_Column {
   CreditType = 'credit_type',
   /** column name */
   Department = 'department',
-  /** column name */
-  Details = 'details',
   /** column name */
   Id = 'id',
   /** column name */
@@ -6213,9 +6181,11 @@ export enum Credits_Select_Column {
 
 /** input type for updating data in table "credits" */
 export type Credits_Set_Input = {
+  character?: InputMaybe<Scalars['String']['input']>;
   credit_type?: InputMaybe<Credit_Types_Enum>;
-  details?: InputMaybe<Scalars['jsonb']['input']>;
+  department?: InputMaybe<Department_Types_Enum>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  job?: InputMaybe<Job_Types_Enum>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_type?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<Scalars['Float']['input']>;
@@ -6267,10 +6237,9 @@ export type Credits_Stream_Cursor_Input = {
 export type Credits_Stream_Cursor_Value_Input = {
   character?: InputMaybe<Scalars['String']['input']>;
   credit_type?: InputMaybe<Credit_Types_Enum>;
-  department?: InputMaybe<Scalars['String']['input']>;
-  details?: InputMaybe<Scalars['jsonb']['input']>;
+  department?: InputMaybe<Department_Types_Enum>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  job?: InputMaybe<Scalars['String']['input']>;
+  job?: InputMaybe<Job_Types_Enum>;
   object_id?: InputMaybe<Scalars['uuid']['input']>;
   object_type?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<Scalars['Float']['input']>;
@@ -6291,11 +6260,15 @@ export type Credits_Sum_Order_By = {
 /** update columns of table "credits" */
 export enum Credits_Update_Column {
   /** column name */
+  Character = 'character',
+  /** column name */
   CreditType = 'credit_type',
   /** column name */
-  Details = 'details',
+  Department = 'department',
   /** column name */
   Id = 'id',
+  /** column name */
+  Job = 'job',
   /** column name */
   ObjectId = 'object_id',
   /** column name */
@@ -6307,18 +6280,8 @@ export enum Credits_Update_Column {
 }
 
 export type Credits_Updates = {
-  /** append existing jsonb value of filtered columns with new jsonb value */
-  _append?: InputMaybe<Credits_Append_Input>;
-  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-  _delete_at_path?: InputMaybe<Credits_Delete_At_Path_Input>;
-  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-  _delete_elem?: InputMaybe<Credits_Delete_Elem_Input>;
-  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
-  _delete_key?: InputMaybe<Credits_Delete_Key_Input>;
   /** increments the numeric columns with given value of the filtered values */
   _inc?: InputMaybe<Credits_Inc_Input>;
-  /** prepend existing jsonb value of filtered columns with new jsonb value */
-  _prepend?: InputMaybe<Credits_Prepend_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Credits_Set_Input>;
   /** filter the rows which have to be updated */
@@ -6978,6 +6941,188 @@ export type Date_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['date']['input']>;
   _neq?: InputMaybe<Scalars['date']['input']>;
   _nin?: InputMaybe<Array<Scalars['date']['input']>>;
+};
+
+/** columns and relationships of "department_types" */
+export type Department_Types = {
+  __typename?: 'department_types';
+  /** An array relationship */
+  credits: Array<Credits>;
+  /** An aggregate relationship */
+  credits_aggregate: Credits_Aggregate;
+  type: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "department_types" */
+export type Department_TypesCreditsArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "department_types" */
+export type Department_TypesCredits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+/** aggregated selection of "department_types" */
+export type Department_Types_Aggregate = {
+  __typename?: 'department_types_aggregate';
+  aggregate?: Maybe<Department_Types_Aggregate_Fields>;
+  nodes: Array<Department_Types>;
+};
+
+/** aggregate fields of "department_types" */
+export type Department_Types_Aggregate_Fields = {
+  __typename?: 'department_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Department_Types_Max_Fields>;
+  min?: Maybe<Department_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "department_types" */
+export type Department_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Department_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "department_types". All fields are combined with a logical 'AND'. */
+export type Department_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Department_Types_Bool_Exp>>;
+  _not?: InputMaybe<Department_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Department_Types_Bool_Exp>>;
+  credits?: InputMaybe<Credits_Bool_Exp>;
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "department_types" */
+export enum Department_Types_Constraint {
+  /** unique or primary key constraint on columns "type" */
+  DepartmentTypesPkey = 'department_types_pkey'
+}
+
+export enum Department_Types_Enum {
+  Acting = 'ACTING',
+  Art = 'ART',
+  Camera = 'CAMERA',
+  CostumeAndMakeUp = 'COSTUME_AND_MAKE_UP',
+  Crew = 'CREW',
+  Directing = 'DIRECTING',
+  Editing = 'EDITING',
+  Lighting = 'LIGHTING',
+  Production = 'PRODUCTION',
+  Singing = 'SINGING',
+  Sound = 'SOUND',
+  VisualEffects = 'VISUAL_EFFECTS',
+  Writing = 'WRITING'
+}
+
+/** Boolean expression to compare columns of type "department_types_enum". All fields are combined with logical 'AND'. */
+export type Department_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Department_Types_Enum>;
+  _in?: InputMaybe<Array<Department_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Department_Types_Enum>;
+  _nin?: InputMaybe<Array<Department_Types_Enum>>;
+};
+
+/** input type for inserting data into table "department_types" */
+export type Department_Types_Insert_Input = {
+  credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Department_Types_Max_Fields = {
+  __typename?: 'department_types_max_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Department_Types_Min_Fields = {
+  __typename?: 'department_types_min_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "department_types" */
+export type Department_Types_Mutation_Response = {
+  __typename?: 'department_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Department_Types>;
+};
+
+/** input type for inserting object relation for remote table "department_types" */
+export type Department_Types_Obj_Rel_Insert_Input = {
+  data: Department_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Department_Types_On_Conflict>;
+};
+
+/** on_conflict condition type for table "department_types" */
+export type Department_Types_On_Conflict = {
+  constraint: Department_Types_Constraint;
+  update_columns?: Array<Department_Types_Update_Column>;
+  where?: InputMaybe<Department_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "department_types". */
+export type Department_Types_Order_By = {
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: department_types */
+export type Department_Types_Pk_Columns_Input = {
+  type: Scalars['String']['input'];
+};
+
+/** select columns of table "department_types" */
+export enum Department_Types_Select_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "department_types" */
+export type Department_Types_Set_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "department_types" */
+export type Department_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Department_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Department_Types_Stream_Cursor_Value_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "department_types" */
+export enum Department_Types_Update_Column {
+  /** column name */
+  Type = 'type'
+}
+
+export type Department_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Department_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Department_Types_Bool_Exp;
 };
 
 /** columns and relationships of "storage.files" */
@@ -7997,6 +8142,1105 @@ export type Interval_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['interval']['input']>;
   _neq?: InputMaybe<Scalars['interval']['input']>;
   _nin?: InputMaybe<Array<Scalars['interval']['input']>>;
+};
+
+/** columns and relationships of "job_types" */
+export type Job_Types = {
+  __typename?: 'job_types';
+  /** An array relationship */
+  credits: Array<Credits>;
+  /** An aggregate relationship */
+  credits_aggregate: Credits_Aggregate;
+  type: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "job_types" */
+export type Job_TypesCreditsArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "job_types" */
+export type Job_TypesCredits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Credits_Order_By>>;
+  where?: InputMaybe<Credits_Bool_Exp>;
+};
+
+/** aggregated selection of "job_types" */
+export type Job_Types_Aggregate = {
+  __typename?: 'job_types_aggregate';
+  aggregate?: Maybe<Job_Types_Aggregate_Fields>;
+  nodes: Array<Job_Types>;
+};
+
+/** aggregate fields of "job_types" */
+export type Job_Types_Aggregate_Fields = {
+  __typename?: 'job_types_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Job_Types_Max_Fields>;
+  min?: Maybe<Job_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "job_types" */
+export type Job_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Job_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "job_types". All fields are combined with a logical 'AND'. */
+export type Job_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Job_Types_Bool_Exp>>;
+  _not?: InputMaybe<Job_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Job_Types_Bool_Exp>>;
+  credits?: InputMaybe<Credits_Bool_Exp>;
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Bool_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "job_types" */
+export enum Job_Types_Constraint {
+  /** unique or primary key constraint on columns "type" */
+  JobTypesPkey = 'job_types_pkey'
+}
+
+export enum Job_Types_Enum {
+  Accountant = 'ACCOUNTANT',
+  AccountingClerkAssistant = 'ACCOUNTING_CLERK_ASSISTANT',
+  AccountingSupervisor = 'ACCOUNTING_SUPERVISOR',
+  AccountingTrainee = 'ACCOUNTING_TRAINEE',
+  ActingDouble = 'ACTING_DOUBLE',
+  ActionDirector = 'ACTION_DIRECTOR',
+  Actor = 'ACTOR',
+  ActorSAssistant = 'ACTOR_S_ASSISTANT',
+  Adaptation = 'ADAPTATION',
+  AdditionalCamera = 'ADDITIONAL_CAMERA',
+  AdditionalCasting = 'ADDITIONAL_CASTING',
+  AdditionalColorist = 'ADDITIONAL_COLORIST',
+  AdditionalConstruction = 'ADDITIONAL_CONSTRUCTION',
+  AdditionalConstructionGrip = 'ADDITIONAL_CONSTRUCTION_GRIP',
+  AdditionalDialogue = 'ADDITIONAL_DIALOGUE',
+  AdditionalDirectorOfPhotography = 'ADDITIONAL_DIRECTOR_OF_PHOTOGRAPHY',
+  AdditionalEditing = 'ADDITIONAL_EDITING',
+  AdditionalEditor = 'ADDITIONAL_EDITOR',
+  AdditionalEditorialAssistant = 'ADDITIONAL_EDITORIAL_ASSISTANT',
+  AdditionalEffectsDevelopment = 'ADDITIONAL_EFFECTS_DEVELOPMENT',
+  AdditionalFirstAssistantCamera = 'ADDITIONAL_FIRST_ASSISTANT_CAMERA',
+  AdditionalGaffer = 'ADDITIONAL_GAFFER',
+  AdditionalGrip = 'ADDITIONAL_GRIP',
+  AdditionalHairstylist = 'ADDITIONAL_HAIRSTYLIST',
+  AdditionalKeyConstructionGrip = 'ADDITIONAL_KEY_CONSTRUCTION_GRIP',
+  AdditionalKeyGrip = 'ADDITIONAL_KEY_GRIP',
+  AdditionalLightingTechnician = 'ADDITIONAL_LIGHTING_TECHNICIAN',
+  AdditionalMusic = 'ADDITIONAL_MUSIC',
+  AdditionalMusicSupervisor = 'ADDITIONAL_MUSIC_SUPERVISOR',
+  AdditionalPhotography = 'ADDITIONAL_PHOTOGRAPHY',
+  AdditionalPostProductionSupervisor = 'ADDITIONAL_POST_PRODUCTION_SUPERVISOR',
+  AdditionalProductionAssistant = 'ADDITIONAL_PRODUCTION_ASSISTANT',
+  AdditionalProductionSoundMixer = 'ADDITIONAL_PRODUCTION_SOUND_MIXER',
+  AdditionalScriptSupervisor = 'ADDITIONAL_SCRIPT_SUPERVISOR',
+  AdditionalSecondAssistantCamera = 'ADDITIONAL_SECOND_ASSISTANT_CAMERA',
+  AdditionalSecondAssistantDirector = 'ADDITIONAL_SECOND_ASSISTANT_DIRECTOR',
+  AdditionalSetDresser = 'ADDITIONAL_SET_DRESSER',
+  AdditionalSetPhotographer = 'ADDITIONAL_SET_PHOTOGRAPHER',
+  AdditionalSoundtrack = 'ADDITIONAL_SOUNDTRACK',
+  AdditionalSoundReRecordingMixer = 'ADDITIONAL_SOUND_RE_RECORDING_MIXER',
+  AdditionalSoundReRecordist = 'ADDITIONAL_SOUND_RE_RECORDIST',
+  AdditionalStillPhotographer = 'ADDITIONAL_STILL_PHOTOGRAPHER',
+  AdditionalStoryboarding = 'ADDITIONAL_STORYBOARDING',
+  AdditionalThirdAssistantDirector = 'ADDITIONAL_THIRD_ASSISTANT_DIRECTOR',
+  AdditionalUnderwaterPhotography = 'ADDITIONAL_UNDERWATER_PHOTOGRAPHY',
+  AdditionalVisualEffects = 'ADDITIONAL_VISUAL_EFFECTS',
+  AdditionalWardrobeAssistant = 'ADDITIONAL_WARDROBE_ASSISTANT',
+  AdditionalWriting = 'ADDITIONAL_WRITING',
+  Administration = 'ADMINISTRATION',
+  AdministrativeAssistant = 'ADMINISTRATIVE_ASSISTANT',
+  AdrAndDubbing = 'ADR_AND_DUBBING',
+  AdrCoordinator = 'ADR_COORDINATOR',
+  AdrEditor = 'ADR_EDITOR',
+  AdrEngineer = 'ADR_ENGINEER',
+  AdrMixer = 'ADR_MIXER',
+  AdrPostProducer = 'ADR_POST_PRODUCER',
+  AdrRecordingEngineer = 'ADR_RECORDING_ENGINEER',
+  AdrRecordist = 'ADR_RECORDIST',
+  AdrSupervisor = 'ADR_SUPERVISOR',
+  AdrVoiceCasting = 'ADR_VOICE_CASTING',
+  AerialCamera = 'AERIAL_CAMERA',
+  AerialCameraTechnician = 'AERIAL_CAMERA_TECHNICIAN',
+  AerialCoordinator = 'AERIAL_COORDINATOR',
+  AerialDirectorOfPhotography = 'AERIAL_DIRECTOR_OF_PHOTOGRAPHY',
+  AgerDyer = 'AGER_DYER',
+  AnimalCoordinator = 'ANIMAL_COORDINATOR',
+  AnimalWrangler = 'ANIMAL_WRANGLER',
+  Animation = 'ANIMATION',
+  AnimationCoordinator = 'ANIMATION_COORDINATOR',
+  AnimationDepartmentCoordinator = 'ANIMATION_DEPARTMENT_COORDINATOR',
+  AnimationDirector = 'ANIMATION_DIRECTOR',
+  AnimationFixCoordinator = 'ANIMATION_FIX_COORDINATOR',
+  AnimationManager = 'ANIMATION_MANAGER',
+  AnimationProductionAssistant = 'ANIMATION_PRODUCTION_ASSISTANT',
+  AnimationSupervisor = 'ANIMATION_SUPERVISOR',
+  AnimationTechnicalDirector = 'ANIMATION_TECHNICAL_DIRECTOR',
+  AnimatronicsDesigner = 'ANIMATRONICS_DESIGNER',
+  AnimatronicsSupervisor = 'ANIMATRONICS_SUPERVISOR',
+  AnimatronicAndProstheticEffects = 'ANIMATRONIC_AND_PROSTHETIC_EFFECTS',
+  ApprenticeSoundEditor = 'APPRENTICE_SOUND_EDITOR',
+  ArchivalFootageCoordinator = 'ARCHIVAL_FOOTAGE_COORDINATOR',
+  ArchivalFootageResearch = 'ARCHIVAL_FOOTAGE_RESEARCH',
+  Armorer = 'ARMORER',
+  ArmoryCoordinator = 'ARMORY_COORDINATOR',
+  ArtDepartmentAssistant = 'ART_DEPARTMENT_ASSISTANT',
+  ArtDepartmentCoordinator = 'ART_DEPARTMENT_COORDINATOR',
+  ArtDepartmentManager = 'ART_DEPARTMENT_MANAGER',
+  ArtDepartmentProductionAssistant = 'ART_DEPARTMENT_PRODUCTION_ASSISTANT',
+  ArtDepartmentTrainee = 'ART_DEPARTMENT_TRAINEE',
+  ArtDesigner = 'ART_DESIGNER',
+  ArtDirection = 'ART_DIRECTION',
+  ArtDirectionIntern = 'ART_DIRECTION_INTERN',
+  AssistantAccountant = 'ASSISTANT_ACCOUNTANT',
+  AssistantArtDirector = 'ASSISTANT_ART_DIRECTOR',
+  AssistantCamera = 'ASSISTANT_CAMERA',
+  AssistantChef = 'ASSISTANT_CHEF',
+  AssistantChiefLightingTechnician = 'ASSISTANT_CHIEF_LIGHTING_TECHNICIAN',
+  AssistantCostumeDesigner = 'ASSISTANT_COSTUME_DESIGNER',
+  AssistantCraftService = 'ASSISTANT_CRAFT_SERVICE',
+  AssistantDecorator = 'ASSISTANT_DECORATOR',
+  AssistantDialogueEditor = 'ASSISTANT_DIALOGUE_EDITOR',
+  AssistantDirector = 'ASSISTANT_DIRECTOR',
+  AssistantDirectorOfPhotography = 'ASSISTANT_DIRECTOR_OF_PHOTOGRAPHY',
+  AssistantDirectorTrainee = 'ASSISTANT_DIRECTOR_TRAINEE',
+  AssistantEditor = 'ASSISTANT_EDITOR',
+  AssistantElectrician = 'ASSISTANT_ELECTRICIAN',
+  AssistantExtrasCasting = 'ASSISTANT_EXTRAS_CASTING',
+  AssistantFoleyArtist = 'ASSISTANT_FOLEY_ARTIST',
+  AssistantGaffer = 'ASSISTANT_GAFFER',
+  AssistantGrip = 'ASSISTANT_GRIP',
+  AssistantHairdresser = 'ASSISTANT_HAIRDRESSER',
+  AssistantHairstylist = 'ASSISTANT_HAIRSTYLIST',
+  AssistantLocationManager = 'ASSISTANT_LOCATION_MANAGER',
+  AssistantMakeupArtist = 'ASSISTANT_MAKEUP_ARTIST',
+  AssistantMusicSupervisor = 'ASSISTANT_MUSIC_SUPERVISOR',
+  AssistantPictureCarCoordinator = 'ASSISTANT_PICTURE_CAR_COORDINATOR',
+  AssistantPictureEditor = 'ASSISTANT_PICTURE_EDITOR',
+  AssistantProductionCoordinator = 'ASSISTANT_PRODUCTION_COORDINATOR',
+  AssistantProductionDesign = 'ASSISTANT_PRODUCTION_DESIGN',
+  AssistantProductionManager = 'ASSISTANT_PRODUCTION_MANAGER',
+  AssistantPropertyMaster = 'ASSISTANT_PROPERTY_MASTER',
+  AssistantScript = 'ASSISTANT_SCRIPT',
+  AssistantSetDecoration = 'ASSISTANT_SET_DECORATION',
+  AssistantSetDecorationBuyer = 'ASSISTANT_SET_DECORATION_BUYER',
+  AssistantSetDesigner = 'ASSISTANT_SET_DESIGNER',
+  AssistantSetDresser = 'ASSISTANT_SET_DRESSER',
+  AssistantSetPropsman = 'ASSISTANT_SET_PROPSMAN',
+  AssistantSoundDesigner = 'ASSISTANT_SOUND_DESIGNER',
+  AssistantSoundEditor = 'ASSISTANT_SOUND_EDITOR',
+  AssistantSoundEngineer = 'ASSISTANT_SOUND_ENGINEER',
+  AssistantUnitManager = 'ASSISTANT_UNIT_MANAGER',
+  AssistantVehiclesCoordinator = 'ASSISTANT_VEHICLES_COORDINATOR',
+  AssociateChoreographer = 'ASSOCIATE_CHOREOGRAPHER',
+  AssociateEditor = 'ASSOCIATE_EDITOR',
+  AssociateProducer = 'ASSOCIATE_PRODUCER',
+  AtmosEditor = 'ATMOS_EDITOR',
+  Attorney = 'ATTORNEY',
+  AudioPostCoordinator = 'AUDIO_POST_COORDINATOR',
+  Author = 'AUTHOR',
+  ACameraOperator = 'A_CAMERA_OPERATOR',
+  BackgroundCastingDirector = 'BACKGROUND_CASTING_DIRECTOR',
+  BackgroundDesigner = 'BACKGROUND_DESIGNER',
+  BackUpSetProductionAssistant = 'BACK_UP_SET_PRODUCTION_ASSISTANT',
+  BackUpTruckProductionAssistant = 'BACK_UP_TRUCK_PRODUCTION_ASSISTANT',
+  BaseCampOperator = 'BASE_CAMP_OPERATOR',
+  BattleMotionCoordinator = 'BATTLE_MOTION_COORDINATOR',
+  BestBoyElectric = 'BEST_BOY_ELECTRIC',
+  BestBoyElectrician = 'BEST_BOY_ELECTRICIAN',
+  BestBoyGrip = 'BEST_BOY_GRIP',
+  BestBoyLightingTechnician = 'BEST_BOY_LIGHTING_TECHNICIAN',
+  Book = 'BOOK',
+  BoomOperator = 'BOOM_OPERATOR',
+  BroadcastProducer = 'BROADCAST_PRODUCER',
+  BtsFootage = 'BTS_FOOTAGE',
+  BtsPhotographer = 'BTS_PHOTOGRAPHER',
+  BtsVideographer = 'BTS_VIDEOGRAPHER',
+  BusinessAffairsCoordinator = 'BUSINESS_AFFAIRS_COORDINATOR',
+  BCameraOperator = 'B_CAMERA_OPERATOR',
+  Cableman = 'CABLEMAN',
+  Cameo = 'CAMEO',
+  CameraCar = 'CAMERA_CAR',
+  CameraDepartmentManager = 'CAMERA_DEPARTMENT_MANAGER',
+  CameraDepartmentProductionAssistant = 'CAMERA_DEPARTMENT_PRODUCTION_ASSISTANT',
+  CameraIntern = 'CAMERA_INTERN',
+  CameraLoader = 'CAMERA_LOADER',
+  CameraOperator = 'CAMERA_OPERATOR',
+  CameraProductionAssistant = 'CAMERA_PRODUCTION_ASSISTANT',
+  CameraSupervisor = 'CAMERA_SUPERVISOR',
+  CameraTechnician = 'CAMERA_TECHNICIAN',
+  CameraTrainee = 'CAMERA_TRAINEE',
+  CameraTruck = 'CAMERA_TRUCK',
+  CaptainDriver = 'CAPTAIN_DRIVER',
+  Carpenter = 'CARPENTER',
+  Casting = 'CASTING',
+  CastingAssistant = 'CASTING_ASSISTANT',
+  CastingAssociate = 'CASTING_ASSOCIATE',
+  CastingConsultant = 'CASTING_CONSULTANT',
+  CastingCoordinator = 'CASTING_COORDINATOR',
+  CastingDirector = 'CASTING_DIRECTOR',
+  CastingProducer = 'CASTING_PRODUCER',
+  CastingResearcher = 'CASTING_RESEARCHER',
+  CastDriver = 'CAST_DRIVER',
+  Catering = 'CATERING',
+  CateringHeadChef = 'CATERING_HEAD_CHEF',
+  CgiDirector = 'CGI_DIRECTOR',
+  CgiSupervisor = 'CGI_SUPERVISOR',
+  CgAnimator = 'CG_ANIMATOR',
+  CgArtist = 'CG_ARTIST',
+  CgEngineer = 'CG_ENGINEER',
+  CgPainter = 'CG_PAINTER',
+  CgSupervisor = 'CG_SUPERVISOR',
+  Chaperone = 'CHAPERONE',
+  ChaperoneTutor = 'CHAPERONE_TUTOR',
+  Characters = 'CHARACTERS',
+  CharacterDesigner = 'CHARACTER_DESIGNER',
+  CharacterModellingSupervisor = 'CHARACTER_MODELLING_SUPERVISOR',
+  CharacterTechnicalSupervisor = 'CHARACTER_TECHNICAL_SUPERVISOR',
+  ChargeScenicArtist = 'CHARGE_SCENIC_ARTIST',
+  Chef = 'CHEF',
+  ChiefLightingTechnician = 'CHIEF_LIGHTING_TECHNICIAN',
+  ChiefTechnicianStopMotionExpert = 'CHIEF_TECHNICIAN_STOP_MOTION_EXPERT',
+  ChildWrangler = 'CHILD_WRANGLER',
+  Choreographer = 'CHOREOGRAPHER',
+  Cinematography = 'CINEMATOGRAPHY',
+  ClapperLoader = 'CLAPPER_LOADER',
+  ClearancesConsultant = 'CLEARANCES_CONSULTANT',
+  ClearancesCoordinator = 'CLEARANCES_COORDINATOR',
+  ClothSetup = 'CLOTH_SETUP',
+  Colorist = 'COLORIST',
+  ColorAssistant = 'COLOR_ASSISTANT',
+  ColorDesigner = 'COLOR_DESIGNER',
+  ColorGrading = 'COLOR_GRADING',
+  ColorTimer = 'COLOR_TIMER',
+  ComicBook = 'COMIC_BOOK',
+  CommissioningEditor = 'COMMISSIONING_EDITOR',
+  CompositingArtist = 'COMPOSITING_ARTIST',
+  CompositingLead = 'COMPOSITING_LEAD',
+  CompositingSupervisor = 'COMPOSITING_SUPERVISOR',
+  Compositor = 'COMPOSITOR',
+  ConceptualDesign = 'CONCEPTUAL_DESIGN',
+  ConceptualIllustrator = 'CONCEPTUAL_ILLUSTRATOR',
+  ConceptArtist = 'CONCEPT_ARTIST',
+  Conductor = 'CONDUCTOR',
+  ConstructionBuyer = 'CONSTRUCTION_BUYER',
+  ConstructionCoordinator = 'CONSTRUCTION_COORDINATOR',
+  ConstructionForeman = 'CONSTRUCTION_FOREMAN',
+  ConstructionGrip = 'CONSTRUCTION_GRIP',
+  ConstructionManager = 'CONSTRUCTION_MANAGER',
+  ConsultingAccountant = 'CONSULTING_ACCOUNTANT',
+  ConsultingEditor = 'CONSULTING_EDITOR',
+  ConsultingProducer = 'CONSULTING_PRODUCER',
+  ContactLensDesigner = 'CONTACT_LENS_DESIGNER',
+  ContactLensPainter = 'CONTACT_LENS_PAINTER',
+  ContactLensTechnician = 'CONTACT_LENS_TECHNICIAN',
+  Continuity = 'CONTINUITY',
+  ContractManager = 'CONTRACT_MANAGER',
+  Controller = 'CONTROLLER',
+  CoordinatingProducer = 'COORDINATING_PRODUCER',
+  Costumer = 'COSTUMER',
+  CostumeAssistant = 'COSTUME_ASSISTANT',
+  CostumeConsultant = 'COSTUME_CONSULTANT',
+  CostumeCoordinator = 'COSTUME_COORDINATOR',
+  CostumeDesign = 'COSTUME_DESIGN',
+  CostumeDesigner = 'COSTUME_DESIGNER',
+  CostumeIllustrator = 'COSTUME_ILLUSTRATOR',
+  CostumeMistress = 'COSTUME_MISTRESS',
+  CostumeSetSupervisor = 'COSTUME_SET_SUPERVISOR',
+  CostumeStandby = 'COSTUME_STANDBY',
+  CostumeSupervisor = 'COSTUME_SUPERVISOR',
+  CoArtDirector = 'CO_ART_DIRECTOR',
+  CoCostumeDesigner = 'CO_COSTUME_DESIGNER',
+  CoDirector = 'CO_DIRECTOR',
+  CoEditor = 'CO_EDITOR',
+  CoExecutiveProducer = 'CO_EXECUTIVE_PRODUCER',
+  CoProducer = 'CO_PRODUCER',
+  CoWriter = 'CO_WRITER',
+  CraftService = 'CRAFT_SERVICE',
+  CreativeConsultant = 'CREATIVE_CONSULTANT',
+  CreativeDirector = 'CREATIVE_DIRECTOR',
+  CreativeProducer = 'CREATIVE_PRODUCER',
+  Creator = 'CREATOR',
+  CreatureDesign = 'CREATURE_DESIGN',
+  CreatureEffectsTechnicalDirector = 'CREATURE_EFFECTS_TECHNICAL_DIRECTOR',
+  CreatureTechnicalDirector = 'CREATURE_TECHNICAL_DIRECTOR',
+  CrowdAssistantDirector = 'CROWD_ASSISTANT_DIRECTOR',
+  CyberScanningSupervisor = 'CYBER_SCANNING_SUPERVISOR',
+  CCameraOperator = 'C_CAMERA_OPERATOR',
+  DailiesManager = 'DAILIES_MANAGER',
+  DailiesOperator = 'DAILIES_OPERATOR',
+  DailiesTechnician = 'DAILIES_TECHNICIAN',
+  DailyElectrics = 'DAILY_ELECTRICS',
+  DailyGrip = 'DAILY_GRIP',
+  DailyMakeupAndHair = 'DAILY_MAKEUP_AND_HAIR',
+  DailyWardrobe = 'DAILY_WARDROBE',
+  DataManagementTechnician = 'DATA_MANAGEMENT_TECHNICIAN',
+  DataWrangler = 'DATA_WRANGLER',
+  Decorator = 'DECORATOR',
+  DelegatedProducer = 'DELEGATED_PRODUCER',
+  DepartmentAdministrator = 'DEPARTMENT_ADMINISTRATOR',
+  DevelopmentManager = 'DEVELOPMENT_MANAGER',
+  DevelopmentProducer = 'DEVELOPMENT_PRODUCER',
+  DialectCoach = 'DIALECT_COACH',
+  Dialogue = 'DIALOGUE',
+  DialogueCoach = 'DIALOGUE_COACH',
+  DialogueEditor = 'DIALOGUE_EDITOR',
+  DigitalColorist = 'DIGITAL_COLORIST',
+  DigitalColorTimer = 'DIGITAL_COLOR_TIMER',
+  DigitalCompositor = 'DIGITAL_COMPOSITOR',
+  DigitalConformEditor = 'DIGITAL_CONFORM_EDITOR',
+  DigitalEffectsProducer = 'DIGITAL_EFFECTS_PRODUCER',
+  DigitalEffectsSupervisor = 'DIGITAL_EFFECTS_SUPERVISOR',
+  DigitalFilmRecording = 'DIGITAL_FILM_RECORDING',
+  DigitalFoleyArtist = 'DIGITAL_FOLEY_ARTIST',
+  DigitalImagingTechnician = 'DIGITAL_IMAGING_TECHNICIAN',
+  DigitalIntermediate = 'DIGITAL_INTERMEDIATE',
+  DigitalIntermediateAssistant = 'DIGITAL_INTERMEDIATE_ASSISTANT',
+  DigitalIntermediateColorist = 'DIGITAL_INTERMEDIATE_COLORIST',
+  DigitalIntermediateDataWrangler = 'DIGITAL_INTERMEDIATE_DATA_WRANGLER',
+  DigitalIntermediateEditor = 'DIGITAL_INTERMEDIATE_EDITOR',
+  DigitalIntermediateProducer = 'DIGITAL_INTERMEDIATE_PRODUCER',
+  DigitalProducer = 'DIGITAL_PRODUCER',
+  DigitalStoryboarding = 'DIGITAL_STORYBOARDING',
+  DigitalSupervisor = 'DIGITAL_SUPERVISOR',
+  DirectingLightingArtist = 'DIRECTING_LIGHTING_ARTIST',
+  Director = 'DIRECTOR',
+  DirectorOfCommunications = 'DIRECTOR_OF_COMMUNICATIONS',
+  DirectorOfOperations = 'DIRECTOR_OF_OPERATIONS',
+  DirectorOfPhotography = 'DIRECTOR_OF_PHOTOGRAPHY',
+  DirectorOfPrevisualization = 'DIRECTOR_OF_PREVISUALIZATION',
+  DocumentationAndSupport = 'DOCUMENTATION_AND_SUPPORT',
+  DolbyConsultant = 'DOLBY_CONSULTANT',
+  DollyGrip = 'DOLLY_GRIP',
+  Dramaturgy = 'DRAMATURGY',
+  Draughtsman = 'DRAUGHTSMAN',
+  Dresser = 'DRESSER',
+  DressingProp = 'DRESSING_PROP',
+  Driver = 'DRIVER',
+  DroneCinematographer = 'DRONE_CINEMATOGRAPHER',
+  DroneOperator = 'DRONE_OPERATOR',
+  DronePilot = 'DRONE_PILOT',
+  DCameraOperator = 'D_CAMERA_OPERATOR',
+  Editor = 'EDITOR',
+  EditorialConsultant = 'EDITORIAL_CONSULTANT',
+  EditorialCoordinator = 'EDITORIAL_COORDINATOR',
+  EditorialManager = 'EDITORIAL_MANAGER',
+  EditorialProductionAssistant = 'EDITORIAL_PRODUCTION_ASSISTANT',
+  EditorialServices = 'EDITORIAL_SERVICES',
+  EditorialStaff = 'EDITORIAL_STAFF',
+  EffectsSupervisor = 'EFFECTS_SUPERVISOR',
+  Electrician = 'ELECTRICIAN',
+  EpkCameraOperator = 'EPK_CAMERA_OPERATOR',
+  EpkDirector = 'EPK_DIRECTOR',
+  EpkEditor = 'EPK_EDITOR',
+  EpkProducer = 'EPK_PRODUCER',
+  ExecutiveAssistant = 'EXECUTIVE_ASSISTANT',
+  ExecutiveConsultant = 'EXECUTIVE_CONSULTANT',
+  ExecutiveCoProducer = 'EXECUTIVE_CO_PRODUCER',
+  ExecutiveInChargeOfFinance = 'EXECUTIVE_IN_CHARGE_OF_FINANCE',
+  ExecutiveInChargeOfPostProduction = 'EXECUTIVE_IN_CHARGE_OF_POST_PRODUCTION',
+  ExecutiveInChargeOfProduction = 'EXECUTIVE_IN_CHARGE_OF_PRODUCTION',
+  ExecutiveMusicProducer = 'EXECUTIVE_MUSIC_PRODUCER',
+  ExecutiveProducer = 'EXECUTIVE_PRODUCER',
+  ExecutiveProducerSAssistant = 'EXECUTIVE_PRODUCER_S_ASSISTANT',
+  ExecutiveStoryEditor = 'EXECUTIVE_STORY_EDITOR',
+  ExecutiveVisualEffectsProducer = 'EXECUTIVE_VISUAL_EFFECTS_PRODUCER',
+  ExtrasCasting = 'EXTRAS_CASTING',
+  ExtrasCastingAssistant = 'EXTRAS_CASTING_ASSISTANT',
+  ExtrasCastingCoordinator = 'EXTRAS_CASTING_COORDINATOR',
+  ExtrasDresser = 'EXTRAS_DRESSER',
+  ExtrasMakeupArtist = 'EXTRAS_MAKEUP_ARTIST',
+  FacialSetupArtist = 'FACIAL_SETUP_ARTIST',
+  FeatureFinishingProducer = 'FEATURE_FINISHING_PRODUCER',
+  FieldDirector = 'FIELD_DIRECTOR',
+  FightChoreographer = 'FIGHT_CHOREOGRAPHER',
+  FileFootage = 'FILE_FOOTAGE',
+  FilmProcessor = 'FILM_PROCESSOR',
+  Finance = 'FINANCE',
+  FinishingProducer = 'FINISHING_PRODUCER',
+  FirstAssistantAccountant = 'FIRST_ASSISTANT_ACCOUNTANT',
+  FirstAssistantArtDirection = 'FIRST_ASSISTANT_ART_DIRECTION',
+  FirstAssistantACamera = 'FIRST_ASSISTANT_A_CAMERA',
+  FirstAssistantBCamera = 'FIRST_ASSISTANT_B_CAMERA',
+  FirstAssistantCamera = 'FIRST_ASSISTANT_CAMERA',
+  FirstAssistantCCamera = 'FIRST_ASSISTANT_C_CAMERA',
+  FirstAssistantDirector = 'FIRST_ASSISTANT_DIRECTOR',
+  FirstAssistantDirectorPrep = 'FIRST_ASSISTANT_DIRECTOR_PREP',
+  FirstAssistantDirectorTrainee = 'FIRST_ASSISTANT_DIRECTOR_TRAINEE',
+  FirstAssistantDCamera = 'FIRST_ASSISTANT_D_CAMERA',
+  FirstAssistantEditor = 'FIRST_ASSISTANT_EDITOR',
+  FirstAssistantHairstylist = 'FIRST_ASSISTANT_HAIRSTYLIST',
+  FirstAssistantMakeupArtist = 'FIRST_ASSISTANT_MAKEUP_ARTIST',
+  FirstAssistantPictureEditor = 'FIRST_ASSISTANT_PICTURE_EDITOR',
+  FirstAssistantProductionCoordinator = 'FIRST_ASSISTANT_PRODUCTION_COORDINATOR',
+  FirstAssistantPropertyMaster = 'FIRST_ASSISTANT_PROPERTY_MASTER',
+  FirstAssistantSoundEditor = 'FIRST_ASSISTANT_SOUND_EDITOR',
+  FirstCompanyGrip = 'FIRST_COMPANY_GRIP',
+  FixAnimator = 'FIX_ANIMATOR',
+  FloorRunner = 'FLOOR_RUNNER',
+  FocusPuller = 'FOCUS_PULLER',
+  Foley = 'FOLEY',
+  FoleyArtist = 'FOLEY_ARTIST',
+  FoleyEditor = 'FOLEY_EDITOR',
+  FoleyMixer = 'FOLEY_MIXER',
+  FoleyRecordingEngineer = 'FOLEY_RECORDING_ENGINEER',
+  FoleyRecordist = 'FOLEY_RECORDIST',
+  FoleySupervisor = 'FOLEY_SUPERVISOR',
+  Gaffer = 'GAFFER',
+  Generalist = 'GENERALIST',
+  GeneralManager = 'GENERAL_MANAGER',
+  GeneratorOperator = 'GENERATOR_OPERATOR',
+  GenetatorOperator = 'GENETATOR_OPERATOR',
+  GraphicDesigner = 'GRAPHIC_DESIGNER',
+  GraphicNovel = 'GRAPHIC_NOVEL',
+  GraphicNovelIllustrator = 'GRAPHIC_NOVEL_ILLUSTRATOR',
+  Greensman = 'GREENSMAN',
+  Grip = 'GRIP',
+  GripProductionAssistant = 'GRIP_PRODUCTION_ASSISTANT',
+  GunWrangler = 'GUN_WRANGLER',
+  Hairdresser = 'HAIRDRESSER',
+  Hairstylist = 'HAIRSTYLIST',
+  HairAssistant = 'HAIR_ASSISTANT',
+  HairDepartmentHead = 'HAIR_DEPARTMENT_HEAD',
+  HairDesigner = 'HAIR_DESIGNER',
+  HairSetup = 'HAIR_SETUP',
+  HairSupervisor = 'HAIR_SUPERVISOR',
+  HeadCarpenter = 'HEAD_CARPENTER',
+  HeadDecorator = 'HEAD_DECORATOR',
+  HeadDesigner = 'HEAD_DESIGNER',
+  HeadDriver = 'HEAD_DRIVER',
+  HeadGreensman = 'HEAD_GREENSMAN',
+  HeadOfAnimation = 'HEAD_OF_ANIMATION',
+  HeadOfLayout = 'HEAD_OF_LAYOUT',
+  HeadOfProduction = 'HEAD_OF_PRODUCTION',
+  HeadOfProgramming = 'HEAD_OF_PROGRAMMING',
+  HeadOfResearch = 'HEAD_OF_RESEARCH',
+  HeadOfStory = 'HEAD_OF_STORY',
+  HealthAndSafety = 'HEALTH_AND_SAFETY',
+  HelicopterCamera = 'HELICOPTER_CAMERA',
+  HelpingHand = 'HELPING_HAND',
+  HumanResources = 'HUMAN_RESOURCES',
+  Idea = 'IDEA',
+  ImagingScience = 'IMAGING_SCIENCE',
+  InformationSystemsManager = 'INFORMATION_SYSTEMS_MANAGER',
+  InsertUnitDirector = 'INSERT_UNIT_DIRECTOR',
+  InsertUnitFirstAssistantDirector = 'INSERT_UNIT_FIRST_ASSISTANT_DIRECTOR',
+  InsertUnitLocationManager = 'INSERT_UNIT_LOCATION_MANAGER',
+  InteractiveManager = 'INTERACTIVE_MANAGER',
+  InteriorDesigner = 'INTERIOR_DESIGNER',
+  Intern = 'INTERN',
+  InMemoryOf = 'IN_MEMORY_OF',
+  IOManager = 'I_O_MANAGER',
+  IOSupervisor = 'I_O_SUPERVISOR',
+  JimmyJibOperator = 'JIMMY_JIB_OPERATOR',
+  JointAdrMixer = 'JOINT_ADR_MIXER',
+  JuniorStoryEditor = 'JUNIOR_STORY_EDITOR',
+  KeyboardProgrammer = 'KEYBOARD_PROGRAMMER',
+  KeyAccountant = 'KEY_ACCOUNTANT',
+  KeyAnimation = 'KEY_ANIMATION',
+  KeyArtProductionAssistant = 'KEY_ART_PRODUCTION_ASSISTANT',
+  KeyCarpenter = 'KEY_CARPENTER',
+  KeyConstructionGrip = 'KEY_CONSTRUCTION_GRIP',
+  KeyCostumer = 'KEY_COSTUMER',
+  KeyDresser = 'KEY_DRESSER',
+  KeyGrip = 'KEY_GRIP',
+  KeyGripProductionAssistant = 'KEY_GRIP_PRODUCTION_ASSISTANT',
+  KeyHairdresser = 'KEY_HAIRDRESSER',
+  KeyHairStylist = 'KEY_HAIR_STYLIST',
+  KeyMakeupArtist = 'KEY_MAKEUP_ARTIST',
+  KeyProductionAssistant = 'KEY_PRODUCTION_ASSISTANT',
+  KeyRiggingGrip = 'KEY_RIGGING_GRIP',
+  KeyScenicArtist = 'KEY_SCENIC_ARTIST',
+  KeySetCostumer = 'KEY_SET_COSTUMER',
+  KeySetPainter = 'KEY_SET_PAINTER',
+  KeySetProductionAssistant = 'KEY_SET_PRODUCTION_ASSISTANT',
+  KeySpecialEffects = 'KEY_SPECIAL_EFFECTS',
+  Layout = 'LAYOUT',
+  LayoutSupervisor = 'LAYOUT_SUPERVISOR',
+  Leadman = 'LEADMAN',
+  LeadAnimator = 'LEAD_ANIMATOR',
+  LeadCharacterDesigner = 'LEAD_CHARACTER_DESIGNER',
+  LeadCostumer = 'LEAD_COSTUMER',
+  LeadCreatureDesigner = 'LEAD_CREATURE_DESIGNER',
+  LeadEditor = 'LEAD_EDITOR',
+  LeadPainter = 'LEAD_PAINTER',
+  LeadSetDresser = 'LEAD_SET_DRESSER',
+  LegalServices = 'LEGAL_SERVICES',
+  LibraHeadTechnician = 'LIBRA_HEAD_TECHNICIAN',
+  LightingArtist = 'LIGHTING_ARTIST',
+  LightingCamera = 'LIGHTING_CAMERA',
+  LightingCoordinator = 'LIGHTING_COORDINATOR',
+  LightingDesign = 'LIGHTING_DESIGN',
+  LightingDirector = 'LIGHTING_DIRECTOR',
+  LightingManager = 'LIGHTING_MANAGER',
+  LightingProductionAssistant = 'LIGHTING_PRODUCTION_ASSISTANT',
+  LightingProgrammer = 'LIGHTING_PROGRAMMER',
+  LightingSupervisor = 'LIGHTING_SUPERVISOR',
+  LightingTechnician = 'LIGHTING_TECHNICIAN',
+  LineProducer = 'LINE_PRODUCER',
+  Loader = 'LOADER',
+  LocaleCastingDirector = 'LOCALE_CASTING_DIRECTOR',
+  LocalCasting = 'LOCAL_CASTING',
+  LocationAssistant = 'LOCATION_ASSISTANT',
+  LocationCasting = 'LOCATION_CASTING',
+  LocationCoordinator = 'LOCATION_COORDINATOR',
+  LocationManager = 'LOCATION_MANAGER',
+  LocationProductionAssistant = 'LOCATION_PRODUCTION_ASSISTANT',
+  LocationScout = 'LOCATION_SCOUT',
+  LocationSoundAssistant = 'LOCATION_SOUND_ASSISTANT',
+  LocationSoundMixer = 'LOCATION_SOUND_MIXER',
+  LocationSoundRecordist = 'LOCATION_SOUND_RECORDIST',
+  LogisticsCoordinator = 'LOGISTICS_COORDINATOR',
+  LoopGroupCoordinator = 'LOOP_GROUP_COORDINATOR',
+  Lyricist = 'LYRICIST',
+  Machinist = 'MACHINIST',
+  MainTitleDesigner = 'MAIN_TITLE_DESIGNER',
+  MainTitleThemeComposer = 'MAIN_TITLE_THEME_COMPOSER',
+  MakeupAndHair = 'MAKEUP_AND_HAIR',
+  MakeupAndHairAssistant = 'MAKEUP_AND_HAIR_ASSISTANT',
+  MakeupArtist = 'MAKEUP_ARTIST',
+  MakeupDepartmentHead = 'MAKEUP_DEPARTMENT_HEAD',
+  MakeupDesigner = 'MAKEUP_DESIGNER',
+  MakeupEffects = 'MAKEUP_EFFECTS',
+  MakeupEffectsDesigner = 'MAKEUP_EFFECTS_DESIGNER',
+  MakeupSupervisor = 'MAKEUP_SUPERVISOR',
+  MakeupTrainee = 'MAKEUP_TRAINEE',
+  ManagerOfOperations = 'MANAGER_OF_OPERATIONS',
+  MarineCoordinator = 'MARINE_COORDINATOR',
+  MarinePilot = 'MARINE_PILOT',
+  MartialArtsChoreographer = 'MARTIAL_ARTS_CHOREOGRAPHER',
+  MasterAtArms = 'MASTER_AT_ARMS',
+  MasterLightingArtist = 'MASTER_LIGHTING_ARTIST',
+  MatchmoveSupervisor = 'MATCHMOVE_SUPERVISOR',
+  MattePainter = 'MATTE_PAINTER',
+  MechanicalAndCreatureDesigner = 'MECHANICAL_AND_CREATURE_DESIGNER',
+  MechanicalDesigner = 'MECHANICAL_DESIGNER',
+  MedicalConsultant = 'MEDICAL_CONSULTANT',
+  MilitaryConsultant = 'MILITARY_CONSULTANT',
+  MixingEngineer = 'MIXING_ENGINEER',
+  MixTechnician = 'MIX_TECHNICIAN',
+  Modeling = 'MODELING',
+  ModellingSupervisor = 'MODELLING_SUPERVISOR',
+  MotionActor = 'MOTION_ACTOR',
+  MotionCaptureArtist = 'MOTION_CAPTURE_ARTIST',
+  Music = 'MUSIC',
+  Musical = 'MUSICAL',
+  MusicalCasting = 'MUSICAL_CASTING',
+  Musician = 'MUSICIAN',
+  MusicArranger = 'MUSIC_ARRANGER',
+  MusicConsultant = 'MUSIC_CONSULTANT',
+  MusicCoordinator = 'MUSIC_COORDINATOR',
+  MusicCoSupervisor = 'MUSIC_CO_SUPERVISOR',
+  MusicDirector = 'MUSIC_DIRECTOR',
+  MusicEditor = 'MUSIC_EDITOR',
+  MusicProducer = 'MUSIC_PRODUCER',
+  MusicProgrammer = 'MUSIC_PROGRAMMER',
+  MusicScoreProducer = 'MUSIC_SCORE_PRODUCER',
+  MusicSoundDesignAndProcessing = 'MUSIC_SOUND_DESIGN_AND_PROCESSING',
+  MusicSupervisionAssistant = 'MUSIC_SUPERVISION_ASSISTANT',
+  MusicSupervisor = 'MUSIC_SUPERVISOR',
+  NegativeCutter = 'NEGATIVE_CUTTER',
+  Novel = 'NOVEL',
+  OnlineEditor = 'ONLINE_EDITOR',
+  OnSetComputerGraphics = 'ON_SET_COMPUTER_GRAPHICS',
+  OnSetDresser = 'ON_SET_DRESSER',
+  OnSetKeyProps = 'ON_SET_KEY_PROPS',
+  OnSetProps = 'ON_SET_PROPS',
+  OpeningEndingAnimation = 'OPENING_ENDING_ANIMATION',
+  OpeningTitleSequence = 'OPENING_TITLE_SEQUENCE',
+  Opera = 'OPERA',
+  Orchestrator = 'ORCHESTRATOR',
+  OriginalCasting = 'ORIGINAL_CASTING',
+  OriginalConcept = 'ORIGINAL_CONCEPT',
+  OriginalFilmWriter = 'ORIGINAL_FILM_WRITER',
+  OriginalMusicComposer = 'ORIGINAL_MUSIC_COMPOSER',
+  OriginalSeriesCreator = 'ORIGINAL_SERIES_CREATOR',
+  OriginalSeriesDesign = 'ORIGINAL_SERIES_DESIGN',
+  OriginalStory = 'ORIGINAL_STORY',
+  Other = 'OTHER',
+  OBLighting = 'O_B_LIGHTING',
+  OBSound = 'O_B_SOUND',
+  Painter = 'PAINTER',
+  PaintCoordinator = 'PAINT_COORDINATOR',
+  PayrollAccountant = 'PAYROLL_ACCOUNTANT',
+  PettyCashBuyer = 'PETTY_CASH_BUYER',
+  PhantomOperator = 'PHANTOM_OPERATOR',
+  PhotoscienceManager = 'PHOTOSCIENCE_MANAGER',
+  PhotoRetouching = 'PHOTO_RETOUCHING',
+  PictureCarCoordinator = 'PICTURE_CAR_COORDINATOR',
+  Pilot = 'PILOT',
+  PipelineTechnicalDirector = 'PIPELINE_TECHNICAL_DIRECTOR',
+  PlaybackCoordinator = 'PLAYBACK_COORDINATOR',
+  PlaybackSinger = 'PLAYBACK_SINGER',
+  Poem = 'POEM',
+  PoliceConsultant = 'POLICE_CONSULTANT',
+  PostCoordinator = 'POST_COORDINATOR',
+  PostProducer = 'POST_PRODUCER',
+  PostProductionAccountant = 'POST_PRODUCTION_ACCOUNTANT',
+  PostProductionAssistant = 'POST_PRODUCTION_ASSISTANT',
+  PostProductionConsulting = 'POST_PRODUCTION_CONSULTING',
+  PostProductionCoordinator = 'POST_PRODUCTION_COORDINATOR',
+  PostProductionManager = 'POST_PRODUCTION_MANAGER',
+  PostProductionProducer = 'POST_PRODUCTION_PRODUCER',
+  PostProductionScripts = 'POST_PRODUCTION_SCRIPTS',
+  PostProductionSupervisor = 'POST_PRODUCTION_SUPERVISOR',
+  PostProductionTechnicalEngineer = 'POST_PRODUCTION_TECHNICAL_ENGINEER',
+  Presenter = 'PRESENTER',
+  PreVisualizationCoordinator = 'PRE_VISUALIZATION_COORDINATOR',
+  PreVisualizationSupervisor = 'PRE_VISUALIZATION_SUPERVISOR',
+  PrincipalCostumer = 'PRINCIPAL_COSTUMER',
+  Producer = 'PRODUCER',
+  ProducerSAssistant = 'PRODUCER_S_ASSISTANT',
+  ProductionAccountant = 'PRODUCTION_ACCOUNTANT',
+  ProductionArtist = 'PRODUCTION_ARTIST',
+  ProductionAssistant = 'PRODUCTION_ASSISTANT',
+  ProductionConsultant = 'PRODUCTION_CONSULTANT',
+  ProductionController = 'PRODUCTION_CONTROLLER',
+  ProductionCoordinator = 'PRODUCTION_COORDINATOR',
+  ProductionDesign = 'PRODUCTION_DESIGN',
+  ProductionDesigner = 'PRODUCTION_DESIGNER',
+  ProductionDirector = 'PRODUCTION_DIRECTOR',
+  ProductionDriver = 'PRODUCTION_DRIVER',
+  ProductionExecutive = 'PRODUCTION_EXECUTIVE',
+  ProductionIllustrator = 'PRODUCTION_ILLUSTRATOR',
+  ProductionIntern = 'PRODUCTION_INTERN',
+  ProductionManager = 'PRODUCTION_MANAGER',
+  ProductionOfficeAssistant = 'PRODUCTION_OFFICE_ASSISTANT',
+  ProductionOfficeCoordinator = 'PRODUCTION_OFFICE_COORDINATOR',
+  ProductionRunner = 'PRODUCTION_RUNNER',
+  ProductionSecretary = 'PRODUCTION_SECRETARY',
+  ProductionSoundMixer = 'PRODUCTION_SOUND_MIXER',
+  ProductionSupervisor = 'PRODUCTION_SUPERVISOR',
+  ProductionTrainee = 'PRODUCTION_TRAINEE',
+  Projection = 'PROJECTION',
+  ProjectManager = 'PROJECT_MANAGER',
+  PropertyBuilder = 'PROPERTY_BUILDER',
+  PropertyBuyer = 'PROPERTY_BUYER',
+  PropertyGraphicDesigner = 'PROPERTY_GRAPHIC_DESIGNER',
+  PropertyMaster = 'PROPERTY_MASTER',
+  Propmaker = 'PROPMAKER',
+  Props = 'PROPS',
+  PropDesigner = 'PROP_DESIGNER',
+  PropMaker = 'PROP_MAKER',
+  Prosthetics = 'PROSTHETICS',
+  ProstheticsPainter = 'PROSTHETICS_PAINTER',
+  ProstheticsSculptor = 'PROSTHETICS_SCULPTOR',
+  ProstheticDesigner = 'PROSTHETIC_DESIGNER',
+  ProstheticMakeupArtist = 'PROSTHETIC_MAKEUP_ARTIST',
+  ProstheticSupervisor = 'PROSTHETIC_SUPERVISOR',
+  Publicist = 'PUBLICIST',
+  PublicRelations = 'PUBLIC_RELATIONS',
+  Pyrotechnician = 'PYROTECHNICIAN',
+  PyrotechnicSupervisor = 'PYROTECHNIC_SUPERVISOR',
+  QualityControlSupervisor = 'QUALITY_CONTROL_SUPERVISOR',
+  RadioPlay = 'RADIO_PLAY',
+  Receptionist = 'RECEPTIONIST',
+  RecordingSupervision = 'RECORDING_SUPERVISION',
+  RedTechnician = 'RED_TECHNICIAN',
+  Researcher = 'RESEARCHER',
+  ResearchAssistant = 'RESEARCH_ASSISTANT',
+  RiggingGaffer = 'RIGGING_GAFFER',
+  RiggingGrip = 'RIGGING_GRIP',
+  RiggingSupervisor = 'RIGGING_SUPERVISOR',
+  RotoscopingArtist = 'ROTOSCOPING_ARTIST',
+  RotoSupervisor = 'ROTO_SUPERVISOR',
+  RunnerArtDepartment = 'RUNNER_ART_DEPARTMENT',
+  RussianArmOperator = 'RUSSIAN_ARM_OPERATOR',
+  ScenarioWriter = 'SCENARIO_WRITER',
+  ScenicArtist = 'SCENIC_ARTIST',
+  ScheduleCoordinator = 'SCHEDULE_COORDINATOR',
+  ScientificConsultant = 'SCIENTIFIC_CONSULTANT',
+  ScoreEngineer = 'SCORE_ENGINEER',
+  ScoringMixer = 'SCORING_MIXER',
+  Screenplay = 'SCREENPLAY',
+  Screenstory = 'SCREENSTORY',
+  Script = 'SCRIPT',
+  ScriptConsultant = 'SCRIPT_CONSULTANT',
+  ScriptCoordinator = 'SCRIPT_COORDINATOR',
+  ScriptEditor = 'SCRIPT_EDITOR',
+  ScriptResearcher = 'SCRIPT_RESEARCHER',
+  ScriptSupervisor = 'SCRIPT_SUPERVISOR',
+  Sculptor = 'SCULPTOR',
+  Seamstress = 'SEAMSTRESS',
+  SecondAssistantAccountant = 'SECOND_ASSISTANT_ACCOUNTANT',
+  SecondAssistantArtDirector = 'SECOND_ASSISTANT_ART_DIRECTOR',
+  SecondAssistantACamera = 'SECOND_ASSISTANT_A_CAMERA',
+  SecondAssistantBCamera = 'SECOND_ASSISTANT_B_CAMERA',
+  SecondAssistantCamera = 'SECOND_ASSISTANT_CAMERA',
+  SecondAssistantCCamera = 'SECOND_ASSISTANT_C_CAMERA',
+  SecondAssistantDirector = 'SECOND_ASSISTANT_DIRECTOR',
+  SecondAssistantDirectorTrainee = 'SECOND_ASSISTANT_DIRECTOR_TRAINEE',
+  SecondAssistantDCamera = 'SECOND_ASSISTANT_D_CAMERA',
+  SecondAssistantProductionCoordinator = 'SECOND_ASSISTANT_PRODUCTION_COORDINATOR',
+  SecondAssistantSound = 'SECOND_ASSISTANT_SOUND',
+  SecondAssistantUnitManager = 'SECOND_ASSISTANT_UNIT_MANAGER',
+  SecondCompanyGrip = 'SECOND_COMPANY_GRIP',
+  SecondFilmEditor = 'SECOND_FILM_EDITOR',
+  SecondSecondAssistantDirector = 'SECOND_SECOND_ASSISTANT_DIRECTOR',
+  SecondUnit = 'SECOND_UNIT',
+  SecondUnitCinematographer = 'SECOND_UNIT_CINEMATOGRAPHER',
+  SecondUnitDirector = 'SECOND_UNIT_DIRECTOR',
+  SecondUnitDirectorOfPhotography = 'SECOND_UNIT_DIRECTOR_OF_PHOTOGRAPHY',
+  SecondUnitFirstAssistantDirector = 'SECOND_UNIT_FIRST_ASSISTANT_DIRECTOR',
+  SecondUnitLocationManager = 'SECOND_UNIT_LOCATION_MANAGER',
+  Security = 'SECURITY',
+  SecurityCoordinator = 'SECURITY_COORDINATOR',
+  SeniorAnimator = 'SENIOR_ANIMATOR',
+  SeniorColorist = 'SENIOR_COLORIST',
+  SeniorDigitalIntermediateColorist = 'SENIOR_DIGITAL_INTERMEDIATE_COLORIST',
+  SeniorExecutiveConsultant = 'SENIOR_EXECUTIVE_CONSULTANT',
+  SeniorGeneralist = 'SENIOR_GENERALIST',
+  SeniorModeller = 'SENIOR_MODELLER',
+  SeniorStoryEditor = 'SENIOR_STORY_EDITOR',
+  SeniorVisualEffectsSupervisor = 'SENIOR_VISUAL_EFFECTS_SUPERVISOR',
+  SequenceArtist = 'SEQUENCE_ARTIST',
+  SequenceLead = 'SEQUENCE_LEAD',
+  SequenceSupervisor = 'SEQUENCE_SUPERVISOR',
+  SeriesComposition = 'SERIES_COMPOSITION',
+  SeriesDirector = 'SERIES_DIRECTOR',
+  SeriesPublicist = 'SERIES_PUBLICIST',
+  SeriesWriter = 'SERIES_WRITER',
+  SetsAndPropsArtist = 'SETS_AND_PROPS_ARTIST',
+  SetsAndPropsSupervisor = 'SETS_AND_PROPS_SUPERVISOR',
+  Settings = 'SETTINGS',
+  SetBuyer = 'SET_BUYER',
+  SetCostumer = 'SET_COSTUMER',
+  SetDecoratingCoordinator = 'SET_DECORATING_COORDINATOR',
+  SetDecoration = 'SET_DECORATION',
+  SetDecorationBuyer = 'SET_DECORATION_BUYER',
+  SetDesigner = 'SET_DESIGNER',
+  SetDresser = 'SET_DRESSER',
+  SetDressingArtist = 'SET_DRESSING_ARTIST',
+  SetDressingBuyer = 'SET_DRESSING_BUYER',
+  SetDressingManager = 'SET_DRESSING_MANAGER',
+  SetDressingProductionAssistant = 'SET_DRESSING_PRODUCTION_ASSISTANT',
+  SetDressingSupervisor = 'SET_DRESSING_SUPERVISOR',
+  SetMedic = 'SET_MEDIC',
+  SetPainter = 'SET_PAINTER',
+  SetPhotographer = 'SET_PHOTOGRAPHER',
+  SetProductionAssistant = 'SET_PRODUCTION_ASSISTANT',
+  SetProductionIntern = 'SET_PRODUCTION_INTERN',
+  SetPropsman = 'SET_PROPSMAN',
+  SetRunner = 'SET_RUNNER',
+  SetSupervisor = 'SET_SUPERVISOR',
+  Shading = 'SHADING',
+  ShoeDesign = 'SHOE_DESIGN',
+  ShopElectric = 'SHOP_ELECTRIC',
+  ShortStory = 'SHORT_STORY',
+  SignPainter = 'SIGN_PAINTER',
+  SimulationAndEffectsArtist = 'SIMULATION_AND_EFFECTS_ARTIST',
+  SimulationAndEffectsProductionAssistant = 'SIMULATION_AND_EFFECTS_PRODUCTION_ASSISTANT',
+  Singer = 'SINGER',
+  SmokeArtist = 'SMOKE_ARTIST',
+  SoftwareEngineer = 'SOFTWARE_ENGINEER',
+  SoftwareTeamLead = 'SOFTWARE_TEAM_LEAD',
+  Songs = 'SONGS',
+  Sound = 'SOUND',
+  SoundAssistant = 'SOUND_ASSISTANT',
+  SoundDesigner = 'SOUND_DESIGNER',
+  SoundDesignAssistant = 'SOUND_DESIGN_ASSISTANT',
+  SoundDirector = 'SOUND_DIRECTOR',
+  SoundEditor = 'SOUND_EDITOR',
+  SoundEffects = 'SOUND_EFFECTS',
+  SoundEffectsDesigner = 'SOUND_EFFECTS_DESIGNER',
+  SoundEffectsEditor = 'SOUND_EFFECTS_EDITOR',
+  SoundEngineer = 'SOUND_ENGINEER',
+  SoundMixer = 'SOUND_MIXER',
+  SoundMixTechnician = 'SOUND_MIX_TECHNICIAN',
+  SoundMontageAssociate = 'SOUND_MONTAGE_ASSOCIATE',
+  SoundPostProductionCoordinator = 'SOUND_POST_PRODUCTION_COORDINATOR',
+  SoundPostSupervisor = 'SOUND_POST_SUPERVISOR',
+  SoundRecordist = 'SOUND_RECORDIST',
+  SoundReRecordingAssistant = 'SOUND_RE_RECORDING_ASSISTANT',
+  SoundReRecordingMixer = 'SOUND_RE_RECORDING_MIXER',
+  SoundSupervisor = 'SOUND_SUPERVISOR',
+  SoundTechnicalSupervisor = 'SOUND_TECHNICAL_SUPERVISOR',
+  SpecializedDriver = 'SPECIALIZED_DRIVER',
+  SpecialEffects = 'SPECIAL_EFFECTS',
+  SpecialEffectsAssistant = 'SPECIAL_EFFECTS_ASSISTANT',
+  SpecialEffectsBestBoy = 'SPECIAL_EFFECTS_BEST_BOY',
+  SpecialEffectsCoordinator = 'SPECIAL_EFFECTS_COORDINATOR',
+  SpecialEffectsKeyMakeupArtist = 'SPECIAL_EFFECTS_KEY_MAKEUP_ARTIST',
+  SpecialEffectsMakeupArtist = 'SPECIAL_EFFECTS_MAKEUP_ARTIST',
+  SpecialEffectsManager = 'SPECIAL_EFFECTS_MANAGER',
+  SpecialEffectsSupervisor = 'SPECIAL_EFFECTS_SUPERVISOR',
+  SpecialEffectsTechnician = 'SPECIAL_EFFECTS_TECHNICIAN',
+  SpecialGuest = 'SPECIAL_GUEST',
+  SpecialGuestDirector = 'SPECIAL_GUEST_DIRECTOR',
+  SpecialProps = 'SPECIAL_PROPS',
+  SpecialSoundEffects = 'SPECIAL_SOUND_EFFECTS',
+  SponsorshipCoordinator = 'SPONSORSHIP_COORDINATOR',
+  SponsorshipDirector = 'SPONSORSHIP_DIRECTOR',
+  StaffWriter = 'STAFF_WRITER',
+  StageDirector = 'STAGE_DIRECTOR',
+  StandbyArtDirector = 'STANDBY_ART_DIRECTOR',
+  StandbyCarpenter = 'STANDBY_CARPENTER',
+  StandbyPainter = 'STANDBY_PAINTER',
+  StandbyPropertyMaster = 'STANDBY_PROPERTY_MASTER',
+  StandbyRigger = 'STANDBY_RIGGER',
+  StandIn = 'STAND_IN',
+  SteadicamOperator = 'STEADICAM_OPERATOR',
+  Steadycam = 'STEADYCAM',
+  StereoscopicCoordinator = 'STEREOSCOPIC_COORDINATOR',
+  StereoscopicEditor = 'STEREOSCOPIC_EDITOR',
+  StereoscopicSupervisor = 'STEREOSCOPIC_SUPERVISOR',
+  StereoscopicTechnicalDirector = 'STEREOSCOPIC_TECHNICAL_DIRECTOR',
+  StillPhotographer = 'STILL_PHOTOGRAPHER',
+  Story = 'STORY',
+  Storyboard = 'STORYBOARD',
+  StoryboardArtist = 'STORYBOARD_ARTIST',
+  StoryboardAssistant = 'STORYBOARD_ASSISTANT',
+  StoryboardDesigner = 'STORYBOARD_DESIGNER',
+  StoryArtist = 'STORY_ARTIST',
+  StoryConsultant = 'STORY_CONSULTANT',
+  StoryCoordinator = 'STORY_COORDINATOR',
+  StoryDeveloper = 'STORY_DEVELOPER',
+  StoryEditor = 'STORY_EDITOR',
+  StoryManager = 'STORY_MANAGER',
+  StorySupervisor = 'STORY_SUPERVISOR',
+  StreetCasting = 'STREET_CASTING',
+  StudioTeacher = 'STUDIO_TEACHER',
+  Stunts = 'STUNTS',
+  StuntCoordinator = 'STUNT_COORDINATOR',
+  StuntDouble = 'STUNT_DOUBLE',
+  StuntDriver = 'STUNT_DRIVER',
+  SupervisingAdrEditor = 'SUPERVISING_ADR_EDITOR',
+  SupervisingAnimationDirector = 'SUPERVISING_ANIMATION_DIRECTOR',
+  SupervisingAnimator = 'SUPERVISING_ANIMATOR',
+  SupervisingArmorer = 'SUPERVISING_ARMORER',
+  SupervisingArtDirector = 'SUPERVISING_ART_DIRECTOR',
+  SupervisingCarpenter = 'SUPERVISING_CARPENTER',
+  SupervisingDialogueEditor = 'SUPERVISING_DIALOGUE_EDITOR',
+  SupervisingEditor = 'SUPERVISING_EDITOR',
+  SupervisingFilmEditor = 'SUPERVISING_FILM_EDITOR',
+  SupervisingMusicEditor = 'SUPERVISING_MUSIC_EDITOR',
+  SupervisingProducer = 'SUPERVISING_PRODUCER',
+  SupervisingSoundEditor = 'SUPERVISING_SOUND_EDITOR',
+  SupervisingSoundEffectsEditor = 'SUPERVISING_SOUND_EFFECTS_EDITOR',
+  SupervisingTechnicalDirector = 'SUPERVISING_TECHNICAL_DIRECTOR',
+  SupervisorOfProductionResources = 'SUPERVISOR_OF_PRODUCTION_RESOURCES',
+  Swing = 'SWING',
+  SystemsAdministratorsAndSupport = 'SYSTEMS_ADMINISTRATORS_AND_SUPPORT',
+  Tailor = 'TAILOR',
+  Tattooist = 'TATTOOIST',
+  TattooDesigner = 'TATTOO_DESIGNER',
+  TechnicalAdvisor = 'TECHNICAL_ADVISOR',
+  TechnicalSupervisor = 'TECHNICAL_SUPERVISOR',
+  TechnoCraneOperator = 'TECHNO_CRANE_OPERATOR',
+  TelecineColorist = 'TELECINE_COLORIST',
+  Teleplay = 'TELEPLAY',
+  TempMusicEditor = 'TEMP_MUSIC_EDITOR',
+  TempSoundEditor = 'TEMP_SOUND_EDITOR',
+  TextileArtist = 'TEXTILE_ARTIST',
+  Thanks = 'THANKS',
+  TheatrePlay = 'THEATRE_PLAY',
+  ThemeSongPerformance = 'THEME_SONG_PERFORMANCE',
+  ThirdAssistantACamera = 'THIRD_ASSISTANT_A_CAMERA',
+  ThirdAssistantBCamera = 'THIRD_ASSISTANT_B_CAMERA',
+  ThirdAssistantCamera = 'THIRD_ASSISTANT_CAMERA',
+  ThirdAssistantCCamera = 'THIRD_ASSISTANT_C_CAMERA',
+  ThirdAssistantDirector = 'THIRD_ASSISTANT_DIRECTOR',
+  ThirdAssistantDCamera = 'THIRD_ASSISTANT_D_CAMERA',
+  TitleDesigner = 'TITLE_DESIGNER',
+  TitleGraphics = 'TITLE_GRAPHICS',
+  TitleIllustration = 'TITLE_ILLUSTRATION',
+  TraineeProductionCoordinator = 'TRAINEE_PRODUCTION_COORDINATOR',
+  Transcriptions = 'TRANSCRIPTIONS',
+  Translator = 'TRANSLATOR',
+  TransportationCaptain = 'TRANSPORTATION_CAPTAIN',
+  TransportationCoordinator = 'TRANSPORTATION_COORDINATOR',
+  TransportationCoCaptain = 'TRANSPORTATION_CO_CAPTAIN',
+  TravelCoordinator = 'TRAVEL_COORDINATOR',
+  Treatment = 'TREATMENT',
+  TruckCostumer = 'TRUCK_COSTUMER',
+  TruckProductionAssistant = 'TRUCK_PRODUCTION_ASSISTANT',
+  TruckSupervisor = 'TRUCK_SUPERVISOR',
+  UltimateArmOperator = 'ULTIMATE_ARM_OPERATOR',
+  UnderwaterCamera = 'UNDERWATER_CAMERA',
+  UnderwaterDirectorOfPhotography = 'UNDERWATER_DIRECTOR_OF_PHOTOGRAPHY',
+  UnderwaterEpkPhotographer = 'UNDERWATER_EPK_PHOTOGRAPHER',
+  UnderwaterGaffer = 'UNDERWATER_GAFFER',
+  UnderwaterStillsPhotographer = 'UNDERWATER_STILLS_PHOTOGRAPHER',
+  UnitManager = 'UNIT_MANAGER',
+  UnitMedic = 'UNIT_MEDIC',
+  UnitProductionManager = 'UNIT_PRODUCTION_MANAGER',
+  UnitPublicist = 'UNIT_PUBLICIST',
+  UnitSwing = 'UNIT_SWING',
+  UtilitySound = 'UTILITY_SOUND',
+  UtilityStunts = 'UTILITY_STUNTS',
+  VehiclesCoordinator = 'VEHICLES_COORDINATOR',
+  VehiclesWrangler = 'VEHICLES_WRANGLER',
+  VfxArtist = 'VFX_ARTIST',
+  VfxDirectorOfPhotography = 'VFX_DIRECTOR_OF_PHOTOGRAPHY',
+  VfxEditor = 'VFX_EDITOR',
+  VfxLightingArtist = 'VFX_LIGHTING_ARTIST',
+  VfxProductionCoordinator = 'VFX_PRODUCTION_COORDINATOR',
+  VfxSupervisor = 'VFX_SUPERVISOR',
+  Videojournalist = 'VIDEOJOURNALIST',
+  VideoAssistOperator = 'VIDEO_ASSIST_OPERATOR',
+  VideoGame = 'VIDEO_GAME',
+  VideoReport = 'VIDEO_REPORT',
+  VisualDevelopment = 'VISUAL_DEVELOPMENT',
+  VisualEffects = 'VISUAL_EFFECTS',
+  VisualEffectsArtDirector = 'VISUAL_EFFECTS_ART_DIRECTOR',
+  VisualEffectsAssistantEditor = 'VISUAL_EFFECTS_ASSISTANT_EDITOR',
+  VisualEffectsCamera = 'VISUAL_EFFECTS_CAMERA',
+  VisualEffectsCompositor = 'VISUAL_EFFECTS_COMPOSITOR',
+  VisualEffectsCoordinator = 'VISUAL_EFFECTS_COORDINATOR',
+  VisualEffectsDesigner = 'VISUAL_EFFECTS_DESIGNER',
+  VisualEffectsDesignConsultant = 'VISUAL_EFFECTS_DESIGN_CONSULTANT',
+  VisualEffectsDirector = 'VISUAL_EFFECTS_DIRECTOR',
+  VisualEffectsEditor = 'VISUAL_EFFECTS_EDITOR',
+  VisualEffectsLineup = 'VISUAL_EFFECTS_LINEUP',
+  VisualEffectsProducer = 'VISUAL_EFFECTS_PRODUCER',
+  VisualEffectsProductionAssistant = 'VISUAL_EFFECTS_PRODUCTION_ASSISTANT',
+  VisualEffectsProductionManager = 'VISUAL_EFFECTS_PRODUCTION_MANAGER',
+  VisualEffectsSupervisor = 'VISUAL_EFFECTS_SUPERVISOR',
+  VisualEffectsTechnicalDirector = 'VISUAL_EFFECTS_TECHNICAL_DIRECTOR',
+  Vocals = 'VOCALS',
+  VocalCoach = 'VOCAL_COACH',
+  Voice = 'VOICE',
+  WardrobeAssistant = 'WARDROBE_ASSISTANT',
+  WardrobeCoordinator = 'WARDROBE_COORDINATOR',
+  WardrobeDesigner = 'WARDROBE_DESIGNER',
+  WardrobeIntern = 'WARDROBE_INTERN',
+  WardrobeMaster = 'WARDROBE_MASTER',
+  WardrobeSpecializedTechnician = 'WARDROBE_SPECIALIZED_TECHNICIAN',
+  WardrobeSupervisor = 'WARDROBE_SUPERVISOR',
+  WeaponsMaster = 'WEAPONS_MASTER',
+  WeaponsWrangler = 'WEAPONS_WRANGLER',
+  WebDesigner = 'WEB_DESIGNER',
+  Wigmaker = 'WIGMAKER',
+  WigDesigner = 'WIG_DESIGNER',
+  Writer = 'WRITER',
+  WritersAssistant = 'WRITERS_ASSISTANT',
+  WritersProduction = 'WRITERS_PRODUCTION',
+  '2DArtist' = '_2D_ARTIST',
+  '2DSequenceSupervisor' = '_2D_SEQUENCE_SUPERVISOR',
+  '2DSupervisor' = '_2D_SUPERVISOR',
+  '3DAnimator' = '_3D_ANIMATOR',
+  '3DArtist' = '_3D_ARTIST',
+  '3DCoordinator' = '_3D_COORDINATOR',
+  '3DDigitalColorist' = '_3D_DIGITAL_COLORIST',
+  '3DDirector' = '_3D_DIRECTOR',
+  '3DEditor' = '_3D_EDITOR',
+  '3DGeneralist' = '_3D_GENERALIST',
+  '3DModeller' = '_3D_MODELLER',
+  '3DSequenceSupervisor' = '_3D_SEQUENCE_SUPERVISOR',
+  '3DSupervisor' = '_3D_SUPERVISOR',
+  '3DTrackingLayout' = '_3D_TRACKING_LAYOUT',
+  '24FramePlayback' = '_24_FRAME_PLAYBACK'
+}
+
+/** Boolean expression to compare columns of type "job_types_enum". All fields are combined with logical 'AND'. */
+export type Job_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Job_Types_Enum>;
+  _in?: InputMaybe<Array<Job_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Job_Types_Enum>;
+  _nin?: InputMaybe<Array<Job_Types_Enum>>;
+};
+
+/** input type for inserting data into table "job_types" */
+export type Job_Types_Insert_Input = {
+  credits?: InputMaybe<Credits_Arr_Rel_Insert_Input>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Job_Types_Max_Fields = {
+  __typename?: 'job_types_max_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Job_Types_Min_Fields = {
+  __typename?: 'job_types_min_fields';
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "job_types" */
+export type Job_Types_Mutation_Response = {
+  __typename?: 'job_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Job_Types>;
+};
+
+/** input type for inserting object relation for remote table "job_types" */
+export type Job_Types_Obj_Rel_Insert_Input = {
+  data: Job_Types_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Job_Types_On_Conflict>;
+};
+
+/** on_conflict condition type for table "job_types" */
+export type Job_Types_On_Conflict = {
+  constraint: Job_Types_Constraint;
+  update_columns?: Array<Job_Types_Update_Column>;
+  where?: InputMaybe<Job_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "job_types". */
+export type Job_Types_Order_By = {
+  credits_aggregate?: InputMaybe<Credits_Aggregate_Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: job_types */
+export type Job_Types_Pk_Columns_Input = {
+  type: Scalars['String']['input'];
+};
+
+/** select columns of table "job_types" */
+export enum Job_Types_Select_Column {
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "job_types" */
+export type Job_Types_Set_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "job_types" */
+export type Job_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Job_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Job_Types_Stream_Cursor_Value_Input = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "job_types" */
+export enum Job_Types_Update_Column {
+  /** column name */
+  Type = 'type'
+}
+
+export type Job_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Job_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Job_Types_Bool_Exp;
 };
 
 export type Jsonb_Cast_Exp = {
@@ -11696,6 +12940,10 @@ export type Mutation_Root = {
   delete_cron_job_run_details?: Maybe<Cron_Job_Run_Details_Mutation_Response>;
   /** delete single row from the table: "cron.job_run_details" */
   delete_cron_job_run_details_by_pk?: Maybe<Cron_Job_Run_Details>;
+  /** delete data from the table: "department_types" */
+  delete_department_types?: Maybe<Department_Types_Mutation_Response>;
+  /** delete single row from the table: "department_types" */
+  delete_department_types_by_pk?: Maybe<Department_Types>;
   /** delete data from the table: "follows" */
   delete_follows?: Maybe<Follows_Mutation_Response>;
   /** delete single row from the table: "follows" */
@@ -11704,6 +12952,10 @@ export type Mutation_Root = {
   delete_gender_types?: Maybe<Gender_Types_Mutation_Response>;
   /** delete single row from the table: "gender_types" */
   delete_gender_types_by_pk?: Maybe<Gender_Types>;
+  /** delete data from the table: "job_types" */
+  delete_job_types?: Maybe<Job_Types_Mutation_Response>;
+  /** delete single row from the table: "job_types" */
+  delete_job_types_by_pk?: Maybe<Job_Types>;
   /** delete data from the table: "keywords" */
   delete_keywords?: Maybe<Keywords_Mutation_Response>;
   /** delete single row from the table: "keywords" */
@@ -11960,6 +13212,10 @@ export type Mutation_Root = {
   insert_cron_job_run_details?: Maybe<Cron_Job_Run_Details_Mutation_Response>;
   /** insert a single row into the table: "cron.job_run_details" */
   insert_cron_job_run_details_one?: Maybe<Cron_Job_Run_Details>;
+  /** insert data into the table: "department_types" */
+  insert_department_types?: Maybe<Department_Types_Mutation_Response>;
+  /** insert a single row into the table: "department_types" */
+  insert_department_types_one?: Maybe<Department_Types>;
   /** insert data into the table: "follows" */
   insert_follows?: Maybe<Follows_Mutation_Response>;
   /** insert a single row into the table: "follows" */
@@ -11968,6 +13224,10 @@ export type Mutation_Root = {
   insert_gender_types?: Maybe<Gender_Types_Mutation_Response>;
   /** insert a single row into the table: "gender_types" */
   insert_gender_types_one?: Maybe<Gender_Types>;
+  /** insert data into the table: "job_types" */
+  insert_job_types?: Maybe<Job_Types_Mutation_Response>;
+  /** insert a single row into the table: "job_types" */
+  insert_job_types_one?: Maybe<Job_Types>;
   /** insert data into the table: "keywords" */
   insert_keywords?: Maybe<Keywords_Mutation_Response>;
   /** insert a single row into the table: "keywords" */
@@ -12278,6 +13538,12 @@ export type Mutation_Root = {
   update_cron_job_run_details_by_pk?: Maybe<Cron_Job_Run_Details>;
   /** update multiples rows of table: "cron.job_run_details" */
   update_cron_job_run_details_many?: Maybe<Array<Maybe<Cron_Job_Run_Details_Mutation_Response>>>;
+  /** update data of the table: "department_types" */
+  update_department_types?: Maybe<Department_Types_Mutation_Response>;
+  /** update single row of the table: "department_types" */
+  update_department_types_by_pk?: Maybe<Department_Types>;
+  /** update multiples rows of table: "department_types" */
+  update_department_types_many?: Maybe<Array<Maybe<Department_Types_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
   /** update data of the table: "follows" */
@@ -12292,6 +13558,12 @@ export type Mutation_Root = {
   update_gender_types_by_pk?: Maybe<Gender_Types>;
   /** update multiples rows of table: "gender_types" */
   update_gender_types_many?: Maybe<Array<Maybe<Gender_Types_Mutation_Response>>>;
+  /** update data of the table: "job_types" */
+  update_job_types?: Maybe<Job_Types_Mutation_Response>;
+  /** update single row of the table: "job_types" */
+  update_job_types_by_pk?: Maybe<Job_Types>;
+  /** update multiples rows of table: "job_types" */
+  update_job_types_many?: Maybe<Array<Maybe<Job_Types_Mutation_Response>>>;
   /** update data of the table: "keywords" */
   update_keywords?: Maybe<Keywords_Mutation_Response>;
   /** update single row of the table: "keywords" */
@@ -12869,6 +14141,18 @@ export type Mutation_RootDelete_Cron_Job_Run_Details_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Department_TypesArgs = {
+  where: Department_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Department_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_FollowsArgs = {
   where: Follows_Bool_Exp;
 };
@@ -12889,6 +14173,18 @@ export type Mutation_RootDelete_Gender_TypesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Gender_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Job_TypesArgs = {
+  where: Job_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Job_Types_By_PkArgs = {
   type: Scalars['String']['input'];
 };
 
@@ -13733,6 +15029,20 @@ export type Mutation_RootInsert_Cron_Job_Run_Details_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Department_TypesArgs = {
+  objects: Array<Department_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Department_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Department_Types_OneArgs = {
+  object: Department_Types_Insert_Input;
+  on_conflict?: InputMaybe<Department_Types_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_FollowsArgs = {
   objects: Array<Follows_Insert_Input>;
   on_conflict?: InputMaybe<Follows_On_Conflict>;
@@ -13757,6 +15067,20 @@ export type Mutation_RootInsert_Gender_TypesArgs = {
 export type Mutation_RootInsert_Gender_Types_OneArgs = {
   object: Gender_Types_Insert_Input;
   on_conflict?: InputMaybe<Gender_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Job_TypesArgs = {
+  objects: Array<Job_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Job_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Job_Types_OneArgs = {
+  object: Job_Types_Insert_Input;
+  on_conflict?: InputMaybe<Job_Types_On_Conflict>;
 };
 
 
@@ -14830,12 +16154,7 @@ export type Mutation_RootUpdate_Credit_Types_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_CreditsArgs = {
-  _append?: InputMaybe<Credits_Append_Input>;
-  _delete_at_path?: InputMaybe<Credits_Delete_At_Path_Input>;
-  _delete_elem?: InputMaybe<Credits_Delete_Elem_Input>;
-  _delete_key?: InputMaybe<Credits_Delete_Key_Input>;
   _inc?: InputMaybe<Credits_Inc_Input>;
-  _prepend?: InputMaybe<Credits_Prepend_Input>;
   _set?: InputMaybe<Credits_Set_Input>;
   where: Credits_Bool_Exp;
 };
@@ -14843,12 +16162,7 @@ export type Mutation_RootUpdate_CreditsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Credits_By_PkArgs = {
-  _append?: InputMaybe<Credits_Append_Input>;
-  _delete_at_path?: InputMaybe<Credits_Delete_At_Path_Input>;
-  _delete_elem?: InputMaybe<Credits_Delete_Elem_Input>;
-  _delete_key?: InputMaybe<Credits_Delete_Key_Input>;
   _inc?: InputMaybe<Credits_Inc_Input>;
-  _prepend?: InputMaybe<Credits_Prepend_Input>;
   _set?: InputMaybe<Credits_Set_Input>;
   pk_columns: Credits_Pk_Columns_Input;
 };
@@ -14905,6 +16219,26 @@ export type Mutation_RootUpdate_Cron_Job_Run_Details_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Department_TypesArgs = {
+  _set?: InputMaybe<Department_Types_Set_Input>;
+  where: Department_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Department_Types_By_PkArgs = {
+  _set?: InputMaybe<Department_Types_Set_Input>;
+  pk_columns: Department_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Department_Types_ManyArgs = {
+  updates: Array<Department_Types_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Files_ManyArgs = {
   updates: Array<Files_Updates>;
 };
@@ -14947,6 +16281,26 @@ export type Mutation_RootUpdate_Gender_Types_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Gender_Types_ManyArgs = {
   updates: Array<Gender_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Job_TypesArgs = {
+  _set?: InputMaybe<Job_Types_Set_Input>;
+  where: Job_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Job_Types_By_PkArgs = {
+  _set?: InputMaybe<Job_Types_Set_Input>;
+  pk_columns: Job_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Job_Types_ManyArgs = {
+  updates: Array<Job_Types_Updates>;
 };
 
 
@@ -16356,8 +17710,6 @@ export type People = {
   id: Scalars['uuid']['output'];
   /** A computed field, executes function "top_department_for" */
   known_for_department?: Maybe<Scalars['String']['output']>;
-  /** A computed field, executes function "top_role_for" */
-  known_for_role?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   /** An array relationship */
   person_media: Array<Person_Media>;
@@ -16519,7 +17871,6 @@ export type People_Bool_Exp = {
   headshot?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   known_for_department?: InputMaybe<String_Comparison_Exp>;
-  known_for_role?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   person_media?: InputMaybe<Person_Media_Bool_Exp>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Bool_Exp>;
@@ -16579,8 +17930,6 @@ export type People_Max_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   /** A computed field, executes function "top_department_for" */
   known_for_department?: Maybe<Scalars['String']['output']>;
-  /** A computed field, executes function "top_role_for" */
-  known_for_role?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
@@ -16616,8 +17965,6 @@ export type People_Min_Fields = {
   id?: Maybe<Scalars['uuid']['output']>;
   /** A computed field, executes function "top_department_for" */
   known_for_department?: Maybe<Scalars['String']['output']>;
-  /** A computed field, executes function "top_role_for" */
-  known_for_role?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   spotify_id?: Maybe<Scalars['String']['output']>;
   tmdb_id?: Maybe<Scalars['String']['output']>;
@@ -16677,7 +18024,6 @@ export type People_Order_By = {
   headshot?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   known_for_department?: InputMaybe<Order_By>;
-  known_for_role?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   person_media_aggregate?: InputMaybe<Person_Media_Aggregate_Order_By>;
   spotify_id?: InputMaybe<Order_By>;
@@ -17257,6 +18603,12 @@ export type Query_Root = {
   cron_job_run_details_aggregate: Cron_Job_Run_Details_Aggregate;
   /** fetch data from the table: "cron.job_run_details" using primary key columns */
   cron_job_run_details_by_pk?: Maybe<Cron_Job_Run_Details>;
+  /** fetch data from the table: "department_types" */
+  department_types: Array<Department_Types>;
+  /** fetch aggregated fields from the table: "department_types" */
+  department_types_aggregate: Department_Types_Aggregate;
+  /** fetch data from the table: "department_types" using primary key columns */
+  department_types_by_pk?: Maybe<Department_Types>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -17275,6 +18627,12 @@ export type Query_Root = {
   gender_types_aggregate: Gender_Types_Aggregate;
   /** fetch data from the table: "gender_types" using primary key columns */
   gender_types_by_pk?: Maybe<Gender_Types>;
+  /** fetch data from the table: "job_types" */
+  job_types: Array<Job_Types>;
+  /** fetch aggregated fields from the table: "job_types" */
+  job_types_aggregate: Job_Types_Aggregate;
+  /** fetch data from the table: "job_types" using primary key columns */
+  job_types_by_pk?: Maybe<Job_Types>;
   /** fetch data from the table: "keywords" */
   keywords: Array<Keywords>;
   /** fetch aggregated fields from the table: "keywords" */
@@ -18120,6 +19478,29 @@ export type Query_RootCron_Job_Run_Details_By_PkArgs = {
 };
 
 
+export type Query_RootDepartment_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Department_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Department_Types_Order_By>>;
+  where?: InputMaybe<Department_Types_Bool_Exp>;
+};
+
+
+export type Query_RootDepartment_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Department_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Department_Types_Order_By>>;
+  where?: InputMaybe<Department_Types_Bool_Exp>;
+};
+
+
+export type Query_RootDepartment_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
 export type Query_RootFileArgs = {
   id: Scalars['uuid']['input'];
 };
@@ -18186,6 +19567,29 @@ export type Query_RootGender_Types_AggregateArgs = {
 
 
 export type Query_RootGender_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Query_RootJob_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Job_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Job_Types_Order_By>>;
+  where?: InputMaybe<Job_Types_Bool_Exp>;
+};
+
+
+export type Query_RootJob_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Job_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Job_Types_Order_By>>;
+  where?: InputMaybe<Job_Types_Bool_Exp>;
+};
+
+
+export type Query_RootJob_Types_By_PkArgs = {
   type: Scalars['String']['input'];
 };
 
@@ -21789,6 +23193,14 @@ export type Subscription_Root = {
   cron_job_run_details_stream: Array<Cron_Job_Run_Details>;
   /** fetch data from the table in a streaming manner: "cron.job" */
   cron_job_stream: Array<Cron_Job>;
+  /** fetch data from the table: "department_types" */
+  department_types: Array<Department_Types>;
+  /** fetch aggregated fields from the table: "department_types" */
+  department_types_aggregate: Department_Types_Aggregate;
+  /** fetch data from the table: "department_types" using primary key columns */
+  department_types_by_pk?: Maybe<Department_Types>;
+  /** fetch data from the table in a streaming manner: "department_types" */
+  department_types_stream: Array<Department_Types>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -21813,6 +23225,14 @@ export type Subscription_Root = {
   gender_types_by_pk?: Maybe<Gender_Types>;
   /** fetch data from the table in a streaming manner: "gender_types" */
   gender_types_stream: Array<Gender_Types>;
+  /** fetch data from the table: "job_types" */
+  job_types: Array<Job_Types>;
+  /** fetch aggregated fields from the table: "job_types" */
+  job_types_aggregate: Job_Types_Aggregate;
+  /** fetch data from the table: "job_types" using primary key columns */
+  job_types_by_pk?: Maybe<Job_Types>;
+  /** fetch data from the table in a streaming manner: "job_types" */
+  job_types_stream: Array<Job_Types>;
   /** fetch data from the table: "keywords" */
   keywords: Array<Keywords>;
   /** fetch aggregated fields from the table: "keywords" */
@@ -22919,6 +24339,36 @@ export type Subscription_RootCron_Job_StreamArgs = {
 };
 
 
+export type Subscription_RootDepartment_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Department_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Department_Types_Order_By>>;
+  where?: InputMaybe<Department_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootDepartment_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Department_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Department_Types_Order_By>>;
+  where?: InputMaybe<Department_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootDepartment_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootDepartment_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Department_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Department_Types_Bool_Exp>;
+};
+
+
 export type Subscription_RootFileArgs = {
   id: Scalars['uuid']['input'];
 };
@@ -23007,6 +24457,36 @@ export type Subscription_RootGender_Types_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Gender_Types_Stream_Cursor_Input>>;
   where?: InputMaybe<Gender_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootJob_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Job_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Job_Types_Order_By>>;
+  where?: InputMaybe<Job_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootJob_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Job_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Job_Types_Order_By>>;
+  where?: InputMaybe<Job_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootJob_Types_By_PkArgs = {
+  type: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootJob_Types_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Job_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Job_Types_Bool_Exp>;
 };
 
 
@@ -27375,14 +28855,14 @@ export type GetCreditsQueryVariables = Exact<{
 }>;
 
 
-export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, job?: string | null, character?: string | null, department?: string | null, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, credits_aggregate: { __typename?: 'credits_aggregate', aggregate?: { __typename?: 'credits_aggregate_fields', count: number } | null } };
+export type GetCreditsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, job?: Job_Types_Enum | null, character?: string | null, department?: Department_Types_Enum | null, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, credits_aggregate: { __typename?: 'credits_aggregate', aggregate?: { __typename?: 'credits_aggregate_fields', count: number } | null } };
 
 export type InsertCreditsMutationVariables = Exact<{
   objects: Array<Credits_Insert_Input> | Credits_Insert_Input;
 }>;
 
 
-export type InsertCreditsMutation = { __typename?: 'mutation_root', insert_credits?: { __typename?: 'credits_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }> } | null };
+export type InsertCreditsMutation = { __typename?: 'mutation_root', insert_credits?: { __typename?: 'credits_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, department?: Department_Types_Enum | null, job?: Job_Types_Enum | null, character?: string | null, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }> } | null };
 
 export type UpdateCreditsMutationVariables = Exact<{
   where: Credits_Bool_Exp;
@@ -27498,7 +28978,7 @@ export type GetMovieForContentQualityCheckQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetMovieForContentQualityCheckQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, overview?: string | null, backdrop: string, budget?: any | null, content_score: number, created_at?: any | null, imdb_id?: string | null, language?: string | null, poster: string, release_date?: any | null, revenue?: any | null, runtime?: number | null, formatted_runtime?: string | null, tagline?: string | null, tmdb_id?: string | null, trailer?: string | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, homepage?: string | null, status?: Movie_Release_Status_Types_Enum | null, certification?: Movie_Certification_Types_Enum | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, department?: Department_Types_Enum | null, job?: Job_Types_Enum | null, character?: string | null, order: number, person: { __typename?: 'people', id: any, name: string, headshot: string } }>, movie_genres: Array<{ __typename?: 'movie_genres', genre: Movie_Genre_Types_Enum }>, movie_keywords: Array<{ __typename?: 'movie_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetMovieMediaQueryVariables = Exact<{
   where?: InputMaybe<Movie_Media_Bool_Exp>;
@@ -27719,7 +29199,7 @@ export type GetPersonDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonDetailsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', department?: string | null }> };
+export type GetPersonDetailsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', department?: Department_Types_Enum | null }> };
 
 export type GetPersonQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -27731,7 +29211,7 @@ export type GetPersonQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, details: any, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } | null }> } | null };
+export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, department?: Department_Types_Enum | null, job?: Job_Types_Enum | null, character?: string | null, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } | null }> } | null };
 
 export type InsertPersonMutationVariables = Exact<{
   object: People_Insert_Input;
@@ -28506,7 +29986,9 @@ export const InsertCreditsDocument = `
     returning {
       id
       credit_type
-      details
+      department
+      job
+      character
       order
       person {
         id
@@ -29048,7 +30530,9 @@ export const GetMovieForContentQualityCheckDocument = `
     credits {
       id
       credit_type
-      details
+      department
+      job
+      character
       order
       person {
         id
@@ -30095,7 +31579,9 @@ export const GetPersonDocument = `
     ) {
       id
       credit_type
-      details
+      department
+      job
+      character
       object_id
       object_type
       movie_credit {

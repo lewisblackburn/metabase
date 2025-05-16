@@ -22,7 +22,9 @@ query GetPerson(
         ) {
             id
             credit_type
-            details
+            department
+            job
+            character
             object_id
             object_type
             movie_credit {
