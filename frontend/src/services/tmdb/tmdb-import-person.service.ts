@@ -87,7 +87,10 @@ export async function importPersonFromTmdb(
         const onConflict: People_On_Conflict = {
             constraint: People_Constraint.PeopleTmdbIdKey,
             update_columns: Object.values(People_Update_Column).filter(
-                (col) => col !== People_Update_Column.CreatedAt && col !== People_Update_Column.Id
+                (col) =>
+                    col !== People_Update_Column.CreatedAt &&
+                    col !== People_Update_Column.Id &&
+                    col !== People_Update_Column.Verified
             )
         };
 
