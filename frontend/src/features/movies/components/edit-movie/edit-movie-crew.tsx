@@ -7,12 +7,15 @@ import SortingArrows from '@/components/shared/sorting-arrows';
 import { DataTable } from '@/components/ui/data-table';
 import {
     Credit_Types_Enum,
+    Department_Types_Enum,
+    Job_Types_Enum,
     Order_By,
     useDeleteCreditsMutation,
     useGetCreditsQuery,
     useUpdateCreditsMutation
 } from '@/generated/graphql';
 import { useDebounce } from '@/hooks/use-debounce';
+import { fuzzyEnumMap } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Input } from '@/registry/new-york-v4/ui/input';
 import { useQueryClient } from '@tanstack/react-query';
@@ -57,12 +60,18 @@ export default function EditMovieCrew({ movieId }: { movieId: string }) {
                                   },
                                   {
                                       department: {
-                                          _ilike: `%${debouncedSearchQuery}%`
+                                          _eq: fuzzyEnumMap(debouncedSearchQuery, Department_Types_Enum, {
+                                              fallback: Department_Types_Enum.Crew,
+                                              threshold: 1
+                                          })
                                       }
                                   },
                                   {
                                       job: {
-                                          _ilike: `%${debouncedSearchQuery}%`
+                                          _eq: fuzzyEnumMap(debouncedSearchQuery, Job_Types_Enum, {
+                                              fallback: Job_Types_Enum.Other,
+                                              threshold: 1
+                                          })
                                       }
                                   }
                               ]

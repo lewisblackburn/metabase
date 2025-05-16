@@ -29015,7 +29015,7 @@ export type GetMovieSoundtrackQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieSoundtrackQuery = { __typename?: 'query_root', movie_soundtrack: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<any> | null, description?: string | null, song: { __typename?: 'songs', id: any, name: string, credits: Array<{ __typename?: 'credits', person: { __typename?: 'people', name: string } }> } }>, movie_soundtrack_aggregate: { __typename?: 'movie_soundtrack_aggregate', aggregate?: { __typename?: 'movie_soundtrack_aggregate_fields', count: number } | null } };
+export type GetMovieSoundtrackQuery = { __typename?: 'query_root', movie_soundtrack: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<any> | null, description?: string | null, song: { __typename?: 'songs', id: any, name: string, spotify_uri?: string | null, credits: Array<{ __typename?: 'credits', person: { __typename?: 'people', name: string } }> } }>, movie_soundtrack_aggregate: { __typename?: 'movie_soundtrack_aggregate', aggregate?: { __typename?: 'movie_soundtrack_aggregate_fields', count: number } | null } };
 
 export type GetMovieTitleQueryVariables = Exact<{
   movie_id: Scalars['uuid']['input'];
@@ -29199,7 +29199,7 @@ export type GetPersonDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonDetailsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', department?: Department_Types_Enum | null }> };
+export type GetPersonDetailsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', department?: Department_Types_Enum | null, job?: Job_Types_Enum | null }> };
 
 export type GetPersonQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
@@ -30754,6 +30754,7 @@ export const GetMovieSoundtrackDocument = `
     song {
       id
       name
+      spotify_uri
       credits {
         person {
           name
@@ -31522,6 +31523,7 @@ export const GetPersonDetailsDocument = `
     order_by: {department: asc}
   ) {
     department
+    job
   }
 }
     `;

@@ -9,6 +9,7 @@ query GetMovieSoundtrack(
         song {
             id
             name
+            spotify_uri
             credits {
                 person {
                     name

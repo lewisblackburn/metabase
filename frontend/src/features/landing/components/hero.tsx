@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import GraphQLIcon from '@/components/icons/graphql.icon';
@@ -10,6 +9,7 @@ import TailwindIcon from '@/components/icons/tailwind.icon';
 import TypeScriptIcon from '@/components/icons/typescript.icon';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { TextAnimate } from '@/components/magicui/text-animate';
+import ImageWithSkeleton from '@/components/shared/image-with-skeleton';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/registry/new-york-v4/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
@@ -70,14 +70,14 @@ const Hero = () => {
                 <img
                     alt='background'
                     src='/images/square-alt-grid.svg'
-                    className='opacity-90 [mask-image:radial-gradient(75%_75%_at_center,white,transparent)]'
+                    className='[mask-image:radial-gradient(75%_75%_at_center,white,transparent)] opacity-90'
                 />
             </div>
             <div className='relative z-10 container'>
                 <div className='mx-auto flex max-w-5xl flex-col items-center'>
                     <div className='flex flex-col items-center gap-6 text-center'>
                         <div className='bg-background/30 rounded-xl p-4 shadow-sm backdrop-blur-sm'>
-                            <Image
+                            <ImageWithSkeleton
                                 src='/images/logo/logo-light-streamline.png'
                                 alt='logo'
                                 className='h-16'

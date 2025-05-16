@@ -15,6 +15,7 @@ import MovieChanges from '@/features/movies/components/movie-changes';
 import MovieCredits from '@/features/movies/components/movie-credits';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import MovieLayout from '@/features/movies/components/movie-layout';
+import MovieMedia from '@/features/movies/components/movie-media';
 import ObjectOverview from '@/features/movies/components/movie-overview';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
 import MovieReports from '@/features/movies/components/movie-reports';
@@ -67,8 +68,7 @@ const tabItems = [
     { value: 'credits', icon: User, label: 'Credits' },
     { value: 'soundtrack', icon: Music, label: 'Soundtrack' },
     { value: 'awards', icon: Trophy, label: 'Awards' },
-    { value: 'images', icon: Image, label: 'Images' },
-    { value: 'videos', icon: Video, label: 'Videos' },
+    { value: 'media', icon: Image, label: 'Media' },
     { value: 'changes', icon: Edit, label: 'Changes' },
     { value: 'reports', icon: Flag, label: 'Reports' }
 ];
@@ -88,8 +88,7 @@ function MoviePageContent() {
         credits: { content: <MovieCredits /> },
         soundtrack: { content: <MovieSoundtrackTable /> },
         awards: { content: 'No awards available' },
-        images: { content: 'No images available.' },
-        videos: { content: 'No videos available.' },
+        media: { content: <MovieMedia /> },
         changes: { content: <MovieChanges /> },
         reports: { content: <MovieReports /> }
     };
