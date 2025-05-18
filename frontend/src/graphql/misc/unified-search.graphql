@@ -1,0 +1,7 @@
+query SearchUnified($where: unified_search_bool_exp) {
+    unified_search(where: $where, limit: 10) {
+        id
+        title
+        type
+    }
+}

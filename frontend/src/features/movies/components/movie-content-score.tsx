@@ -1,8 +1,7 @@
-import { OBJECT_TYPE } from '@/constants/objects.constant';
 import { useUpdateMovieMutation } from '@/generated/graphql';
 import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york-v4/ui/tooltip';
-import { contentQualityService } from '@/services/content-quality.service';
+import { ContentQualityService } from '@/services/content-quality.service';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useMovie } from './movie-provider';
@@ -16,7 +15,7 @@ export default function MovieContentScore() {
     if (!movie || !movie.tmdb_id) return null;
 
     const handleClick = async () => {
-        const score = await contentQualityService.check(OBJECT_TYPE.MOVIE, movie.id, movie.tmdb_id!);
+        const score = await ContentQualityService.checkMovieQuality(movie.id);
         await updateMovie.mutateAsync({
             id: movie.id,
             inc: {},

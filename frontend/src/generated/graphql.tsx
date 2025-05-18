@@ -18801,6 +18801,10 @@ export type Query_Root = {
   storage_schema_migrations_aggregate: Storage_Schema_Migrations_Aggregate;
   /** fetch data from the table: "storage.schema_migrations" using primary key columns */
   storage_schema_migrations_by_pk?: Maybe<Storage_Schema_Migrations>;
+  /** fetch data from the table: "unified_search" */
+  unified_search: Array<Unified_Search>;
+  /** fetch aggregated fields from the table: "unified_search" */
+  unified_search_aggregate: Unified_Search_Aggregate;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** An array relationship */
@@ -20243,6 +20247,24 @@ export type Query_RootStorage_Schema_Migrations_AggregateArgs = {
 
 export type Query_RootStorage_Schema_Migrations_By_PkArgs = {
   version: Scalars['bigint']['input'];
+};
+
+
+export type Query_RootUnified_SearchArgs = {
+  distinct_on?: InputMaybe<Array<Unified_Search_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Unified_Search_Order_By>>;
+  where?: InputMaybe<Unified_Search_Bool_Exp>;
+};
+
+
+export type Query_RootUnified_Search_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Unified_Search_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Unified_Search_Order_By>>;
+  where?: InputMaybe<Unified_Search_Bool_Exp>;
 };
 
 
@@ -23457,6 +23479,12 @@ export type Subscription_Root = {
   storage_schema_migrations_by_pk?: Maybe<Storage_Schema_Migrations>;
   /** fetch data from the table in a streaming manner: "storage.schema_migrations" */
   storage_schema_migrations_stream: Array<Storage_Schema_Migrations>;
+  /** fetch data from the table: "unified_search" */
+  unified_search: Array<Unified_Search>;
+  /** fetch aggregated fields from the table: "unified_search" */
+  unified_search_aggregate: Unified_Search_Aggregate;
+  /** fetch data from the table in a streaming manner: "unified_search" */
+  unified_search_stream: Array<Unified_Search>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** An array relationship */
@@ -25338,6 +25366,31 @@ export type Subscription_RootStorage_Schema_Migrations_StreamArgs = {
 };
 
 
+export type Subscription_RootUnified_SearchArgs = {
+  distinct_on?: InputMaybe<Array<Unified_Search_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Unified_Search_Order_By>>;
+  where?: InputMaybe<Unified_Search_Bool_Exp>;
+};
+
+
+export type Subscription_RootUnified_Search_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Unified_Search_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Unified_Search_Order_By>>;
+  where?: InputMaybe<Unified_Search_Bool_Exp>;
+};
+
+
+export type Subscription_RootUnified_Search_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Unified_Search_Stream_Cursor_Input>>;
+  where?: InputMaybe<Unified_Search_Bool_Exp>;
+};
+
+
 export type Subscription_RootUserArgs = {
   id: Scalars['uuid']['input'];
 };
@@ -25604,6 +25657,94 @@ export type Timestamptz_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['timestamptz']['input']>;
   _neq?: InputMaybe<Scalars['timestamptz']['input']>;
   _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+};
+
+/** columns and relationships of "unified_search" */
+export type Unified_Search = {
+  __typename?: 'unified_search';
+  id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregated selection of "unified_search" */
+export type Unified_Search_Aggregate = {
+  __typename?: 'unified_search_aggregate';
+  aggregate?: Maybe<Unified_Search_Aggregate_Fields>;
+  nodes: Array<Unified_Search>;
+};
+
+/** aggregate fields of "unified_search" */
+export type Unified_Search_Aggregate_Fields = {
+  __typename?: 'unified_search_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Unified_Search_Max_Fields>;
+  min?: Maybe<Unified_Search_Min_Fields>;
+};
+
+
+/** aggregate fields of "unified_search" */
+export type Unified_Search_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Unified_Search_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "unified_search". All fields are combined with a logical 'AND'. */
+export type Unified_Search_Bool_Exp = {
+  _and?: InputMaybe<Array<Unified_Search_Bool_Exp>>;
+  _not?: InputMaybe<Unified_Search_Bool_Exp>;
+  _or?: InputMaybe<Array<Unified_Search_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Unified_Search_Max_Fields = {
+  __typename?: 'unified_search_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Unified_Search_Min_Fields = {
+  __typename?: 'unified_search_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Ordering options when selecting data from "unified_search". */
+export type Unified_Search_Order_By = {
+  id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "unified_search" */
+export enum Unified_Search_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  Type = 'type'
+}
+
+/** Streaming cursor of the table "unified_search" */
+export type Unified_Search_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Unified_Search_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Unified_Search_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** columns and relationships of "user_activities" */
@@ -28900,6 +29041,13 @@ export type GetUserStatusesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUserStatusesQuery = { __typename?: 'query_root', user_book_statuses: Array<{ __typename?: 'user_book_statuses', user_id: any, book_id: any, rating?: any | null, book: { __typename?: 'books', title: string, cover: string } }>, user_song_statuses: Array<{ __typename?: 'user_song_statuses', user_id: any, song_id: any, rating?: any | null, song: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } }>, user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', user_id: any, movie_id: any, rating?: any | null, movie: { __typename?: 'movies', title: string, poster: string } }> };
 
+export type SearchUnifiedQueryVariables = Exact<{
+  where?: InputMaybe<Unified_Search_Bool_Exp>;
+}>;
+
+
+export type SearchUnifiedQuery = { __typename?: 'query_root', unified_search: Array<{ __typename?: 'unified_search', id?: any | null, title?: string | null, type?: string | null }> };
+
 export type DeleteMovieAlternativeTitlesMutationVariables = Exact<{
   where: Movie_Alternative_Titles_Bool_Exp;
 }>;
@@ -30230,6 +30378,51 @@ export const useInfiniteGetUserStatusesQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetUserStatuses.infinite'] : ['GetUserStatuses.infinite', variables],
       queryFn: (metaData) => fetcher<GetUserStatusesQuery, GetUserStatusesQueryVariables>(GetUserStatusesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const SearchUnifiedDocument = `
+    query SearchUnified($where: unified_search_bool_exp) {
+  unified_search(where: $where, limit: 10) {
+    id
+    title
+    type
+  }
+}
+    `;
+
+export const useSearchUnifiedQuery = <
+      TData = SearchUnifiedQuery,
+      TError = unknown
+    >(
+      variables?: SearchUnifiedQueryVariables,
+      options?: Omit<UseQueryOptions<SearchUnifiedQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchUnifiedQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchUnifiedQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['SearchUnified'] : ['SearchUnified', variables],
+    queryFn: fetcher<SearchUnifiedQuery, SearchUnifiedQueryVariables>(SearchUnifiedDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteSearchUnifiedQuery = <
+      TData = InfiniteData<SearchUnifiedQuery>,
+      TError = unknown
+    >(
+      variables: SearchUnifiedQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<SearchUnifiedQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<SearchUnifiedQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<SearchUnifiedQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['SearchUnified.infinite'] : ['SearchUnified.infinite', variables],
+      queryFn: (metaData) => fetcher<SearchUnifiedQuery, SearchUnifiedQueryVariables>(SearchUnifiedDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

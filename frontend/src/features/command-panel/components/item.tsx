@@ -13,18 +13,23 @@ export type ItemType = {
         background: string;
         foreground: string;
         border: string;
-        icon: React.ComponentType;
+        icon: React.ComponentType<{ className?: string }>;
     };
     shortcut?: string;
     lastOpened?: string;
 };
 
-export default function Item({ item }: Readonly<{ item: ItemType }>) {
+interface ItemProps {
+    item: ItemType;
+    onSelect?: () => void;
+}
+
+export default function Item({ item, onSelect }: Readonly<ItemProps>) {
     const hasBadge = item.shortcut || item.type.type === ACTION_TYPE.OPEN.type;
     const hasShortcut = item.shortcut;
 
     return (
-        <CommandItem key={item.id} className='text-xs'>
+        <CommandItem key={item.id} className='text-xs' onSelect={onSelect} value={item.title}>
             <div className={cn(item.type.background, 'p-1', { 'self-start': item.description })}>
                 <item.type.icon className={cn(item.type.foreground, '!size-3')} />
             </div>
@@ -39,7 +44,6 @@ export default function Item({ item }: Readonly<{ item: ItemType }>) {
                     item.type.border,
                     'ml-auto flex items-center rounded-sm',
                     {
-                        // NOTE: Hidden if no badge is present
                         hidden: hasBadge,
                         'self-start': item.description
                     }

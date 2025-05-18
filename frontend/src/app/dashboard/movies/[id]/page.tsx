@@ -12,6 +12,7 @@ import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import MovieChanges from '@/features/movies/components/movie-changes';
+import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieCredits from '@/features/movies/components/movie-credits';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
 import MovieLayout from '@/features/movies/components/movie-layout';
@@ -164,6 +165,10 @@ function MoviePageContent() {
 
                                     <ItemInformation icon={Eye} label='View Count'>
                                         {movie.view_count || 0}
+                                    </ItemInformation>
+
+                                    <ItemInformation icon={Star} label='Content Score'>
+                                        <MovieContentScore />
                                     </ItemInformation>
                                 </div>
                             </ResponsiveDialog>
