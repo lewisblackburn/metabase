@@ -1,7 +1,7 @@
+import storage from '@/store/storage';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 export type ViewMode = 'grid' | 'list';
 

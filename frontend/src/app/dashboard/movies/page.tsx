@@ -13,11 +13,11 @@ import MoviesSidebar from '@/features/movies/components/movies-sidebar';
 import MoviesSkeleton from '@/features/movies/components/movies-skeleton';
 import { useIncrementMovieViews } from '@/features/movies/hooks/use-increment-movie-views';
 import { useMovieFilters } from '@/features/movies/hooks/use-movie-filters';
-import { setViewMode } from '@/features/movies/store/view-mode.slice';
 import { GetMoviesQuery, useInfiniteGetMoviesQuery } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york-v4/ui/toggle-group';
 import { RootState } from '@/store/store';
+import { setViewMode } from '@/store/view-mode.slice';
 
 import { FlipHorizontalIcon, FlipVerticalIcon, LayoutGrid, List as ListIcon } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';

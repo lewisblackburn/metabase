@@ -2,22 +2,24 @@ import booksFilterReducer from '@/features/books/store/books-filter.slice';
 import commandPanelReducer from '@/features/command-panel/store/command-panel.slice';
 import editDialogReducer from '@/features/edit-dailog/store/edit-dialog.slice';
 import movieEditReducer from '@/features/movies/store/movie-edit.slice';
-import moviesFilterReducer from '@/features/movies/store/movies-filter.slice';
-import viewModeReducer from '@/features/movies/store/view-mode.slice';
+import { persistedMoviesFilterReducer } from '@/features/movies/store/movies-filter.store';
 import personEditReducer from '@/features/people/store/person-edit.slice';
 import settingsReducer from '@/features/settings/store/settings.slice';
 import shortcutsReducer from '@/features/shortcuts/store/shortcuts.slice';
 import songsFilterReducer from '@/features/songs/store/songs-filter.slice';
+import viewModeReducer from '@/store/view-mode.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import persistedGlobalReducer from './global.slice';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 
 const rootReducer = combineReducers({
+    global: persistedGlobalReducer,
     commandPanel: commandPanelReducer,
     editDialog: editDialogReducer,
     movieEdit: movieEditReducer,
     personEdit: personEditReducer,
-    moviesFilter: moviesFilterReducer,
+    moviesFilter: persistedMoviesFilterReducer,
     booksFilter: booksFilterReducer,
     songsFilter: songsFilterReducer,
     settings: settingsReducer,

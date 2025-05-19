@@ -23,7 +23,7 @@ import {
     SheetTrigger
 } from '@/registry/new-york-v4/ui/sheet';
 import { SidebarInput } from '@/registry/new-york-v4/ui/sidebar';
-import { RootState } from '@/store/store';
+import { AppDispatch, RootState } from '@/store/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -33,7 +33,8 @@ import {
     movieReleaseStatusOptions
 } from '../constants/movie-enums';
 import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
-import { resetMoviesFilter, setMoviesFilter } from '../store/movies-filter.slice';
+import { resetMoviesFilter } from '../store/movies-filter.store';
+import { setMoviesFilter } from '../store/movies-filter.store';
 import { Tag, TagInput } from 'emblor';
 import { Calendar, Flame, Settings2, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -44,8 +45,8 @@ export default function MoviesSidebar() {
     const [keywords, setKeywords] = useState<Tag[]>([]);
     const [activeKeywordIndex, setActiveKeywordIndex] = useState<number | null>(null);
 
-    const moviesFilter = useSelector((state: RootState) => state.moviesFilter);
-    const dispatch = useDispatch();
+    const moviesFilter = useSelector((s: RootState) => s.moviesFilter);
+    const dispatch = useDispatch<AppDispatch>();
     const [open, setOpen] = React.useState(false);
     const form = useForm<MoviesFilter>({
         resolver: zodResolver(moviesFilterSchema),

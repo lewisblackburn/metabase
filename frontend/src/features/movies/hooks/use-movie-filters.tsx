@@ -9,6 +9,7 @@ import {
     User_Movie_Status_Types_Enum
 } from '@/generated/graphql';
 import { RootState } from '@/store/store';
+import { useUserId } from '@nhost/nextjs';
 
 import { useSelector } from 'react-redux';
 
@@ -22,6 +23,7 @@ export function useMovieFilters(): {
     where: GetMoviesQueryVariables['where'];
     order_by: NonNullable<GetMoviesQueryVariables['order_by']>;
 } {
+    const userId = useUserId();
     const {
         orderBy,
         search,
@@ -73,6 +75,9 @@ export function useMovieFilters(): {
                             _eq: isNull ? 0 : 1
                         },
                         filter: {
+                            user_id: {
+                                _eq: userId
+                            },
                             status: {
                                 _eq: User_Movie_Status_Types_Enum.Watched
                             }
@@ -121,7 +126,15 @@ export function useMovieFilters(): {
         }
 
         if (keywords?.length) {
-            clauses.push({ movie_keywords: { keyword: { keyword: { _in: keywords.map((k) => k.text) } } } });
+            clauses.push({
+                movie_keywords: {
+                    keyword: {
+                        keyword: {
+                            _in: keywords.map((k: { text: string }) => k.text)
+                        }
+                    }
+                }
+            });
         }
 
         return clauses.length > 0 ? { _and: clauses as Movies_Bool_Exp[] } : {};

@@ -1,6 +1,8 @@
+import storage from '@/store/storage';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { MoviesFilter } from '../schemas/movies-filter.schema';
+import { persistReducer } from 'redux-persist';
 
 const initialState: MoviesFilter = {
     orderBy: {
@@ -21,24 +23,23 @@ const initialState: MoviesFilter = {
     keywords: []
 };
 
+const persistConfig = { key: 'moviesFilter', storage };
+
 export const moviesFilterSlice = createSlice({
     name: 'moviesFilter',
     initialState,
     reducers: {
-        setMoviesFilter: (_state, action) => {
-            if (action.payload.releaseDates) {
-                action.payload.releaseDates.from = action.payload.releaseDates.from?.toISOString();
-                action.payload.releaseDates.to = action.payload.releaseDates.to?.toISOString();
+        setMoviesFilter: (_s, a) => {
+            if (a.payload.releaseDates) {
+                a.payload.releaseDates.from = a.payload.releaseDates.from?.toISOString();
+                a.payload.releaseDates.to = a.payload.releaseDates.to?.toISOString();
             }
-
-            return action.payload;
+            return a.payload;
         },
-        resetMoviesFilter: () => {
-            return initialState;
-        }
+        resetMoviesFilter: () => initialState
     }
 });
 
 export const { setMoviesFilter, resetMoviesFilter } = moviesFilterSlice.actions;
 
-export default moviesFilterSlice.reducer;
+export const persistedMoviesFilterReducer = persistReducer(persistConfig, moviesFilterSlice.reducer);
