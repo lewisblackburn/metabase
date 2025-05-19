@@ -13,6 +13,7 @@ query GetBook($id: uuid!) {
         vote_average
         vote_count
         status
+        googlebooks_id
         book_availabilities {
             availability
         }

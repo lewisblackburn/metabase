@@ -1,3 +1,5 @@
+import { GoogleBooksVolume } from '@/types/googlebooks.types';
+
 export class GoogleBooksService {
     private readonly GOOGLE_BOOKS_API_URL = 'https://www.googleapis.com/books/v1';
 
@@ -38,8 +40,8 @@ export class GoogleBooksService {
         return response.json();
     }
 
-    public async getVolume<T>(volumeId: string): Promise<T> {
-        return this.fetcher<T>(this.GOOGLE_BOOKS_ENTITY_URL(volumeId));
+    public async getVolume(volumeId: string): Promise<GoogleBooksVolume> {
+        return this.fetcher<GoogleBooksVolume>(this.GOOGLE_BOOKS_ENTITY_URL(volumeId));
     }
 
     public async search<T>(query: string, pageIndex: number, maxResults?: number): Promise<T> {

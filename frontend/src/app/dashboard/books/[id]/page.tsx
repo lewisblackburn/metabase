@@ -8,6 +8,7 @@ import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
 import BookChanges from '@/features/books/components/book-changes';
+import BookContentScore from '@/features/books/components/book-content-score';
 import BookCredits from '@/features/books/components/book-credits';
 import BookFavouriteButton from '@/features/books/components/book-favourite-button';
 import BookLayout from '@/features/books/components/book-layout';
@@ -127,9 +128,9 @@ function BookPageContent() {
                                         {book.view_count || 0}
                                     </ItemInformation>
 
-                                    {/* <ItemInformation icon={TrendingUp} label='Content Score'> */}
-                                    {/* <MovieContentScore /> */}
-                                    {/* </ItemInformation> */}
+                                    <ItemInformation icon={Star} label='Content Score'>
+                                        <BookContentScore />
+                                    </ItemInformation>
                                 </div>
                             </ResponsiveDialog>
                         </div>

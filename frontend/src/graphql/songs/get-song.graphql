@@ -8,6 +8,7 @@ query GetSong($id: uuid!) {
         view_count
         vote_average
         vote_count
+        spotify_id
         album {
             artwork
             release_date

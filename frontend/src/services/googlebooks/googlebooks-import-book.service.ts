@@ -42,7 +42,7 @@ export async function importBookFromGoogleBooks(
 
     let bookData: GoogleBooksVolume;
     try {
-        bookData = await googleBooksService.getVolume<GoogleBooksVolume>(volumeId);
+        bookData = await googleBooksService.getVolume(volumeId);
     } catch (error) {
         console.error('Error fetching book details from Google Books:', error);
         return { message: `Error fetching book details for Google Books ID ${volumeId}.` };

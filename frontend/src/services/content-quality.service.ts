@@ -1,21 +1,24 @@
 import {
-    GetMovieForContentQualityCheckDocument,
-    GetMovieForContentQualityCheckQuery,
-    GetMovieForContentQualityCheckQueryVariables
+    GetBookDocument,
+    GetBookQuery,
+    GetBookQueryVariables,
+    GetMovieDocument,
+    GetMovieQuery,
+    GetMovieQueryVariables,
+    GetSongDocument,
+    GetSongQuery,
+    GetSongQueryVariables
 } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
 import { TmdbMovieDetails } from '@/types/tmdb.types';
 
-import { GoogleBooksVolume } from '../types/googlebooks.types';
-import { SpotifyTrack } from '../types/spotify.types';
+import { googleBooksService } from './googlebooks/googlebooks.service';
+import { spotifyService } from './spotify/spotify.service';
 import { tmdbService } from './tmdb/tmdb.service';
 
 export class ContentQualityService {
     public static async checkMovieQuality(id: string): Promise<number> {
-        const localMovieData = await nhost.graphql.request<
-            GetMovieForContentQualityCheckQuery,
-            GetMovieForContentQualityCheckQueryVariables
-        >(GetMovieForContentQualityCheckDocument, {
+        const localMovieData = await nhost.graphql.request<GetMovieQuery, GetMovieQueryVariables>(GetMovieDocument, {
             id
         });
 
@@ -52,48 +55,63 @@ export class ContentQualityService {
         return score;
     }
 
-    // TODO
-    public static async checkSongQuality(localSong: any, spotifyTrack: SpotifyTrack): Promise<number> {
+    public static async checkSongQuality(id: string): Promise<number> {
+        const localSongData = await nhost.graphql.request<GetSongQuery, GetSongQueryVariables>(GetSongDocument, {
+            id
+        });
+
+        const localSong = localSongData.data?.songs_by_pk;
+
+        if (!localSong?.spotify_id) return 0;
+
+        const spotifyTrack = await spotifyService.getTrack(localSong.spotify_id);
+
         let score = 0;
 
-        if (localSong.title?.toLowerCase() === spotifyTrack.name?.toLowerCase()) {
+        if (localSong.name?.toLowerCase() === spotifyTrack.name?.toLowerCase()) {
             score += 40;
         }
 
-        const localArtists = new Set(localSong.artists?.map((a: string) => a.toLowerCase()));
-        const spotifyArtists = new Set(spotifyTrack.artists.map((a) => a.name.toLowerCase()));
-        if (ContentQualityService.areSetsEqual(localArtists, spotifyArtists)) {
+        if (localSong.album?.name?.toLowerCase() === spotifyTrack.album.name?.toLowerCase()) {
             score += 30;
         }
 
-        if (localSong.album?.toLowerCase() === spotifyTrack.album.name?.toLowerCase()) {
+        if (localSong.duration === spotifyTrack.duration_ms) {
             score += 30;
         }
 
         return score;
     }
 
-    // TODO
-    public static async checkBookQuality(localBook: any, googleBook: GoogleBooksVolume): Promise<number> {
+    public static async checkBookQuality(id: string): Promise<number> {
+        const localBookData = await nhost.graphql.request<GetBookQuery, GetBookQueryVariables>(GetBookDocument, {
+            id
+        });
+
+        const localBook = localBookData.data?.books_by_pk;
+
+        if (!localBook?.googlebooks_id) return 0;
+
+        const googleBook = await googleBooksService.getVolume(localBook.googlebooks_id);
+
         let score = 0;
 
-        if (localBook.title?.toLowerCase() === googleBook.volumeInfo.title?.toLowerCase()) {
+        if (localBook.title?.toLowerCase() === googleBook?.volumeInfo.title?.toLowerCase()) {
             score += 40;
         }
 
-        const localAuthors = new Set(localBook.authors?.map((a: string) => a.toLowerCase()));
-        const googleAuthors = new Set(googleBook.volumeInfo.authors?.map((a) => a.toLowerCase()) || []);
-        if (ContentQualityService.areSetsEqual(localAuthors, googleAuthors)) {
+        const localGenres = new Set(localBook.book_genres?.map((g) => g.genre.toLowerCase()));
+        const googleGenres = new Set(googleBook.volumeInfo.categories?.map((g) => g.toLowerCase()) || []);
+        if (ContentQualityService.areSetsEqual(localGenres, googleGenres)) {
             score += 30;
         }
 
-        const localISBN = localBook.isbn;
-        const googleISBN = googleBook.volumeInfo.industryIdentifiers?.find(
-            (id) => id.type === 'ISBN_13' || id.type === 'ISBN_10'
-        )?.identifier;
+        if (localBook.published_date === googleBook.volumeInfo.publishedDate) {
+            score += 20;
+        }
 
-        if (localISBN === googleISBN) {
-            score += 30;
+        if (localBook.overview?.toLowerCase() === googleBook.volumeInfo.description?.toLowerCase()) {
+            score += 10;
         }
 
         return score;

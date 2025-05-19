@@ -1,5 +1,5 @@
-mutation UpdateSong($pk_columns: songs_pk_columns_input!, $inc: songs_inc_input) {
-    update_songs_by_pk(pk_columns: $pk_columns, _inc: $inc) {
+mutation UpdateSong($pk_columns: songs_pk_columns_input!, $inc: songs_inc_input, $set: songs_set_input) {
+    update_songs_by_pk(pk_columns: $pk_columns, _inc: $inc, _set: $set) {
         id
     }
 }

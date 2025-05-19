@@ -11,6 +11,7 @@ import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dia
 import ObjectOverview from '@/features/movies/components/movie-overview';
 import ReviewSongDialog from '@/features/songs/components/review-song-dialog';
 import SongChanges from '@/features/songs/components/song-changes';
+import SongContentScore from '@/features/songs/components/song-content-score';
 import SongCredits from '@/features/songs/components/song-credits';
 import SongFavouriteButton from '@/features/songs/components/song-favourite-button';
 import SongLayout from '@/features/songs/components/song-layout';
@@ -20,7 +21,7 @@ import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
-import { Calendar, Edit, Eye, Image, Info, Layers2, Star, Timer, Trophy, User, Video } from 'lucide-react';
+import { Calendar, Edit, Eye, Image, Info, Layers2, Star, Timer, TrendingUp, Trophy, User, Video } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
 export default function SongPage() {
@@ -103,9 +104,9 @@ function SongPageContent() {
                                         {song.view_count || 0}
                                     </ItemInformation>
 
-                                    {/* <ItemInformation icon={TrendingUp} label='Content Score'> */}
-                                    {/* <MovieContentScore /> */}
-                                    {/* </ItemInformation> */}
+                                    <ItemInformation icon={Star} label='Content Score'>
+                                        <SongContentScore />
+                                    </ItemInformation>
                                 </div>
                             </ResponsiveDialog>
                         </div>
