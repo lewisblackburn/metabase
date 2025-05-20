@@ -1,14 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-
 import { BUCKET, BucketType } from '@/constants/media.constant';
-import {
-    useGetAlbumMediaQuery,
-    useGetSongQuery,
-    useInsertAlbumMediaMutation,
-    useUpdateAlbumMutation
-} from '@/generated/graphql';
+import { useGetBookMediaQuery, useInsertBookMediaMutation, useUpdateBookMutation } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { useFileUpload, useNhostClient } from '@nhost/nextjs';
@@ -18,41 +11,35 @@ import { MediaTable } from '../../../../components/shared/media-table';
 import { AlertCircleIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface EditAlbumMediaProps {
-    songId: string;
+interface EditBookMediaProps {
+    bookId: string;
 }
 
-export default function EditAlbumMedia({ songId }: EditAlbumMediaProps) {
+export default function EditBookMedia({ bookId }: EditBookMediaProps) {
     const nhost = useNhostClient();
     const queryClient = useQueryClient();
     const { add, upload, progress, isUploading, error } = useFileUpload();
-    const { data: song } = useGetSongQuery({
-        id: songId
-    });
-
-    const albumId = song?.songs_by_pk?.album?.id;
-
-    const { data: media, isLoading } = useGetAlbumMediaQuery(
+    const { data: media, isLoading } = useGetBookMediaQuery(
         {
             where: {
-                album_id: {
-                    _eq: albumId
+                book_id: {
+                    _eq: bookId
                 }
             }
         },
         {
-            queryKey: ['album-media', albumId],
-            enabled: !!albumId
+            queryKey: ['book-media', bookId],
+            enabled: !!bookId
         }
     );
-    const insertMediaMutation = useInsertAlbumMediaMutation({
+    const insertMediaMutation = useInsertBookMediaMutation({
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['album-media', albumId] });
+            queryClient.invalidateQueries({ queryKey: ['book-media', bookId] });
         }
     });
-    const updateAlbumMutation = useUpdateAlbumMutation({
+    const updateBookMutation = useUpdateBookMutation({
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['album', albumId] });
+            queryClient.invalidateQueries({ queryKey: ['book', bookId] });
             toast.success('Primary image updated');
         },
         onError: (error: Error) => {
@@ -75,7 +62,7 @@ export default function EditAlbumMedia({ songId }: EditAlbumMediaProps) {
                     await insertMediaMutation.mutateAsync({
                         objects: [
                             {
-                                album_id: albumId,
+                                book_id: bookId,
                                 file_id: result.id
                             }
                         ]
@@ -93,7 +80,7 @@ export default function EditAlbumMedia({ songId }: EditAlbumMediaProps) {
     const handleDelete = async (fileId: string) => {
         try {
             await nhost.storage.delete({ fileId });
-            queryClient.invalidateQueries({ queryKey: ['album-media', songId] });
+            queryClient.invalidateQueries({ queryKey: ['book-media', bookId] });
             toast.success('Image deleted successfully');
         } catch (err) {
             toast.error('Failed to delete image');
@@ -103,13 +90,14 @@ export default function EditAlbumMedia({ songId }: EditAlbumMediaProps) {
     const handleSetPrimary = async (fileId: string, bucketId: BucketType) => {
         try {
             const publicUrl = nhost.storage.getPublicUrl({ fileId });
-            await updateAlbumMutation.mutateAsync({
+            await updateBookMutation.mutateAsync({
                 pk_columns: {
-                    id: albumId
+                    id: bookId
                 },
                 set: {
-                    artwork: publicUrl
-                }
+                    cover: publicUrl
+                },
+                inc: {}
             });
         } catch (err) {
             toast.error('Failed to update primary image');
@@ -120,11 +108,11 @@ export default function EditAlbumMedia({ songId }: EditAlbumMediaProps) {
         <div className='space-y-6'>
             <div className='flex justify-end gap-4'>
                 <Button
-                    onClick={() => handleFileSelect(BUCKET.ARTWORK)}
+                    onClick={() => handleFileSelect(BUCKET.COVER)}
                     disabled={isUploading}
                     variant='outline'
                     size='sm'>
-                    Upload Artwork
+                    Upload Cover
                 </Button>
             </div>
             {isUploading && (
@@ -140,7 +128,7 @@ export default function EditAlbumMedia({ songId }: EditAlbumMediaProps) {
                 </div>
             )}
             <MediaTable
-                media={media?.album_media || []}
+                media={media?.book_media || []}
                 onDelete={handleDelete}
                 onSetPrimary={handleSetPrimary}
                 isLoading={isLoading}

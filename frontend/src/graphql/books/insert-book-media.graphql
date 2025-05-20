@@ -1,0 +1,5 @@
+mutation InsertBookMedia($objects: [book_media_insert_input!]!) {
+    insert_book_media(objects: $objects) {
+        affected_rows
+    }
+}

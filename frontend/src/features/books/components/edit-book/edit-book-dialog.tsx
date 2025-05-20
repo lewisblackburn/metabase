@@ -10,6 +10,7 @@ import { setActiveItemId } from '../../store/edit-book.slice';
 import EditBookAuthors from './edit-book-authors';
 import EditBookDangerZone from './edit-book-danger-zone';
 import EditBookDetails from './edit-book-details';
+import EditBookMedia from './edit-book-media';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EditBookDialogProps {
@@ -26,7 +27,7 @@ export function EditBookDialog({ id, isOpen, onOpenChange }: EditBookDialogProps
         details: () => <EditBookDetails bookId={id} />,
         authors: () => <EditBookAuthors bookId={id} />,
         // awards: () => <EditSongAwards songId={id} />,
-        // media: () => <EditAlbumMedia songId={id} />,
+        media: () => <EditBookMedia bookId={id} />,
         danger_zone: () => <EditBookDangerZone bookId={id} />
     };
 

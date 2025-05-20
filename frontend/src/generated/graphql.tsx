@@ -4961,7 +4961,7 @@ export type Books_Bool_Exp = {
 /** unique or primary key constraints on table "books" */
 export enum Books_Constraint {
   /** unique or primary key constraint on columns "googlebooks_id" */
-  BooksOpenlibraryIdKey = 'books_openlibrary_id_key',
+  BooksGooglebooksIdKey = 'books_googlebooks_id_key',
   /** unique or primary key constraint on columns "id" */
   BooksPkey = 'books_pkey'
 }
@@ -28980,6 +28980,16 @@ export type GetBookByGoogleBooksIdQueryVariables = Exact<{
 
 export type GetBookByGoogleBooksIdQuery = { __typename?: 'query_root', books: Array<{ __typename?: 'books', googlebooks_id?: string | null }> };
 
+export type GetBookMediaQueryVariables = Exact<{
+  where?: InputMaybe<Book_Media_Bool_Exp>;
+  order_by?: InputMaybe<Array<Book_Media_Order_By> | Book_Media_Order_By>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetBookMediaQuery = { __typename?: 'query_root', book_media: Array<{ __typename?: 'book_media', file: { __typename?: 'files', name?: string | null, uploadedByUserId?: any | null, bucketId: string, id: any, size?: number | null, createdAt: any, mimeType?: string | null } }> };
+
 export type GetBookTitleQueryVariables = Exact<{
   book_id: Scalars['uuid']['input'];
 }>;
@@ -29022,6 +29032,13 @@ export type IncrementBookViewsMutationVariables = Exact<{
 
 
 export type IncrementBookViewsMutation = { __typename?: 'mutation_root', update_books_by_pk?: { __typename?: 'books', id: any, view_count?: number | null } | null };
+
+export type InsertBookMediaMutationVariables = Exact<{
+  objects: Array<Book_Media_Insert_Input> | Book_Media_Insert_Input;
+}>;
+
+
+export type InsertBookMediaMutation = { __typename?: 'mutation_root', insert_book_media?: { __typename?: 'book_media_mutation_response', affected_rows: number } | null };
 
 export type InsertBookMutationVariables = Exact<{
   object: Books_Insert_Input;
@@ -29979,6 +29996,57 @@ export const useInfiniteGetBookByGoogleBooksIdQuery = <
   })()
     )};
 
+export const GetBookMediaDocument = `
+    query GetBookMedia($where: book_media_bool_exp, $order_by: [book_media_order_by!], $limit: Int, $offset: Int) {
+  book_media(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
+    file {
+      name
+      uploadedByUserId
+      bucketId
+      id
+      size
+      createdAt
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useGetBookMediaQuery = <
+      TData = GetBookMediaQuery,
+      TError = unknown
+    >(
+      variables?: GetBookMediaQueryVariables,
+      options?: Omit<UseQueryOptions<GetBookMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBookMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBookMediaQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetBookMedia'] : ['GetBookMedia', variables],
+    queryFn: fetcher<GetBookMediaQuery, GetBookMediaQueryVariables>(GetBookMediaDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetBookMediaQuery = <
+      TData = InfiniteData<GetBookMediaQuery>,
+      TError = unknown
+    >(
+      variables: GetBookMediaQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetBookMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetBookMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetBookMediaQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetBookMedia.infinite'] : ['GetBookMedia.infinite', variables],
+      queryFn: (metaData) => fetcher<GetBookMediaQuery, GetBookMediaQueryVariables>(GetBookMediaDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
 export const GetBookTitleDocument = `
     query GetBookTitle($book_id: uuid!) {
   books(where: {id: {_eq: $book_id}}) {
@@ -30211,6 +30279,27 @@ export const useIncrementBookViewsMutation = <
       {
     mutationKey: ['IncrementBookViews'],
     mutationFn: (variables?: IncrementBookViewsMutationVariables) => fetcher<IncrementBookViewsMutation, IncrementBookViewsMutationVariables>(IncrementBookViewsDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const InsertBookMediaDocument = `
+    mutation InsertBookMedia($objects: [book_media_insert_input!]!) {
+  insert_book_media(objects: $objects) {
+    affected_rows
+  }
+}
+    `;
+
+export const useInsertBookMediaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertBookMediaMutation, TError, InsertBookMediaMutationVariables, TContext>) => {
+    
+    return useMutation<InsertBookMediaMutation, TError, InsertBookMediaMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertBookMedia'],
+    mutationFn: (variables?: InsertBookMediaMutationVariables) => fetcher<InsertBookMediaMutation, InsertBookMediaMutationVariables>(InsertBookMediaDocument, variables)(),
     ...options
   }
     )};

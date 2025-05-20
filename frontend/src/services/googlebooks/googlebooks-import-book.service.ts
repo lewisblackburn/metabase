@@ -4,6 +4,7 @@ import { nhost } from '@/lib/nhost';
 import {
     Book_Media_Constraint,
     Book_Media_Update_Column,
+    Books_Constraint,
     Books_Insert_Input,
     Credit_Types_Enum,
     Credits_Insert_Input,
@@ -14,8 +15,10 @@ import {
     InsertBookDocument,
     InsertBookMutation,
     InsertBookMutationVariables,
+    InsertSongDocument,
     Job_Types_Enum,
-    Object_Types_Enum
+    Object_Types_Enum,
+    Songs_Constraint
 } from '../../generated/graphql';
 import { fetcher } from '../../lib/graphql-client';
 import { GoogleBooksVolume } from '../../types/googlebooks.types';
@@ -115,7 +118,10 @@ export async function importBookFromGoogleBooks(
         };
 
         const result = await fetcher<InsertBookMutation, InsertBookMutationVariables>(InsertBookDocument, {
-            object: bookInsertInput
+            object: bookInsertInput,
+            on_conflict: {
+                constraint: Books_Constraint.BooksGooglebooksIdKey
+            }
         })();
 
         if (!result.insert_books_one) {
