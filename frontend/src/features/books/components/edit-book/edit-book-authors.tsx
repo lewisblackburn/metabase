@@ -17,11 +17,11 @@ import { Input } from '@/registry/new-york-v4/ui/input';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, SortingState } from '@tanstack/react-table';
 
-import AddSongArtistDialog from './add-song-artist-dialog';
+import AddBookAuthorDialog from './add-book-author-dialog';
 import { Trash, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function EditSongArtists({ songId }: { songId: string }) {
+export default function EditBookAuthors({ bookId }: { bookId: string }) {
     const queryClient = useQueryClient();
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -36,12 +36,12 @@ export default function EditSongArtists({ songId }: { songId: string }) {
                 _and: [
                     {
                         object_id: {
-                            _eq: songId
+                            _eq: bookId
                         }
                     },
                     {
                         credit_type: {
-                            _eq: Credit_Types_Enum.Artist
+                            _eq: Credit_Types_Enum.Author
                         }
                     },
                     debouncedSearchQuery
@@ -73,18 +73,18 @@ export default function EditSongArtists({ songId }: { songId: string }) {
             ]
         },
         {
-            queryKey: ['song-artists', songId, debouncedSearchQuery, pageIndex, pageSize, sorting]
+            queryKey: ['book-authors', bookId, debouncedSearchQuery, pageIndex, pageSize, sorting]
         }
     );
 
     const castMembers = data?.credits ?? [];
     const totalRows = data?.credits_aggregate?.aggregate?.count ?? 0;
 
-    const { mutateAsync: deleteSongArtists } = useDeleteCreditsMutation({
+    const { mutateAsync: deleteBookAuthors } = useDeleteCreditsMutation({
         onSuccess: () => {
-            toast.success('Artists deleted successfully');
-            queryClient.invalidateQueries({ queryKey: ['song-artists', songId] });
-            queryClient.invalidateQueries({ queryKey: ['song-credits', songId] });
+            toast.success('Authors deleted successfully');
+            queryClient.invalidateQueries({ queryKey: ['book-authors', bookId] });
+            queryClient.invalidateQueries({ queryKey: ['book-credits', bookId] });
         },
         onError: (error: Error) => {
             toast.error(error.message);
@@ -93,8 +93,8 @@ export default function EditSongArtists({ songId }: { songId: string }) {
 
     const { mutateAsync: updateCredits } = useUpdateCreditsMutation({
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['song-artists', songId] });
-            queryClient.invalidateQueries({ queryKey: ['song-credits', songId] });
+            queryClient.invalidateQueries({ queryKey: ['book-authors', bookId] });
+            queryClient.invalidateQueries({ queryKey: ['book-credits', bookId] });
         },
         onError: (error: Error) => {
             toast.error(error.message);
@@ -136,7 +136,7 @@ export default function EditSongArtists({ songId }: { songId: string }) {
     const columns: ColumnDef<(typeof castMembers)[number]>[] = [
         {
             accessorKey: 'person',
-            header: 'Artist',
+            header: 'Author',
             cell: ({ row }) => {
                 const person = row.original.person;
                 return (
@@ -153,7 +153,7 @@ export default function EditSongArtists({ songId }: { songId: string }) {
         const selectedIds = Object.keys(rowSelection);
         if (selectedIds.length === 0) return;
 
-        await deleteSongArtists({
+        await deleteBookAuthors({
             where: {
                 id: {
                     _in: selectedIds
@@ -172,7 +172,7 @@ export default function EditSongArtists({ songId }: { songId: string }) {
         <div className='overflow-x-auto'>
             <div className='mb-4 flex w-full items-center justify-between gap-2'>
                 <Input
-                    placeholder='Search by artist...'
+                    placeholder='Search by author...'
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
@@ -184,7 +184,7 @@ export default function EditSongArtists({ songId }: { songId: string }) {
                         Reset
                     </Button>
                 )}
-                <AddSongArtistDialog songId={songId} />
+                <AddBookAuthorDialog bookId={bookId} />
 
                 {Object.keys(rowSelection).length > 0 && (
                     <Button variant='destructive' size='sm' onClick={handleDelete}>

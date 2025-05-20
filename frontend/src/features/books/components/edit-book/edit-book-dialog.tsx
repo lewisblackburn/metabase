@@ -7,6 +7,7 @@ import { SidebarItem } from '@/components/shared/sidebar-dialog';
 import { RootState } from '@/store/store';
 
 import { setActiveItemId } from '../../store/edit-book.slice';
+import EditBookAuthors from './edit-book-authors';
 import EditBookDangerZone from './edit-book-danger-zone';
 import EditBookDetails from './edit-book-details';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +24,7 @@ export function EditBookDialog({ id, isOpen, onOpenChange }: EditBookDialogProps
 
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
         details: () => <EditBookDetails bookId={id} />,
-        // artists: () => <EditSongArtists songId={id} />,
+        authors: () => <EditBookAuthors bookId={id} />,
         // awards: () => <EditSongAwards songId={id} />,
         // media: () => <EditAlbumMedia songId={id} />,
         danger_zone: () => <EditBookDangerZone bookId={id} />

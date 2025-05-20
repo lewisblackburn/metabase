@@ -9,6 +9,7 @@ import Poster from '@/components/shared/poster';
 import { OBJECT_TYPE } from '@/constants/objects.constant';
 import {
     Credits,
+    Cron_Job_Select_Column,
     Department_Types_Enum,
     Object_Types_Enum,
     People,

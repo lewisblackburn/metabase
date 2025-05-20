@@ -6,7 +6,12 @@ import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
 import PersonSelect from '@/components/form/person-select';
 import { AddCastMemberSchemaType, addCastMemberSchema } from '@/features/movies/schemas/movie-cast-member.schema';
-import { Object_Types_Enum, useInsertCreditsMutation } from '@/generated/graphql';
+import {
+    Department_Types_Enum,
+    Job_Types_Enum,
+    Object_Types_Enum,
+    useInsertCreditsMutation
+} from '@/generated/graphql';
 import { Credit_Types_Enum } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import {
@@ -54,13 +59,17 @@ export default function AddCastMemberDialog({ movieId }: AddCastMemberDialogProp
                         person_id: data.person,
                         character: data.character,
                         credit_type: Credit_Types_Enum.Cast,
-                        object_type: Object_Types_Enum.Movie
+                        object_type: Object_Types_Enum.Movie,
+                        department: Department_Types_Enum.Acting,
+                        job: Job_Types_Enum.Actor
                     }
                 ]
             });
 
             toast.success('Cast member added successfully');
             queryClient.invalidateQueries({ queryKey: ['movie-cast', movieId] });
+            queryClient.invalidateQueries({ queryKey: ['movie-credits', movieId] });
+            queryClient.invalidateQueries({ queryKey: ['person', data.person] });
             setOpen(false);
             reset();
         } catch (error) {

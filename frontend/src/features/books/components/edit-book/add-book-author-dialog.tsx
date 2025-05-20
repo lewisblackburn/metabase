@@ -4,8 +4,7 @@ import { useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import PersonSelect from '@/components/form/person-select';
-import { AddSongArtistSchemaType } from '@/features/songs/schemas/song-artist.schema';
-import { addSongArtistSchema } from '@/features/songs/schemas/song-artist.schema';
+import { AddBookAuthorSchemaType, addBookAuthorSchema } from '@/features/books/schemas/book-author.schema';
 import {
     Department_Types_Enum,
     Job_Types_Enum,
@@ -30,18 +29,18 @@ import { Plus, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-interface AddSongArtistDialogProps {
-    songId: string;
+interface AddBookAuthorDialogProps {
+    bookId: string;
 }
 
-export default function AddSongArtistDialog({ songId }: AddSongArtistDialogProps) {
+export default function AddBookAuthorDialog({ bookId }: AddBookAuthorDialogProps) {
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
 
     const { mutateAsync: insertCredits } = useInsertCreditsMutation();
 
     const form = useForm({
-        resolver: zodResolver(addSongArtistSchema),
+        resolver: zodResolver(addBookAuthorSchema),
         defaultValues: {
             person: ''
         }
@@ -49,29 +48,29 @@ export default function AddSongArtistDialog({ songId }: AddSongArtistDialogProps
 
     const { handleSubmit, control, reset } = form;
 
-    const onSubmit = async (data: AddSongArtistSchemaType) => {
+    const onSubmit = async (data: AddBookAuthorSchemaType) => {
         try {
             await insertCredits({
                 objects: [
                     {
-                        object_id: songId,
+                        object_id: bookId,
                         person_id: data.person,
-                        credit_type: Credit_Types_Enum.Artist,
-                        object_type: Object_Types_Enum.Song,
-                        department: Department_Types_Enum.Singing,
-                        job: Job_Types_Enum.Singer
+                        credit_type: Credit_Types_Enum.Author,
+                        object_type: Object_Types_Enum.Book,
+                        department: Department_Types_Enum.Writing,
+                        job: Job_Types_Enum.Writer
                     }
                 ]
             });
 
-            toast.success('Song artist added successfully');
-            queryClient.invalidateQueries({ queryKey: ['song-artists', songId] });
-            queryClient.invalidateQueries({ queryKey: ['song-credits', songId] });
+            toast.success('Book author added successfully');
+            queryClient.invalidateQueries({ queryKey: ['book-authors', bookId] });
+            queryClient.invalidateQueries({ queryKey: ['book-credits', bookId] });
             queryClient.invalidateQueries({ queryKey: ['person', data.person] });
             setOpen(false);
             reset();
         } catch (error) {
-            toast.error('Failed to add song artist');
+            toast.error('Failed to add book author');
         }
     };
 
@@ -80,14 +79,14 @@ export default function AddSongArtistDialog({ songId }: AddSongArtistDialogProps
             <DialogTrigger asChild>
                 <Button variant='outline' size='sm'>
                     <Plus className='size-4' />
-                    Add Song Artist
+                    Add Book Author
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add Song Artist</DialogTitle>
+                    <DialogTitle>Add Book Author</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Add an artist to the song.</DialogDescription>
+                <DialogDescription>Add an author to the book.</DialogDescription>
                 <Form {...form}>
                     <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
@@ -108,7 +107,7 @@ export default function AddSongArtistDialog({ songId }: AddSongArtistDialogProps
                                 <X className='size-4' />
                                 Cancel
                             </Button>
-                            <Button type='submit'>Add Song Artist</Button>
+                            <Button type='submit'>Add Book Author</Button>
                         </div>
                     </form>
                 </Form>

@@ -68,6 +68,8 @@ export default function AddCrewMemberDialog({ movieId }: AddCrewMemberDialogProp
 
             toast.success('Crew member added successfully');
             queryClient.invalidateQueries({ queryKey: ['movie-crew', movieId] });
+            queryClient.invalidateQueries({ queryKey: ['movie-credits', movieId] });
+            queryClient.invalidateQueries({ queryKey: ['person', data.person] });
             setOpen(false);
             reset();
         } catch (error) {
