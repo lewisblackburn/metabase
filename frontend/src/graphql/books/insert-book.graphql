@@ -1,5 +1,5 @@
-mutation InsertBook($object: books_insert_input!) {
-    insert_books_one(object: $object) {
+mutation InsertBook($object: books_insert_input!, $on_conflict: books_on_conflict) {
+    insert_books_one(object: $object, on_conflict: $on_conflict) {
         id
         title
     }

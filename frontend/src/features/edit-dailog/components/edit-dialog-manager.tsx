@@ -1,5 +1,6 @@
 'use client';
 
+import { EditBookDialog } from '@/features/books/components/edit-book/edit-book-dialog';
 import { EditMovieDialog } from '@/features/movies/components/edit-movie/edit-movie-dialog';
 import { EditPersonDialog } from '@/features/people/components/edit-person.dialog';
 import { EditSongDialog } from '@/features/songs/components/edit-song/edit-song-dialog';
@@ -27,6 +28,8 @@ export default function EditDialogManager() {
             return <EditMovieDialog {...commonProps} />;
         case Object_Types_Enum.Song:
             return <EditSongDialog {...commonProps} />;
+        case Object_Types_Enum.Book:
+            return <EditBookDialog {...commonProps} />;
         case Object_Types_Enum.Person:
             return <EditPersonDialog {...commonProps} />;
         default:

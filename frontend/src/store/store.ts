@@ -1,4 +1,5 @@
 import booksFilterReducer from '@/features/books/store/books-filter.slice';
+import bookEditReducer from '@/features/books/store/edit-book.slice';
 import commandPanelReducer from '@/features/command-panel/store/command-panel.slice';
 import editDialogReducer from '@/features/edit-dailog/store/edit-dialog.slice';
 import movieEditReducer from '@/features/movies/store/movie-edit.slice';
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     // Edit states
     movieEdit: movieEditReducer,
     songEdit: songEditReducer,
+    bookEdit: bookEditReducer,
     personEdit: personEditReducer,
 
     // Filter states

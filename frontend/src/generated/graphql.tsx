@@ -3437,13 +3437,6 @@ export type Book_Availabilities_Mutation_Response = {
   returning: Array<Book_Availabilities>;
 };
 
-/** input type for inserting object relation for remote table "book_availabilities" */
-export type Book_Availabilities_Obj_Rel_Insert_Input = {
-  data: Book_Availabilities_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Book_Availabilities_On_Conflict>;
-};
-
 /** on_conflict condition type for table "book_availabilities" */
 export type Book_Availabilities_On_Conflict = {
   constraint: Book_Availabilities_Constraint;
@@ -4647,8 +4640,10 @@ export type Books = {
   book_alternative_titles: Array<Book_Alternative_Titles>;
   /** An aggregate relationship */
   book_alternative_titles_aggregate: Book_Alternative_Titles_Aggregate;
-  /** An object relationship */
-  book_availabilities?: Maybe<Book_Availabilities>;
+  /** An array relationship */
+  book_availabilities: Array<Book_Availabilities>;
+  /** An aggregate relationship */
+  book_availabilities_aggregate: Book_Availabilities_Aggregate;
   /** An array relationship */
   book_genres: Array<Book_Genres>;
   /** An aggregate relationship */
@@ -4706,6 +4701,26 @@ export type BooksBook_Alternative_Titles_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Book_Alternative_Titles_Order_By>>;
   where?: InputMaybe<Book_Alternative_Titles_Bool_Exp>;
+};
+
+
+/** columns and relationships of "books" */
+export type BooksBook_AvailabilitiesArgs = {
+  distinct_on?: InputMaybe<Array<Book_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Book_Availabilities_Order_By>>;
+  where?: InputMaybe<Book_Availabilities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "books" */
+export type BooksBook_Availabilities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Book_Availabilities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Book_Availabilities_Order_By>>;
+  where?: InputMaybe<Book_Availabilities_Bool_Exp>;
 };
 
 
@@ -4914,6 +4929,7 @@ export type Books_Bool_Exp = {
   book_alternative_titles?: InputMaybe<Book_Alternative_Titles_Bool_Exp>;
   book_alternative_titles_aggregate?: InputMaybe<Book_Alternative_Titles_Aggregate_Bool_Exp>;
   book_availabilities?: InputMaybe<Book_Availabilities_Bool_Exp>;
+  book_availabilities_aggregate?: InputMaybe<Book_Availabilities_Aggregate_Bool_Exp>;
   book_genres?: InputMaybe<Book_Genres_Bool_Exp>;
   book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Bool_Exp>;
   book_keywords?: InputMaybe<Book_Keywords_Bool_Exp>;
@@ -4962,7 +4978,7 @@ export type Books_Inc_Input = {
 /** input type for inserting data into table "books" */
 export type Books_Insert_Input = {
   book_alternative_titles?: InputMaybe<Book_Alternative_Titles_Arr_Rel_Insert_Input>;
-  book_availabilities?: InputMaybe<Book_Availabilities_Obj_Rel_Insert_Input>;
+  book_availabilities?: InputMaybe<Book_Availabilities_Arr_Rel_Insert_Input>;
   book_genres?: InputMaybe<Book_Genres_Arr_Rel_Insert_Input>;
   book_keywords?: InputMaybe<Book_Keywords_Arr_Rel_Insert_Input>;
   book_media?: InputMaybe<Book_Media_Arr_Rel_Insert_Input>;
@@ -5082,7 +5098,7 @@ export type Books_On_Conflict = {
 /** Ordering options when selecting data from "books". */
 export type Books_Order_By = {
   book_alternative_titles_aggregate?: InputMaybe<Book_Alternative_Titles_Aggregate_Order_By>;
-  book_availabilities?: InputMaybe<Book_Availabilities_Order_By>;
+  book_availabilities_aggregate?: InputMaybe<Book_Availabilities_Aggregate_Order_By>;
   book_genres_aggregate?: InputMaybe<Book_Genres_Aggregate_Order_By>;
   book_keywords_aggregate?: InputMaybe<Book_Keywords_Aggregate_Order_By>;
   book_media_aggregate?: InputMaybe<Book_Media_Aggregate_Order_By>;
@@ -28929,6 +28945,27 @@ export type InsertAuditLogsMutationVariables = Exact<{
 
 export type InsertAuditLogsMutation = { __typename?: 'mutation_root', insert_audit_logs?: { __typename?: 'audit_logs_mutation_response', affected_rows: number } | null };
 
+export type DeleteBookAvailabilitiesMutationVariables = Exact<{
+  where: Book_Availabilities_Bool_Exp;
+}>;
+
+
+export type DeleteBookAvailabilitiesMutation = { __typename?: 'mutation_root', delete_book_availabilities?: { __typename?: 'book_availabilities_mutation_response', affected_rows: number } | null };
+
+export type DeleteBookGenresMutationVariables = Exact<{
+  where: Book_Genres_Bool_Exp;
+}>;
+
+
+export type DeleteBookGenresMutation = { __typename?: 'mutation_root', delete_book_genres?: { __typename?: 'book_genres_mutation_response', affected_rows: number } | null };
+
+export type DeleteBookKeywordsMutationVariables = Exact<{
+  where: Book_Keywords_Bool_Exp;
+}>;
+
+
+export type DeleteBookKeywordsMutation = { __typename?: 'mutation_root', delete_book_keywords?: { __typename?: 'book_keywords_mutation_response', affected_rows: number } | null };
+
 export type DeleteBookMutationVariables = Exact<{
   where: Books_Bool_Exp;
 }>;
@@ -28955,7 +28992,7 @@ export type GetBookQueryVariables = Exact<{
 }>;
 
 
-export type GetBookQuery = { __typename?: 'query_root', books_by_pk?: { __typename?: 'books', id: any, title: string, overview?: string | null, cover: string, content_score?: number | null, created_at?: any | null, language?: string | null, published_date?: any | null, reading_time?: number | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, status?: Book_Release_Status_Types_Enum | null, googlebooks_id?: string | null, book_availabilities?: { __typename?: 'book_availabilities', availability: Book_Availability_Types_Enum } | null, book_genres: Array<{ __typename?: 'book_genres', genre: Book_Genre_Types_Enum }>, book_keywords: Array<{ __typename?: 'book_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetBookQuery = { __typename?: 'query_root', books_by_pk?: { __typename?: 'books', id: any, title: string, overview?: string | null, cover: string, content_score?: number | null, created_at?: any | null, googlebooks_id?: string | null, language?: string | null, published_date?: any | null, reading_time?: number | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, status?: Book_Release_Status_Types_Enum | null, book_availabilities: Array<{ __typename?: 'book_availabilities', availability: Book_Availability_Types_Enum }>, book_genres: Array<{ __typename?: 'book_genres', genre: Book_Genre_Types_Enum }>, book_keywords: Array<{ __typename?: 'book_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetBooksQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Books_Select_Column> | Books_Select_Column>;
@@ -28988,6 +29025,7 @@ export type IncrementBookViewsMutation = { __typename?: 'mutation_root', update_
 
 export type InsertBookMutationVariables = Exact<{
   object: Books_Insert_Input;
+  on_conflict?: InputMaybe<Books_On_Conflict>;
 }>;
 
 
@@ -29814,6 +29852,69 @@ export const useInsertAuditLogsMutation = <
   }
     )};
 
+export const DeleteBookAvailabilitiesDocument = `
+    mutation DeleteBookAvailabilities($where: book_availabilities_bool_exp!) {
+  delete_book_availabilities(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteBookAvailabilitiesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteBookAvailabilitiesMutation, TError, DeleteBookAvailabilitiesMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteBookAvailabilitiesMutation, TError, DeleteBookAvailabilitiesMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteBookAvailabilities'],
+    mutationFn: (variables?: DeleteBookAvailabilitiesMutationVariables) => fetcher<DeleteBookAvailabilitiesMutation, DeleteBookAvailabilitiesMutationVariables>(DeleteBookAvailabilitiesDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteBookGenresDocument = `
+    mutation DeleteBookGenres($where: book_genres_bool_exp!) {
+  delete_book_genres(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteBookGenresMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteBookGenresMutation, TError, DeleteBookGenresMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteBookGenresMutation, TError, DeleteBookGenresMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteBookGenres'],
+    mutationFn: (variables?: DeleteBookGenresMutationVariables) => fetcher<DeleteBookGenresMutation, DeleteBookGenresMutationVariables>(DeleteBookGenresDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteBookKeywordsDocument = `
+    mutation DeleteBookKeywords($where: book_keywords_bool_exp!) {
+  delete_book_keywords(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteBookKeywordsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteBookKeywordsMutation, TError, DeleteBookKeywordsMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteBookKeywordsMutation, TError, DeleteBookKeywordsMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteBookKeywords'],
+    mutationFn: (variables?: DeleteBookKeywordsMutationVariables) => fetcher<DeleteBookKeywordsMutation, DeleteBookKeywordsMutationVariables>(DeleteBookKeywordsDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const DeleteBookDocument = `
     mutation DeleteBook($where: books_bool_exp!) {
   delete_books(where: $where) {
@@ -29930,6 +30031,7 @@ export const GetBookDocument = `
     cover
     content_score
     created_at
+    googlebooks_id
     language
     published_date
     reading_time
@@ -29937,7 +30039,6 @@ export const GetBookDocument = `
     vote_average
     vote_count
     status
-    googlebooks_id
     book_availabilities {
       availability
     }
@@ -30115,8 +30216,8 @@ export const useIncrementBookViewsMutation = <
     )};
 
 export const InsertBookDocument = `
-    mutation InsertBook($object: books_insert_input!) {
-  insert_books_one(object: $object) {
+    mutation InsertBook($object: books_insert_input!, $on_conflict: books_on_conflict) {
+  insert_books_one(object: $object, on_conflict: $on_conflict) {
     id
     title
   }

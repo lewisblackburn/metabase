@@ -1,0 +1,5 @@
+mutation DeleteBookAvailabilities($where: book_availabilities_bool_exp!) {
+    delete_book_availabilities(where: $where) {
+        affected_rows
+    }
+}

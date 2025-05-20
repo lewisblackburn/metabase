@@ -1,0 +1,5 @@
+mutation DeleteBookGenres($where: book_genres_bool_exp!) {
+    delete_book_genres(where: $where) {
+        affected_rows
+    }
+}

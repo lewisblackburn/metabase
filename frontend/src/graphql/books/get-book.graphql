@@ -6,6 +6,7 @@ query GetBook($id: uuid!) {
         cover
         content_score
         created_at
+        googlebooks_id
         language
         published_date
         reading_time
@@ -13,7 +14,6 @@ query GetBook($id: uuid!) {
         vote_average
         vote_count
         status
-        googlebooks_id
         book_availabilities {
             availability
         }
