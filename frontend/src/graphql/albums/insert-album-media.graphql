@@ -1,0 +1,5 @@
+mutation InsertAlbumMedia($objects: [album_media_insert_input!]!) {
+    insert_album_media(objects: $objects) {
+        affected_rows
+    }
+}

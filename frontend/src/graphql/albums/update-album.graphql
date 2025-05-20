@@ -1,0 +1,5 @@
+mutation UpdateAlbum($pk_columns: albums_pk_columns_input!, $set: albums_set_input) {
+    update_albums_by_pk(_set: $set, pk_columns: $pk_columns) {
+        id
+    }
+}

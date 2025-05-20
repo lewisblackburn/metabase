@@ -19,12 +19,14 @@ import {
 } from '../../generated/graphql';
 import { fetcher } from '../../lib/graphql-client';
 import { GoogleBooksVolume } from '../../types/googlebooks.types';
-import { uploadFile } from '../file.service';
+import { FileService } from '../file.service';
 import { googleBooksService } from './googlebooks.service';
 
 export async function importBookFromGoogleBooks(
     volumeId: string
 ): Promise<InsertBookMutation['insert_books_one'] | { message: string }> {
+    const fileService = new FileService();
+
     try {
         const existingBook = await fetcher<GetBookByGoogleBooksIdQuery, GetBookByGoogleBooksIdQueryVariables>(
             GetBookByGoogleBooksIdDocument,
@@ -54,7 +56,7 @@ export async function importBookFromGoogleBooks(
 
     let cover;
     if (coverUrl) {
-        cover = await uploadFile({ url: coverUrl, bucketId: BUCKET.COVER });
+        cover = await fileService.uploadFileFromUrl(coverUrl, BUCKET.COVER);
     }
 
     const credits: Promise<Credits_Insert_Input[]> = Promise.all(
@@ -88,11 +90,11 @@ export async function importBookFromGoogleBooks(
             published_date: bookData.volumeInfo.publishedDate ? new Date(bookData.volumeInfo.publishedDate) : undefined,
             // page_count: bookData.volumeInfo.pageCount,
             // language: bookData.volumeInfo.language,
-            cover: cover ? nhost.storage.getPublicUrl({ fileId: cover.id }) : undefined,
+            cover: cover ? cover.fileUrl : undefined,
             book_media: {
                 data: [
                     {
-                        file_id: cover.id
+                        file_id: cover?.fileId
                     }
                 ],
                 on_conflict: {

@@ -12,7 +12,7 @@ import EditMovieCast from './edit-movie-cast';
 import EditMovieCrew from './edit-movie-crew';
 import EditMovieDangerZone from './edit-movie-danger-zone';
 import EditMovieDetails from './edit-movie-details';
-import EditMovieMedia from './edit-movie-gallery';
+import EditMovieMedia from './edit-movie-media';
 import EditMovieProductionInformation from './edit-movie-production-information';
 import EditMovieSoundtrack from './edit-movie-soundtrack';
 import { useDispatch, useSelector } from 'react-redux';

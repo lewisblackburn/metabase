@@ -18,13 +18,15 @@ import { fetcher } from '@/lib/graphql-client';
 import { nhost } from '@/lib/nhost';
 import type { TmdbPersonDetails } from '@/types/tmdb.types';
 
-import { uploadFile } from '../file.service';
+import { FileService } from '../file.service';
 import { tmdbService } from './tmdb.service';
 
 export async function importPersonFromTmdb(
     tmdbId: number,
     override: boolean = false
 ): Promise<InsertPersonMutation['insert_people_one'] | { message: string }> {
+    const fileService = new FileService();
+
     try {
         const existingPerson = await fetcher<GetPersonByTmdb_IdQuery, GetPersonByTmdb_IdQueryVariables>(
             GetPersonByTmdb_IdDocument,
@@ -51,10 +53,10 @@ export async function importPersonFromTmdb(
     let profileFile;
     if (personData.profile_path) {
         try {
-            profileFile = await uploadFile({
-                url: tmdbService.getProfileImage(personData.profile_path),
-                bucketId: BUCKET.HEADSHOT
-            });
+            profileFile = await fileService.uploadFileFromUrl(
+                tmdbService.getProfileImage(personData.profile_path),
+                BUCKET.HEADSHOT
+            );
         } catch (error) {
             console.error('Error uploading profile image:', error);
         }
@@ -68,12 +70,12 @@ export async function importPersonFromTmdb(
             death_date: personData.deathday,
             gender: TMDB_GENDER_MAP[personData.gender as keyof typeof TMDB_GENDER_MAP],
             tmdb_id: personData.id.toString(),
-            headshot: profileFile ? nhost.storage.getPublicUrl({ fileId: profileFile.id }) : undefined,
+            headshot: profileFile ? profileFile.fileUrl : undefined,
             person_media: profileFile
                 ? {
                       data: [
                           {
-                              file_id: profileFile.id
+                              file_id: profileFile?.fileId
                           }
                       ],
                       on_conflict: {

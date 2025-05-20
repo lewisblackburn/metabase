@@ -42,12 +42,14 @@ import {
 } from '../../generated/graphql';
 import { fetcher } from '../../lib/graphql-client';
 import { TmdbMovieDetails } from '../../types/tmdb.types';
-import { uploadFile } from '../file.service';
+import { FileService } from '../file.service';
 import { tmdbService } from './tmdb.service';
 
 export async function importMovieFromTmdb(
     tmdbId: number
 ): Promise<InsertMovieMutation['insert_movies_one'] | { message: string }> {
+    const fileService = new FileService();
+
     try {
         const existingMovie = await fetcher<GetMovieByTmdb_IdQuery, GetMovieByTmdb_IdQueryVariables>(
             GetMovieByTmdb_IdDocument,
@@ -81,16 +83,16 @@ export async function importMovieFromTmdb(
     let poster;
 
     if (backdropUrl) {
-        backdrop = await uploadFile({ url: backdropUrl, bucketId: BUCKET.BACKDROP });
+        backdrop = await fileService.uploadFileFromUrl(backdropUrl, BUCKET.BACKDROP);
     }
     if (posterUrl) {
-        poster = await uploadFile({ url: posterUrl, bucketId: BUCKET.POSTER });
+        poster = await fileService.uploadFileFromUrl(posterUrl, BUCKET.POSTER);
     }
 
     const castCredits: Promise<Credits_Insert_Input[]> = Promise.all(
         tmdbMovieData.credits?.cast?.map(async (cast, index) => {
             const headshotFile = cast.profile_path
-                ? await uploadFile({ url: tmdbService.getProfileImage(cast.profile_path), bucketId: BUCKET.HEADSHOT })
+                ? await fileService.uploadFileFromUrl(tmdbService.getProfileImage(cast.profile_path), BUCKET.HEADSHOT)
                 : undefined;
 
             return {
@@ -105,12 +107,12 @@ export async function importMovieFromTmdb(
                         tmdb_id: String(cast.id),
                         name: cast.name,
                         gender: TMDB_GENDER_MAP[cast.gender as keyof typeof TMDB_GENDER_MAP],
-                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
+                        headshot: headshotFile ? headshotFile.fileUrl : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
                                       {
-                                          file_id: headshotFile?.id
+                                          file_id: headshotFile?.fileId
                                       }
                                   ],
                                   on_conflict: {
@@ -136,7 +138,7 @@ export async function importMovieFromTmdb(
     const crewCredits: Promise<Credits_Insert_Input[]> = Promise.all(
         tmdbMovieData.credits?.crew?.map(async (crew, index) => {
             const headshotFile = crew.profile_path
-                ? await uploadFile({ url: tmdbService.getProfileImage(crew.profile_path), bucketId: BUCKET.HEADSHOT })
+                ? await fileService.uploadFileFromUrl(tmdbService.getProfileImage(crew.profile_path), BUCKET.HEADSHOT)
                 : undefined;
 
             return {
@@ -156,12 +158,12 @@ export async function importMovieFromTmdb(
                         tmdb_id: String(crew.id),
                         name: crew.name,
                         gender: TMDB_GENDER_MAP[crew.gender as keyof typeof TMDB_GENDER_MAP],
-                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
+                        headshot: headshotFile ? headshotFile.fileUrl : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
                                       {
-                                          file_id: headshotFile?.id
+                                          file_id: headshotFile?.fileId
                                       }
                                   ],
                                   on_conflict: {
@@ -204,15 +206,15 @@ export async function importMovieFromTmdb(
                 threshold: 0.3
             }),
             language: tmdbMovieData.original_language,
-            backdrop: backdrop ? nhost.storage.getPublicUrl({ fileId: backdrop.id }) : undefined,
-            poster: poster ? nhost.storage.getPublicUrl({ fileId: poster.id }) : undefined,
+            backdrop: backdrop ? backdrop.fileUrl : undefined,
+            poster: poster ? poster.fileUrl : undefined,
             movie_media: {
                 data: [
                     {
-                        file_id: backdrop?.id
+                        file_id: backdrop?.fileId
                     },
                     {
-                        file_id: poster?.id
+                        file_id: poster?.fileId
                     }
                 ],
                 on_conflict: {

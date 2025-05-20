@@ -74,8 +74,7 @@ export function MediaTable({ media, onDelete, onSetPrimary, isLoading }: MediaTa
         },
         {
             accessorKey: 'bucketId',
-            header: 'Type',
-            cell: ({ row }) => (row.original.bucketId === BUCKET.POSTER ? 'Poster' : 'Backdrop')
+            header: 'Type'
         }
     ];
 

@@ -7,6 +7,8 @@ import { SidebarItem } from '@/components/shared/sidebar-dialog';
 import { RootState } from '@/store/store';
 
 import { setActiveItemId } from '../../store/song-edit.slice';
+import EditAlbumMedia from './edit-album-media';
+import EditSongArtists from './edit-song-artists';
 import EditSongDangerZone from './edit-song-danger-zone';
 import EditSongDetails from './edit-song-details';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,9 +25,9 @@ export function EditSongDialog({ id, isOpen, onOpenChange }: EditSongDialogProps
 
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
         details: () => <EditSongDetails songId={id} />,
-        // credits: () => <EditSongCredits songId={id} />,
+        artists: () => <EditSongArtists songId={id} />,
         // awards: () => <EditSongAwards songId={id} />,
-        // media: () => <EditSongMedia songId={id} />,
+        media: () => <EditAlbumMedia songId={id} />,
         danger_zone: () => <EditSongDangerZone songId={id} />
     };
 

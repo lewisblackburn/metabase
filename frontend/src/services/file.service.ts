@@ -1,27 +1,35 @@
-import { GetFilesDocument, useGetFilesQuery } from '@/generated/graphql';
+import { BucketType } from '@/constants/media.constant';
+import { GetFilesDocument, GetFilesQuery, GetFilesQueryVariables } from '@/generated/graphql';
 import { nhost } from '@/lib/nhost';
 
-import crypto from 'crypto';
-
-export interface UploadFileOptions {
-    url: string;
-    bucketId?: string;
-    fileName?: string;
+export interface UploadResult {
+    fileId: string;
+    fileUrl: string;
 }
 
-export const uploadFile = async ({ url, bucketId = 'default', fileName }: UploadFileOptions) => {
-    try {
+export class FileService {
+    private async fetchFileFromUrl(url: string): Promise<File> {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Failed to fetch file from URL: ${response.statusText}`);
         }
-
         const blob = await response.blob();
-        const buffer = await blob.arrayBuffer();
-        const hash = crypto.createHash('sha256').update(Buffer.from(buffer)).digest('hex');
-        const finalFileName = hash;
+        const filename = url.split('/').pop() || 'downloaded-file';
+        return new File([blob], filename, { type: blob.type });
+    }
 
-        const existingFile = await nhost.graphql.request(GetFilesDocument, {
+    private async calculateHash(file: File): Promise<string> {
+        const arrayBuffer = await file.arrayBuffer();
+        const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    public async uploadFileFromUrl(url: string, bucketId: BucketType): Promise<UploadResult> {
+        const file = await this.fetchFileFromUrl(url);
+        const hash = await this.calculateHash(file);
+
+        const existingFile = await nhost.graphql.request<GetFilesQuery, GetFilesQueryVariables>(GetFilesDocument, {
             where: {
                 name: {
                     _eq: hash
@@ -29,26 +37,22 @@ export const uploadFile = async ({ url, bucketId = 'default', fileName }: Upload
             }
         });
 
-        if (existingFile?.data?.files && existingFile.data.files.length > 0) {
-            return existingFile.data.files[0];
+        const existingFileId = existingFile.data?.files[0]?.id;
+        if (existingFileId) {
+            const publicURL = nhost.storage.getPublicUrl({ fileId: existingFileId });
+            return { fileId: existingFileId, fileUrl: publicURL };
         }
 
-        const file = new File([blob], finalFileName, {
-            type: blob.type
-        });
-
-        const { fileMetadata, error: uploadError } = await nhost.storage.upload({
+        const { fileMetadata, error } = await nhost.storage.upload({
             file,
-            bucketId
+            bucketId,
+            name: hash
         });
-
-        if (uploadError) {
-            throw uploadError;
+        if (error) {
+            throw error;
         }
 
-        return fileMetadata;
-    } catch (error) {
-        console.error('Error uploading file:', error);
-        throw error;
+        const fileUrl = nhost.storage.getPublicUrl({ fileId: fileMetadata.id });
+        return { fileId: fileMetadata.id, fileUrl };
     }
-};
+}

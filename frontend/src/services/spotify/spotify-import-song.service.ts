@@ -20,18 +20,21 @@ import {
     People_Update_Column,
     Person_Media_Constraint,
     Person_Media_Update_Column,
+    Songs_Constraint,
     Songs_Insert_Input
 } from '@/generated/graphql';
 import { fetcher } from '@/lib/graphql-client';
 import { nhost } from '@/lib/nhost';
 import { SpotifyTrack } from '@/types/spotify.types';
 
-import { uploadFile } from '../file.service';
+import { FileService } from '../file.service';
 import { spotifyService } from './spotify.service';
 
 export async function importSongFromSpotify(
     spotifyId: string
 ): Promise<InsertSongMutation['insert_songs_one'] | { message: string }> {
+    const fileService = new FileService();
+
     try {
         const existingSong = await fetcher<GetSongBySpotifyIdQuery, GetSongBySpotifyIdQueryVariables>(
             GetSongBySpotifyIdDocument,
@@ -58,10 +61,7 @@ export async function importSongFromSpotify(
     let artworkFile;
     if (songData.album.images && songData.album.images.length > 0) {
         try {
-            artworkFile = await uploadFile({
-                url: songData.album.images[0].url,
-                bucketId: BUCKET.ARTWORK
-            });
+            artworkFile = await fileService.uploadFileFromUrl(songData.album.images[0].url, BUCKET.ARTWORK);
         } catch (error) {
             console.error('Error uploading artwork:', error);
         }
@@ -70,7 +70,7 @@ export async function importSongFromSpotify(
     const songCredits: Promise<Credits_Insert_Input[]> = Promise.all(
         songData.artists?.map(async (artist, index) => {
             const headshotFile = artist.images?.[0]?.url
-                ? await uploadFile({ url: artist.images[0].url, bucketId: BUCKET.HEADSHOT })
+                ? await fileService.uploadFileFromUrl(artist.images[0].url, BUCKET.HEADSHOT)
                 : undefined;
 
             return {
@@ -83,12 +83,12 @@ export async function importSongFromSpotify(
                     data: {
                         spotify_id: artist.id,
                         name: artist.name,
-                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
+                        headshot: headshotFile ? headshotFile.fileUrl : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
                                       {
-                                          file_id: headshotFile?.id
+                                          file_id: headshotFile?.fileId
                                       }
                                   ],
                                   on_conflict: {
@@ -110,7 +110,7 @@ export async function importSongFromSpotify(
     const albumCredits: Promise<Credits_Insert_Input[]> = Promise.all(
         songData.album.artists?.map(async (artist, index) => {
             const headshotFile = artist.images?.[0]?.url
-                ? await uploadFile({ url: artist.images[0].url, bucketId: BUCKET.HEADSHOT })
+                ? await fileService.uploadFileFromUrl(artist.images[0].url, BUCKET.HEADSHOT)
                 : undefined;
 
             return {
@@ -123,12 +123,12 @@ export async function importSongFromSpotify(
                     data: {
                         spotify_id: artist.id,
                         name: artist.name,
-                        headshot: headshotFile ? nhost.storage.getPublicUrl({ fileId: headshotFile.id }) : undefined,
+                        headshot: headshotFile ? headshotFile.fileUrl : undefined,
                         person_media: headshotFile
                             ? {
                                   data: [
                                       {
-                                          file_id: headshotFile?.id
+                                          file_id: headshotFile?.fileId
                                       }
                                   ],
                                   on_conflict: {
@@ -168,7 +168,7 @@ export async function importSongFromSpotify(
                 data: {
                     name: songData.album.name,
                     release_date: songData.album.release_date,
-                    artwork: artworkFile ? nhost.storage.getPublicUrl({ fileId: artworkFile.id }) : undefined,
+                    artwork: artworkFile ? artworkFile.fileUrl : undefined,
                     type: songData.album.album_type,
                     spotify_id: songData.album.id.toString(),
                     spotify_uri: songData.album.external_urls.spotify,
@@ -182,7 +182,7 @@ export async function importSongFromSpotify(
                     album_media: {
                         data: [
                             {
-                                file_id: artworkFile.id
+                                file_id: artworkFile?.fileId
                             }
                         ],
                         on_conflict: {
@@ -205,7 +205,10 @@ export async function importSongFromSpotify(
         };
 
         const result = await fetcher<InsertSongMutation, InsertSongMutationVariables>(InsertSongDocument, {
-            object: songInsertInput
+            object: songInsertInput,
+            on_conflict: {
+                constraint: Songs_Constraint.SongsSpotifyIdKey
+            }
         })();
 
         if (!result.insert_songs_one) {
@@ -213,5 +216,8 @@ export async function importSongFromSpotify(
         }
 
         return result.insert_songs_one;
-    } catch (error) {}
+    } catch (error) {
+        console.error('Error inserting song into database:', error);
+        return { message: 'Error inserting song into database.' };
+    }
 }

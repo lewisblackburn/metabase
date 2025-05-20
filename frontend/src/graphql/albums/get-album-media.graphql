@@ -1,0 +1,13 @@
+query GetAlbumMedia($where: album_media_bool_exp, $order_by: [album_media_order_by!], $limit: Int, $offset: Int) {
+    album_media(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
+        file {
+            name
+            uploadedByUserId
+            bucketId
+            id
+            size
+            createdAt
+            mimeType
+        }
+    }
+}

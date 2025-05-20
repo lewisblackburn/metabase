@@ -22332,8 +22332,12 @@ export type Songs_Bool_Exp = {
 
 /** unique or primary key constraints on table "songs" */
 export enum Songs_Constraint {
+  /** unique or primary key constraint on columns "apple_music_id" */
+  SongsAppleMusicIdKey = 'songs_apple_music_id_key',
   /** unique or primary key constraint on columns "id" */
-  SongsPkey = 'songs_pkey'
+  SongsPkey = 'songs_pkey',
+  /** unique or primary key constraint on columns "spotify_id" */
+  SongsSpotifyIdKey = 'songs_spotify_id_key'
 }
 
 /** input type for incrementing numeric columns in table "songs" */
@@ -28882,6 +28886,31 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp;
 };
 
+export type GetAlbumMediaQueryVariables = Exact<{
+  where?: InputMaybe<Album_Media_Bool_Exp>;
+  order_by?: InputMaybe<Array<Album_Media_Order_By> | Album_Media_Order_By>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetAlbumMediaQuery = { __typename?: 'query_root', album_media: Array<{ __typename?: 'album_media', file: { __typename?: 'files', name?: string | null, uploadedByUserId?: any | null, bucketId: string, id: any, size?: number | null, createdAt: any, mimeType?: string | null } }> };
+
+export type InsertAlbumMediaMutationVariables = Exact<{
+  objects: Array<Album_Media_Insert_Input> | Album_Media_Insert_Input;
+}>;
+
+
+export type InsertAlbumMediaMutation = { __typename?: 'mutation_root', insert_album_media?: { __typename?: 'album_media_mutation_response', affected_rows: number } | null };
+
+export type UpdateAlbumMutationVariables = Exact<{
+  pk_columns: Albums_Pk_Columns_Input;
+  set?: InputMaybe<Albums_Set_Input>;
+}>;
+
+
+export type UpdateAlbumMutation = { __typename?: 'mutation_root', update_albums_by_pk?: { __typename?: 'albums', id: any } | null };
+
 export type GetAuditLogsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column> | Audit_Logs_Select_Column>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -29611,6 +29640,99 @@ export const NotificationFragmentDoc = `
   created_at
 }
     `;
+export const GetAlbumMediaDocument = `
+    query GetAlbumMedia($where: album_media_bool_exp, $order_by: [album_media_order_by!], $limit: Int, $offset: Int) {
+  album_media(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
+    file {
+      name
+      uploadedByUserId
+      bucketId
+      id
+      size
+      createdAt
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useGetAlbumMediaQuery = <
+      TData = GetAlbumMediaQuery,
+      TError = unknown
+    >(
+      variables?: GetAlbumMediaQueryVariables,
+      options?: Omit<UseQueryOptions<GetAlbumMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAlbumMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetAlbumMediaQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetAlbumMedia'] : ['GetAlbumMedia', variables],
+    queryFn: fetcher<GetAlbumMediaQuery, GetAlbumMediaQueryVariables>(GetAlbumMediaDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetAlbumMediaQuery = <
+      TData = InfiniteData<GetAlbumMediaQuery>,
+      TError = unknown
+    >(
+      variables: GetAlbumMediaQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetAlbumMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetAlbumMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetAlbumMediaQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetAlbumMedia.infinite'] : ['GetAlbumMedia.infinite', variables],
+      queryFn: (metaData) => fetcher<GetAlbumMediaQuery, GetAlbumMediaQueryVariables>(GetAlbumMediaDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const InsertAlbumMediaDocument = `
+    mutation InsertAlbumMedia($objects: [album_media_insert_input!]!) {
+  insert_album_media(objects: $objects) {
+    affected_rows
+  }
+}
+    `;
+
+export const useInsertAlbumMediaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertAlbumMediaMutation, TError, InsertAlbumMediaMutationVariables, TContext>) => {
+    
+    return useMutation<InsertAlbumMediaMutation, TError, InsertAlbumMediaMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertAlbumMedia'],
+    mutationFn: (variables?: InsertAlbumMediaMutationVariables) => fetcher<InsertAlbumMediaMutation, InsertAlbumMediaMutationVariables>(InsertAlbumMediaDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const UpdateAlbumDocument = `
+    mutation UpdateAlbum($pk_columns: albums_pk_columns_input!, $set: albums_set_input) {
+  update_albums_by_pk(_set: $set, pk_columns: $pk_columns) {
+    id
+  }
+}
+    `;
+
+export const useUpdateAlbumMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateAlbumMutation, TError, UpdateAlbumMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateAlbumMutation, TError, UpdateAlbumMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateAlbum'],
+    mutationFn: (variables?: UpdateAlbumMutationVariables) => fetcher<UpdateAlbumMutation, UpdateAlbumMutationVariables>(UpdateAlbumDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const GetAuditLogsDocument = `
     query GetAuditLogs($distinct_on: [audit_logs_select_column!], $limit: Int, $offset: Int, $order_by: [audit_logs_order_by!], $where: audit_logs_bool_exp) {
   audit_logs(

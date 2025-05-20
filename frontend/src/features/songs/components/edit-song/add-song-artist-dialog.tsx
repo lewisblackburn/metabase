@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
-import InputField from '@/components/form/input';
 import PersonSelect from '@/components/form/person-select';
-import { AddCastMemberSchemaType, addCastMemberSchema } from '@/features/movies/schemas/movie-cast-member.schema';
+import { AddSongArtistSchemaType } from '@/features/songs/schemas/song-artist.schema';
+import { addSongArtistSchema } from '@/features/songs/schemas/song-artist.schema';
 import { Object_Types_Enum, useInsertCreditsMutation } from '@/generated/graphql';
 import { Credit_Types_Enum } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -25,46 +25,44 @@ import { Plus, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-interface AddCastMemberDialogProps {
-    movieId: string;
+interface AddSongArtistDialogProps {
+    songId: string;
 }
 
-export default function AddCastMemberDialog({ movieId }: AddCastMemberDialogProps) {
+export default function AddSongArtistDialog({ songId }: AddSongArtistDialogProps) {
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
 
     const { mutateAsync: insertCredits } = useInsertCreditsMutation();
 
     const form = useForm({
-        resolver: zodResolver(addCastMemberSchema),
+        resolver: zodResolver(addSongArtistSchema),
         defaultValues: {
-            person: '',
-            character: ''
+            person: ''
         }
     });
 
     const { handleSubmit, control, reset } = form;
 
-    const onSubmit = async (data: AddCastMemberSchemaType) => {
+    const onSubmit = async (data: AddSongArtistSchemaType) => {
         try {
             await insertCredits({
                 objects: [
                     {
-                        object_id: movieId,
+                        object_id: songId,
                         person_id: data.person,
-                        character: data.character,
-                        credit_type: Credit_Types_Enum.Cast,
-                        object_type: Object_Types_Enum.Movie
+                        credit_type: Credit_Types_Enum.Artist,
+                        object_type: Object_Types_Enum.Song
                     }
                 ]
             });
 
-            toast.success('Cast member added successfully');
-            queryClient.invalidateQueries({ queryKey: ['movie-cast', movieId] });
+            toast.success('Song artist added successfully');
+            queryClient.invalidateQueries({ queryKey: ['song-artists', songId] });
             setOpen(false);
             reset();
         } catch (error) {
-            toast.error('Failed to add cast member');
+            toast.error('Failed to add song artist');
         }
     };
 
@@ -73,14 +71,14 @@ export default function AddCastMemberDialog({ movieId }: AddCastMemberDialogProp
             <DialogTrigger asChild>
                 <Button variant='outline' size='sm'>
                     <Plus className='size-4' />
-                    Add Cast Member
+                    Add Song Artist
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add Cast Member</DialogTitle>
+                    <DialogTitle>Add Song Artist</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>Add a cast member to the movie.</DialogDescription>
+                <DialogDescription>Add an artist to the song.</DialogDescription>
                 <Form {...form}>
                     <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
@@ -96,22 +94,12 @@ export default function AddCastMemberDialog({ movieId }: AddCastMemberDialogProp
                             )}
                         />
 
-                        <FormField
-                            control={control}
-                            name='character'
-                            render={({ field }) => (
-                                <BaseFormLayout label='Character'>
-                                    <InputField {...field} />
-                                </BaseFormLayout>
-                            )}
-                        />
-
                         <div className='flex justify-end gap-2'>
                             <Button variant='outline' type='button' className='mr-2' onClick={() => setOpen(false)}>
                                 <X className='size-4' />
                                 Cancel
                             </Button>
-                            <Button type='submit'>Add Cast Member</Button>
+                            <Button type='submit'>Add Song Artist</Button>
                         </div>
                     </form>
                 </Form>

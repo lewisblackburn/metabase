@@ -89,17 +89,6 @@ function PersonPageContent() {
                                 ) : null}
                             </div>
                         </ItemInformation>
-                        <ItemInformation icon={TrendingUp} label='Content Score'>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <div className='flex items-center gap-2'>
-                                        <Progress value={0} className='min-w-24' />
-                                        <span>{0}%</span>
-                                    </div>
-                                </TooltipTrigger>
-                                <TooltipContent>Click to compute the content score</TooltipContent>
-                            </Tooltip>
-                        </ItemInformation>
                     </div>
 
                     <div className='mt-5 flex flex-wrap items-center gap-2'>
