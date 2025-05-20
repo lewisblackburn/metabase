@@ -12,7 +12,7 @@ import EditMovieCast from './edit-movie-cast';
 import EditMovieCrew from './edit-movie-crew';
 import EditMovieDangerZone from './edit-movie-danger-zone';
 import EditMovieDetails from './edit-movie-details';
-import EditMovieGallery from './edit-movie-gallery';
+import EditMovieMedia from './edit-movie-gallery';
 import EditMovieProductionInformation from './edit-movie-production-information';
 import EditMovieSoundtrack from './edit-movie-soundtrack';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,7 +34,7 @@ export function EditMovieDialog({ id, isOpen, onOpenChange }: EditMovieDialogPro
         crew: () => <EditMovieCrew movieId={id} />,
         soundtrack: () => <EditMovieSoundtrack movieId={id} />,
         production_information: () => <EditMovieProductionInformation movieId={id} />,
-        gallery: () => <EditMovieGallery movieId={id} />,
+        media: () => <EditMovieMedia movieId={id} />,
         danger_zone: () => <EditMovieDangerZone movieId={id} />
     };
 

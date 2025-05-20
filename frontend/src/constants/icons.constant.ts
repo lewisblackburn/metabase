@@ -20,6 +20,7 @@ import {
     Paintbrush,
     Plug,
     Tags,
+    Trophy,
     User,
     UserCog,
     Users
@@ -48,7 +49,8 @@ export const ICONS = {
     Download,
     Globe,
     FilePlus,
-    Import
+    Import,
+    Trophy
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconType = keyof typeof ICONS;

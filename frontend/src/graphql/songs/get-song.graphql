@@ -6,9 +6,11 @@ query GetSong($id: uuid!) {
         created_at
         duration
         view_count
-        vote_average
-        vote_count
+        track_number
+        disc_number
+        explicit
         spotify_id
+        apple_music_id
         album {
             artwork
             release_date

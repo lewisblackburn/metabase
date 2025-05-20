@@ -1,6 +1,5 @@
 import { Movie_Certification_Types_Enum, Movie_Release_Status_Types_Enum } from '@/generated/graphql';
 import { selectSchema } from '@/schemas/select.schema';
-import { createOptionSchema } from '@/utils/enum-to-options';
 
 import { movieAvailabilityOptionsSchema, movieGenresOptionsSchema } from '../constants/movie-enums';
 import { z } from 'zod';

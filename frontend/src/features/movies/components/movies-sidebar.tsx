@@ -33,8 +33,8 @@ import {
     movieReleaseStatusOptions
 } from '../constants/movie-enums';
 import { MoviesFilter, moviesFilterSchema } from '../schemas/movies-filter.schema';
-import { resetMoviesFilter } from '../store/movies-filter.store';
-import { setMoviesFilter } from '../store/movies-filter.store';
+import { resetMoviesFilter } from '../store/movies-filter.slice';
+import { setMoviesFilter } from '../store/movies-filter.slice';
 import { Tag, TagInput } from 'emblor';
 import { Calendar, Flame, Settings2, Star } from 'lucide-react';
 import { useForm } from 'react-hook-form';

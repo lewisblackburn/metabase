@@ -270,6 +270,7 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                         </BaseFormLayout>
                     )}
                 />
+
                 <FormField
                     control={control}
                     name='runtime'
@@ -277,8 +278,8 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                         <BaseFormLayout label='Runtime'>
                             <InputField
                                 type='number'
-                                value={value ?? ''}
-                                onChange={(e) => onChange(e.target.value ? Number(e.target.value) : undefined)}
+                                value={value || ''}
+                                onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
                                 {...field}
                             />
                         </BaseFormLayout>
@@ -287,18 +288,28 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                 <FormField
                     control={control}
                     name='budget'
-                    render={({ field }) => (
+                    render={({ field: { value, onChange, ...field } }) => (
                         <BaseFormLayout label='Budget'>
-                            <InputField {...field} />
+                            <InputField
+                                type='number'
+                                value={value || ''}
+                                onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
+                                {...field}
+                            />
                         </BaseFormLayout>
                     )}
                 />
                 <FormField
                     control={control}
                     name='revenue'
-                    render={({ field }) => (
+                    render={({ field: { value, onChange, ...field } }) => (
                         <BaseFormLayout label='Revenue'>
-                            <InputField {...field} />
+                            <InputField
+                                type='number'
+                                value={value || ''}
+                                onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
+                                {...field}
+                            />
                         </BaseFormLayout>
                     )}
                 />
@@ -409,9 +420,14 @@ export default function EditMovieDetails({ movieId }: EditMovieDetailsProps) {
                 <FormField
                     control={control}
                     name='tmdbId'
-                    render={({ field }) => (
+                    render={({ field: { value, onChange, ...field } }) => (
                         <BaseFormLayout label='TMDB ID'>
-                            <InputField type='number' {...field} />
+                            <InputField
+                                type='number'
+                                value={value || ''}
+                                onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
+                                {...field}
+                            />
                         </BaseFormLayout>
                     )}
                 />

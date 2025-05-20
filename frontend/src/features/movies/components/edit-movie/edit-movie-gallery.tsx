@@ -13,11 +13,11 @@ import { MediaTable } from '../../../../components/shared/media-table';
 import { AlertCircleIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface EditMovieGalleryProps {
+interface EditMovieMediaProps {
     movieId: string;
 }
 
-export default function EditMovieGallery({ movieId }: EditMovieGalleryProps) {
+export default function EditMovieMedia({ movieId }: EditMovieMediaProps) {
     const nhost = useNhostClient();
     const queryClient = useQueryClient();
     const { add, upload, progress, isUploading, error } = useFileUpload();

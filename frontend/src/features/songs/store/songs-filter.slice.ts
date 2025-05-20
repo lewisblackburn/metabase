@@ -1,6 +1,8 @@
+import storage from '@/store/storage';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { SongsFilterType } from '../schemas/songs-filter.schema';
+import { persistReducer } from 'redux-persist';
 
 const initialState: SongsFilterType = {
     orderBy: {
@@ -14,6 +16,8 @@ const initialState: SongsFilterType = {
     minVotes: [0],
     keywords: []
 };
+
+const persistConfig = { key: 'songsFilter', storage };
 
 export const songsFilterSlice = createSlice({
     name: 'songsFilter',
@@ -30,4 +34,4 @@ export const songsFilterSlice = createSlice({
 
 export const { setSongsFilter, resetSongsFilter } = songsFilterSlice.actions;
 
-export default songsFilterSlice.reducer;
+export const persistedSongsFilterReducer = persistReducer(persistConfig, songsFilterSlice.reducer);

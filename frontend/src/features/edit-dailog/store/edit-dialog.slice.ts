@@ -1,4 +1,4 @@
-import { ObjectType, ObjectTypeKey } from '@/constants/objects.constant';
+import { ObjectTypeKey } from '@/constants/objects.constant';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface EditDialogState {

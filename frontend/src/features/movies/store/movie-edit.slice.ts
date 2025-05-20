@@ -52,10 +52,10 @@ const initialState: MovieEditState = {
             iconColor: 'text-yellow-500'
         },
         {
-            id: 'gallery',
-            name: 'Gallery',
+            id: 'media',
+            name: 'Media',
             icon: 'Image',
-            description: 'Edit the gallery of the movie',
+            description: 'Edit the media of the movie',
             iconColor: 'text-pink-500'
         },
         {

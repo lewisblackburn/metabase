@@ -2,6 +2,7 @@
 
 import { EditMovieDialog } from '@/features/movies/components/edit-movie/edit-movie-dialog';
 import { EditPersonDialog } from '@/features/people/components/edit-person.dialog';
+import { EditSongDialog } from '@/features/songs/components/edit-song/edit-song-dialog';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { RootState } from '@/store/store';
 
@@ -24,6 +25,8 @@ export default function EditDialogManager() {
     switch (objectType) {
         case Object_Types_Enum.Movie:
             return <EditMovieDialog {...commonProps} />;
+        case Object_Types_Enum.Song:
+            return <EditSongDialog {...commonProps} />;
         case Object_Types_Enum.Person:
             return <EditPersonDialog {...commonProps} />;
         default:

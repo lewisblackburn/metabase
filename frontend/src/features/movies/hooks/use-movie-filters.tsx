@@ -41,8 +41,8 @@ export function useMovieFilters(): {
     } = useSelector((s: RootState) => s.moviesFilter);
 
     const order_by = useMemo<NonNullable<GetMoviesQueryVariables['order_by']>>(() => {
-        const field = orderByFieldMap[orderBy.orderBy] ?? 'view_count';
-        const dir = orderEnumMap[orderBy.order] ?? Order_By.Desc;
+        const field = orderByFieldMap[orderBy.orderBy as keyof typeof orderByFieldMap] ?? 'view_count';
+        const dir = orderEnumMap[orderBy.order as keyof typeof orderEnumMap] ?? Order_By.Desc;
 
         return [
             { [field]: dir },

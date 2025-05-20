@@ -1,0 +1,5 @@
+mutation DeleteSongGenres($where: song_genres_bool_exp!) {
+    delete_song_genres(where: $where) {
+        affected_rows
+    }
+}

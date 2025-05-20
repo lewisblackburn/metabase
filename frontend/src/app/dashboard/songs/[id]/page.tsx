@@ -21,7 +21,21 @@ import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 
 import dayjs from 'dayjs';
-import { Calendar, Edit, Eye, Image, Info, Layers2, Star, Timer, TrendingUp, Trophy, User, Video } from 'lucide-react';
+import {
+    Calendar,
+    Edit,
+    Eye,
+    Flag,
+    Image,
+    Info,
+    Layers2,
+    Star,
+    Timer,
+    TrendingUp,
+    Trophy,
+    User,
+    Video
+} from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
 export default function SongPage() {
@@ -34,12 +48,11 @@ export default function SongPage() {
 
 const tabItems = [
     { value: 'reviews', icon: Star, label: 'Reviews' },
-    { value: 'where-to-watch', icon: Layers2, label: 'Where to Watch' },
     { value: 'credits', icon: User, label: 'Credits' },
     { value: 'awards', icon: Trophy, label: 'Awards' },
-    { value: 'images', icon: Image, label: 'Images' },
-    { value: 'videos', icon: Video, label: 'Videos' },
-    { value: 'changes', icon: Edit, label: 'Changes' }
+    { value: 'media', icon: Image, label: 'Media' },
+    { value: 'changes', icon: Edit, label: 'Changes' },
+    { value: 'reports', icon: Flag, label: 'Reports' }
 ];
 
 function SongPageContent() {
@@ -53,12 +66,11 @@ function SongPageContent() {
         reviews: {
             content: 'No reviews available.'
         },
-        'where-to-watch': { content: 'No where to watch information available.' },
         credits: { content: <SongCredits /> },
         awards: { content: 'No awards available' },
-        images: { content: 'No images available.' },
-        videos: { content: 'No videos available.' },
-        changes: { content: <SongChanges /> }
+        media: { content: 'No media available.' },
+        changes: { content: <SongChanges /> },
+        reports: { content: 'No reports available.' }
     };
 
     return (

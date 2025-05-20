@@ -1,5 +1,5 @@
-mutation InsertSong($object: songs_insert_input!) {
-    insert_songs_one(object: $object) {
+mutation InsertSong($object: songs_insert_input!, $on_conflict: songs_on_conflict) {
+    insert_songs_one(object: $object, on_conflict: $on_conflict) {
         id
         name
     }

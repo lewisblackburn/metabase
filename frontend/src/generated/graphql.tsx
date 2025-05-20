@@ -29411,6 +29411,27 @@ export type InsertReportMutationVariables = Exact<{
 
 export type InsertReportMutation = { __typename?: 'mutation_root', insert_reports_one?: { __typename?: 'reports', id: any } | null };
 
+export type DeleteSongAvailabilitiesMutationVariables = Exact<{
+  where: Song_Availabilities_Bool_Exp;
+}>;
+
+
+export type DeleteSongAvailabilitiesMutation = { __typename?: 'mutation_root', delete_song_availabilities?: { __typename?: 'song_availabilities_mutation_response', affected_rows: number } | null };
+
+export type DeleteSongGenresMutationVariables = Exact<{
+  where: Song_Genres_Bool_Exp;
+}>;
+
+
+export type DeleteSongGenresMutation = { __typename?: 'mutation_root', delete_song_genres?: { __typename?: 'song_genres_mutation_response', affected_rows: number } | null };
+
+export type DeleteSongKeywordsMutationVariables = Exact<{
+  where: Song_Keywords_Bool_Exp;
+}>;
+
+
+export type DeleteSongKeywordsMutation = { __typename?: 'mutation_root', delete_song_keywords?: { __typename?: 'song_keywords_mutation_response', affected_rows: number } | null };
+
 export type DeleteSongMutationVariables = Exact<{
   where: Songs_Bool_Exp;
 }>;
@@ -29437,7 +29458,7 @@ export type GetSongQueryVariables = Exact<{
 }>;
 
 
-export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, vote_average?: number | null, vote_count?: number | null, spotify_id?: string | null, album?: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any } | null, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
+export type GetSongQuery = { __typename?: 'query_root', songs_by_pk?: { __typename?: 'songs', id: any, name: string, content_score: number, created_at?: any | null, duration?: any | null, view_count?: number | null, track_number?: number | null, disc_number?: number | null, explicit?: boolean | null, spotify_id?: string | null, apple_music_id?: string | null, album?: { __typename?: 'albums', artwork: string, release_date?: any | null, name: string, id: any } | null, song_availabilities: Array<{ __typename?: 'song_availabilities', availability: Song_Availability_Types_Enum }>, song_genres: Array<{ __typename?: 'song_genres', genre: Song_Genre_Types_Enum }>, song_keywords: Array<{ __typename?: 'song_keywords', keyword: { __typename?: 'keywords', keyword: string } }> } | null };
 
 export type GetSongsQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<Songs_Select_Column> | Songs_Select_Column>;
@@ -29470,6 +29491,7 @@ export type IncrementSongViewsMutation = { __typename?: 'mutation_root', update_
 
 export type InsertSongMutationVariables = Exact<{
   object: Songs_Insert_Input;
+  on_conflict?: InputMaybe<Songs_On_Conflict>;
 }>;
 
 
@@ -31932,6 +31954,69 @@ export const useInsertReportMutation = <
   }
     )};
 
+export const DeleteSongAvailabilitiesDocument = `
+    mutation DeleteSongAvailabilities($where: song_availabilities_bool_exp!) {
+  delete_song_availabilities(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteSongAvailabilitiesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteSongAvailabilitiesMutation, TError, DeleteSongAvailabilitiesMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteSongAvailabilitiesMutation, TError, DeleteSongAvailabilitiesMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteSongAvailabilities'],
+    mutationFn: (variables?: DeleteSongAvailabilitiesMutationVariables) => fetcher<DeleteSongAvailabilitiesMutation, DeleteSongAvailabilitiesMutationVariables>(DeleteSongAvailabilitiesDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteSongGenresDocument = `
+    mutation DeleteSongGenres($where: song_genres_bool_exp!) {
+  delete_song_genres(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteSongGenresMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteSongGenresMutation, TError, DeleteSongGenresMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteSongGenresMutation, TError, DeleteSongGenresMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteSongGenres'],
+    mutationFn: (variables?: DeleteSongGenresMutationVariables) => fetcher<DeleteSongGenresMutation, DeleteSongGenresMutationVariables>(DeleteSongGenresDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteSongKeywordsDocument = `
+    mutation DeleteSongKeywords($where: song_keywords_bool_exp!) {
+  delete_song_keywords(where: $where) {
+    affected_rows
+  }
+}
+    `;
+
+export const useDeleteSongKeywordsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteSongKeywordsMutation, TError, DeleteSongKeywordsMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteSongKeywordsMutation, TError, DeleteSongKeywordsMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteSongKeywords'],
+    mutationFn: (variables?: DeleteSongKeywordsMutationVariables) => fetcher<DeleteSongKeywordsMutation, DeleteSongKeywordsMutationVariables>(DeleteSongKeywordsDocument, variables)(),
+    ...options
+  }
+    )};
+
 export const DeleteSongDocument = `
     mutation DeleteSong($where: songs_bool_exp!) {
   delete_songs(where: $where) {
@@ -32048,9 +32133,11 @@ export const GetSongDocument = `
     created_at
     duration
     view_count
-    vote_average
-    vote_count
+    track_number
+    disc_number
+    explicit
     spotify_id
+    apple_music_id
     album {
       artwork
       release_date
@@ -32236,8 +32323,8 @@ export const useIncrementSongViewsMutation = <
     )};
 
 export const InsertSongDocument = `
-    mutation InsertSong($object: songs_insert_input!) {
-  insert_songs_one(object: $object) {
+    mutation InsertSong($object: songs_insert_input!, $on_conflict: songs_on_conflict) {
+  insert_songs_one(object: $object, on_conflict: $on_conflict) {
     id
     name
   }
