@@ -29,7 +29,7 @@ export default function Item({ item, onSelect }: Readonly<ItemProps>) {
     const hasShortcut = item.shortcut;
 
     return (
-        <CommandItem key={item.id} className='text-xs' onSelect={onSelect} value={item.title}>
+        <CommandItem key={item.id} className='text-xs' onSelect={onSelect} value={`${item.title}-${item.id}`}>
             <div className={cn(item.type.background, 'p-1', { 'self-start': item.description })}>
                 <item.type.icon className={cn(item.type.foreground, '!size-3')} />
             </div>

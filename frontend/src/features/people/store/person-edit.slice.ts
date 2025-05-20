@@ -22,6 +22,13 @@ const initialState: PersonEditState = {
             icon: 'Download',
             description: 'Import person information from external sources',
             iconColor: 'text-green-500'
+        },
+        {
+            id: 'danger',
+            name: 'Danger Zone',
+            icon: 'CircleHelp',
+            description: 'Delete person',
+            iconColor: 'text-red-500'
         }
     ]
 };

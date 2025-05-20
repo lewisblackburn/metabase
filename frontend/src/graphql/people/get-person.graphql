@@ -13,6 +13,13 @@ query GetPerson(
         name
         bio
         known_for_department
+        gender
+        content_score
+        view_count
+        birth_date
+        death_date
+        tmdb_id
+        spotify_id
         credits(
             distinct_on: $credit_distinct_on
             limit: $credit_limit
@@ -43,10 +50,5 @@ query GetPerson(
             }
         }
         gender
-        content_score
-        view_count
-        birth_date
-        death_date
-        tmdb_id
     }
 }

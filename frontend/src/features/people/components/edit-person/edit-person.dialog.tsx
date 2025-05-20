@@ -6,10 +6,10 @@ import { DialogConfig, DialogManager } from '@/components/shared/dialog-manager'
 import { SidebarItem } from '@/components/shared/sidebar-dialog';
 import { RootState } from '@/store/store';
 
-import { setActiveItemId } from '../store/person-edit.slice';
+import { setActiveItemId } from '../../store/person-edit.slice';
+import ImportPersonFromTMDB from '../import-person-from-tmdb';
+import EditPersonDangerZone from './edit-person-danger-zone';
 import EditPersonDetails from './edit-person.details';
-import ImportPerson from './import-person-from-tmdb';
-import ImportPersonFromTMDB from './import-person-from-tmdb';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EditPersonDialogProps {
@@ -24,7 +24,8 @@ export function EditPersonDialog({ id, isOpen, onOpenChange }: EditPersonDialogP
 
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
         details: () => <EditPersonDetails personId={id} />,
-        import: () => <ImportPersonFromTMDB personId={id} />
+        import: () => <ImportPersonFromTMDB personId={id} />,
+        danger: () => <EditPersonDangerZone personId={id} />
     };
 
     const config: DialogConfig = {

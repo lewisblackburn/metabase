@@ -2,7 +2,7 @@
 
 import { EditBookDialog } from '@/features/books/components/edit-book/edit-book-dialog';
 import { EditMovieDialog } from '@/features/movies/components/edit-movie/edit-movie-dialog';
-import { EditPersonDialog } from '@/features/people/components/edit-person.dialog';
+import { EditPersonDialog } from '@/features/people/components/edit-person/edit-person.dialog';
 import { EditSongDialog } from '@/features/songs/components/edit-song/edit-song-dialog';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { RootState } from '@/store/store';

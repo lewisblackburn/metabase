@@ -13,14 +13,32 @@ import { CalendarIcon } from 'lucide-react';
 export interface DatePickerFieldProps {
     name: string;
     value?: Date;
-    onChange: (date: Date) => void;
+    onChange: (date: Date | null) => void;
     onBlur?: (e: React.FocusEvent) => void;
 }
 
 const DatePickerField = React.forwardRef<HTMLDivElement, DatePickerFieldProps>(
     ({ name, value, onChange, onBlur }, ref) => {
         const handleChange = (date: any) => {
-            onChange(new Date(date.toString()));
+            if (!date) {
+                onChange(null);
+                return;
+            }
+
+            // NOTE: If clicking the same date, set to null
+            if (
+                value &&
+                value.getFullYear() === date.getFullYear() &&
+                value.getMonth() === date.getMonth() &&
+                value.getDate() === date.getDate()
+            ) {
+                onChange(null);
+                return;
+            }
+
+            // NOTE: Create date at noon UTC to avoid timezone issues
+            const newDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0));
+            onChange(newDate);
         };
 
         return (
@@ -30,7 +48,7 @@ const DatePickerField = React.forwardRef<HTMLDivElement, DatePickerFieldProps>(
                         variant={'outline'}
                         className={cn('w-full justify-start text-left font-normal', !value && 'text-muted-foreground')}>
                         <CalendarIcon />
-                        {value ? format(new Date(value), 'PPP') : <span>Pick a date</span>}
+                        {value ? format(value, 'PPP') : <span>Pick a date</span>}
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className='w-auto p-0' align='start' style={{ zIndex: '1000 !important' }}>

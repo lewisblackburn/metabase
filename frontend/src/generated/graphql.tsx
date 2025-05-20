@@ -29437,7 +29437,7 @@ export type GetPersonQueryVariables = Exact<{
 }>;
 
 
-export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, department?: Department_Types_Enum | null, job?: Job_Types_Enum | null, character?: string | null, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } | null }> } | null };
+export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, spotify_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, department?: Department_Types_Enum | null, job?: Job_Types_Enum | null, character?: string | null, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } | null }> } | null };
 
 export type InsertPersonMutationVariables = Exact<{
   object: People_Insert_Input;
@@ -32009,6 +32009,13 @@ export const GetPersonDocument = `
     name
     bio
     known_for_department
+    gender
+    content_score
+    view_count
+    birth_date
+    death_date
+    tmdb_id
+    spotify_id
     credits(
       distinct_on: $credit_distinct_on
       limit: $credit_limit
@@ -32039,11 +32046,6 @@ export const GetPersonDocument = `
       }
     }
     gender
-    content_score
-    view_count
-    birth_date
-    death_date
-    tmdb_id
   }
 }
     `;
