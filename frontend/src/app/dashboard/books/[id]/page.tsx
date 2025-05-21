@@ -2,6 +2,7 @@
 
 import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
+import AuditLogs from '@/components/shared/audit-logs';
 import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
 import ReportObjectDialog from '@/components/shared/report-object-dialog';
@@ -77,7 +78,7 @@ function BookPageContent() {
         credits: { content: <BookCredits /> },
         awards: { content: 'No awards available' },
         media: { content: <BookMedia /> },
-        changes: { content: <BookChanges /> },
+        changes: { content: <AuditLogs tableName='books' entityId={book?.id} /> },
         reports: { content: <ReportsTable objectType={Object_Types_Enum.Book} /> }
     };
 

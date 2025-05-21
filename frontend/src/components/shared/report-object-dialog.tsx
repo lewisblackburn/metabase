@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 interface ReportObjectDialogProps {
     objectId: string;
     objectType: Object_Types_Enum;
-    queryKey?: string[];
+    queryKey: string[];
 }
 
 export default function ReportObjectDialog({ objectId, objectType, queryKey }: ReportObjectDialogProps) {
@@ -16,9 +16,7 @@ export default function ReportObjectDialog({ objectId, objectType, queryKey }: R
     const { mutateAsync: insertReport } = useInsertReportMutation({
         onSuccess: () => {
             toast.success('Content reported successfully');
-            if (queryKey) {
-                queryClient.invalidateQueries({ queryKey });
-            }
+            queryClient.invalidateQueries({ queryKey });
         },
         onError: (error: Error) => toast.error(error.message)
     });

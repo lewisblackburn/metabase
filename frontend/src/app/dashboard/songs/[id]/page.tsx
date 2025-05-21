@@ -2,6 +2,7 @@
 
 import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
+import AuditLogs from '@/components/shared/audit-logs';
 import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
 import ReportObjectDialog from '@/components/shared/report-object-dialog';
@@ -73,7 +74,7 @@ function SongPageContent() {
         credits: { content: <SongCredits /> },
         awards: { content: 'No awards available' },
         media: { content: <AlbumMedia /> },
-        changes: { content: <SongChanges /> },
+        changes: { content: <AuditLogs tableName='songs' entityId={song?.id} /> },
         reports: { content: <ReportsTable objectType={Object_Types_Enum.Song} /> }
     };
 

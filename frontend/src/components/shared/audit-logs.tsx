@@ -9,7 +9,6 @@ import { Separator } from '@/registry/new-york-v4/ui/separator';
 import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 import isLastIndex from '@/utils/is-last-index';
 
-import { useMovie } from './movie-provider';
 import { useInView } from 'react-intersection-observer';
 
 function ChangesSkeleton() {
@@ -38,15 +37,19 @@ function ChangesSkeleton() {
     );
 }
 
-export default function MovieChanges() {
-    const { movie } = useMovie();
+interface AuditLogsProps {
+    tableName: string;
+    entityId: string | undefined;
+}
+
+export default function AuditLogs({ tableName, entityId }: AuditLogsProps) {
     const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetAuditLogsQuery(
         {
             where: {
-                table_name: { _eq: 'movies' },
+                table_name: { _eq: tableName },
                 pk: {
                     _eq: {
-                        id: movie?.id
+                        id: entityId
                     }
                 }
             },
@@ -63,7 +66,7 @@ export default function MovieChanges() {
                 const nextOffset = pages.length * MAX_LIMIT;
                 return lastPage.audit_logs.length === MAX_LIMIT ? { offset: nextOffset } : undefined;
             },
-            enabled: !!movie?.id,
+            enabled: !!entityId,
             staleTime: 0,
             gcTime: 0
         }
@@ -94,7 +97,7 @@ export default function MovieChanges() {
                         avatarUrl={change.user.avatarUrl}
                         displayName={change.user.displayName}
                         userId={change.user.id}
-                        createdAt={change.user.createdAt}
+                        createdAt={change.created_at}
                     />
                     {!isLastIndex(index, allChanges) && <Separator />}
                 </div>

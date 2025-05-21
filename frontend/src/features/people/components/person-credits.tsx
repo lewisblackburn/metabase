@@ -26,13 +26,13 @@ import {
 
 import { usePerson } from './person-provider';
 
-function MediaSkeleton() {
+function CreditsSkeleton() {
     return Array(6)
         .fill(0)
         .map((_, i) => <div key={i} className='aspect-[2/3] w-full animate-pulse rounded bg-gray-200' />);
 }
 
-function MediaItem({
+function CreditItem({
     credit
 }: {
     credit: Pick<Credits, 'id' | 'object_type' | 'object_id'> & {
@@ -74,7 +74,7 @@ function MediaItem({
     return null;
 }
 
-export default function PersonMedia() {
+export default function PersonCredits() {
     const params = useParams<{ id: string }>();
     const [creditDepartment, setCreditDepartment] = useState<Department_Types_Enum>();
     const [isFirstLoad, setIsFirstLoad] = useState(true);
@@ -128,23 +128,23 @@ export default function PersonMedia() {
         );
     }
 
-    function MediaContent() {
+    function CreditsContent() {
         if (isLoading) {
-            return <MediaSkeleton />;
+            return <CreditsSkeleton />;
         }
 
         if (!creditDepartment) {
             return null;
         }
 
-        return person?.credits?.map((credit) => <MediaItem key={credit.id} credit={credit} />);
+        return person?.credits?.map((credit) => <CreditItem key={credit.id} credit={credit} />);
     }
 
     return (
         <div className='flex flex-col gap-4'>
             <DepartmentSelector />
             <Grid>
-                <MediaContent />
+                <CreditsContent />
             </Grid>
         </div>
     );

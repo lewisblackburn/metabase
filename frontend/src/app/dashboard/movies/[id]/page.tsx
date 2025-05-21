@@ -1,20 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
+import AuditLogs from '@/components/shared/audit-logs';
 import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
-import ReportMovieDialog from '@/components/shared/report-object-dialog';
 import ReportObjectDialog from '@/components/shared/report-object-dialog';
 import ReportsTable from '@/components/shared/reports-table';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
-import MovieChanges from '@/features/movies/components/movie-changes';
 import MovieContentScore from '@/features/movies/components/movie-content-score';
 import MovieCredits from '@/features/movies/components/movie-credits';
 import MovieFavouriteButton from '@/features/movies/components/movie-favourite-button';
@@ -22,7 +20,6 @@ import MovieLayout from '@/features/movies/components/movie-layout';
 import MovieMedia from '@/features/movies/components/movie-media';
 import ObjectOverview from '@/features/movies/components/movie-overview';
 import { MovieProvider, useMovie } from '@/features/movies/components/movie-provider';
-import MovieReports from '@/features/movies/components/movie-reports';
 import MovieReviews from '@/features/movies/components/movie-reviews';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
@@ -40,7 +37,7 @@ import {
     Edit,
     Eye,
     Flag,
-    Image,
+    ImageIcon,
     Info,
     Languages,
     Layers2,
@@ -69,7 +66,7 @@ const tabItems = [
     { value: 'credits', icon: User, label: 'Credits' },
     { value: 'soundtrack', icon: Music, label: 'Soundtrack' },
     { value: 'awards', icon: Trophy, label: 'Awards' },
-    { value: 'media', icon: Image, label: 'Media' },
+    { value: 'media', icon: ImageIcon, label: 'Media' },
     { value: 'changes', icon: Edit, label: 'Changes' },
     { value: 'reports', icon: Flag, label: 'Reports' }
 ];
@@ -90,7 +87,7 @@ function MoviePageContent() {
         soundtrack: { content: <MovieSoundtrackTable /> },
         awards: { content: 'No awards available' },
         media: { content: <MovieMedia /> },
-        changes: { content: <MovieChanges /> },
+        changes: { content: <AuditLogs tableName='movies' entityId={movie?.id} /> },
         reports: { content: <ReportsTable objectType={Object_Types_Enum.Movie} /> }
     };
 
