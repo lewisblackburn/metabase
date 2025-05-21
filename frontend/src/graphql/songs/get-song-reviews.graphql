@@ -1,0 +1,18 @@
+query GetSongReviews(
+    $where: user_song_statuses_bool_exp
+    $limit: Int
+    $offset: Int
+    $orderBy: [user_song_statuses_order_by!]
+) {
+    user_song_statuses(where: $where, limit: $limit, offset: $offset, order_by: $orderBy) {
+        user_id
+        rating
+        review
+        updated_at
+        user {
+            displayName
+            avatarUrl
+            createdAt
+        }
+    }
+}

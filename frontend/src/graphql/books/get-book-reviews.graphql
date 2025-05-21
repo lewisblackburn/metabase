@@ -1,0 +1,18 @@
+query GetBookReviews(
+    $where: user_book_statuses_bool_exp
+    $limit: Int
+    $offset: Int
+    $orderBy: [user_book_statuses_order_by!]
+) {
+    user_book_statuses(where: $where, limit: $limit, offset: $offset, order_by: $orderBy) {
+        user_id
+        rating
+        review
+        updated_at
+        user {
+            displayName
+            avatarUrl
+            createdAt
+        }
+    }
+}

@@ -6,20 +6,19 @@ import { useParams } from 'next/navigation';
 
 import { MAX_LIMIT } from '@/constants/api.constant';
 import Review, { ReviewsSkeleton } from '@/features/reviews/components/review';
-import { Order_By, useInfiniteGetMovieReviewsQuery } from '@/generated/graphql';
-import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
+import { Order_By, useInfiniteGetBookReviewsQuery } from '@/generated/graphql';
 import { Timeline } from '@/registry/new-york-v4/ui/timeline';
 
 import { useInView } from 'react-intersection-observer';
 
-export default function MovieReviews() {
+export default function BookReviews() {
     const params = useParams<{ id: string }>();
     const { ref: loadMoreRef, inView } = useInView({ threshold: 0.5 });
 
-    const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetMovieReviewsQuery(
+    const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteGetBookReviewsQuery(
         {
             where: {
-                movie_id: {
+                book_id: {
                     _eq: params?.id
                 },
                 review: {
@@ -37,7 +36,7 @@ export default function MovieReviews() {
             initialPageParam: { offset: 0 },
             getNextPageParam: (lastPage, pages) => {
                 const nextOffset = pages.length * MAX_LIMIT;
-                return lastPage.user_movie_statuses.length === MAX_LIMIT ? { offset: nextOffset } : undefined;
+                return lastPage.user_book_statuses.length === MAX_LIMIT ? { offset: nextOffset } : undefined;
             }
         }
     );
@@ -49,7 +48,7 @@ export default function MovieReviews() {
     }, [inView, hasNextPage, fetchNextPage]);
 
     const allReviews = useMemo(() => {
-        return data?.pages.flatMap((page) => page.user_movie_statuses) || [];
+        return data?.pages.flatMap((page) => page.user_book_statuses) || [];
     }, [data]);
 
     if (isLoading) {

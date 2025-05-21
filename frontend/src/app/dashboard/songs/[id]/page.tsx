@@ -9,6 +9,7 @@ import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import ObjectOverview from '@/features/movies/components/movie-overview';
+import AlbumMedia from '@/features/songs/components/album-media';
 import ReviewSongDialog from '@/features/songs/components/review-song-dialog';
 import SongChanges from '@/features/songs/components/song-changes';
 import SongContentScore from '@/features/songs/components/song-content-score';
@@ -16,6 +17,7 @@ import SongCredits from '@/features/songs/components/song-credits';
 import SongFavouriteButton from '@/features/songs/components/song-favourite-button';
 import SongLayout from '@/features/songs/components/song-layout';
 import { SongProvider, useSong } from '@/features/songs/components/song-provider';
+import SongReviews from '@/features/songs/components/song-reviews';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
@@ -64,11 +66,11 @@ function SongPageContent() {
 
     const tabContents = {
         reviews: {
-            content: 'No reviews available.'
+            content: <SongReviews />
         },
         credits: { content: <SongCredits /> },
         awards: { content: 'No awards available' },
-        media: { content: 'No media available.' },
+        media: { content: <AlbumMedia /> },
         changes: { content: <SongChanges /> },
         reports: { content: 'No reports available.' }
     };

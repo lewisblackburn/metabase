@@ -12,7 +12,9 @@ import BookContentScore from '@/features/books/components/book-content-score';
 import BookCredits from '@/features/books/components/book-credits';
 import BookFavouriteButton from '@/features/books/components/book-favourite-button';
 import BookLayout from '@/features/books/components/book-layout';
+import BookMedia from '@/features/books/components/book-media';
 import { BookProvider, useBook } from '@/features/books/components/book-provider';
+import BookReviews from '@/features/books/components/book-reviews';
 import BookStatusPicker from '@/features/books/components/book-status-picker';
 import ReviewBookDialog from '@/features/books/components/review-book-dialog';
 import { bookReleaseStatusLabels } from '@/features/books/constants/book-enums';
@@ -27,6 +29,8 @@ import {
     Calendar,
     Edit,
     Eye,
+    FileIcon,
+    Flag,
     Image,
     Info,
     Languages,
@@ -50,12 +54,11 @@ export default function BookPage() {
 
 const tabItems = [
     { value: 'reviews', icon: Star, label: 'Reviews' },
-    { value: 'where-to-watch', icon: Layers2, label: 'Where to Watch' },
     { value: 'credits', icon: User, label: 'Credits' },
     { value: 'awards', icon: Trophy, label: 'Awards' },
-    { value: 'images', icon: Image, label: 'Images' },
-    { value: 'videos', icon: Video, label: 'Videos' },
-    { value: 'changes', icon: Edit, label: 'Changes' }
+    { value: 'media', icon: Image, label: 'Media' },
+    { value: 'changes', icon: Edit, label: 'Changes' },
+    { value: 'reports', icon: Flag, label: 'Reports' }
 ];
 
 function BookPageContent() {
@@ -67,14 +70,13 @@ function BookPageContent() {
 
     const tabContents = {
         reviews: {
-            content: 'No reviews available.'
+            content: <BookReviews />
         },
-        'where-to-watch': { content: 'No where to watch information available.' },
         credits: { content: <BookCredits /> },
         awards: { content: 'No awards available' },
-        images: { content: 'No images available.' },
-        videos: { content: 'No videos available.' },
-        changes: { content: <BookChanges /> }
+        media: { content: <BookMedia /> },
+        changes: { content: <BookChanges /> },
+        reports: { content: 'No reports available' }
     };
 
     return (

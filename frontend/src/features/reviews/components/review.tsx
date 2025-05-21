@@ -1,5 +1,6 @@
 import { UserHoverCard } from '@/components/user-hover-card';
 import { Avatar, AvatarFallback } from '@/registry/new-york-v4/ui/avatar';
+import { Skeleton } from '@/registry/new-york-v4/ui/skeleton';
 import {
     TimelineContent,
     TimelineDate,
@@ -26,6 +27,16 @@ export type ReviewProps = {
     createdAt: Date;
     content: string;
 };
+
+export function ReviewsSkeleton() {
+    return (
+        <div className='space-y-4'>
+            {Array.from({ length: 3 }).map((_, index) => (
+                <Skeleton key={index} className='h-32 w-full' />
+            ))}
+        </div>
+    );
+}
 
 export default function Review({ user, rating, createdAt, content }: ReviewProps) {
     return (

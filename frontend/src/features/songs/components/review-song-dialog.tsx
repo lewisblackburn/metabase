@@ -47,6 +47,7 @@ export default function ReviewSongDialog() {
                 onSuccess: () => {
                     toast.success('Song reviewed successfully');
                     queryClient.invalidateQueries({ queryKey: ['song-status', song?.id, userId] });
+                    queryClient.invalidateQueries({ queryKey: ['GetSongReviews.infinite'] });
                 }
             }
         );
@@ -73,6 +74,7 @@ export default function ReviewSongDialog() {
                 onSuccess: () => {
                     toast.success('Song review deleted successfully');
                     queryClient.invalidateQueries({ queryKey: ['song-status', song?.id, userId] });
+                    queryClient.invalidateQueries({ queryKey: ['GetSongReviews.infinite'] });
                 }
             }
         );

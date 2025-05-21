@@ -28990,6 +28990,16 @@ export type GetBookMediaQueryVariables = Exact<{
 
 export type GetBookMediaQuery = { __typename?: 'query_root', book_media: Array<{ __typename?: 'book_media', file: { __typename?: 'files', name?: string | null, uploadedByUserId?: any | null, bucketId: string, id: any, size?: number | null, createdAt: any, mimeType?: string | null } }> };
 
+export type GetBookReviewsQueryVariables = Exact<{
+  where?: InputMaybe<User_Book_Statuses_Bool_Exp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<User_Book_Statuses_Order_By> | User_Book_Statuses_Order_By>;
+}>;
+
+
+export type GetBookReviewsQuery = { __typename?: 'query_root', user_book_statuses: Array<{ __typename?: 'user_book_statuses', user_id: any, rating?: any | null, review?: string | null, updated_at: any, user: { __typename?: 'users', displayName: string, avatarUrl: string, createdAt: any } }> };
+
 export type GetBookTitleQueryVariables = Exact<{
   book_id: Scalars['uuid']['input'];
 }>;
@@ -29554,6 +29564,16 @@ export type GetSongNameQueryVariables = Exact<{
 
 export type GetSongNameQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', name: string }> };
 
+export type GetSongReviewsQueryVariables = Exact<{
+  where?: InputMaybe<User_Song_Statuses_Bool_Exp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<User_Song_Statuses_Order_By> | User_Song_Statuses_Order_By>;
+}>;
+
+
+export type GetSongReviewsQuery = { __typename?: 'query_root', user_song_statuses: Array<{ __typename?: 'user_song_statuses', user_id: any, rating?: any | null, review?: string | null, updated_at: any, user: { __typename?: 'users', displayName: string, avatarUrl: string, createdAt: any } }> };
+
 export type GetSongQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
@@ -30059,6 +30079,62 @@ export const useInfiniteGetBookMediaQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetBookMedia.infinite'] : ['GetBookMedia.infinite', variables],
       queryFn: (metaData) => fetcher<GetBookMediaQuery, GetBookMediaQueryVariables>(GetBookMediaDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetBookReviewsDocument = `
+    query GetBookReviews($where: user_book_statuses_bool_exp, $limit: Int, $offset: Int, $orderBy: [user_book_statuses_order_by!]) {
+  user_book_statuses(
+    where: $where
+    limit: $limit
+    offset: $offset
+    order_by: $orderBy
+  ) {
+    user_id
+    rating
+    review
+    updated_at
+    user {
+      displayName
+      avatarUrl
+      createdAt
+    }
+  }
+}
+    `;
+
+export const useGetBookReviewsQuery = <
+      TData = GetBookReviewsQuery,
+      TError = unknown
+    >(
+      variables?: GetBookReviewsQueryVariables,
+      options?: Omit<UseQueryOptions<GetBookReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetBookReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetBookReviewsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetBookReviews'] : ['GetBookReviews', variables],
+    queryFn: fetcher<GetBookReviewsQuery, GetBookReviewsQueryVariables>(GetBookReviewsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetBookReviewsQuery = <
+      TData = InfiniteData<GetBookReviewsQuery>,
+      TError = unknown
+    >(
+      variables: GetBookReviewsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetBookReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetBookReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetBookReviewsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetBookReviews.infinite'] : ['GetBookReviews.infinite', variables],
+      queryFn: (metaData) => fetcher<GetBookReviewsQuery, GetBookReviewsQueryVariables>(GetBookReviewsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
@@ -32522,6 +32598,62 @@ export const useInfiniteGetSongNameQuery = <
     return {
       queryKey: optionsQueryKey ?? ['GetSongName.infinite', variables],
       queryFn: (metaData) => fetcher<GetSongNameQuery, GetSongNameQueryVariables>(GetSongNameDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetSongReviewsDocument = `
+    query GetSongReviews($where: user_song_statuses_bool_exp, $limit: Int, $offset: Int, $orderBy: [user_song_statuses_order_by!]) {
+  user_song_statuses(
+    where: $where
+    limit: $limit
+    offset: $offset
+    order_by: $orderBy
+  ) {
+    user_id
+    rating
+    review
+    updated_at
+    user {
+      displayName
+      avatarUrl
+      createdAt
+    }
+  }
+}
+    `;
+
+export const useGetSongReviewsQuery = <
+      TData = GetSongReviewsQuery,
+      TError = unknown
+    >(
+      variables?: GetSongReviewsQueryVariables,
+      options?: Omit<UseQueryOptions<GetSongReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetSongReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetSongReviewsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetSongReviews'] : ['GetSongReviews', variables],
+    queryFn: fetcher<GetSongReviewsQuery, GetSongReviewsQueryVariables>(GetSongReviewsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetSongReviewsQuery = <
+      TData = InfiniteData<GetSongReviewsQuery>,
+      TError = unknown
+    >(
+      variables: GetSongReviewsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetSongReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetSongReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetSongReviewsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetSongReviews.infinite'] : ['GetSongReviews.infinite', variables],
+      queryFn: (metaData) => fetcher<GetSongReviewsQuery, GetSongReviewsQueryVariables>(GetSongReviewsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()
