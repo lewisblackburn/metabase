@@ -124,9 +124,6 @@ export default function BooksSidebar() {
                                 type='multiple'
                                 className='flex w-full flex-col gap-4 px-2 sm:px-4'
                                 defaultValue={['filters']}>
-                                <SidebarAccordionItem id='where-to-watch' title='Where to Read'>
-                                    content
-                                </SidebarAccordionItem>
                                 <SidebarAccordionItem id='filters' title='Filters'>
                                     <div className='mt-4 flex flex-col gap-4 sm:gap-5'>
                                         <FilterSection>

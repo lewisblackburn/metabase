@@ -29129,7 +29129,7 @@ export type GetFilesQuery = { __typename?: 'query_root', files: Array<{ __typena
 export type GetFeaturedItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFeaturedItemsQuery = { __typename?: 'query_root', featuredMovie: Array<{ __typename?: 'movies', id: any, title: string, poster: string }>, featuredSong: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null }>, featuredBook: Array<{ __typename?: 'books', id: any, title: string, cover: string }> };
+export type GetFeaturedItemsQuery = { __typename?: 'query_root', featuredMovie: Array<{ __typename?: 'movies', id: any, title: string, poster: string }>, featuredSong: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null }>, featuredBook: Array<{ __typename?: 'books', id: any, title: string, cover: string }>, featuredPerson: Array<{ __typename?: 'people', id: any, name: string, headshot: string }> };
 
 export type GetUserStatusesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -29421,7 +29421,7 @@ export type GetPeopleQueryVariables = Exact<{
 }>;
 
 
-export type GetPeopleQuery = { __typename?: 'query_root', people: Array<{ __typename?: 'people', id: any, name: string, headshot: string }> };
+export type GetPeopleQuery = { __typename?: 'query_root', people: Array<{ __typename?: 'people', id: any, name: string, bio?: string | null, headshot: string }> };
 
 export type GetPersonByTmdb_IdQueryVariables = Exact<{
   tmdb_id?: InputMaybe<Scalars['String']['input']>;
@@ -29458,6 +29458,13 @@ export type GetPersonQueryVariables = Exact<{
 
 
 export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, spotify_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, department?: Department_Types_Enum | null, job?: Job_Types_Enum | null, character?: string | null, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } | null }> } | null };
+
+export type IncrementPersonViewsMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type IncrementPersonViewsMutation = { __typename?: 'mutation_root', update_people_by_pk?: { __typename?: 'people', id: any, view_count?: number | null } | null };
 
 export type InsertPersonMediaMutationVariables = Exact<{
   objects: Array<Person_Media_Insert_Input> | Person_Media_Insert_Input;
@@ -30698,6 +30705,11 @@ export const GetFeaturedItemsDocument = `
     id
     title
     cover
+  }
+  featuredPerson: people(limit: 1, order_by: {view_count: desc}) {
+    id
+    name
+    headshot
   }
 }
     `;
@@ -31962,6 +31974,7 @@ export const GetPeopleDocument = `
   ) {
     id
     name
+    bio
     headshot
   }
 }
@@ -32227,6 +32240,28 @@ export const useInfiniteGetPersonQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const IncrementPersonViewsDocument = `
+    mutation IncrementPersonViews($id: uuid!) {
+  update_people_by_pk(pk_columns: {id: $id}, _inc: {view_count: 1}) {
+    id
+    view_count
+  }
+}
+    `;
+
+export const useIncrementPersonViewsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<IncrementPersonViewsMutation, TError, IncrementPersonViewsMutationVariables, TContext>) => {
+    
+    return useMutation<IncrementPersonViewsMutation, TError, IncrementPersonViewsMutationVariables, TContext>(
+      {
+    mutationKey: ['IncrementPersonViews'],
+    mutationFn: (variables?: IncrementPersonViewsMutationVariables) => fetcher<IncrementPersonViewsMutation, IncrementPersonViewsMutationVariables>(IncrementPersonViewsDocument, variables)(),
+    ...options
+  }
     )};
 
 export const InsertPersonMediaDocument = `

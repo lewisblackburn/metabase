@@ -15,29 +15,25 @@ export const NAVIGATION = {
                 icon: Heart,
                 name: 'Popular',
                 description: "See what's trending right now.",
-                path: '',
-                disabled: true
+                path: ''
             },
             {
                 icon: Calendar,
                 name: 'Upcoming',
                 description: "See what's coming soon.",
-                path: '',
-                disabled: true
+                path: ''
             },
             {
                 icon: Play,
                 name: 'Now Playing',
                 description: "See what's playing in theaters now.",
-                path: '',
-                disabled: true
+                path: ''
             },
             {
                 icon: Star,
                 name: 'Top Rated',
                 description: "See what's most popular.",
-                path: '',
-                disabled: true
+                path: ''
             },
             {
                 icon: Plus,
@@ -57,16 +53,16 @@ export const NAVIGATION = {
                 description: 'Explore a wide-range of series with filters and sorting options.',
                 path: ''
             }
-        ],
-        disabled: true
+        ]
     },
     people: {
+        type: OBJECT_TYPE.PERSON,
         cards: [
             {
                 icon: Sparkles,
                 name: 'Discover',
                 description: 'Explore a wide-range of people with filters and sorting options.',
-                path: ''
+                path: '/dashboard/people'
             },
             {
                 icon: Plus,
@@ -74,8 +70,7 @@ export const NAVIGATION = {
                 description: 'Add a new person to the database.',
                 path: '/dashboard/people/new'
             }
-        ],
-        type: OBJECT_TYPE.PERSON
+        ]
     },
     songs: {
         type: OBJECT_TYPE.SONG,
@@ -109,8 +104,7 @@ export const NAVIGATION = {
                 description: 'Add a new book to the database.',
                 path: '/dashboard/books/new'
             }
-        ],
-        disabled: true
+        ]
     },
     games: {
         id: 'games',
@@ -122,7 +116,6 @@ export const NAVIGATION = {
                 description: 'Explore a wide-range of games with filters and sorting options.',
                 path: ''
             }
-        ],
-        disabled: true
+        ]
     }
 };

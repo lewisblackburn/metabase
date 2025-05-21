@@ -30,6 +30,7 @@ import { NavUser } from './nav-user';
 import Notifications from './notifications/notifications';
 import Artwork, { ArtworkSkeleton } from './shared/artwork';
 import Cover, { CoverSkeleton } from './shared/cover';
+import Headshot, { HeadshotSkeleton } from './shared/headshot';
 import ImageWithSkeleton from './shared/image-with-skeleton';
 import Poster, { PosterSkeleton } from './shared/poster';
 import { Container } from './ui/container';
@@ -82,6 +83,7 @@ const Navbar: React.FC = () => {
     const featuredMovie = featuredItemsData?.featuredMovie[0] ?? null;
     const featuredSong = featuredItemsData?.featuredSong[0] ?? null;
     const featuredBook = featuredItemsData?.featuredBook[0] ?? null;
+    const featuredPerson = featuredItemsData?.featuredPerson[0] ?? null;
 
     const handleOpenCommandPanel = () => {
         dispatch(toggleCommandPanelOpenState());
@@ -203,7 +205,18 @@ const Navbar: React.FC = () => {
                                         <div className='grid grid-cols-[.75fr_1fr_1fr] gap-2'>
                                             <div className='col-span-1 row-span-3'>
                                                 <div className='p-1'>
-                                                    <PosterSkeleton />
+                                                    {featuredPerson && !isFeaturedItemsLoading ? (
+                                                        <Link
+                                                            href={`/dashboard/people/${featuredPerson.id}`}
+                                                            className='block h-full'>
+                                                            <Headshot
+                                                                image={featuredPerson.headshot}
+                                                                title={featuredPerson.name}
+                                                            />
+                                                        </Link>
+                                                    ) : (
+                                                        <HeadshotSkeleton />
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className='col-span-2'>

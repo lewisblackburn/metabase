@@ -16,6 +16,7 @@ import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { toggleEditDialogOpenState } from '@/features/edit-dailog/store/edit-dialog.slice';
 import PersonBio from '@/features/people/components/person-bio';
 import PersonCredits from '@/features/people/components/person-credits';
+import PersonMedia from '@/features/people/components/person-media';
 import PersonOverview from '@/features/people/components/person-overview';
 import { PersonProvider, usePerson } from '@/features/people/components/person-provider';
 import { Object_Types_Enum } from '@/generated/graphql';
@@ -48,7 +49,7 @@ function PersonPageContent() {
         overview: {
             content: <PersonOverview />
         },
-        media: { content: <PersonCredits /> },
+        media: { content: <PersonMedia /> },
         changes: { content: <AuditLogs tableName='people' entityId={person?.id} /> },
         reports: { content: <ReportsTable objectType={Object_Types_Enum.Person} /> }
     };

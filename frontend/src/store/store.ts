@@ -4,6 +4,7 @@ import commandPanelReducer from '@/features/command-panel/store/command-panel.sl
 import editDialogReducer from '@/features/edit-dailog/store/edit-dialog.slice';
 import movieEditReducer from '@/features/movies/store/movie-edit.slice';
 import { persistedMoviesFilterReducer } from '@/features/movies/store/movies-filter.slice';
+import { persistedPeopleFilterReducer } from '@/features/people/store/people-filter.slice';
 import personEditReducer from '@/features/people/store/person-edit.slice';
 import settingsReducer from '@/features/settings/store/settings.slice';
 import shortcutsReducer from '@/features/shortcuts/store/shortcuts.slice';
@@ -34,7 +35,7 @@ const rootReducer = combineReducers({
     moviesFilter: persistedMoviesFilterReducer,
     booksFilter: booksFilterReducer,
     songsFilter: persistedSongsFilterReducer,
-
+    peopleFilter: persistedPeopleFilterReducer,
     // Settings and preferences
     settings: settingsReducer,
     shortcuts: shortcutsReducer

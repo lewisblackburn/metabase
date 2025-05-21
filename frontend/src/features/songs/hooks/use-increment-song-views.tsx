@@ -34,6 +34,7 @@ export function useIncrementSongViews(songId: string) {
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ['song', songId] });
+            queryClient.invalidateQueries({ queryKey: ['GetSongs.infinite'] });
         }
     });
 }

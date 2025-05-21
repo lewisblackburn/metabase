@@ -1,0 +1,6 @@
+mutation IncrementPersonViews($id: uuid!) {
+    update_people_by_pk(pk_columns: { id: $id }, _inc: { view_count: 1 }) {
+        id
+        view_count
+    }
+}

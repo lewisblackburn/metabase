@@ -34,6 +34,7 @@ export function useIncrementBookViews(bookId: string) {
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ['book', bookId] });
+            queryClient.invalidateQueries({ queryKey: ['GetBooks.infinite'] });
         }
     });
 }

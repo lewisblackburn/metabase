@@ -16,4 +16,9 @@ query GetFeaturedItems {
         title
         cover
     }
+    featuredPerson: people(limit: 1, order_by: { view_count: desc }) {
+        id
+        name
+        headshot
+    }
 }

@@ -8,6 +8,7 @@ import { useNhostClient } from '@nhost/nextjs';
 
 import Backdrop from './backdrop';
 import Cover from './cover';
+import Headshot from './headshot';
 import Poster from './poster';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -59,6 +60,8 @@ const MediaItem = memo(({ image }: { image: TransformedImage }) => {
                 return <Artwork image={image.src} title={image.title} />;
             case BUCKET.COVER:
                 return <Cover image={image.src} title={image.title} />;
+            case BUCKET.HEADSHOT:
+                return <Headshot image={image.src} title={image.title} />;
             default:
                 return null;
         }
@@ -69,7 +72,7 @@ const MediaItem = memo(({ image }: { image: TransformedImage }) => {
             <a href={image.src} target='_blank' rel='noopener noreferrer'>
                 {renderMediaComponent()}
             </a>
-            <div className='space-y-1'>
+            <div className='space-y-1 pt-2'>
                 <p className='truncate font-medium' title={image.title}>
                     {image.title}
                 </p>
