@@ -1,45 +1,49 @@
 'use client';
 
-import { BUCKET, BucketType } from '@/constants/media.constant';
-import { useGetMovieMediaQuery, useInsertMovieMediaMutation, useUpdateMovieMutation } from '@/generated/graphql';
+import { MediaTable } from '@/components/shared/media-table';
+import { BucketType } from '@/constants/media.constant';
+import { BUCKET } from '@/constants/media.constant';
+import { useGetPersonMediaQuery, useInsertPersonMediaMutation, useUpdatePersonMutation } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Progress } from '@/registry/new-york-v4/ui/progress';
 import { useFileUpload, useNhostClient } from '@nhost/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { MediaTable } from '../../../../components/shared/media-table';
 import { AlertCircleIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface EditMovieMediaProps {
-    movieId: string;
+interface EditPersonMediaProps {
+    personId: string;
 }
 
-export default function EditMovieMedia({ movieId }: EditMovieMediaProps) {
+export default function EditPersonMedia({ personId }: EditPersonMediaProps) {
     const nhost = useNhostClient();
     const queryClient = useQueryClient();
     const { add, upload, progress, isUploading, error } = useFileUpload();
-    const { data: media, isLoading } = useGetMovieMediaQuery(
+    const { data: media, isLoading } = useGetPersonMediaQuery(
         {
             where: {
-                movie_id: {
-                    _eq: movieId
+                person_id: {
+                    _eq: personId
                 }
             }
         },
         {
-            queryKey: ['movie-media', movieId],
-            enabled: !!movieId
+            queryKey: ['person-media', personId],
+            enabled: !!personId
         }
     );
-    const insertMediaMutation = useInsertMovieMediaMutation({
+    const insertMediaMutation = useInsertPersonMediaMutation({
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['movie-media', movieId] });
+            queryClient.invalidateQueries({ queryKey: ['person-media', personId] });
+        },
+        onError: (error: Error) => {
+            toast.error(error.message || 'Failed to upload image');
         }
     });
-    const updateMovieMutation = useUpdateMovieMutation({
+    const updatePersonMutation = useUpdatePersonMutation({
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['movie', movieId] });
+            queryClient.invalidateQueries({ queryKey: ['person', personId] });
             toast.success('Primary image updated');
         },
         onError: (error: Error) => {
@@ -62,7 +66,7 @@ export default function EditMovieMedia({ movieId }: EditMovieMediaProps) {
                     await insertMediaMutation.mutateAsync({
                         objects: [
                             {
-                                movie_id: movieId,
+                                person_id: personId,
                                 file_id: result.id
                             }
                         ]
@@ -80,7 +84,7 @@ export default function EditMovieMedia({ movieId }: EditMovieMediaProps) {
     const handleDelete = async (fileId: string) => {
         try {
             await nhost.storage.delete({ fileId });
-            queryClient.invalidateQueries({ queryKey: ['movie-media', movieId] });
+            queryClient.invalidateQueries({ queryKey: ['person-media', personId] });
             toast.success('Image deleted successfully');
         } catch (err) {
             toast.error('Failed to delete image');
@@ -90,12 +94,11 @@ export default function EditMovieMedia({ movieId }: EditMovieMediaProps) {
     const handleSetPrimary = async (fileId: string, bucketId: BucketType) => {
         try {
             const publicUrl = nhost.storage.getPublicUrl({ fileId });
-            await updateMovieMutation.mutateAsync({
-                id: movieId,
+            await updatePersonMutation.mutateAsync({
+                id: personId,
                 set: {
-                    [bucketId === BUCKET.POSTER ? 'poster' : 'backdrop']: publicUrl
-                },
-                inc: {}
+                    [bucketId === BUCKET.HEADSHOT ? 'headshot' : 'backdrop']: publicUrl
+                }
             });
         } catch (err) {
             toast.error('Failed to update primary image');
@@ -105,19 +108,19 @@ export default function EditMovieMedia({ movieId }: EditMovieMediaProps) {
     return (
         <div className='space-y-6'>
             <div className='flex justify-end gap-4'>
-                <Button
-                    onClick={() => handleFileSelect(BUCKET.POSTER)}
-                    disabled={isUploading}
-                    variant='outline'
-                    size='sm'>
-                    Upload Poster
-                </Button>
-                <Button
+                {/* <Button
                     onClick={() => handleFileSelect(BUCKET.BACKDROP)}
                     disabled={isUploading}
                     variant='outline'
                     size='sm'>
                     Upload Backdrop
+                </Button> */}
+                <Button
+                    onClick={() => handleFileSelect(BUCKET.HEADSHOT)}
+                    disabled={isUploading}
+                    variant='outline'
+                    size='sm'>
+                    Upload Headshot
                 </Button>
             </div>
             {isUploading && (
@@ -133,7 +136,7 @@ export default function EditMovieMedia({ movieId }: EditMovieMediaProps) {
                 </div>
             )}
             <MediaTable
-                media={media?.movie_media ?? []}
+                media={media?.person_media ?? []}
                 onDelete={handleDelete}
                 onSetPrimary={handleSetPrimary}
                 isLoading={isLoading}

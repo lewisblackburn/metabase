@@ -1,0 +1,13 @@
+query GetPersonMedia($where: person_media_bool_exp, $order_by: [person_media_order_by!], $limit: Int, $offset: Int) {
+    person_media(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
+        file {
+            name
+            uploadedByUserId
+            bucketId
+            id
+            size
+            createdAt
+            mimeType
+        }
+    }
+}

@@ -12,7 +12,7 @@ import { CalendarIcon } from 'lucide-react';
 
 export interface DatePickerFieldProps {
     name: string;
-    value?: Date;
+    value?: Date | null;
     onChange: (date: Date | null) => void;
     onBlur?: (e: React.FocusEvent) => void;
 }
@@ -52,7 +52,13 @@ const DatePickerField = React.forwardRef<HTMLDivElement, DatePickerFieldProps>(
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className='w-auto p-0' align='start' style={{ zIndex: '1000 !important' }}>
-                    <Calendar mode='single' selected={value} onSelect={handleChange} initialFocus />
+                    <Calendar
+                        mode='single'
+                        selected={value || undefined}
+                        onSelect={handleChange}
+                        initialFocus
+                        defaultMonth={value || undefined}
+                    />
                 </PopoverContent>
             </Popover>
         );

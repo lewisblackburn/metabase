@@ -1,0 +1,5 @@
+mutation InsertPersonMedia($objects: [person_media_insert_input!]!) {
+    insert_person_media(objects: $objects) {
+        affected_rows
+    }
+}

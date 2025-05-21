@@ -1,12 +1,11 @@
 'use client';
 
 import BaseFormLayout from '@/components/form/base-form-layout';
-import CheckboxGroupField from '@/components/form/checkbox-group';
 import DatePickerField from '@/components/form/date-picker';
 import InputField from '@/components/form/input';
 import SelectField from '@/components/form/select';
 import TextareaField from '@/components/form/textarea';
-import { genderOptions, genderOptionsSchema } from '@/constants/misc.constant';
+import { genderOptions } from '@/constants/misc.constant';
 import { Gender_Types_Enum, useGetPersonQuery, useUpdatePersonMutation } from '@/generated/graphql';
 import { queryClient } from '@/lib/query-client';
 import { Button } from '@/registry/new-york-v4/ui/button';
@@ -57,7 +56,7 @@ export default function EditPersonDetails({ personId }: EditPersonDetailsProps) 
                     bio: values.bio,
                     birth_date: values.birth_date,
                     death_date: values.death_date,
-                    gender: values.gender as Gender_Types_Enum,
+                    gender: values.gender,
                     tmdb_id: values.tmdb_id,
                     spotify_id: values.spotify_id
                 }

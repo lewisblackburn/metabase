@@ -1,3 +1,5 @@
+import { Gender_Types_Enum } from '@/generated/graphql';
+
 import { z } from 'zod';
 
 export const editPersonSchema = z.object({
@@ -5,7 +7,7 @@ export const editPersonSchema = z.object({
     bio: z.string().optional(),
     birth_date: z.date().nullable().optional(),
     death_date: z.date().nullable().optional(),
-    gender: z.string().optional(),
+    gender: z.nativeEnum(Gender_Types_Enum).optional(),
     tmdb_id: z.string().optional(),
     spotify_id: z.string().optional()
 });

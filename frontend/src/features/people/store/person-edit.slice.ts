@@ -17,6 +17,13 @@ const initialState: PersonEditState = {
             iconColor: 'text-blue-500'
         },
         {
+            id: 'media',
+            name: 'Media',
+            icon: 'Image',
+            description: 'Upload and manage person media',
+            iconColor: 'text-yellow-500'
+        },
+        {
             id: 'import',
             name: 'Import',
             icon: 'Download',

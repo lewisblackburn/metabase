@@ -29427,6 +29427,16 @@ export type GetPersonDetailsQueryVariables = Exact<{
 
 export type GetPersonDetailsQuery = { __typename?: 'query_root', credits: Array<{ __typename?: 'credits', department?: Department_Types_Enum | null, job?: Job_Types_Enum | null }> };
 
+export type GetPersonMediaQueryVariables = Exact<{
+  where?: InputMaybe<Person_Media_Bool_Exp>;
+  order_by?: InputMaybe<Array<Person_Media_Order_By> | Person_Media_Order_By>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetPersonMediaQuery = { __typename?: 'query_root', person_media: Array<{ __typename?: 'person_media', file: { __typename?: 'files', name?: string | null, uploadedByUserId?: any | null, bucketId: string, id: any, size?: number | null, createdAt: any, mimeType?: string | null } }> };
+
 export type GetPersonQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
   credit_distinct_on?: InputMaybe<Array<Credits_Select_Column> | Credits_Select_Column>;
@@ -29438,6 +29448,13 @@ export type GetPersonQueryVariables = Exact<{
 
 
 export type GetPersonQuery = { __typename?: 'query_root', people_by_pk?: { __typename?: 'people', id: any, headshot: string, backdrop: string, name: string, bio?: string | null, known_for_department?: string | null, gender?: Gender_Types_Enum | null, content_score: number, view_count?: number | null, birth_date?: any | null, death_date?: any | null, tmdb_id?: string | null, spotify_id?: string | null, credits: Array<{ __typename?: 'credits', id: any, credit_type: Credit_Types_Enum, department?: Department_Types_Enum | null, job?: Job_Types_Enum | null, character?: string | null, object_id: any, object_type: string, movie_credit?: { __typename?: 'movies', title: string, poster: string } | null, book_credit?: { __typename?: 'books', title: string, cover: string } | null, song_credit?: { __typename?: 'songs', name: string, album?: { __typename?: 'albums', artwork: string } | null } | null }> } | null };
+
+export type InsertPersonMediaMutationVariables = Exact<{
+  objects: Array<Person_Media_Insert_Input> | Person_Media_Insert_Input;
+}>;
+
+
+export type InsertPersonMediaMutation = { __typename?: 'mutation_root', insert_person_media?: { __typename?: 'person_media_mutation_response', affected_rows: number } | null };
 
 export type InsertPersonMutationVariables = Exact<{
   object: People_Insert_Input;
@@ -32000,6 +32017,57 @@ export const useInfiniteGetPersonDetailsQuery = <
   })()
     )};
 
+export const GetPersonMediaDocument = `
+    query GetPersonMedia($where: person_media_bool_exp, $order_by: [person_media_order_by!], $limit: Int, $offset: Int) {
+  person_media(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
+    file {
+      name
+      uploadedByUserId
+      bucketId
+      id
+      size
+      createdAt
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useGetPersonMediaQuery = <
+      TData = GetPersonMediaQuery,
+      TError = unknown
+    >(
+      variables?: GetPersonMediaQueryVariables,
+      options?: Omit<UseQueryOptions<GetPersonMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPersonMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetPersonMediaQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetPersonMedia'] : ['GetPersonMedia', variables],
+    queryFn: fetcher<GetPersonMediaQuery, GetPersonMediaQueryVariables>(GetPersonMediaDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetPersonMediaQuery = <
+      TData = InfiniteData<GetPersonMediaQuery>,
+      TError = unknown
+    >(
+      variables: GetPersonMediaQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetPersonMediaQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetPersonMediaQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetPersonMediaQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetPersonMedia.infinite'] : ['GetPersonMedia.infinite', variables],
+      queryFn: (metaData) => fetcher<GetPersonMediaQuery, GetPersonMediaQueryVariables>(GetPersonMediaDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
 export const GetPersonDocument = `
     query GetPerson($id: uuid!, $credit_distinct_on: [credits_select_column!], $credit_limit: Int, $credit_offset: Int, $credit_order_by: [credits_order_by!], $credit_where: credits_bool_exp) {
   people_by_pk(id: $id) {
@@ -32083,6 +32151,27 @@ export const useInfiniteGetPersonQuery = <
       ...restOptions
     }
   })()
+    )};
+
+export const InsertPersonMediaDocument = `
+    mutation InsertPersonMedia($objects: [person_media_insert_input!]!) {
+  insert_person_media(objects: $objects) {
+    affected_rows
+  }
+}
+    `;
+
+export const useInsertPersonMediaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<InsertPersonMediaMutation, TError, InsertPersonMediaMutationVariables, TContext>) => {
+    
+    return useMutation<InsertPersonMediaMutation, TError, InsertPersonMediaMutationVariables, TContext>(
+      {
+    mutationKey: ['InsertPersonMedia'],
+    mutationFn: (variables?: InsertPersonMediaMutationVariables) => fetcher<InsertPersonMediaMutation, InsertPersonMediaMutationVariables>(InsertPersonMediaDocument, variables)(),
+    ...options
+  }
     )};
 
 export const InsertPersonDocument = `

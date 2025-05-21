@@ -9,6 +9,7 @@ import { RootState } from '@/store/store';
 import { setActiveItemId } from '../../store/person-edit.slice';
 import ImportPersonFromTMDB from '../import-person-from-tmdb';
 import EditPersonDangerZone from './edit-person-danger-zone';
+import EditPersonMedia from './edit-person-media';
 import EditPersonDetails from './edit-person.details';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -24,6 +25,7 @@ export function EditPersonDialog({ id, isOpen, onOpenChange }: EditPersonDialogP
 
     const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
         details: () => <EditPersonDetails personId={id} />,
+        media: () => <EditPersonMedia personId={id} />,
         import: () => <ImportPersonFromTMDB personId={id} />,
         danger: () => <EditPersonDangerZone personId={id} />
     };
