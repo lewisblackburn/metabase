@@ -2,28 +2,32 @@ import ReportDialog, { ReportFormValues } from '@/components/shared/report-dialo
 import { Object_Types_Enum, Reports_Constraint, useInsertReportMutation } from '@/generated/graphql';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useMovie } from './movie-provider';
 import { toast } from 'sonner';
 
-export default function ReportMovieDialog() {
-    const queryClient = useQueryClient();
-    const { movie } = useMovie();
+interface ReportObjectDialogProps {
+    objectId: string;
+    objectType: Object_Types_Enum;
+    queryKey?: string[];
+}
 
-    const { mutateAsync: insertMovieReport } = useInsertReportMutation({
+export default function ReportObjectDialog({ objectId, objectType, queryKey }: ReportObjectDialogProps) {
+    const queryClient = useQueryClient();
+
+    const { mutateAsync: insertReport } = useInsertReportMutation({
         onSuccess: () => {
-            toast.success('Movie reported successfully');
-            queryClient.invalidateQueries({ queryKey: ['GetReports', movie?.id] });
+            toast.success('Content reported successfully');
+            if (queryKey) {
+                queryClient.invalidateQueries({ queryKey });
+            }
         },
         onError: (error: Error) => toast.error(error.message)
     });
 
-    if (!movie) return null;
-
     const handleSubmitReport = async (reportData: ReportFormValues) => {
-        await insertMovieReport({
+        await insertReport({
             object: {
-                object_id: movie.id,
-                object_type: Object_Types_Enum.Movie,
+                object_id: objectId,
+                object_type: objectType,
                 reason: reportData.reason,
                 details: reportData.details,
                 report_votes: {

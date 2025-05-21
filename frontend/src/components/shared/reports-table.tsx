@@ -22,7 +22,11 @@ import dayjs from 'dayjs';
 import { ThumbsDown, ThumbsUp, Trash } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function MovieReports() {
+interface ReportsTableProps {
+    objectType: Object_Types_Enum;
+}
+
+export default function ReportsTable({ objectType }: ReportsTableProps) {
     const params = useParams<{ id: string }>();
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(5);
@@ -37,7 +41,7 @@ export default function MovieReports() {
                     _eq: params?.id
                 },
                 object_type: {
-                    _eq: Object_Types_Enum.Movie
+                    _eq: objectType
                 }
             },
             limit: pageSize,
@@ -184,7 +188,7 @@ export default function MovieReports() {
     }
 
     if (reports.length === 0) {
-        return <div>No reports for this movie</div>;
+        return <div>No reports found</div>;
     }
 
     return (

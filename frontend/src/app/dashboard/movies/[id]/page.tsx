@@ -7,6 +7,9 @@ import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
+import ReportMovieDialog from '@/components/shared/report-object-dialog';
+import ReportObjectDialog from '@/components/shared/report-object-dialog';
+import ReportsTable from '@/components/shared/reports-table';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
@@ -22,7 +25,6 @@ import { MovieProvider, useMovie } from '@/features/movies/components/movie-prov
 import MovieReports from '@/features/movies/components/movie-reports';
 import MovieReviews from '@/features/movies/components/movie-reviews';
 import MovieStatusPicker from '@/features/movies/components/movie-status-picker';
-import ReportMovieDialog from '@/features/movies/components/report-movie-dialog';
 import ReviewMovieDialog from '@/features/movies/components/review-movie-dialog';
 import MovieSoundtrackTable from '@/features/movies/components/soundtrack-table';
 import { movieCertificationLabels, movieReleaseStatusLabels } from '@/features/movies/constants/movie-enums';
@@ -89,7 +91,7 @@ function MoviePageContent() {
         awards: { content: 'No awards available' },
         media: { content: <MovieMedia /> },
         changes: { content: <MovieChanges /> },
-        reports: { content: <MovieReports /> }
+        reports: { content: <ReportsTable objectType={Object_Types_Enum.Movie} /> }
     };
 
     return (
@@ -186,7 +188,11 @@ function MoviePageContent() {
                             )}
                             <ReviewMovieDialog />
                             <MovieStatusPicker />
-                            <ReportMovieDialog />
+                            <ReportObjectDialog
+                                objectId={movie.id}
+                                objectType={Object_Types_Enum.Movie}
+                                queryKey={['GetReports', movie.id]}
+                            />
                             <ActionButton
                                 icon={Edit}
                                 size='sm'

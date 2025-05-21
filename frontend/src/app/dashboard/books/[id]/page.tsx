@@ -4,6 +4,8 @@ import NotFound from '@/app/not-found';
 import ActionButton from '@/components/shared/action-button';
 import DefaultLoading from '@/components/shared/default-loading';
 import ItemInformation from '@/components/shared/item-information';
+import ReportObjectDialog from '@/components/shared/report-object-dialog';
+import ReportsTable from '@/components/shared/reports-table';
 import ResponsiveDialog from '@/components/shared/responsive-dailog';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
 import { LANGUAGES } from '@/constants/languages.constant';
@@ -76,7 +78,7 @@ function BookPageContent() {
         awards: { content: 'No awards available' },
         media: { content: <BookMedia /> },
         changes: { content: <BookChanges /> },
-        reports: { content: 'No reports available' }
+        reports: { content: <ReportsTable objectType={Object_Types_Enum.Book} /> }
     };
 
     return (
@@ -143,6 +145,11 @@ function BookPageContent() {
                             <BookFavouriteButton />
                             <ReviewBookDialog />
                             <BookStatusPicker />
+                            <ReportObjectDialog
+                                objectId={book.id}
+                                objectType={Object_Types_Enum.Book}
+                                queryKey={['GetReports', book.id]}
+                            />
                             <ActionButton
                                 icon={Edit}
                                 size='sm'
