@@ -16,7 +16,7 @@ export type ItemType = {
         icon: React.ComponentType<{ className?: string }>;
     };
     shortcut?: string;
-    lastOpened?: string;
+    href?: string;
 };
 
 interface ItemProps {

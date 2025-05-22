@@ -29650,6 +29650,20 @@ export type DeleteFollowMutationVariables = Exact<{
 
 export type DeleteFollowMutation = { __typename?: 'mutation_root', delete_follows_by_pk?: { __typename?: 'follows', followee_id: any, follower_id: any } | null };
 
+export type DeleteUserMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', deleteUser?: { __typename?: 'users', id: any } | null };
+
+export type DisableUserMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type DisableUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename?: 'users', id: any } | null };
+
 export type GetFolloweesQueryVariables = Exact<{
   user_id: Scalars['uuid']['input'];
   followees_limit?: InputMaybe<Scalars['Int']['input']>;
@@ -32977,6 +32991,48 @@ export const useDeleteFollowMutation = <
       {
     mutationKey: ['DeleteFollow'],
     mutationFn: (variables?: DeleteFollowMutationVariables) => fetcher<DeleteFollowMutation, DeleteFollowMutationVariables>(DeleteFollowDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DeleteUserDocument = `
+    mutation DeleteUser($id: uuid!) {
+  deleteUser(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteUserMutation, TError, DeleteUserMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteUserMutation, TError, DeleteUserMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteUser'],
+    mutationFn: (variables?: DeleteUserMutationVariables) => fetcher<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument, variables)(),
+    ...options
+  }
+    )};
+
+export const DisableUserDocument = `
+    mutation DisableUser($id: uuid!) {
+  updateUser(pk_columns: {id: $id}, _set: {disabled: true}) {
+    id
+  }
+}
+    `;
+
+export const useDisableUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DisableUserMutation, TError, DisableUserMutationVariables, TContext>) => {
+    
+    return useMutation<DisableUserMutation, TError, DisableUserMutationVariables, TContext>(
+      {
+    mutationKey: ['DisableUser'],
+    mutationFn: (variables?: DisableUserMutationVariables) => fetcher<DisableUserMutation, DisableUserMutationVariables>(DisableUserDocument, variables)(),
     ...options
   }
     )};

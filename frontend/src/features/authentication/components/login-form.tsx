@@ -16,18 +16,16 @@ import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignInEmailPassword } from '@nhost/nextjs';
 
-import { loginSchema } from '../schemas/login.schema';
+import { LoginSchemaType, loginSchema } from '../schemas/login.schema';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-type LoginValues = z.infer<typeof loginSchema>;
-
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
     const { isSuccess, isLoading, isError, error, signInEmailPassword } = useSignInEmailPassword();
     const router = useRouter();
-    const form = useForm<LoginValues>({
+    const form = useForm<LoginSchemaType>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
             email: '',
@@ -35,14 +33,11 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
         }
     });
 
-    const onSubmit = async (data: LoginValues) => {
-        const { error } = await signInEmailPassword(data.email, data.password);
+    const onSubmit = async (data: LoginSchemaType) => {
+        const { error, needsEmailVerification } = await signInEmailPassword(data.email, data.password);
         if (error) toast.error(error.message);
+        if (needsEmailVerification) toast.info('Please check your email for verification.');
     };
-
-    React.useEffect(() => {
-        if (isError) toast.error(error?.message);
-    }, [isError, error]);
 
     React.useEffect(() => {
         if (isSuccess) router.push('/dashboard');
@@ -108,7 +103,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
 
                     <div className='text-center text-sm'>
                         Don’t have an account?{' '}
-                        <a href='#' className='underline underline-offset-4'>
+                        <a href='/authentication/register' className='underline underline-offset-4'>
                             Sign up
                         </a>
                     </div>

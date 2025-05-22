@@ -1,27 +1,25 @@
-import { SidebarItem } from '@/components/shared/sidebar-dialog';
-import { Input } from '@/registry/new-york-v4/ui/input';
-import { Label } from '@/registry/new-york-v4/ui/label';
 import { Separator } from '@/registry/new-york-v4/ui/separator';
 
+import DeleteAccount from './delete-account';
+import DisableAccount from './disable-account';
+import DisplayNameForm from './display-name-form';
+import ResetPassword from './reset-password';
 import UploadAvatar from './upload-avatar';
 
-interface AccountProps {
-    item: SidebarItem;
-}
-
-export default function Account({ item }: AccountProps) {
+export default function Account() {
     return (
         <div className='space-y-6'>
             <div className='flex items-start gap-6'>
                 <UploadAvatar />
                 <div className='flex-1 space-y-4'>
-                    <div className='space-y-2'>
-                        <Label htmlFor='displayName'>Display Name</Label>
-                        <Input id='displayName' placeholder='Enter your display name' />
-                    </div>
+                    <DisplayNameForm />
                 </div>
             </div>
             <Separator />
+            <ResetPassword />
+            <Separator />
+            <DisableAccount />
+            <DeleteAccount />
         </div>
     );
 }

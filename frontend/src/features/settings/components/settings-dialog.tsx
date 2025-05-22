@@ -12,7 +12,7 @@ import Import from './import/import';
 import { useDispatch, useSelector } from 'react-redux';
 
 const contentMap: Record<string, (item: SidebarItem) => React.ReactNode> = {
-    account: (item) => <Account item={item} />,
+    account: () => <Account />,
     notifications: (item) => <div>{item.name} settings</div>,
     language: (item) => <div>{item.name} settings</div>,
     password_authentication: (item) => <div>{item.name} settings</div>,

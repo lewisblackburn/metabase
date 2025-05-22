@@ -1,0 +1,5 @@
+mutation DisableUser($id: uuid!) {
+    updateUser(pk_columns: { id: $id }, _set: { disabled: true }) {
+        id
+    }
+}
