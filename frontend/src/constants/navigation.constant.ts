@@ -12,30 +12,6 @@ export const NAVIGATION = {
                 path: '/dashboard/movies'
             },
             {
-                icon: Heart,
-                name: 'Popular',
-                description: "See what's trending right now.",
-                path: ''
-            },
-            {
-                icon: Calendar,
-                name: 'Upcoming',
-                description: "See what's coming soon.",
-                path: ''
-            },
-            {
-                icon: Play,
-                name: 'Now Playing',
-                description: "See what's playing in theaters now.",
-                path: ''
-            },
-            {
-                icon: Star,
-                name: 'Top Rated',
-                description: "See what's most popular.",
-                path: ''
-            },
-            {
                 icon: Plus,
                 name: 'Add New',
                 description: 'Add a new movie to the database.',
