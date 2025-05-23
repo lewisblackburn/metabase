@@ -29951,7 +29951,7 @@ export type GetProfileQueryVariables = Exact<{
 }>;
 
 
-export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, lastSeen?: any | null, createdAt: any, avatarUrl: string, emailVerified: boolean, disabled: boolean, locale: string, is_following?: boolean | null, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null }, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
+export type GetProfileQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, displayName: string, metadata?: any | null, lastSeen?: any | null, createdAt: any, avatarUrl: string, emailVerified: boolean, disabled: boolean, locale: string, is_following?: boolean | null, followers_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null }, followees_aggregate: { __typename?: 'follows_aggregate', aggregate?: { __typename?: 'follows_aggregate_fields', count: number } | null } } | null };
 
 export type GetUserDisplayNameQueryVariables = Exact<{
   user_id: Scalars['uuid']['input'];
@@ -33609,6 +33609,7 @@ export const GetProfileDocument = `
   user(id: $id) {
     id
     displayName
+    metadata
     lastSeen
     createdAt
     avatarUrl

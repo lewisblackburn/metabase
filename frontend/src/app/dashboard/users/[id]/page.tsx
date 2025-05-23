@@ -59,7 +59,7 @@ export default function ProfilePage() {
     const userInfo = useMemo(() => {
         if (!data?.user) return null;
 
-        const { displayName, avatarUrl, createdAt, emailVerified, followers_aggregate, followees_aggregate } =
+        const { displayName, metadata, avatarUrl, createdAt, emailVerified, followers_aggregate, followees_aggregate } =
             data.user;
         const joined = createdAt ? format(new Date(createdAt), 'MMMM do, yyyy') : 'Unknown';
         const joinedAgo = createdAt ? formatDistanceToNow(new Date(createdAt), { addSuffix: true }) : '';
@@ -67,6 +67,7 @@ export default function ProfilePage() {
         return {
             displayName,
             avatarUrl,
+            metadata: metadata || { bio: 'This user has not set a bio.' },
             joined,
             joinedAgo,
             emailVerified,
@@ -96,10 +97,7 @@ export default function ProfilePage() {
                         <span className='hidden text-xs sm:inline'> ({userInfo.joinedAgo})</span>
                     </p>
 
-                    <p className='mt-1 text-sm sm:text-base'>
-                        "I'd rather die drunk, broke at 34 and have people at a dinner table talk about me than live to
-                        be rich and sober at 90 and nobody remembered who I was."
-                    </p>
+                    <p className='mt-1 text-sm sm:text-base'>{userInfo.metadata.bio}</p>
 
                     <div className='flex flex-col space-y-2'>
                         <div className='mb-4 flex items-center gap-4'>

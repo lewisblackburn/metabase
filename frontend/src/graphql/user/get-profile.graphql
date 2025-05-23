@@ -2,6 +2,7 @@ query GetProfile($id: uuid!) {
     user(id: $id) {
         id
         displayName
+        metadata
         lastSeen
         createdAt
         avatarUrl
