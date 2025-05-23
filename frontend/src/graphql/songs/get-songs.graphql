@@ -11,5 +11,10 @@ query GetSongs(
         album {
             artwork
         }
+        credits {
+            person {
+                name
+            }
+        }
     }
 }

@@ -32,7 +32,10 @@ export default function SongSelect({ onValueChange, ...props }: SongSelectProps)
 
     const { data, isLoading } = useGetSongsQuery({
         where: {
-            name: { _ilike: `%${debouncedSearchQuery}%` }
+            _or: [
+                { name: { _ilike: `%${debouncedSearchQuery}%` } },
+                { credits: { person: { name: { _ilike: `%${debouncedSearchQuery}%` } } } }
+            ]
         },
         limit: 5
     });
@@ -64,7 +67,15 @@ export default function SongSelect({ onValueChange, ...props }: SongSelectProps)
                         </div>
                     ) : selectedSong ? (
                         <div className='flex items-center gap-2'>
-                            <span className='truncate'>{selectedSong.name}</span>
+                            <span className='truncate'>
+                                {selectedSong.name}
+                                {selectedSong.credits.length > 0 && (
+                                    <span className='text-muted-foreground'>
+                                        {' '}
+                                        • {selectedSong.credits.map((c) => c.person.name).join(', ')}
+                                    </span>
+                                )}
+                            </span>
                         </div>
                     ) : (
                         <span>Select a song</span>
@@ -80,7 +91,11 @@ export default function SongSelect({ onValueChange, ...props }: SongSelectProps)
 
             <PopoverContent className='popover-content-width-full p-0' align='start'>
                 <Command shouldFilter={false}>
-                    <CommandInput placeholder='Search songs...' value={searchInput} onValueChange={setSearchInput} />
+                    <CommandInput
+                        placeholder='Search songs or artists...'
+                        value={searchInput}
+                        onValueChange={setSearchInput}
+                    />
                     <CommandList>
                         {isLoading ? (
                             <div className='space-y-3 p-4'>
@@ -100,7 +115,15 @@ export default function SongSelect({ onValueChange, ...props }: SongSelectProps)
                                             value={song.id}
                                             onSelect={handleSelect}
                                             className='flex items-center gap-2'>
-                                            <span className='truncate'>{song.name}</span>
+                                            <span className='truncate'>
+                                                {song.name}
+                                                {song.credits.length > 0 && (
+                                                    <span className='text-muted-foreground'>
+                                                        {' '}
+                                                        • {song.credits.map((c) => c.person.name).join(', ')}
+                                                    </span>
+                                                )}
+                                            </span>
                                             {selectedId === song.id && <CheckIcon size={16} className='ml-auto' />}
                                         </CommandItem>
                                     ))}

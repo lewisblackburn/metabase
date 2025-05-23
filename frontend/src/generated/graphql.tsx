@@ -29851,7 +29851,7 @@ export type GetSongsQueryVariables = Exact<{
 }>;
 
 
-export type GetSongsQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null }> };
+export type GetSongsQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null, credits: Array<{ __typename?: 'credits', person: { __typename?: 'people', name: string } }> }> };
 
 export type GetUserSongStatusQueryVariables = Exact<{
   distinct_on?: InputMaybe<Array<User_Song_Statuses_Select_Column> | User_Song_Statuses_Select_Column>;
@@ -33166,6 +33166,11 @@ export const GetSongsDocument = `
     name
     album {
       artwork
+    }
+    credits {
+      person {
+        name
+      }
     }
   }
 }
