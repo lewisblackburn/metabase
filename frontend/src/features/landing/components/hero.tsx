@@ -42,7 +42,7 @@ const Hero = () => {
             name: 'Hasura',
             icon: <HasuraIcon />,
             description: 'Instant GraphQL APIs for your data',
-            link: 'https://hasura.io/'
+            link: 'https://hasura.io/ddn'
         },
         {
             name: 'Next.js',
