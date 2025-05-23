@@ -19,6 +19,7 @@ import FollowersDialog from '@/features/users/components/followers-dialog';
 import FollowingDialog from '@/features/users/components/following-dialog';
 import { Recommendations } from '@/features/users/components/recommendations/recommendations';
 import UserActivity from '@/features/users/components/user-activity';
+import UserReviews from '@/features/users/components/user-reviews';
 import { useGetProfileQuery } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
@@ -30,7 +31,6 @@ import { Activity, Crown, Folder, Lightbulb, List, Star, Verified } from 'lucide
 const tabItems = [
     { value: 'activity', icon: Activity, label: 'Activity' },
     { value: 'collections', icon: Folder, label: 'Collections' },
-    { value: 'lists', icon: List, label: 'Lists' },
     { value: 'reviews', icon: Star, label: 'Reviews' },
     { value: 'recommendations', icon: Lightbulb, label: 'Recs', responsiveLabel: 'Recommendations' }
 ];
@@ -38,8 +38,7 @@ const tabItems = [
 const tabContents = {
     activity: { content: <UserActivity /> },
     collections: { content: <Collections /> },
-    lists: { content: "You haven't created any lists yet." },
-    reviews: { content: "You haven't written any reviews yet." },
+    reviews: { content: <UserReviews /> },
     recommendations: { content: <Recommendations /> }
 };
 
