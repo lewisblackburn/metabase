@@ -29,7 +29,6 @@ export function useBookFilters(): {
         availabilities,
         publishDates,
         genres,
-        certifications,
         statuses,
         language,
         userScore,
@@ -82,7 +81,7 @@ export function useBookFilters(): {
 
         if (publishDates) {
             clauses.push({
-                publish_date: { _gte: publishDates.from, _lte: publishDates.to }
+                published_date: { _gte: publishDates.from, _lte: publishDates.to }
             });
         }
 
@@ -121,7 +120,6 @@ export function useBookFilters(): {
         availabilities,
         publishDates,
         genres,
-        certifications,
         statuses,
         language,
         userScore,

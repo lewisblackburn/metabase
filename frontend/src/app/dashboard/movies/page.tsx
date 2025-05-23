@@ -1,64 +1,23 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
-
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Fragment, useEffect, useMemo } from 'react';
 
 import Grid from '@/components/shared/grid';
 import List from '@/components/shared/list';
-import Poster from '@/components/shared/poster';
 import { MAX_LIMIT } from '@/constants/api.constant';
+import { MovieCard } from '@/features/movies/components/movie-card';
 import MoviesSidebar from '@/features/movies/components/movies-sidebar';
 import MoviesSkeleton from '@/features/movies/components/movies-skeleton';
-import { useIncrementMovieViews } from '@/features/movies/hooks/use-increment-movie-views';
 import { useMovieFilters } from '@/features/movies/hooks/use-movie-filters';
-import { GetMoviesQuery, useInfiniteGetMoviesQuery } from '@/generated/graphql';
+import { useInfiniteGetMoviesQuery } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york-v4/ui/toggle-group';
 import { RootState } from '@/store/store';
 import { setViewMode } from '@/store/view-mode.slice';
 
-import { FlipHorizontalIcon, FlipVerticalIcon, LayoutGrid, List as ListIcon } from 'lucide-react';
+import { LayoutGrid, List as ListIcon } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useDispatch, useSelector } from 'react-redux';
-
-export function MovieCard({ movie, viewMode }: { movie: GetMoviesQuery['movies'][number]; viewMode: 'grid' | 'list' }) {
-    const router = useRouter();
-    const { mutate: bumpViews } = useIncrementMovieViews(movie.id);
-
-    if (!movie) return null;
-
-    const handleClick = async (e: React.MouseEvent) => {
-        e.preventDefault();
-        bumpViews({ id: movie.id });
-        router.push(`/dashboard/movies/${movie.id}`);
-    };
-
-    if (viewMode === 'list') {
-        return (
-            <Link href={`/dashboard/movies/${movie.id}`} scroll={false} onClick={handleClick}>
-                <div className='hover:bg-muted/50 flex items-center gap-4 rounded-lg border p-4 transition-colors'>
-                    <div className='relative aspect-[2/3] w-24 shrink-0 overflow-hidden rounded-md'>
-                        <Poster title={movie.title} image={movie.poster} />
-                    </div>
-                    <div className='min-w-0 flex-1'>
-                        <h3 className='truncate text-lg font-semibold'>{movie.title}</h3>
-                        {movie.overview && (
-                            <p className='text-muted-foreground mt-1 line-clamp-2 text-sm'>{movie.overview}</p>
-                        )}
-                    </div>
-                </div>
-            </Link>
-        );
-    }
-
-    return (
-        <Link href={`/dashboard/movies/${movie.id}`} scroll={false} onClick={handleClick}>
-            <Poster title={movie.title} image={movie.poster} />
-        </Link>
-    );
-}
 
 export default function MoviesPage() {
     const dispatch = useDispatch();

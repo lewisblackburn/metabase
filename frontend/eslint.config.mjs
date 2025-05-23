@@ -1,6 +1,6 @@
 import pluginJs from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
-import eslintPluginTanstackQuery from '@tanstack/eslint-plugin';
+import eslintPluginTanstackQuery from '@tanstack/eslint-plugin-query';
 
 import eslintConfigPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
@@ -60,20 +60,14 @@ export default [
             'import/no-named-as-default-member': 'off'
         }
     },
-    // ! ===================== DISCLAIMER =====================
-    // ! There is no official solution available for new ESLint 9 flat config structure for NextJS
-    // ! The solution is taken from the community and may not be the best practice, use it at your own risk
-    // ? Ref: https://github.com/vercel/next.js/discussions/49337?sort=top#discussioncomment-5998603
-    // ! ======================================================
     {
         plugins: {
-            '@next/next': nextPlugin
+            next: nextPlugin
         },
         rules: {
             ...nextPlugin.configs.recommended.rules,
             ...nextPlugin.configs['core-web-vitals'].rules,
             '@next/next/no-img-element': 'off',
-            // ! TO COMPILE SHADCN EXAMPLES, PLEASE REMOVE AS NEEDED
             '@next/next/no-html-link-for-pages': 'off'
         }
     },

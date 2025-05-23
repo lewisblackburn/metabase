@@ -1,10 +1,10 @@
 'use client';
 
-import { BookCard } from '@/app/dashboard/books/page';
-import { MovieCard } from '@/app/dashboard/movies/page';
-import { SongCard } from '@/app/dashboard/songs/page';
 import DefaultLoading from '@/components/shared/default-loading';
 import ScrollableTabs from '@/components/shared/scrollable-tabs';
+import { BookCard } from '@/features/books/components/book-card';
+import { MovieCard } from '@/features/movies/components/movie-card';
+import { SongCard } from '@/features/songs/components/song-card';
 import { Object_Types_Enum, useGetPopularObjectsQuery } from '@/generated/graphql';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
 

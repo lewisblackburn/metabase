@@ -2,37 +2,15 @@
 
 import { Fragment, useEffect, useMemo } from 'react';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-
-import Artwork from '@/components/shared/artwork';
 import Grid from '@/components/shared/grid';
 import { MAX_LIMIT } from '@/constants/api.constant';
+import { SongCard } from '@/features/songs/components/song-card';
 import SongsSidebar from '@/features/songs/components/songs-sidebar';
 import SongsSkeleton from '@/features/songs/components/songs-skeleton';
 import { useSongFilters } from '@/features/songs/hooks/use-song-filters';
-import { GetSongsQuery, useIncrementSongViewsMutation, useInfiniteGetSongsQuery } from '@/generated/graphql';
+import { useInfiniteGetSongsQuery } from '@/generated/graphql';
 
 import { useInView } from 'react-intersection-observer';
-
-export function SongCard({ song }: { song: GetSongsQuery['songs'][number] }) {
-    const router = useRouter();
-    const { mutate: bumpViews } = useIncrementSongViewsMutation(song.id);
-
-    if (!song) return null;
-
-    const handleClick = async (e: React.MouseEvent) => {
-        e.preventDefault();
-        bumpViews({ id: song.id });
-        router.push(`/dashboard/songs/${song.id}`);
-    };
-
-    return (
-        <Link href={`/dashboard/songs/${song.id}`} scroll={false} onClick={handleClick}>
-            <Artwork title={song.name} image={song.album?.artwork ?? 'https://placehold.co/450x450x.png'} />
-        </Link>
-    );
-}
 
 export default function SongsPage() {
     const { where, order_by } = useSongFilters();
