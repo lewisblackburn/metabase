@@ -14,6 +14,7 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york-v4/ui/toggle-group';
 import { RootState } from '@/store/store';
 import { setViewMode } from '@/store/view-mode.slice';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { LayoutGrid, List as ListIcon } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';

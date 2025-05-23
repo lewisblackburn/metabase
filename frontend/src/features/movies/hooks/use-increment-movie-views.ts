@@ -37,7 +37,6 @@ export function useIncrementMovieViews(movieId: string) {
         // NOTE: Invalidate cache after mutation
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ['movie', movieId] });
-            queryClient.invalidateQueries({ queryKey: ['GetMovies.infinite'] });
         }
     });
 }

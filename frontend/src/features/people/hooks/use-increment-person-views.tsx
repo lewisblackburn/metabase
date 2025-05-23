@@ -37,7 +37,6 @@ export function useIncrementPersonViews(personId: string) {
         // NOTE: Invalidate cache after mutation
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ['person', personId] });
-            queryClient.invalidateQueries({ queryKey: ['GetPeople.infinite'] });
         }
     });
 }
