@@ -1,5 +1,7 @@
+numpy<2.0
+pybind11>=2.12
 requests
 pandas
 scikit-surprise
 fastapi
-uvicorn
+uvicorn[standard]
