@@ -15,7 +15,7 @@ const features = [
         description:
             'Access films, books, music, series, and games all in one place—no more switching between platforms.',
         icon: OBJECT_TYPE.BOOK.icon,
-        image: 'https://placehold.co/200x300?text=Unified+Media+Library'
+        image: '/images/movies-page.png'
     },
     {
         id: 'feature-2',
@@ -23,7 +23,7 @@ const features = [
         description:
             'Explore connections—find which soundtracks appear in films, or books adapted into series, with one click.',
         icon: OBJECT_TYPE.MOVIE.icon,
-        image: 'https://placehold.co/200x300?text=Cross-Media+Discovery'
+        image: '/images/soundtrack-page.png'
     },
     {
         id: 'feature-3',
@@ -31,14 +31,14 @@ const features = [
         description:
             'Get personalized suggestions across all media types using a mix of content‑based and collaborative filtering.',
         icon: OBJECT_TYPE.SONG.icon,
-        image: 'https://placehold.co/200x300?text=Hybrid+Recommendations'
+        image: '/images/recommendations-page.png'
     },
     {
         id: 'feature-4',
         title: 'User‑Driven Curation',
         description: 'Contribute ratings, reviews, and new entries with a verification system to ensure data accuracy.',
         icon: OBJECT_TYPE.GAME.icon,
-        image: 'https://placehold.co/200x300?text=User-Driven+Curation'
+        image: '/images/reviews-page.png'
     }
 ];
 
