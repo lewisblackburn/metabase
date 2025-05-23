@@ -2,37 +2,29 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-
     const isAuthenticationPage = pathname.startsWith('/authentication');
     const isDashboardPage = pathname.startsWith('/dashboard');
 
-    const sessionCookie = request.cookies.get('nhostSession')?.value;
-
-    let nhostSession = null;
     try {
-        nhostSession = sessionCookie ? JSON.parse(sessionCookie) : null;
+        const hasSessionToken = request.cookies.has('nhostSession') || request.cookies.has('nhostRefreshToken');
+        const authHeader = request.headers.get('authorization');
+        const isAuthenticated = hasSessionToken || authHeader?.startsWith('Bearer ');
+
+        if (isAuthenticationPage && isAuthenticated) {
+            return NextResponse.redirect(new URL('/dashboard', request.url));
+        }
+
+        if (isDashboardPage && !isAuthenticated) {
+            return NextResponse.redirect(new URL('/authentication/login', request.url));
+        }
+
+        return NextResponse.next();
     } catch (error) {
-        nhostSession = null;
-    }
-
-    const isLoggedIn = nhostSession && nhostSession.accessToken;
-
-    // NOTE: Small delay to allow session validation to complete
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    if (isAuthenticationPage) {
-        if (isLoggedIn) return NextResponse.redirect(new URL('/dashboard', request.url));
-
+        if (isDashboardPage) {
+            return NextResponse.redirect(new URL('/authentication/login', request.url));
+        }
         return NextResponse.next();
     }
-
-    if (isDashboardPage) {
-        if (!isLoggedIn) return NextResponse.redirect(new URL('/authentication/login', request.url));
-
-        return NextResponse.next();
-    }
-
-    return NextResponse.next();
 }
 
 export const config = {

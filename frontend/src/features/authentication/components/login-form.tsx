@@ -9,6 +9,7 @@ import InputField from '@/components/form/input';
 import AppleIcon from '@/components/icons/apple.icon';
 import GoogleIcon from '@/components/icons/google.icon';
 import MetaIcon from '@/components/icons/meta.icon';
+import { nhost } from '@/lib/nhost';
 import { cn } from '@/lib/utils';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Card, CardContent } from '@/registry/new-york-v4/ui/card';
