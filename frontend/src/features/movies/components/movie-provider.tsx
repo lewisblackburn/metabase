@@ -23,7 +23,7 @@ const MovieContext = createContext<MovieContextType | undefined>(undefined);
 export function MovieProvider({ children }: { children: ReactNode }) {
     const params = useParams<{ id: string }>();
     const userId = useUserId();
-    // NOTE: Errors are thrown automatically
+
     const { data: movieData, isLoading: isMovieLoading } = useGetMovieQuery(
         { id: params?.id },
         {
