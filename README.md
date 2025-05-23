@@ -3,7 +3,7 @@
 ## Technologies
 
 - [NHost](https://nhost.io)
-  - [Hasura](https://hasura.io/)
+  - [Hasura](https://hasura.io/ddn)
   - [GraphQL](https://graphql.org)
   - [PostgreSQL](https://www.postgresql.org)
 - [NextJS](https://nextjs.org/)
