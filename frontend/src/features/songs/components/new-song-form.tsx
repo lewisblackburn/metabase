@@ -2,7 +2,7 @@
 
 import BaseFormLayout from '@/components/form/base-form-layout';
 import InputField from '@/components/form/input';
-import { useInsertSongMutation } from '@/generated/graphql';
+import { Songs_Constraint, useInsertSongMutation } from '@/generated/graphql';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import MultipleSelector from '@/registry/new-york-v4/ui/multiselect';
@@ -37,6 +37,9 @@ export function NewSongForm() {
                             })) ?? []
                     },
                     duration: values.duration
+                },
+                on_conflict: {
+                    constraint: Songs_Constraint.SongsPkey
                 }
             },
             {
