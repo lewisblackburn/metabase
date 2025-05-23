@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     const isAuthenticationPage = pathname.startsWith('/authentication');
@@ -16,6 +16,9 @@ export function middleware(request: NextRequest) {
     }
 
     const isLoggedIn = nhostSession && nhostSession.accessToken;
+
+    // NOTE: Small delay to allow session validation to complete
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     if (isAuthenticationPage) {
         if (isLoggedIn) return NextResponse.redirect(new URL('/dashboard', request.url));
