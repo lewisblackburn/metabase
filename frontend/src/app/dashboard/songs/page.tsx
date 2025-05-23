@@ -15,7 +15,7 @@ import { GetSongsQuery, useIncrementSongViewsMutation, useInfiniteGetSongsQuery 
 
 import { useInView } from 'react-intersection-observer';
 
-function SongCard({ song }: { song: GetSongsQuery['songs'][number] }) {
+export function SongCard({ song }: { song: GetSongsQuery['songs'][number] }) {
     const router = useRouter();
     const { mutate: bumpViews } = useIncrementSongViewsMutation(song.id);
 
@@ -24,11 +24,11 @@ function SongCard({ song }: { song: GetSongsQuery['songs'][number] }) {
     const handleClick = async (e: React.MouseEvent) => {
         e.preventDefault();
         bumpViews({ id: song.id });
-        router.push(`songs/${song.id}`);
+        router.push(`/dashboard/songs/${song.id}`);
     };
 
     return (
-        <Link href={`songs/${song.id}`} scroll={false} onClick={handleClick}>
+        <Link href={`/dashboard/songs/${song.id}`} scroll={false} onClick={handleClick}>
             <Artwork title={song.name} image={song.album?.artwork ?? 'https://placehold.co/450x450x.png'} />
         </Link>
     );

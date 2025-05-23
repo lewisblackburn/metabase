@@ -1,0 +1,22 @@
+query GetMostRecentReviews($limit: Int, $offset: Int) {
+    all_reviews(
+        where: { review: { _is_null: false } }
+        limit: $limit
+        offset: $offset
+        order_by: { updated_at: desc }
+    ) {
+        user_id
+        type
+        object_id
+        review
+        image
+        rating
+        updated_at
+        title
+        user {
+            displayName
+            avatarUrl
+            createdAt
+        }
+    }
+}

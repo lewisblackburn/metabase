@@ -23,7 +23,7 @@ import { FlipHorizontalIcon, FlipVerticalIcon, LayoutGrid, List as ListIcon } fr
 import { useInView } from 'react-intersection-observer';
 import { useDispatch, useSelector } from 'react-redux';
 
-function MovieCard({ movie, viewMode }: { movie: GetMoviesQuery['movies'][number]; viewMode: 'grid' | 'list' }) {
+export function MovieCard({ movie, viewMode }: { movie: GetMoviesQuery['movies'][number]; viewMode: 'grid' | 'list' }) {
     const router = useRouter();
     const { mutate: bumpViews } = useIncrementMovieViews(movie.id);
 
@@ -32,12 +32,12 @@ function MovieCard({ movie, viewMode }: { movie: GetMoviesQuery['movies'][number
     const handleClick = async (e: React.MouseEvent) => {
         e.preventDefault();
         bumpViews({ id: movie.id });
-        router.push(`movies/${movie.id}`);
+        router.push(`/dashboard/movies/${movie.id}`);
     };
 
     if (viewMode === 'list') {
         return (
-            <Link href={`movies/${movie.id}`} scroll={false} onClick={handleClick}>
+            <Link href={`/dashboard/movies/${movie.id}`} scroll={false} onClick={handleClick}>
                 <div className='hover:bg-muted/50 flex items-center gap-4 rounded-lg border p-4 transition-colors'>
                     <div className='relative aspect-[2/3] w-24 shrink-0 overflow-hidden rounded-md'>
                         <Poster title={movie.title} image={movie.poster} />
@@ -54,7 +54,7 @@ function MovieCard({ movie, viewMode }: { movie: GetMoviesQuery['movies'][number
     }
 
     return (
-        <Link href={`movies/${movie.id}`} scroll={false} onClick={handleClick}>
+        <Link href={`/dashboard/movies/${movie.id}`} scroll={false} onClick={handleClick}>
             <Poster title={movie.title} image={movie.poster} />
         </Link>
     );

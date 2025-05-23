@@ -72,6 +72,7 @@ const Navbar: React.FC = () => {
     const user = useUserData();
     const dispatch = useDispatch();
     const searchShortcut = useShortcut('openCommandPanel');
+    const [isOpen, setIsOpen] = React.useState(false);
 
     const { data: featuredItemsData, isLoading: isFeaturedItemsLoading } = useGetFeaturedItemsQuery(
         {},
@@ -374,7 +375,7 @@ const Navbar: React.FC = () => {
                     </div>
                 </div>
 
-                <Sheet>
+                <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild className='lg:hidden'>
                         <Button variant='outline' size='icon' aria-label='Menu'>
                             <MenuIcon className='h-4 w-4' />
@@ -399,7 +400,7 @@ const Navbar: React.FC = () => {
 
                         <div className='space-y-6'>
                             <div className='space-y-1'>
-                                <Link href='/dashboard' className='px-1'>
+                                <Link href='/dashboard' className='px-1' onClick={() => setIsOpen(false)}>
                                     <Button variant='ghost' className='w-full justify-start'>
                                         <Home className='size-4' />
                                         Home
@@ -416,7 +417,10 @@ const Navbar: React.FC = () => {
                                         <AccordionContent>
                                             <div className='space-y-1 pl-6'>
                                                 {NAVIGATION.movies.cards.map((item) => (
-                                                    <Link href={item.path} key={item.name}>
+                                                    <Link
+                                                        href={item.path}
+                                                        key={item.name}
+                                                        onClick={() => setIsOpen(false)}>
                                                         <Button variant='ghost' className='w-full justify-start'>
                                                             <item.icon className='mr-2 size-4' />
                                                             {item.name}
@@ -438,7 +442,10 @@ const Navbar: React.FC = () => {
                                             <AccordionContent>
                                                 <div className='space-y-1 pl-6'>
                                                     {NAVIGATION.series.cards.map((item) => (
-                                                        <Link href={item.path} key={item.name}>
+                                                        <Link
+                                                            href={item.path}
+                                                            key={item.name}
+                                                            onClick={() => setIsOpen(false)}>
                                                             <Button variant='ghost' className='w-full justify-start'>
                                                                 <item.icon className='mr-2 size-4' />
                                                                 {item.name}
@@ -460,7 +467,10 @@ const Navbar: React.FC = () => {
                                         <AccordionContent>
                                             <div className='space-y-1 pl-6'>
                                                 {NAVIGATION.people.cards.map((item) => (
-                                                    <Link href={item.path} key={item.name}>
+                                                    <Link
+                                                        href={item.path}
+                                                        key={item.name}
+                                                        onClick={() => setIsOpen(false)}>
                                                         <Button variant='ghost' className='w-full justify-start'>
                                                             <item.icon className='mr-2 size-4' />
                                                             {item.name}
@@ -481,7 +491,10 @@ const Navbar: React.FC = () => {
                                         <AccordionContent>
                                             <div className='space-y-1 pl-6'>
                                                 {NAVIGATION.books.cards.map((item) => (
-                                                    <Link href={item.path} key={item.name}>
+                                                    <Link
+                                                        href={item.path}
+                                                        key={item.name}
+                                                        onClick={() => setIsOpen(false)}>
                                                         <Button variant='ghost' className='w-full justify-start'>
                                                             <item.icon className='mr-2 size-4' />
                                                             {item.name}
@@ -502,7 +515,10 @@ const Navbar: React.FC = () => {
                                         <AccordionContent>
                                             <div className='space-y-1 pl-6'>
                                                 {NAVIGATION.songs.cards.map((item) => (
-                                                    <Link href={item.path} key={item.name}>
+                                                    <Link
+                                                        href={item.path}
+                                                        key={item.name}
+                                                        onClick={() => setIsOpen(false)}>
                                                         <Button variant='ghost' className='w-full justify-start'>
                                                             <item.icon className='mr-2 size-4' />
                                                             {item.name}
@@ -523,7 +539,10 @@ const Navbar: React.FC = () => {
                                         <AccordionContent>
                                             <div className='space-y-1 pl-6'>
                                                 {NAVIGATION.games.cards.map((item) => (
-                                                    <Link href={item.path} key={item.name}>
+                                                    <Link
+                                                        href={item.path}
+                                                        key={item.name}
+                                                        onClick={() => setIsOpen(false)}>
                                                         <Button variant='ghost' className='w-full justify-start'>
                                                             <item.icon className='mr-2 size-4' />
                                                             {item.name}

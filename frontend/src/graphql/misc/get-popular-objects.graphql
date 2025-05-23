@@ -1,0 +1,22 @@
+query GetPopularObjects {
+    movies(limit: 3, order_by: { vote_average: desc }) {
+        id
+        title
+        poster
+        vote_average
+    }
+    songs(limit: 3, order_by: { vote_average: desc }) {
+        id
+        name
+        album {
+            artwork
+        }
+        vote_average
+    }
+    books(limit: 3, order_by: { vote_average: desc }) {
+        id
+        title
+        cover
+        vote_average
+    }
+}

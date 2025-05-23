@@ -760,6 +760,194 @@ export type Albums_Updates = {
   where: Albums_Bool_Exp;
 };
 
+/** columns and relationships of "all_reviews" */
+export type All_Reviews = {
+  __typename?: 'all_reviews';
+  image?: Maybe<Scalars['String']['output']>;
+  object_id?: Maybe<Scalars['uuid']['output']>;
+  rating?: Maybe<Scalars['smallint']['output']>;
+  review?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  /** An object relationship */
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregated selection of "all_reviews" */
+export type All_Reviews_Aggregate = {
+  __typename?: 'all_reviews_aggregate';
+  aggregate?: Maybe<All_Reviews_Aggregate_Fields>;
+  nodes: Array<All_Reviews>;
+};
+
+/** aggregate fields of "all_reviews" */
+export type All_Reviews_Aggregate_Fields = {
+  __typename?: 'all_reviews_aggregate_fields';
+  avg?: Maybe<All_Reviews_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<All_Reviews_Max_Fields>;
+  min?: Maybe<All_Reviews_Min_Fields>;
+  stddev?: Maybe<All_Reviews_Stddev_Fields>;
+  stddev_pop?: Maybe<All_Reviews_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<All_Reviews_Stddev_Samp_Fields>;
+  sum?: Maybe<All_Reviews_Sum_Fields>;
+  var_pop?: Maybe<All_Reviews_Var_Pop_Fields>;
+  var_samp?: Maybe<All_Reviews_Var_Samp_Fields>;
+  variance?: Maybe<All_Reviews_Variance_Fields>;
+};
+
+
+/** aggregate fields of "all_reviews" */
+export type All_Reviews_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<All_Reviews_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type All_Reviews_Avg_Fields = {
+  __typename?: 'all_reviews_avg_fields';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "all_reviews". All fields are combined with a logical 'AND'. */
+export type All_Reviews_Bool_Exp = {
+  _and?: InputMaybe<Array<All_Reviews_Bool_Exp>>;
+  _not?: InputMaybe<All_Reviews_Bool_Exp>;
+  _or?: InputMaybe<Array<All_Reviews_Bool_Exp>>;
+  image?: InputMaybe<String_Comparison_Exp>;
+  object_id?: InputMaybe<Uuid_Comparison_Exp>;
+  rating?: InputMaybe<Smallint_Comparison_Exp>;
+  review?: InputMaybe<String_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type All_Reviews_Max_Fields = {
+  __typename?: 'all_reviews_max_fields';
+  image?: Maybe<Scalars['String']['output']>;
+  object_id?: Maybe<Scalars['uuid']['output']>;
+  rating?: Maybe<Scalars['smallint']['output']>;
+  review?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type All_Reviews_Min_Fields = {
+  __typename?: 'all_reviews_min_fields';
+  image?: Maybe<Scalars['String']['output']>;
+  object_id?: Maybe<Scalars['uuid']['output']>;
+  rating?: Maybe<Scalars['smallint']['output']>;
+  review?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** Ordering options when selecting data from "all_reviews". */
+export type All_Reviews_Order_By = {
+  image?: InputMaybe<Order_By>;
+  object_id?: InputMaybe<Order_By>;
+  rating?: InputMaybe<Order_By>;
+  review?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "all_reviews" */
+export enum All_Reviews_Select_Column {
+  /** column name */
+  Image = 'image',
+  /** column name */
+  ObjectId = 'object_id',
+  /** column name */
+  Rating = 'rating',
+  /** column name */
+  Review = 'review',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** aggregate stddev on columns */
+export type All_Reviews_Stddev_Fields = {
+  __typename?: 'all_reviews_stddev_fields';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type All_Reviews_Stddev_Pop_Fields = {
+  __typename?: 'all_reviews_stddev_pop_fields';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type All_Reviews_Stddev_Samp_Fields = {
+  __typename?: 'all_reviews_stddev_samp_fields';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "all_reviews" */
+export type All_Reviews_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: All_Reviews_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type All_Reviews_Stream_Cursor_Value_Input = {
+  image?: InputMaybe<Scalars['String']['input']>;
+  object_id?: InputMaybe<Scalars['uuid']['input']>;
+  rating?: InputMaybe<Scalars['smallint']['input']>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate sum on columns */
+export type All_Reviews_Sum_Fields = {
+  __typename?: 'all_reviews_sum_fields';
+  rating?: Maybe<Scalars['smallint']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type All_Reviews_Var_Pop_Fields = {
+  __typename?: 'all_reviews_var_pop_fields';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type All_Reviews_Var_Samp_Fields = {
+  __typename?: 'all_reviews_var_samp_fields';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type All_Reviews_Variance_Fields = {
+  __typename?: 'all_reviews_variance_fields';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
 /** columns and relationships of "audit_logs" */
 export type Audit_Logs = {
   __typename?: 'audit_logs';
@@ -18475,6 +18663,10 @@ export type Query_Root = {
   albums_aggregate: Albums_Aggregate;
   /** fetch data from the table: "albums" using primary key columns */
   albums_by_pk?: Maybe<Albums>;
+  /** fetch data from the table: "all_reviews" */
+  all_reviews: Array<All_Reviews>;
+  /** fetch aggregated fields from the table: "all_reviews" */
+  all_reviews_aggregate: All_Reviews_Aggregate;
   /** An array relationship */
   audit_logs: Array<Audit_Logs>;
   /** An aggregate relationship */
@@ -18939,6 +19131,24 @@ export type Query_RootAlbums_AggregateArgs = {
 
 export type Query_RootAlbums_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootAll_ReviewsArgs = {
+  distinct_on?: InputMaybe<Array<All_Reviews_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<All_Reviews_Order_By>>;
+  where?: InputMaybe<All_Reviews_Bool_Exp>;
+};
+
+
+export type Query_RootAll_Reviews_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<All_Reviews_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<All_Reviews_Order_By>>;
+  where?: InputMaybe<All_Reviews_Bool_Exp>;
 };
 
 
@@ -23043,6 +23253,12 @@ export type Subscription_Root = {
   albums_by_pk?: Maybe<Albums>;
   /** fetch data from the table in a streaming manner: "albums" */
   albums_stream: Array<Albums>;
+  /** fetch data from the table: "all_reviews" */
+  all_reviews: Array<All_Reviews>;
+  /** fetch aggregated fields from the table: "all_reviews" */
+  all_reviews_aggregate: All_Reviews_Aggregate;
+  /** fetch data from the table in a streaming manner: "all_reviews" */
+  all_reviews_stream: Array<All_Reviews>;
   /** An array relationship */
   audit_logs: Array<Audit_Logs>;
   /** An aggregate relationship */
@@ -23660,6 +23876,31 @@ export type Subscription_RootAlbums_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Albums_Stream_Cursor_Input>>;
   where?: InputMaybe<Albums_Bool_Exp>;
+};
+
+
+export type Subscription_RootAll_ReviewsArgs = {
+  distinct_on?: InputMaybe<Array<All_Reviews_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<All_Reviews_Order_By>>;
+  where?: InputMaybe<All_Reviews_Bool_Exp>;
+};
+
+
+export type Subscription_RootAll_Reviews_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<All_Reviews_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<All_Reviews_Order_By>>;
+  where?: InputMaybe<All_Reviews_Bool_Exp>;
+};
+
+
+export type Subscription_RootAll_Reviews_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<All_Reviews_Stream_Cursor_Input>>;
+  where?: InputMaybe<All_Reviews_Bool_Exp>;
 };
 
 
@@ -29131,6 +29372,19 @@ export type GetFeaturedItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetFeaturedItemsQuery = { __typename?: 'query_root', featuredMovie: Array<{ __typename?: 'movies', id: any, title: string, poster: string }>, featuredSong: Array<{ __typename?: 'songs', id: any, name: string, album?: { __typename?: 'albums', artwork: string } | null }>, featuredBook: Array<{ __typename?: 'books', id: any, title: string, cover: string }>, featuredPerson: Array<{ __typename?: 'people', id: any, name: string, headshot: string }> };
 
+export type GetMostRecentReviewsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetMostRecentReviewsQuery = { __typename?: 'query_root', all_reviews: Array<{ __typename?: 'all_reviews', user_id?: any | null, type?: string | null, object_id?: any | null, review?: string | null, image?: string | null, rating?: any | null, updated_at?: any | null, title?: string | null, user?: { __typename?: 'users', displayName: string, avatarUrl: string, createdAt: any } | null }> };
+
+export type GetPopularObjectsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPopularObjectsQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, poster: string, vote_average?: number | null }>, songs: Array<{ __typename?: 'songs', id: any, name: string, vote_average?: number | null, album?: { __typename?: 'albums', artwork: string } | null }>, books: Array<{ __typename?: 'books', id: any, title: string, cover: string, vote_average?: number | null }> };
+
 export type GetUserStatusesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -30758,6 +31012,126 @@ export const useInfiniteGetFeaturedItemsQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetFeaturedItems.infinite'] : ['GetFeaturedItems.infinite', variables],
       queryFn: (metaData) => fetcher<GetFeaturedItemsQuery, GetFeaturedItemsQueryVariables>(GetFeaturedItemsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetMostRecentReviewsDocument = `
+    query GetMostRecentReviews($limit: Int, $offset: Int) {
+  all_reviews(
+    where: {review: {_is_null: false}}
+    limit: $limit
+    offset: $offset
+    order_by: {updated_at: desc}
+  ) {
+    user_id
+    type
+    object_id
+    review
+    image
+    rating
+    updated_at
+    title
+    user {
+      displayName
+      avatarUrl
+      createdAt
+    }
+  }
+}
+    `;
+
+export const useGetMostRecentReviewsQuery = <
+      TData = GetMostRecentReviewsQuery,
+      TError = unknown
+    >(
+      variables?: GetMostRecentReviewsQueryVariables,
+      options?: Omit<UseQueryOptions<GetMostRecentReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMostRecentReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMostRecentReviewsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetMostRecentReviews'] : ['GetMostRecentReviews', variables],
+    queryFn: fetcher<GetMostRecentReviewsQuery, GetMostRecentReviewsQueryVariables>(GetMostRecentReviewsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetMostRecentReviewsQuery = <
+      TData = InfiniteData<GetMostRecentReviewsQuery>,
+      TError = unknown
+    >(
+      variables: GetMostRecentReviewsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetMostRecentReviewsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetMostRecentReviewsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetMostRecentReviewsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetMostRecentReviews.infinite'] : ['GetMostRecentReviews.infinite', variables],
+      queryFn: (metaData) => fetcher<GetMostRecentReviewsQuery, GetMostRecentReviewsQueryVariables>(GetMostRecentReviewsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetPopularObjectsDocument = `
+    query GetPopularObjects {
+  movies(limit: 3, order_by: {vote_average: desc}) {
+    id
+    title
+    poster
+    vote_average
+  }
+  songs(limit: 3, order_by: {vote_average: desc}) {
+    id
+    name
+    album {
+      artwork
+    }
+    vote_average
+  }
+  books(limit: 3, order_by: {vote_average: desc}) {
+    id
+    title
+    cover
+    vote_average
+  }
+}
+    `;
+
+export const useGetPopularObjectsQuery = <
+      TData = GetPopularObjectsQuery,
+      TError = unknown
+    >(
+      variables?: GetPopularObjectsQueryVariables,
+      options?: Omit<UseQueryOptions<GetPopularObjectsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPopularObjectsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetPopularObjectsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetPopularObjects'] : ['GetPopularObjects', variables],
+    queryFn: fetcher<GetPopularObjectsQuery, GetPopularObjectsQueryVariables>(GetPopularObjectsDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetPopularObjectsQuery = <
+      TData = InfiniteData<GetPopularObjectsQuery>,
+      TError = unknown
+    >(
+      variables: GetPopularObjectsQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetPopularObjectsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetPopularObjectsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetPopularObjectsQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetPopularObjects.infinite'] : ['GetPopularObjects.infinite', variables],
+      queryFn: (metaData) => fetcher<GetPopularObjectsQuery, GetPopularObjectsQueryVariables>(GetPopularObjectsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

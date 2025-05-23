@@ -16,7 +16,7 @@ import { GetBooksQuery, useInfiniteGetBooksQuery } from '@/generated/graphql';
 
 import { useInView } from 'react-intersection-observer';
 
-function BookCard({ book }: { book: GetBooksQuery['books'][number] }) {
+export function BookCard({ book }: { book: GetBooksQuery['books'][number] }) {
     const router = useRouter();
     const { mutate: bumpViews } = useIncrementBookViews(book.id);
 
@@ -25,11 +25,11 @@ function BookCard({ book }: { book: GetBooksQuery['books'][number] }) {
     const handleClick = async (e: React.MouseEvent) => {
         e.preventDefault();
         bumpViews({ id: book.id });
-        router.push(`books/${book.id}`);
+        router.push(`/dashboard/books/${book.id}`);
     };
 
     return (
-        <Link href={`books/${book.id}`} scroll={false} onClick={handleClick}>
+        <Link href={`/dashboard/books/${book.id}`} scroll={false} onClick={handleClick}>
             <Cover title={book.title} image={book.cover} />
         </Link>
     );
