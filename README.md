@@ -33,7 +33,7 @@ These are some important login details.
 # Important URL's
 
 - [Movie with all information filled in](https://metabase-j34n.vercel.app/dashboard/movies/53702a3c-fe51-4e93-844f-0286abc73b67)
-- [User with all informatiln filled in](https://metabase-j34n.vercel.app/dashboard/users/f1263157-21a4-4ca8-8803-4b6da216799c)
+- [User with all information filled in](https://metabase-j34n.vercel.app/dashboard/users/f1263157-21a4-4ca8-8803-4b6da216799c)
 
 # References
 

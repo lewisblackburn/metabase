@@ -80,7 +80,7 @@ export default function ProfilePage() {
 
     return (
         <HeroCardLayout
-            backdropImage='https://media.themoviedb.org/t/p/w1066_and_h600_bestv2/fzZmcKQv7ZTGIiPvocPhNs3wUyK.jpg'
+            backdropImage='https://placehold.co/1920x1080'
             backdropAlt={userInfo.displayName}
             avatarImage={userInfo.avatarUrl}
             avatarAlt={userInfo.displayName}>
