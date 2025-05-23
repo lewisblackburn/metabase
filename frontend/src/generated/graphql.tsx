@@ -29818,6 +29818,16 @@ export type GetSongBySpotifyIdQueryVariables = Exact<{
 
 export type GetSongBySpotifyIdQuery = { __typename?: 'query_root', songs: Array<{ __typename?: 'songs', spotify_id?: string | null }> };
 
+export type GetSongMoviesQueryVariables = Exact<{
+  where?: InputMaybe<Movie_Soundtrack_Bool_Exp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Movie_Soundtrack_Order_By> | Movie_Soundtrack_Order_By>;
+}>;
+
+
+export type GetSongMoviesQuery = { __typename?: 'query_root', movie_soundtrack: Array<{ __typename?: 'movie_soundtrack', id: any, timestamps?: Array<any> | null, description?: string | null, movie: { __typename?: 'movies', id: any, title: string, poster: string } }>, movie_soundtrack_aggregate: { __typename?: 'movie_soundtrack_aggregate', aggregate?: { __typename?: 'movie_soundtrack_aggregate_fields', count: number } | null } };
+
 export type GetSongNameQueryVariables = Exact<{
   song_id: Scalars['uuid']['input'];
 }>;
@@ -32978,6 +32988,66 @@ export const useInfiniteGetSongBySpotifyIdQuery = <
     return {
       queryKey: optionsQueryKey ?? variables === undefined ? ['GetSongBySpotifyId.infinite'] : ['GetSongBySpotifyId.infinite', variables],
       queryFn: (metaData) => fetcher<GetSongBySpotifyIdQuery, GetSongBySpotifyIdQueryVariables>(GetSongBySpotifyIdDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const GetSongMoviesDocument = `
+    query GetSongMovies($where: movie_soundtrack_bool_exp, $limit: Int, $offset: Int, $order_by: [movie_soundtrack_order_by!]) {
+  movie_soundtrack(
+    where: $where
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+  ) {
+    id
+    timestamps
+    description
+    movie {
+      id
+      title
+      poster
+    }
+  }
+  movie_soundtrack_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+export const useGetSongMoviesQuery = <
+      TData = GetSongMoviesQuery,
+      TError = unknown
+    >(
+      variables?: GetSongMoviesQueryVariables,
+      options?: Omit<UseQueryOptions<GetSongMoviesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetSongMoviesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetSongMoviesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetSongMovies'] : ['GetSongMovies', variables],
+    queryFn: fetcher<GetSongMoviesQuery, GetSongMoviesQueryVariables>(GetSongMoviesDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteGetSongMoviesQuery = <
+      TData = InfiniteData<GetSongMoviesQuery>,
+      TError = unknown
+    >(
+      variables: GetSongMoviesQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<GetSongMoviesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<GetSongMoviesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<GetSongMoviesQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['GetSongMovies.infinite'] : ['GetSongMovies.infinite', variables],
+      queryFn: (metaData) => fetcher<GetSongMoviesQuery, GetSongMoviesQueryVariables>(GetSongMoviesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
   })()

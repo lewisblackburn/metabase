@@ -21,6 +21,7 @@ import SongFavouriteButton from '@/features/songs/components/song-favourite-butt
 import SongLayout from '@/features/songs/components/song-layout';
 import { SongProvider, useSong } from '@/features/songs/components/song-provider';
 import SongReviews from '@/features/songs/components/song-reviews';
+import SongSoundtracks from '@/features/songs/components/song-soundtracks';
 import { Object_Types_Enum } from '@/generated/graphql';
 import { Badge } from '@/registry/new-york-v4/ui/badge';
 import { TabsContent } from '@/registry/new-york-v4/ui/tabs';
@@ -34,6 +35,7 @@ import {
     Image,
     Info,
     Layers2,
+    Music,
     Star,
     Timer,
     TrendingUp,
@@ -54,6 +56,7 @@ export default function SongPage() {
 const tabItems = [
     { value: 'reviews', icon: Star, label: 'Reviews' },
     { value: 'credits', icon: User, label: 'Credits' },
+    { value: 'soundtracks', icon: Music, label: 'Soundtracks' },
     { value: 'awards', icon: Trophy, label: 'Awards' },
     { value: 'media', icon: Image, label: 'Media' },
     { value: 'changes', icon: Edit, label: 'Changes' },
@@ -72,6 +75,7 @@ function SongPageContent() {
             content: <SongReviews />
         },
         credits: { content: <SongCredits /> },
+        soundtracks: { content: <SongSoundtracks /> },
         awards: { content: 'No awards available' },
         media: { content: <AlbumMedia /> },
         changes: { content: <AuditLogs tableName='songs' entityId={song?.id} /> },

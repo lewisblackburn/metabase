@@ -1,13 +1,12 @@
 'use client';
 
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import SpotifyIcon from '@/components/icons/spotify.icon';
 import { DataTable } from '@/components/ui/data-table';
 import { Order_By, useGetMovieSoundtrackQuery } from '@/generated/graphql';
 import { ColumnDef } from '@tanstack/react-table';
-
-import { Music } from 'lucide-react';
 
 export default function MovieSoundtrackTable() {
     const params = useParams<{ id: string }>();
@@ -36,7 +35,11 @@ export default function MovieSoundtrackTable() {
             header: 'Track',
             cell: ({ row }) => (
                 <div>
-                    <p className='text-primary font-semibold'>{row.original.song.name}</p>
+                    <Link
+                        href={`/dashboard/songs/${row.original.song.id}`}
+                        className='text-primary font-semibold hover:underline'>
+                        {row.original.song.name}
+                    </Link>
                     <p className='text-muted-foreground'>
                         {row.original.song.credits.map((credit) => credit.person.name).join(', ')}
                     </p>
