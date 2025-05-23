@@ -10,20 +10,29 @@ export async function middleware(request: NextRequest) {
         const authHeader = request.headers.get('authorization');
         const isAuthenticated = hasSessionToken || authHeader?.startsWith('Bearer ');
 
+        const response = NextResponse.next();
+
         if (isAuthenticationPage && isAuthenticated) {
+            response.headers.set('x-middleware-cache', 'no-cache');
             return NextResponse.redirect(new URL('/dashboard', request.url));
         }
 
         if (isDashboardPage && !isAuthenticated) {
+            response.headers.set('x-middleware-cache', 'no-cache');
             return NextResponse.redirect(new URL('/authentication/login', request.url));
         }
 
-        return NextResponse.next();
+        response.headers.set('x-middleware-cache', 'no-cache');
+        return response;
     } catch (error) {
         if (isDashboardPage) {
-            return NextResponse.redirect(new URL('/authentication/login', request.url));
+            const response = NextResponse.redirect(new URL('/authentication/login', request.url));
+            response.headers.set('x-middleware-cache', 'no-cache');
+            return response;
         }
-        return NextResponse.next();
+        const response = NextResponse.next();
+        response.headers.set('x-middleware-cache', 'no-cache');
+        return response;
     }
 }
 
