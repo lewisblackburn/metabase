@@ -79,7 +79,12 @@ export default function PopularObjects() {
                             <div key={song.id} className='transform transition-all hover:scale-[1.02]'>
                                 <div className='w-full'>
                                     <SongCard
-                                        song={{ ...song, name: song.title, album: { artwork: song.image ?? '' } }}
+                                        song={{
+                                            ...song,
+                                            name: song.title,
+                                            album: { artwork: song.image ?? '' },
+                                            credits: []
+                                        }}
                                     />
                                 </div>
                             </div>
