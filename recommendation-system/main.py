@@ -117,7 +117,7 @@ def compute_recommendations():
         cached = False
         cached_recommendations = all_recommendations
 
-# NOTE: This is set to run every minute for demonstration purposes only
+# NOTE: This is set to run every 30 minutes for demonstration purposes only
 def internal_cron_job(interval_minutes: int = 30):
     while True:
         print(f"Recomputing recommendations at {time.strftime('%Y-%m-%d %H:%M:%S')}")
