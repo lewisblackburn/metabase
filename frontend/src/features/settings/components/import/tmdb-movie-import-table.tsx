@@ -132,6 +132,7 @@ export default function TMDBMovieImportTable() {
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
+                        setPageIndex(0);
                     }}
                 />
                 {searchQuery && (

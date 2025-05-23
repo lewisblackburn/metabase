@@ -151,6 +151,7 @@ export default function EditMovieAlternativeTitles({ movieId }: { movieId: strin
                     value={searchQuery || ''}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
+                        setPageIndex(0);
                     }}
                 />
                 {searchQuery && (

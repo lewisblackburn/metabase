@@ -142,6 +142,7 @@ export default function GoogleBooksBookImportTable() {
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
+                        setPageIndex(0);
                     }}
                 />
                 {searchQuery && (

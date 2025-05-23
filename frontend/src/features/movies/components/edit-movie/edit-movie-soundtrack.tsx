@@ -129,6 +129,7 @@ export default function EditMovieSoundtrack({ movieId }: EditMovieSoundtrackProp
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
+                        setPageIndex(0);
                     }}
                 />
                 {searchQuery && (

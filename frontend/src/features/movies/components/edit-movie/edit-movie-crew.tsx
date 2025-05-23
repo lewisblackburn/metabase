@@ -199,6 +199,7 @@ export default function EditMovieCrew({ movieId }: { movieId: string }) {
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
+                        setPageIndex(0);
                     }}
                 />
                 {searchQuery && (

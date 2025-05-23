@@ -176,6 +176,7 @@ export default function EditSongArtists({ songId }: { songId: string }) {
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
+                        setPageIndex(0);
                     }}
                 />
                 {searchQuery && (

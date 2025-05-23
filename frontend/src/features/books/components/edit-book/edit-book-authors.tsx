@@ -176,6 +176,7 @@ export default function EditBookAuthors({ bookId }: { bookId: string }) {
                     value={searchQuery}
                     onChange={(e) => {
                         setSearchQuery(e.target.value);
+                        setPageIndex(0);
                     }}
                 />
                 {searchQuery && (
