@@ -25,6 +25,7 @@ import {
 } from '@/generated/graphql';
 import { fetcher } from '@/lib/graphql-client';
 import { SpotifyTrack } from '@/types/spotify.types';
+import { formatReleaseDate } from '@/utils/date.utils';
 
 import { FileService } from '../file.service';
 import { spotifyService } from './spotify.service';
@@ -166,7 +167,7 @@ export async function importSongFromSpotify(
             album: {
                 data: {
                     name: songData.album.name,
-                    release_date: songData.album.release_date,
+                    release_date: formatReleaseDate(songData.album.release_date),
                     artwork: artworkFile ? artworkFile.fileUrl : undefined,
                     type: songData.album.album_type,
                     spotify_id: songData.album.id.toString(),
