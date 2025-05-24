@@ -14,23 +14,24 @@ export const withAuth = <P extends object>(Component: React.ComponentType<P>) =>
         const [isLoading, setIsLoading] = useState(true);
 
         useEffect(() => {
-            const checkAuth = async () => {
-                try {
-                    await nhost.auth.getSession();
-                    const isAuthenticated = nhost.auth.isAuthenticated();
-
-                    if (!isAuthenticated) {
-                        router.push(`/authentication/login?redirect=${encodeURIComponent(pathname)}`);
-                    } else {
-                        setIsLoading(false);
-                    }
-                } catch (error) {
-                    console.error('Auth check failed:', error);
+            const unsubscribe = nhost.auth.onAuthStateChanged((event) => {
+                if (event === 'SIGNED_IN') {
+                    setIsLoading(false);
+                } else if (event === 'SIGNED_OUT') {
                     router.push(`/authentication/login?redirect=${encodeURIComponent(pathname)}`);
                 }
-            };
+            });
 
-            checkAuth();
+            const isAuthenticated = nhost.auth.isAuthenticated();
+            if (!isAuthenticated) {
+                router.push(`/authentication/login?redirect=${encodeURIComponent(pathname)}`);
+            } else {
+                setIsLoading(false);
+            }
+
+            return () => {
+                unsubscribe();
+            };
         }, [router, pathname]);
 
         if (isLoading) return <DefaultLoading />;
