@@ -11,7 +11,6 @@ export const withAuth = <P extends object>(Component: React.ComponentType<P>) =>
     return function WithAuth(props: P) {
         const router = useRouter();
         const [isLoading, setIsLoading] = useState(true);
-        console.log(isLoading);
 
         useEffect(() => {
             const checkAuth = async () => {
