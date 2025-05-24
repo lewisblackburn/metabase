@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 const orderByFieldMap = {
     popularity: 'view_count',
     'release-date': 'release_date',
-    rating: 'average_rating'
+    rating: 'vote_average'
 } as const;
 
 export function useMovieFilters(): {

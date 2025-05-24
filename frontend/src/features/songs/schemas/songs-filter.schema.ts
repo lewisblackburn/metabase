@@ -4,7 +4,7 @@ import * as z from 'zod';
 
 export const songsFilterSchema = z.object({
     orderBy: z.object({
-        orderBy: z.enum(['popularity', 'duration']),
+        orderBy: z.enum(['popularity', 'duration', 'rating']),
         order: z.enum(['asc', 'desc'])
     }),
     search: z.string().optional(),

@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 const orderByFieldMap = {
     popularity: 'view_count',
     'publish-date': 'publish_date',
-    rating: 'average_rating'
+    rating: 'vote_average'
 } as const;
 
 export function useBookFilters(): {

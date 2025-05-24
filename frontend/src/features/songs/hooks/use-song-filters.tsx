@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 
 const orderByFieldMap = {
     popularity: 'view_count',
-    duration: 'duration'
+    duration: 'duration',
+    rating: 'vote_average'
 } as const;
 
 export function useSongFilters(): {

@@ -1,7 +1,11 @@
+'use client';
+
 import { ReactNode } from 'react';
 
-const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
-    return <>{children}</>;
-};
+import { withAuth } from '@/hocs/withAuth';
 
-export default DashboardLayout;
+function DashboardLayout({ children }: Readonly<{ children: ReactNode }>) {
+    return <>{children}</>;
+}
+
+export default withAuth(DashboardLayout);
