@@ -21,10 +21,9 @@ import { LoginSchemaType, loginSchema } from '../schemas/login.schema';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
-export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
-    const { isSuccess, isLoading, isError, error, signInEmailPassword } = useSignInEmailPassword();
+export function LoginForm() {
+    const { isLoading, signInEmailPassword } = useSignInEmailPassword();
     const router = useRouter();
     const form = useForm<LoginSchemaType>({
         resolver: zodResolver(loginSchema),
@@ -37,12 +36,9 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
     const onSubmit = async (data: LoginSchemaType) => {
         const { error, needsEmailVerification } = await signInEmailPassword(data.email, data.password);
         if (error) toast.error(error.message);
-        if (needsEmailVerification) toast.info('Please check your email for verification.');
+        else if (needsEmailVerification) toast.info('Please check your email for verification.');
+        else router.push('/dashboard');
     };
-
-    React.useEffect(() => {
-        if (isSuccess) router.push('/dashboard');
-    }, [isSuccess, router]);
 
     return (
         <Form {...form}>

@@ -16,7 +16,7 @@ import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-export function RegisterForm({ className, ...props }: React.ComponentProps<'div'>) {
+export function RegisterForm() {
     const { signUpEmailPassword, isLoading } = useSignUpEmailPassword();
     const router = useRouter();
     const form = useForm<RegisterSchemaType>({

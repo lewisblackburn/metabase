@@ -22,31 +22,9 @@ import {
 import { User, useSignOut } from '@nhost/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-    BadgeCheck,
-    Bell,
-    Bookmark,
-    ChevronsUpDown,
-    Cloud,
-    CreditCard,
-    Github,
-    Heart,
-    Keyboard,
-    LifeBuoy,
-    LogIn,
-    LogOut,
-    Mail,
-    MessageSquare,
-    Plus,
-    PlusCircle,
-    Settings,
-    Sparkles,
-    Star,
-    UserIcon,
-    UserPlus,
-    Users
-} from 'lucide-react';
+import { Cloud, Keyboard, LogIn, LogOut, Settings, UserIcon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 
 export function NavUser({ user }: { user: User | null }) {
     const { signOut, isSuccess } = useSignOut();
@@ -56,9 +34,12 @@ export function NavUser({ user }: { user: User | null }) {
     const queryClient = useQueryClient();
 
     const handleLogout = async () => {
-        await signOut();
-        queryClient.clear();
-        router.push('/authentication/login');
+        const { error } = await signOut();
+        if (error) toast.error(error.message);
+        else {
+            queryClient.clear();
+            router.push('/authentication/login');
+        }
     };
 
     React.useEffect(() => {
