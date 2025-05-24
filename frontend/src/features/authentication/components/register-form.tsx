@@ -38,6 +38,16 @@ export function RegisterForm() {
         }
     };
 
+    React.useEffect(() => {
+        if (isLoading) return;
+        const subscription = form.watch(() => {
+            if (form.formState.isSubmitSuccessful) {
+                router.push('/authentication/login');
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [form, router, isLoading]);
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='p-6 md:p-8'>

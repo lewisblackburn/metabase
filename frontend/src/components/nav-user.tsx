@@ -27,7 +27,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 export function NavUser({ user }: { user: User | null }) {
-    const { signOut, isSuccess } = useSignOut();
+    const { signOut } = useSignOut();
     const dispatch = useDispatch();
     const toggleSettings = useShortcut('toggleSettings');
     const router = useRouter();
@@ -41,10 +41,6 @@ export function NavUser({ user }: { user: User | null }) {
             router.push('/authentication/login');
         }
     };
-
-    React.useEffect(() => {
-        if (isSuccess) router.push('/authentication/login');
-    }, [isSuccess, router]);
 
     return (
         <DropdownMenu>

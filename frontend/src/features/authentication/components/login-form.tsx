@@ -35,10 +35,25 @@ export function LoginForm() {
 
     const onSubmit = async (data: LoginSchemaType) => {
         const { error, needsEmailVerification } = await signInEmailPassword(data.email, data.password);
-        if (error) toast.error(error.message);
-        else if (needsEmailVerification) toast.info('Please check your email for verification.');
-        else router.push('/dashboard');
+        if (error) {
+            toast.error(error.message);
+        } else if (needsEmailVerification) {
+            toast.info('Please check your email for verification.');
+            router.push('/authentication/login');
+        } else {
+            router.push('/dashboard');
+        }
     };
+
+    React.useEffect(() => {
+        if (isLoading) return;
+        const subscription = form.watch(() => {
+            if (form.formState.isSubmitSuccessful) {
+                router.push('/dashboard');
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [form, router, isLoading]);
 
     return (
         <Form {...form}>
@@ -99,7 +114,7 @@ export function LoginForm() {
                     </div>
 
                     <div className='text-center text-sm'>
-                        Don’t have an account?{' '}
+                        Don't have an account?{' '}
                         <a href='/authentication/register' className='underline underline-offset-4'>
                             Sign up
                         </a>
