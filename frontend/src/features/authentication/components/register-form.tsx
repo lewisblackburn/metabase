@@ -9,7 +9,7 @@ import InputField from '@/components/form/input';
 import { Button } from '@/registry/new-york-v4/ui/button';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSignUpEmailPassword } from '@nhost/nextjs';
+import { useAuthenticationStatus, useSignUpEmailPassword } from '@nhost/nextjs';
 
 import { RegisterSchemaType, registerSchema } from '../schemas/register.schema';
 import { Loader2 } from 'lucide-react';
@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 
 export function RegisterForm() {
     const { signUpEmailPassword, isLoading } = useSignUpEmailPassword();
+    const { isAuthenticated } = useAuthenticationStatus();
     const router = useRouter();
     const form = useForm<RegisterSchemaType>({
         resolver: zodResolver(registerSchema),
@@ -39,14 +40,10 @@ export function RegisterForm() {
     };
 
     React.useEffect(() => {
-        if (isLoading) return;
-        const subscription = form.watch(() => {
-            if (form.formState.isSubmitSuccessful) {
-                router.push('/authentication/login');
-            }
-        });
-        return () => subscription.unsubscribe();
-    }, [form, router, isLoading]);
+        if (isAuthenticated) {
+            router.push('/dashboard');
+        }
+    }, [isAuthenticated, router]);
 
     return (
         <Form {...form}>
@@ -87,9 +84,9 @@ export function RegisterForm() {
                         )}
                     />
 
-                    <Button type='submit' className='w-full' disabled={isLoading}>
+                    <Button type='submit' className='w-full' disabled={isLoading || isAuthenticated}>
                         {isLoading ? <Loader2 className='mr-2 h-4 w-4 animate-spin' /> : null}
-                        Create Account
+                        {isLoading ? 'Creating account...' : 'Create Account'}
                     </Button>
 
                     <div className='text-center text-sm'>

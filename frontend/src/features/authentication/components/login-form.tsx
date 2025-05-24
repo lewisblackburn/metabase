@@ -15,7 +15,7 @@ import { Button } from '@/registry/new-york-v4/ui/button';
 import { Card, CardContent } from '@/registry/new-york-v4/ui/card';
 import { Form, FormField } from '@/registry/new-york-v4/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSignInEmailPassword } from '@nhost/nextjs';
+import { useAuthenticationStatus, useSignInEmailPassword } from '@nhost/nextjs';
 
 import { LoginSchemaType, loginSchema } from '../schemas/login.schema';
 import { Loader2 } from 'lucide-react';
@@ -24,6 +24,7 @@ import { toast } from 'sonner';
 
 export function LoginForm() {
     const { isLoading, signInEmailPassword } = useSignInEmailPassword();
+    const { isAuthenticated } = useAuthenticationStatus();
     const router = useRouter();
     const form = useForm<LoginSchemaType>({
         resolver: zodResolver(loginSchema),
@@ -40,20 +41,14 @@ export function LoginForm() {
         } else if (needsEmailVerification) {
             toast.info('Please check your email for verification.');
             router.push('/authentication/login');
-        } else {
-            router.push('/dashboard');
         }
     };
 
     React.useEffect(() => {
-        if (isLoading) return;
-        const subscription = form.watch(() => {
-            if (form.formState.isSubmitSuccessful) {
-                router.push('/dashboard');
-            }
-        });
-        return () => subscription.unsubscribe();
-    }, [form, router, isLoading]);
+        if (isAuthenticated) {
+            router.push('/dashboard');
+        }
+    }, [isAuthenticated, router]);
 
     return (
         <Form {...form}>
@@ -90,9 +85,9 @@ export function LoginForm() {
                         </a>
                     </div>
 
-                    <Button type='submit' className='w-full' disabled={isLoading}>
+                    <Button type='submit' className='w-full' disabled={isLoading || isAuthenticated}>
                         {isLoading ? <Loader2 className='mr-2 h-4 w-4 animate-spin' /> : null}
-                        Login
+                        {isLoading ? 'Logging in...' : 'Login'}
                     </Button>
 
                     <div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'>
