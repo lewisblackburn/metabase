@@ -558,8 +558,12 @@ const Navbar: React.FC = () => {
                             {!user && (
                                 <div className='border-t pt-4'>
                                     <div className='grid grid-cols-2 gap-2'>
-                                        <Button variant='outline'>Sign in</Button>
-                                        <Button>Join now</Button>
+                                        <Link href='/authentication/login'>
+                                            <Button variant='outline'>Sign in</Button>
+                                        </Link>
+                                        <Link href='/authentication/register'>
+                                            <Button>Join now</Button>
+                                        </Link>
                                     </div>
                                 </div>
                             )}
