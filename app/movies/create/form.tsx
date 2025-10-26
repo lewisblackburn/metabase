@@ -9,31 +9,34 @@ import {
 	FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { login } from "@/lib/actions/auth/login"
-import { loginSchema } from "@/lib/validations/auth/login.schema"
+import { createMovie } from "@/lib/actions/movies/create"
+import { createMovieSchema } from "@/lib/validations/movies/create.schema"
 import { useForm } from "@tanstack/react-form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
-export default function LoginForm() {
+export default function CreateMovieForm() {
 	const router = useRouter();
 	const form = useForm({
 		defaultValues: {
-			email: "",
-			password: "",
+			title: ""
 		},
 		validators: {
-			onSubmit: loginSchema,
+			onSubmit: createMovieSchema,
 		},
-		onSubmit: async ({ value: { email, password } }) => {
-			await login({ email, password }).then(() => {
-				router.push('/')
+		onSubmit: async ({ value: { title } }) => {
+			await createMovie({ title }).then(({ body }) => {
+				const resolvedTitle = body.data?.insert_movies_one?.title
+				const resolvedId = body.data?.insert_movies_one?.id
+
+				toast.success(`Movie "${resolvedTitle}" created successfully`);
+				router.push(`/movies/${resolvedId}`)
 			}).catch((error) => toast.error(error.message))
 		},
 	})
 
 	return (
-		<form id="login-form"
+		<form id="create-movie-form"
 			onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
 				e.preventDefault()
 				e.stopPropagation()
@@ -43,14 +46,14 @@ export default function LoginForm() {
 		>
 			<FieldGroup>
 				<form.Field
-					name="email"
+					name="title"
 				>
 					{(field) => {
 						const isInvalid =
 							field.state.meta.isTouched && !field.state.meta.isValid
 						return (
 							<Field data-invalid={isInvalid}>
-								<FieldLabel htmlFor={field.name}>Email</FieldLabel>
+								<FieldLabel htmlFor={field.name}>Title</FieldLabel>
 								<Input
 									id={field.name}
 									name={field.name}
@@ -58,34 +61,7 @@ export default function LoginForm() {
 									onBlur={field.handleBlur}
 									onChange={(e) => field.handleChange(e.target.value)}
 									aria-invalid={isInvalid}
-									placeholder="Enter your email address"
-									autoComplete="off"
-								/>
-								{isInvalid && (
-									<FieldError errors={field.state.meta.errors} />
-								)}
-							</Field>
-						)
-					}}
-				</form.Field>
-				<form.Field
-					name="password"
-				>
-					{(field) => {
-						const isInvalid =
-							field.state.meta.isTouched && !field.state.meta.isValid
-						return (
-							<Field data-invalid={isInvalid}>
-								<FieldLabel htmlFor={field.name}>Password</FieldLabel>
-								<Input
-									id={field.name}
-									name={field.name}
-									value={field.state.value}
-									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange(e.target.value)}
-									aria-invalid={isInvalid}
-									placeholder="Enter your password"
-									type="password"
+									placeholder="Enter the movie title"
 									autoComplete="off"
 								/>
 								{isInvalid && (
@@ -105,7 +81,7 @@ export default function LoginForm() {
 							Reset
 						</Button>
 						<LoadingButton loading={isSubmitting}>
-							{isSubmitting ? 'Logging in...' : 'Login'}
+							{isSubmitting ? 'Creating movie...' : 'Create movie'}
 						</LoadingButton>
 					</>
 				)}

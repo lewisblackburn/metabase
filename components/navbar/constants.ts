@@ -18,8 +18,6 @@ import {
 	Inbox,
 } from "lucide-react";
 
-export const GITHUB_STARS_URL = "https://github.com/lewisblackburn/metabase";
-
 export const NAVIGATION: MenuItem[] = [
 	{
 		title: "Explore",

@@ -6,6 +6,14 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
+export type CreateMovieMutationVariables = Exact<{
+  object: Movies_Insert_Input;
+  on_conflict?: InputMaybe<Movies_On_Conflict>;
+}>;
+
+
+export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string, poster?: any | null } | null };
+
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2249,6 +2257,10 @@ export type Files = {
   isUploaded?: Maybe<Scalars['Boolean']>;
   metadata?: Maybe<Scalars['jsonb']>;
   mimeType?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  movies: Array<Movies>;
+  /** An aggregate relationship */
+  movies_aggregate: Movies_Aggregate;
   name?: Maybe<Scalars['String']>;
   size?: Maybe<Scalars['Int']>;
   updatedAt: Scalars['timestamptz'];
@@ -2259,6 +2271,26 @@ export type Files = {
 /** columns and relationships of "storage.files" */
 export type Files_MetadataArgs = {
   path?: InputMaybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "storage.files" */
+export type Files_MoviesArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "storage.files" */
+export type Files_Movies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
 };
 
 /** aggregated selection of "storage.files" */
@@ -2369,6 +2401,8 @@ export type Files_Bool_Exp = {
   isUploaded?: InputMaybe<Boolean_Comparison_Exp>;
   metadata?: InputMaybe<Jsonb_Comparison_Exp>;
   mimeType?: InputMaybe<String_Comparison_Exp>;
+  movies?: InputMaybe<Movies_Bool_Exp>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   size?: InputMaybe<Int_Comparison_Exp>;
   updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -2410,6 +2444,7 @@ export type Files_Insert_Input = {
   isUploaded?: InputMaybe<Scalars['Boolean']>;
   metadata?: InputMaybe<Scalars['jsonb']>;
   mimeType?: InputMaybe<Scalars['String']>;
+  movies?: InputMaybe<Movies_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']>;
   size?: InputMaybe<Scalars['Int']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
@@ -2503,6 +2538,7 @@ export type Files_Order_By = {
   isUploaded?: InputMaybe<Order_By>;
   metadata?: InputMaybe<Order_By>;
   mimeType?: InputMaybe<Order_By>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   size?: InputMaybe<Order_By>;
   updatedAt?: InputMaybe<Order_By>;
@@ -2741,6 +2777,193 @@ export type Jsonb_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['jsonb']>>;
 };
 
+/** columns and relationships of "movies" */
+export type Movies = {
+  __typename?: 'movies';
+  /** An object relationship */
+  file?: Maybe<Files>;
+  id: Scalars['uuid'];
+  poster?: Maybe<Scalars['uuid']>;
+  title: Scalars['String'];
+};
+
+/** aggregated selection of "movies" */
+export type Movies_Aggregate = {
+  __typename?: 'movies_aggregate';
+  aggregate?: Maybe<Movies_Aggregate_Fields>;
+  nodes: Array<Movies>;
+};
+
+export type Movies_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movies_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movies_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movies_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Movies_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "movies" */
+export type Movies_Aggregate_Fields = {
+  __typename?: 'movies_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Movies_Max_Fields>;
+  min?: Maybe<Movies_Min_Fields>;
+};
+
+
+/** aggregate fields of "movies" */
+export type Movies_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Movies_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "movies" */
+export type Movies_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movies_Max_Order_By>;
+  min?: InputMaybe<Movies_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movies" */
+export type Movies_Arr_Rel_Insert_Input = {
+  data: Array<Movies_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movies_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "movies". All fields are combined with a logical 'AND'. */
+export type Movies_Bool_Exp = {
+  _and?: InputMaybe<Array<Movies_Bool_Exp>>;
+  _not?: InputMaybe<Movies_Bool_Exp>;
+  _or?: InputMaybe<Array<Movies_Bool_Exp>>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  poster?: InputMaybe<Uuid_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movies" */
+export type Movies_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'movies_pkey';
+
+/** input type for inserting data into table "movies" */
+export type Movies_Insert_Input = {
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  id?: InputMaybe<Scalars['uuid']>;
+  poster?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Movies_Max_Fields = {
+  __typename?: 'movies_max_fields';
+  id?: Maybe<Scalars['uuid']>;
+  poster?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "movies" */
+export type Movies_Max_Order_By = {
+  id?: InputMaybe<Order_By>;
+  poster?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Movies_Min_Fields = {
+  __typename?: 'movies_min_fields';
+  id?: Maybe<Scalars['uuid']>;
+  poster?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "movies" */
+export type Movies_Min_Order_By = {
+  id?: InputMaybe<Order_By>;
+  poster?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "movies" */
+export type Movies_Mutation_Response = {
+  __typename?: 'movies_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movies>;
+};
+
+/** on_conflict condition type for table "movies" */
+export type Movies_On_Conflict = {
+  constraint: Movies_Constraint;
+  update_columns?: Array<Movies_Update_Column>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movies". */
+export type Movies_Order_By = {
+  file?: InputMaybe<Files_Order_By>;
+  id?: InputMaybe<Order_By>;
+  poster?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movies */
+export type Movies_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "movies" */
+export type Movies_Select_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'poster'
+  /** column name */
+  | 'title';
+
+/** input type for updating data in table "movies" */
+export type Movies_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  poster?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "movies" */
+export type Movies_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movies_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movies_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  poster?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "movies" */
+export type Movies_Update_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'poster'
+  /** column name */
+  | 'title';
+
+export type Movies_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movies_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movies_Bool_Exp;
+};
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
@@ -2792,6 +3015,10 @@ export type Mutation_Root = {
   deleteVirus?: Maybe<Virus>;
   /** delete data from the table: "storage.virus" */
   deleteViruses?: Maybe<Virus_Mutation_Response>;
+  /** delete data from the table: "movies" */
+  delete_movies?: Maybe<Movies_Mutation_Response>;
+  /** delete single row from the table: "movies" */
+  delete_movies_by_pk?: Maybe<Movies>;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
   /** insert a single row into the table: "auth.provider_requests" */
@@ -2840,6 +3067,10 @@ export type Mutation_Root = {
   insertVirus?: Maybe<Virus>;
   /** insert data into the table: "storage.virus" */
   insertViruses?: Maybe<Virus_Mutation_Response>;
+  /** insert data into the table: "movies" */
+  insert_movies?: Maybe<Movies_Mutation_Response>;
+  /** insert a single row into the table: "movies" */
+  insert_movies_one?: Maybe<Movies>;
   /** update single row of the table: "auth.providers" */
   updateAuthProvider?: Maybe<AuthProviders>;
   /** update single row of the table: "auth.provider_requests" */
@@ -2908,6 +3139,12 @@ export type Mutation_Root = {
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
+  /** update data of the table: "movies" */
+  update_movies?: Maybe<Movies_Mutation_Response>;
+  /** update single row of the table: "movies" */
+  update_movies_by_pk?: Maybe<Movies>;
+  /** update multiples rows of table: "movies" */
+  update_movies_many?: Maybe<Array<Maybe<Movies_Mutation_Response>>>;
   /** update multiples rows of table: "auth.users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
   /** update multiples rows of table: "storage.virus" */
@@ -3056,6 +3293,18 @@ export type Mutation_Root_DeleteVirusArgs = {
 /** mutation root */
 export type Mutation_Root_DeleteVirusesArgs = {
   where: Virus_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_MoviesArgs = {
+  where: Movies_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movies_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -3224,6 +3473,20 @@ export type Mutation_Root_InsertVirusArgs = {
 export type Mutation_Root_InsertVirusesArgs = {
   objects: Array<Virus_Insert_Input>;
   on_conflict?: InputMaybe<Virus_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_MoviesArgs = {
+  objects: Array<Movies_Insert_Input>;
+  on_conflict?: InputMaybe<Movies_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movies_OneArgs = {
+  object: Movies_Insert_Input;
+  on_conflict?: InputMaybe<Movies_On_Conflict>;
 };
 
 
@@ -3512,6 +3775,26 @@ export type Mutation_Root_Update_Files_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_Root_Update_MoviesArgs = {
+  _set?: InputMaybe<Movies_Set_Input>;
+  where: Movies_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movies_By_PkArgs = {
+  _set?: InputMaybe<Movies_Set_Input>;
+  pk_columns: Movies_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movies_ManyArgs = {
+  updates: Array<Movies_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_Root_Update_Users_ManyArgs = {
   updates: Array<Users_Updates>;
 };
@@ -3599,6 +3882,12 @@ export type Query_Root = {
   files: Array<Files>;
   /** fetch aggregated fields from the table: "storage.files" */
   filesAggregate: Files_Aggregate;
+  /** An array relationship */
+  movies: Array<Movies>;
+  /** An aggregate relationship */
+  movies_aggregate: Movies_Aggregate;
+  /** fetch data from the table: "movies" using primary key columns */
+  movies_by_pk?: Maybe<Movies>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** fetch data from the table: "auth.users" */
@@ -3844,6 +4133,29 @@ export type Query_Root_FilesAggregateArgs = {
 };
 
 
+export type Query_Root_MoviesArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+export type Query_Root_Movies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+export type Query_Root_Movies_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_Root_UserArgs = {
   id: Scalars['uuid'];
 };
@@ -3971,6 +4283,14 @@ export type Subscription_Root = {
   filesAggregate: Files_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.files" */
   files_stream: Array<Files>;
+  /** An array relationship */
+  movies: Array<Movies>;
+  /** An aggregate relationship */
+  movies_aggregate: Movies_Aggregate;
+  /** fetch data from the table: "movies" using primary key columns */
+  movies_by_pk?: Maybe<Movies>;
+  /** fetch data from the table in a streaming manner: "movies" */
+  movies_stream: Array<Movies>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** fetch data from the table: "auth.users" */
@@ -4287,6 +4607,36 @@ export type Subscription_Root_Files_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Files_Stream_Cursor_Input>>;
   where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Subscription_Root_MoviesArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movies_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Movies_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Movies_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
 };
 
 
@@ -15317,6 +15667,142 @@ export default {
               "args": []
             },
             {
+              "name": "movies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "name",
               "type": {
                 "kind": "SCALAR",
@@ -15963,6 +16449,22 @@ export default {
               }
             },
             {
+              "name": "movies",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "name",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -16132,6 +16634,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movies",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_arr_rel_insert_input",
                 "ofType": null
               }
             },
@@ -16671,6 +17181,14 @@ export default {
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_aggregate_order_by",
                 "ofType": null
               }
             },
@@ -17501,6 +18019,795 @@ export default {
         },
         {
           "kind": "OBJECT",
+          "name": "movies",
+          "fields": [
+            {
+              "name": "file",
+              "type": {
+                "kind": "OBJECT",
+                "name": "files",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_aggregate_bool_exp",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_aggregate_bool_exp_count",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_aggregate_bool_exp_count",
+          "inputFields": [
+            {
+              "name": "arguments",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "movies_select_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "predicate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Int_comparison_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_min_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_arr_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movies_insert_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "file",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movies_constraint",
+          "enumValues": [
+            {
+              "name": "movies_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_insert_input",
+          "inputFields": [
+            {
+              "name": "file",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_obj_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_max_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_max_order_by",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_min_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_min_order_by",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "movies_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "movies_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_order_by",
+          "inputFields": [
+            {
+              "name": "file",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movies_select_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "poster"
+            },
+            {
+              "name": "title"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_set_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movies_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movies_update_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "poster"
+            },
+            {
+              "name": "title"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movies_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
           "name": "mutation_root",
           "fields": [
             {
@@ -18001,6 +19308,48 @@ export default {
                     "ofType": {
                       "kind": "INPUT_OBJECT",
                       "name": "virus_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movies_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
                       "ofType": null
                     }
                   }
@@ -18770,6 +20119,70 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "virus_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movies_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movies_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movies_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_on_conflict",
                     "ofType": null
                   }
                 }
@@ -20211,6 +21624,94 @@ export default {
                         "ofType": {
                           "kind": "INPUT_OBJECT",
                           "name": "files_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movies_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movies_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movies_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movies_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movies_updates",
                           "ofType": null
                         }
                       }
@@ -21876,6 +23377,163 @@ export default {
                     "kind": "INPUT_OBJECT",
                     "name": "files_bool_exp",
                     "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
                   }
                 }
               ]
@@ -24286,6 +25944,215 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "files_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
                     "ofType": null
                   }
                 }
@@ -29738,6 +31605,8 @@ export default {
     Citext_Comparison_Exp: Citext_Comparison_Exp,
     Files: Files,
     Files_MetadataArgs: Files_MetadataArgs,
+    Files_MoviesArgs: Files_MoviesArgs,
+    Files_Movies_AggregateArgs: Files_Movies_AggregateArgs,
     Files_Aggregate: Files_Aggregate,
     Files_Aggregate_Bool_Exp: Files_Aggregate_Bool_Exp,
     Files_Aggregate_Bool_Exp_Bool_And: Files_Aggregate_Bool_Exp_Bool_And,
@@ -29786,6 +31655,28 @@ export default {
     Files_Variance_Order_By: Files_Variance_Order_By,
     Jsonb_Cast_Exp: Jsonb_Cast_Exp,
     Jsonb_Comparison_Exp: Jsonb_Comparison_Exp,
+    Movies: Movies,
+    Movies_Aggregate: Movies_Aggregate,
+    Movies_Aggregate_Bool_Exp: Movies_Aggregate_Bool_Exp,
+    Movies_Aggregate_Bool_Exp_Count: Movies_Aggregate_Bool_Exp_Count,
+    Movies_Aggregate_Fields: Movies_Aggregate_Fields,
+    Movies_Aggregate_Fields_CountArgs: Movies_Aggregate_Fields_CountArgs,
+    Movies_Aggregate_Order_By: Movies_Aggregate_Order_By,
+    Movies_Arr_Rel_Insert_Input: Movies_Arr_Rel_Insert_Input,
+    Movies_Bool_Exp: Movies_Bool_Exp,
+    Movies_Insert_Input: Movies_Insert_Input,
+    Movies_Max_Fields: Movies_Max_Fields,
+    Movies_Max_Order_By: Movies_Max_Order_By,
+    Movies_Min_Fields: Movies_Min_Fields,
+    Movies_Min_Order_By: Movies_Min_Order_By,
+    Movies_Mutation_Response: Movies_Mutation_Response,
+    Movies_On_Conflict: Movies_On_Conflict,
+    Movies_Order_By: Movies_Order_By,
+    Movies_Pk_Columns_Input: Movies_Pk_Columns_Input,
+    Movies_Set_Input: Movies_Set_Input,
+    Movies_Stream_Cursor_Input: Movies_Stream_Cursor_Input,
+    Movies_Stream_Cursor_Value_Input: Movies_Stream_Cursor_Value_Input,
+    Movies_Updates: Movies_Updates,
     Mutation_Root: Mutation_Root,
     Mutation_Root_DeleteAuthProviderArgs: Mutation_Root_DeleteAuthProviderArgs,
     Mutation_Root_DeleteAuthProviderRequestArgs: Mutation_Root_DeleteAuthProviderRequestArgs,
@@ -29811,6 +31702,8 @@ export default {
     Mutation_Root_DeleteUsersArgs: Mutation_Root_DeleteUsersArgs,
     Mutation_Root_DeleteVirusArgs: Mutation_Root_DeleteVirusArgs,
     Mutation_Root_DeleteVirusesArgs: Mutation_Root_DeleteVirusesArgs,
+    Mutation_Root_Delete_MoviesArgs: Mutation_Root_Delete_MoviesArgs,
+    Mutation_Root_Delete_Movies_By_PkArgs: Mutation_Root_Delete_Movies_By_PkArgs,
     Mutation_Root_InsertAuthProviderArgs: Mutation_Root_InsertAuthProviderArgs,
     Mutation_Root_InsertAuthProviderRequestArgs: Mutation_Root_InsertAuthProviderRequestArgs,
     Mutation_Root_InsertAuthProviderRequestsArgs: Mutation_Root_InsertAuthProviderRequestsArgs,
@@ -29835,6 +31728,8 @@ export default {
     Mutation_Root_InsertUsersArgs: Mutation_Root_InsertUsersArgs,
     Mutation_Root_InsertVirusArgs: Mutation_Root_InsertVirusArgs,
     Mutation_Root_InsertVirusesArgs: Mutation_Root_InsertVirusesArgs,
+    Mutation_Root_Insert_MoviesArgs: Mutation_Root_Insert_MoviesArgs,
+    Mutation_Root_Insert_Movies_OneArgs: Mutation_Root_Insert_Movies_OneArgs,
     Mutation_Root_UpdateAuthProviderArgs: Mutation_Root_UpdateAuthProviderArgs,
     Mutation_Root_UpdateAuthProviderRequestArgs: Mutation_Root_UpdateAuthProviderRequestArgs,
     Mutation_Root_UpdateAuthProviderRequestsArgs: Mutation_Root_UpdateAuthProviderRequestsArgs,
@@ -29869,6 +31764,9 @@ export default {
     Mutation_Root_Update_AuthUserSecurityKeys_ManyArgs: Mutation_Root_Update_AuthUserSecurityKeys_ManyArgs,
     Mutation_Root_Update_Buckets_ManyArgs: Mutation_Root_Update_Buckets_ManyArgs,
     Mutation_Root_Update_Files_ManyArgs: Mutation_Root_Update_Files_ManyArgs,
+    Mutation_Root_Update_MoviesArgs: Mutation_Root_Update_MoviesArgs,
+    Mutation_Root_Update_Movies_By_PkArgs: Mutation_Root_Update_Movies_By_PkArgs,
+    Mutation_Root_Update_Movies_ManyArgs: Mutation_Root_Update_Movies_ManyArgs,
     Mutation_Root_Update_Users_ManyArgs: Mutation_Root_Update_Users_ManyArgs,
     Mutation_Root_Update_Virus_ManyArgs: Mutation_Root_Update_Virus_ManyArgs,
     Query_Root: Query_Root,
@@ -29902,6 +31800,9 @@ export default {
     Query_Root_FileArgs: Query_Root_FileArgs,
     Query_Root_FilesArgs: Query_Root_FilesArgs,
     Query_Root_FilesAggregateArgs: Query_Root_FilesAggregateArgs,
+    Query_Root_MoviesArgs: Query_Root_MoviesArgs,
+    Query_Root_Movies_AggregateArgs: Query_Root_Movies_AggregateArgs,
+    Query_Root_Movies_By_PkArgs: Query_Root_Movies_By_PkArgs,
     Query_Root_UserArgs: Query_Root_UserArgs,
     Query_Root_UsersArgs: Query_Root_UsersArgs,
     Query_Root_UsersAggregateArgs: Query_Root_UsersAggregateArgs,
@@ -29949,6 +31850,10 @@ export default {
     Subscription_Root_FilesArgs: Subscription_Root_FilesArgs,
     Subscription_Root_FilesAggregateArgs: Subscription_Root_FilesAggregateArgs,
     Subscription_Root_Files_StreamArgs: Subscription_Root_Files_StreamArgs,
+    Subscription_Root_MoviesArgs: Subscription_Root_MoviesArgs,
+    Subscription_Root_Movies_AggregateArgs: Subscription_Root_Movies_AggregateArgs,
+    Subscription_Root_Movies_By_PkArgs: Subscription_Root_Movies_By_PkArgs,
+    Subscription_Root_Movies_StreamArgs: Subscription_Root_Movies_StreamArgs,
     Subscription_Root_UserArgs: Subscription_Root_UserArgs,
     Subscription_Root_UsersArgs: Subscription_Root_UsersArgs,
     Subscription_Root_UsersAggregateArgs: Subscription_Root_UsersAggregateArgs,
@@ -30023,6 +31928,15 @@ export default {
   }
 }
 
+export const CreateMovieDocument = gql`
+    mutation CreateMovie($object: movies_insert_input!, $on_conflict: movies_on_conflict) {
+  insert_movies_one(object: $object, on_conflict: $on_conflict) {
+    id
+    title
+    poster
+  }
+}
+    `;
 export const UsersDocument = gql`
     query Users {
   users {
@@ -30038,6 +31952,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
+    },
     Users(variables?: UsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UsersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UsersQuery>({ document: UsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Users', 'query', variables);
     }

@@ -12,9 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { GithubStars } from "./github-star-button";
 import {
-	GITHUB_STARS_URL,
 	NAVIGATION,
 } from "./constants";
 import type {
@@ -29,8 +27,8 @@ export default async function Navbar() {
 	const session = nhost.getUserSession();
 
 	return (
-		<section className="z-999 bg-background pointer-events-auto fixed w-screen">
-			<div className={cn("container mx-auto", "h-(--navbar-height)")}>
+		<section className="z-999 bg-background pointer-events-auto fixed w-screen border-b border-border">
+			<div className="container mx-auto h-(--navbar-height)">
 				<div className="flex h-full items-center justify-between">
 					<Link href="" className="flex max-h-8 items-center gap-2 text-lg font-semibold tracking-tighter">
 						<span className="text-foreground hidden md:inline-block">Metabase</span>
@@ -47,7 +45,6 @@ export default async function Navbar() {
 						</NavigationMenuList>
 					</NavigationMenu>
 					<div className="flex items-center gap-4">
-						<GithubStars repoUrl={GITHUB_STARS_URL} />
 						{session ? <Logout /> : <Button asChild><Link href="/login">Login</Link></Button>}
 					</div>
 				</div>

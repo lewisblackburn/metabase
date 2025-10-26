@@ -1,13 +1,10 @@
 import { UsersQuery, UsersQueryVariables, UsersDocument } from "@/generated/graphql";
 import { createNhostClient } from "@/lib/nhost/server";
-import { print } from "graphql";
 
 
 export const Users = async () => {
 	const nhost = await createNhostClient();
-	const users = await nhost.graphql.request<UsersQuery, UsersQueryVariables>({
-		query: print(UsersDocument),
-	});
+	const users = await nhost.graphql.request<UsersQuery, UsersQueryVariables>(UsersDocument);
 
 	console.log(users);
 
