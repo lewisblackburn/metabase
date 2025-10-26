@@ -1,7 +1,7 @@
 import { RootDocument } from '../../generated/graphql'
 import { createNhostFunctionsClient } from '../../lib/nhost/functions'
 
-export default async function handler(req: Request): Promise<Response> {
+export default async (req: Request, res: Response) => {
 	const nhost = await createNhostFunctionsClient()
 
 	const status = {
