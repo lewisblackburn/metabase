@@ -1,5 +1,5 @@
-query Movies {
-  movies {
+query Movies($limit: Int, $offset: Int) {
+  movies(limit: $limit, offset: $offset) {
     id
     title
     posterId

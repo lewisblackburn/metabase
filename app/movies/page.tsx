@@ -1,12 +1,9 @@
-import { Suspense } from "react";
-import Movies from "./components/movies";
+import MovieList from "./components/movie-list";
 
 export default function MoviesPage() {
 	return (
 		<div>
-			<Suspense fallback={<div>Loading...</div>}>
-				<Movies />
-			</Suspense>
+			<MovieList />
 		</div>
 	);
 }

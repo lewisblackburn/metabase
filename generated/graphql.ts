@@ -21,7 +21,10 @@ export type MovieQueryVariables = Exact<{
 
 export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, posterId?: any | null } | null };
 
-export type MoviesQueryVariables = Exact<{ [key: string]: never; }>;
+export type MoviesQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
 
 
 export type MoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, posterId?: any | null }> };
@@ -31958,8 +31961,8 @@ export const MovieDocument = gql`
 }
     `;
 export const MoviesDocument = gql`
-    query Movies {
-  movies {
+    query Movies($limit: Int, $offset: Int) {
+  movies(limit: $limit, offset: $offset) {
     id
     title
     posterId
