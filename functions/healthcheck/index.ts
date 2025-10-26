@@ -16,8 +16,9 @@ export default async function handler() {
 		const gqlRes = await nhost.graphql.request(RootDocument)
 		status.graphql = gqlRes.status === 200 ? 'up' : 'down'
 
-		// Auth (basic connectivity check)
-		status.auth = 'up'
+		// Auth
+		const authVersion = await nhost.auth.getVersion()
+		status.auth = authVersion !== null ? 'up' : 'down'
 
 		// Storage
 		const version = await nhost.storage.getVersion()
