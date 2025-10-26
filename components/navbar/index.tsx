@@ -14,11 +14,11 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { GithubStars } from "./github-star-button";
 import {
-	LOGO,
+	GITHUB_STARS_URL,
 	NAVIGATION,
 } from "./constants";
 import type {
-	DesktopMenuItemProps,
+	DesktopMenuItemProps as MenuItemProps,
 	MenuSubLinkProps,
 } from "./types";
 import Logout from "../logout";
@@ -30,16 +30,15 @@ export default async function Navbar() {
 
 	return (
 		<section className="z-999 bg-background pointer-events-auto fixed w-screen">
-			<div className="container mx-auto h-16">
+			<div className={cn("container mx-auto", "h-(--navbar-height)")}>
 				<div className="flex h-full items-center justify-between">
-					<Link href={LOGO.url} className="flex max-h-8 items-center gap-2 text-lg font-semibold tracking-tighter">
-						<img src={LOGO.src} alt={LOGO.alt} className="inline-block size-8 invert" />
-						<span className="text-foreground hidden md:inline-block">{LOGO.title}</span>
+					<Link href="" className="flex max-h-8 items-center gap-2 text-lg font-semibold tracking-tighter">
+						<span className="text-foreground hidden md:inline-block">Metabase</span>
 					</Link>
 					<NavigationMenu className="hidden lg:flex" viewport={false}>
 						<NavigationMenuList className="">
 							{NAVIGATION.map((item, index) => (
-								<DesktopMenuItem
+								<MenuItem
 									key={`desktop-link-${index}`}
 									item={item}
 									index={index}
@@ -48,7 +47,7 @@ export default async function Navbar() {
 						</NavigationMenuList>
 					</NavigationMenu>
 					<div className="flex items-center gap-4">
-						<GithubStars repoUrl="https://github.com/lewisblackburn/metabase" />
+						<GithubStars repoUrl={GITHUB_STARS_URL} />
 						{session ? <Logout /> : <Button asChild><Link href="/login">Login</Link></Button>}
 					</div>
 				</div>
@@ -57,25 +56,28 @@ export default async function Navbar() {
 	);
 };
 
-const DesktopMenuItem = ({ item, index }: DesktopMenuItemProps) => {
+const MenuItem = ({ item, index }: MenuItemProps) => {
+	const regularLinks = item.links?.filter((link) => link?.isFeatured === undefined);
+	const featuredLink = item.links?.find((link) => link.isFeatured);
+
 	if (item.links) {
 		return (
 			<NavigationMenuItem key={`desktop-menu-item-${index}`} value={`${index}`}>
-				<NavigationMenuTrigger className="text-foreground h-fit bg-transparent font-normal focus:!bg-transparent data-[active=true]:!bg-transparent">
+				<NavigationMenuTrigger className="text-foreground h-fit bg-transparent font-normal focus:bg-transparent! data-[active=true]:bg-transparent!">
 					{item.title}
 				</NavigationMenuTrigger>
-				<NavigationMenuContent className="!rounded-xl !p-0">
+				<NavigationMenuContent className="rounded-xl p-0!">
 					<ul className="w-[20rem] p-2.5">
-						{item.links.map((link, index) => (
+						{regularLinks?.map((link, index) => (
 							<li key={`desktop-nav-sublink-${index}`}>
 								<MenuSubLink link={link} />
 							</li>
 						))}
 					</ul>
-					{item.featured && (
+					{featuredLink && (
 						<ul className="w-[20rem] p-2.5 bg-muted">
 							<li key={`desktop-nav-sublink-featured`}>
-								<MenuSubLink link={item.featured} />
+								<MenuSubLink link={featuredLink} isFeatured />
 							</li>
 						</ul>
 					)}
@@ -96,14 +98,11 @@ const DesktopMenuItem = ({ item, index }: DesktopMenuItemProps) => {
 	);
 };
 
-const MenuSubLink = ({ link }: MenuSubLinkProps) => {
-	const isFeatured = link.description === undefined;
-
+const MenuSubLink = ({ link, isFeatured }: MenuSubLinkProps) => {
 	return (
 		<Link
 			href={link.url}
-			className={cn("flex items-center gap-4 rounded-lg p-2", {
-				"hover:bg-muted": !isFeatured,
+			className={cn("flex items-center gap-4 rounded-lg p-2 pr-2.5 hover:bg-muted", {
 				"hover:bg-background/40": isFeatured,
 			})}
 		>
@@ -111,19 +110,13 @@ const MenuSubLink = ({ link }: MenuSubLinkProps) => {
 				<div className="flex gap-2.5">
 					{link.icon && (
 						<link.icon.component
-							className="size-5"
-							style={{ stroke: link.icon.color }}
+							className={cn("size-4", link.icon.color)}
 						/>
 					)}
 					<div className="flex flex-col justify-center gap-1.5">
 						<h3 className="text-foreground text-sm leading-none">
 							{link.label}
 						</h3>
-						{link.description && (
-							<p className="text-muted-foreground/80 text-sm leading-[1.2]">
-								{link.description}
-							</p>
-						)}
 					</div>
 				</div>
 				<ChevronRight className="stroke-muted-foreground size-3.5 opacity-100" />

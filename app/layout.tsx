@@ -31,9 +31,7 @@ export default function RootLayout({
       >
         <main>
           <Navbar />
-          {/* // TODO: make a variable for the height of the navbar */}
-          <div className="h-16" />
-          <section>
+          <section className="flex flex-col container mx-auto min-h-screen pt-(--navbar-height) flex-1">
             {children}
           </section>
         </main>

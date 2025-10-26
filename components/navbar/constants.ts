@@ -1,117 +1,183 @@
-import {
-	Bell,
-	Book,
-	FileText,
-	Globe,
-	Grid,
-	HelpCircle,
-	Info,
-} from "lucide-react";
 import { MenuItem } from "./types";
+import {
+	Film,
+	Tv,
+	Book,
+	Gamepad2,
+	Music2,
+	Users,
+	TrendingUp,
+	Star,
+	Heart,
+	Globe,
+	Info,
+	Bell,
+	HelpCircle,
+	Map,
+	Binoculars,
+	Inbox,
+} from "lucide-react";
 
-export const LOGO = {
-	url: "https://www.shadcnblocks.com",
-	src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg",
-	alt: "logo",
-	title: "Shadcnblocks.com",
-};
+export const GITHUB_STARS_URL = "https://github.com/lewisblackburn/metabase";
 
 export const NAVIGATION: MenuItem[] = [
 	{
-		title: "Products",
+		title: "Explore",
 		url: "#",
 		links: [
 			{
-				label: "Company Blog",
-				description: "Insights & updates",
-				url: "#",
+				label: "Movies",
+				url: "/movies",
 				icon: {
-					component: FileText,
-					color: "#10b981",
+					component: Film,
+					color: "text-rose-500",
 				},
 			},
 			{
-				label: "Our Platform",
-				description: "Empower your work",
-				url: "#",
+				label: "TV Shows",
+				url: "/tv",
 				icon: {
-					component: Grid,
-					color: "#6366f1",
-				},
-			},
-		],
-		featured: {
-			label: "Documentation",
-			url: "#",
-			icon: {
-				component: Book,
-				color: "#8b5cf6",
-			},
-		}
-	},
-	{
-		title: "Company",
-		url: "#",
-		links: [
-			{
-				label: "About Our Team",
-				url: "#",
-				description: "Our mission & values",
-				icon: {
-					component: Info,
-					color: "#f59e0b",
+					component: Tv,
+					color: "text-indigo-500",
 				},
 			},
 			{
-				label: "Help & Support Center",
-				url: "#",
-				description: "Get quick help",
-				icon: {
-					component: HelpCircle,
-					color: "#3b82f6",
-				},
-			},
-			{
-				label: "Latest News",
-				url: "#",
-				description: "Product updates",
-				icon: {
-					component: Bell,
-					color: "#f97316",
-				},
-			},
-		],
-	},
-	{
-		title: "Resources",
-		url: "#",
-		links: [
-			{
-				label: "Documentation",
-				url: "#",
-				description: "Guides & references",
+				label: "Books",
+				url: "/books",
 				icon: {
 					component: Book,
-					color: "#8b5cf6",
+					color: "text-green-500",
 				},
 			},
 			{
-				label: "API Reference",
-				url: "#",
-				description: "Explore our API",
+				label: "Games",
+				url: "/games",
 				icon: {
-					component: Globe,
-					color: "#ef4444",
+					component: Gamepad2,
+					color: "text-yellow-500",
+				},
+			},
+			{
+				label: "Music",
+				url: "/music",
+				icon: {
+					component: Music2,
+					color: "text-purple-500",
+				},
+			},
+			{
+				label: "People",
+				url: "/people",
+				icon: {
+					component: Users,
+					color: "text-blue-500",
+				},
+				isFeatured: true
+			}
+		],
+	},
+	{
+		title: "Community",
+		url: "#",
+		links: [
+			{
+				label: "Reviews",
+				url: "/reviews",
+				icon: {
+					component: Star,
+					color: "text-amber-500",
+				},
+			},
+			{
+				label: "Lists",
+				url: "/lists",
+				icon: {
+					component: Heart,
+					color: "text-pink-500",
+				},
+			},
+			{
+				label: "Trending",
+				url: "/trending",
+				icon: {
+					component: TrendingUp,
+					color: "text-emerald-500",
 				},
 			},
 		],
 	},
 	{
-		title: "Pricing",
+		title: "Developers",
 		url: "#",
+		links: [
+			{
+				label: "API Reference",
+				url: "/api",
+				icon: {
+					component: Globe,
+					color: "text-red-500",
+				},
+			},
+			{
+				label: "Documentation",
+				url: "/about",
+				icon: {
+					component: Info,
+					color: "text-amber-500",
+				},
+			},
+			{
+				label: "Blog",
+				url: "/support",
+				icon: {
+					component: HelpCircle,
+					color: "text-emerald-500",
+				},
+			},
+		],
 	},
 	{
-		title: "Contact",
+		title: "Roadmap",
 		url: "#",
+		links: [
+			{
+				label: "What's New",
+				url: "/whats-new",
+				icon: {
+					component: Bell,
+					color: 'text-blue-500',
+				},
+			},
+			{
+				label: "Roadmap",
+				url: "/roadmap",
+				icon: {
+					component: Map,
+					color: 'text-green-500',
+				},
+			},
+			{
+				label: "What's Next",
+				url: "/whats-next",
+				icon: {
+					component: Binoculars,
+					color: 'text-purple-500',
+				},
+			},
+			{
+				label: "Requests, ideas, bugs",
+				url: "/requests",
+				icon: {
+					component: Inbox,
+					color: 'text-blue-500',
+				},
+				isFeatured: true
+			}
+		],
+	},
+	{
+		title: "Search",
+		url: "/search",
 	},
 ];
+

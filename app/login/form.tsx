@@ -8,6 +8,7 @@ import {
 	FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { Spinner } from "@/components/ui/spinner"
 import { login } from "@/lib/actions/auth/login"
 import { loginSchema } from "@/lib/validations/auth/login.schema"
 import { useForm } from "@tanstack/react-form"
@@ -35,8 +36,10 @@ export default function LoginForm() {
 		<form id="login-form"
 			onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
 				e.preventDefault()
+				e.stopPropagation()
 				form.handleSubmit()
 			}}
+			className="flex flex-col gap-4 min-w-96"
 		>
 			<FieldGroup>
 				<form.Field
@@ -93,12 +96,27 @@ export default function LoginForm() {
 					}}
 				</form.Field>
 			</FieldGroup>
-			<Button type="button" variant="outline" onClick={() => form.reset()}>
-				Reset
-			</Button>
-			<Button type="submit" form="login-form" disabled={form.state.isSubmitting}>
-				{form.state.isSubmitting ? 'Submitting...' : 'Submit'}
-			</Button>
+			<form.Subscribe
+				selector={(state) => [state.isSubmitting]}
+			>
+				{([isSubmitting]) => (
+					<>
+						<Button type="button" variant="outline" onClick={() => form.reset()} disabled={isSubmitting}>
+							Reset
+						</Button>
+						<Button type="submit" disabled={isSubmitting}>
+							{isSubmitting ? (
+								<div className="flex items-center gap-2">
+									<Spinner />
+									<span>
+										Logging in...
+									</span>
+								</div>
+							) : 'Login'}
+						</Button>
+					</>
+				)}
+			</form.Subscribe>
 		</form>
 
 	)

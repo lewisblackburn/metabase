@@ -8,13 +8,13 @@ export interface MenuLink {
 		component: LucideIcon;
 		color: string;
 	};
+	isFeatured?: boolean;
 }
 
 export interface MenuItem {
 	title: string;
 	url: string;
 	links?: MenuLink[];
-	featured?: MenuLink;
 }
 
 export interface DesktopMenuItemProps {
@@ -28,5 +28,6 @@ export interface MobileNavigationMenuProps {
 
 export interface MenuSubLinkProps {
 	link: MenuLink;
+	isFeatured?: boolean;
 }
 
