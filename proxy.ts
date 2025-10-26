@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { handleNhostMiddleware } from "@/lib/nhost/server";
 
 // Define public routes that don't require authentication
-const publicRoutes = ["/", "/users"];
+const publicRoutes = ["/", "/users", "/login"];
+const unAuthenticatedRoutes = ["/login", "/register"];
 
 export async function proxy(request: NextRequest) {
 	// Create a response that we'll modify as needed
@@ -17,10 +18,21 @@ export async function proxy(request: NextRequest) {
 		(route) => path === route || path.startsWith(`${route}/`),
 	);
 
+	// Check if this is an unauthenticated route
+	const isUnAuthenticatedRoute = unAuthenticatedRoutes.some(
+		(route) => path === route || path.startsWith(`${route}/`),
+	);
+
 	// Handle Nhost authentication and token refresh
 	// Always call this to ensure session is up-to-date
 	// even for public routes, so that session changes are detected
 	const session = await handleNhostMiddleware(request, response);
+
+	// If it's an unauthenticated route and the session is found, redirect to the home page
+	if (isUnAuthenticatedRoute && session) {
+		const homeUrl = new URL("/", request.url);
+		return NextResponse.redirect(homeUrl);
+	}
 
 	// If it's a public route, allow access without checking auth
 	if (isPublicRoute) {
