@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 import { handleNhostMiddleware } from "@/lib/nhost/server";
 
 // Define public routes that don't require authentication
-const publicRoutes = ["/"];
 const unAuthenticatedRoutes = ["/login", "/register"];
+const publicRoutes = ["/", ...unAuthenticatedRoutes];
 
 export async function proxy(request: NextRequest) {
 	// Create a response that we'll modify as needed

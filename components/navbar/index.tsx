@@ -30,7 +30,7 @@ export default async function Navbar() {
 		<section className="z-999 bg-background pointer-events-auto fixed w-screen border-b border-border">
 			<div className="container mx-auto h-(--navbar-height)">
 				<div className="flex h-full items-center justify-between">
-					<Link href="" className="flex max-h-8 items-center gap-2 text-lg font-semibold tracking-tighter">
+					<Link href="/" className="flex max-h-8 items-center gap-2 text-lg font-semibold tracking-tighter">
 						<span className="text-foreground hidden md:inline-block">Metabase</span>
 					</Link>
 					<NavigationMenu className="hidden lg:flex" viewport={false}>

@@ -14,6 +14,13 @@ export type CreateMovieMutationVariables = Exact<{
 
 export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string, poster?: any | null } | null };
 
+export type MovieQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, poster?: any | null } | null };
+
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -31937,6 +31944,15 @@ export const CreateMovieDocument = gql`
   }
 }
     `;
+export const MovieDocument = gql`
+    query Movie($id: uuid!) {
+  movies_by_pk(id: $id) {
+    id
+    title
+    poster
+  }
+}
+    `;
 export const UsersDocument = gql`
     query Users {
   users {
@@ -31954,6 +31970,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
+    },
+    Movie(variables: MovieQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MovieQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MovieQuery>({ document: MovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Movie', 'query', variables);
     },
     Users(variables?: UsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UsersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UsersQuery>({ document: UsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Users', 'query', variables);
