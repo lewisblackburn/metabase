@@ -1,4 +1,5 @@
-import { MovieCardSkeleton } from "../movie-card/movie-card-skeleton";
+import MediaGrid from "@/components/media-grid";
+import MoviePosterSkeleton from "../movie-poster/movie-poster-skeleton";
 
 interface MovieListSkeletonProps {
 	itemsPerPage: number;
@@ -6,10 +7,10 @@ interface MovieListSkeletonProps {
 
 export default function MovieListSkeleton({ itemsPerPage }: MovieListSkeletonProps) {
 	return (
-		<div className="flex flex-col gap-2">
+		<MediaGrid className="mx-auto">
 			{[...Array(itemsPerPage)].map((_, i) => (
-				<MovieCardSkeleton key={`movie-card-skeleton-${i}`} />
+				<MoviePosterSkeleton key={`movie-poster-skeleton-${i}`} />
 			))}
-		</div>
+		</MediaGrid>
 	);
 }

@@ -9,13 +9,13 @@ export default function MovieFilterButtons() {
 
 	return (
 		<ButtonGroup>
-			<Button variant="outline" onClick={() => setPosterSize("sm")}>
+			<Button variant="outline" onClick={() => setPosterSize("lg")}>
 				<SquareIcon className="size-4" />
 			</Button>
 			<Button variant="outline" onClick={() => setPosterSize("md")}>
 				<Grid2x2Icon className="size-4" />
 			</Button>
-			<Button variant="outline" onClick={() => setPosterSize("lg")}>
+			<Button variant="outline" onClick={() => setPosterSize("sm")}>
 				<Grid3x3Icon className="size-4" />
 			</Button>
 		</ButtonGroup>
