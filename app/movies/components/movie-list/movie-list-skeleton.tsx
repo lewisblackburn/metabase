@@ -7,7 +7,7 @@ interface MovieListSkeletonProps {
 
 export default function MovieListSkeleton({ itemsPerPage }: MovieListSkeletonProps) {
 	return (
-		<MediaGrid className="mx-auto">
+		<MediaGrid>
 			{[...Array(itemsPerPage)].map((_, i) => (
 				<MoviePosterSkeleton key={`movie-poster-skeleton-${i}`} />
 			))}

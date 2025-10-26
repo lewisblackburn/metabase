@@ -11,7 +11,10 @@ interface MoviePosterProps {
 }
 
 export default function MoviePoster({ posterId, posterSize }: MoviePosterProps) {
-	const { posterSize: currentPosterSize } = useLayoutStore();
+	const { posterSize: currentPosterSize, isHydrated } = useLayoutStore();
+
+	if (!isHydrated) return null;
+
 	const nhost = createNhostClientSingleton();
 	const url = `${nhost.storage.baseURL}/${posterId}`;
 

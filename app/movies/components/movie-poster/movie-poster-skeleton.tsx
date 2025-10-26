@@ -9,7 +9,9 @@ interface MoviePosterSkeletonProps {
 }
 
 export default function MoviePosterSkeleton({ posterSize }: MoviePosterSkeletonProps) {
-	const { posterSize: currentPosterSize } = useLayoutStore();
+	const { posterSize: currentPosterSize, isHydrated } = useLayoutStore();
+
+	if (!isHydrated) return null;
 
 	// if posterSize is not provided, use the current poster size
 	const size = posterSize ?? currentPosterSize;

@@ -6,8 +6,9 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import MovieListSkeleton from "./movie-list-skeleton";
 import MovieListError from "./movie-list-error";
 import MediaGrid from "@/components/media-grid";
+import { Fragment } from "react/jsx-runtime";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 50;
 
 export default function MovieList() {
 	const {
@@ -30,15 +31,17 @@ export default function MovieList() {
 	const movies = data?.pages.flat() || [];
 
 	return (
-		<MediaGrid className="mx-auto">
-			{movies.map((movie) => (
-				<MovieCard key={movie.id} movie={movie} />
-			))}
+		<Fragment>
+			<MediaGrid>
+				{movies.map((movie) => (
+					<MovieCard key={movie.id} movie={movie} />
+				))}
 
+			</MediaGrid>
 			<div ref={loadMoreRef}>
 				{isFetchingNextPage && <MovieListSkeleton itemsPerPage={ITEMS_PER_PAGE} />}
 			</div>
-		</MediaGrid>
+		</Fragment>
 	);
 
 }
