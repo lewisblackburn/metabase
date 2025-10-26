@@ -1,4 +1,4 @@
-import Movie from "./compoents/movie";
+import Movie from "./components/movie";
 
 export default async function MoviePage({
 	params,
@@ -8,8 +8,6 @@ export default async function MoviePage({
 	const { id } = await params;
 
 	return (
-		<div>
-			<Movie id={id} />
-		</div>
+		<Movie id={id} />
 	);
 }

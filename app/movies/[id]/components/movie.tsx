@@ -1,8 +1,8 @@
 import { MovieDocument, MovieQuery, MovieQueryVariables } from "@/generated/graphql";
 import { createNhostClient } from "@/lib/nhost/server";
 import { Suspense } from "react";
-import MoviePoster from "../../components/movie-poster";
-import MoviePosterSkeleton from "../../components/movie-poster-skeleton";
+import MoviePosterSkeleton from "../../components/movie-poster/movie-poster-skeleton";
+import MoviePoster from "../../components/movie-poster/movie-poster";
 
 export default async function Movie({ id }: { id: string }) {
 	const nhost = await createNhostClient();
@@ -11,9 +11,7 @@ export default async function Movie({ id }: { id: string }) {
 
 	return (
 		<div>
-			<Suspense fallback={<MoviePosterSkeleton />}>
-				<MoviePoster posterId={movie?.posterId} />
-			</Suspense>
+			<MoviePoster posterId={movie?.posterId} posterSize="lg" />
 			<h1>{movie?.title}</h1>
 		</div>
 	);

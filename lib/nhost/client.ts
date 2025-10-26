@@ -12,6 +12,7 @@ export function createNhostClientSingleton(): NhostClient {
 			region: process.env.NEXT_PUBLIC_NHOST_REGION,
 			subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
 			graphqlUrl: process.env.NEXT_PUBLIC_NHOST_GRAPHQL_URL,
+			storageUrl: process.env.NEXT_PUBLIC_NHOST_STORAGE_URL,
 		});
 	}
 

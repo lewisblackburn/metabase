@@ -13,3 +13,4 @@ generates:
       reactQueryVersion: 5
       exposeQueryKeys: true
       addInfiniteQuery: true
+      suspense: true
