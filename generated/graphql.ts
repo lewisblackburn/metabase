@@ -29,6 +29,11 @@ export type MoviesQueryVariables = Exact<{
 
 export type MoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, posterId?: any | null }> };
 
+export type RootQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RootQuery = { __typename: 'query_root' };
+
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -31969,6 +31974,11 @@ export const MoviesDocument = gql`
   }
 }
     `;
+export const RootDocument = gql`
+    query Root {
+  __typename
+}
+    `;
 export const UsersDocument = gql`
     query Users {
   users {
@@ -31992,6 +32002,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Movies(variables?: MoviesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MoviesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MoviesQuery>({ document: MoviesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Movies', 'query', variables);
+    },
+    Root(variables?: RootQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RootQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<RootQuery>({ document: RootDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Root', 'query', variables);
     },
     Users(variables?: UsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UsersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UsersQuery>({ document: UsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Users', 'query', variables);
