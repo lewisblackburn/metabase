@@ -1,8 +1,8 @@
 import { RootDocument } from '@/generated/graphql'
-import { createNhostClient } from '@/lib/nhost/server'
+import { createNhostFunctionsClient } from '@/lib/nhost/functions'
 
 export default async function handler(req: Request): Promise<Response> {
-	const nhost = await createNhostClient()
+	const nhost = createNhostFunctionsClient()
 
 	const status = {
 		graphql: 'down',
@@ -14,7 +14,7 @@ export default async function handler(req: Request): Promise<Response> {
 	try {
 		// GraphQL
 		const gqlRes = await nhost.graphql.request(RootDocument)
-		status.graphql = gqlRes.error ? 'down' : 'up'
+		status.graphql = gqlRes.status !== 200 ? 'down' : 'up'
 
 		// Auth
 		const authVersion = await nhost.auth.getVersion()
@@ -24,7 +24,7 @@ export default async function handler(req: Request): Promise<Response> {
 		const storageVersion = await nhost.storage.getVersion()
 		status.storage = storageVersion ? 'up' : 'down'
 
-		// Functions (this one is always up if you're here)
+		// Functions
 		status.functions = 'up'
 
 		return new Response(JSON.stringify(status), {
