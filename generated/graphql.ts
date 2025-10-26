@@ -12,14 +12,19 @@ export type CreateMovieMutationVariables = Exact<{
 }>;
 
 
-export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string, poster?: any | null } | null };
+export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
 export type MovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, poster?: any | null } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, posterId?: any | null } | null };
+
+export type MoviesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, posterId?: any | null }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2787,10 +2792,10 @@ export type Jsonb_Comparison_Exp = {
 /** columns and relationships of "movies" */
 export type Movies = {
   __typename?: 'movies';
-  /** An object relationship */
-  file?: Maybe<Files>;
   id: Scalars['uuid'];
-  poster?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  poster?: Maybe<Files>;
+  posterId?: Maybe<Scalars['uuid']>;
   title: Scalars['String'];
 };
 
@@ -2846,9 +2851,9 @@ export type Movies_Bool_Exp = {
   _and?: InputMaybe<Array<Movies_Bool_Exp>>;
   _not?: InputMaybe<Movies_Bool_Exp>;
   _or?: InputMaybe<Array<Movies_Bool_Exp>>;
-  file?: InputMaybe<Files_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  poster?: InputMaybe<Uuid_Comparison_Exp>;
+  poster?: InputMaybe<Files_Bool_Exp>;
+  posterId?: InputMaybe<Uuid_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -2859,9 +2864,9 @@ export type Movies_Constraint =
 
 /** input type for inserting data into table "movies" */
 export type Movies_Insert_Input = {
-  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']>;
-  poster?: InputMaybe<Scalars['uuid']>;
+  poster?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  posterId?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -2869,14 +2874,14 @@ export type Movies_Insert_Input = {
 export type Movies_Max_Fields = {
   __typename?: 'movies_max_fields';
   id?: Maybe<Scalars['uuid']>;
-  poster?: Maybe<Scalars['uuid']>;
+  posterId?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "movies" */
 export type Movies_Max_Order_By = {
   id?: InputMaybe<Order_By>;
-  poster?: InputMaybe<Order_By>;
+  posterId?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
 };
 
@@ -2884,14 +2889,14 @@ export type Movies_Max_Order_By = {
 export type Movies_Min_Fields = {
   __typename?: 'movies_min_fields';
   id?: Maybe<Scalars['uuid']>;
-  poster?: Maybe<Scalars['uuid']>;
+  posterId?: Maybe<Scalars['uuid']>;
   title?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "movies" */
 export type Movies_Min_Order_By = {
   id?: InputMaybe<Order_By>;
-  poster?: InputMaybe<Order_By>;
+  posterId?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
 };
 
@@ -2913,9 +2918,9 @@ export type Movies_On_Conflict = {
 
 /** Ordering options when selecting data from "movies". */
 export type Movies_Order_By = {
-  file?: InputMaybe<Files_Order_By>;
   id?: InputMaybe<Order_By>;
-  poster?: InputMaybe<Order_By>;
+  poster?: InputMaybe<Files_Order_By>;
+  posterId?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
 };
 
@@ -2929,14 +2934,14 @@ export type Movies_Select_Column =
   /** column name */
   | 'id'
   /** column name */
-  | 'poster'
+  | 'posterId'
   /** column name */
   | 'title';
 
 /** input type for updating data in table "movies" */
 export type Movies_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>;
-  poster?: InputMaybe<Scalars['uuid']>;
+  posterId?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -2951,7 +2956,7 @@ export type Movies_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Movies_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['uuid']>;
-  poster?: InputMaybe<Scalars['uuid']>;
+  posterId?: InputMaybe<Scalars['uuid']>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -2960,7 +2965,7 @@ export type Movies_Update_Column =
   /** column name */
   | 'id'
   /** column name */
-  | 'poster'
+  | 'posterId'
   /** column name */
   | 'title';
 
@@ -18029,15 +18034,6 @@ export default {
           "name": "movies",
           "fields": [
             {
-              "name": "file",
-              "type": {
-                "kind": "OBJECT",
-                "name": "files",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "id",
               "type": {
                 "kind": "NON_NULL",
@@ -18051,6 +18047,15 @@ export default {
             },
             {
               "name": "poster",
+              "type": {
+                "kind": "OBJECT",
+                "name": "files",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "posterId",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -18330,14 +18335,6 @@ export default {
               }
             },
             {
-              "name": "file",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "files_bool_exp",
-                "ofType": null
-              }
-            },
-            {
               "name": "id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -18347,6 +18344,14 @@ export default {
             },
             {
               "name": "poster",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "posterId",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "uuid_comparison_exp",
@@ -18377,14 +18382,6 @@ export default {
           "name": "movies_insert_input",
           "inputFields": [
             {
-              "name": "file",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "files_obj_rel_insert_input",
-                "ofType": null
-              }
-            },
-            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -18394,6 +18391,14 @@ export default {
             },
             {
               "name": "poster",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_obj_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "posterId",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -18424,7 +18429,7 @@ export default {
               "args": []
             },
             {
-              "name": "poster",
+              "name": "posterId",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -18457,7 +18462,7 @@ export default {
               }
             },
             {
-              "name": "poster",
+              "name": "posterId",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18488,7 +18493,7 @@ export default {
               "args": []
             },
             {
-              "name": "poster",
+              "name": "posterId",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -18521,7 +18526,7 @@ export default {
               }
             },
             {
-              "name": "poster",
+              "name": "posterId",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18623,14 +18628,6 @@ export default {
           "name": "movies_order_by",
           "inputFields": [
             {
-              "name": "file",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "files_order_by",
-                "ofType": null
-              }
-            },
-            {
               "name": "id",
               "type": {
                 "kind": "ENUM",
@@ -18640,6 +18637,14 @@ export default {
             },
             {
               "name": "poster",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "posterId",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18681,7 +18686,7 @@ export default {
               "name": "id"
             },
             {
-              "name": "poster"
+              "name": "posterId"
             },
             {
               "name": "title"
@@ -18701,7 +18706,7 @@ export default {
               }
             },
             {
-              "name": "poster",
+              "name": "posterId",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -18756,7 +18761,7 @@ export default {
               }
             },
             {
-              "name": "poster",
+              "name": "posterId",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -18781,7 +18786,7 @@ export default {
               "name": "id"
             },
             {
-              "name": "poster"
+              "name": "posterId"
             },
             {
               "name": "title"
@@ -31940,7 +31945,6 @@ export const CreateMovieDocument = gql`
   insert_movies_one(object: $object, on_conflict: $on_conflict) {
     id
     title
-    poster
   }
 }
     `;
@@ -31949,7 +31953,16 @@ export const MovieDocument = gql`
   movies_by_pk(id: $id) {
     id
     title
-    poster
+    posterId
+  }
+}
+    `;
+export const MoviesDocument = gql`
+    query Movies {
+  movies {
+    id
+    title
+    posterId
   }
 }
     `;
@@ -31973,6 +31986,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Movie(variables: MovieQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MovieQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MovieQuery>({ document: MovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Movie', 'query', variables);
+    },
+    Movies(variables?: MoviesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MoviesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MoviesQuery>({ document: MoviesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Movies', 'query', variables);
     },
     Users(variables?: UsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UsersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UsersQuery>({ document: UsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Users', 'query', variables);

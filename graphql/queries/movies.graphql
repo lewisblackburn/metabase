@@ -1,0 +1,7 @@
+query Movies {
+  movies {
+    id
+    title
+    posterId
+  }
+}
