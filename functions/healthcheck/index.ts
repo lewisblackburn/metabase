@@ -1,7 +1,7 @@
 import { RootDocument } from '@/generated/graphql'
 import { createNhostClient } from '@/lib/nhost/server'
 
-export default async function handler() {
+export default async () => {
 	const nhost = await createNhostClient()
 
 	const status = {
