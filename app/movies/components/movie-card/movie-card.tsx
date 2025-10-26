@@ -9,10 +9,7 @@ interface MovieCardProps {
 export function MovieCard({ movie }: MovieCardProps) {
 	return (
 		<Link href={`/movies/${movie.id}`}>
-			<div className="flex items-center gap-2">
-				<MoviePoster posterId={movie.posterId} />
-				{movie.title}
-			</div>
+			<MoviePoster posterId={movie.posterId} />
 		</Link>
 	);
 }
