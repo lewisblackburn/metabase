@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import Navbar from "@/components/navbar/index";
 import QueryProvider from "@/components/query-provider";
-import Footer from "@/components/footer";
 import { ThemeProvider } from "next-themes";
+import { AppSidebar, SiteHeader } from "@/components/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,13 +34,17 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" enableSystem={true} defaultTheme="system">
           <QueryProvider>
-            <main>
-              <Navbar />
-              <section className="flex flex-col container mx-auto min-h-screen pt-(--navbar-height) flex-1">
-                {children}
-              </section>
-              <Footer />
-            </main>
+            <div className="[--header-height:calc(--spacing(14))]">
+              <SidebarProvider className="flex flex-col">
+                <SiteHeader />
+                <div className="flex flex-1">
+                  <AppSidebar />
+                  <SidebarInset className="p-4">
+                    {children}
+                  </SidebarInset>
+                </div>
+              </SidebarProvider>
+            </div>
             <Toaster />
           </QueryProvider>
         </ThemeProvider>

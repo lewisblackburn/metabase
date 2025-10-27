@@ -1,8 +1,8 @@
 "use client";
 
 import { MovieCard } from "../movie-card/movie-card";
-import { useInfiniteMovies } from "@/hooks/useInfiniteMovies";
-import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useInfiniteMovies } from "@/hooks/use-infinite-movies";
+import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import MovieListSkeleton from "./movie-list-skeleton";
 import MovieListError from "./movie-list-error";
 import MediaGrid from "@/components/media-grid";
