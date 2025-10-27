@@ -1,6 +1,8 @@
 import { User } from "@nhost/nhost-js/auth"
 import { create } from "zustand"
 
+// ! TODO: security issue given user type?
+
 type AuthenticatedState = {
 	isAuthenticated: true
 	user: User
