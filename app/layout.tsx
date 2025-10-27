@@ -8,6 +8,7 @@ import { AppSidebar, SiteHeader } from "@/components/sidebar";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { createNhostClient } from "@/lib/nhost/server";
 import { AuthHydration } from "@/lib/providers/auth-provider";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,6 +49,7 @@ export default async function RootLayout({
                   <AppSidebar />
                   <SidebarInset className="p-4">
                     {children}
+                    <Footer />
                   </SidebarInset>
                 </div>
               </SidebarProvider>

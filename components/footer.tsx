@@ -342,7 +342,7 @@ export default function Footer() {
 	};
 
 	return (
-		<section className="py-32 bg-background">
+		<section className="pt-96 bg-background">
 			<footer className="container mx-auto">
 				<div className="flex w-full flex-col gap-8">
 					<div className="grid w-full grid-cols-[repeat(2,minmax(auto,15rem))] gap-8 md:grid-cols-[repeat(4,1fr)_5rem] md:gap-0">
