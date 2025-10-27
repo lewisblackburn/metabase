@@ -8,13 +8,13 @@ import {
 	BreadcrumbItem,
 	BreadcrumbLink,
 	BreadcrumbList,
-	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useSidebar } from "@/components/ui/sidebar"
 import useBreadcrumbs from "@/hooks/use-breadcrumbs"
+import { Fragment } from "react"
 
 export function SiteHeader() {
 	const { toggleSidebar } = useSidebar()
@@ -35,7 +35,7 @@ export function SiteHeader() {
 				<Breadcrumb className="hidden sm:block">
 					<BreadcrumbList>
 						{breadcrumbs.map((breadcrumb) => (
-							<>
+							<Fragment key={breadcrumb.href}>
 								<BreadcrumbItem key={breadcrumb.href}>
 									<BreadcrumbLink href={breadcrumb.href}>
 										{breadcrumb.label}
@@ -44,7 +44,7 @@ export function SiteHeader() {
 								{!breadcrumb.isLast && (
 									<BreadcrumbSeparator />
 								)}
-							</>
+							</Fragment>
 						))}
 					</BreadcrumbList>
 				</Breadcrumb>
