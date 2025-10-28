@@ -2,63 +2,65 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { handleNhostMiddleware } from "@/lib/nhost/server";
 
-// Define public routes that don't require authentication
-const unAuthenticatedRoutes = ["/login", "/register"];
-const publicRoutes = ["/", "/movies", ...unAuthenticatedRoutes];
-
-export async function proxy(request: NextRequest) {
-	// Create a response that we'll modify as needed
-	const response = NextResponse.next();
-
-	// Get the current path
-	const path = request.nextUrl.pathname;
-
-	// Check if this is a public route or a public asset
-	const isPublicRoute = publicRoutes.some(
-		(route) => path === route || path.startsWith(`${route}/`),
-	);
-
-	// Check if this is an unauthenticated route
-	const isUnAuthenticatedRoute = unAuthenticatedRoutes.some(
-		(route) => path === route || path.startsWith(`${route}/`),
-	);
-
-	// Handle Nhost authentication and token refresh
-	// Always call this to ensure session is up-to-date
-	// even for public routes, so that session changes are detected
-	const session = await handleNhostMiddleware(request, response);
-
-	// If it's an unauthenticated route and the session is found, redirect to the home page
-	if (isUnAuthenticatedRoute && session) {
-		const homeUrl = new URL("/", request.url);
-		return NextResponse.redirect(homeUrl);
-	}
-
-	// If it's a public route, allow access without checking auth
-	if (isPublicRoute) {
-		return response;
-	}
-
-	// If no session and not a public route, redirect to signin
-	if (!session) {
-		const homeUrl = new URL("/", request.url);
-		return NextResponse.redirect(homeUrl);
-	}
-
-	// Session exists, allow access to protected route
-	return response;
+/**
+ * Matches a URL path (e.g. /movies/123) against a pattern (e.g. /movies/:id)
+ */
+function matchRoute(path: string, pattern: string): boolean {
+	const regex = new RegExp("^" + pattern.replace(/:[^/]+/g, "[^/]+") + "$");
+	return regex.test(path);
 }
 
-// Define which routes this middleware should run on
+// Define unauthenticated-only routes (users should NOT be logged in)
+const unAuthenticatedRoutes = ["/login", "/register"];
+
+// Define public routes (accessible by everyone)
+const publicRoutes = ["/", "/movies"];
+
+// Define protected routes (require authentication)
+const protectedRoutes = ["/movies/:id"];
+
+export async function proxy(request: NextRequest) {
+	const response = NextResponse.next();
+	const path = request.nextUrl.pathname;
+
+	// Always call this to ensure the session is up to date
+	const session = await handleNhostMiddleware(request, response);
+
+	const isPublic = publicRoutes.some((r) => matchRoute(path, r));
+	const isUnAuthenticated = unAuthenticatedRoutes.some((r) =>
+		matchRoute(path, r),
+	);
+	const isProtected = protectedRoutes.some((r) => matchRoute(path, r));
+
+	// Route handling logic
+	switch (true) {
+		// Authenticated user visiting unauthenticated-only routes → redirect home
+		case isUnAuthenticated && !!session:
+			return NextResponse.redirect(new URL("/", request.url));
+
+		// Public routes → always allowed
+		case isPublic:
+			return response;
+
+		// Protected routes without session → redirect home
+		case isProtected && !session:
+			return NextResponse.redirect(new URL("/", request.url));
+
+		// Default → allow
+		default:
+			return response;
+	}
+}
+
+/*
+ * Match all request paths except:
+ * - _next/static (static files)
+ * - _next/image (image optimization files)
+ * - favicon.ico (favicon file)
+ * - public files (public directory)
+ */
 export const config = {
 	matcher: [
-		/*
-		 * Match all request paths except:
-		 * - _next/static (static files)
-		 * - _next/image (image optimization files)
-		 * - favicon.ico (favicon file)
-		 * - public files (public directory)
-		 */
 		"/((?!_next/static|_next/image|favicon.ico|public).*)",
 	],
 };
