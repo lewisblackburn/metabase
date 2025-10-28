@@ -1,19 +1,16 @@
-import { MovieDocument, MovieQuery, MovieQueryVariables } from '@/generated/graphql'
-import { createNhostClient } from '@/lib/nhost/server'
+'use client'
+import { MovieQuery } from '@/generated/graphql'
+import useBreadcrumbs from '@/hooks/use-breadcrumbs'
 
 import MoviePoster from '../../components/movie-poster/movie-poster'
 
-export default async function Movie({ id }: { id: string }) {
-  const nhost = await createNhostClient()
-  const {
-    body: { data },
-  } = await nhost.graphql.request<MovieQuery, MovieQueryVariables>(MovieDocument, { id })
-  const movie = data?.movies_by_pk
+export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) {
+    useBreadcrumbs([movie?.title ?? 'Unknown Movie'])
 
-  return (
-    <div>
-      <MoviePoster posterId={movie?.posterId} posterSize="lg" />
-      <h1>{movie?.title}</h1>
-    </div>
-  )
+    return (
+        <div>
+            <MoviePoster posterId={movie?.posterId} posterSize="lg" />
+            <h1>{movie?.title}</h1>
+        </div>
+    )
 }

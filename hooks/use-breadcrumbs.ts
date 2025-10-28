@@ -1,33 +1,6 @@
-import { usePathname } from 'next/navigation'
-import { useMemo } from 'react'
-
-import { capitalize } from '@/lib/utils'
-
-export default function useBreadcrumbs() {
-  const pathname = usePathname()
-
-  const breadcrumbs = useMemo(() => {
-    return pathname
-      .split('/')
-      .filter(Boolean)
-      .map((path, index) => {
-        const pathSegments = pathname.split('/').filter(Boolean)
-
-        const label = capitalize(path)
-        const href = getHref(pathSegments, index)
-        const isLast = isLastSegment(index, pathSegments)
-
-        return { label, href, isLast }
-      })
-  }, [pathname])
-
-  return breadcrumbs
-}
-
-function getHref(pathSegments: string[], index: number) {
-  return `/${pathSegments.slice(0, index + 1).join('/')}`
-}
-
-function isLastSegment(index: number, pathSegments: string[]) {
-  return index === pathSegments.length - 1
-}
+/**
+ * @deprecated Use hooks from '@/lib/providers/breadcrumbs-provider' instead:
+ * - useBreadcrumbsValue() to get breadcrumbs
+ * - useBreadcrumbs(labels) to set custom labels for UUIDs
+ */
+export { type Breadcrumb, useBreadcrumbs as default } from '@/lib/providers/breadcrumbs-provider'

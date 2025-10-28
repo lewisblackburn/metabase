@@ -14,34 +14,34 @@ const publicRoutes = ['/', '/movies']
 const protectedRoutes = ['/movies/:id']
 
 export async function proxy(request: NextRequest) {
-  const response = NextResponse.next()
-  const path = request.nextUrl.pathname
+    const response = NextResponse.next()
+    const path = request.nextUrl.pathname
 
-  // Always call this to ensure the session is up to date
-  const session = await handleNhostMiddleware(request, response)
+    // Always call this to ensure the session is up to date
+    const session = await handleNhostMiddleware(request, response)
 
-  const isPublic = publicRoutes.some(r => matchRoute(path, r))
-  const isUnAuthenticated = unAuthenticatedRoutes.some(r => matchRoute(path, r))
-  const isProtected = protectedRoutes.some(r => matchRoute(path, r))
+    const isPublic = publicRoutes.some(r => matchRoute(path, r))
+    const isUnAuthenticated = unAuthenticatedRoutes.some(r => matchRoute(path, r))
+    const isProtected = protectedRoutes.some(r => matchRoute(path, r))
 
-  // Route handling logic
-  switch (true) {
-    // Authenticated user visiting unauthenticated-only routes → redirect home
-    case isUnAuthenticated && !!session:
-      return NextResponse.redirect(new URL('/', request.url))
+    // Route handling logic
+    switch (true) {
+        // Authenticated user visiting unauthenticated-only routes → redirect home
+        case isUnAuthenticated && !!session:
+            return NextResponse.redirect(new URL('/', request.url))
 
-    // Public routes → always allowed
-    case isPublic:
-      return response
+        // Public routes → always allowed
+        case isPublic:
+            return response
 
-    // Protected routes without session → redirect home
-    case isProtected && !session:
-      return NextResponse.redirect(new URL('/', request.url))
+        // Protected routes without session → redirect home
+        case isProtected && !session:
+            return NextResponse.redirect(new URL('/', request.url))
 
-    // Default → allow
-    default:
-      return response
-  }
+        // Default → allow
+        default:
+            return response
+    }
 }
 
 /*
@@ -52,5 +52,5 @@ export async function proxy(request: NextRequest) {
  * - public files (public directory)
  */
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|public).*)'],
+    matcher: ['/((?!_next/static|_next/image|favicon.ico|public).*)'],
 }

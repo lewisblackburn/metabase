@@ -1,6 +1,6 @@
 mutation CreateMovie($object: movies_insert_input!, $on_conflict: movies_on_conflict) {
-  insert_movies_one(object: $object, on_conflict: $on_conflict) {
-    id
-    title
-  }
+    insert_movies_one(object: $object, on_conflict: $on_conflict) {
+        id
+        title
+    }
 }

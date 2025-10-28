@@ -1,18 +1,18 @@
 schema:
-  - https://nxcihukkkvcwcthlhtdt.graphql.eu-west-2.nhost.run/v1:
-      headers:
-        x-hasura-admin-secret: ${NHOST_ADMIN_SECRET}
+    - https://nxcihukkkvcwcthlhtdt.graphql.eu-west-2.nhost.run/v1:
+          headers:
+              x-hasura-admin-secret: ${NHOST_ADMIN_SECRET}
 documents: 'graphql/**/*.graphql'
 generates:
-  ./generated/graphql.ts:
-    config:
-      reactQueryVersion: 5
-      exposeQueryKeys: true
-      addInfiniteQuery: true
-      suspense: true
-    plugins:
-      - add:
-          content: '// @ts-nocheck'
-      - typescript-operations
-      - typescript-nhost
-      - typescript-graphql-request
+    ./generated/graphql.ts:
+        config:
+            reactQueryVersion: 5
+            exposeQueryKeys: true
+            addInfiniteQuery: true
+            suspense: true
+        plugins:
+            - add:
+                  content: '// @ts-nocheck'
+            - typescript-operations
+            - typescript-nhost
+            - typescript-graphql-request

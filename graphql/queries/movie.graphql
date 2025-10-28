@@ -1,7 +1,7 @@
 query Movie($id: uuid!) {
-  movies_by_pk(id: $id) {
-    id
-    title
-    posterId
-  }
+    movies_by_pk(id: $id) {
+        id
+        title
+        posterId
+    }
 }

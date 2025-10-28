@@ -4,25 +4,25 @@ import { MoviesDocument, MoviesQuery, MoviesQueryVariables } from '@/generated/g
 import { createNhostClientSingleton } from '@/lib/nhost/client'
 
 interface UseInfiniteMoviesOptions {
-  itemsPerPage: number
+    itemsPerPage: number
 }
 
 export function useInfiniteMovies({ itemsPerPage }: UseInfiniteMoviesOptions) {
-  const nhost = createNhostClientSingleton()
+    const nhost = createNhostClientSingleton()
 
-  return useInfiniteQuery({
-    queryKey: ['movies', itemsPerPage],
-    queryFn: async ({ pageParam = 0 }) => {
-      const {
-        body: { data },
-      } = await nhost.graphql.request<MoviesQuery, MoviesQueryVariables>(MoviesDocument, {
-        limit: itemsPerPage,
-        offset: pageParam,
-      })
-      return data?.movies || []
-    },
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length < itemsPerPage ? undefined : allPages.length * itemsPerPage,
-    initialPageParam: 0,
-  })
+    return useInfiniteQuery({
+        queryKey: ['movies', itemsPerPage],
+        queryFn: async ({ pageParam = 0 }) => {
+            const {
+                body: { data },
+            } = await nhost.graphql.request<MoviesQuery, MoviesQueryVariables>(MoviesDocument, {
+                limit: itemsPerPage,
+                offset: pageParam,
+            })
+            return data?.movies || []
+        },
+        getNextPageParam: (lastPage, allPages) =>
+            lastPage.length < itemsPerPage ? undefined : allPages.length * itemsPerPage,
+        initialPageParam: 0,
+    })
 }

@@ -2,15 +2,15 @@ import { UsersDocument, UsersQuery, UsersQueryVariables } from '@/generated/grap
 import { createNhostClient } from '@/lib/nhost/server'
 
 export const Users = async () => {
-  const nhost = await createNhostClient()
-  const users = await nhost.graphql.request<UsersQuery, UsersQueryVariables>(UsersDocument)
+    const nhost = await createNhostClient()
+    const users = await nhost.graphql.request<UsersQuery, UsersQueryVariables>(UsersDocument)
 
-  console.log(users)
+    console.log(users)
 
-  return (
-    <div>
-      <h1>Users</h1>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
-    </div>
-  )
+    return (
+        <div>
+            <h1>Users</h1>
+            <pre>{JSON.stringify(users, null, 2)}</pre>
+        </div>
+    )
 }
