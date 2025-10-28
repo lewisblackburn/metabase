@@ -1,9 +1,9 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function UsersSkeleton() {
-	return (
-		<div>
-			<Skeleton className="w-full h-10" />
-		</div>
-	);
+  return (
+    <div>
+      <Skeleton className="w-full h-10" />
+    </div>
+  )
 }

@@ -1,10 +1,8 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
-const storageUrl = process.env.NEXT_PUBLIC_NHOST_STORAGE_URL;
+const storageUrl = process.env.NEXT_PUBLIC_NHOST_STORAGE_URL
 
-const storageHostname = storageUrl
-  ? new URL(storageUrl).hostname
-  : "localhost";
+const storageHostname = storageUrl ? new URL(storageUrl).hostname : 'localhost'
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -12,11 +10,11 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
+        protocol: 'https',
         hostname: storageHostname,
       },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

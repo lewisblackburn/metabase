@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
@@ -47,8 +48,10 @@ export type Scalars = {
   Int: number;
   Float: number;
   bigint: any;
+  bpchar: any;
   bytea: any;
   citext: any;
+  date: any;
   jsonb: any;
   timestamptz: any;
   uuid: any;
@@ -67,6 +70,19 @@ export type Boolean_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['Boolean']>>;
 };
 
+/** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
+export type Float_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['Float']>;
+  _gt?: InputMaybe<Scalars['Float']>;
+  _gte?: InputMaybe<Scalars['Float']>;
+  _in?: InputMaybe<Array<Scalars['Float']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['Float']>;
+  _lte?: InputMaybe<Scalars['Float']>;
+  _neq?: InputMaybe<Scalars['Float']>;
+  _nin?: InputMaybe<Array<Scalars['Float']>>;
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']>;
@@ -78,6 +94,23 @@ export type Int_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['Int']>;
   _neq?: InputMaybe<Scalars['Int']>;
   _nin?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+export type String_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['String']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['String']>>;
+  _eq?: InputMaybe<Array<Scalars['String']>>;
+  _gt?: InputMaybe<Array<Scalars['String']>>;
+  _gte?: InputMaybe<Array<Scalars['String']>>;
+  _in?: InputMaybe<Array<Array<Scalars['String']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Array<Scalars['String']>>;
+  _lte?: InputMaybe<Array<Scalars['String']>>;
+  _neq?: InputMaybe<Array<Scalars['String']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['String']>>>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -1895,6 +1928,39 @@ export type Bigint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['bigint']>>;
 };
 
+/** Boolean expression to compare columns of type "bpchar". All fields are combined with logical 'AND'. */
+export type Bpchar_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['bpchar']>;
+  _gt?: InputMaybe<Scalars['bpchar']>;
+  _gte?: InputMaybe<Scalars['bpchar']>;
+  /** does the column match the given case-insensitive pattern */
+  _ilike?: InputMaybe<Scalars['bpchar']>;
+  _in?: InputMaybe<Array<Scalars['bpchar']>>;
+  /** does the column match the given POSIX regular expression, case insensitive */
+  _iregex?: InputMaybe<Scalars['bpchar']>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  /** does the column match the given pattern */
+  _like?: InputMaybe<Scalars['bpchar']>;
+  _lt?: InputMaybe<Scalars['bpchar']>;
+  _lte?: InputMaybe<Scalars['bpchar']>;
+  _neq?: InputMaybe<Scalars['bpchar']>;
+  /** does the column NOT match the given case-insensitive pattern */
+  _nilike?: InputMaybe<Scalars['bpchar']>;
+  _nin?: InputMaybe<Array<Scalars['bpchar']>>;
+  /** does the column NOT match the given POSIX regular expression, case insensitive */
+  _niregex?: InputMaybe<Scalars['bpchar']>;
+  /** does the column NOT match the given pattern */
+  _nlike?: InputMaybe<Scalars['bpchar']>;
+  /** does the column NOT match the given POSIX regular expression, case sensitive */
+  _nregex?: InputMaybe<Scalars['bpchar']>;
+  /** does the column NOT match the given SQL regular expression */
+  _nsimilar?: InputMaybe<Scalars['bpchar']>;
+  /** does the column match the given POSIX regular expression, case sensitive */
+  _regex?: InputMaybe<Scalars['bpchar']>;
+  /** does the column match the given SQL regular expression */
+  _similar?: InputMaybe<Scalars['bpchar']>;
+};
+
 /** columns and relationships of "storage.buckets" */
 export type Buckets = {
   __typename?: 'buckets';
@@ -2258,12 +2324,466 @@ export type Citext_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['citext']>;
 };
 
+/** columns and relationships of "collections" */
+export type Collections = {
+  __typename?: 'collections';
+  id: Scalars['uuid'];
+  /** An array relationship */
+  movies: Array<Movies>;
+  /** An aggregate relationship */
+  movies_aggregate: Movies_Aggregate;
+  name?: Maybe<Scalars['String']>;
+  overview?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "collections" */
+export type Collections_MoviesArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "collections" */
+export type Collections_Movies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movies_Order_By>>;
+  where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+/** aggregated selection of "collections" */
+export type Collections_Aggregate = {
+  __typename?: 'collections_aggregate';
+  aggregate?: Maybe<Collections_Aggregate_Fields>;
+  nodes: Array<Collections>;
+};
+
+/** aggregate fields of "collections" */
+export type Collections_Aggregate_Fields = {
+  __typename?: 'collections_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Collections_Max_Fields>;
+  min?: Maybe<Collections_Min_Fields>;
+};
+
+
+/** aggregate fields of "collections" */
+export type Collections_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Collections_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "collections". All fields are combined with a logical 'AND'. */
+export type Collections_Bool_Exp = {
+  _and?: InputMaybe<Array<Collections_Bool_Exp>>;
+  _not?: InputMaybe<Collections_Bool_Exp>;
+  _or?: InputMaybe<Array<Collections_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  movies?: InputMaybe<Movies_Bool_Exp>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Bool_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  overview?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "collections" */
+export type Collections_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'collections_pkey';
+
+/** input type for inserting data into table "collections" */
+export type Collections_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  movies?: InputMaybe<Movies_Arr_Rel_Insert_Input>;
+  name?: InputMaybe<Scalars['String']>;
+  overview?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Collections_Max_Fields = {
+  __typename?: 'collections_max_fields';
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  overview?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Collections_Min_Fields = {
+  __typename?: 'collections_min_fields';
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  overview?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "collections" */
+export type Collections_Mutation_Response = {
+  __typename?: 'collections_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Collections>;
+};
+
+/** input type for inserting object relation for remote table "collections" */
+export type Collections_Obj_Rel_Insert_Input = {
+  data: Collections_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Collections_On_Conflict>;
+};
+
+/** on_conflict condition type for table "collections" */
+export type Collections_On_Conflict = {
+  constraint: Collections_Constraint;
+  update_columns?: Array<Collections_Update_Column>;
+  where?: InputMaybe<Collections_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "collections". */
+export type Collections_Order_By = {
+  id?: InputMaybe<Order_By>;
+  movies_aggregate?: InputMaybe<Movies_Aggregate_Order_By>;
+  name?: InputMaybe<Order_By>;
+  overview?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: collections */
+export type Collections_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "collections" */
+export type Collections_Select_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'name'
+  /** column name */
+  | 'overview';
+
+/** input type for updating data in table "collections" */
+export type Collections_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+  overview?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "collections" */
+export type Collections_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Collections_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Collections_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+  overview?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "collections" */
+export type Collections_Update_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'name'
+  /** column name */
+  | 'overview';
+
+export type Collections_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Collections_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Collections_Bool_Exp;
+};
+
+/** columns and relationships of "countries" */
+export type Countries = {
+  __typename?: 'countries';
+  iso_3166_1: Scalars['bpchar'];
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "countries" */
+export type Countries_Aggregate = {
+  __typename?: 'countries_aggregate';
+  aggregate?: Maybe<Countries_Aggregate_Fields>;
+  nodes: Array<Countries>;
+};
+
+/** aggregate fields of "countries" */
+export type Countries_Aggregate_Fields = {
+  __typename?: 'countries_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Countries_Max_Fields>;
+  min?: Maybe<Countries_Min_Fields>;
+};
+
+
+/** aggregate fields of "countries" */
+export type Countries_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Countries_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "countries". All fields are combined with a logical 'AND'. */
+export type Countries_Bool_Exp = {
+  _and?: InputMaybe<Array<Countries_Bool_Exp>>;
+  _not?: InputMaybe<Countries_Bool_Exp>;
+  _or?: InputMaybe<Array<Countries_Bool_Exp>>;
+  iso_3166_1?: InputMaybe<Bpchar_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "countries" */
+export type Countries_Constraint =
+  /** unique or primary key constraint on columns "iso_3166_1" */
+  | 'countries_pkey';
+
+/** input type for inserting data into table "countries" */
+export type Countries_Insert_Input = {
+  iso_3166_1?: InputMaybe<Scalars['bpchar']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Countries_Max_Fields = {
+  __typename?: 'countries_max_fields';
+  iso_3166_1?: Maybe<Scalars['bpchar']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Countries_Min_Fields = {
+  __typename?: 'countries_min_fields';
+  iso_3166_1?: Maybe<Scalars['bpchar']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "countries" */
+export type Countries_Mutation_Response = {
+  __typename?: 'countries_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Countries>;
+};
+
+/** on_conflict condition type for table "countries" */
+export type Countries_On_Conflict = {
+  constraint: Countries_Constraint;
+  update_columns?: Array<Countries_Update_Column>;
+  where?: InputMaybe<Countries_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "countries". */
+export type Countries_Order_By = {
+  iso_3166_1?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: countries */
+export type Countries_Pk_Columns_Input = {
+  iso_3166_1: Scalars['bpchar'];
+};
+
+/** select columns of table "countries" */
+export type Countries_Select_Column =
+  /** column name */
+  | 'iso_3166_1'
+  /** column name */
+  | 'name';
+
+/** input type for updating data in table "countries" */
+export type Countries_Set_Input = {
+  iso_3166_1?: InputMaybe<Scalars['bpchar']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "countries" */
+export type Countries_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Countries_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Countries_Stream_Cursor_Value_Input = {
+  iso_3166_1?: InputMaybe<Scalars['bpchar']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "countries" */
+export type Countries_Update_Column =
+  /** column name */
+  | 'iso_3166_1'
+  /** column name */
+  | 'name';
+
+export type Countries_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Countries_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Countries_Bool_Exp;
+};
+
+/** columns and relationships of "credit_types" */
+export type Credit_Types = {
+  __typename?: 'credit_types';
+  credit_type: Scalars['String'];
+};
+
+/** aggregated selection of "credit_types" */
+export type Credit_Types_Aggregate = {
+  __typename?: 'credit_types_aggregate';
+  aggregate?: Maybe<Credit_Types_Aggregate_Fields>;
+  nodes: Array<Credit_Types>;
+};
+
+/** aggregate fields of "credit_types" */
+export type Credit_Types_Aggregate_Fields = {
+  __typename?: 'credit_types_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Credit_Types_Max_Fields>;
+  min?: Maybe<Credit_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "credit_types" */
+export type Credit_Types_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "credit_types". All fields are combined with a logical 'AND'. */
+export type Credit_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Credit_Types_Bool_Exp>>;
+  _not?: InputMaybe<Credit_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Credit_Types_Bool_Exp>>;
+  credit_type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "credit_types" */
+export type Credit_Types_Constraint =
+  /** unique or primary key constraint on columns "credit_type" */
+  | 'credit_types_pkey';
+
+export type Credit_Types_Enum =
+  | 'CAST'
+  | 'CREW';
+
+/** Boolean expression to compare columns of type "credit_types_enum". All fields are combined with logical 'AND'. */
+export type Credit_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Credit_Types_Enum>;
+  _in?: InputMaybe<Array<Credit_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<Credit_Types_Enum>;
+  _nin?: InputMaybe<Array<Credit_Types_Enum>>;
+};
+
+/** input type for inserting data into table "credit_types" */
+export type Credit_Types_Insert_Input = {
+  credit_type?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Credit_Types_Max_Fields = {
+  __typename?: 'credit_types_max_fields';
+  credit_type?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Credit_Types_Min_Fields = {
+  __typename?: 'credit_types_min_fields';
+  credit_type?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "credit_types" */
+export type Credit_Types_Mutation_Response = {
+  __typename?: 'credit_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Credit_Types>;
+};
+
+/** on_conflict condition type for table "credit_types" */
+export type Credit_Types_On_Conflict = {
+  constraint: Credit_Types_Constraint;
+  update_columns?: Array<Credit_Types_Update_Column>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "credit_types". */
+export type Credit_Types_Order_By = {
+  credit_type?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: credit_types */
+export type Credit_Types_Pk_Columns_Input = {
+  credit_type: Scalars['String'];
+};
+
+/** select columns of table "credit_types" */
+export type Credit_Types_Select_Column =
+  /** column name */
+  | 'credit_type';
+
+/** input type for updating data in table "credit_types" */
+export type Credit_Types_Set_Input = {
+  credit_type?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "credit_types" */
+export type Credit_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Credit_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Credit_Types_Stream_Cursor_Value_Input = {
+  credit_type?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "credit_types" */
+export type Credit_Types_Update_Column =
+  /** column name */
+  | 'credit_type';
+
+export type Credit_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Credit_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Credit_Types_Bool_Exp;
+};
+
 /** ordering argument of a cursor */
 export type Cursor_Ordering =
   /** ascending ordering of the cursor */
   | 'ASC'
   /** descending ordering of the cursor */
   | 'DESC';
+
+/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+export type Date_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['date']>;
+  _gt?: InputMaybe<Scalars['date']>;
+  _gte?: InputMaybe<Scalars['date']>;
+  _in?: InputMaybe<Array<Scalars['date']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['date']>;
+  _lte?: InputMaybe<Scalars['date']>;
+  _neq?: InputMaybe<Scalars['date']>;
+  _nin?: InputMaybe<Array<Scalars['date']>>;
+};
 
 /** columns and relationships of "storage.files" */
 export type Files = {
@@ -2769,6 +3289,272 @@ export type Files_Variance_Order_By = {
   size?: InputMaybe<Order_By>;
 };
 
+/** columns and relationships of "genders" */
+export type Genders = {
+  __typename?: 'genders';
+  gender: Scalars['String'];
+};
+
+/** aggregated selection of "genders" */
+export type Genders_Aggregate = {
+  __typename?: 'genders_aggregate';
+  aggregate?: Maybe<Genders_Aggregate_Fields>;
+  nodes: Array<Genders>;
+};
+
+/** aggregate fields of "genders" */
+export type Genders_Aggregate_Fields = {
+  __typename?: 'genders_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Genders_Max_Fields>;
+  min?: Maybe<Genders_Min_Fields>;
+};
+
+
+/** aggregate fields of "genders" */
+export type Genders_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Genders_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "genders". All fields are combined with a logical 'AND'. */
+export type Genders_Bool_Exp = {
+  _and?: InputMaybe<Array<Genders_Bool_Exp>>;
+  _not?: InputMaybe<Genders_Bool_Exp>;
+  _or?: InputMaybe<Array<Genders_Bool_Exp>>;
+  gender?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "genders" */
+export type Genders_Constraint =
+  /** unique or primary key constraint on columns "gender" */
+  | 'genders_pkey';
+
+export type Genders_Enum =
+  | 'FEMALE'
+  | 'MALE'
+  | 'OTHER';
+
+/** Boolean expression to compare columns of type "genders_enum". All fields are combined with logical 'AND'. */
+export type Genders_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Genders_Enum>;
+  _in?: InputMaybe<Array<Genders_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<Genders_Enum>;
+  _nin?: InputMaybe<Array<Genders_Enum>>;
+};
+
+/** input type for inserting data into table "genders" */
+export type Genders_Insert_Input = {
+  gender?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Genders_Max_Fields = {
+  __typename?: 'genders_max_fields';
+  gender?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Genders_Min_Fields = {
+  __typename?: 'genders_min_fields';
+  gender?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "genders" */
+export type Genders_Mutation_Response = {
+  __typename?: 'genders_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Genders>;
+};
+
+/** on_conflict condition type for table "genders" */
+export type Genders_On_Conflict = {
+  constraint: Genders_Constraint;
+  update_columns?: Array<Genders_Update_Column>;
+  where?: InputMaybe<Genders_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "genders". */
+export type Genders_Order_By = {
+  gender?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: genders */
+export type Genders_Pk_Columns_Input = {
+  gender: Scalars['String'];
+};
+
+/** select columns of table "genders" */
+export type Genders_Select_Column =
+  /** column name */
+  | 'gender';
+
+/** input type for updating data in table "genders" */
+export type Genders_Set_Input = {
+  gender?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "genders" */
+export type Genders_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Genders_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Genders_Stream_Cursor_Value_Input = {
+  gender?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "genders" */
+export type Genders_Update_Column =
+  /** column name */
+  | 'gender';
+
+export type Genders_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Genders_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Genders_Bool_Exp;
+};
+
+/** columns and relationships of "genres" */
+export type Genres = {
+  __typename?: 'genres';
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+};
+
+/** aggregated selection of "genres" */
+export type Genres_Aggregate = {
+  __typename?: 'genres_aggregate';
+  aggregate?: Maybe<Genres_Aggregate_Fields>;
+  nodes: Array<Genres>;
+};
+
+/** aggregate fields of "genres" */
+export type Genres_Aggregate_Fields = {
+  __typename?: 'genres_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Genres_Max_Fields>;
+  min?: Maybe<Genres_Min_Fields>;
+};
+
+
+/** aggregate fields of "genres" */
+export type Genres_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Genres_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "genres". All fields are combined with a logical 'AND'. */
+export type Genres_Bool_Exp = {
+  _and?: InputMaybe<Array<Genres_Bool_Exp>>;
+  _not?: InputMaybe<Genres_Bool_Exp>;
+  _or?: InputMaybe<Array<Genres_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "genres" */
+export type Genres_Constraint =
+  /** unique or primary key constraint on columns "name" */
+  | 'genres_name_key'
+  /** unique or primary key constraint on columns "id" */
+  | 'genres_pkey';
+
+/** input type for inserting data into table "genres" */
+export type Genres_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Genres_Max_Fields = {
+  __typename?: 'genres_max_fields';
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Genres_Min_Fields = {
+  __typename?: 'genres_min_fields';
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "genres" */
+export type Genres_Mutation_Response = {
+  __typename?: 'genres_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Genres>;
+};
+
+/** on_conflict condition type for table "genres" */
+export type Genres_On_Conflict = {
+  constraint: Genres_Constraint;
+  update_columns?: Array<Genres_Update_Column>;
+  where?: InputMaybe<Genres_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "genres". */
+export type Genres_Order_By = {
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: genres */
+export type Genres_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "genres" */
+export type Genres_Select_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'name';
+
+/** input type for updating data in table "genres" */
+export type Genres_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "genres" */
+export type Genres_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Genres_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Genres_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "genres" */
+export type Genres_Update_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'name';
+
+export type Genres_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Genres_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Genres_Bool_Exp;
+};
+
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
 };
@@ -2797,14 +3583,1252 @@ export type Jsonb_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['jsonb']>>;
 };
 
+/** columns and relationships of "languages" */
+export type Languages = {
+  __typename?: 'languages';
+  iso_639_1: Scalars['bpchar'];
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "languages" */
+export type Languages_Aggregate = {
+  __typename?: 'languages_aggregate';
+  aggregate?: Maybe<Languages_Aggregate_Fields>;
+  nodes: Array<Languages>;
+};
+
+/** aggregate fields of "languages" */
+export type Languages_Aggregate_Fields = {
+  __typename?: 'languages_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Languages_Max_Fields>;
+  min?: Maybe<Languages_Min_Fields>;
+};
+
+
+/** aggregate fields of "languages" */
+export type Languages_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Languages_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "languages". All fields are combined with a logical 'AND'. */
+export type Languages_Bool_Exp = {
+  _and?: InputMaybe<Array<Languages_Bool_Exp>>;
+  _not?: InputMaybe<Languages_Bool_Exp>;
+  _or?: InputMaybe<Array<Languages_Bool_Exp>>;
+  iso_639_1?: InputMaybe<Bpchar_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "languages" */
+export type Languages_Constraint =
+  /** unique or primary key constraint on columns "iso_639_1" */
+  | 'languages_pkey';
+
+/** input type for inserting data into table "languages" */
+export type Languages_Insert_Input = {
+  iso_639_1?: InputMaybe<Scalars['bpchar']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Languages_Max_Fields = {
+  __typename?: 'languages_max_fields';
+  iso_639_1?: Maybe<Scalars['bpchar']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Languages_Min_Fields = {
+  __typename?: 'languages_min_fields';
+  iso_639_1?: Maybe<Scalars['bpchar']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "languages" */
+export type Languages_Mutation_Response = {
+  __typename?: 'languages_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Languages>;
+};
+
+/** on_conflict condition type for table "languages" */
+export type Languages_On_Conflict = {
+  constraint: Languages_Constraint;
+  update_columns?: Array<Languages_Update_Column>;
+  where?: InputMaybe<Languages_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "languages". */
+export type Languages_Order_By = {
+  iso_639_1?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: languages */
+export type Languages_Pk_Columns_Input = {
+  iso_639_1: Scalars['bpchar'];
+};
+
+/** select columns of table "languages" */
+export type Languages_Select_Column =
+  /** column name */
+  | 'iso_639_1'
+  /** column name */
+  | 'name';
+
+/** input type for updating data in table "languages" */
+export type Languages_Set_Input = {
+  iso_639_1?: InputMaybe<Scalars['bpchar']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "languages" */
+export type Languages_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Languages_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Languages_Stream_Cursor_Value_Input = {
+  iso_639_1?: InputMaybe<Scalars['bpchar']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "languages" */
+export type Languages_Update_Column =
+  /** column name */
+  | 'iso_639_1'
+  /** column name */
+  | 'name';
+
+export type Languages_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Languages_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Languages_Bool_Exp;
+};
+
+/** columns and relationships of "movie_credits" */
+export type Movie_Credits = {
+  __typename?: 'movie_credits';
+  character: Scalars['String'];
+  credit_type: Credit_Types_Enum;
+  id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+  order: Scalars['Int'];
+  person_id: Scalars['uuid'];
+  role: Scalars['String'];
+};
+
+/** aggregated selection of "movie_credits" */
+export type Movie_Credits_Aggregate = {
+  __typename?: 'movie_credits_aggregate';
+  aggregate?: Maybe<Movie_Credits_Aggregate_Fields>;
+  nodes: Array<Movie_Credits>;
+};
+
+export type Movie_Credits_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movie_Credits_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movie_Credits_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Movie_Credits_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "movie_credits" */
+export type Movie_Credits_Aggregate_Fields = {
+  __typename?: 'movie_credits_aggregate_fields';
+  avg?: Maybe<Movie_Credits_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Movie_Credits_Max_Fields>;
+  min?: Maybe<Movie_Credits_Min_Fields>;
+  stddev?: Maybe<Movie_Credits_Stddev_Fields>;
+  stddev_pop?: Maybe<Movie_Credits_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Movie_Credits_Stddev_Samp_Fields>;
+  sum?: Maybe<Movie_Credits_Sum_Fields>;
+  var_pop?: Maybe<Movie_Credits_Var_Pop_Fields>;
+  var_samp?: Maybe<Movie_Credits_Var_Samp_Fields>;
+  variance?: Maybe<Movie_Credits_Variance_Fields>;
+};
+
+
+/** aggregate fields of "movie_credits" */
+export type Movie_Credits_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "movie_credits" */
+export type Movie_Credits_Aggregate_Order_By = {
+  avg?: InputMaybe<Movie_Credits_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movie_Credits_Max_Order_By>;
+  min?: InputMaybe<Movie_Credits_Min_Order_By>;
+  stddev?: InputMaybe<Movie_Credits_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Movie_Credits_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Movie_Credits_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Movie_Credits_Sum_Order_By>;
+  var_pop?: InputMaybe<Movie_Credits_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Movie_Credits_Var_Samp_Order_By>;
+  variance?: InputMaybe<Movie_Credits_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movie_credits" */
+export type Movie_Credits_Arr_Rel_Insert_Input = {
+  data: Array<Movie_Credits_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Credits_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Movie_Credits_Avg_Fields = {
+  __typename?: 'movie_credits_avg_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "movie_credits" */
+export type Movie_Credits_Avg_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "movie_credits". All fields are combined with a logical 'AND'. */
+export type Movie_Credits_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Credits_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Credits_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Credits_Bool_Exp>>;
+  character?: InputMaybe<String_Comparison_Exp>;
+  credit_type?: InputMaybe<Credit_Types_Enum_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+  order?: InputMaybe<Int_Comparison_Exp>;
+  person_id?: InputMaybe<Uuid_Comparison_Exp>;
+  role?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_credits" */
+export type Movie_Credits_Constraint =
+  /** unique or primary key constraint on columns "id", "order" */
+  | 'movie_credits_id_order_key'
+  /** unique or primary key constraint on columns "id" */
+  | 'movie_credits_pkey';
+
+/** input type for incrementing numeric columns in table "movie_credits" */
+export type Movie_Credits_Inc_Input = {
+  order?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "movie_credits" */
+export type Movie_Credits_Insert_Input = {
+  character?: InputMaybe<Scalars['String']>;
+  credit_type?: InputMaybe<Credit_Types_Enum>;
+  id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  order?: InputMaybe<Scalars['Int']>;
+  person_id?: InputMaybe<Scalars['uuid']>;
+  role?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Credits_Max_Fields = {
+  __typename?: 'movie_credits_max_fields';
+  character?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  person_id?: Maybe<Scalars['uuid']>;
+  role?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "movie_credits" */
+export type Movie_Credits_Max_Order_By = {
+  character?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  order?: InputMaybe<Order_By>;
+  person_id?: InputMaybe<Order_By>;
+  role?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Movie_Credits_Min_Fields = {
+  __typename?: 'movie_credits_min_fields';
+  character?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  person_id?: Maybe<Scalars['uuid']>;
+  role?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "movie_credits" */
+export type Movie_Credits_Min_Order_By = {
+  character?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  order?: InputMaybe<Order_By>;
+  person_id?: InputMaybe<Order_By>;
+  role?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "movie_credits" */
+export type Movie_Credits_Mutation_Response = {
+  __typename?: 'movie_credits_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Credits>;
+};
+
+/** on_conflict condition type for table "movie_credits" */
+export type Movie_Credits_On_Conflict = {
+  constraint: Movie_Credits_Constraint;
+  update_columns?: Array<Movie_Credits_Update_Column>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_credits". */
+export type Movie_Credits_Order_By = {
+  character?: InputMaybe<Order_By>;
+  credit_type?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  order?: InputMaybe<Order_By>;
+  person_id?: InputMaybe<Order_By>;
+  role?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_credits */
+export type Movie_Credits_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "movie_credits" */
+export type Movie_Credits_Select_Column =
+  /** column name */
+  | 'character'
+  /** column name */
+  | 'credit_type'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'movie_id'
+  /** column name */
+  | 'order'
+  /** column name */
+  | 'person_id'
+  /** column name */
+  | 'role';
+
+/** input type for updating data in table "movie_credits" */
+export type Movie_Credits_Set_Input = {
+  character?: InputMaybe<Scalars['String']>;
+  credit_type?: InputMaybe<Credit_Types_Enum>;
+  id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  order?: InputMaybe<Scalars['Int']>;
+  person_id?: InputMaybe<Scalars['uuid']>;
+  role?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Movie_Credits_Stddev_Fields = {
+  __typename?: 'movie_credits_stddev_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "movie_credits" */
+export type Movie_Credits_Stddev_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Movie_Credits_Stddev_Pop_Fields = {
+  __typename?: 'movie_credits_stddev_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "movie_credits" */
+export type Movie_Credits_Stddev_Pop_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Movie_Credits_Stddev_Samp_Fields = {
+  __typename?: 'movie_credits_stddev_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "movie_credits" */
+export type Movie_Credits_Stddev_Samp_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "movie_credits" */
+export type Movie_Credits_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Credits_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Credits_Stream_Cursor_Value_Input = {
+  character?: InputMaybe<Scalars['String']>;
+  credit_type?: InputMaybe<Credit_Types_Enum>;
+  id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  order?: InputMaybe<Scalars['Int']>;
+  person_id?: InputMaybe<Scalars['uuid']>;
+  role?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate sum on columns */
+export type Movie_Credits_Sum_Fields = {
+  __typename?: 'movie_credits_sum_fields';
+  order?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "movie_credits" */
+export type Movie_Credits_Sum_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "movie_credits" */
+export type Movie_Credits_Update_Column =
+  /** column name */
+  | 'character'
+  /** column name */
+  | 'credit_type'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'movie_id'
+  /** column name */
+  | 'order'
+  /** column name */
+  | 'person_id'
+  /** column name */
+  | 'role';
+
+export type Movie_Credits_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Movie_Credits_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Credits_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Credits_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Movie_Credits_Var_Pop_Fields = {
+  __typename?: 'movie_credits_var_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "movie_credits" */
+export type Movie_Credits_Var_Pop_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Movie_Credits_Var_Samp_Fields = {
+  __typename?: 'movie_credits_var_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "movie_credits" */
+export type Movie_Credits_Var_Samp_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Movie_Credits_Variance_Fields = {
+  __typename?: 'movie_credits_variance_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "movie_credits" */
+export type Movie_Credits_Variance_Order_By = {
+  order?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "movie_genres" */
+export type Movie_Genres = {
+  __typename?: 'movie_genres';
+  genre_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "movie_genres" */
+export type Movie_Genres_Aggregate = {
+  __typename?: 'movie_genres_aggregate';
+  aggregate?: Maybe<Movie_Genres_Aggregate_Fields>;
+  nodes: Array<Movie_Genres>;
+};
+
+/** aggregate fields of "movie_genres" */
+export type Movie_Genres_Aggregate_Fields = {
+  __typename?: 'movie_genres_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Movie_Genres_Max_Fields>;
+  min?: Maybe<Movie_Genres_Min_Fields>;
+};
+
+
+/** aggregate fields of "movie_genres" */
+export type Movie_Genres_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "movie_genres". All fields are combined with a logical 'AND'. */
+export type Movie_Genres_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Genres_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Genres_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Genres_Bool_Exp>>;
+  genre_id?: InputMaybe<Uuid_Comparison_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_genres" */
+export type Movie_Genres_Constraint =
+  /** unique or primary key constraint on columns "genre_id", "movie_id" */
+  | 'movie_genres_pkey';
+
+/** input type for inserting data into table "movie_genres" */
+export type Movie_Genres_Insert_Input = {
+  genre_id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Genres_Max_Fields = {
+  __typename?: 'movie_genres_max_fields';
+  genre_id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type Movie_Genres_Min_Fields = {
+  __typename?: 'movie_genres_min_fields';
+  genre_id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** response of any mutation on the table "movie_genres" */
+export type Movie_Genres_Mutation_Response = {
+  __typename?: 'movie_genres_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Genres>;
+};
+
+/** on_conflict condition type for table "movie_genres" */
+export type Movie_Genres_On_Conflict = {
+  constraint: Movie_Genres_Constraint;
+  update_columns?: Array<Movie_Genres_Update_Column>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_genres". */
+export type Movie_Genres_Order_By = {
+  genre_id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_genres */
+export type Movie_Genres_Pk_Columns_Input = {
+  genre_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+/** select columns of table "movie_genres" */
+export type Movie_Genres_Select_Column =
+  /** column name */
+  | 'genre_id'
+  /** column name */
+  | 'movie_id';
+
+/** input type for updating data in table "movie_genres" */
+export type Movie_Genres_Set_Input = {
+  genre_id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "movie_genres" */
+export type Movie_Genres_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Genres_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Genres_Stream_Cursor_Value_Input = {
+  genre_id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "movie_genres" */
+export type Movie_Genres_Update_Column =
+  /** column name */
+  | 'genre_id'
+  /** column name */
+  | 'movie_id';
+
+export type Movie_Genres_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Genres_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Genres_Bool_Exp;
+};
+
+/** columns and relationships of "movie_production_companies" */
+export type Movie_Production_Companies = {
+  __typename?: 'movie_production_companies';
+  company_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "movie_production_companies" */
+export type Movie_Production_Companies_Aggregate = {
+  __typename?: 'movie_production_companies_aggregate';
+  aggregate?: Maybe<Movie_Production_Companies_Aggregate_Fields>;
+  nodes: Array<Movie_Production_Companies>;
+};
+
+export type Movie_Production_Companies_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movie_Production_Companies_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movie_Production_Companies_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "movie_production_companies" */
+export type Movie_Production_Companies_Aggregate_Fields = {
+  __typename?: 'movie_production_companies_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Movie_Production_Companies_Max_Fields>;
+  min?: Maybe<Movie_Production_Companies_Min_Fields>;
+};
+
+
+/** aggregate fields of "movie_production_companies" */
+export type Movie_Production_Companies_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "movie_production_companies" */
+export type Movie_Production_Companies_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movie_Production_Companies_Max_Order_By>;
+  min?: InputMaybe<Movie_Production_Companies_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movie_production_companies" */
+export type Movie_Production_Companies_Arr_Rel_Insert_Input = {
+  data: Array<Movie_Production_Companies_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Production_Companies_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "movie_production_companies". All fields are combined with a logical 'AND'. */
+export type Movie_Production_Companies_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Production_Companies_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Production_Companies_Bool_Exp>>;
+  company_id?: InputMaybe<Uuid_Comparison_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_production_companies" */
+export type Movie_Production_Companies_Constraint =
+  /** unique or primary key constraint on columns "movie_id", "company_id" */
+  | 'movie_production_companies_pkey';
+
+/** input type for inserting data into table "movie_production_companies" */
+export type Movie_Production_Companies_Insert_Input = {
+  company_id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Production_Companies_Max_Fields = {
+  __typename?: 'movie_production_companies_max_fields';
+  company_id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "movie_production_companies" */
+export type Movie_Production_Companies_Max_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Movie_Production_Companies_Min_Fields = {
+  __typename?: 'movie_production_companies_min_fields';
+  company_id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "movie_production_companies" */
+export type Movie_Production_Companies_Min_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "movie_production_companies" */
+export type Movie_Production_Companies_Mutation_Response = {
+  __typename?: 'movie_production_companies_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Production_Companies>;
+};
+
+/** on_conflict condition type for table "movie_production_companies" */
+export type Movie_Production_Companies_On_Conflict = {
+  constraint: Movie_Production_Companies_Constraint;
+  update_columns?: Array<Movie_Production_Companies_Update_Column>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_production_companies". */
+export type Movie_Production_Companies_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_production_companies */
+export type Movie_Production_Companies_Pk_Columns_Input = {
+  company_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+/** select columns of table "movie_production_companies" */
+export type Movie_Production_Companies_Select_Column =
+  /** column name */
+  | 'company_id'
+  /** column name */
+  | 'movie_id';
+
+/** input type for updating data in table "movie_production_companies" */
+export type Movie_Production_Companies_Set_Input = {
+  company_id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "movie_production_companies" */
+export type Movie_Production_Companies_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Production_Companies_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Production_Companies_Stream_Cursor_Value_Input = {
+  company_id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "movie_production_companies" */
+export type Movie_Production_Companies_Update_Column =
+  /** column name */
+  | 'company_id'
+  /** column name */
+  | 'movie_id';
+
+export type Movie_Production_Companies_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Production_Companies_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Production_Companies_Bool_Exp;
+};
+
+/** columns and relationships of "movie_production_countries" */
+export type Movie_Production_Countries = {
+  __typename?: 'movie_production_countries';
+  country_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "movie_production_countries" */
+export type Movie_Production_Countries_Aggregate = {
+  __typename?: 'movie_production_countries_aggregate';
+  aggregate?: Maybe<Movie_Production_Countries_Aggregate_Fields>;
+  nodes: Array<Movie_Production_Countries>;
+};
+
+export type Movie_Production_Countries_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movie_Production_Countries_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movie_Production_Countries_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "movie_production_countries" */
+export type Movie_Production_Countries_Aggregate_Fields = {
+  __typename?: 'movie_production_countries_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Movie_Production_Countries_Max_Fields>;
+  min?: Maybe<Movie_Production_Countries_Min_Fields>;
+};
+
+
+/** aggregate fields of "movie_production_countries" */
+export type Movie_Production_Countries_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "movie_production_countries" */
+export type Movie_Production_Countries_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movie_Production_Countries_Max_Order_By>;
+  min?: InputMaybe<Movie_Production_Countries_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movie_production_countries" */
+export type Movie_Production_Countries_Arr_Rel_Insert_Input = {
+  data: Array<Movie_Production_Countries_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Production_Countries_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "movie_production_countries". All fields are combined with a logical 'AND'. */
+export type Movie_Production_Countries_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Production_Countries_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Production_Countries_Bool_Exp>>;
+  country_code?: InputMaybe<Bpchar_Comparison_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_production_countries" */
+export type Movie_Production_Countries_Constraint =
+  /** unique or primary key constraint on columns "movie_id", "country_code" */
+  | 'movie_production_countries_pkey';
+
+/** input type for inserting data into table "movie_production_countries" */
+export type Movie_Production_Countries_Insert_Input = {
+  country_code?: InputMaybe<Scalars['bpchar']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Production_Countries_Max_Fields = {
+  __typename?: 'movie_production_countries_max_fields';
+  country_code?: Maybe<Scalars['bpchar']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "movie_production_countries" */
+export type Movie_Production_Countries_Max_Order_By = {
+  country_code?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Movie_Production_Countries_Min_Fields = {
+  __typename?: 'movie_production_countries_min_fields';
+  country_code?: Maybe<Scalars['bpchar']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "movie_production_countries" */
+export type Movie_Production_Countries_Min_Order_By = {
+  country_code?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "movie_production_countries" */
+export type Movie_Production_Countries_Mutation_Response = {
+  __typename?: 'movie_production_countries_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Production_Countries>;
+};
+
+/** on_conflict condition type for table "movie_production_countries" */
+export type Movie_Production_Countries_On_Conflict = {
+  constraint: Movie_Production_Countries_Constraint;
+  update_columns?: Array<Movie_Production_Countries_Update_Column>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_production_countries". */
+export type Movie_Production_Countries_Order_By = {
+  country_code?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_production_countries */
+export type Movie_Production_Countries_Pk_Columns_Input = {
+  country_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+/** select columns of table "movie_production_countries" */
+export type Movie_Production_Countries_Select_Column =
+  /** column name */
+  | 'country_code'
+  /** column name */
+  | 'movie_id';
+
+/** input type for updating data in table "movie_production_countries" */
+export type Movie_Production_Countries_Set_Input = {
+  country_code?: InputMaybe<Scalars['bpchar']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "movie_production_countries" */
+export type Movie_Production_Countries_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Production_Countries_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Production_Countries_Stream_Cursor_Value_Input = {
+  country_code?: InputMaybe<Scalars['bpchar']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "movie_production_countries" */
+export type Movie_Production_Countries_Update_Column =
+  /** column name */
+  | 'country_code'
+  /** column name */
+  | 'movie_id';
+
+export type Movie_Production_Countries_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Production_Countries_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Production_Countries_Bool_Exp;
+};
+
+/** columns and relationships of "movie_spoken_languages" */
+export type Movie_Spoken_Languages = {
+  __typename?: 'movie_spoken_languages';
+  language_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Aggregate = {
+  __typename?: 'movie_spoken_languages_aggregate';
+  aggregate?: Maybe<Movie_Spoken_Languages_Aggregate_Fields>;
+  nodes: Array<Movie_Spoken_Languages>;
+};
+
+export type Movie_Spoken_Languages_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movie_Spoken_Languages_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movie_Spoken_Languages_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Aggregate_Fields = {
+  __typename?: 'movie_spoken_languages_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Movie_Spoken_Languages_Max_Fields>;
+  min?: Maybe<Movie_Spoken_Languages_Min_Fields>;
+};
+
+
+/** aggregate fields of "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movie_Spoken_Languages_Max_Order_By>;
+  min?: InputMaybe<Movie_Spoken_Languages_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Arr_Rel_Insert_Input = {
+  data: Array<Movie_Spoken_Languages_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Spoken_Languages_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "movie_spoken_languages". All fields are combined with a logical 'AND'. */
+export type Movie_Spoken_Languages_Bool_Exp = {
+  _and?: InputMaybe<Array<Movie_Spoken_Languages_Bool_Exp>>;
+  _not?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+  _or?: InputMaybe<Array<Movie_Spoken_Languages_Bool_Exp>>;
+  language_code?: InputMaybe<Bpchar_Comparison_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Constraint =
+  /** unique or primary key constraint on columns "movie_id", "language_code" */
+  | 'movie_spoken_languages_pkey';
+
+/** input type for inserting data into table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Insert_Input = {
+  language_code?: InputMaybe<Scalars['bpchar']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Movie_Spoken_Languages_Max_Fields = {
+  __typename?: 'movie_spoken_languages_max_fields';
+  language_code?: Maybe<Scalars['bpchar']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Max_Order_By = {
+  language_code?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Movie_Spoken_Languages_Min_Fields = {
+  __typename?: 'movie_spoken_languages_min_fields';
+  language_code?: Maybe<Scalars['bpchar']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Min_Order_By = {
+  language_code?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Mutation_Response = {
+  __typename?: 'movie_spoken_languages_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Movie_Spoken_Languages>;
+};
+
+/** on_conflict condition type for table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_On_Conflict = {
+  constraint: Movie_Spoken_Languages_Constraint;
+  update_columns?: Array<Movie_Spoken_Languages_Update_Column>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "movie_spoken_languages". */
+export type Movie_Spoken_Languages_Order_By = {
+  language_code?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: movie_spoken_languages */
+export type Movie_Spoken_Languages_Pk_Columns_Input = {
+  language_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+/** select columns of table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Select_Column =
+  /** column name */
+  | 'language_code'
+  /** column name */
+  | 'movie_id';
+
+/** input type for updating data in table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Set_Input = {
+  language_code?: InputMaybe<Scalars['bpchar']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Movie_Spoken_Languages_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Movie_Spoken_Languages_Stream_Cursor_Value_Input = {
+  language_code?: InputMaybe<Scalars['bpchar']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "movie_spoken_languages" */
+export type Movie_Spoken_Languages_Update_Column =
+  /** column name */
+  | 'language_code'
+  /** column name */
+  | 'movie_id';
+
+export type Movie_Spoken_Languages_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Movie_Spoken_Languages_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Movie_Spoken_Languages_Bool_Exp;
+};
+
 /** columns and relationships of "movies" */
 export type Movies = {
   __typename?: 'movies';
+  /** An object relationship */
+  backdrop?: Maybe<Files>;
+  backdropId?: Maybe<Scalars['uuid']>;
+  budget?: Maybe<Scalars['bigint']>;
+  certification?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  collection?: Maybe<Collections>;
+  collection_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  homepage?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
+  imdb_id?: Maybe<Scalars['String']>;
+  keywords?: Maybe<Array<Scalars['String']>>;
+  language?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  movie_credits: Array<Movie_Credits>;
+  /** An aggregate relationship */
+  movie_credits_aggregate: Movie_Credits_Aggregate;
+  /** An array relationship */
+  movie_production_companies: Array<Movie_Production_Companies>;
+  /** An aggregate relationship */
+  movie_production_companies_aggregate: Movie_Production_Companies_Aggregate;
+  /** An array relationship */
+  movie_production_countries: Array<Movie_Production_Countries>;
+  /** An aggregate relationship */
+  movie_production_countries_aggregate: Movie_Production_Countries_Aggregate;
+  /** An array relationship */
+  movie_spoken_languages: Array<Movie_Spoken_Languages>;
+  /** An aggregate relationship */
+  movie_spoken_languages_aggregate: Movie_Spoken_Languages_Aggregate;
+  overview?: Maybe<Scalars['String']>;
+  popularity?: Maybe<Scalars['Float']>;
   /** An object relationship */
   poster?: Maybe<Files>;
   posterId?: Maybe<Scalars['uuid']>;
+  production_country_codes?: Maybe<Array<Scalars['String']>>;
+  release_date?: Maybe<Scalars['date']>;
+  revenue?: Maybe<Scalars['bigint']>;
+  runtime?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
+  tagline?: Maybe<Scalars['String']>;
   title: Scalars['String'];
+  tmdb_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Int']>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_CreditsArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Credits_Order_By>>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_Credits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Credits_Order_By>>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_Production_CompaniesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Companies_Order_By>>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_Production_Companies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Companies_Order_By>>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_Production_CountriesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Countries_Order_By>>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_Production_Countries_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Countries_Order_By>>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_Spoken_LanguagesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Spoken_Languages_Order_By>>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Movie_Spoken_Languages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Spoken_Languages_Order_By>>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
 };
 
 /** aggregated selection of "movies" */
@@ -2828,9 +4852,17 @@ export type Movies_Aggregate_Bool_Exp_Count = {
 /** aggregate fields of "movies" */
 export type Movies_Aggregate_Fields = {
   __typename?: 'movies_aggregate_fields';
+  avg?: Maybe<Movies_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Movies_Max_Fields>;
   min?: Maybe<Movies_Min_Fields>;
+  stddev?: Maybe<Movies_Stddev_Fields>;
+  stddev_pop?: Maybe<Movies_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Movies_Stddev_Samp_Fields>;
+  sum?: Maybe<Movies_Sum_Fields>;
+  var_pop?: Maybe<Movies_Var_Pop_Fields>;
+  var_samp?: Maybe<Movies_Var_Samp_Fields>;
+  variance?: Maybe<Movies_Variance_Fields>;
 };
 
 
@@ -2842,9 +4874,17 @@ export type Movies_Aggregate_Fields_CountArgs = {
 
 /** order by aggregate values of table "movies" */
 export type Movies_Aggregate_Order_By = {
+  avg?: InputMaybe<Movies_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Movies_Max_Order_By>;
   min?: InputMaybe<Movies_Min_Order_By>;
+  stddev?: InputMaybe<Movies_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Movies_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Movies_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Movies_Sum_Order_By>;
+  var_pop?: InputMaybe<Movies_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Movies_Var_Samp_Order_By>;
+  variance?: InputMaybe<Movies_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "movies" */
@@ -2854,58 +4894,235 @@ export type Movies_Arr_Rel_Insert_Input = {
   on_conflict?: InputMaybe<Movies_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Movies_Avg_Fields = {
+  __typename?: 'movies_avg_fields';
+  budget?: Maybe<Scalars['Float']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  runtime?: Maybe<Scalars['Float']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "movies" */
+export type Movies_Avg_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "movies". All fields are combined with a logical 'AND'. */
 export type Movies_Bool_Exp = {
   _and?: InputMaybe<Array<Movies_Bool_Exp>>;
   _not?: InputMaybe<Movies_Bool_Exp>;
   _or?: InputMaybe<Array<Movies_Bool_Exp>>;
+  backdrop?: InputMaybe<Files_Bool_Exp>;
+  backdropId?: InputMaybe<Uuid_Comparison_Exp>;
+  budget?: InputMaybe<Bigint_Comparison_Exp>;
+  certification?: InputMaybe<String_Comparison_Exp>;
+  collection?: InputMaybe<Collections_Bool_Exp>;
+  collection_id?: InputMaybe<Uuid_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  homepage?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  imdb_id?: InputMaybe<String_Comparison_Exp>;
+  keywords?: InputMaybe<String_Array_Comparison_Exp>;
+  language?: InputMaybe<String_Comparison_Exp>;
+  movie_credits?: InputMaybe<Movie_Credits_Bool_Exp>;
+  movie_credits_aggregate?: InputMaybe<Movie_Credits_Aggregate_Bool_Exp>;
+  movie_production_companies?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+  movie_production_companies_aggregate?: InputMaybe<Movie_Production_Companies_Aggregate_Bool_Exp>;
+  movie_production_countries?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+  movie_production_countries_aggregate?: InputMaybe<Movie_Production_Countries_Aggregate_Bool_Exp>;
+  movie_spoken_languages?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+  movie_spoken_languages_aggregate?: InputMaybe<Movie_Spoken_Languages_Aggregate_Bool_Exp>;
+  overview?: InputMaybe<String_Comparison_Exp>;
+  popularity?: InputMaybe<Float_Comparison_Exp>;
   poster?: InputMaybe<Files_Bool_Exp>;
   posterId?: InputMaybe<Uuid_Comparison_Exp>;
+  production_country_codes?: InputMaybe<String_Array_Comparison_Exp>;
+  release_date?: InputMaybe<Date_Comparison_Exp>;
+  revenue?: InputMaybe<Bigint_Comparison_Exp>;
+  runtime?: InputMaybe<Int_Comparison_Exp>;
+  status?: InputMaybe<String_Comparison_Exp>;
+  tagline?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
+  tmdb_id?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  vote_average?: InputMaybe<Float_Comparison_Exp>;
+  vote_count?: InputMaybe<Int_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "movies" */
 export type Movies_Constraint =
+  /** unique or primary key constraint on columns "imdb_id" */
+  | 'movies_imdb_id_key'
   /** unique or primary key constraint on columns "id" */
-  | 'movies_pkey';
+  | 'movies_pkey'
+  /** unique or primary key constraint on columns "tmdb_id" */
+  | 'movies_tmdb_id_key';
+
+/** input type for incrementing numeric columns in table "movies" */
+export type Movies_Inc_Input = {
+  budget?: InputMaybe<Scalars['bigint']>;
+  popularity?: InputMaybe<Scalars['Float']>;
+  revenue?: InputMaybe<Scalars['bigint']>;
+  runtime?: InputMaybe<Scalars['Int']>;
+  vote_average?: InputMaybe<Scalars['Float']>;
+  vote_count?: InputMaybe<Scalars['Int']>;
+};
 
 /** input type for inserting data into table "movies" */
 export type Movies_Insert_Input = {
+  backdrop?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  backdropId?: InputMaybe<Scalars['uuid']>;
+  budget?: InputMaybe<Scalars['bigint']>;
+  certification?: InputMaybe<Scalars['String']>;
+  collection?: InputMaybe<Collections_Obj_Rel_Insert_Input>;
+  collection_id?: InputMaybe<Scalars['uuid']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  homepage?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  imdb_id?: InputMaybe<Scalars['String']>;
+  keywords?: InputMaybe<Array<Scalars['String']>>;
+  language?: InputMaybe<Scalars['String']>;
+  movie_credits?: InputMaybe<Movie_Credits_Arr_Rel_Insert_Input>;
+  movie_production_companies?: InputMaybe<Movie_Production_Companies_Arr_Rel_Insert_Input>;
+  movie_production_countries?: InputMaybe<Movie_Production_Countries_Arr_Rel_Insert_Input>;
+  movie_spoken_languages?: InputMaybe<Movie_Spoken_Languages_Arr_Rel_Insert_Input>;
+  overview?: InputMaybe<Scalars['String']>;
+  popularity?: InputMaybe<Scalars['Float']>;
   poster?: InputMaybe<Files_Obj_Rel_Insert_Input>;
   posterId?: InputMaybe<Scalars['uuid']>;
+  production_country_codes?: InputMaybe<Array<Scalars['String']>>;
+  release_date?: InputMaybe<Scalars['date']>;
+  revenue?: InputMaybe<Scalars['bigint']>;
+  runtime?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['String']>;
+  tagline?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  tmdb_id?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  vote_average?: InputMaybe<Scalars['Float']>;
+  vote_count?: InputMaybe<Scalars['Int']>;
 };
 
 /** aggregate max on columns */
 export type Movies_Max_Fields = {
   __typename?: 'movies_max_fields';
+  backdropId?: Maybe<Scalars['uuid']>;
+  budget?: Maybe<Scalars['bigint']>;
+  certification?: Maybe<Scalars['String']>;
+  collection_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  homepage?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
+  imdb_id?: Maybe<Scalars['String']>;
+  keywords?: Maybe<Array<Scalars['String']>>;
+  language?: Maybe<Scalars['String']>;
+  overview?: Maybe<Scalars['String']>;
+  popularity?: Maybe<Scalars['Float']>;
   posterId?: Maybe<Scalars['uuid']>;
+  production_country_codes?: Maybe<Array<Scalars['String']>>;
+  release_date?: Maybe<Scalars['date']>;
+  revenue?: Maybe<Scalars['bigint']>;
+  runtime?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
+  tagline?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+  tmdb_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Int']>;
 };
 
 /** order by max() on columns of table "movies" */
 export type Movies_Max_Order_By = {
+  backdropId?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  certification?: InputMaybe<Order_By>;
+  collection_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  homepage?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  imdb_id?: InputMaybe<Order_By>;
+  keywords?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
+  overview?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
   posterId?: InputMaybe<Order_By>;
+  production_country_codes?: InputMaybe<Order_By>;
+  release_date?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Movies_Min_Fields = {
   __typename?: 'movies_min_fields';
+  backdropId?: Maybe<Scalars['uuid']>;
+  budget?: Maybe<Scalars['bigint']>;
+  certification?: Maybe<Scalars['String']>;
+  collection_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  homepage?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
+  imdb_id?: Maybe<Scalars['String']>;
+  keywords?: Maybe<Array<Scalars['String']>>;
+  language?: Maybe<Scalars['String']>;
+  overview?: Maybe<Scalars['String']>;
+  popularity?: Maybe<Scalars['Float']>;
   posterId?: Maybe<Scalars['uuid']>;
+  production_country_codes?: Maybe<Array<Scalars['String']>>;
+  release_date?: Maybe<Scalars['date']>;
+  revenue?: Maybe<Scalars['bigint']>;
+  runtime?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
+  tagline?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+  tmdb_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Int']>;
 };
 
 /** order by min() on columns of table "movies" */
 export type Movies_Min_Order_By = {
+  backdropId?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  certification?: InputMaybe<Order_By>;
+  collection_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  homepage?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  imdb_id?: InputMaybe<Order_By>;
+  keywords?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
+  overview?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
   posterId?: InputMaybe<Order_By>;
+  production_country_codes?: InputMaybe<Order_By>;
+  release_date?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "movies" */
@@ -2926,10 +5143,37 @@ export type Movies_On_Conflict = {
 
 /** Ordering options when selecting data from "movies". */
 export type Movies_Order_By = {
+  backdrop?: InputMaybe<Files_Order_By>;
+  backdropId?: InputMaybe<Order_By>;
+  budget?: InputMaybe<Order_By>;
+  certification?: InputMaybe<Order_By>;
+  collection?: InputMaybe<Collections_Order_By>;
+  collection_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  homepage?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  imdb_id?: InputMaybe<Order_By>;
+  keywords?: InputMaybe<Order_By>;
+  language?: InputMaybe<Order_By>;
+  movie_credits_aggregate?: InputMaybe<Movie_Credits_Aggregate_Order_By>;
+  movie_production_companies_aggregate?: InputMaybe<Movie_Production_Companies_Aggregate_Order_By>;
+  movie_production_countries_aggregate?: InputMaybe<Movie_Production_Countries_Aggregate_Order_By>;
+  movie_spoken_languages_aggregate?: InputMaybe<Movie_Spoken_Languages_Aggregate_Order_By>;
+  overview?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
   poster?: InputMaybe<Files_Order_By>;
   posterId?: InputMaybe<Order_By>;
+  production_country_codes?: InputMaybe<Order_By>;
+  release_date?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: movies */
@@ -2940,17 +5184,143 @@ export type Movies_Pk_Columns_Input = {
 /** select columns of table "movies" */
 export type Movies_Select_Column =
   /** column name */
+  | 'backdropId'
+  /** column name */
+  | 'budget'
+  /** column name */
+  | 'certification'
+  /** column name */
+  | 'collection_id'
+  /** column name */
+  | 'created_at'
+  /** column name */
+  | 'homepage'
+  /** column name */
   | 'id'
+  /** column name */
+  | 'imdb_id'
+  /** column name */
+  | 'keywords'
+  /** column name */
+  | 'language'
+  /** column name */
+  | 'overview'
+  /** column name */
+  | 'popularity'
   /** column name */
   | 'posterId'
   /** column name */
-  | 'title';
+  | 'production_country_codes'
+  /** column name */
+  | 'release_date'
+  /** column name */
+  | 'revenue'
+  /** column name */
+  | 'runtime'
+  /** column name */
+  | 'status'
+  /** column name */
+  | 'tagline'
+  /** column name */
+  | 'title'
+  /** column name */
+  | 'tmdb_id'
+  /** column name */
+  | 'updated_at'
+  /** column name */
+  | 'vote_average'
+  /** column name */
+  | 'vote_count';
 
 /** input type for updating data in table "movies" */
 export type Movies_Set_Input = {
+  backdropId?: InputMaybe<Scalars['uuid']>;
+  budget?: InputMaybe<Scalars['bigint']>;
+  certification?: InputMaybe<Scalars['String']>;
+  collection_id?: InputMaybe<Scalars['uuid']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  homepage?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  imdb_id?: InputMaybe<Scalars['String']>;
+  keywords?: InputMaybe<Array<Scalars['String']>>;
+  language?: InputMaybe<Scalars['String']>;
+  overview?: InputMaybe<Scalars['String']>;
+  popularity?: InputMaybe<Scalars['Float']>;
   posterId?: InputMaybe<Scalars['uuid']>;
+  production_country_codes?: InputMaybe<Array<Scalars['String']>>;
+  release_date?: InputMaybe<Scalars['date']>;
+  revenue?: InputMaybe<Scalars['bigint']>;
+  runtime?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['String']>;
+  tagline?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  tmdb_id?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  vote_average?: InputMaybe<Scalars['Float']>;
+  vote_count?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type Movies_Stddev_Fields = {
+  __typename?: 'movies_stddev_fields';
+  budget?: Maybe<Scalars['Float']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  runtime?: Maybe<Scalars['Float']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "movies" */
+export type Movies_Stddev_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Movies_Stddev_Pop_Fields = {
+  __typename?: 'movies_stddev_pop_fields';
+  budget?: Maybe<Scalars['Float']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  runtime?: Maybe<Scalars['Float']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "movies" */
+export type Movies_Stddev_Pop_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Movies_Stddev_Samp_Fields = {
+  __typename?: 'movies_stddev_samp_fields';
+  budget?: Maybe<Scalars['Float']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  runtime?: Maybe<Scalars['Float']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "movies" */
+export type Movies_Stddev_Samp_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "movies" */
@@ -2963,25 +5333,174 @@ export type Movies_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movies_Stream_Cursor_Value_Input = {
+  backdropId?: InputMaybe<Scalars['uuid']>;
+  budget?: InputMaybe<Scalars['bigint']>;
+  certification?: InputMaybe<Scalars['String']>;
+  collection_id?: InputMaybe<Scalars['uuid']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  homepage?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  imdb_id?: InputMaybe<Scalars['String']>;
+  keywords?: InputMaybe<Array<Scalars['String']>>;
+  language?: InputMaybe<Scalars['String']>;
+  overview?: InputMaybe<Scalars['String']>;
+  popularity?: InputMaybe<Scalars['Float']>;
   posterId?: InputMaybe<Scalars['uuid']>;
+  production_country_codes?: InputMaybe<Array<Scalars['String']>>;
+  release_date?: InputMaybe<Scalars['date']>;
+  revenue?: InputMaybe<Scalars['bigint']>;
+  runtime?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['String']>;
+  tagline?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  tmdb_id?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  vote_average?: InputMaybe<Scalars['Float']>;
+  vote_count?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate sum on columns */
+export type Movies_Sum_Fields = {
+  __typename?: 'movies_sum_fields';
+  budget?: Maybe<Scalars['bigint']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['bigint']>;
+  runtime?: Maybe<Scalars['Int']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "movies" */
+export type Movies_Sum_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "movies" */
 export type Movies_Update_Column =
   /** column name */
+  | 'backdropId'
+  /** column name */
+  | 'budget'
+  /** column name */
+  | 'certification'
+  /** column name */
+  | 'collection_id'
+  /** column name */
+  | 'created_at'
+  /** column name */
+  | 'homepage'
+  /** column name */
   | 'id'
+  /** column name */
+  | 'imdb_id'
+  /** column name */
+  | 'keywords'
+  /** column name */
+  | 'language'
+  /** column name */
+  | 'overview'
+  /** column name */
+  | 'popularity'
   /** column name */
   | 'posterId'
   /** column name */
-  | 'title';
+  | 'production_country_codes'
+  /** column name */
+  | 'release_date'
+  /** column name */
+  | 'revenue'
+  /** column name */
+  | 'runtime'
+  /** column name */
+  | 'status'
+  /** column name */
+  | 'tagline'
+  /** column name */
+  | 'title'
+  /** column name */
+  | 'tmdb_id'
+  /** column name */
+  | 'updated_at'
+  /** column name */
+  | 'vote_average'
+  /** column name */
+  | 'vote_count';
 
 export type Movies_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Movies_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Movies_Set_Input>;
   /** filter the rows which have to be updated */
   where: Movies_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Movies_Var_Pop_Fields = {
+  __typename?: 'movies_var_pop_fields';
+  budget?: Maybe<Scalars['Float']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  runtime?: Maybe<Scalars['Float']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "movies" */
+export type Movies_Var_Pop_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Movies_Var_Samp_Fields = {
+  __typename?: 'movies_var_samp_fields';
+  budget?: Maybe<Scalars['Float']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  runtime?: Maybe<Scalars['Float']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "movies" */
+export type Movies_Var_Samp_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Movies_Variance_Fields = {
+  __typename?: 'movies_variance_fields';
+  budget?: Maybe<Scalars['Float']>;
+  popularity?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  runtime?: Maybe<Scalars['Float']>;
+  vote_average?: Maybe<Scalars['Float']>;
+  vote_count?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "movies" */
+export type Movies_Variance_Order_By = {
+  budget?: InputMaybe<Order_By>;
+  popularity?: InputMaybe<Order_By>;
+  revenue?: InputMaybe<Order_By>;
+  runtime?: InputMaybe<Order_By>;
+  vote_average?: InputMaybe<Order_By>;
+  vote_count?: InputMaybe<Order_By>;
 };
 
 /** mutation root */
@@ -3035,10 +5554,62 @@ export type Mutation_Root = {
   deleteVirus?: Maybe<Virus>;
   /** delete data from the table: "storage.virus" */
   deleteViruses?: Maybe<Virus_Mutation_Response>;
+  /** delete data from the table: "collections" */
+  delete_collections?: Maybe<Collections_Mutation_Response>;
+  /** delete single row from the table: "collections" */
+  delete_collections_by_pk?: Maybe<Collections>;
+  /** delete data from the table: "countries" */
+  delete_countries?: Maybe<Countries_Mutation_Response>;
+  /** delete single row from the table: "countries" */
+  delete_countries_by_pk?: Maybe<Countries>;
+  /** delete data from the table: "credit_types" */
+  delete_credit_types?: Maybe<Credit_Types_Mutation_Response>;
+  /** delete single row from the table: "credit_types" */
+  delete_credit_types_by_pk?: Maybe<Credit_Types>;
+  /** delete data from the table: "genders" */
+  delete_genders?: Maybe<Genders_Mutation_Response>;
+  /** delete single row from the table: "genders" */
+  delete_genders_by_pk?: Maybe<Genders>;
+  /** delete data from the table: "genres" */
+  delete_genres?: Maybe<Genres_Mutation_Response>;
+  /** delete single row from the table: "genres" */
+  delete_genres_by_pk?: Maybe<Genres>;
+  /** delete data from the table: "languages" */
+  delete_languages?: Maybe<Languages_Mutation_Response>;
+  /** delete single row from the table: "languages" */
+  delete_languages_by_pk?: Maybe<Languages>;
+  /** delete data from the table: "movie_credits" */
+  delete_movie_credits?: Maybe<Movie_Credits_Mutation_Response>;
+  /** delete single row from the table: "movie_credits" */
+  delete_movie_credits_by_pk?: Maybe<Movie_Credits>;
+  /** delete data from the table: "movie_genres" */
+  delete_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
+  /** delete single row from the table: "movie_genres" */
+  delete_movie_genres_by_pk?: Maybe<Movie_Genres>;
+  /** delete data from the table: "movie_production_companies" */
+  delete_movie_production_companies?: Maybe<Movie_Production_Companies_Mutation_Response>;
+  /** delete single row from the table: "movie_production_companies" */
+  delete_movie_production_companies_by_pk?: Maybe<Movie_Production_Companies>;
+  /** delete data from the table: "movie_production_countries" */
+  delete_movie_production_countries?: Maybe<Movie_Production_Countries_Mutation_Response>;
+  /** delete single row from the table: "movie_production_countries" */
+  delete_movie_production_countries_by_pk?: Maybe<Movie_Production_Countries>;
+  /** delete data from the table: "movie_spoken_languages" */
+  delete_movie_spoken_languages?: Maybe<Movie_Spoken_Languages_Mutation_Response>;
+  /** delete single row from the table: "movie_spoken_languages" */
+  delete_movie_spoken_languages_by_pk?: Maybe<Movie_Spoken_Languages>;
   /** delete data from the table: "movies" */
   delete_movies?: Maybe<Movies_Mutation_Response>;
   /** delete single row from the table: "movies" */
   delete_movies_by_pk?: Maybe<Movies>;
+  /** delete data from the table: "people" */
+  delete_people?: Maybe<People_Mutation_Response>;
+  /** delete single row from the table: "people" */
+  delete_people_by_pk?: Maybe<People>;
+  /** delete data from the table: "production_companies" */
+  delete_production_companies?: Maybe<Production_Companies_Mutation_Response>;
+  /** delete single row from the table: "production_companies" */
+  delete_production_companies_by_pk?: Maybe<Production_Companies>;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
   /** insert a single row into the table: "auth.provider_requests" */
@@ -3087,10 +5658,62 @@ export type Mutation_Root = {
   insertVirus?: Maybe<Virus>;
   /** insert data into the table: "storage.virus" */
   insertViruses?: Maybe<Virus_Mutation_Response>;
+  /** insert data into the table: "collections" */
+  insert_collections?: Maybe<Collections_Mutation_Response>;
+  /** insert a single row into the table: "collections" */
+  insert_collections_one?: Maybe<Collections>;
+  /** insert data into the table: "countries" */
+  insert_countries?: Maybe<Countries_Mutation_Response>;
+  /** insert a single row into the table: "countries" */
+  insert_countries_one?: Maybe<Countries>;
+  /** insert data into the table: "credit_types" */
+  insert_credit_types?: Maybe<Credit_Types_Mutation_Response>;
+  /** insert a single row into the table: "credit_types" */
+  insert_credit_types_one?: Maybe<Credit_Types>;
+  /** insert data into the table: "genders" */
+  insert_genders?: Maybe<Genders_Mutation_Response>;
+  /** insert a single row into the table: "genders" */
+  insert_genders_one?: Maybe<Genders>;
+  /** insert data into the table: "genres" */
+  insert_genres?: Maybe<Genres_Mutation_Response>;
+  /** insert a single row into the table: "genres" */
+  insert_genres_one?: Maybe<Genres>;
+  /** insert data into the table: "languages" */
+  insert_languages?: Maybe<Languages_Mutation_Response>;
+  /** insert a single row into the table: "languages" */
+  insert_languages_one?: Maybe<Languages>;
+  /** insert data into the table: "movie_credits" */
+  insert_movie_credits?: Maybe<Movie_Credits_Mutation_Response>;
+  /** insert a single row into the table: "movie_credits" */
+  insert_movie_credits_one?: Maybe<Movie_Credits>;
+  /** insert data into the table: "movie_genres" */
+  insert_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
+  /** insert a single row into the table: "movie_genres" */
+  insert_movie_genres_one?: Maybe<Movie_Genres>;
+  /** insert data into the table: "movie_production_companies" */
+  insert_movie_production_companies?: Maybe<Movie_Production_Companies_Mutation_Response>;
+  /** insert a single row into the table: "movie_production_companies" */
+  insert_movie_production_companies_one?: Maybe<Movie_Production_Companies>;
+  /** insert data into the table: "movie_production_countries" */
+  insert_movie_production_countries?: Maybe<Movie_Production_Countries_Mutation_Response>;
+  /** insert a single row into the table: "movie_production_countries" */
+  insert_movie_production_countries_one?: Maybe<Movie_Production_Countries>;
+  /** insert data into the table: "movie_spoken_languages" */
+  insert_movie_spoken_languages?: Maybe<Movie_Spoken_Languages_Mutation_Response>;
+  /** insert a single row into the table: "movie_spoken_languages" */
+  insert_movie_spoken_languages_one?: Maybe<Movie_Spoken_Languages>;
   /** insert data into the table: "movies" */
   insert_movies?: Maybe<Movies_Mutation_Response>;
   /** insert a single row into the table: "movies" */
   insert_movies_one?: Maybe<Movies>;
+  /** insert data into the table: "people" */
+  insert_people?: Maybe<People_Mutation_Response>;
+  /** insert a single row into the table: "people" */
+  insert_people_one?: Maybe<People>;
+  /** insert data into the table: "production_companies" */
+  insert_production_companies?: Maybe<Production_Companies_Mutation_Response>;
+  /** insert a single row into the table: "production_companies" */
+  insert_production_companies_one?: Maybe<Production_Companies>;
   /** update single row of the table: "auth.providers" */
   updateAuthProvider?: Maybe<AuthProviders>;
   /** update single row of the table: "auth.provider_requests" */
@@ -3157,14 +5780,92 @@ export type Mutation_Root = {
   update_authUserSecurityKeys_many?: Maybe<Array<Maybe<AuthUserSecurityKeys_Mutation_Response>>>;
   /** update multiples rows of table: "storage.buckets" */
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
+  /** update data of the table: "collections" */
+  update_collections?: Maybe<Collections_Mutation_Response>;
+  /** update single row of the table: "collections" */
+  update_collections_by_pk?: Maybe<Collections>;
+  /** update multiples rows of table: "collections" */
+  update_collections_many?: Maybe<Array<Maybe<Collections_Mutation_Response>>>;
+  /** update data of the table: "countries" */
+  update_countries?: Maybe<Countries_Mutation_Response>;
+  /** update single row of the table: "countries" */
+  update_countries_by_pk?: Maybe<Countries>;
+  /** update multiples rows of table: "countries" */
+  update_countries_many?: Maybe<Array<Maybe<Countries_Mutation_Response>>>;
+  /** update data of the table: "credit_types" */
+  update_credit_types?: Maybe<Credit_Types_Mutation_Response>;
+  /** update single row of the table: "credit_types" */
+  update_credit_types_by_pk?: Maybe<Credit_Types>;
+  /** update multiples rows of table: "credit_types" */
+  update_credit_types_many?: Maybe<Array<Maybe<Credit_Types_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
+  /** update data of the table: "genders" */
+  update_genders?: Maybe<Genders_Mutation_Response>;
+  /** update single row of the table: "genders" */
+  update_genders_by_pk?: Maybe<Genders>;
+  /** update multiples rows of table: "genders" */
+  update_genders_many?: Maybe<Array<Maybe<Genders_Mutation_Response>>>;
+  /** update data of the table: "genres" */
+  update_genres?: Maybe<Genres_Mutation_Response>;
+  /** update single row of the table: "genres" */
+  update_genres_by_pk?: Maybe<Genres>;
+  /** update multiples rows of table: "genres" */
+  update_genres_many?: Maybe<Array<Maybe<Genres_Mutation_Response>>>;
+  /** update data of the table: "languages" */
+  update_languages?: Maybe<Languages_Mutation_Response>;
+  /** update single row of the table: "languages" */
+  update_languages_by_pk?: Maybe<Languages>;
+  /** update multiples rows of table: "languages" */
+  update_languages_many?: Maybe<Array<Maybe<Languages_Mutation_Response>>>;
+  /** update data of the table: "movie_credits" */
+  update_movie_credits?: Maybe<Movie_Credits_Mutation_Response>;
+  /** update single row of the table: "movie_credits" */
+  update_movie_credits_by_pk?: Maybe<Movie_Credits>;
+  /** update multiples rows of table: "movie_credits" */
+  update_movie_credits_many?: Maybe<Array<Maybe<Movie_Credits_Mutation_Response>>>;
+  /** update data of the table: "movie_genres" */
+  update_movie_genres?: Maybe<Movie_Genres_Mutation_Response>;
+  /** update single row of the table: "movie_genres" */
+  update_movie_genres_by_pk?: Maybe<Movie_Genres>;
+  /** update multiples rows of table: "movie_genres" */
+  update_movie_genres_many?: Maybe<Array<Maybe<Movie_Genres_Mutation_Response>>>;
+  /** update data of the table: "movie_production_companies" */
+  update_movie_production_companies?: Maybe<Movie_Production_Companies_Mutation_Response>;
+  /** update single row of the table: "movie_production_companies" */
+  update_movie_production_companies_by_pk?: Maybe<Movie_Production_Companies>;
+  /** update multiples rows of table: "movie_production_companies" */
+  update_movie_production_companies_many?: Maybe<Array<Maybe<Movie_Production_Companies_Mutation_Response>>>;
+  /** update data of the table: "movie_production_countries" */
+  update_movie_production_countries?: Maybe<Movie_Production_Countries_Mutation_Response>;
+  /** update single row of the table: "movie_production_countries" */
+  update_movie_production_countries_by_pk?: Maybe<Movie_Production_Countries>;
+  /** update multiples rows of table: "movie_production_countries" */
+  update_movie_production_countries_many?: Maybe<Array<Maybe<Movie_Production_Countries_Mutation_Response>>>;
+  /** update data of the table: "movie_spoken_languages" */
+  update_movie_spoken_languages?: Maybe<Movie_Spoken_Languages_Mutation_Response>;
+  /** update single row of the table: "movie_spoken_languages" */
+  update_movie_spoken_languages_by_pk?: Maybe<Movie_Spoken_Languages>;
+  /** update multiples rows of table: "movie_spoken_languages" */
+  update_movie_spoken_languages_many?: Maybe<Array<Maybe<Movie_Spoken_Languages_Mutation_Response>>>;
   /** update data of the table: "movies" */
   update_movies?: Maybe<Movies_Mutation_Response>;
   /** update single row of the table: "movies" */
   update_movies_by_pk?: Maybe<Movies>;
   /** update multiples rows of table: "movies" */
   update_movies_many?: Maybe<Array<Maybe<Movies_Mutation_Response>>>;
+  /** update data of the table: "people" */
+  update_people?: Maybe<People_Mutation_Response>;
+  /** update single row of the table: "people" */
+  update_people_by_pk?: Maybe<People>;
+  /** update multiples rows of table: "people" */
+  update_people_many?: Maybe<Array<Maybe<People_Mutation_Response>>>;
+  /** update data of the table: "production_companies" */
+  update_production_companies?: Maybe<Production_Companies_Mutation_Response>;
+  /** update single row of the table: "production_companies" */
+  update_production_companies_by_pk?: Maybe<Production_Companies>;
+  /** update multiples rows of table: "production_companies" */
+  update_production_companies_many?: Maybe<Array<Maybe<Production_Companies_Mutation_Response>>>;
   /** update multiples rows of table: "auth.users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
   /** update multiples rows of table: "storage.virus" */
@@ -3317,6 +6018,142 @@ export type Mutation_Root_DeleteVirusesArgs = {
 
 
 /** mutation root */
+export type Mutation_Root_Delete_CollectionsArgs = {
+  where: Collections_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Collections_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_CountriesArgs = {
+  where: Countries_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Countries_By_PkArgs = {
+  iso_3166_1: Scalars['bpchar'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Credit_TypesArgs = {
+  where: Credit_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Credit_Types_By_PkArgs = {
+  credit_type: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_GendersArgs = {
+  where: Genders_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Genders_By_PkArgs = {
+  gender: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_GenresArgs = {
+  where: Genres_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Genres_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_LanguagesArgs = {
+  where: Languages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Languages_By_PkArgs = {
+  iso_639_1: Scalars['bpchar'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_CreditsArgs = {
+  where: Movie_Credits_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Credits_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_GenresArgs = {
+  where: Movie_Genres_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Genres_By_PkArgs = {
+  genre_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Production_CompaniesArgs = {
+  where: Movie_Production_Companies_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Production_Companies_By_PkArgs = {
+  company_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Production_CountriesArgs = {
+  where: Movie_Production_Countries_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Production_Countries_By_PkArgs = {
+  country_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Spoken_LanguagesArgs = {
+  where: Movie_Spoken_Languages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Movie_Spoken_Languages_By_PkArgs = {
+  language_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_Root_Delete_MoviesArgs = {
   where: Movies_Bool_Exp;
 };
@@ -3324,6 +6161,30 @@ export type Mutation_Root_Delete_MoviesArgs = {
 
 /** mutation root */
 export type Mutation_Root_Delete_Movies_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_PeopleArgs = {
+  where: People_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_People_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Production_CompaniesArgs = {
+  where: Production_Companies_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Production_Companies_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3497,6 +6358,160 @@ export type Mutation_Root_InsertVirusesArgs = {
 
 
 /** mutation root */
+export type Mutation_Root_Insert_CollectionsArgs = {
+  objects: Array<Collections_Insert_Input>;
+  on_conflict?: InputMaybe<Collections_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Collections_OneArgs = {
+  object: Collections_Insert_Input;
+  on_conflict?: InputMaybe<Collections_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_CountriesArgs = {
+  objects: Array<Countries_Insert_Input>;
+  on_conflict?: InputMaybe<Countries_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Countries_OneArgs = {
+  object: Countries_Insert_Input;
+  on_conflict?: InputMaybe<Countries_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Credit_TypesArgs = {
+  objects: Array<Credit_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Credit_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Credit_Types_OneArgs = {
+  object: Credit_Types_Insert_Input;
+  on_conflict?: InputMaybe<Credit_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_GendersArgs = {
+  objects: Array<Genders_Insert_Input>;
+  on_conflict?: InputMaybe<Genders_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Genders_OneArgs = {
+  object: Genders_Insert_Input;
+  on_conflict?: InputMaybe<Genders_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_GenresArgs = {
+  objects: Array<Genres_Insert_Input>;
+  on_conflict?: InputMaybe<Genres_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Genres_OneArgs = {
+  object: Genres_Insert_Input;
+  on_conflict?: InputMaybe<Genres_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_LanguagesArgs = {
+  objects: Array<Languages_Insert_Input>;
+  on_conflict?: InputMaybe<Languages_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Languages_OneArgs = {
+  object: Languages_Insert_Input;
+  on_conflict?: InputMaybe<Languages_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_CreditsArgs = {
+  objects: Array<Movie_Credits_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Credits_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Credits_OneArgs = {
+  object: Movie_Credits_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Credits_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_GenresArgs = {
+  objects: Array<Movie_Genres_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Genres_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Genres_OneArgs = {
+  object: Movie_Genres_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Genres_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Production_CompaniesArgs = {
+  objects: Array<Movie_Production_Companies_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Production_Companies_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Production_Companies_OneArgs = {
+  object: Movie_Production_Companies_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Production_Companies_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Production_CountriesArgs = {
+  objects: Array<Movie_Production_Countries_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Production_Countries_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Production_Countries_OneArgs = {
+  object: Movie_Production_Countries_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Production_Countries_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Spoken_LanguagesArgs = {
+  objects: Array<Movie_Spoken_Languages_Insert_Input>;
+  on_conflict?: InputMaybe<Movie_Spoken_Languages_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Movie_Spoken_Languages_OneArgs = {
+  object: Movie_Spoken_Languages_Insert_Input;
+  on_conflict?: InputMaybe<Movie_Spoken_Languages_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_Root_Insert_MoviesArgs = {
   objects: Array<Movies_Insert_Input>;
   on_conflict?: InputMaybe<Movies_On_Conflict>;
@@ -3507,6 +6522,34 @@ export type Mutation_Root_Insert_MoviesArgs = {
 export type Mutation_Root_Insert_Movies_OneArgs = {
   object: Movies_Insert_Input;
   on_conflict?: InputMaybe<Movies_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_PeopleArgs = {
+  objects: Array<People_Insert_Input>;
+  on_conflict?: InputMaybe<People_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_People_OneArgs = {
+  object: People_Insert_Input;
+  on_conflict?: InputMaybe<People_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Production_CompaniesArgs = {
+  objects: Array<Production_Companies_Insert_Input>;
+  on_conflict?: InputMaybe<Production_Companies_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Production_Companies_OneArgs = {
+  object: Production_Companies_Insert_Input;
+  on_conflict?: InputMaybe<Production_Companies_On_Conflict>;
 };
 
 
@@ -3789,13 +6832,236 @@ export type Mutation_Root_Update_Buckets_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_Root_Update_CollectionsArgs = {
+  _set?: InputMaybe<Collections_Set_Input>;
+  where: Collections_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Collections_By_PkArgs = {
+  _set?: InputMaybe<Collections_Set_Input>;
+  pk_columns: Collections_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Collections_ManyArgs = {
+  updates: Array<Collections_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_CountriesArgs = {
+  _set?: InputMaybe<Countries_Set_Input>;
+  where: Countries_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Countries_By_PkArgs = {
+  _set?: InputMaybe<Countries_Set_Input>;
+  pk_columns: Countries_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Countries_ManyArgs = {
+  updates: Array<Countries_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Credit_TypesArgs = {
+  _set?: InputMaybe<Credit_Types_Set_Input>;
+  where: Credit_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Credit_Types_By_PkArgs = {
+  _set?: InputMaybe<Credit_Types_Set_Input>;
+  pk_columns: Credit_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Credit_Types_ManyArgs = {
+  updates: Array<Credit_Types_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_Root_Update_Files_ManyArgs = {
   updates: Array<Files_Updates>;
 };
 
 
 /** mutation root */
+export type Mutation_Root_Update_GendersArgs = {
+  _set?: InputMaybe<Genders_Set_Input>;
+  where: Genders_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Genders_By_PkArgs = {
+  _set?: InputMaybe<Genders_Set_Input>;
+  pk_columns: Genders_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Genders_ManyArgs = {
+  updates: Array<Genders_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_GenresArgs = {
+  _set?: InputMaybe<Genres_Set_Input>;
+  where: Genres_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Genres_By_PkArgs = {
+  _set?: InputMaybe<Genres_Set_Input>;
+  pk_columns: Genres_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Genres_ManyArgs = {
+  updates: Array<Genres_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_LanguagesArgs = {
+  _set?: InputMaybe<Languages_Set_Input>;
+  where: Languages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Languages_By_PkArgs = {
+  _set?: InputMaybe<Languages_Set_Input>;
+  pk_columns: Languages_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Languages_ManyArgs = {
+  updates: Array<Languages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_CreditsArgs = {
+  _inc?: InputMaybe<Movie_Credits_Inc_Input>;
+  _set?: InputMaybe<Movie_Credits_Set_Input>;
+  where: Movie_Credits_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Credits_By_PkArgs = {
+  _inc?: InputMaybe<Movie_Credits_Inc_Input>;
+  _set?: InputMaybe<Movie_Credits_Set_Input>;
+  pk_columns: Movie_Credits_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Credits_ManyArgs = {
+  updates: Array<Movie_Credits_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_GenresArgs = {
+  _set?: InputMaybe<Movie_Genres_Set_Input>;
+  where: Movie_Genres_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Genres_By_PkArgs = {
+  _set?: InputMaybe<Movie_Genres_Set_Input>;
+  pk_columns: Movie_Genres_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Genres_ManyArgs = {
+  updates: Array<Movie_Genres_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Production_CompaniesArgs = {
+  _set?: InputMaybe<Movie_Production_Companies_Set_Input>;
+  where: Movie_Production_Companies_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Production_Companies_By_PkArgs = {
+  _set?: InputMaybe<Movie_Production_Companies_Set_Input>;
+  pk_columns: Movie_Production_Companies_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Production_Companies_ManyArgs = {
+  updates: Array<Movie_Production_Companies_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Production_CountriesArgs = {
+  _set?: InputMaybe<Movie_Production_Countries_Set_Input>;
+  where: Movie_Production_Countries_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Production_Countries_By_PkArgs = {
+  _set?: InputMaybe<Movie_Production_Countries_Set_Input>;
+  pk_columns: Movie_Production_Countries_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Production_Countries_ManyArgs = {
+  updates: Array<Movie_Production_Countries_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Spoken_LanguagesArgs = {
+  _set?: InputMaybe<Movie_Spoken_Languages_Set_Input>;
+  where: Movie_Spoken_Languages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Spoken_Languages_By_PkArgs = {
+  _set?: InputMaybe<Movie_Spoken_Languages_Set_Input>;
+  pk_columns: Movie_Spoken_Languages_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Movie_Spoken_Languages_ManyArgs = {
+  updates: Array<Movie_Spoken_Languages_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_Root_Update_MoviesArgs = {
+  _inc?: InputMaybe<Movies_Inc_Input>;
   _set?: InputMaybe<Movies_Set_Input>;
   where: Movies_Bool_Exp;
 };
@@ -3803,6 +7069,7 @@ export type Mutation_Root_Update_MoviesArgs = {
 
 /** mutation root */
 export type Mutation_Root_Update_Movies_By_PkArgs = {
+  _inc?: InputMaybe<Movies_Inc_Input>;
   _set?: InputMaybe<Movies_Set_Input>;
   pk_columns: Movies_Pk_Columns_Input;
 };
@@ -3811,6 +7078,48 @@ export type Mutation_Root_Update_Movies_By_PkArgs = {
 /** mutation root */
 export type Mutation_Root_Update_Movies_ManyArgs = {
   updates: Array<Movies_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_PeopleArgs = {
+  _set?: InputMaybe<People_Set_Input>;
+  where: People_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_People_By_PkArgs = {
+  _set?: InputMaybe<People_Set_Input>;
+  pk_columns: People_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_People_ManyArgs = {
+  updates: Array<People_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Production_CompaniesArgs = {
+  _inc?: InputMaybe<Production_Companies_Inc_Input>;
+  _set?: InputMaybe<Production_Companies_Set_Input>;
+  where: Production_Companies_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Production_Companies_By_PkArgs = {
+  _inc?: InputMaybe<Production_Companies_Inc_Input>;
+  _set?: InputMaybe<Production_Companies_Set_Input>;
+  pk_columns: Production_Companies_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Production_Companies_ManyArgs = {
+  updates: Array<Production_Companies_Updates>;
 };
 
 
@@ -3839,6 +7148,391 @@ export type Order_By =
   | 'desc_nulls_first'
   /** in descending order, nulls last */
   | 'desc_nulls_last';
+
+/** columns and relationships of "people" */
+export type People = {
+  __typename?: 'people';
+  birthdate?: Maybe<Scalars['date']>;
+  gender?: Maybe<Genders_Enum>;
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+};
+
+/** aggregated selection of "people" */
+export type People_Aggregate = {
+  __typename?: 'people_aggregate';
+  aggregate?: Maybe<People_Aggregate_Fields>;
+  nodes: Array<People>;
+};
+
+/** aggregate fields of "people" */
+export type People_Aggregate_Fields = {
+  __typename?: 'people_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<People_Max_Fields>;
+  min?: Maybe<People_Min_Fields>;
+};
+
+
+/** aggregate fields of "people" */
+export type People_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<People_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "people". All fields are combined with a logical 'AND'. */
+export type People_Bool_Exp = {
+  _and?: InputMaybe<Array<People_Bool_Exp>>;
+  _not?: InputMaybe<People_Bool_Exp>;
+  _or?: InputMaybe<Array<People_Bool_Exp>>;
+  birthdate?: InputMaybe<Date_Comparison_Exp>;
+  gender?: InputMaybe<Genders_Enum_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "people" */
+export type People_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'people_pkey';
+
+/** input type for inserting data into table "people" */
+export type People_Insert_Input = {
+  birthdate?: InputMaybe<Scalars['date']>;
+  gender?: InputMaybe<Genders_Enum>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type People_Max_Fields = {
+  __typename?: 'people_max_fields';
+  birthdate?: Maybe<Scalars['date']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type People_Min_Fields = {
+  __typename?: 'people_min_fields';
+  birthdate?: Maybe<Scalars['date']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "people" */
+export type People_Mutation_Response = {
+  __typename?: 'people_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<People>;
+};
+
+/** on_conflict condition type for table "people" */
+export type People_On_Conflict = {
+  constraint: People_Constraint;
+  update_columns?: Array<People_Update_Column>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "people". */
+export type People_Order_By = {
+  birthdate?: InputMaybe<Order_By>;
+  gender?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: people */
+export type People_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "people" */
+export type People_Select_Column =
+  /** column name */
+  | 'birthdate'
+  /** column name */
+  | 'gender'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'name';
+
+/** input type for updating data in table "people" */
+export type People_Set_Input = {
+  birthdate?: InputMaybe<Scalars['date']>;
+  gender?: InputMaybe<Genders_Enum>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "people" */
+export type People_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: People_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type People_Stream_Cursor_Value_Input = {
+  birthdate?: InputMaybe<Scalars['date']>;
+  gender?: InputMaybe<Genders_Enum>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "people" */
+export type People_Update_Column =
+  /** column name */
+  | 'birthdate'
+  /** column name */
+  | 'gender'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'name';
+
+export type People_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<People_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: People_Bool_Exp;
+};
+
+/** columns and relationships of "production_companies" */
+export type Production_Companies = {
+  __typename?: 'production_companies';
+  id: Scalars['uuid'];
+  logo_path?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  origin_country?: Maybe<Scalars['String']>;
+  tmdb_id?: Maybe<Scalars['Int']>;
+};
+
+/** aggregated selection of "production_companies" */
+export type Production_Companies_Aggregate = {
+  __typename?: 'production_companies_aggregate';
+  aggregate?: Maybe<Production_Companies_Aggregate_Fields>;
+  nodes: Array<Production_Companies>;
+};
+
+/** aggregate fields of "production_companies" */
+export type Production_Companies_Aggregate_Fields = {
+  __typename?: 'production_companies_aggregate_fields';
+  avg?: Maybe<Production_Companies_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Production_Companies_Max_Fields>;
+  min?: Maybe<Production_Companies_Min_Fields>;
+  stddev?: Maybe<Production_Companies_Stddev_Fields>;
+  stddev_pop?: Maybe<Production_Companies_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Production_Companies_Stddev_Samp_Fields>;
+  sum?: Maybe<Production_Companies_Sum_Fields>;
+  var_pop?: Maybe<Production_Companies_Var_Pop_Fields>;
+  var_samp?: Maybe<Production_Companies_Var_Samp_Fields>;
+  variance?: Maybe<Production_Companies_Variance_Fields>;
+};
+
+
+/** aggregate fields of "production_companies" */
+export type Production_Companies_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Production_Companies_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Production_Companies_Avg_Fields = {
+  __typename?: 'production_companies_avg_fields';
+  tmdb_id?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "production_companies". All fields are combined with a logical 'AND'. */
+export type Production_Companies_Bool_Exp = {
+  _and?: InputMaybe<Array<Production_Companies_Bool_Exp>>;
+  _not?: InputMaybe<Production_Companies_Bool_Exp>;
+  _or?: InputMaybe<Array<Production_Companies_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  logo_path?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  origin_country?: InputMaybe<String_Comparison_Exp>;
+  tmdb_id?: InputMaybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "production_companies" */
+export type Production_Companies_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'production_companies_pkey'
+  /** unique or primary key constraint on columns "tmdb_id" */
+  | 'production_companies_tmdb_id_key';
+
+/** input type for incrementing numeric columns in table "production_companies" */
+export type Production_Companies_Inc_Input = {
+  tmdb_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "production_companies" */
+export type Production_Companies_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  logo_path?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  origin_country?: InputMaybe<Scalars['String']>;
+  tmdb_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate max on columns */
+export type Production_Companies_Max_Fields = {
+  __typename?: 'production_companies_max_fields';
+  id?: Maybe<Scalars['uuid']>;
+  logo_path?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  origin_country?: Maybe<Scalars['String']>;
+  tmdb_id?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate min on columns */
+export type Production_Companies_Min_Fields = {
+  __typename?: 'production_companies_min_fields';
+  id?: Maybe<Scalars['uuid']>;
+  logo_path?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  origin_country?: Maybe<Scalars['String']>;
+  tmdb_id?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "production_companies" */
+export type Production_Companies_Mutation_Response = {
+  __typename?: 'production_companies_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Production_Companies>;
+};
+
+/** on_conflict condition type for table "production_companies" */
+export type Production_Companies_On_Conflict = {
+  constraint: Production_Companies_Constraint;
+  update_columns?: Array<Production_Companies_Update_Column>;
+  where?: InputMaybe<Production_Companies_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "production_companies". */
+export type Production_Companies_Order_By = {
+  id?: InputMaybe<Order_By>;
+  logo_path?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  origin_country?: InputMaybe<Order_By>;
+  tmdb_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: production_companies */
+export type Production_Companies_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "production_companies" */
+export type Production_Companies_Select_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'logo_path'
+  /** column name */
+  | 'name'
+  /** column name */
+  | 'origin_country'
+  /** column name */
+  | 'tmdb_id';
+
+/** input type for updating data in table "production_companies" */
+export type Production_Companies_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  logo_path?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  origin_country?: InputMaybe<Scalars['String']>;
+  tmdb_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type Production_Companies_Stddev_Fields = {
+  __typename?: 'production_companies_stddev_fields';
+  tmdb_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Production_Companies_Stddev_Pop_Fields = {
+  __typename?: 'production_companies_stddev_pop_fields';
+  tmdb_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Production_Companies_Stddev_Samp_Fields = {
+  __typename?: 'production_companies_stddev_samp_fields';
+  tmdb_id?: Maybe<Scalars['Float']>;
+};
+
+/** Streaming cursor of the table "production_companies" */
+export type Production_Companies_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Production_Companies_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Production_Companies_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  logo_path?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  origin_country?: InputMaybe<Scalars['String']>;
+  tmdb_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate sum on columns */
+export type Production_Companies_Sum_Fields = {
+  __typename?: 'production_companies_sum_fields';
+  tmdb_id?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "production_companies" */
+export type Production_Companies_Update_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'logo_path'
+  /** column name */
+  | 'name'
+  /** column name */
+  | 'origin_country'
+  /** column name */
+  | 'tmdb_id';
+
+export type Production_Companies_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Production_Companies_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Production_Companies_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Production_Companies_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Production_Companies_Var_Pop_Fields = {
+  __typename?: 'production_companies_var_pop_fields';
+  tmdb_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Production_Companies_Var_Samp_Fields = {
+  __typename?: 'production_companies_var_samp_fields';
+  tmdb_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Production_Companies_Variance_Fields = {
+  __typename?: 'production_companies_variance_fields';
+  tmdb_id?: Maybe<Scalars['Float']>;
+};
 
 export type Query_Root = {
   __typename?: 'query_root';
@@ -3896,18 +7590,96 @@ export type Query_Root = {
   buckets: Array<Buckets>;
   /** fetch aggregated fields from the table: "storage.buckets" */
   bucketsAggregate: Buckets_Aggregate;
+  /** fetch data from the table: "collections" */
+  collections: Array<Collections>;
+  /** fetch aggregated fields from the table: "collections" */
+  collections_aggregate: Collections_Aggregate;
+  /** fetch data from the table: "collections" using primary key columns */
+  collections_by_pk?: Maybe<Collections>;
+  /** fetch data from the table: "countries" */
+  countries: Array<Countries>;
+  /** fetch aggregated fields from the table: "countries" */
+  countries_aggregate: Countries_Aggregate;
+  /** fetch data from the table: "countries" using primary key columns */
+  countries_by_pk?: Maybe<Countries>;
+  /** fetch data from the table: "credit_types" */
+  credit_types: Array<Credit_Types>;
+  /** fetch aggregated fields from the table: "credit_types" */
+  credit_types_aggregate: Credit_Types_Aggregate;
+  /** fetch data from the table: "credit_types" using primary key columns */
+  credit_types_by_pk?: Maybe<Credit_Types>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
   files: Array<Files>;
   /** fetch aggregated fields from the table: "storage.files" */
   filesAggregate: Files_Aggregate;
+  /** fetch data from the table: "genders" */
+  genders: Array<Genders>;
+  /** fetch aggregated fields from the table: "genders" */
+  genders_aggregate: Genders_Aggregate;
+  /** fetch data from the table: "genders" using primary key columns */
+  genders_by_pk?: Maybe<Genders>;
+  /** fetch data from the table: "genres" */
+  genres: Array<Genres>;
+  /** fetch aggregated fields from the table: "genres" */
+  genres_aggregate: Genres_Aggregate;
+  /** fetch data from the table: "genres" using primary key columns */
+  genres_by_pk?: Maybe<Genres>;
+  /** fetch data from the table: "languages" */
+  languages: Array<Languages>;
+  /** fetch aggregated fields from the table: "languages" */
+  languages_aggregate: Languages_Aggregate;
+  /** fetch data from the table: "languages" using primary key columns */
+  languages_by_pk?: Maybe<Languages>;
+  /** An array relationship */
+  movie_credits: Array<Movie_Credits>;
+  /** An aggregate relationship */
+  movie_credits_aggregate: Movie_Credits_Aggregate;
+  /** fetch data from the table: "movie_credits" using primary key columns */
+  movie_credits_by_pk?: Maybe<Movie_Credits>;
+  /** fetch data from the table: "movie_genres" */
+  movie_genres: Array<Movie_Genres>;
+  /** fetch aggregated fields from the table: "movie_genres" */
+  movie_genres_aggregate: Movie_Genres_Aggregate;
+  /** fetch data from the table: "movie_genres" using primary key columns */
+  movie_genres_by_pk?: Maybe<Movie_Genres>;
+  /** An array relationship */
+  movie_production_companies: Array<Movie_Production_Companies>;
+  /** An aggregate relationship */
+  movie_production_companies_aggregate: Movie_Production_Companies_Aggregate;
+  /** fetch data from the table: "movie_production_companies" using primary key columns */
+  movie_production_companies_by_pk?: Maybe<Movie_Production_Companies>;
+  /** An array relationship */
+  movie_production_countries: Array<Movie_Production_Countries>;
+  /** An aggregate relationship */
+  movie_production_countries_aggregate: Movie_Production_Countries_Aggregate;
+  /** fetch data from the table: "movie_production_countries" using primary key columns */
+  movie_production_countries_by_pk?: Maybe<Movie_Production_Countries>;
+  /** An array relationship */
+  movie_spoken_languages: Array<Movie_Spoken_Languages>;
+  /** An aggregate relationship */
+  movie_spoken_languages_aggregate: Movie_Spoken_Languages_Aggregate;
+  /** fetch data from the table: "movie_spoken_languages" using primary key columns */
+  movie_spoken_languages_by_pk?: Maybe<Movie_Spoken_Languages>;
   /** An array relationship */
   movies: Array<Movies>;
   /** An aggregate relationship */
   movies_aggregate: Movies_Aggregate;
   /** fetch data from the table: "movies" using primary key columns */
   movies_by_pk?: Maybe<Movies>;
+  /** fetch data from the table: "people" */
+  people: Array<People>;
+  /** fetch aggregated fields from the table: "people" */
+  people_aggregate: People_Aggregate;
+  /** fetch data from the table: "people" using primary key columns */
+  people_by_pk?: Maybe<People>;
+  /** fetch data from the table: "production_companies" */
+  production_companies: Array<Production_Companies>;
+  /** fetch aggregated fields from the table: "production_companies" */
+  production_companies_aggregate: Production_Companies_Aggregate;
+  /** fetch data from the table: "production_companies" using primary key columns */
+  production_companies_by_pk?: Maybe<Production_Companies>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** fetch data from the table: "auth.users" */
@@ -4130,6 +7902,75 @@ export type Query_Root_BucketsAggregateArgs = {
 };
 
 
+export type Query_Root_CollectionsArgs = {
+  distinct_on?: InputMaybe<Array<Collections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Collections_Order_By>>;
+  where?: InputMaybe<Collections_Bool_Exp>;
+};
+
+
+export type Query_Root_Collections_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Collections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Collections_Order_By>>;
+  where?: InputMaybe<Collections_Bool_Exp>;
+};
+
+
+export type Query_Root_Collections_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_Root_CountriesArgs = {
+  distinct_on?: InputMaybe<Array<Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Countries_Order_By>>;
+  where?: InputMaybe<Countries_Bool_Exp>;
+};
+
+
+export type Query_Root_Countries_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Countries_Order_By>>;
+  where?: InputMaybe<Countries_Bool_Exp>;
+};
+
+
+export type Query_Root_Countries_By_PkArgs = {
+  iso_3166_1: Scalars['bpchar'];
+};
+
+
+export type Query_Root_Credit_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Query_Root_Credit_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Query_Root_Credit_Types_By_PkArgs = {
+  credit_type: Scalars['String'];
+};
+
+
 export type Query_Root_FileArgs = {
   id: Scalars['uuid'];
 };
@@ -4153,6 +7994,194 @@ export type Query_Root_FilesAggregateArgs = {
 };
 
 
+export type Query_Root_GendersArgs = {
+  distinct_on?: InputMaybe<Array<Genders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genders_Order_By>>;
+  where?: InputMaybe<Genders_Bool_Exp>;
+};
+
+
+export type Query_Root_Genders_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Genders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genders_Order_By>>;
+  where?: InputMaybe<Genders_Bool_Exp>;
+};
+
+
+export type Query_Root_Genders_By_PkArgs = {
+  gender: Scalars['String'];
+};
+
+
+export type Query_Root_GenresArgs = {
+  distinct_on?: InputMaybe<Array<Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genres_Order_By>>;
+  where?: InputMaybe<Genres_Bool_Exp>;
+};
+
+
+export type Query_Root_Genres_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genres_Order_By>>;
+  where?: InputMaybe<Genres_Bool_Exp>;
+};
+
+
+export type Query_Root_Genres_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_Root_LanguagesArgs = {
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
+};
+
+
+export type Query_Root_Languages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
+};
+
+
+export type Query_Root_Languages_By_PkArgs = {
+  iso_639_1: Scalars['bpchar'];
+};
+
+
+export type Query_Root_Movie_CreditsArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Credits_Order_By>>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Credits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Credits_Order_By>>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Credits_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_Root_Movie_GenresArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Genres_Order_By>>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Genres_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Genres_Order_By>>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Genres_By_PkArgs = {
+  genre_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+
+export type Query_Root_Movie_Production_CompaniesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Companies_Order_By>>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Production_Companies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Companies_Order_By>>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Production_Companies_By_PkArgs = {
+  company_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+
+export type Query_Root_Movie_Production_CountriesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Countries_Order_By>>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Production_Countries_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Countries_Order_By>>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Production_Countries_By_PkArgs = {
+  country_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+
+export type Query_Root_Movie_Spoken_LanguagesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Spoken_Languages_Order_By>>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Spoken_Languages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Spoken_Languages_Order_By>>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+
+export type Query_Root_Movie_Spoken_Languages_By_PkArgs = {
+  language_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+
 export type Query_Root_MoviesArgs = {
   distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -4172,6 +8201,52 @@ export type Query_Root_Movies_AggregateArgs = {
 
 
 export type Query_Root_Movies_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_Root_PeopleArgs = {
+  distinct_on?: InputMaybe<Array<People_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<People_Order_By>>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+
+export type Query_Root_People_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<People_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<People_Order_By>>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+
+export type Query_Root_People_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_Root_Production_CompaniesArgs = {
+  distinct_on?: InputMaybe<Array<Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Production_Companies_Order_By>>;
+  where?: InputMaybe<Production_Companies_Bool_Exp>;
+};
+
+
+export type Query_Root_Production_Companies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Production_Companies_Order_By>>;
+  where?: InputMaybe<Production_Companies_Bool_Exp>;
+};
+
+
+export type Query_Root_Production_Companies_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -4295,6 +8370,30 @@ export type Subscription_Root = {
   bucketsAggregate: Buckets_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.buckets" */
   buckets_stream: Array<Buckets>;
+  /** fetch data from the table: "collections" */
+  collections: Array<Collections>;
+  /** fetch aggregated fields from the table: "collections" */
+  collections_aggregate: Collections_Aggregate;
+  /** fetch data from the table: "collections" using primary key columns */
+  collections_by_pk?: Maybe<Collections>;
+  /** fetch data from the table in a streaming manner: "collections" */
+  collections_stream: Array<Collections>;
+  /** fetch data from the table: "countries" */
+  countries: Array<Countries>;
+  /** fetch aggregated fields from the table: "countries" */
+  countries_aggregate: Countries_Aggregate;
+  /** fetch data from the table: "countries" using primary key columns */
+  countries_by_pk?: Maybe<Countries>;
+  /** fetch data from the table in a streaming manner: "countries" */
+  countries_stream: Array<Countries>;
+  /** fetch data from the table: "credit_types" */
+  credit_types: Array<Credit_Types>;
+  /** fetch aggregated fields from the table: "credit_types" */
+  credit_types_aggregate: Credit_Types_Aggregate;
+  /** fetch data from the table: "credit_types" using primary key columns */
+  credit_types_by_pk?: Maybe<Credit_Types>;
+  /** fetch data from the table in a streaming manner: "credit_types" */
+  credit_types_stream: Array<Credit_Types>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -4303,6 +8402,70 @@ export type Subscription_Root = {
   filesAggregate: Files_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.files" */
   files_stream: Array<Files>;
+  /** fetch data from the table: "genders" */
+  genders: Array<Genders>;
+  /** fetch aggregated fields from the table: "genders" */
+  genders_aggregate: Genders_Aggregate;
+  /** fetch data from the table: "genders" using primary key columns */
+  genders_by_pk?: Maybe<Genders>;
+  /** fetch data from the table in a streaming manner: "genders" */
+  genders_stream: Array<Genders>;
+  /** fetch data from the table: "genres" */
+  genres: Array<Genres>;
+  /** fetch aggregated fields from the table: "genres" */
+  genres_aggregate: Genres_Aggregate;
+  /** fetch data from the table: "genres" using primary key columns */
+  genres_by_pk?: Maybe<Genres>;
+  /** fetch data from the table in a streaming manner: "genres" */
+  genres_stream: Array<Genres>;
+  /** fetch data from the table: "languages" */
+  languages: Array<Languages>;
+  /** fetch aggregated fields from the table: "languages" */
+  languages_aggregate: Languages_Aggregate;
+  /** fetch data from the table: "languages" using primary key columns */
+  languages_by_pk?: Maybe<Languages>;
+  /** fetch data from the table in a streaming manner: "languages" */
+  languages_stream: Array<Languages>;
+  /** An array relationship */
+  movie_credits: Array<Movie_Credits>;
+  /** An aggregate relationship */
+  movie_credits_aggregate: Movie_Credits_Aggregate;
+  /** fetch data from the table: "movie_credits" using primary key columns */
+  movie_credits_by_pk?: Maybe<Movie_Credits>;
+  /** fetch data from the table in a streaming manner: "movie_credits" */
+  movie_credits_stream: Array<Movie_Credits>;
+  /** fetch data from the table: "movie_genres" */
+  movie_genres: Array<Movie_Genres>;
+  /** fetch aggregated fields from the table: "movie_genres" */
+  movie_genres_aggregate: Movie_Genres_Aggregate;
+  /** fetch data from the table: "movie_genres" using primary key columns */
+  movie_genres_by_pk?: Maybe<Movie_Genres>;
+  /** fetch data from the table in a streaming manner: "movie_genres" */
+  movie_genres_stream: Array<Movie_Genres>;
+  /** An array relationship */
+  movie_production_companies: Array<Movie_Production_Companies>;
+  /** An aggregate relationship */
+  movie_production_companies_aggregate: Movie_Production_Companies_Aggregate;
+  /** fetch data from the table: "movie_production_companies" using primary key columns */
+  movie_production_companies_by_pk?: Maybe<Movie_Production_Companies>;
+  /** fetch data from the table in a streaming manner: "movie_production_companies" */
+  movie_production_companies_stream: Array<Movie_Production_Companies>;
+  /** An array relationship */
+  movie_production_countries: Array<Movie_Production_Countries>;
+  /** An aggregate relationship */
+  movie_production_countries_aggregate: Movie_Production_Countries_Aggregate;
+  /** fetch data from the table: "movie_production_countries" using primary key columns */
+  movie_production_countries_by_pk?: Maybe<Movie_Production_Countries>;
+  /** fetch data from the table in a streaming manner: "movie_production_countries" */
+  movie_production_countries_stream: Array<Movie_Production_Countries>;
+  /** An array relationship */
+  movie_spoken_languages: Array<Movie_Spoken_Languages>;
+  /** An aggregate relationship */
+  movie_spoken_languages_aggregate: Movie_Spoken_Languages_Aggregate;
+  /** fetch data from the table: "movie_spoken_languages" using primary key columns */
+  movie_spoken_languages_by_pk?: Maybe<Movie_Spoken_Languages>;
+  /** fetch data from the table in a streaming manner: "movie_spoken_languages" */
+  movie_spoken_languages_stream: Array<Movie_Spoken_Languages>;
   /** An array relationship */
   movies: Array<Movies>;
   /** An aggregate relationship */
@@ -4311,6 +8474,22 @@ export type Subscription_Root = {
   movies_by_pk?: Maybe<Movies>;
   /** fetch data from the table in a streaming manner: "movies" */
   movies_stream: Array<Movies>;
+  /** fetch data from the table: "people" */
+  people: Array<People>;
+  /** fetch aggregated fields from the table: "people" */
+  people_aggregate: People_Aggregate;
+  /** fetch data from the table: "people" using primary key columns */
+  people_by_pk?: Maybe<People>;
+  /** fetch data from the table in a streaming manner: "people" */
+  people_stream: Array<People>;
+  /** fetch data from the table: "production_companies" */
+  production_companies: Array<Production_Companies>;
+  /** fetch aggregated fields from the table: "production_companies" */
+  production_companies_aggregate: Production_Companies_Aggregate;
+  /** fetch data from the table: "production_companies" using primary key columns */
+  production_companies_by_pk?: Maybe<Production_Companies>;
+  /** fetch data from the table in a streaming manner: "production_companies" */
+  production_companies_stream: Array<Production_Companies>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** fetch data from the table: "auth.users" */
@@ -4600,6 +8779,96 @@ export type Subscription_Root_Buckets_StreamArgs = {
 };
 
 
+export type Subscription_Root_CollectionsArgs = {
+  distinct_on?: InputMaybe<Array<Collections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Collections_Order_By>>;
+  where?: InputMaybe<Collections_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Collections_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Collections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Collections_Order_By>>;
+  where?: InputMaybe<Collections_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Collections_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Collections_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Collections_Stream_Cursor_Input>>;
+  where?: InputMaybe<Collections_Bool_Exp>;
+};
+
+
+export type Subscription_Root_CountriesArgs = {
+  distinct_on?: InputMaybe<Array<Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Countries_Order_By>>;
+  where?: InputMaybe<Countries_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Countries_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Countries_Order_By>>;
+  where?: InputMaybe<Countries_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Countries_By_PkArgs = {
+  iso_3166_1: Scalars['bpchar'];
+};
+
+
+export type Subscription_Root_Countries_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Countries_Stream_Cursor_Input>>;
+  where?: InputMaybe<Countries_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Credit_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Credit_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Credit_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Credit_Types_Order_By>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Credit_Types_By_PkArgs = {
+  credit_type: Scalars['String'];
+};
+
+
+export type Subscription_Root_Credit_Types_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Credit_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
 export type Subscription_Root_FileArgs = {
   id: Scalars['uuid'];
 };
@@ -4630,6 +8899,250 @@ export type Subscription_Root_Files_StreamArgs = {
 };
 
 
+export type Subscription_Root_GendersArgs = {
+  distinct_on?: InputMaybe<Array<Genders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genders_Order_By>>;
+  where?: InputMaybe<Genders_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Genders_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Genders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genders_Order_By>>;
+  where?: InputMaybe<Genders_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Genders_By_PkArgs = {
+  gender: Scalars['String'];
+};
+
+
+export type Subscription_Root_Genders_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Genders_Stream_Cursor_Input>>;
+  where?: InputMaybe<Genders_Bool_Exp>;
+};
+
+
+export type Subscription_Root_GenresArgs = {
+  distinct_on?: InputMaybe<Array<Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genres_Order_By>>;
+  where?: InputMaybe<Genres_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Genres_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Genres_Order_By>>;
+  where?: InputMaybe<Genres_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Genres_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Genres_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Genres_Stream_Cursor_Input>>;
+  where?: InputMaybe<Genres_Bool_Exp>;
+};
+
+
+export type Subscription_Root_LanguagesArgs = {
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Languages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Languages_By_PkArgs = {
+  iso_639_1: Scalars['bpchar'];
+};
+
+
+export type Subscription_Root_Languages_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Languages_Stream_Cursor_Input>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_CreditsArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Credits_Order_By>>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Credits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Credits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Credits_Order_By>>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Credits_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Movie_Credits_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Movie_Credits_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Credits_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_GenresArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Genres_Order_By>>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Genres_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Genres_Order_By>>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Genres_By_PkArgs = {
+  genre_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Movie_Genres_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Movie_Genres_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Production_CompaniesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Companies_Order_By>>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Production_Companies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Companies_Order_By>>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Production_Companies_By_PkArgs = {
+  company_id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Movie_Production_Companies_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Movie_Production_Companies_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Production_Companies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Production_CountriesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Countries_Order_By>>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Production_Countries_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Production_Countries_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Production_Countries_Order_By>>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Production_Countries_By_PkArgs = {
+  country_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Movie_Production_Countries_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Movie_Production_Countries_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Production_Countries_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Spoken_LanguagesArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Spoken_Languages_Order_By>>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Spoken_Languages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Spoken_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Spoken_Languages_Order_By>>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Movie_Spoken_Languages_By_PkArgs = {
+  language_code: Scalars['bpchar'];
+  movie_id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Movie_Spoken_Languages_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Movie_Spoken_Languages_Stream_Cursor_Input>>;
+  where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+
 export type Subscription_Root_MoviesArgs = {
   distinct_on?: InputMaybe<Array<Movies_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -4657,6 +9170,66 @@ export type Subscription_Root_Movies_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Movies_Stream_Cursor_Input>>;
   where?: InputMaybe<Movies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_PeopleArgs = {
+  distinct_on?: InputMaybe<Array<People_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<People_Order_By>>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+
+export type Subscription_Root_People_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<People_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<People_Order_By>>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+
+export type Subscription_Root_People_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_People_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<People_Stream_Cursor_Input>>;
+  where?: InputMaybe<People_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Production_CompaniesArgs = {
+  distinct_on?: InputMaybe<Array<Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Production_Companies_Order_By>>;
+  where?: InputMaybe<Production_Companies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Production_Companies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Production_Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Production_Companies_Order_By>>;
+  where?: InputMaybe<Production_Companies_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Production_Companies_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Production_Companies_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Production_Companies_Stream_Cursor_Input>>;
+  where?: InputMaybe<Production_Companies_Bool_Exp>;
 };
 
 
@@ -5773,6 +10346,96 @@ export default {
           "name": "Float"
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "Float_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_gt",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_gte",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_lt",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_lte",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
           "kind": "SCALAR",
           "name": "Int"
         },
@@ -5869,6 +10532,172 @@ export default {
         {
           "kind": "SCALAR",
           "name": "String"
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "String_array_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_contained_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_contains",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_gt",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_gte",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "String",
+                        "ofType": null
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_lt",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_lte",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "String",
+                        "ofType": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           "kind": "INPUT_OBJECT",
@@ -13799,6 +18628,180 @@ export default {
           ]
         },
         {
+          "kind": "SCALAR",
+          "name": "bpchar"
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "bpchar_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_gt",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_gte",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_ilike",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "bpchar",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_iregex",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_like",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_lt",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_lte",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nilike",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "bpchar",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_niregex",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nlike",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nregex",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nsimilar",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_regex",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_similar",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "buckets",
           "fields": [
@@ -15578,6 +20581,1763 @@ export default {
           ]
         },
         {
+          "kind": "OBJECT",
+          "name": "collections",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "movies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "collections_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "collections",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "collections_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "collections_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "collections_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movies",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "collections_constraint",
+          "enumValues": [
+            {
+              "name": "collections_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_insert_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movies",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_arr_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "collections_max_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "collections_min_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "collections_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "collections",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_obj_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "collections_insert_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "collections_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "collections_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "collections_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "collections_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_order_by",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movies_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_aggregate_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "collections_select_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "overview"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_set_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "collections_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "collections_update_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "overview"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "collections_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "collections_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "collections_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "countries",
+          "fields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "countries_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "countries_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "countries_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "bpchar_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "countries_constraint",
+          "enumValues": [
+            {
+              "name": "countries_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_insert_input",
+          "inputFields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "countries_max_fields",
+          "fields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "countries_min_fields",
+          "fields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "countries_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "countries_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "countries_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "countries_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_order_by",
+          "inputFields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "countries_select_column",
+          "enumValues": [
+            {
+              "name": "iso_3166_1"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_set_input",
+          "inputFields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "countries_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "iso_3166_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "countries_update_column",
+          "enumValues": [
+            {
+              "name": "iso_3166_1"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "countries_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "countries_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "countries_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "credit_types",
+          "fields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "credit_types_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "credit_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "credit_types_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "credit_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "credit_types_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "credit_types_constraint",
+          "enumValues": [
+            {
+              "name": "credit_types_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "credit_types_enum",
+          "enumValues": [
+            {
+              "name": "CAST"
+            },
+            {
+              "name": "CREW"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_enum_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "ENUM",
+                "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "credit_types_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "ENUM",
+                "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "credit_types_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_insert_input",
+          "inputFields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "credit_types_max_fields",
+          "fields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "credit_types_min_fields",
+          "fields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "credit_types_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "credit_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "credit_types_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "credit_types_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "credit_types_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_order_by",
+          "inputFields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "credit_types_select_column",
+          "enumValues": [
+            {
+              "name": "credit_type"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_set_input",
+          "inputFields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "credit_types_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "credit_types_update_column",
+          "enumValues": [
+            {
+              "name": "credit_type"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "credit_types_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "credit_types_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "credit_types_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
           "kind": "ENUM",
           "name": "cursor_ordering",
           "enumValues": [
@@ -15586,6 +22346,100 @@ export default {
             },
             {
               "name": "DESC"
+            }
+          ]
+        },
+        {
+          "kind": "SCALAR",
+          "name": "date"
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "date_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_gt",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_gte",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "date",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_lt",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_lte",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "date",
+                    "ofType": null
+                  }
+                }
+              }
             }
           ]
         },
@@ -17870,6 +24724,1008 @@ export default {
           ]
         },
         {
+          "kind": "OBJECT",
+          "name": "genders",
+          "fields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genders_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genders",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genders_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genders_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genders_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "gender",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "genders_constraint",
+          "enumValues": [
+            {
+              "name": "genders_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "genders_enum",
+          "enumValues": [
+            {
+              "name": "FEMALE"
+            },
+            {
+              "name": "MALE"
+            },
+            {
+              "name": "OTHER"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_enum_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "ENUM",
+                "name": "genders_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "genders_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "ENUM",
+                "name": "genders_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "genders_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_insert_input",
+          "inputFields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genders_max_fields",
+          "fields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genders_min_fields",
+          "fields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genders_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genders",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "genders_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "genders_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genders_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_order_by",
+          "inputFields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "genders_select_column",
+          "enumValues": [
+            {
+              "name": "gender"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_set_input",
+          "inputFields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "genders_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "gender",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "genders_update_column",
+          "enumValues": [
+            {
+              "name": "gender"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genders_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genders_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "genders_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genres",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genres_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genres_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genres_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "genres_constraint",
+          "enumValues": [
+            {
+              "name": "genres_name_key"
+            },
+            {
+              "name": "genres_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_insert_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genres_max_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genres_min_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "genres_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "genres_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "genres_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genres_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_order_by",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "genres_select_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_set_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "genres_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "genres_update_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "genres_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genres_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "genres_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
           "kind": "SCALAR",
           "name": "jsonb"
         },
@@ -18039,8 +25895,530 @@ export default {
         },
         {
           "kind": "OBJECT",
-          "name": "movies",
+          "name": "languages",
           "fields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "languages_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "languages_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "languages_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "bpchar_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "languages_constraint",
+          "enumValues": [
+            {
+              "name": "languages_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_insert_input",
+          "inputFields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "languages_max_fields",
+          "fields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "languages_min_fields",
+          "fields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "languages_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "languages_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "languages_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "languages_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_order_by",
+          "inputFields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "languages_select_column",
+          "enumValues": [
+            {
+              "name": "iso_639_1"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_set_input",
+          "inputFields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "languages_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "iso_639_1",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "languages_update_column",
+          "enumValues": [
+            {
+              "name": "iso_639_1"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "languages_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "languages_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "languages_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits",
+          "fields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "credit_types_enum",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
             {
               "name": "id",
               "type": {
@@ -18050,6 +26428,4689 @@ export default {
                   "name": "uuid",
                   "ofType": null
                 }
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_credits",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_aggregate_bool_exp",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_aggregate_bool_exp_count",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_aggregate_bool_exp_count",
+          "inputFields": [
+            {
+              "name": "arguments",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "movie_credits_select_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "predicate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Int_comparison_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_aggregate_fields",
+          "fields": [
+            {
+              "name": "avg",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_avg_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_credits_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_min_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_stddev_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_stddev_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_stddev_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "sum",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_sum_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_var_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_var_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "variance",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_variance_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "avg",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_avg_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_min_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_stddev_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev_pop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_stddev_pop_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev_samp",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_stddev_samp_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "sum",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_sum_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "var_pop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_var_pop_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "var_samp",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_var_samp_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "variance",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_variance_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_arr_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_credits_insert_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_avg_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_avg_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "character",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "credit_types_enum_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "Int_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_credits_constraint",
+          "enumValues": [
+            {
+              "name": "movie_credits_id_order_key"
+            },
+            {
+              "name": "movie_credits_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_inc_input",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_insert_input",
+          "inputFields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "ENUM",
+                "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_max_fields",
+          "fields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_max_order_by",
+          "inputFields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_min_fields",
+          "fields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_min_order_by",
+          "inputFields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_credits",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "movie_credits_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "movie_credits_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_order_by",
+          "inputFields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_credits_select_column",
+          "enumValues": [
+            {
+              "name": "character"
+            },
+            {
+              "name": "credit_type"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "movie_id"
+            },
+            {
+              "name": "order"
+            },
+            {
+              "name": "person_id"
+            },
+            {
+              "name": "role"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_set_input",
+          "inputFields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "ENUM",
+                "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_stddev_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_stddev_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_stddev_pop_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_stddev_pop_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_stddev_samp_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_stddev_samp_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_credits_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "character",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "credit_type",
+              "type": {
+                "kind": "ENUM",
+                "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "role",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_sum_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_sum_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_credits_update_column",
+          "enumValues": [
+            {
+              "name": "character"
+            },
+            {
+              "name": "credit_type"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "movie_id"
+            },
+            {
+              "name": "order"
+            },
+            {
+              "name": "person_id"
+            },
+            {
+              "name": "role"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_updates",
+          "inputFields": [
+            {
+              "name": "_inc",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_inc_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_credits_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_var_pop_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_var_pop_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_var_samp_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_var_samp_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_credits_variance_fields",
+          "fields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_credits_variance_order_by",
+          "inputFields": [
+            {
+              "name": "order",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_genres",
+          "fields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_genres_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_genres_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_genres_constraint",
+          "enumValues": [
+            {
+              "name": "movie_genres_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_insert_input",
+          "inputFields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_genres_max_fields",
+          "fields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_genres_min_fields",
+          "fields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_genres_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "movie_genres_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "movie_genres_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_order_by",
+          "inputFields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_genres_select_column",
+          "enumValues": [
+            {
+              "name": "genre_id"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_set_input",
+          "inputFields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_genres_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_genres_update_column",
+          "enumValues": [
+            {
+              "name": "genre_id"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_genres_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_companies",
+          "fields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_companies_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_aggregate_bool_exp",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_aggregate_bool_exp_count",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_aggregate_bool_exp_count",
+          "inputFields": [
+            {
+              "name": "arguments",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "movie_production_companies_select_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "predicate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Int_comparison_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_companies_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_min_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_arr_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_companies_insert_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_production_companies_constraint",
+          "enumValues": [
+            {
+              "name": "movie_production_companies_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_insert_input",
+          "inputFields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_companies_max_fields",
+          "fields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_max_order_by",
+          "inputFields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_companies_min_fields",
+          "fields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_min_order_by",
+          "inputFields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_companies_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "movie_production_companies_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "movie_production_companies_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_order_by",
+          "inputFields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_production_companies_select_column",
+          "enumValues": [
+            {
+              "name": "company_id"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_set_input",
+          "inputFields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_production_companies_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "company_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_production_companies_update_column",
+          "enumValues": [
+            {
+              "name": "company_id"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_companies_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_production_companies_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_countries",
+          "fields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_countries_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_aggregate_bool_exp",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_aggregate_bool_exp_count",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_aggregate_bool_exp_count",
+          "inputFields": [
+            {
+              "name": "arguments",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "movie_production_countries_select_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "predicate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Int_comparison_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_countries_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_min_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_arr_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_countries_insert_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "bpchar_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_production_countries_constraint",
+          "enumValues": [
+            {
+              "name": "movie_production_countries_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_insert_input",
+          "inputFields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_countries_max_fields",
+          "fields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_max_order_by",
+          "inputFields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_countries_min_fields",
+          "fields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_min_order_by",
+          "inputFields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_production_countries_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "movie_production_countries_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "movie_production_countries_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_order_by",
+          "inputFields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_production_countries_select_column",
+          "enumValues": [
+            {
+              "name": "country_code"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_set_input",
+          "inputFields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_production_countries_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "country_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_production_countries_update_column",
+          "enumValues": [
+            {
+              "name": "country_code"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_production_countries_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_production_countries_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_spoken_languages",
+          "fields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_spoken_languages_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_spoken_languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_aggregate_bool_exp",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_aggregate_bool_exp_count",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_aggregate_bool_exp_count",
+          "inputFields": [
+            {
+              "name": "arguments",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "movie_spoken_languages_select_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "predicate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Int_comparison_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_spoken_languages_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_spoken_languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_min_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_arr_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_spoken_languages_insert_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "bpchar_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_spoken_languages_constraint",
+          "enumValues": [
+            {
+              "name": "movie_spoken_languages_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_insert_input",
+          "inputFields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_spoken_languages_max_fields",
+          "fields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_max_order_by",
+          "inputFields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_spoken_languages_min_fields",
+          "fields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_min_order_by",
+          "inputFields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movie_spoken_languages_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_spoken_languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "movie_spoken_languages_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "movie_spoken_languages_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_order_by",
+          "inputFields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "bpchar",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_spoken_languages_select_column",
+          "enumValues": [
+            {
+              "name": "language_code"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_set_input",
+          "inputFields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_spoken_languages_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "language_code",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bpchar",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "movie_spoken_languages_update_column",
+          "enumValues": [
+            {
+              "name": "language_code"
+            },
+            {
+              "name": "movie_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_spoken_languages_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "movie_spoken_languages_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies",
+          "fields": [
+            {
+              "name": "backdrop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "files",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "backdropId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "collection",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_credits",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_credits",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_credits_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_credits_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_credits_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_credits_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_credits_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_companies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_countries_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_spoken_languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_spoken_languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_spoken_languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_spoken_languages_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_spoken_languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_spoken_languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
               },
               "args": []
             },
@@ -18072,6 +31133,66 @@ export default {
               "args": []
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "title",
               "type": {
                 "kind": "NON_NULL",
@@ -18080,6 +31201,42 @@ export default {
                   "name": "String",
                   "ofType": null
                 }
+              },
+              "args": []
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
               },
               "args": []
             }
@@ -18186,6 +31343,15 @@ export default {
           "name": "movies_aggregate_fields",
           "fields": [
             {
+              "name": "avg",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_avg_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "count",
               "type": {
                 "kind": "NON_NULL",
@@ -18237,6 +31403,69 @@ export default {
                 "ofType": null
               },
               "args": []
+            },
+            {
+              "name": "stddev",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_stddev_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_stddev_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_stddev_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "sum",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_sum_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_var_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_var_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "variance",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movies_variance_fields",
+                "ofType": null
+              },
+              "args": []
             }
           ],
           "interfaces": []
@@ -18245,6 +31474,14 @@ export default {
           "kind": "INPUT_OBJECT",
           "name": "movies_aggregate_order_by",
           "inputFields": [
+            {
+              "name": "avg",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_avg_order_by",
+                "ofType": null
+              }
+            },
             {
               "name": "count",
               "type": {
@@ -18266,6 +31503,62 @@ export default {
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "movies_min_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_stddev_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev_pop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_stddev_pop_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev_samp",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_stddev_samp_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "sum",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_sum_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "var_pop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_var_pop_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "var_samp",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_var_samp_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "variance",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_variance_order_by",
                 "ofType": null
               }
             }
@@ -18297,6 +31590,121 @@ export default {
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "movies_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_avg_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_avg_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
                 "ofType": null
               }
             }
@@ -18343,10 +31751,178 @@ export default {
               }
             },
             {
+              "name": "backdrop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "backdropId",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "bigint_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "collections_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "timestamptz_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_array_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_credits",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_credits_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_companies",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_companies_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_countries",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_countries_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_spoken_languages",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_spoken_languages_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "Float_comparison_exp",
                 "ofType": null
               }
             },
@@ -18367,10 +31943,90 @@ export default {
               }
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_array_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "date_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "bigint_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "Int_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "title",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "timestamptz_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "Float_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "Int_comparison_exp",
                 "ofType": null
               }
             }
@@ -18381,7 +32037,67 @@ export default {
           "name": "movies_constraint",
           "enumValues": [
             {
+              "name": "movies_imdb_id_key"
+            },
+            {
               "name": "movies_pkey"
+            },
+            {
+              "name": "movies_tmdb_id_key"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_inc_input",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             }
           ]
         },
@@ -18390,10 +32106,152 @@ export default {
           "name": "movies_insert_input",
           "inputFields": [
             {
+              "name": "backdrop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_obj_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "backdropId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "collections_obj_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_credits",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_arr_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_companies",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_arr_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_countries",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_arr_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_spoken_languages",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_arr_rel_insert_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -18414,10 +32272,96 @@ export default {
               }
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "name": "title",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             }
@@ -18428,10 +32372,115 @@ export default {
           "name": "movies_max_fields",
           "fields": [
             {
+              "name": "backdropId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               },
               "args": []
@@ -18446,10 +32495,106 @@ export default {
               "args": []
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "title",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               },
               "args": []
@@ -18462,7 +32607,95 @@ export default {
           "name": "movies_max_order_by",
           "inputFields": [
             {
+              "name": "backdropId",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18478,7 +32711,87 @@ export default {
               }
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18492,6 +32805,60 @@ export default {
           "name": "movies_min_fields",
           "fields": [
             {
+              "name": "backdropId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -18501,10 +32868,121 @@ export default {
               "args": []
             },
             {
+              "name": "imdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "posterId",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "args": []
@@ -18517,6 +32995,42 @@ export default {
                 "ofType": null
               },
               "args": []
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
             }
           ],
           "interfaces": []
@@ -18526,7 +33040,95 @@ export default {
           "name": "movies_min_order_by",
           "inputFields": [
             {
+              "name": "backdropId",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18542,7 +33144,87 @@ export default {
               }
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18636,7 +33318,143 @@ export default {
           "name": "movies_order_by",
           "inputFields": [
             {
+              "name": "backdrop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "files_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "backdropId",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "collections_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_credits_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_credits_aggregate_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_companies_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_companies_aggregate_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_production_countries_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_production_countries_aggregate_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_spoken_languages_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_spoken_languages_aggregate_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18660,7 +33478,87 @@ export default {
               }
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -18691,13 +33589,76 @@ export default {
           "name": "movies_select_column",
           "enumValues": [
             {
+              "name": "backdropId"
+            },
+            {
+              "name": "budget"
+            },
+            {
+              "name": "certification"
+            },
+            {
+              "name": "collection_id"
+            },
+            {
+              "name": "created_at"
+            },
+            {
+              "name": "homepage"
+            },
+            {
               "name": "id"
+            },
+            {
+              "name": "imdb_id"
+            },
+            {
+              "name": "keywords"
+            },
+            {
+              "name": "language"
+            },
+            {
+              "name": "overview"
+            },
+            {
+              "name": "popularity"
             },
             {
               "name": "posterId"
             },
             {
+              "name": "production_country_codes"
+            },
+            {
+              "name": "release_date"
+            },
+            {
+              "name": "revenue"
+            },
+            {
+              "name": "runtime"
+            },
+            {
+              "name": "status"
+            },
+            {
+              "name": "tagline"
+            },
+            {
               "name": "title"
+            },
+            {
+              "name": "tmdb_id"
+            },
+            {
+              "name": "updated_at"
+            },
+            {
+              "name": "vote_average"
+            },
+            {
+              "name": "vote_count"
             }
           ]
         },
@@ -18706,10 +33667,104 @@ export default {
           "name": "movies_set_input",
           "inputFields": [
             {
+              "name": "backdropId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -18722,10 +33777,441 @@ export default {
               }
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "name": "title",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_stddev_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_stddev_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_stddev_pop_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_stddev_pop_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_stddev_samp_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_stddev_samp_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
                 "ofType": null
               }
             }
@@ -18761,10 +34247,104 @@ export default {
           "name": "movies_stream_cursor_value_input",
           "inputFields": [
             {
+              "name": "backdropId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "certification",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "collection_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "homepage",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "imdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "language",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "overview",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -18777,10 +34357,211 @@ export default {
               }
             },
             {
+              "name": "production_country_codes",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "release_date",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tagline",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "name": "title",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "updated_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_sum_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "bigint",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_sum_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
                 "ofType": null
               }
             }
@@ -18791,13 +34572,76 @@ export default {
           "name": "movies_update_column",
           "enumValues": [
             {
+              "name": "backdropId"
+            },
+            {
+              "name": "budget"
+            },
+            {
+              "name": "certification"
+            },
+            {
+              "name": "collection_id"
+            },
+            {
+              "name": "created_at"
+            },
+            {
+              "name": "homepage"
+            },
+            {
               "name": "id"
+            },
+            {
+              "name": "imdb_id"
+            },
+            {
+              "name": "keywords"
+            },
+            {
+              "name": "language"
+            },
+            {
+              "name": "overview"
+            },
+            {
+              "name": "popularity"
             },
             {
               "name": "posterId"
             },
             {
+              "name": "production_country_codes"
+            },
+            {
+              "name": "release_date"
+            },
+            {
+              "name": "revenue"
+            },
+            {
+              "name": "runtime"
+            },
+            {
+              "name": "status"
+            },
+            {
+              "name": "tagline"
+            },
+            {
               "name": "title"
+            },
+            {
+              "name": "tmdb_id"
+            },
+            {
+              "name": "updated_at"
+            },
+            {
+              "name": "vote_average"
+            },
+            {
+              "name": "vote_count"
             }
           ]
         },
@@ -18805,6 +34649,14 @@ export default {
           "kind": "INPUT_OBJECT",
           "name": "movies_updates",
           "inputFields": [
+            {
+              "name": "_inc",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movies_inc_input",
+                "ofType": null
+              }
+            },
             {
               "name": "_set",
               "type": {
@@ -18822,6 +34674,351 @@ export default {
                   "name": "movies_bool_exp",
                   "ofType": null
                 }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_var_pop_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_var_pop_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_var_samp_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_var_samp_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "movies_variance_fields",
+          "fields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movies_variance_order_by",
+          "inputFields": [
+            {
+              "name": "budget",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "popularity",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "revenue",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "runtime",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_average",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "vote_count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
               }
             }
           ]
@@ -19335,6 +35532,512 @@ export default {
               ]
             },
             {
+              "name": "delete_collections",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "collections_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_collections_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_countries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "countries_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "iso_3166_1",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_credit_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "credit_types_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_credit_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "credit_type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_genders",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genders_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_genders_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "gender",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_genres",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genres_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_languages",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "languages_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "iso_639_1",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_credits",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_credits_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_credits_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_genres",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_genres_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "genre_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_production_companies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_companies_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "company_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_production_countries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_countries_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_production_countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "country_code",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_spoken_languages",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_spoken_languages_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_movie_spoken_languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "language_code",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "delete_movies",
               "type": {
                 "kind": "OBJECT",
@@ -19360,6 +36063,90 @@ export default {
               "type": {
                 "kind": "OBJECT",
                 "name": "movies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_people",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "people_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_people_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_production_companies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "production_companies_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies",
                 "ofType": null
               },
               "args": [
@@ -20145,6 +36932,710 @@ export default {
               ]
             },
             {
+              "name": "insert_collections",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "collections_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_collections_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "collections_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_countries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "countries_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_countries_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "countries_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_credit_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "credit_types_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_credit_types_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "credit_types_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_genders",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "genders_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_genders_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genders_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_genres",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "genres_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_genres_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genres_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_languages",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "languages_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_languages_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "languages_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_credits",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_credits_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_credits_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_credits_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_genres",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_genres_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_genres_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_genres_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_production_companies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_production_companies_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_production_companies_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_companies_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_production_countries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_production_countries_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_production_countries_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_countries_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_spoken_languages",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_spoken_languages_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_movie_spoken_languages_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_spoken_languages_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "insert_movies",
               "type": {
                 "kind": "OBJECT",
@@ -20203,6 +37694,134 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "movies_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_people",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "people_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_people_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "people_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_production_companies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "production_companies_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_production_companies_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "production_companies_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_on_conflict",
                     "ofType": null
                   }
                 }
@@ -21623,6 +39242,270 @@ export default {
               ]
             },
             {
+              "name": "update_collections",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "collections_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_collections_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "collections_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_collections_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "collections_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "collections_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_countries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "countries_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "countries_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_countries_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "countries_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "countries_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_credit_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "credit_types_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_credit_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "credit_types_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_credit_types_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "credit_types_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "credit_types_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "update_files_many",
               "type": {
                 "kind": "LIST",
@@ -21653,6 +39536,726 @@ export default {
               ]
             },
             {
+              "name": "update_genders",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genders_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_genders_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genders_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_genders_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "genders_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "genders_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_genres",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genres_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "genres_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_genres_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "genres_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "genres_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_languages",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "languages_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "languages_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_languages_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "languages_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "languages_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_credits",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_credits_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_credits_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_credits_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_credits_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_credits_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_credits_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_genres",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_genres_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_genres_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_genres_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_genres_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_genres_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_production_companies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_companies_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_companies_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_production_companies_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_companies_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_production_companies_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_production_countries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_countries_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_production_countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_production_countries_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_production_countries_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_countries_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_production_countries_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_spoken_languages",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_spoken_languages_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_spoken_languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_spoken_languages_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_movie_spoken_languages_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_spoken_languages_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "movie_spoken_languages_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "update_movies",
               "type": {
                 "kind": "OBJECT",
@@ -21660,6 +40263,14 @@ export default {
                 "ofType": null
               },
               "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_inc_input",
+                    "ofType": null
+                  }
+                },
                 {
                   "name": "_set",
                   "type": {
@@ -21689,6 +40300,14 @@ export default {
                 "ofType": null
               },
               "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movies_inc_input",
+                    "ofType": null
+                  }
+                },
                 {
                   "name": "_set",
                   "type": {
@@ -21732,6 +40351,198 @@ export default {
                         "ofType": {
                           "kind": "INPUT_OBJECT",
                           "name": "movies_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_people",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "people_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_people_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "people_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_people_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "people_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "people_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_production_companies",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "production_companies_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "production_companies_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_production_companies_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "production_companies_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "production_companies_updates",
                           "ofType": null
                         }
                       }
@@ -21826,6 +40637,1577 @@ export default {
               "name": "desc_nulls_last"
             }
           ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "people",
+          "fields": [
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "gender",
+              "type": {
+                "kind": "ENUM",
+                "name": "genders_enum",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "people_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "people",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "people_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "people_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "people_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "date_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "gender",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genders_enum_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "people_constraint",
+          "enumValues": [
+            {
+              "name": "people_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_insert_input",
+          "inputFields": [
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "gender",
+              "type": {
+                "kind": "ENUM",
+                "name": "genders_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "people_max_fields",
+          "fields": [
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "people_min_fields",
+          "fields": [
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "people_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "people",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "people_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "people_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "people_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_order_by",
+          "inputFields": [
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "gender",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "people_select_column",
+          "enumValues": [
+            {
+              "name": "birthdate"
+            },
+            {
+              "name": "gender"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_set_input",
+          "inputFields": [
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "gender",
+              "type": {
+                "kind": "ENUM",
+                "name": "genders_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "people_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "birthdate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "date",
+                "ofType": null
+              }
+            },
+            {
+              "name": "gender",
+              "type": {
+                "kind": "ENUM",
+                "name": "genders_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "people_update_column",
+          "enumValues": [
+            {
+              "name": "birthdate"
+            },
+            {
+              "name": "gender"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "people_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "people_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_aggregate_fields",
+          "fields": [
+            {
+              "name": "avg",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_avg_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_min_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_stddev_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_stddev_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_stddev_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "sum",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_sum_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_var_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_var_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "variance",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies_variance_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_avg_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "production_companies_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "Int_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "production_companies_constraint",
+          "enumValues": [
+            {
+              "name": "production_companies_pkey"
+            },
+            {
+              "name": "production_companies_tmdb_id_key"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_inc_input",
+          "inputFields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_insert_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_max_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_min_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "production_companies_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "production_companies_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "production_companies_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_order_by",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "production_companies_select_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "logo_path"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "origin_country"
+            },
+            {
+              "name": "tmdb_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_set_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_stddev_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_stddev_pop_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_stddev_samp_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "production_companies_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "logo_path",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "origin_country",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_sum_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "ENUM",
+          "name": "production_companies_update_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "logo_path"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "origin_country"
+            },
+            {
+              "name": "tmdb_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "production_companies_updates",
+          "inputFields": [
+            {
+              "name": "_inc",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "production_companies_inc_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "production_companies_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "production_companies_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_var_pop_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_var_samp_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "production_companies_variance_fields",
+          "fields": [
+            {
+              "name": "tmdb_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
         },
         {
           "kind": "OBJECT",
@@ -23245,6 +43627,477 @@ export default {
               ]
             },
             {
+              "name": "collections",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "collections",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "collections_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "collections_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "collections_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "collections_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "collections_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "collections_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "collections_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "countries",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "countries_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "countries_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "iso_3166_1",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "credit_types",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "credit_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "credit_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "credit_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "credit_types_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "credit_types_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "credit_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "credit_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "credit_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "credit_type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "file",
               "type": {
                 "kind": "OBJECT",
@@ -23402,6 +44255,1306 @@ export default {
               ]
             },
             {
+              "name": "genders",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genders",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genders_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genders_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genders_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "genders_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genders_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genders_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genders_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "gender",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "genres_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "languages",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "languages_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "languages_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "iso_639_1",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_credits",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_credits_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_credits_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_credits_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_credits_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_credits_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_genres",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_genres_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_genres_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "genre_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_companies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "company_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_countries_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "country_code",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_spoken_languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_spoken_languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_spoken_languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_spoken_languages_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_spoken_languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_spoken_languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "language_code",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "movies",
               "type": {
                 "kind": "NON_NULL",
@@ -23542,6 +45695,320 @@ export default {
               "type": {
                 "kind": "OBJECT",
                 "name": "movies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "people",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "people",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "people_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "people_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "people_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "people_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "people_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "people_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "people_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "production_companies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "production_companies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "production_companies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies",
                 "ofType": null
               },
               "args": [
@@ -25761,6 +48228,633 @@ export default {
               ]
             },
             {
+              "name": "collections",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "collections",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "collections_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "collections_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "collections_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "collections_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "collections_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "collections_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "collections_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "collections",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "collections_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "collections",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "collections_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "collections_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "countries",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "countries_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "countries_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "iso_3166_1",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "countries_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "countries_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "credit_types",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "credit_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "credit_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "credit_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "credit_types_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "credit_types_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "credit_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "credit_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "credit_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "credit_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "credit_type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "credit_types_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "credit_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "credit_types_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "credit_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "file",
               "type": {
                 "kind": "OBJECT",
@@ -25970,6 +49064,1722 @@ export default {
               ]
             },
             {
+              "name": "genders",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genders",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genders_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genders_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genders_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "genders_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genders_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genders_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genders_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genders",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "gender",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genders_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genders",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genders_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genders_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "genres_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "genres_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "languages",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "languages_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "languages_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "iso_639_1",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "languages_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "languages_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_credits",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_credits_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_credits_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_credits_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_credits_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_credits_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_credits",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_credits_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_credits",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_credits_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_credits_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_genres",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_genres_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_genres_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_genres_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_genres",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "genre_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_genres_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_genres_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_companies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "company_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_companies_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_companies_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_production_countries_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_production_countries_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_countries_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_production_countries",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "country_code",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_production_countries_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_production_countries",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_production_countries_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_production_countries_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_spoken_languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_spoken_languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_spoken_languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_spoken_languages_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_spoken_languages_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_spoken_languages_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "movie_spoken_languages",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "language_code",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "movie_spoken_languages_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_spoken_languages",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_spoken_languages_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_spoken_languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "movies",
               "type": {
                 "kind": "NON_NULL",
@@ -26173,6 +50983,424 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "movies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "people",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "people",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "people_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "people_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "people_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "people_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "people_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "people_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "people_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "people",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "people_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "people",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "people_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "people_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "production_companies",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "production_companies_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "production_companies_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "production_companies_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "production_companies_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "production_companies_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "production_companies",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "production_companies_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "production_companies",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "production_companies_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "production_companies_bool_exp",
                     "ofType": null
                   }
                 }
@@ -31399,7 +56627,9 @@ export default {
   types: {} as {
     Scalars: Scalars,
     Boolean_Comparison_Exp: Boolean_Comparison_Exp,
+    Float_Comparison_Exp: Float_Comparison_Exp,
     Int_Comparison_Exp: Int_Comparison_Exp,
+    String_Array_Comparison_Exp: String_Array_Comparison_Exp,
     String_Comparison_Exp: String_Comparison_Exp,
     AuthProviderRequests: AuthProviderRequests,
     AuthProviderRequests_OptionsArgs: AuthProviderRequests_OptionsArgs,
@@ -31593,6 +56823,7 @@ export default {
     AuthUserSecurityKeys_Variance_Fields: AuthUserSecurityKeys_Variance_Fields,
     AuthUserSecurityKeys_Variance_Order_By: AuthUserSecurityKeys_Variance_Order_By,
     Bigint_Comparison_Exp: Bigint_Comparison_Exp,
+    Bpchar_Comparison_Exp: Bpchar_Comparison_Exp,
     Buckets: Buckets,
     Buckets_FilesArgs: Buckets_FilesArgs,
     Buckets_Files_AggregateArgs: Buckets_Files_AggregateArgs,
@@ -31623,6 +56854,59 @@ export default {
     Buckets_Variance_Fields: Buckets_Variance_Fields,
     Bytea_Comparison_Exp: Bytea_Comparison_Exp,
     Citext_Comparison_Exp: Citext_Comparison_Exp,
+    Collections: Collections,
+    Collections_MoviesArgs: Collections_MoviesArgs,
+    Collections_Movies_AggregateArgs: Collections_Movies_AggregateArgs,
+    Collections_Aggregate: Collections_Aggregate,
+    Collections_Aggregate_Fields: Collections_Aggregate_Fields,
+    Collections_Aggregate_Fields_CountArgs: Collections_Aggregate_Fields_CountArgs,
+    Collections_Bool_Exp: Collections_Bool_Exp,
+    Collections_Insert_Input: Collections_Insert_Input,
+    Collections_Max_Fields: Collections_Max_Fields,
+    Collections_Min_Fields: Collections_Min_Fields,
+    Collections_Mutation_Response: Collections_Mutation_Response,
+    Collections_Obj_Rel_Insert_Input: Collections_Obj_Rel_Insert_Input,
+    Collections_On_Conflict: Collections_On_Conflict,
+    Collections_Order_By: Collections_Order_By,
+    Collections_Pk_Columns_Input: Collections_Pk_Columns_Input,
+    Collections_Set_Input: Collections_Set_Input,
+    Collections_Stream_Cursor_Input: Collections_Stream_Cursor_Input,
+    Collections_Stream_Cursor_Value_Input: Collections_Stream_Cursor_Value_Input,
+    Collections_Updates: Collections_Updates,
+    Countries: Countries,
+    Countries_Aggregate: Countries_Aggregate,
+    Countries_Aggregate_Fields: Countries_Aggregate_Fields,
+    Countries_Aggregate_Fields_CountArgs: Countries_Aggregate_Fields_CountArgs,
+    Countries_Bool_Exp: Countries_Bool_Exp,
+    Countries_Insert_Input: Countries_Insert_Input,
+    Countries_Max_Fields: Countries_Max_Fields,
+    Countries_Min_Fields: Countries_Min_Fields,
+    Countries_Mutation_Response: Countries_Mutation_Response,
+    Countries_On_Conflict: Countries_On_Conflict,
+    Countries_Order_By: Countries_Order_By,
+    Countries_Pk_Columns_Input: Countries_Pk_Columns_Input,
+    Countries_Set_Input: Countries_Set_Input,
+    Countries_Stream_Cursor_Input: Countries_Stream_Cursor_Input,
+    Countries_Stream_Cursor_Value_Input: Countries_Stream_Cursor_Value_Input,
+    Countries_Updates: Countries_Updates,
+    Credit_Types: Credit_Types,
+    Credit_Types_Aggregate: Credit_Types_Aggregate,
+    Credit_Types_Aggregate_Fields: Credit_Types_Aggregate_Fields,
+    Credit_Types_Aggregate_Fields_CountArgs: Credit_Types_Aggregate_Fields_CountArgs,
+    Credit_Types_Bool_Exp: Credit_Types_Bool_Exp,
+    Credit_Types_Enum_Comparison_Exp: Credit_Types_Enum_Comparison_Exp,
+    Credit_Types_Insert_Input: Credit_Types_Insert_Input,
+    Credit_Types_Max_Fields: Credit_Types_Max_Fields,
+    Credit_Types_Min_Fields: Credit_Types_Min_Fields,
+    Credit_Types_Mutation_Response: Credit_Types_Mutation_Response,
+    Credit_Types_On_Conflict: Credit_Types_On_Conflict,
+    Credit_Types_Order_By: Credit_Types_Order_By,
+    Credit_Types_Pk_Columns_Input: Credit_Types_Pk_Columns_Input,
+    Credit_Types_Set_Input: Credit_Types_Set_Input,
+    Credit_Types_Stream_Cursor_Input: Credit_Types_Stream_Cursor_Input,
+    Credit_Types_Stream_Cursor_Value_Input: Credit_Types_Stream_Cursor_Value_Input,
+    Credit_Types_Updates: Credit_Types_Updates,
+    Date_Comparison_Exp: Date_Comparison_Exp,
     Files: Files,
     Files_MetadataArgs: Files_MetadataArgs,
     Files_MoviesArgs: Files_MoviesArgs,
@@ -31673,9 +56957,187 @@ export default {
     Files_Var_Samp_Order_By: Files_Var_Samp_Order_By,
     Files_Variance_Fields: Files_Variance_Fields,
     Files_Variance_Order_By: Files_Variance_Order_By,
+    Genders: Genders,
+    Genders_Aggregate: Genders_Aggregate,
+    Genders_Aggregate_Fields: Genders_Aggregate_Fields,
+    Genders_Aggregate_Fields_CountArgs: Genders_Aggregate_Fields_CountArgs,
+    Genders_Bool_Exp: Genders_Bool_Exp,
+    Genders_Enum_Comparison_Exp: Genders_Enum_Comparison_Exp,
+    Genders_Insert_Input: Genders_Insert_Input,
+    Genders_Max_Fields: Genders_Max_Fields,
+    Genders_Min_Fields: Genders_Min_Fields,
+    Genders_Mutation_Response: Genders_Mutation_Response,
+    Genders_On_Conflict: Genders_On_Conflict,
+    Genders_Order_By: Genders_Order_By,
+    Genders_Pk_Columns_Input: Genders_Pk_Columns_Input,
+    Genders_Set_Input: Genders_Set_Input,
+    Genders_Stream_Cursor_Input: Genders_Stream_Cursor_Input,
+    Genders_Stream_Cursor_Value_Input: Genders_Stream_Cursor_Value_Input,
+    Genders_Updates: Genders_Updates,
+    Genres: Genres,
+    Genres_Aggregate: Genres_Aggregate,
+    Genres_Aggregate_Fields: Genres_Aggregate_Fields,
+    Genres_Aggregate_Fields_CountArgs: Genres_Aggregate_Fields_CountArgs,
+    Genres_Bool_Exp: Genres_Bool_Exp,
+    Genres_Insert_Input: Genres_Insert_Input,
+    Genres_Max_Fields: Genres_Max_Fields,
+    Genres_Min_Fields: Genres_Min_Fields,
+    Genres_Mutation_Response: Genres_Mutation_Response,
+    Genres_On_Conflict: Genres_On_Conflict,
+    Genres_Order_By: Genres_Order_By,
+    Genres_Pk_Columns_Input: Genres_Pk_Columns_Input,
+    Genres_Set_Input: Genres_Set_Input,
+    Genres_Stream_Cursor_Input: Genres_Stream_Cursor_Input,
+    Genres_Stream_Cursor_Value_Input: Genres_Stream_Cursor_Value_Input,
+    Genres_Updates: Genres_Updates,
     Jsonb_Cast_Exp: Jsonb_Cast_Exp,
     Jsonb_Comparison_Exp: Jsonb_Comparison_Exp,
+    Languages: Languages,
+    Languages_Aggregate: Languages_Aggregate,
+    Languages_Aggregate_Fields: Languages_Aggregate_Fields,
+    Languages_Aggregate_Fields_CountArgs: Languages_Aggregate_Fields_CountArgs,
+    Languages_Bool_Exp: Languages_Bool_Exp,
+    Languages_Insert_Input: Languages_Insert_Input,
+    Languages_Max_Fields: Languages_Max_Fields,
+    Languages_Min_Fields: Languages_Min_Fields,
+    Languages_Mutation_Response: Languages_Mutation_Response,
+    Languages_On_Conflict: Languages_On_Conflict,
+    Languages_Order_By: Languages_Order_By,
+    Languages_Pk_Columns_Input: Languages_Pk_Columns_Input,
+    Languages_Set_Input: Languages_Set_Input,
+    Languages_Stream_Cursor_Input: Languages_Stream_Cursor_Input,
+    Languages_Stream_Cursor_Value_Input: Languages_Stream_Cursor_Value_Input,
+    Languages_Updates: Languages_Updates,
+    Movie_Credits: Movie_Credits,
+    Movie_Credits_Aggregate: Movie_Credits_Aggregate,
+    Movie_Credits_Aggregate_Bool_Exp: Movie_Credits_Aggregate_Bool_Exp,
+    Movie_Credits_Aggregate_Bool_Exp_Count: Movie_Credits_Aggregate_Bool_Exp_Count,
+    Movie_Credits_Aggregate_Fields: Movie_Credits_Aggregate_Fields,
+    Movie_Credits_Aggregate_Fields_CountArgs: Movie_Credits_Aggregate_Fields_CountArgs,
+    Movie_Credits_Aggregate_Order_By: Movie_Credits_Aggregate_Order_By,
+    Movie_Credits_Arr_Rel_Insert_Input: Movie_Credits_Arr_Rel_Insert_Input,
+    Movie_Credits_Avg_Fields: Movie_Credits_Avg_Fields,
+    Movie_Credits_Avg_Order_By: Movie_Credits_Avg_Order_By,
+    Movie_Credits_Bool_Exp: Movie_Credits_Bool_Exp,
+    Movie_Credits_Inc_Input: Movie_Credits_Inc_Input,
+    Movie_Credits_Insert_Input: Movie_Credits_Insert_Input,
+    Movie_Credits_Max_Fields: Movie_Credits_Max_Fields,
+    Movie_Credits_Max_Order_By: Movie_Credits_Max_Order_By,
+    Movie_Credits_Min_Fields: Movie_Credits_Min_Fields,
+    Movie_Credits_Min_Order_By: Movie_Credits_Min_Order_By,
+    Movie_Credits_Mutation_Response: Movie_Credits_Mutation_Response,
+    Movie_Credits_On_Conflict: Movie_Credits_On_Conflict,
+    Movie_Credits_Order_By: Movie_Credits_Order_By,
+    Movie_Credits_Pk_Columns_Input: Movie_Credits_Pk_Columns_Input,
+    Movie_Credits_Set_Input: Movie_Credits_Set_Input,
+    Movie_Credits_Stddev_Fields: Movie_Credits_Stddev_Fields,
+    Movie_Credits_Stddev_Order_By: Movie_Credits_Stddev_Order_By,
+    Movie_Credits_Stddev_Pop_Fields: Movie_Credits_Stddev_Pop_Fields,
+    Movie_Credits_Stddev_Pop_Order_By: Movie_Credits_Stddev_Pop_Order_By,
+    Movie_Credits_Stddev_Samp_Fields: Movie_Credits_Stddev_Samp_Fields,
+    Movie_Credits_Stddev_Samp_Order_By: Movie_Credits_Stddev_Samp_Order_By,
+    Movie_Credits_Stream_Cursor_Input: Movie_Credits_Stream_Cursor_Input,
+    Movie_Credits_Stream_Cursor_Value_Input: Movie_Credits_Stream_Cursor_Value_Input,
+    Movie_Credits_Sum_Fields: Movie_Credits_Sum_Fields,
+    Movie_Credits_Sum_Order_By: Movie_Credits_Sum_Order_By,
+    Movie_Credits_Updates: Movie_Credits_Updates,
+    Movie_Credits_Var_Pop_Fields: Movie_Credits_Var_Pop_Fields,
+    Movie_Credits_Var_Pop_Order_By: Movie_Credits_Var_Pop_Order_By,
+    Movie_Credits_Var_Samp_Fields: Movie_Credits_Var_Samp_Fields,
+    Movie_Credits_Var_Samp_Order_By: Movie_Credits_Var_Samp_Order_By,
+    Movie_Credits_Variance_Fields: Movie_Credits_Variance_Fields,
+    Movie_Credits_Variance_Order_By: Movie_Credits_Variance_Order_By,
+    Movie_Genres: Movie_Genres,
+    Movie_Genres_Aggregate: Movie_Genres_Aggregate,
+    Movie_Genres_Aggregate_Fields: Movie_Genres_Aggregate_Fields,
+    Movie_Genres_Aggregate_Fields_CountArgs: Movie_Genres_Aggregate_Fields_CountArgs,
+    Movie_Genres_Bool_Exp: Movie_Genres_Bool_Exp,
+    Movie_Genres_Insert_Input: Movie_Genres_Insert_Input,
+    Movie_Genres_Max_Fields: Movie_Genres_Max_Fields,
+    Movie_Genres_Min_Fields: Movie_Genres_Min_Fields,
+    Movie_Genres_Mutation_Response: Movie_Genres_Mutation_Response,
+    Movie_Genres_On_Conflict: Movie_Genres_On_Conflict,
+    Movie_Genres_Order_By: Movie_Genres_Order_By,
+    Movie_Genres_Pk_Columns_Input: Movie_Genres_Pk_Columns_Input,
+    Movie_Genres_Set_Input: Movie_Genres_Set_Input,
+    Movie_Genres_Stream_Cursor_Input: Movie_Genres_Stream_Cursor_Input,
+    Movie_Genres_Stream_Cursor_Value_Input: Movie_Genres_Stream_Cursor_Value_Input,
+    Movie_Genres_Updates: Movie_Genres_Updates,
+    Movie_Production_Companies: Movie_Production_Companies,
+    Movie_Production_Companies_Aggregate: Movie_Production_Companies_Aggregate,
+    Movie_Production_Companies_Aggregate_Bool_Exp: Movie_Production_Companies_Aggregate_Bool_Exp,
+    Movie_Production_Companies_Aggregate_Bool_Exp_Count: Movie_Production_Companies_Aggregate_Bool_Exp_Count,
+    Movie_Production_Companies_Aggregate_Fields: Movie_Production_Companies_Aggregate_Fields,
+    Movie_Production_Companies_Aggregate_Fields_CountArgs: Movie_Production_Companies_Aggregate_Fields_CountArgs,
+    Movie_Production_Companies_Aggregate_Order_By: Movie_Production_Companies_Aggregate_Order_By,
+    Movie_Production_Companies_Arr_Rel_Insert_Input: Movie_Production_Companies_Arr_Rel_Insert_Input,
+    Movie_Production_Companies_Bool_Exp: Movie_Production_Companies_Bool_Exp,
+    Movie_Production_Companies_Insert_Input: Movie_Production_Companies_Insert_Input,
+    Movie_Production_Companies_Max_Fields: Movie_Production_Companies_Max_Fields,
+    Movie_Production_Companies_Max_Order_By: Movie_Production_Companies_Max_Order_By,
+    Movie_Production_Companies_Min_Fields: Movie_Production_Companies_Min_Fields,
+    Movie_Production_Companies_Min_Order_By: Movie_Production_Companies_Min_Order_By,
+    Movie_Production_Companies_Mutation_Response: Movie_Production_Companies_Mutation_Response,
+    Movie_Production_Companies_On_Conflict: Movie_Production_Companies_On_Conflict,
+    Movie_Production_Companies_Order_By: Movie_Production_Companies_Order_By,
+    Movie_Production_Companies_Pk_Columns_Input: Movie_Production_Companies_Pk_Columns_Input,
+    Movie_Production_Companies_Set_Input: Movie_Production_Companies_Set_Input,
+    Movie_Production_Companies_Stream_Cursor_Input: Movie_Production_Companies_Stream_Cursor_Input,
+    Movie_Production_Companies_Stream_Cursor_Value_Input: Movie_Production_Companies_Stream_Cursor_Value_Input,
+    Movie_Production_Companies_Updates: Movie_Production_Companies_Updates,
+    Movie_Production_Countries: Movie_Production_Countries,
+    Movie_Production_Countries_Aggregate: Movie_Production_Countries_Aggregate,
+    Movie_Production_Countries_Aggregate_Bool_Exp: Movie_Production_Countries_Aggregate_Bool_Exp,
+    Movie_Production_Countries_Aggregate_Bool_Exp_Count: Movie_Production_Countries_Aggregate_Bool_Exp_Count,
+    Movie_Production_Countries_Aggregate_Fields: Movie_Production_Countries_Aggregate_Fields,
+    Movie_Production_Countries_Aggregate_Fields_CountArgs: Movie_Production_Countries_Aggregate_Fields_CountArgs,
+    Movie_Production_Countries_Aggregate_Order_By: Movie_Production_Countries_Aggregate_Order_By,
+    Movie_Production_Countries_Arr_Rel_Insert_Input: Movie_Production_Countries_Arr_Rel_Insert_Input,
+    Movie_Production_Countries_Bool_Exp: Movie_Production_Countries_Bool_Exp,
+    Movie_Production_Countries_Insert_Input: Movie_Production_Countries_Insert_Input,
+    Movie_Production_Countries_Max_Fields: Movie_Production_Countries_Max_Fields,
+    Movie_Production_Countries_Max_Order_By: Movie_Production_Countries_Max_Order_By,
+    Movie_Production_Countries_Min_Fields: Movie_Production_Countries_Min_Fields,
+    Movie_Production_Countries_Min_Order_By: Movie_Production_Countries_Min_Order_By,
+    Movie_Production_Countries_Mutation_Response: Movie_Production_Countries_Mutation_Response,
+    Movie_Production_Countries_On_Conflict: Movie_Production_Countries_On_Conflict,
+    Movie_Production_Countries_Order_By: Movie_Production_Countries_Order_By,
+    Movie_Production_Countries_Pk_Columns_Input: Movie_Production_Countries_Pk_Columns_Input,
+    Movie_Production_Countries_Set_Input: Movie_Production_Countries_Set_Input,
+    Movie_Production_Countries_Stream_Cursor_Input: Movie_Production_Countries_Stream_Cursor_Input,
+    Movie_Production_Countries_Stream_Cursor_Value_Input: Movie_Production_Countries_Stream_Cursor_Value_Input,
+    Movie_Production_Countries_Updates: Movie_Production_Countries_Updates,
+    Movie_Spoken_Languages: Movie_Spoken_Languages,
+    Movie_Spoken_Languages_Aggregate: Movie_Spoken_Languages_Aggregate,
+    Movie_Spoken_Languages_Aggregate_Bool_Exp: Movie_Spoken_Languages_Aggregate_Bool_Exp,
+    Movie_Spoken_Languages_Aggregate_Bool_Exp_Count: Movie_Spoken_Languages_Aggregate_Bool_Exp_Count,
+    Movie_Spoken_Languages_Aggregate_Fields: Movie_Spoken_Languages_Aggregate_Fields,
+    Movie_Spoken_Languages_Aggregate_Fields_CountArgs: Movie_Spoken_Languages_Aggregate_Fields_CountArgs,
+    Movie_Spoken_Languages_Aggregate_Order_By: Movie_Spoken_Languages_Aggregate_Order_By,
+    Movie_Spoken_Languages_Arr_Rel_Insert_Input: Movie_Spoken_Languages_Arr_Rel_Insert_Input,
+    Movie_Spoken_Languages_Bool_Exp: Movie_Spoken_Languages_Bool_Exp,
+    Movie_Spoken_Languages_Insert_Input: Movie_Spoken_Languages_Insert_Input,
+    Movie_Spoken_Languages_Max_Fields: Movie_Spoken_Languages_Max_Fields,
+    Movie_Spoken_Languages_Max_Order_By: Movie_Spoken_Languages_Max_Order_By,
+    Movie_Spoken_Languages_Min_Fields: Movie_Spoken_Languages_Min_Fields,
+    Movie_Spoken_Languages_Min_Order_By: Movie_Spoken_Languages_Min_Order_By,
+    Movie_Spoken_Languages_Mutation_Response: Movie_Spoken_Languages_Mutation_Response,
+    Movie_Spoken_Languages_On_Conflict: Movie_Spoken_Languages_On_Conflict,
+    Movie_Spoken_Languages_Order_By: Movie_Spoken_Languages_Order_By,
+    Movie_Spoken_Languages_Pk_Columns_Input: Movie_Spoken_Languages_Pk_Columns_Input,
+    Movie_Spoken_Languages_Set_Input: Movie_Spoken_Languages_Set_Input,
+    Movie_Spoken_Languages_Stream_Cursor_Input: Movie_Spoken_Languages_Stream_Cursor_Input,
+    Movie_Spoken_Languages_Stream_Cursor_Value_Input: Movie_Spoken_Languages_Stream_Cursor_Value_Input,
+    Movie_Spoken_Languages_Updates: Movie_Spoken_Languages_Updates,
     Movies: Movies,
+    Movies_Movie_CreditsArgs: Movies_Movie_CreditsArgs,
+    Movies_Movie_Credits_AggregateArgs: Movies_Movie_Credits_AggregateArgs,
+    Movies_Movie_Production_CompaniesArgs: Movies_Movie_Production_CompaniesArgs,
+    Movies_Movie_Production_Companies_AggregateArgs: Movies_Movie_Production_Companies_AggregateArgs,
+    Movies_Movie_Production_CountriesArgs: Movies_Movie_Production_CountriesArgs,
+    Movies_Movie_Production_Countries_AggregateArgs: Movies_Movie_Production_Countries_AggregateArgs,
+    Movies_Movie_Spoken_LanguagesArgs: Movies_Movie_Spoken_LanguagesArgs,
+    Movies_Movie_Spoken_Languages_AggregateArgs: Movies_Movie_Spoken_Languages_AggregateArgs,
     Movies_Aggregate: Movies_Aggregate,
     Movies_Aggregate_Bool_Exp: Movies_Aggregate_Bool_Exp,
     Movies_Aggregate_Bool_Exp_Count: Movies_Aggregate_Bool_Exp_Count,
@@ -31683,7 +57145,10 @@ export default {
     Movies_Aggregate_Fields_CountArgs: Movies_Aggregate_Fields_CountArgs,
     Movies_Aggregate_Order_By: Movies_Aggregate_Order_By,
     Movies_Arr_Rel_Insert_Input: Movies_Arr_Rel_Insert_Input,
+    Movies_Avg_Fields: Movies_Avg_Fields,
+    Movies_Avg_Order_By: Movies_Avg_Order_By,
     Movies_Bool_Exp: Movies_Bool_Exp,
+    Movies_Inc_Input: Movies_Inc_Input,
     Movies_Insert_Input: Movies_Insert_Input,
     Movies_Max_Fields: Movies_Max_Fields,
     Movies_Max_Order_By: Movies_Max_Order_By,
@@ -31694,9 +57159,23 @@ export default {
     Movies_Order_By: Movies_Order_By,
     Movies_Pk_Columns_Input: Movies_Pk_Columns_Input,
     Movies_Set_Input: Movies_Set_Input,
+    Movies_Stddev_Fields: Movies_Stddev_Fields,
+    Movies_Stddev_Order_By: Movies_Stddev_Order_By,
+    Movies_Stddev_Pop_Fields: Movies_Stddev_Pop_Fields,
+    Movies_Stddev_Pop_Order_By: Movies_Stddev_Pop_Order_By,
+    Movies_Stddev_Samp_Fields: Movies_Stddev_Samp_Fields,
+    Movies_Stddev_Samp_Order_By: Movies_Stddev_Samp_Order_By,
     Movies_Stream_Cursor_Input: Movies_Stream_Cursor_Input,
     Movies_Stream_Cursor_Value_Input: Movies_Stream_Cursor_Value_Input,
+    Movies_Sum_Fields: Movies_Sum_Fields,
+    Movies_Sum_Order_By: Movies_Sum_Order_By,
     Movies_Updates: Movies_Updates,
+    Movies_Var_Pop_Fields: Movies_Var_Pop_Fields,
+    Movies_Var_Pop_Order_By: Movies_Var_Pop_Order_By,
+    Movies_Var_Samp_Fields: Movies_Var_Samp_Fields,
+    Movies_Var_Samp_Order_By: Movies_Var_Samp_Order_By,
+    Movies_Variance_Fields: Movies_Variance_Fields,
+    Movies_Variance_Order_By: Movies_Variance_Order_By,
     Mutation_Root: Mutation_Root,
     Mutation_Root_DeleteAuthProviderArgs: Mutation_Root_DeleteAuthProviderArgs,
     Mutation_Root_DeleteAuthProviderRequestArgs: Mutation_Root_DeleteAuthProviderRequestArgs,
@@ -31722,8 +57201,34 @@ export default {
     Mutation_Root_DeleteUsersArgs: Mutation_Root_DeleteUsersArgs,
     Mutation_Root_DeleteVirusArgs: Mutation_Root_DeleteVirusArgs,
     Mutation_Root_DeleteVirusesArgs: Mutation_Root_DeleteVirusesArgs,
+    Mutation_Root_Delete_CollectionsArgs: Mutation_Root_Delete_CollectionsArgs,
+    Mutation_Root_Delete_Collections_By_PkArgs: Mutation_Root_Delete_Collections_By_PkArgs,
+    Mutation_Root_Delete_CountriesArgs: Mutation_Root_Delete_CountriesArgs,
+    Mutation_Root_Delete_Countries_By_PkArgs: Mutation_Root_Delete_Countries_By_PkArgs,
+    Mutation_Root_Delete_Credit_TypesArgs: Mutation_Root_Delete_Credit_TypesArgs,
+    Mutation_Root_Delete_Credit_Types_By_PkArgs: Mutation_Root_Delete_Credit_Types_By_PkArgs,
+    Mutation_Root_Delete_GendersArgs: Mutation_Root_Delete_GendersArgs,
+    Mutation_Root_Delete_Genders_By_PkArgs: Mutation_Root_Delete_Genders_By_PkArgs,
+    Mutation_Root_Delete_GenresArgs: Mutation_Root_Delete_GenresArgs,
+    Mutation_Root_Delete_Genres_By_PkArgs: Mutation_Root_Delete_Genres_By_PkArgs,
+    Mutation_Root_Delete_LanguagesArgs: Mutation_Root_Delete_LanguagesArgs,
+    Mutation_Root_Delete_Languages_By_PkArgs: Mutation_Root_Delete_Languages_By_PkArgs,
+    Mutation_Root_Delete_Movie_CreditsArgs: Mutation_Root_Delete_Movie_CreditsArgs,
+    Mutation_Root_Delete_Movie_Credits_By_PkArgs: Mutation_Root_Delete_Movie_Credits_By_PkArgs,
+    Mutation_Root_Delete_Movie_GenresArgs: Mutation_Root_Delete_Movie_GenresArgs,
+    Mutation_Root_Delete_Movie_Genres_By_PkArgs: Mutation_Root_Delete_Movie_Genres_By_PkArgs,
+    Mutation_Root_Delete_Movie_Production_CompaniesArgs: Mutation_Root_Delete_Movie_Production_CompaniesArgs,
+    Mutation_Root_Delete_Movie_Production_Companies_By_PkArgs: Mutation_Root_Delete_Movie_Production_Companies_By_PkArgs,
+    Mutation_Root_Delete_Movie_Production_CountriesArgs: Mutation_Root_Delete_Movie_Production_CountriesArgs,
+    Mutation_Root_Delete_Movie_Production_Countries_By_PkArgs: Mutation_Root_Delete_Movie_Production_Countries_By_PkArgs,
+    Mutation_Root_Delete_Movie_Spoken_LanguagesArgs: Mutation_Root_Delete_Movie_Spoken_LanguagesArgs,
+    Mutation_Root_Delete_Movie_Spoken_Languages_By_PkArgs: Mutation_Root_Delete_Movie_Spoken_Languages_By_PkArgs,
     Mutation_Root_Delete_MoviesArgs: Mutation_Root_Delete_MoviesArgs,
     Mutation_Root_Delete_Movies_By_PkArgs: Mutation_Root_Delete_Movies_By_PkArgs,
+    Mutation_Root_Delete_PeopleArgs: Mutation_Root_Delete_PeopleArgs,
+    Mutation_Root_Delete_People_By_PkArgs: Mutation_Root_Delete_People_By_PkArgs,
+    Mutation_Root_Delete_Production_CompaniesArgs: Mutation_Root_Delete_Production_CompaniesArgs,
+    Mutation_Root_Delete_Production_Companies_By_PkArgs: Mutation_Root_Delete_Production_Companies_By_PkArgs,
     Mutation_Root_InsertAuthProviderArgs: Mutation_Root_InsertAuthProviderArgs,
     Mutation_Root_InsertAuthProviderRequestArgs: Mutation_Root_InsertAuthProviderRequestArgs,
     Mutation_Root_InsertAuthProviderRequestsArgs: Mutation_Root_InsertAuthProviderRequestsArgs,
@@ -31748,8 +57253,34 @@ export default {
     Mutation_Root_InsertUsersArgs: Mutation_Root_InsertUsersArgs,
     Mutation_Root_InsertVirusArgs: Mutation_Root_InsertVirusArgs,
     Mutation_Root_InsertVirusesArgs: Mutation_Root_InsertVirusesArgs,
+    Mutation_Root_Insert_CollectionsArgs: Mutation_Root_Insert_CollectionsArgs,
+    Mutation_Root_Insert_Collections_OneArgs: Mutation_Root_Insert_Collections_OneArgs,
+    Mutation_Root_Insert_CountriesArgs: Mutation_Root_Insert_CountriesArgs,
+    Mutation_Root_Insert_Countries_OneArgs: Mutation_Root_Insert_Countries_OneArgs,
+    Mutation_Root_Insert_Credit_TypesArgs: Mutation_Root_Insert_Credit_TypesArgs,
+    Mutation_Root_Insert_Credit_Types_OneArgs: Mutation_Root_Insert_Credit_Types_OneArgs,
+    Mutation_Root_Insert_GendersArgs: Mutation_Root_Insert_GendersArgs,
+    Mutation_Root_Insert_Genders_OneArgs: Mutation_Root_Insert_Genders_OneArgs,
+    Mutation_Root_Insert_GenresArgs: Mutation_Root_Insert_GenresArgs,
+    Mutation_Root_Insert_Genres_OneArgs: Mutation_Root_Insert_Genres_OneArgs,
+    Mutation_Root_Insert_LanguagesArgs: Mutation_Root_Insert_LanguagesArgs,
+    Mutation_Root_Insert_Languages_OneArgs: Mutation_Root_Insert_Languages_OneArgs,
+    Mutation_Root_Insert_Movie_CreditsArgs: Mutation_Root_Insert_Movie_CreditsArgs,
+    Mutation_Root_Insert_Movie_Credits_OneArgs: Mutation_Root_Insert_Movie_Credits_OneArgs,
+    Mutation_Root_Insert_Movie_GenresArgs: Mutation_Root_Insert_Movie_GenresArgs,
+    Mutation_Root_Insert_Movie_Genres_OneArgs: Mutation_Root_Insert_Movie_Genres_OneArgs,
+    Mutation_Root_Insert_Movie_Production_CompaniesArgs: Mutation_Root_Insert_Movie_Production_CompaniesArgs,
+    Mutation_Root_Insert_Movie_Production_Companies_OneArgs: Mutation_Root_Insert_Movie_Production_Companies_OneArgs,
+    Mutation_Root_Insert_Movie_Production_CountriesArgs: Mutation_Root_Insert_Movie_Production_CountriesArgs,
+    Mutation_Root_Insert_Movie_Production_Countries_OneArgs: Mutation_Root_Insert_Movie_Production_Countries_OneArgs,
+    Mutation_Root_Insert_Movie_Spoken_LanguagesArgs: Mutation_Root_Insert_Movie_Spoken_LanguagesArgs,
+    Mutation_Root_Insert_Movie_Spoken_Languages_OneArgs: Mutation_Root_Insert_Movie_Spoken_Languages_OneArgs,
     Mutation_Root_Insert_MoviesArgs: Mutation_Root_Insert_MoviesArgs,
     Mutation_Root_Insert_Movies_OneArgs: Mutation_Root_Insert_Movies_OneArgs,
+    Mutation_Root_Insert_PeopleArgs: Mutation_Root_Insert_PeopleArgs,
+    Mutation_Root_Insert_People_OneArgs: Mutation_Root_Insert_People_OneArgs,
+    Mutation_Root_Insert_Production_CompaniesArgs: Mutation_Root_Insert_Production_CompaniesArgs,
+    Mutation_Root_Insert_Production_Companies_OneArgs: Mutation_Root_Insert_Production_Companies_OneArgs,
     Mutation_Root_UpdateAuthProviderArgs: Mutation_Root_UpdateAuthProviderArgs,
     Mutation_Root_UpdateAuthProviderRequestArgs: Mutation_Root_UpdateAuthProviderRequestArgs,
     Mutation_Root_UpdateAuthProviderRequestsArgs: Mutation_Root_UpdateAuthProviderRequestsArgs,
@@ -31783,12 +57314,92 @@ export default {
     Mutation_Root_Update_AuthUserRoles_ManyArgs: Mutation_Root_Update_AuthUserRoles_ManyArgs,
     Mutation_Root_Update_AuthUserSecurityKeys_ManyArgs: Mutation_Root_Update_AuthUserSecurityKeys_ManyArgs,
     Mutation_Root_Update_Buckets_ManyArgs: Mutation_Root_Update_Buckets_ManyArgs,
+    Mutation_Root_Update_CollectionsArgs: Mutation_Root_Update_CollectionsArgs,
+    Mutation_Root_Update_Collections_By_PkArgs: Mutation_Root_Update_Collections_By_PkArgs,
+    Mutation_Root_Update_Collections_ManyArgs: Mutation_Root_Update_Collections_ManyArgs,
+    Mutation_Root_Update_CountriesArgs: Mutation_Root_Update_CountriesArgs,
+    Mutation_Root_Update_Countries_By_PkArgs: Mutation_Root_Update_Countries_By_PkArgs,
+    Mutation_Root_Update_Countries_ManyArgs: Mutation_Root_Update_Countries_ManyArgs,
+    Mutation_Root_Update_Credit_TypesArgs: Mutation_Root_Update_Credit_TypesArgs,
+    Mutation_Root_Update_Credit_Types_By_PkArgs: Mutation_Root_Update_Credit_Types_By_PkArgs,
+    Mutation_Root_Update_Credit_Types_ManyArgs: Mutation_Root_Update_Credit_Types_ManyArgs,
     Mutation_Root_Update_Files_ManyArgs: Mutation_Root_Update_Files_ManyArgs,
+    Mutation_Root_Update_GendersArgs: Mutation_Root_Update_GendersArgs,
+    Mutation_Root_Update_Genders_By_PkArgs: Mutation_Root_Update_Genders_By_PkArgs,
+    Mutation_Root_Update_Genders_ManyArgs: Mutation_Root_Update_Genders_ManyArgs,
+    Mutation_Root_Update_GenresArgs: Mutation_Root_Update_GenresArgs,
+    Mutation_Root_Update_Genres_By_PkArgs: Mutation_Root_Update_Genres_By_PkArgs,
+    Mutation_Root_Update_Genres_ManyArgs: Mutation_Root_Update_Genres_ManyArgs,
+    Mutation_Root_Update_LanguagesArgs: Mutation_Root_Update_LanguagesArgs,
+    Mutation_Root_Update_Languages_By_PkArgs: Mutation_Root_Update_Languages_By_PkArgs,
+    Mutation_Root_Update_Languages_ManyArgs: Mutation_Root_Update_Languages_ManyArgs,
+    Mutation_Root_Update_Movie_CreditsArgs: Mutation_Root_Update_Movie_CreditsArgs,
+    Mutation_Root_Update_Movie_Credits_By_PkArgs: Mutation_Root_Update_Movie_Credits_By_PkArgs,
+    Mutation_Root_Update_Movie_Credits_ManyArgs: Mutation_Root_Update_Movie_Credits_ManyArgs,
+    Mutation_Root_Update_Movie_GenresArgs: Mutation_Root_Update_Movie_GenresArgs,
+    Mutation_Root_Update_Movie_Genres_By_PkArgs: Mutation_Root_Update_Movie_Genres_By_PkArgs,
+    Mutation_Root_Update_Movie_Genres_ManyArgs: Mutation_Root_Update_Movie_Genres_ManyArgs,
+    Mutation_Root_Update_Movie_Production_CompaniesArgs: Mutation_Root_Update_Movie_Production_CompaniesArgs,
+    Mutation_Root_Update_Movie_Production_Companies_By_PkArgs: Mutation_Root_Update_Movie_Production_Companies_By_PkArgs,
+    Mutation_Root_Update_Movie_Production_Companies_ManyArgs: Mutation_Root_Update_Movie_Production_Companies_ManyArgs,
+    Mutation_Root_Update_Movie_Production_CountriesArgs: Mutation_Root_Update_Movie_Production_CountriesArgs,
+    Mutation_Root_Update_Movie_Production_Countries_By_PkArgs: Mutation_Root_Update_Movie_Production_Countries_By_PkArgs,
+    Mutation_Root_Update_Movie_Production_Countries_ManyArgs: Mutation_Root_Update_Movie_Production_Countries_ManyArgs,
+    Mutation_Root_Update_Movie_Spoken_LanguagesArgs: Mutation_Root_Update_Movie_Spoken_LanguagesArgs,
+    Mutation_Root_Update_Movie_Spoken_Languages_By_PkArgs: Mutation_Root_Update_Movie_Spoken_Languages_By_PkArgs,
+    Mutation_Root_Update_Movie_Spoken_Languages_ManyArgs: Mutation_Root_Update_Movie_Spoken_Languages_ManyArgs,
     Mutation_Root_Update_MoviesArgs: Mutation_Root_Update_MoviesArgs,
     Mutation_Root_Update_Movies_By_PkArgs: Mutation_Root_Update_Movies_By_PkArgs,
     Mutation_Root_Update_Movies_ManyArgs: Mutation_Root_Update_Movies_ManyArgs,
+    Mutation_Root_Update_PeopleArgs: Mutation_Root_Update_PeopleArgs,
+    Mutation_Root_Update_People_By_PkArgs: Mutation_Root_Update_People_By_PkArgs,
+    Mutation_Root_Update_People_ManyArgs: Mutation_Root_Update_People_ManyArgs,
+    Mutation_Root_Update_Production_CompaniesArgs: Mutation_Root_Update_Production_CompaniesArgs,
+    Mutation_Root_Update_Production_Companies_By_PkArgs: Mutation_Root_Update_Production_Companies_By_PkArgs,
+    Mutation_Root_Update_Production_Companies_ManyArgs: Mutation_Root_Update_Production_Companies_ManyArgs,
     Mutation_Root_Update_Users_ManyArgs: Mutation_Root_Update_Users_ManyArgs,
     Mutation_Root_Update_Virus_ManyArgs: Mutation_Root_Update_Virus_ManyArgs,
+    People: People,
+    People_Aggregate: People_Aggregate,
+    People_Aggregate_Fields: People_Aggregate_Fields,
+    People_Aggregate_Fields_CountArgs: People_Aggregate_Fields_CountArgs,
+    People_Bool_Exp: People_Bool_Exp,
+    People_Insert_Input: People_Insert_Input,
+    People_Max_Fields: People_Max_Fields,
+    People_Min_Fields: People_Min_Fields,
+    People_Mutation_Response: People_Mutation_Response,
+    People_On_Conflict: People_On_Conflict,
+    People_Order_By: People_Order_By,
+    People_Pk_Columns_Input: People_Pk_Columns_Input,
+    People_Set_Input: People_Set_Input,
+    People_Stream_Cursor_Input: People_Stream_Cursor_Input,
+    People_Stream_Cursor_Value_Input: People_Stream_Cursor_Value_Input,
+    People_Updates: People_Updates,
+    Production_Companies: Production_Companies,
+    Production_Companies_Aggregate: Production_Companies_Aggregate,
+    Production_Companies_Aggregate_Fields: Production_Companies_Aggregate_Fields,
+    Production_Companies_Aggregate_Fields_CountArgs: Production_Companies_Aggregate_Fields_CountArgs,
+    Production_Companies_Avg_Fields: Production_Companies_Avg_Fields,
+    Production_Companies_Bool_Exp: Production_Companies_Bool_Exp,
+    Production_Companies_Inc_Input: Production_Companies_Inc_Input,
+    Production_Companies_Insert_Input: Production_Companies_Insert_Input,
+    Production_Companies_Max_Fields: Production_Companies_Max_Fields,
+    Production_Companies_Min_Fields: Production_Companies_Min_Fields,
+    Production_Companies_Mutation_Response: Production_Companies_Mutation_Response,
+    Production_Companies_On_Conflict: Production_Companies_On_Conflict,
+    Production_Companies_Order_By: Production_Companies_Order_By,
+    Production_Companies_Pk_Columns_Input: Production_Companies_Pk_Columns_Input,
+    Production_Companies_Set_Input: Production_Companies_Set_Input,
+    Production_Companies_Stddev_Fields: Production_Companies_Stddev_Fields,
+    Production_Companies_Stddev_Pop_Fields: Production_Companies_Stddev_Pop_Fields,
+    Production_Companies_Stddev_Samp_Fields: Production_Companies_Stddev_Samp_Fields,
+    Production_Companies_Stream_Cursor_Input: Production_Companies_Stream_Cursor_Input,
+    Production_Companies_Stream_Cursor_Value_Input: Production_Companies_Stream_Cursor_Value_Input,
+    Production_Companies_Sum_Fields: Production_Companies_Sum_Fields,
+    Production_Companies_Updates: Production_Companies_Updates,
+    Production_Companies_Var_Pop_Fields: Production_Companies_Var_Pop_Fields,
+    Production_Companies_Var_Samp_Fields: Production_Companies_Var_Samp_Fields,
+    Production_Companies_Variance_Fields: Production_Companies_Variance_Fields,
     Query_Root: Query_Root,
     Query_Root_AuthProviderArgs: Query_Root_AuthProviderArgs,
     Query_Root_AuthProviderRequestArgs: Query_Root_AuthProviderRequestArgs,
@@ -31817,12 +57428,51 @@ export default {
     Query_Root_BucketArgs: Query_Root_BucketArgs,
     Query_Root_BucketsArgs: Query_Root_BucketsArgs,
     Query_Root_BucketsAggregateArgs: Query_Root_BucketsAggregateArgs,
+    Query_Root_CollectionsArgs: Query_Root_CollectionsArgs,
+    Query_Root_Collections_AggregateArgs: Query_Root_Collections_AggregateArgs,
+    Query_Root_Collections_By_PkArgs: Query_Root_Collections_By_PkArgs,
+    Query_Root_CountriesArgs: Query_Root_CountriesArgs,
+    Query_Root_Countries_AggregateArgs: Query_Root_Countries_AggregateArgs,
+    Query_Root_Countries_By_PkArgs: Query_Root_Countries_By_PkArgs,
+    Query_Root_Credit_TypesArgs: Query_Root_Credit_TypesArgs,
+    Query_Root_Credit_Types_AggregateArgs: Query_Root_Credit_Types_AggregateArgs,
+    Query_Root_Credit_Types_By_PkArgs: Query_Root_Credit_Types_By_PkArgs,
     Query_Root_FileArgs: Query_Root_FileArgs,
     Query_Root_FilesArgs: Query_Root_FilesArgs,
     Query_Root_FilesAggregateArgs: Query_Root_FilesAggregateArgs,
+    Query_Root_GendersArgs: Query_Root_GendersArgs,
+    Query_Root_Genders_AggregateArgs: Query_Root_Genders_AggregateArgs,
+    Query_Root_Genders_By_PkArgs: Query_Root_Genders_By_PkArgs,
+    Query_Root_GenresArgs: Query_Root_GenresArgs,
+    Query_Root_Genres_AggregateArgs: Query_Root_Genres_AggregateArgs,
+    Query_Root_Genres_By_PkArgs: Query_Root_Genres_By_PkArgs,
+    Query_Root_LanguagesArgs: Query_Root_LanguagesArgs,
+    Query_Root_Languages_AggregateArgs: Query_Root_Languages_AggregateArgs,
+    Query_Root_Languages_By_PkArgs: Query_Root_Languages_By_PkArgs,
+    Query_Root_Movie_CreditsArgs: Query_Root_Movie_CreditsArgs,
+    Query_Root_Movie_Credits_AggregateArgs: Query_Root_Movie_Credits_AggregateArgs,
+    Query_Root_Movie_Credits_By_PkArgs: Query_Root_Movie_Credits_By_PkArgs,
+    Query_Root_Movie_GenresArgs: Query_Root_Movie_GenresArgs,
+    Query_Root_Movie_Genres_AggregateArgs: Query_Root_Movie_Genres_AggregateArgs,
+    Query_Root_Movie_Genres_By_PkArgs: Query_Root_Movie_Genres_By_PkArgs,
+    Query_Root_Movie_Production_CompaniesArgs: Query_Root_Movie_Production_CompaniesArgs,
+    Query_Root_Movie_Production_Companies_AggregateArgs: Query_Root_Movie_Production_Companies_AggregateArgs,
+    Query_Root_Movie_Production_Companies_By_PkArgs: Query_Root_Movie_Production_Companies_By_PkArgs,
+    Query_Root_Movie_Production_CountriesArgs: Query_Root_Movie_Production_CountriesArgs,
+    Query_Root_Movie_Production_Countries_AggregateArgs: Query_Root_Movie_Production_Countries_AggregateArgs,
+    Query_Root_Movie_Production_Countries_By_PkArgs: Query_Root_Movie_Production_Countries_By_PkArgs,
+    Query_Root_Movie_Spoken_LanguagesArgs: Query_Root_Movie_Spoken_LanguagesArgs,
+    Query_Root_Movie_Spoken_Languages_AggregateArgs: Query_Root_Movie_Spoken_Languages_AggregateArgs,
+    Query_Root_Movie_Spoken_Languages_By_PkArgs: Query_Root_Movie_Spoken_Languages_By_PkArgs,
     Query_Root_MoviesArgs: Query_Root_MoviesArgs,
     Query_Root_Movies_AggregateArgs: Query_Root_Movies_AggregateArgs,
     Query_Root_Movies_By_PkArgs: Query_Root_Movies_By_PkArgs,
+    Query_Root_PeopleArgs: Query_Root_PeopleArgs,
+    Query_Root_People_AggregateArgs: Query_Root_People_AggregateArgs,
+    Query_Root_People_By_PkArgs: Query_Root_People_By_PkArgs,
+    Query_Root_Production_CompaniesArgs: Query_Root_Production_CompaniesArgs,
+    Query_Root_Production_Companies_AggregateArgs: Query_Root_Production_Companies_AggregateArgs,
+    Query_Root_Production_Companies_By_PkArgs: Query_Root_Production_Companies_By_PkArgs,
     Query_Root_UserArgs: Query_Root_UserArgs,
     Query_Root_UsersArgs: Query_Root_UsersArgs,
     Query_Root_UsersAggregateArgs: Query_Root_UsersAggregateArgs,
@@ -31866,14 +57516,66 @@ export default {
     Subscription_Root_BucketsArgs: Subscription_Root_BucketsArgs,
     Subscription_Root_BucketsAggregateArgs: Subscription_Root_BucketsAggregateArgs,
     Subscription_Root_Buckets_StreamArgs: Subscription_Root_Buckets_StreamArgs,
+    Subscription_Root_CollectionsArgs: Subscription_Root_CollectionsArgs,
+    Subscription_Root_Collections_AggregateArgs: Subscription_Root_Collections_AggregateArgs,
+    Subscription_Root_Collections_By_PkArgs: Subscription_Root_Collections_By_PkArgs,
+    Subscription_Root_Collections_StreamArgs: Subscription_Root_Collections_StreamArgs,
+    Subscription_Root_CountriesArgs: Subscription_Root_CountriesArgs,
+    Subscription_Root_Countries_AggregateArgs: Subscription_Root_Countries_AggregateArgs,
+    Subscription_Root_Countries_By_PkArgs: Subscription_Root_Countries_By_PkArgs,
+    Subscription_Root_Countries_StreamArgs: Subscription_Root_Countries_StreamArgs,
+    Subscription_Root_Credit_TypesArgs: Subscription_Root_Credit_TypesArgs,
+    Subscription_Root_Credit_Types_AggregateArgs: Subscription_Root_Credit_Types_AggregateArgs,
+    Subscription_Root_Credit_Types_By_PkArgs: Subscription_Root_Credit_Types_By_PkArgs,
+    Subscription_Root_Credit_Types_StreamArgs: Subscription_Root_Credit_Types_StreamArgs,
     Subscription_Root_FileArgs: Subscription_Root_FileArgs,
     Subscription_Root_FilesArgs: Subscription_Root_FilesArgs,
     Subscription_Root_FilesAggregateArgs: Subscription_Root_FilesAggregateArgs,
     Subscription_Root_Files_StreamArgs: Subscription_Root_Files_StreamArgs,
+    Subscription_Root_GendersArgs: Subscription_Root_GendersArgs,
+    Subscription_Root_Genders_AggregateArgs: Subscription_Root_Genders_AggregateArgs,
+    Subscription_Root_Genders_By_PkArgs: Subscription_Root_Genders_By_PkArgs,
+    Subscription_Root_Genders_StreamArgs: Subscription_Root_Genders_StreamArgs,
+    Subscription_Root_GenresArgs: Subscription_Root_GenresArgs,
+    Subscription_Root_Genres_AggregateArgs: Subscription_Root_Genres_AggregateArgs,
+    Subscription_Root_Genres_By_PkArgs: Subscription_Root_Genres_By_PkArgs,
+    Subscription_Root_Genres_StreamArgs: Subscription_Root_Genres_StreamArgs,
+    Subscription_Root_LanguagesArgs: Subscription_Root_LanguagesArgs,
+    Subscription_Root_Languages_AggregateArgs: Subscription_Root_Languages_AggregateArgs,
+    Subscription_Root_Languages_By_PkArgs: Subscription_Root_Languages_By_PkArgs,
+    Subscription_Root_Languages_StreamArgs: Subscription_Root_Languages_StreamArgs,
+    Subscription_Root_Movie_CreditsArgs: Subscription_Root_Movie_CreditsArgs,
+    Subscription_Root_Movie_Credits_AggregateArgs: Subscription_Root_Movie_Credits_AggregateArgs,
+    Subscription_Root_Movie_Credits_By_PkArgs: Subscription_Root_Movie_Credits_By_PkArgs,
+    Subscription_Root_Movie_Credits_StreamArgs: Subscription_Root_Movie_Credits_StreamArgs,
+    Subscription_Root_Movie_GenresArgs: Subscription_Root_Movie_GenresArgs,
+    Subscription_Root_Movie_Genres_AggregateArgs: Subscription_Root_Movie_Genres_AggregateArgs,
+    Subscription_Root_Movie_Genres_By_PkArgs: Subscription_Root_Movie_Genres_By_PkArgs,
+    Subscription_Root_Movie_Genres_StreamArgs: Subscription_Root_Movie_Genres_StreamArgs,
+    Subscription_Root_Movie_Production_CompaniesArgs: Subscription_Root_Movie_Production_CompaniesArgs,
+    Subscription_Root_Movie_Production_Companies_AggregateArgs: Subscription_Root_Movie_Production_Companies_AggregateArgs,
+    Subscription_Root_Movie_Production_Companies_By_PkArgs: Subscription_Root_Movie_Production_Companies_By_PkArgs,
+    Subscription_Root_Movie_Production_Companies_StreamArgs: Subscription_Root_Movie_Production_Companies_StreamArgs,
+    Subscription_Root_Movie_Production_CountriesArgs: Subscription_Root_Movie_Production_CountriesArgs,
+    Subscription_Root_Movie_Production_Countries_AggregateArgs: Subscription_Root_Movie_Production_Countries_AggregateArgs,
+    Subscription_Root_Movie_Production_Countries_By_PkArgs: Subscription_Root_Movie_Production_Countries_By_PkArgs,
+    Subscription_Root_Movie_Production_Countries_StreamArgs: Subscription_Root_Movie_Production_Countries_StreamArgs,
+    Subscription_Root_Movie_Spoken_LanguagesArgs: Subscription_Root_Movie_Spoken_LanguagesArgs,
+    Subscription_Root_Movie_Spoken_Languages_AggregateArgs: Subscription_Root_Movie_Spoken_Languages_AggregateArgs,
+    Subscription_Root_Movie_Spoken_Languages_By_PkArgs: Subscription_Root_Movie_Spoken_Languages_By_PkArgs,
+    Subscription_Root_Movie_Spoken_Languages_StreamArgs: Subscription_Root_Movie_Spoken_Languages_StreamArgs,
     Subscription_Root_MoviesArgs: Subscription_Root_MoviesArgs,
     Subscription_Root_Movies_AggregateArgs: Subscription_Root_Movies_AggregateArgs,
     Subscription_Root_Movies_By_PkArgs: Subscription_Root_Movies_By_PkArgs,
     Subscription_Root_Movies_StreamArgs: Subscription_Root_Movies_StreamArgs,
+    Subscription_Root_PeopleArgs: Subscription_Root_PeopleArgs,
+    Subscription_Root_People_AggregateArgs: Subscription_Root_People_AggregateArgs,
+    Subscription_Root_People_By_PkArgs: Subscription_Root_People_By_PkArgs,
+    Subscription_Root_People_StreamArgs: Subscription_Root_People_StreamArgs,
+    Subscription_Root_Production_CompaniesArgs: Subscription_Root_Production_CompaniesArgs,
+    Subscription_Root_Production_Companies_AggregateArgs: Subscription_Root_Production_Companies_AggregateArgs,
+    Subscription_Root_Production_Companies_By_PkArgs: Subscription_Root_Production_Companies_By_PkArgs,
+    Subscription_Root_Production_Companies_StreamArgs: Subscription_Root_Production_Companies_StreamArgs,
     Subscription_Root_UserArgs: Subscription_Root_UserArgs,
     Subscription_Root_UsersArgs: Subscription_Root_UsersArgs,
     Subscription_Root_UsersAggregateArgs: Subscription_Root_UsersAggregateArgs,

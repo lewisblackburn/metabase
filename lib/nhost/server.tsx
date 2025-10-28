@@ -1,9 +1,9 @@
-import { createServerClient, type NhostClient } from "@nhost/nhost-js";
-import { DEFAULT_SESSION_KEY, type Session } from "@nhost/nhost-js/session";
-import { cookies } from "next/headers";
-import type { NextRequest, NextResponse } from "next/server";
+import { createServerClient, type NhostClient } from '@nhost/nhost-js'
+import { DEFAULT_SESSION_KEY, type Session } from '@nhost/nhost-js/session'
+import { cookies } from 'next/headers'
+import type { NextRequest, NextResponse } from 'next/server'
 
-const key = DEFAULT_SESSION_KEY;
+const key = DEFAULT_SESSION_KEY
 
 /**
  * Creates an Nhost client for use in server components.
@@ -12,31 +12,31 @@ const key = DEFAULT_SESSION_KEY;
  * customized to be able to retrieve the session from cookies in Next.js server components.
  */
 export async function createNhostClient(): Promise<NhostClient> {
-  const cookieStore = await cookies();
+  const cookieStore = await cookies()
 
   const nhost = createServerClient({
-    region: process.env["NHOST_REGION"] || "local",
-    subdomain: process.env["NHOST_SUBDOMAIN"] || "local",
+    region: process.env['NHOST_REGION'] || 'local',
+    subdomain: process.env['NHOST_SUBDOMAIN'] || 'local',
     storage: {
       // storage compatible with Next.js server components
       get: (): Session | null => {
-        const s = cookieStore.get(key)?.value || null;
+        const s = cookieStore.get(key)?.value || null
         if (!s) {
-          return null;
+          return null
         }
-        const session = JSON.parse(s) as Session;
-        return session;
+        const session = JSON.parse(s) as Session
+        return session
       },
       set: (value: Session) => {
-        cookieStore.set(key, JSON.stringify(value));
+        cookieStore.set(key, JSON.stringify(value))
       },
       remove: () => {
-        cookieStore.delete(key);
+        cookieStore.delete(key)
       },
     },
-  });
+  })
 
-  return nhost;
+  return nhost
 }
 
 /**
@@ -54,36 +54,36 @@ export async function handleNhostMiddleware(
   response: NextResponse<unknown>,
 ): Promise<Session | null> {
   const nhost = createServerClient({
-    region: process.env["NHOST_REGION"] || "local",
-    subdomain: process.env["NHOST_SUBDOMAIN"] || "local",
+    region: process.env['NHOST_REGION'] || 'local',
+    subdomain: process.env['NHOST_SUBDOMAIN'] || 'local',
     storage: {
       // storage compatible with Next.js middleware
       get: (): Session | null => {
-        const raw = request.cookies.get(key)?.value || null;
+        const raw = request.cookies.get(key)?.value || null
         if (!raw) {
-          return null;
+          return null
         }
-        const session = JSON.parse(raw) as Session;
-        return session;
+        const session = JSON.parse(raw) as Session
+        return session
       },
       set: (value: Session) => {
         response.cookies.set({
           name: key,
           value: JSON.stringify(value),
-          path: "/",
+          path: '/',
           httpOnly: false, //if set to true we can't access it in the client
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
           maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
-        });
+        })
       },
       remove: () => {
-        response.cookies.delete(key);
+        response.cookies.delete(key)
       },
     },
-  });
+  })
 
   // we only want to refresh the session if  the token will
   // expire in the next 60 seconds
-  return await nhost.refreshSession(60);
+  return await nhost.refreshSession(60)
 }

@@ -1,29 +1,33 @@
-import { capitalize } from "@/lib/utils";
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { usePathname } from 'next/navigation'
+import { useMemo } from 'react'
+
+import { capitalize } from '@/lib/utils'
 
 export default function useBreadcrumbs() {
-	const pathname = usePathname();
+  const pathname = usePathname()
 
-	const breadcrumbs = useMemo(() => {
-		return pathname.split("/").filter(Boolean).map((path, index) => {
-			const pathSegments = pathname.split("/").filter(Boolean);
+  const breadcrumbs = useMemo(() => {
+    return pathname
+      .split('/')
+      .filter(Boolean)
+      .map((path, index) => {
+        const pathSegments = pathname.split('/').filter(Boolean)
 
-			const label = capitalize(path);
-			const href = getHref(pathSegments, index);
-			const isLast = isLastSegment(index, pathSegments);
+        const label = capitalize(path)
+        const href = getHref(pathSegments, index)
+        const isLast = isLastSegment(index, pathSegments)
 
-			return { label, href, isLast };
-		});
-	}, [pathname]);
+        return { label, href, isLast }
+      })
+  }, [pathname])
 
-	return breadcrumbs;
+  return breadcrumbs
 }
 
 function getHref(pathSegments: string[], index: number) {
-	return `/${pathSegments.slice(0, index + 1).join("/")}`;
+  return `/${pathSegments.slice(0, index + 1).join('/')}`
 }
 
 function isLastSegment(index: number, pathSegments: string[]) {
-	return index === pathSegments.length - 1;
+  return index === pathSegments.length - 1
 }
