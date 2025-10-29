@@ -15,6 +15,11 @@ export type CreateMovieMutationVariables = Exact<{
 
 export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
+export type HealthQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HealthQuery = { __typename: 'query_root' };
+
 export type MovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
@@ -57658,6 +57663,11 @@ export const CreateMovieDocument = gql`
   }
 }
     `;
+export const HealthDocument = gql`
+    query Health {
+  __typename
+}
+    `;
 export const MovieDocument = gql`
     query Movie($id: uuid!) {
   movies_by_pk(id: $id) {
@@ -57699,6 +57709,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
+    },
+    Health(variables?: HealthQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<HealthQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HealthQuery>({ document: HealthDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Health', 'query', variables);
     },
     Movie(variables: MovieQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MovieQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MovieQuery>({ document: MovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Movie', 'query', variables);

@@ -30,6 +30,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
+import SystemStatusButton from './system-status-button'
+
 type linkType = 'DROPDOWN' | 'LINK' | 'EXTERNAL_LINK'
 
 interface NavigationLink {
@@ -393,17 +395,7 @@ export default function Footer() {
                         </a>
                     </div>
                     <div className="mt-8 flex w-full flex-wrap items-center justify-between gap-4">
-                        <div>
-                            <Button asChild variant="secondary" className="bg-secondary/40">
-                                <a href="#">
-                                    <div className="relative size-[0.4375rem]">
-                                        <span className="-translate-1/2 absolute left-1/2 top-1/2 z-10 size-[0.6875rem] animate-pulse rounded-full bg-green-400/50" />
-                                        <span className="-translate-1/2 absolute left-1/2 top-1/2 z-20 size-full rounded-full bg-green-500" />
-                                    </div>
-                                    All systems normal
-                                </a>
-                            </Button>
-                        </div>
+                        <SystemStatusButton />
                         <div>
                             <ToggleGroup
                                 value={theme}
