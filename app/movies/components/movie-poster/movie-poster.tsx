@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 
 interface MoviePosterProps {
     posterId: string | null
-    posterSize?: 'sm' | 'md' | 'lg'
+    posterSize?: 'sm' | 'md' | 'lg' | 'full'
 }
 
 export default function MoviePoster({ posterId, posterSize }: MoviePosterProps) {
@@ -23,12 +23,12 @@ export default function MoviePoster({ posterId, posterSize }: MoviePosterProps) 
     const size = posterSize ?? currentPosterSize
 
     return (
-        <div className={cn('relative', posterSizeClasses[size])}>
+        <div className={cn('relative aspect-poster', posterSizeClasses[size])}>
             <Image
                 src={url}
                 alt="Movie Poster"
                 fill
-                className="aspect-poster object-cover bg-muted rounded-md"
+                className="object-cover bg-muted rounded-md"
                 loading="eager"
             />
         </div>

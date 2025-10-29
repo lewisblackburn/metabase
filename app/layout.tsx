@@ -50,7 +50,7 @@ export default async function RootLayout({
                                     <div className="flex flex-1">
                                         <AppSidebar />
                                         <SidebarInset className="p-4">
-                                            {children}
+                                            <div className="flex-1 min-h-screen">{children}</div>
                                             <Footer />
                                         </SidebarInset>
                                     </div>

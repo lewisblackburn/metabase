@@ -341,8 +341,8 @@ export default function Footer() {
     }
 
     return (
-        <section className="pt-96 bg-background">
-            <footer className="container mx-auto">
+        <section className="bg-background">
+            <footer className="max-w-7xl mx-auto">
                 <div className="flex w-full flex-col gap-8">
                     <div className="grid w-full grid-cols-[repeat(2,minmax(auto,15rem))] gap-8 md:grid-cols-[repeat(4,1fr)_5rem] md:gap-0">
                         {NAVIGATION.map(section => (
@@ -394,7 +394,7 @@ export default function Footer() {
                     </div>
                     <div className="mt-8 flex w-full flex-wrap items-center justify-between gap-4">
                         <div>
-                            <Button asChild variant="ghost" className="text-foreground">
+                            <Button asChild variant="secondary" className="bg-secondary/40">
                                 <a href="#">
                                     <div className="relative size-[0.4375rem]">
                                         <span className="-translate-1/2 absolute left-1/2 top-1/2 z-10 size-[0.6875rem] animate-pulse rounded-full bg-green-400/50" />

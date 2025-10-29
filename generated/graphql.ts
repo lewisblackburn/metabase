@@ -20,7 +20,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, posterId?: any | null } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, poster_id?: any | null, backdrop_id?: any | null } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -28,7 +28,7 @@ export type MoviesQueryVariables = Exact<{
 }>;
 
 
-export type MoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, posterId?: any | null }> };
+export type MoviesQuery = { __typename?: 'query_root', movies: Array<{ __typename?: 'movies', id: any, title: string, poster_id?: any | null }> };
 
 export type RootQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4705,7 +4705,7 @@ export type Movies = {
   __typename?: 'movies';
   /** An object relationship */
   backdrop?: Maybe<Files>;
-  backdropId?: Maybe<Scalars['uuid']>;
+  backdrop_id?: Maybe<Scalars['uuid']>;
   budget?: Maybe<Scalars['bigint']>;
   certification?: Maybe<Scalars['String']>;
   /** An object relationship */
@@ -4737,7 +4737,7 @@ export type Movies = {
   popularity?: Maybe<Scalars['Float']>;
   /** An object relationship */
   poster?: Maybe<Files>;
-  posterId?: Maybe<Scalars['uuid']>;
+  poster_id?: Maybe<Scalars['uuid']>;
   production_country_codes?: Maybe<Array<Scalars['String']>>;
   release_date?: Maybe<Scalars['date']>;
   revenue?: Maybe<Scalars['bigint']>;
@@ -4921,7 +4921,7 @@ export type Movies_Bool_Exp = {
   _not?: InputMaybe<Movies_Bool_Exp>;
   _or?: InputMaybe<Array<Movies_Bool_Exp>>;
   backdrop?: InputMaybe<Files_Bool_Exp>;
-  backdropId?: InputMaybe<Uuid_Comparison_Exp>;
+  backdrop_id?: InputMaybe<Uuid_Comparison_Exp>;
   budget?: InputMaybe<Bigint_Comparison_Exp>;
   certification?: InputMaybe<String_Comparison_Exp>;
   collection?: InputMaybe<Collections_Bool_Exp>;
@@ -4943,7 +4943,7 @@ export type Movies_Bool_Exp = {
   overview?: InputMaybe<String_Comparison_Exp>;
   popularity?: InputMaybe<Float_Comparison_Exp>;
   poster?: InputMaybe<Files_Bool_Exp>;
-  posterId?: InputMaybe<Uuid_Comparison_Exp>;
+  poster_id?: InputMaybe<Uuid_Comparison_Exp>;
   production_country_codes?: InputMaybe<String_Array_Comparison_Exp>;
   release_date?: InputMaybe<Date_Comparison_Exp>;
   revenue?: InputMaybe<Bigint_Comparison_Exp>;
@@ -4979,7 +4979,7 @@ export type Movies_Inc_Input = {
 /** input type for inserting data into table "movies" */
 export type Movies_Insert_Input = {
   backdrop?: InputMaybe<Files_Obj_Rel_Insert_Input>;
-  backdropId?: InputMaybe<Scalars['uuid']>;
+  backdrop_id?: InputMaybe<Scalars['uuid']>;
   budget?: InputMaybe<Scalars['bigint']>;
   certification?: InputMaybe<Scalars['String']>;
   collection?: InputMaybe<Collections_Obj_Rel_Insert_Input>;
@@ -4997,7 +4997,7 @@ export type Movies_Insert_Input = {
   overview?: InputMaybe<Scalars['String']>;
   popularity?: InputMaybe<Scalars['Float']>;
   poster?: InputMaybe<Files_Obj_Rel_Insert_Input>;
-  posterId?: InputMaybe<Scalars['uuid']>;
+  poster_id?: InputMaybe<Scalars['uuid']>;
   production_country_codes?: InputMaybe<Array<Scalars['String']>>;
   release_date?: InputMaybe<Scalars['date']>;
   revenue?: InputMaybe<Scalars['bigint']>;
@@ -5014,7 +5014,7 @@ export type Movies_Insert_Input = {
 /** aggregate max on columns */
 export type Movies_Max_Fields = {
   __typename?: 'movies_max_fields';
-  backdropId?: Maybe<Scalars['uuid']>;
+  backdrop_id?: Maybe<Scalars['uuid']>;
   budget?: Maybe<Scalars['bigint']>;
   certification?: Maybe<Scalars['String']>;
   collection_id?: Maybe<Scalars['uuid']>;
@@ -5026,7 +5026,7 @@ export type Movies_Max_Fields = {
   language?: Maybe<Scalars['String']>;
   overview?: Maybe<Scalars['String']>;
   popularity?: Maybe<Scalars['Float']>;
-  posterId?: Maybe<Scalars['uuid']>;
+  poster_id?: Maybe<Scalars['uuid']>;
   production_country_codes?: Maybe<Array<Scalars['String']>>;
   release_date?: Maybe<Scalars['date']>;
   revenue?: Maybe<Scalars['bigint']>;
@@ -5042,7 +5042,7 @@ export type Movies_Max_Fields = {
 
 /** order by max() on columns of table "movies" */
 export type Movies_Max_Order_By = {
-  backdropId?: InputMaybe<Order_By>;
+  backdrop_id?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   certification?: InputMaybe<Order_By>;
   collection_id?: InputMaybe<Order_By>;
@@ -5054,7 +5054,7 @@ export type Movies_Max_Order_By = {
   language?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   popularity?: InputMaybe<Order_By>;
-  posterId?: InputMaybe<Order_By>;
+  poster_id?: InputMaybe<Order_By>;
   production_country_codes?: InputMaybe<Order_By>;
   release_date?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -5071,7 +5071,7 @@ export type Movies_Max_Order_By = {
 /** aggregate min on columns */
 export type Movies_Min_Fields = {
   __typename?: 'movies_min_fields';
-  backdropId?: Maybe<Scalars['uuid']>;
+  backdrop_id?: Maybe<Scalars['uuid']>;
   budget?: Maybe<Scalars['bigint']>;
   certification?: Maybe<Scalars['String']>;
   collection_id?: Maybe<Scalars['uuid']>;
@@ -5083,7 +5083,7 @@ export type Movies_Min_Fields = {
   language?: Maybe<Scalars['String']>;
   overview?: Maybe<Scalars['String']>;
   popularity?: Maybe<Scalars['Float']>;
-  posterId?: Maybe<Scalars['uuid']>;
+  poster_id?: Maybe<Scalars['uuid']>;
   production_country_codes?: Maybe<Array<Scalars['String']>>;
   release_date?: Maybe<Scalars['date']>;
   revenue?: Maybe<Scalars['bigint']>;
@@ -5099,7 +5099,7 @@ export type Movies_Min_Fields = {
 
 /** order by min() on columns of table "movies" */
 export type Movies_Min_Order_By = {
-  backdropId?: InputMaybe<Order_By>;
+  backdrop_id?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   certification?: InputMaybe<Order_By>;
   collection_id?: InputMaybe<Order_By>;
@@ -5111,7 +5111,7 @@ export type Movies_Min_Order_By = {
   language?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
   popularity?: InputMaybe<Order_By>;
-  posterId?: InputMaybe<Order_By>;
+  poster_id?: InputMaybe<Order_By>;
   production_country_codes?: InputMaybe<Order_By>;
   release_date?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -5144,7 +5144,7 @@ export type Movies_On_Conflict = {
 /** Ordering options when selecting data from "movies". */
 export type Movies_Order_By = {
   backdrop?: InputMaybe<Files_Order_By>;
-  backdropId?: InputMaybe<Order_By>;
+  backdrop_id?: InputMaybe<Order_By>;
   budget?: InputMaybe<Order_By>;
   certification?: InputMaybe<Order_By>;
   collection?: InputMaybe<Collections_Order_By>;
@@ -5162,7 +5162,7 @@ export type Movies_Order_By = {
   overview?: InputMaybe<Order_By>;
   popularity?: InputMaybe<Order_By>;
   poster?: InputMaybe<Files_Order_By>;
-  posterId?: InputMaybe<Order_By>;
+  poster_id?: InputMaybe<Order_By>;
   production_country_codes?: InputMaybe<Order_By>;
   release_date?: InputMaybe<Order_By>;
   revenue?: InputMaybe<Order_By>;
@@ -5184,7 +5184,7 @@ export type Movies_Pk_Columns_Input = {
 /** select columns of table "movies" */
 export type Movies_Select_Column =
   /** column name */
-  | 'backdropId'
+  | 'backdrop_id'
   /** column name */
   | 'budget'
   /** column name */
@@ -5208,7 +5208,7 @@ export type Movies_Select_Column =
   /** column name */
   | 'popularity'
   /** column name */
-  | 'posterId'
+  | 'poster_id'
   /** column name */
   | 'production_country_codes'
   /** column name */
@@ -5234,7 +5234,7 @@ export type Movies_Select_Column =
 
 /** input type for updating data in table "movies" */
 export type Movies_Set_Input = {
-  backdropId?: InputMaybe<Scalars['uuid']>;
+  backdrop_id?: InputMaybe<Scalars['uuid']>;
   budget?: InputMaybe<Scalars['bigint']>;
   certification?: InputMaybe<Scalars['String']>;
   collection_id?: InputMaybe<Scalars['uuid']>;
@@ -5246,7 +5246,7 @@ export type Movies_Set_Input = {
   language?: InputMaybe<Scalars['String']>;
   overview?: InputMaybe<Scalars['String']>;
   popularity?: InputMaybe<Scalars['Float']>;
-  posterId?: InputMaybe<Scalars['uuid']>;
+  poster_id?: InputMaybe<Scalars['uuid']>;
   production_country_codes?: InputMaybe<Array<Scalars['String']>>;
   release_date?: InputMaybe<Scalars['date']>;
   revenue?: InputMaybe<Scalars['bigint']>;
@@ -5333,7 +5333,7 @@ export type Movies_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movies_Stream_Cursor_Value_Input = {
-  backdropId?: InputMaybe<Scalars['uuid']>;
+  backdrop_id?: InputMaybe<Scalars['uuid']>;
   budget?: InputMaybe<Scalars['bigint']>;
   certification?: InputMaybe<Scalars['String']>;
   collection_id?: InputMaybe<Scalars['uuid']>;
@@ -5345,7 +5345,7 @@ export type Movies_Stream_Cursor_Value_Input = {
   language?: InputMaybe<Scalars['String']>;
   overview?: InputMaybe<Scalars['String']>;
   popularity?: InputMaybe<Scalars['Float']>;
-  posterId?: InputMaybe<Scalars['uuid']>;
+  poster_id?: InputMaybe<Scalars['uuid']>;
   production_country_codes?: InputMaybe<Array<Scalars['String']>>;
   release_date?: InputMaybe<Scalars['date']>;
   revenue?: InputMaybe<Scalars['bigint']>;
@@ -5383,7 +5383,7 @@ export type Movies_Sum_Order_By = {
 /** update columns of table "movies" */
 export type Movies_Update_Column =
   /** column name */
-  | 'backdropId'
+  | 'backdrop_id'
   /** column name */
   | 'budget'
   /** column name */
@@ -5407,7 +5407,7 @@ export type Movies_Update_Column =
   /** column name */
   | 'popularity'
   /** column name */
-  | 'posterId'
+  | 'poster_id'
   /** column name */
   | 'production_country_codes'
   /** column name */
@@ -30445,7 +30445,7 @@ export default {
               "args": []
             },
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -31124,7 +31124,7 @@ export default {
               "args": []
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -31759,7 +31759,7 @@ export default {
               }
             },
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "uuid_comparison_exp",
@@ -31935,7 +31935,7 @@ export default {
               }
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "uuid_comparison_exp",
@@ -32114,7 +32114,7 @@ export default {
               }
             },
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -32264,7 +32264,7 @@ export default {
               }
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -32372,7 +32372,7 @@ export default {
           "name": "movies_max_fields",
           "fields": [
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -32486,7 +32486,7 @@ export default {
               "args": []
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -32607,7 +32607,7 @@ export default {
           "name": "movies_max_order_by",
           "inputFields": [
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -32703,7 +32703,7 @@ export default {
               }
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -32805,7 +32805,7 @@ export default {
           "name": "movies_min_fields",
           "fields": [
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -32919,7 +32919,7 @@ export default {
               "args": []
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -33040,7 +33040,7 @@ export default {
           "name": "movies_min_order_by",
           "inputFields": [
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -33136,7 +33136,7 @@ export default {
               }
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -33326,7 +33326,7 @@ export default {
               }
             },
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -33470,7 +33470,7 @@ export default {
               }
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -33589,7 +33589,7 @@ export default {
           "name": "movies_select_column",
           "enumValues": [
             {
-              "name": "backdropId"
+              "name": "backdrop_id"
             },
             {
               "name": "budget"
@@ -33625,7 +33625,7 @@ export default {
               "name": "popularity"
             },
             {
-              "name": "posterId"
+              "name": "poster_id"
             },
             {
               "name": "production_country_codes"
@@ -33667,7 +33667,7 @@ export default {
           "name": "movies_set_input",
           "inputFields": [
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -33769,7 +33769,7 @@ export default {
               }
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -34247,7 +34247,7 @@ export default {
           "name": "movies_stream_cursor_value_input",
           "inputFields": [
             {
-              "name": "backdropId",
+              "name": "backdrop_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -34349,7 +34349,7 @@ export default {
               }
             },
             {
-              "name": "posterId",
+              "name": "poster_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -34572,7 +34572,7 @@ export default {
           "name": "movies_update_column",
           "enumValues": [
             {
-              "name": "backdropId"
+              "name": "backdrop_id"
             },
             {
               "name": "budget"
@@ -34608,7 +34608,7 @@ export default {
               "name": "popularity"
             },
             {
-              "name": "posterId"
+              "name": "poster_id"
             },
             {
               "name": "production_country_codes"
@@ -57663,7 +57663,8 @@ export const MovieDocument = gql`
   movies_by_pk(id: $id) {
     id
     title
-    posterId
+    poster_id
+    backdrop_id
   }
 }
     `;
@@ -57672,7 +57673,7 @@ export const MoviesDocument = gql`
   movies(limit: $limit, offset: $offset) {
     id
     title
-    posterId
+    poster_id
   }
 }
     `;

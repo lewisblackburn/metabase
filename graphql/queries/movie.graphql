@@ -2,6 +2,7 @@ query Movie($id: uuid!) {
     movies_by_pk(id: $id) {
         id
         title
-        posterId
+        poster_id
+        backdrop_id
     }
 }

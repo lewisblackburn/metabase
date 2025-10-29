@@ -11,7 +11,7 @@ interface MovieCardProps {
 export function MovieCard({ movie }: MovieCardProps) {
     return (
         <Link href={`/movies/${movie.id}`}>
-            <MoviePoster posterId={movie.posterId} />
+            <MoviePoster posterId={movie.poster_id} />
         </Link>
     )
 }

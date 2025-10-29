@@ -2,6 +2,6 @@ query Movies($limit: Int, $offset: Int) {
     movies(limit: $limit, offset: $offset) {
         id
         title
-        posterId
+        poster_id
     }
 }
