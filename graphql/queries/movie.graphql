@@ -1,8 +1,16 @@
 query Movie($id: uuid!) {
     movies_by_pk(id: $id) {
         id
-        title
         poster_id
         backdrop_id
+        title
+        overview
+        certification
+        release_date
+        genres {
+            genre {
+                name
+            }
+        }
     }
 }

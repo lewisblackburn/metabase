@@ -1,9 +1,13 @@
 'use client'
+import { BadgeCheckIcon } from 'lucide-react'
+
+import { Badge } from '@/components/ui/badge'
 import { MovieQuery } from '@/generated/graphql'
 import useBreadcrumbs from '@/hooks/use-breadcrumbs'
 
 import MovieBackdrop from '../../components/movie-backdrop/movie-backdrop'
 import MoviePoster from '../../components/movie-poster/movie-poster'
+import CertificationBadge from './certification-badge.'
 
 export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) {
     useBreadcrumbs([movie?.title ?? 'Unknown Movie'])
@@ -12,12 +16,27 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
         <div>
             <div className="relative h-96">
                 <MovieBackdrop backdropId={movie?.backdrop_id} />
-                <div className={'absolute inset-0 flex items-center justify-start p-5'}>
+                <div className="absolute inset-0 flex items-center justify-start p-5 gap-5">
                     <MoviePoster posterId={movie?.poster_id} posterSize="full" />
-                    <div>test</div>
+                    <div className="flex flex-col gap-2 w-2/3">
+                        <h1 className="text-4xl font-extrabold tracking-tight text-balance">
+                            {movie?.title}
+                        </h1>
+                        <div className="flex items-center gap-2">
+                            <CertificationBadge certification={movie?.certification} />
+                            <time className="text-sm text-muted-foreground">
+                                {movie?.release_date}
+                            </time>
+                            <div>
+                                {movie?.genres.map(({ genre }) => (
+                                    <Badge key={genre?.name}>{genre?.name}</Badge>
+                                ))}
+                            </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{movie?.overview}</p>
+                    </div>
                 </div>
             </div>
-            <h1>{movie?.title}</h1>
         </div>
     )
 }

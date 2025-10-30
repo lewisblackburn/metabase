@@ -25,7 +25,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, title: string, poster_id?: any | null, backdrop_id?: any | null } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, overview?: string | null, certification?: string | null, release_date?: any | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', name: string } | null }> } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -3501,6 +3501,13 @@ export type Genres_Mutation_Response = {
   returning: Array<Genres>;
 };
 
+/** input type for inserting object relation for remote table "genres" */
+export type Genres_Obj_Rel_Insert_Input = {
+  data: Genres_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Genres_On_Conflict>;
+};
+
 /** on_conflict condition type for table "genres" */
 export type Genres_On_Conflict = {
   constraint: Genres_Constraint;
@@ -4069,6 +4076,8 @@ export type Movie_Credits_Variance_Order_By = {
 /** columns and relationships of "movie_genres" */
 export type Movie_Genres = {
   __typename?: 'movie_genres';
+  /** An object relationship */
+  genre?: Maybe<Genres>;
   genre_id: Scalars['uuid'];
   movie_id: Scalars['uuid'];
 };
@@ -4078,6 +4087,17 @@ export type Movie_Genres_Aggregate = {
   __typename?: 'movie_genres_aggregate';
   aggregate?: Maybe<Movie_Genres_Aggregate_Fields>;
   nodes: Array<Movie_Genres>;
+};
+
+export type Movie_Genres_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Movie_Genres_Aggregate_Bool_Exp_Count>;
+};
+
+export type Movie_Genres_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Movie_Genres_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "movie_genres" */
@@ -4095,11 +4115,26 @@ export type Movie_Genres_Aggregate_Fields_CountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "movie_genres" */
+export type Movie_Genres_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Movie_Genres_Max_Order_By>;
+  min?: InputMaybe<Movie_Genres_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "movie_genres" */
+export type Movie_Genres_Arr_Rel_Insert_Input = {
+  data: Array<Movie_Genres_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Movie_Genres_On_Conflict>;
+};
+
 /** Boolean expression to filter rows from the table "movie_genres". All fields are combined with a logical 'AND'. */
 export type Movie_Genres_Bool_Exp = {
   _and?: InputMaybe<Array<Movie_Genres_Bool_Exp>>;
   _not?: InputMaybe<Movie_Genres_Bool_Exp>;
   _or?: InputMaybe<Array<Movie_Genres_Bool_Exp>>;
+  genre?: InputMaybe<Genres_Bool_Exp>;
   genre_id?: InputMaybe<Uuid_Comparison_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -4111,6 +4146,7 @@ export type Movie_Genres_Constraint =
 
 /** input type for inserting data into table "movie_genres" */
 export type Movie_Genres_Insert_Input = {
+  genre?: InputMaybe<Genres_Obj_Rel_Insert_Input>;
   genre_id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -4122,11 +4158,23 @@ export type Movie_Genres_Max_Fields = {
   movie_id?: Maybe<Scalars['uuid']>;
 };
 
+/** order by max() on columns of table "movie_genres" */
+export type Movie_Genres_Max_Order_By = {
+  genre_id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Movie_Genres_Min_Fields = {
   __typename?: 'movie_genres_min_fields';
   genre_id?: Maybe<Scalars['uuid']>;
   movie_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "movie_genres" */
+export type Movie_Genres_Min_Order_By = {
+  genre_id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "movie_genres" */
@@ -4147,6 +4195,7 @@ export type Movie_Genres_On_Conflict = {
 
 /** Ordering options when selecting data from "movie_genres". */
 export type Movie_Genres_Order_By = {
+  genre?: InputMaybe<Genres_Order_By>;
   genre_id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
 };
@@ -4717,6 +4766,10 @@ export type Movies = {
   collection?: Maybe<Collections>;
   collection_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  /** An array relationship */
+  genres: Array<Movie_Genres>;
+  /** An aggregate relationship */
+  genres_aggregate: Movie_Genres_Aggregate;
   homepage?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   imdb_id?: Maybe<Scalars['String']>;
@@ -4754,6 +4807,26 @@ export type Movies = {
   updated_at?: Maybe<Scalars['timestamptz']>;
   vote_average?: Maybe<Scalars['Float']>;
   vote_count?: Maybe<Scalars['Int']>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_GenresArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Genres_Order_By>>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_Genres_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Movie_Genres_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Movie_Genres_Order_By>>;
+  where?: InputMaybe<Movie_Genres_Bool_Exp>;
 };
 
 
@@ -4932,6 +5005,8 @@ export type Movies_Bool_Exp = {
   collection?: InputMaybe<Collections_Bool_Exp>;
   collection_id?: InputMaybe<Uuid_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  genres?: InputMaybe<Movie_Genres_Bool_Exp>;
+  genres_aggregate?: InputMaybe<Movie_Genres_Aggregate_Bool_Exp>;
   homepage?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   imdb_id?: InputMaybe<String_Comparison_Exp>;
@@ -4990,6 +5065,7 @@ export type Movies_Insert_Input = {
   collection?: InputMaybe<Collections_Obj_Rel_Insert_Input>;
   collection_id?: InputMaybe<Scalars['uuid']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  genres?: InputMaybe<Movie_Genres_Arr_Rel_Insert_Input>;
   homepage?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   imdb_id?: InputMaybe<Scalars['String']>;
@@ -5155,6 +5231,7 @@ export type Movies_Order_By = {
   collection?: InputMaybe<Collections_Order_By>;
   collection_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  genres_aggregate?: InputMaybe<Movie_Genres_Aggregate_Order_By>;
   homepage?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   imdb_id?: InputMaybe<Order_By>;
@@ -25532,6 +25609,31 @@ export default {
         },
         {
           "kind": "INPUT_OBJECT",
+          "name": "genres_obj_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "genres_insert_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genres_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
           "name": "genres_on_conflict",
           "inputFields": [
             {
@@ -27895,6 +27997,15 @@ export default {
           "name": "movie_genres",
           "fields": [
             {
+              "name": "genre",
+              "type": {
+                "kind": "OBJECT",
+                "name": "genres",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "genre_id",
               "type": {
                 "kind": "NON_NULL",
@@ -27954,6 +28065,67 @@ export default {
             }
           ],
           "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_aggregate_bool_exp",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_aggregate_bool_exp_count",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_aggregate_bool_exp_count",
+          "inputFields": [
+            {
+              "name": "arguments",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "movie_genres_select_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "predicate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Int_comparison_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
         },
         {
           "kind": "OBJECT",
@@ -28017,6 +28189,67 @@ export default {
         },
         {
           "kind": "INPUT_OBJECT",
+          "name": "movie_genres_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_min_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_arr_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "movie_genres_insert_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
           "name": "movie_genres_bool_exp",
           "inputFields": [
             {
@@ -28056,6 +28289,14 @@ export default {
               }
             },
             {
+              "name": "genre",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genres_bool_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "genre_id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -28086,6 +28327,14 @@ export default {
           "kind": "INPUT_OBJECT",
           "name": "movie_genres_insert_input",
           "inputFields": [
+            {
+              "name": "genre",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genres_obj_rel_insert_input",
+                "ofType": null
+              }
+            },
             {
               "name": "genre_id",
               "type": {
@@ -28130,6 +28379,28 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_max_order_by",
+          "inputFields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "movie_genres_min_fields",
           "fields": [
@@ -28153,6 +28424,28 @@ export default {
             }
           ],
           "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "movie_genres_min_order_by",
+          "inputFields": [
+            {
+              "name": "genre_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
         },
         {
           "kind": "OBJECT",
@@ -28238,6 +28531,14 @@ export default {
           "kind": "INPUT_OBJECT",
           "name": "movie_genres_order_by",
           "inputFields": [
+            {
+              "name": "genre",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "genres_order_by",
+                "ofType": null
+              }
+            },
             {
               "name": "genre_id",
               "type": {
@@ -30504,6 +30805,142 @@ export default {
               "args": []
             },
             {
+              "name": "genres",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "movie_genres",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "genres_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "movie_genres_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "movie_genres_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "movie_genres_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "movie_genres_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "homepage",
               "type": {
                 "kind": "SCALAR",
@@ -31812,6 +32249,22 @@ export default {
               }
             },
             {
+              "name": "genres",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "genres_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "homepage",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -32163,6 +32616,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "genres",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_arr_rel_insert_input",
                 "ofType": null
               }
             },
@@ -33375,6 +33836,14 @@ export default {
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "genres_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "movie_genres_aggregate_order_by",
                 "ofType": null
               }
             },
@@ -56988,6 +57457,7 @@ export default {
     Genres_Max_Fields: Genres_Max_Fields,
     Genres_Min_Fields: Genres_Min_Fields,
     Genres_Mutation_Response: Genres_Mutation_Response,
+    Genres_Obj_Rel_Insert_Input: Genres_Obj_Rel_Insert_Input,
     Genres_On_Conflict: Genres_On_Conflict,
     Genres_Order_By: Genres_Order_By,
     Genres_Pk_Columns_Input: Genres_Pk_Columns_Input,
@@ -57054,12 +57524,18 @@ export default {
     Movie_Credits_Variance_Order_By: Movie_Credits_Variance_Order_By,
     Movie_Genres: Movie_Genres,
     Movie_Genres_Aggregate: Movie_Genres_Aggregate,
+    Movie_Genres_Aggregate_Bool_Exp: Movie_Genres_Aggregate_Bool_Exp,
+    Movie_Genres_Aggregate_Bool_Exp_Count: Movie_Genres_Aggregate_Bool_Exp_Count,
     Movie_Genres_Aggregate_Fields: Movie_Genres_Aggregate_Fields,
     Movie_Genres_Aggregate_Fields_CountArgs: Movie_Genres_Aggregate_Fields_CountArgs,
+    Movie_Genres_Aggregate_Order_By: Movie_Genres_Aggregate_Order_By,
+    Movie_Genres_Arr_Rel_Insert_Input: Movie_Genres_Arr_Rel_Insert_Input,
     Movie_Genres_Bool_Exp: Movie_Genres_Bool_Exp,
     Movie_Genres_Insert_Input: Movie_Genres_Insert_Input,
     Movie_Genres_Max_Fields: Movie_Genres_Max_Fields,
+    Movie_Genres_Max_Order_By: Movie_Genres_Max_Order_By,
     Movie_Genres_Min_Fields: Movie_Genres_Min_Fields,
+    Movie_Genres_Min_Order_By: Movie_Genres_Min_Order_By,
     Movie_Genres_Mutation_Response: Movie_Genres_Mutation_Response,
     Movie_Genres_On_Conflict: Movie_Genres_On_Conflict,
     Movie_Genres_Order_By: Movie_Genres_Order_By,
@@ -57135,6 +57611,8 @@ export default {
     Movie_Spoken_Languages_Stream_Cursor_Value_Input: Movie_Spoken_Languages_Stream_Cursor_Value_Input,
     Movie_Spoken_Languages_Updates: Movie_Spoken_Languages_Updates,
     Movies: Movies,
+    Movies_GenresArgs: Movies_GenresArgs,
+    Movies_Genres_AggregateArgs: Movies_Genres_AggregateArgs,
     Movies_Movie_CreditsArgs: Movies_Movie_CreditsArgs,
     Movies_Movie_Credits_AggregateArgs: Movies_Movie_Credits_AggregateArgs,
     Movies_Movie_Production_CompaniesArgs: Movies_Movie_Production_CompaniesArgs,
@@ -57672,9 +58150,17 @@ export const MovieDocument = gql`
     query Movie($id: uuid!) {
   movies_by_pk(id: $id) {
     id
-    title
     poster_id
     backdrop_id
+    title
+    overview
+    certification
+    release_date
+    genres {
+      genre {
+        name
+      }
+    }
   }
 }
     `;
