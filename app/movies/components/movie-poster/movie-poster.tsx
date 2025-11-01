@@ -27,6 +27,7 @@ export default function MoviePoster({ posterId, posterSize }: MoviePosterProps) 
             <Image
                 src={url}
                 alt="Movie Poster"
+                sizes="100%"
                 fill
                 className="object-cover bg-muted rounded-md"
                 loading="eager"

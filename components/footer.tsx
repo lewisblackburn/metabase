@@ -10,7 +10,9 @@ import {
     Sun,
     Twitter,
 } from 'lucide-react'
+import Image from 'next/image'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -326,7 +328,15 @@ const getLink = ({ type, href, name, links }: NavigationLink) => {
 }
 
 export default function Footer() {
+    const [mounted, setMounted] = useState(false)
     const { theme, setTheme } = useTheme()
+
+    // TODO: We need to find a better way to do this.
+    useEffect(() => {
+        setTimeout(() => {
+            setMounted(true)
+        }, 0)
+    }, [])
 
     const onThemeChange = (value: 'light' | 'dark' | 'system') => {
         if (value == 'system') {
@@ -386,46 +396,56 @@ export default function Footer() {
                             href={HOME_LINK}
                             className="row-1 col-[1/3] block size-9 md:col-[5/6] md:justify-self-end"
                         >
-                            <img
-                                src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg"
-                                alt=""
-                                className="size-full object-cover object-center"
-                                style={theme === 'dark' ? { filter: 'invert(100%)' } : undefined}
-                            />
+                            <div className="relative size-9">
+                                <Image
+                                    src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg"
+                                    alt="Logo"
+                                    className="object-cover object-center"
+                                    width={36}
+                                    height={36}
+                                    style={
+                                        mounted && theme === 'dark'
+                                            ? { filter: 'invert(100%)' }
+                                            : undefined
+                                    }
+                                />
+                            </div>
                         </a>
                     </div>
                     <div className="mt-8 flex w-full flex-wrap items-center justify-between gap-4">
                         <SystemStatusButton />
-                        <div>
-                            <ToggleGroup
-                                value={theme}
-                                onValueChange={onThemeChange}
-                                type="single"
-                                className="rounded-full border"
-                            >
-                                <ToggleGroupItem
-                                    value="system"
-                                    aria-label="Toggle system"
-                                    className="rounded-full! size-6"
+                        {mounted && (
+                            <div>
+                                <ToggleGroup
+                                    value={theme}
+                                    onValueChange={onThemeChange}
+                                    type="single"
+                                    className="rounded-full border"
                                 >
-                                    <MonitorCog className="stroke-foreground size-3" />
-                                </ToggleGroupItem>
-                                <ToggleGroupItem
-                                    value="light"
-                                    aria-label="Toggle light"
-                                    className="size-6 rounded-full"
-                                >
-                                    <Sun className="stroke-foreground size-3" />
-                                </ToggleGroupItem>
-                                <ToggleGroupItem
-                                    value="dark"
-                                    aria-label="Toggle dark"
-                                    className="rounded-full! size-6"
-                                >
-                                    <Moon className="stroke-foreground size-3" />
-                                </ToggleGroupItem>
-                            </ToggleGroup>
-                        </div>
+                                    <ToggleGroupItem
+                                        value="system"
+                                        aria-label="Toggle system"
+                                        className="rounded-full! size-6"
+                                    >
+                                        <MonitorCog className="stroke-foreground size-3" />
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                        value="light"
+                                        aria-label="Toggle light"
+                                        className="size-6 rounded-full"
+                                    >
+                                        <Sun className="stroke-foreground size-3" />
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                        value="dark"
+                                        aria-label="Toggle dark"
+                                        className="rounded-full! size-6"
+                                    >
+                                        <Moon className="stroke-foreground size-3" />
+                                    </ToggleGroupItem>
+                                </ToggleGroup>
+                            </div>
+                        )}
                     </div>
                 </div>
             </footer>

@@ -38,7 +38,7 @@ export default async function RootLayout({
     const user = session?.user
 
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <AuthHydration user={user} />
                 <ThemeProvider attribute="class" enableSystem={true} defaultTheme="system">

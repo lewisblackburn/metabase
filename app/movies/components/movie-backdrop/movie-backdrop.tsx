@@ -17,6 +17,7 @@ export default function MovieBackdrop({ backdropId }: MovieBackdropProps) {
             <Image
                 src={url}
                 alt="Movie Backdrop"
+                sizes="100%"
                 fill
                 className="object-cover bg-muted rounded-md"
                 loading="eager"
