@@ -10,7 +10,6 @@ type PosterSize = 'sm' | 'md' | 'lg'
 type LayoutStore = {
     posterSize: PosterSize
     setPosterSize: (size: PosterSize) => void
-    isHydrated: boolean
 }
 
 export const LAYOUT_STORAGE_KEY = 'layout-storage'
@@ -26,7 +25,6 @@ export const useLayoutStore = create<LayoutStore>()(
     persist(
         set => ({
             posterSize: 'md',
-            isHydrated: false,
             setPosterSize: posterSize => set({ posterSize }),
         }),
         {
@@ -37,10 +35,6 @@ export const useLayoutStore = create<LayoutStore>()(
                     logger.error('Failed to rehydrate store', error)
                 } else {
                     logger.debug('Store rehydrated', state)
-                    // Set isHydrated after store initialization is complete
-                    queueMicrotask(() => {
-                        useLayoutStore.setState({ isHydrated: true })
-                    })
                 }
             },
         },
