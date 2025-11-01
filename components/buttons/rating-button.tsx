@@ -1,21 +1,12 @@
 import { StarIcon } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
-
 import { Button } from '../ui/button'
 
 export function RatingButton() {
     return (
-        <Button
-            aria-label="Rate this title"
-            size="icon"
-            variant="outline"
-            className={cn(
-                'relative transition-colors duration-300 bg-transparent text-muted-foreground hover:text-yellow-500 ',
-            )}
-        >
-            <StarIcon className="size-4 transition-all duration-300 stroke-current hover:fill-yellow-500" />
-            <span className="sr-only">Rate this title</span>
+        <Button aria-label="Rate" variant="outline">
+            <StarIcon className="size-4" />
+            <span className="font-medium">Rate</span>
         </Button>
     )
 }
