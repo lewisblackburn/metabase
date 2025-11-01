@@ -24,7 +24,7 @@ export default function MediaGrid({ children, className }: MediaGridProps) {
         <div
             className={cn('grid place-items-center mx-auto w-full gap-4', className)}
             style={{
-                gridTemplateColumns: `repeat(auto-fit, minmax(${minWidth}, 1fr))`,
+                gridTemplateColumns: `repeat(auto-fill, minmax(${minWidth}, 1fr))`,
             }}
         >
             {children}

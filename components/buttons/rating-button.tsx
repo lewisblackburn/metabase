@@ -11,7 +11,7 @@ export function RatingButton() {
             size="icon"
             variant="outline"
             className={cn(
-                'relative transition-colors duration-300 text-muted-foreground hover:text-yellow-500 hover:border-yellow-400',
+                'relative transition-colors duration-300 bg-transparent text-muted-foreground hover:text-yellow-500 ',
             )}
         >
             <StarIcon className="size-4 transition-all duration-300 stroke-current hover:fill-yellow-500" />

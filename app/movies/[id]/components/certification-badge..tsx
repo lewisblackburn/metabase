@@ -1,6 +1,5 @@
-import { AlertCircle, Baby, Lock, Tag, User } from 'lucide-react'
-
 import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 
 export default function CertificationBadge({
     certification,
@@ -8,22 +7,17 @@ export default function CertificationBadge({
     certification: string | null | undefined
 }) {
     const config = {
-        U: { color: 'bg-green-500', icon: Baby },
-        PG: { color: 'bg-yellow-500', icon: AlertCircle },
-        '12': { color: 'bg-orange-500', icon: User },
-        '12A': { color: 'bg-orange-500', icon: User },
-        '15': { color: 'bg-red-500', icon: Lock },
-        '18': { color: 'bg-rose-600', icon: Lock },
+        U: { color: 'bg-green-500' },
+        PG: { color: 'bg-yellow-500' },
+        '12': { color: 'bg-orange-500' },
+        '12A': { color: 'bg-orange-500' },
+        '15': { color: 'bg-red-500' },
+        '18': { color: 'bg-rose-600' },
+        R: { color: 'bg-gray-500' },
     }[certification ?? 'PG']
 
-    const Icon = config?.icon ?? Tag
-
     return (
-        <Badge
-            variant="secondary"
-            className={`${config?.color} text-white flex text-md items-center gap-1`}
-        >
-            <Icon className="size-3" />
+        <Badge className={cn('rounded-sm min-w-10 text-white font-bold', config?.color)}>
             {certification}
         </Badge>
     )
