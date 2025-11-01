@@ -4,6 +4,7 @@ query Movie($id: uuid!) {
         poster_id
         backdrop_id
         title
+        tagline
         overview
         certification
         release_date

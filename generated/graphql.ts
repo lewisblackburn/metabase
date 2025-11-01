@@ -25,7 +25,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', name: string } | null }> } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', name: string } | null }> } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -58153,6 +58153,7 @@ export const MovieDocument = gql`
     poster_id
     backdrop_id
     title
+    tagline
     overview
     certification
     release_date
