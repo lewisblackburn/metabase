@@ -1,5 +1,9 @@
 import { create } from 'zustand'
-import { createJSONStorage, persist } from 'zustand/middleware'
+import { persist } from 'zustand/middleware'
+
+import { createLogger } from '@/lib/helpers/logger'
+
+const logger = createLogger('LayoutStore')
 
 type PosterSize = 'sm' | 'md' | 'lg'
 
@@ -8,6 +12,8 @@ type LayoutStore = {
     setPosterSize: (size: PosterSize) => void
     isHydrated: boolean
 }
+
+export const LAYOUT_STORAGE_KEY = 'layout-storage'
 
 export const posterSizeClasses = {
     sm: 'w-24 h-36',
@@ -24,11 +30,17 @@ export const useLayoutStore = create<LayoutStore>()(
             setPosterSize: posterSize => set({ posterSize }),
         }),
         {
-            name: 'layout-store',
-            storage: createJSONStorage(() => localStorage),
-            onRehydrateStorage: () => error => {
-                if (!error) {
-                    useLayoutStore.setState({ isHydrated: true })
+            name: LAYOUT_STORAGE_KEY,
+            version: 1,
+            onRehydrateStorage: () => (state, error) => {
+                if (error) {
+                    logger.error('Failed to rehydrate store', error)
+                } else {
+                    logger.debug('Store rehydrated', state)
+                    // Set isHydrated after store initialization is complete
+                    queueMicrotask(() => {
+                        useLayoutStore.setState({ isHydrated: true })
+                    })
                 }
             },
         },

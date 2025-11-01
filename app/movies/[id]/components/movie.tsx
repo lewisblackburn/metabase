@@ -1,5 +1,5 @@
 'use client'
-import { BadgeCheckIcon } from 'lucide-react'
+import { format } from 'date-fns'
 
 import { Badge } from '@/components/ui/badge'
 import { MovieQuery } from '@/generated/graphql'
@@ -25,13 +25,14 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
                         <div className="flex items-center gap-2">
                             <CertificationBadge certification={movie?.certification} />
                             <time className="text-sm text-muted-foreground">
-                                {movie?.release_date}
+                                {format(new Date(movie?.release_date), 'MMMM d, yyyy')}
                             </time>
                             <div>
                                 {movie?.genres.map(({ genre }) => (
                                     <Badge key={genre?.name}>{genre?.name}</Badge>
                                 ))}
                             </div>
+                            <time></time>
                         </div>
                         <p className="text-sm text-muted-foreground">{movie?.overview}</p>
                     </div>

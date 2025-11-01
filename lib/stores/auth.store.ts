@@ -1,7 +1,9 @@
 import { User } from '@nhost/nhost-js/auth'
 import { create } from 'zustand'
 
-// ! TODO: security issue given user type?
+import { createLogger } from '@/lib/helpers/logger'
+
+const logger = createLogger('AuthStore')
 
 type AuthenticatedState = {
     isAuthenticated: true
@@ -20,6 +22,13 @@ export type AuthState = (AuthenticatedState | UnauthenticatedState) & {
 export const useAuthStore = create<AuthState>(set => ({
     user: undefined,
     isAuthenticated: false,
-    setUser: user =>
-        set(user ? { user, isAuthenticated: true } : { user: undefined, isAuthenticated: false }),
+    setUser: user => {
+        if (user) {
+            logger.info('User authenticated', { userId: user.id })
+            set({ user, isAuthenticated: true })
+        } else {
+            logger.info('User logged out')
+            set({ user: undefined, isAuthenticated: false })
+        }
+    },
 }))
