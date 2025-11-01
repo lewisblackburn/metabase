@@ -3,11 +3,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+import { type Locale } from '@/lib/config/locales'
 import { createLogger } from '@/lib/helpers/logger'
 
 const logger = createLogger('SiteStore')
 
-export type Locale = 'en' | 'fr' | 'es' | 'de' // extend as needed
+export type { Locale }
 
 interface SiteState {
     locale: Locale

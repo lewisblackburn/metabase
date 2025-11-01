@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { Badge } from '@/components/ui/badge'
 import { MovieQuery } from '@/generated/graphql'
 import useBreadcrumbs from '@/hooks/use-breadcrumbs'
+import { useFormatDate } from '@/hooks/use-format-date'
 
 import MovieBackdrop from '../../components/movie-backdrop/movie-backdrop'
 import MoviePoster from '../../components/movie-poster/movie-poster'
@@ -11,6 +12,7 @@ import CertificationBadge from './certification-badge.'
 
 export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) {
     useBreadcrumbs([movie?.title ?? 'Unknown Movie'])
+    const formatDate = useFormatDate()
 
     return (
         <div>
@@ -25,7 +27,7 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
                         <div className="flex items-center gap-2">
                             <CertificationBadge certification={movie?.certification} />
                             <time className="text-sm text-muted-foreground">
-                                {format(new Date(movie?.release_date), 'MMMM d, yyyy')}
+                                {formatDate(new Date(movie?.release_date), 'MMMM d, yyyy')}
                             </time>
                             <div>
                                 {movie?.genres.map(({ genre }) => (
