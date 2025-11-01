@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { MovieQuery } from '@/generated/graphql'
 import useBreadcrumbs from '@/hooks/use-breadcrumbs'
 import { useFormatDate } from '@/hooks/use-format-date'
+import { formatRuntime } from '@/lib/helpers/strings/strings'
 
 import MovieBackdrop from '../../components/movie-backdrop/movie-backdrop'
 import MoviePoster from '../../components/movie-poster/movie-poster'
@@ -34,7 +35,7 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
                                     <Badge key={genre?.name}>{genre?.name}</Badge>
                                 ))}
                             </div>
-                            <time></time>
+                            <time>{formatRuntime(movie?.runtime ?? 0)}</time>
                         </div>
                         <p className="text-sm text-muted-foreground">{movie?.overview}</p>
                     </div>
