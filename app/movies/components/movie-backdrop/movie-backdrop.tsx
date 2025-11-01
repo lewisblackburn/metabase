@@ -13,7 +13,7 @@ export default function MovieBackdrop({ backdropId }: MovieBackdropProps) {
     const url = `${nhost.storage.baseURL}/${backdropId}`
 
     return (
-        <div className="relative w-full h-full filter brightness-25">
+        <div className="relative w-full h-full filter brightness-50 dark:brightness-25">
             <Image
                 src={url}
                 alt="Movie Backdrop"
