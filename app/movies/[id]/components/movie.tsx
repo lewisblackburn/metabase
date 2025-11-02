@@ -3,7 +3,6 @@
 import { formatDate } from 'date-fns'
 
 import { MovieQuery } from '@/generated/graphql'
-import useBreadcrumbs from '@/hooks/use-breadcrumbs'
 
 import MovieBackdrop from '../../components/movie-backdrop/movie-backdrop'
 import MoviePoster from '../../components/movie-poster/movie-poster'
@@ -12,8 +11,6 @@ import { MovieMetadata } from './movie-metadata'
 import MovieTabs from './movie-tabs'
 
 export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) {
-    useBreadcrumbs([movie?.title ?? 'Unknown Movie'])
-
     if (!movie) {
         return null
     }

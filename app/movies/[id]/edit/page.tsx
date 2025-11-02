@@ -1,10 +1,10 @@
 import { MovieDocument, MovieQuery, MovieQueryVariables } from '@/generated/graphql'
 import { createNhostClient } from '@/lib/nhost/server'
 
-import Movie from './components/movie'
-import { MovieBreadcrumbs } from './components/movie-breadcrumbs'
+import { MovieBreadcrumbs } from '../components/movie-breadcrumbs'
 
-export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function EditMoviePage({ params }: { params: Promise<{ id: string }> }) {
+    // TODO: use React's cache function to cache certain requests
     const { id } = await params
     const nhost = await createNhostClient()
     const {
@@ -15,7 +15,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
     return (
         <>
             <MovieBreadcrumbs movieTitle={movie?.title ?? 'Unknown Movie'} />
-            <Movie movie={movie} />
+            <div>edit movie page</div>
         </>
     )
 }

@@ -6,6 +6,14 @@ describe('matchRoute', () => {
     it('should return true if the path matches the pattern', () => {
         expect(matchRoute('/movies/123', '/movies/:id')).toBe(true)
     })
+
+    it('should return true if the path matches the array of patterns', () => {
+        expect(matchRoute('/movies/123', ['/movies/:id', '/movies/:id/edit'])).toBe(true)
+    })
+
+    it('should return false if the path does not match the pattern', () => {
+        expect(matchRoute('/movies/123', '/movies/:id/edit')).toBe(false)
+    })
 })
 
 describe('isUuid', () => {

@@ -1,9 +1,29 @@
 /**
- * Matches a URL path (e.g. /movies/123) against a pattern (e.g. /movies/:id)
+ * Checks if a pathname matches a pattern or an array of patterns.
+ * @param pathname - The pathname to check.
+ * @param patterns - The pattern or array of patterns to check against.
+ * @returns True if the pathname matches any of the patterns, false otherwise.
+ * @example
+ * matchRoute('/movies/123', '/movies/:id') // true
+ * matchRoute('/movies/123', ['/movies/:id', '/movies/:id/edit']) // true
  */
-export function matchRoute(path: string, pattern: string): boolean {
-    const regex = new RegExp('^' + pattern.replace(/:[^/]+/g, '[^/]+') + '$')
-    return regex.test(path)
+export function matchRoute(pathname: string, patterns: string | string[]) {
+    const cleanPath = pathname.replace(/\/+$/, '')
+
+    const patternsArray = Array.isArray(patterns) ? patterns : [patterns]
+
+    return patternsArray.some(pattern => {
+        const cleanPattern = pattern.replace(/\/+$/, '')
+
+        // Convert something like /movies/[id] or /movies/:id to a regex
+        const regexPattern = cleanPattern
+            .replace(/\[.*?\]/g, '[^/]+') // replace [param] with wildcard
+            .replace(/:[\w]+/g, '[^/]+') // replace :param with wildcard
+            .replace(/\//g, '\\/')
+
+        const regex = new RegExp(`^${regexPattern}$`)
+        return regex.test(cleanPath)
+    })
 }
 
 /**

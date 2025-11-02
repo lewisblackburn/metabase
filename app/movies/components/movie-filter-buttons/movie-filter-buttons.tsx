@@ -1,24 +1,23 @@
 'use client'
 import { Grid2x2Icon, Grid3x3Icon, SquareIcon } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
-import { ButtonGroup } from '@/components/ui/button-group'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useLayoutStore } from '@/lib/stores/layout.store'
 
 export default function MovieFilterButtons() {
-    const { setPosterSize } = useLayoutStore()
+    const { posterSize, setPosterSize } = useLayoutStore()
 
     return (
-        <ButtonGroup>
-            <Button variant="outline" onClick={() => setPosterSize('lg')}>
+        <ToggleGroup type="single" value={posterSize} onValueChange={setPosterSize}>
+            <ToggleGroupItem value="lg" variant="outline">
                 <SquareIcon className="size-4" />
-            </Button>
-            <Button variant="outline" onClick={() => setPosterSize('md')}>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="md" variant="outline">
                 <Grid2x2Icon className="size-4" />
-            </Button>
-            <Button variant="outline" onClick={() => setPosterSize('sm')}>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="sm" variant="outline">
                 <Grid3x3Icon className="size-4" />
-            </Button>
-        </ButtonGroup>
+            </ToggleGroupItem>
+        </ToggleGroup>
     )
 }
