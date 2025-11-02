@@ -58,8 +58,8 @@ export function SiteHeader() {
                 {/* Right-side controls */}
                 <div className="flex shrink-0 items-center gap-2">
                     <SearchForm className="w-48 sm:w-64" />
-                    <ActionsPanel />
                     <Notifications />
+                    <ActionsPanel />
                 </div>
             </div>
         </header>
