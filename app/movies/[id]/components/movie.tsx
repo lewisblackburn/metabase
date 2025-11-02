@@ -9,6 +9,7 @@ import MovieBackdrop from '../../components/movie-backdrop/movie-backdrop'
 import MoviePoster from '../../components/movie-poster/movie-poster'
 import { MovieActions } from './movie-actions'
 import { MovieMetadata } from './movie-metadata'
+import MovieTabs from './movie-tabs'
 
 export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) {
     useBreadcrumbs([movie?.title ?? 'Unknown Movie'])
@@ -20,7 +21,6 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
     return (
         <>
             <MovieBackdrop backdropId={movie.backdrop_id} />
-
             <section className="mx-auto my-4 max-w-7xl p-5 space-y-6">
                 <div className="flex flex-row items-end gap-4 md:items-start">
                     {/* Movie Poster */}
@@ -78,6 +78,7 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
                         runtime={movie.runtime}
                     />
                 </div>
+                <MovieTabs />
             </section>
         </>
     )
