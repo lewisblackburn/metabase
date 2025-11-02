@@ -1,12 +1,12 @@
-import { ListPlusIcon } from 'lucide-react'
+import { Plus } from 'lucide-react'
 
 import { Button } from '../ui/button'
 
 export function AddToListButton() {
     return (
-        <Button aria-label="Add to list" variant="outline">
-            <ListPlusIcon className="size-4" />
-            <span className="font-medium">Add to list</span>
+        <Button aria-label="Add to list" variant="outline" size="sm" className="text-xs">
+            <Plus className="size-4" />
+            Add to list
         </Button>
     )
 }

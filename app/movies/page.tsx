@@ -3,7 +3,7 @@ import MovieList from './components/movie-list/movie-list'
 
 export default function MoviesPage() {
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-4">
             <div className="flex justify-end">
                 <MovieFilterBar />
             </div>

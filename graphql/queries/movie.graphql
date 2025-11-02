@@ -9,8 +9,10 @@ query Movie($id: uuid!) {
         certification
         release_date
         runtime
+        vote_average
         genres {
             genre {
+                id
                 name
             }
         }

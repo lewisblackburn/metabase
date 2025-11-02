@@ -10,7 +10,7 @@ interface MovieCardProps {
 
 export function MovieCard({ movie }: MovieCardProps) {
     return (
-        <Link href={`/movies/${movie.id}`}>
+        <Link href={`/movies/${movie.id}`} className="block w-full">
             <MoviePoster posterId={movie.poster_id} />
         </Link>
     )

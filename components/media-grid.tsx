@@ -16,6 +16,9 @@ export default function MediaGrid({ children, className }: MediaGridProps) {
         sm: '6rem',
         md: '8rem',
         lg: '10rem',
+        xl: '12rem',
+        '2xl': '16rem',
+        full: '20rem',
     } as const
 
     const minWidth = minWidthMap[posterSize]

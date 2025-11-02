@@ -1,4 +1,4 @@
-import { PlayIcon } from 'lucide-react'
+import { Play, PlayIcon } from 'lucide-react'
 import Link from 'next/link'
 
 import { Button } from '../ui/button'
@@ -9,10 +9,10 @@ interface PlayTrailerButtonProps {
 
 export function PlayTrailerButton({ href = '#' }: PlayTrailerButtonProps) {
     return (
-        <Button aria-label="Play trailer" variant="outline" asChild>
+        <Button aria-label="Rating" variant="outline" size="sm" className="text-xs" asChild>
             <Link href={href}>
-                <PlayIcon className="size-4" />
-                <span className="font-medium">Play Trailer</span>
+                <Play className="size-4" />
+                Play Trailer
             </Link>
         </Button>
     )

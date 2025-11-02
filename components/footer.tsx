@@ -354,7 +354,7 @@ export default function Footer() {
 
     return (
         <section className="bg-background">
-            <footer className="max-w-7xl mx-auto">
+            <footer className="max-w-7xl mx-auto p-5">
                 <div className="flex w-full flex-col gap-8">
                     <div className="grid w-full grid-cols-[repeat(2,minmax(auto,15rem))] gap-8 md:grid-cols-[repeat(4,1fr)_5rem] md:gap-0">
                         {NAVIGATION.map(section => (

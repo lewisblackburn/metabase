@@ -10,7 +10,9 @@ export default function MovieListSkeleton({ itemsPerPage }: MovieListSkeletonPro
     return (
         <MediaGrid>
             {[...Array(itemsPerPage)].map((_, i) => (
-                <MoviePosterSkeleton key={`movie-poster-skeleton-${i}`} />
+                <div key={`movie-poster-skeleton-${i}`} className="relative w-full aspect-poster">
+                    <MoviePosterSkeleton />
+                </div>
             ))}
         </MediaGrid>
     )
