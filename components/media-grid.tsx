@@ -11,7 +11,7 @@ interface MediaGridProps {
 export default function MediaGrid({ children, className }: MediaGridProps) {
     const { posterSize } = useLayoutStore()
 
-    // Map poster sizes to min width for auto-fit
+    // Map poster sizes to min width for auto-fill
     const minWidthMap = {
         sm: '6rem',
         md: '8rem',
