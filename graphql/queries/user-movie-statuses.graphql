@@ -1,5 +1,5 @@
 query UserMovieStatuses {
-	user_movie_statuses {
-	name
-	}
+    user_movie_statuses {
+        name
+    }
 }
