@@ -17,7 +17,7 @@ async function getSiteSystemStatus(): Promise<SiteSystemStatus> {
     return res.json()
 }
 
-export default async function StatusPage() {
+export default async function SiteStatusPage() {
     const { status, updatedAt } = await getSiteSystemStatus()
     const services = Object.entries(status)
 
@@ -26,7 +26,7 @@ export default async function StatusPage() {
             <Card className="shadow-lg border-border/50">
                 <CardHeader>
                     <CardTitle className="flex items-center justify-between text-2xl font-semibold">
-                        System Status
+                        Site System Status
                         <Badge variant="outline" className="text-xs font-medium">
                             Updated {new Date(updatedAt).toLocaleTimeString()}
                         </Badge>

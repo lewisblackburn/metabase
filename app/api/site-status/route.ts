@@ -2,18 +2,18 @@ import { NextResponse } from 'next/server'
 
 import { HealthDocument, HealthQuery, HealthQueryVariables } from '@/generated/graphql'
 import { createNhostClient } from '@/lib/nhost/server'
-import type { ServiceName, SystemStatus } from '@/lib/types/status'
-import { STATUS_REVALIDATE_TIME } from '@/lib/types/status'
+import type { SiteServiceName, SiteSystemStatus } from '@/lib/types/status'
+import { SITE_STATUS_REVALIDATE_TIME } from '@/lib/utils/status'
 
 /**
- * GET /api/status
- * Returns the health status of all system services
+ * GET /api/site-status
+ * Returns the health status of all site backend services
  */
 export async function GET() {
     try {
         const nhost = await createNhostClient()
 
-        const status: Record<ServiceName, boolean> = {
+        const status: Record<SiteServiceName, boolean> = {
             auth: false,
             graphQL: false,
             storage: false,
@@ -35,19 +35,19 @@ export async function GET() {
         status.storage = storageVersion.status === 200
         status.functions = functionsHealth.ok
 
-        const response: SystemStatus = {
+        const response: SiteSystemStatus = {
             status,
             updatedAt: new Date().toISOString(),
         }
 
         return NextResponse.json(response, {
             headers: {
-                'Cache-Control': `public, s-maxage=${STATUS_REVALIDATE_TIME}, stale-while-revalidate`,
+                'Cache-Control': `public, s-maxage=${SITE_STATUS_REVALIDATE_TIME}, stale-while-revalidate`,
             },
         })
     } catch (error) {
-        console.error('Status check failed:', error)
+        console.error('Site status check failed:', error)
 
-        return NextResponse.json({ error: 'Failed to check system status' }, { status: 500 })
+        return NextResponse.json({ error: 'Failed to check site system status' }, { status: 500 })
     }
 }

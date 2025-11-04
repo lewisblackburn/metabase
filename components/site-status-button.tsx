@@ -5,26 +5,26 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import type { SystemStatus } from '@/lib/types/status'
-import { getStatusIndicator } from '@/lib/types/status'
+import type { SiteSystemStatus } from '@/lib/types/status'
+import { getSiteStatusIndicator } from '@/lib/utils/status'
 
-export default function SystemStatusButton() {
-    const [data, setData] = useState<SystemStatus | null>(null)
+export default function SiteStatusButton() {
+    const [data, setData] = useState<SiteSystemStatus | null>(null)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         async function fetchStatus() {
             try {
-                const res = await fetch('/api/status')
+                const res = await fetch('/api/site-status')
 
                 if (!res.ok) {
-                    throw new Error('Failed to fetch status')
+                    throw new Error('Failed to fetch site status')
                 }
 
-                const statusData: SystemStatus = await res.json()
+                const statusData: SiteSystemStatus = await res.json()
                 setData(statusData)
             } catch (error) {
-                console.error('Failed to fetch system status:', error)
+                console.error('Failed to fetch site system status:', error)
             } finally {
                 setIsLoading(false)
             }
@@ -34,7 +34,7 @@ export default function SystemStatusButton() {
     }, [])
 
     const indicator = data
-        ? getStatusIndicator(Object.values(data.status))
+        ? getSiteStatusIndicator(Object.values(data.status))
         : { color: 'bg-gray-500', glow: 'bg-gray-400/50', text: 'Loading status...' }
 
     return (

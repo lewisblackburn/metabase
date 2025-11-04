@@ -13,7 +13,8 @@
         "test:ui": "vitest --ui",
         "test:coverage": "vitest run --coverage",
         "typecheck": "tsc --noEmit ",
-        "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
+        "codegen": "graphql-codegen --require dotenv/config --config codegen.yml",
+        "generate-enums": "tsx scripts/generate-enums.ts"
     },
     "lint-staged": {
         "*.{js,ts,jsx,tsx}": "eslint --fix"
@@ -51,6 +52,7 @@
         "react-dom": "19.2.0",
         "sonner": "^2.0.7",
         "tailwind-merge": "^3.3.1",
+        "tsx": "^4.20.6",
         "vaul": "^1.1.2",
         "zod": "^4.1.12",
         "zustand": "^5.0.8"

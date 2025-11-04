@@ -15,6 +15,11 @@ export type CreateMovieMutationVariables = Exact<{
 
 export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
+export type GendersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GendersQuery = { __typename?: 'query_root', genders: Array<{ __typename?: 'genders', gender: string }> };
+
 export type HealthQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -25,7 +30,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', name: string } | null }> } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }> } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -39,6 +44,11 @@ export type RootQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RootQuery = { __typename: 'query_root' };
+
+export type UserMovieStatusesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserMovieStatusesQuery = { __typename?: 'query_root', user_movie_statuses: Array<{ __typename?: 'user_movie_statuses', name: string }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5692,6 +5702,14 @@ export type Mutation_Root = {
   delete_production_companies?: Maybe<Production_Companies_Mutation_Response>;
   /** delete single row from the table: "production_companies" */
   delete_production_companies_by_pk?: Maybe<Production_Companies>;
+  /** delete data from the table: "user_movie_activities" */
+  delete_user_movie_activities?: Maybe<User_Movie_Activities_Mutation_Response>;
+  /** delete single row from the table: "user_movie_activities" */
+  delete_user_movie_activities_by_pk?: Maybe<User_Movie_Activities>;
+  /** delete data from the table: "user_movie_statuses" */
+  delete_user_movie_statuses?: Maybe<User_Movie_Statuses_Mutation_Response>;
+  /** delete single row from the table: "user_movie_statuses" */
+  delete_user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
   /** insert a single row into the table: "auth.provider_requests" */
@@ -5796,6 +5814,14 @@ export type Mutation_Root = {
   insert_production_companies?: Maybe<Production_Companies_Mutation_Response>;
   /** insert a single row into the table: "production_companies" */
   insert_production_companies_one?: Maybe<Production_Companies>;
+  /** insert data into the table: "user_movie_activities" */
+  insert_user_movie_activities?: Maybe<User_Movie_Activities_Mutation_Response>;
+  /** insert a single row into the table: "user_movie_activities" */
+  insert_user_movie_activities_one?: Maybe<User_Movie_Activities>;
+  /** insert data into the table: "user_movie_statuses" */
+  insert_user_movie_statuses?: Maybe<User_Movie_Statuses_Mutation_Response>;
+  /** insert a single row into the table: "user_movie_statuses" */
+  insert_user_movie_statuses_one?: Maybe<User_Movie_Statuses>;
   /** update single row of the table: "auth.providers" */
   updateAuthProvider?: Maybe<AuthProviders>;
   /** update single row of the table: "auth.provider_requests" */
@@ -5948,6 +5974,18 @@ export type Mutation_Root = {
   update_production_companies_by_pk?: Maybe<Production_Companies>;
   /** update multiples rows of table: "production_companies" */
   update_production_companies_many?: Maybe<Array<Maybe<Production_Companies_Mutation_Response>>>;
+  /** update data of the table: "user_movie_activities" */
+  update_user_movie_activities?: Maybe<User_Movie_Activities_Mutation_Response>;
+  /** update single row of the table: "user_movie_activities" */
+  update_user_movie_activities_by_pk?: Maybe<User_Movie_Activities>;
+  /** update multiples rows of table: "user_movie_activities" */
+  update_user_movie_activities_many?: Maybe<Array<Maybe<User_Movie_Activities_Mutation_Response>>>;
+  /** update data of the table: "user_movie_statuses" */
+  update_user_movie_statuses?: Maybe<User_Movie_Statuses_Mutation_Response>;
+  /** update single row of the table: "user_movie_statuses" */
+  update_user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
+  /** update multiples rows of table: "user_movie_statuses" */
+  update_user_movie_statuses_many?: Maybe<Array<Maybe<User_Movie_Statuses_Mutation_Response>>>;
   /** update multiples rows of table: "auth.users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
   /** update multiples rows of table: "storage.virus" */
@@ -6268,6 +6306,31 @@ export type Mutation_Root_Delete_Production_CompaniesArgs = {
 /** mutation root */
 export type Mutation_Root_Delete_Production_Companies_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_User_Movie_ActivitiesArgs = {
+  where: User_Movie_Activities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_User_Movie_Activities_By_PkArgs = {
+  movie_id: Scalars['uuid'];
+  user_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_User_Movie_StatusesArgs = {
+  where: User_Movie_Statuses_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_User_Movie_Statuses_By_PkArgs = {
+  name: Scalars['String'];
 };
 
 
@@ -6632,6 +6695,34 @@ export type Mutation_Root_Insert_Production_CompaniesArgs = {
 export type Mutation_Root_Insert_Production_Companies_OneArgs = {
   object: Production_Companies_Insert_Input;
   on_conflict?: InputMaybe<Production_Companies_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_User_Movie_ActivitiesArgs = {
+  objects: Array<User_Movie_Activities_Insert_Input>;
+  on_conflict?: InputMaybe<User_Movie_Activities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_User_Movie_Activities_OneArgs = {
+  object: User_Movie_Activities_Insert_Input;
+  on_conflict?: InputMaybe<User_Movie_Activities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_User_Movie_StatusesArgs = {
+  objects: Array<User_Movie_Statuses_Insert_Input>;
+  on_conflict?: InputMaybe<User_Movie_Statuses_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_User_Movie_Statuses_OneArgs = {
+  object: User_Movie_Statuses_Insert_Input;
+  on_conflict?: InputMaybe<User_Movie_Statuses_On_Conflict>;
 };
 
 
@@ -7206,6 +7297,48 @@ export type Mutation_Root_Update_Production_Companies_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_Root_Update_User_Movie_ActivitiesArgs = {
+  _inc?: InputMaybe<User_Movie_Activities_Inc_Input>;
+  _set?: InputMaybe<User_Movie_Activities_Set_Input>;
+  where: User_Movie_Activities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_User_Movie_Activities_By_PkArgs = {
+  _inc?: InputMaybe<User_Movie_Activities_Inc_Input>;
+  _set?: InputMaybe<User_Movie_Activities_Set_Input>;
+  pk_columns: User_Movie_Activities_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_User_Movie_Activities_ManyArgs = {
+  updates: Array<User_Movie_Activities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_User_Movie_StatusesArgs = {
+  _set?: InputMaybe<User_Movie_Statuses_Set_Input>;
+  where: User_Movie_Statuses_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_User_Movie_Statuses_By_PkArgs = {
+  _set?: InputMaybe<User_Movie_Statuses_Set_Input>;
+  pk_columns: User_Movie_Statuses_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_User_Movie_Statuses_ManyArgs = {
+  updates: Array<User_Movie_Statuses_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_Root_Update_Users_ManyArgs = {
   updates: Array<Users_Updates>;
 };
@@ -7764,6 +7897,18 @@ export type Query_Root = {
   production_companies_by_pk?: Maybe<Production_Companies>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
+  /** fetch data from the table: "user_movie_activities" */
+  user_movie_activities: Array<User_Movie_Activities>;
+  /** fetch aggregated fields from the table: "user_movie_activities" */
+  user_movie_activities_aggregate: User_Movie_Activities_Aggregate;
+  /** fetch data from the table: "user_movie_activities" using primary key columns */
+  user_movie_activities_by_pk?: Maybe<User_Movie_Activities>;
+  /** fetch data from the table: "user_movie_statuses" */
+  user_movie_statuses: Array<User_Movie_Statuses>;
+  /** fetch aggregated fields from the table: "user_movie_statuses" */
+  user_movie_statuses_aggregate: User_Movie_Statuses_Aggregate;
+  /** fetch data from the table: "user_movie_statuses" using primary key columns */
+  user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -8338,6 +8483,53 @@ export type Query_Root_UserArgs = {
 };
 
 
+export type Query_Root_User_Movie_ActivitiesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+export type Query_Root_User_Movie_Activities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+export type Query_Root_User_Movie_Activities_By_PkArgs = {
+  movie_id: Scalars['uuid'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Query_Root_User_Movie_StatusesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Statuses_Order_By>>;
+  where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+};
+
+
+export type Query_Root_User_Movie_Statuses_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Statuses_Order_By>>;
+  where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+};
+
+
+export type Query_Root_User_Movie_Statuses_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
 export type Query_Root_UsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -8574,6 +8766,22 @@ export type Subscription_Root = {
   production_companies_stream: Array<Production_Companies>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
+  /** fetch data from the table: "user_movie_activities" */
+  user_movie_activities: Array<User_Movie_Activities>;
+  /** fetch aggregated fields from the table: "user_movie_activities" */
+  user_movie_activities_aggregate: User_Movie_Activities_Aggregate;
+  /** fetch data from the table: "user_movie_activities" using primary key columns */
+  user_movie_activities_by_pk?: Maybe<User_Movie_Activities>;
+  /** fetch data from the table in a streaming manner: "user_movie_activities" */
+  user_movie_activities_stream: Array<User_Movie_Activities>;
+  /** fetch data from the table: "user_movie_statuses" */
+  user_movie_statuses: Array<User_Movie_Statuses>;
+  /** fetch aggregated fields from the table: "user_movie_statuses" */
+  user_movie_statuses_aggregate: User_Movie_Statuses_Aggregate;
+  /** fetch data from the table: "user_movie_statuses" using primary key columns */
+  user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
+  /** fetch data from the table in a streaming manner: "user_movie_statuses" */
+  user_movie_statuses_stream: Array<User_Movie_Statuses>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -9320,6 +9528,67 @@ export type Subscription_Root_UserArgs = {
 };
 
 
+export type Subscription_Root_User_Movie_ActivitiesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+export type Subscription_Root_User_Movie_Activities_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+export type Subscription_Root_User_Movie_Activities_By_PkArgs = {
+  movie_id: Scalars['uuid'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_User_Movie_Activities_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Movie_Activities_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+export type Subscription_Root_User_Movie_StatusesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Statuses_Order_By>>;
+  where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+};
+
+
+export type Subscription_Root_User_Movie_Statuses_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Statuses_Order_By>>;
+  where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+};
+
+
+export type Subscription_Root_User_Movie_Statuses_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
+export type Subscription_Root_User_Movie_Statuses_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Movie_Statuses_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+};
+
+
 export type Subscription_Root_UsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -9385,6 +9654,369 @@ export type Timestamptz_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['timestamptz']>;
   _neq?: InputMaybe<Scalars['timestamptz']>;
   _nin?: InputMaybe<Array<Scalars['timestamptz']>>;
+};
+
+/** columns and relationships of "user_movie_activities" */
+export type User_Movie_Activities = {
+  __typename?: 'user_movie_activities';
+  comment?: Maybe<Scalars['String']>;
+  movie_id: Scalars['uuid'];
+  rating?: Maybe<Scalars['Int']>;
+  status?: Maybe<User_Movie_Statuses_Enum>;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "user_movie_activities" */
+export type User_Movie_Activities_Aggregate = {
+  __typename?: 'user_movie_activities_aggregate';
+  aggregate?: Maybe<User_Movie_Activities_Aggregate_Fields>;
+  nodes: Array<User_Movie_Activities>;
+};
+
+/** aggregate fields of "user_movie_activities" */
+export type User_Movie_Activities_Aggregate_Fields = {
+  __typename?: 'user_movie_activities_aggregate_fields';
+  avg?: Maybe<User_Movie_Activities_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<User_Movie_Activities_Max_Fields>;
+  min?: Maybe<User_Movie_Activities_Min_Fields>;
+  stddev?: Maybe<User_Movie_Activities_Stddev_Fields>;
+  stddev_pop?: Maybe<User_Movie_Activities_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<User_Movie_Activities_Stddev_Samp_Fields>;
+  sum?: Maybe<User_Movie_Activities_Sum_Fields>;
+  var_pop?: Maybe<User_Movie_Activities_Var_Pop_Fields>;
+  var_samp?: Maybe<User_Movie_Activities_Var_Samp_Fields>;
+  variance?: Maybe<User_Movie_Activities_Variance_Fields>;
+};
+
+
+/** aggregate fields of "user_movie_activities" */
+export type User_Movie_Activities_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type User_Movie_Activities_Avg_Fields = {
+  __typename?: 'user_movie_activities_avg_fields';
+  rating?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "user_movie_activities". All fields are combined with a logical 'AND'. */
+export type User_Movie_Activities_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Movie_Activities_Bool_Exp>>;
+  _not?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Movie_Activities_Bool_Exp>>;
+  comment?: InputMaybe<String_Comparison_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+  rating?: InputMaybe<Int_Comparison_Exp>;
+  status?: InputMaybe<User_Movie_Statuses_Enum_Comparison_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_movie_activities" */
+export type User_Movie_Activities_Constraint =
+  /** unique or primary key constraint on columns "user_id", "movie_id" */
+  | 'user_movie_activities_pkey';
+
+/** input type for incrementing numeric columns in table "user_movie_activities" */
+export type User_Movie_Activities_Inc_Input = {
+  rating?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "user_movie_activities" */
+export type User_Movie_Activities_Insert_Input = {
+  comment?: InputMaybe<Scalars['String']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  rating?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<User_Movie_Statuses_Enum>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Movie_Activities_Max_Fields = {
+  __typename?: 'user_movie_activities_max_fields';
+  comment?: Maybe<Scalars['String']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+  rating?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type User_Movie_Activities_Min_Fields = {
+  __typename?: 'user_movie_activities_min_fields';
+  comment?: Maybe<Scalars['String']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+  rating?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** response of any mutation on the table "user_movie_activities" */
+export type User_Movie_Activities_Mutation_Response = {
+  __typename?: 'user_movie_activities_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Movie_Activities>;
+};
+
+/** on_conflict condition type for table "user_movie_activities" */
+export type User_Movie_Activities_On_Conflict = {
+  constraint: User_Movie_Activities_Constraint;
+  update_columns?: Array<User_Movie_Activities_Update_Column>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_movie_activities". */
+export type User_Movie_Activities_Order_By = {
+  comment?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  rating?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_movie_activities */
+export type User_Movie_Activities_Pk_Columns_Input = {
+  movie_id: Scalars['uuid'];
+  user_id: Scalars['uuid'];
+};
+
+/** select columns of table "user_movie_activities" */
+export type User_Movie_Activities_Select_Column =
+  /** column name */
+  | 'comment'
+  /** column name */
+  | 'movie_id'
+  /** column name */
+  | 'rating'
+  /** column name */
+  | 'status'
+  /** column name */
+  | 'user_id';
+
+/** input type for updating data in table "user_movie_activities" */
+export type User_Movie_Activities_Set_Input = {
+  comment?: InputMaybe<Scalars['String']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  rating?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<User_Movie_Statuses_Enum>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type User_Movie_Activities_Stddev_Fields = {
+  __typename?: 'user_movie_activities_stddev_fields';
+  rating?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type User_Movie_Activities_Stddev_Pop_Fields = {
+  __typename?: 'user_movie_activities_stddev_pop_fields';
+  rating?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type User_Movie_Activities_Stddev_Samp_Fields = {
+  __typename?: 'user_movie_activities_stddev_samp_fields';
+  rating?: Maybe<Scalars['Float']>;
+};
+
+/** Streaming cursor of the table "user_movie_activities" */
+export type User_Movie_Activities_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Movie_Activities_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Movie_Activities_Stream_Cursor_Value_Input = {
+  comment?: InputMaybe<Scalars['String']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  rating?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<User_Movie_Statuses_Enum>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate sum on columns */
+export type User_Movie_Activities_Sum_Fields = {
+  __typename?: 'user_movie_activities_sum_fields';
+  rating?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "user_movie_activities" */
+export type User_Movie_Activities_Update_Column =
+  /** column name */
+  | 'comment'
+  /** column name */
+  | 'movie_id'
+  /** column name */
+  | 'rating'
+  /** column name */
+  | 'status'
+  /** column name */
+  | 'user_id';
+
+export type User_Movie_Activities_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<User_Movie_Activities_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Movie_Activities_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Movie_Activities_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type User_Movie_Activities_Var_Pop_Fields = {
+  __typename?: 'user_movie_activities_var_pop_fields';
+  rating?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type User_Movie_Activities_Var_Samp_Fields = {
+  __typename?: 'user_movie_activities_var_samp_fields';
+  rating?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type User_Movie_Activities_Variance_Fields = {
+  __typename?: 'user_movie_activities_variance_fields';
+  rating?: Maybe<Scalars['Float']>;
+};
+
+/** columns and relationships of "user_movie_statuses" */
+export type User_Movie_Statuses = {
+  __typename?: 'user_movie_statuses';
+  name: Scalars['String'];
+};
+
+/** aggregated selection of "user_movie_statuses" */
+export type User_Movie_Statuses_Aggregate = {
+  __typename?: 'user_movie_statuses_aggregate';
+  aggregate?: Maybe<User_Movie_Statuses_Aggregate_Fields>;
+  nodes: Array<User_Movie_Statuses>;
+};
+
+/** aggregate fields of "user_movie_statuses" */
+export type User_Movie_Statuses_Aggregate_Fields = {
+  __typename?: 'user_movie_statuses_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Movie_Statuses_Max_Fields>;
+  min?: Maybe<User_Movie_Statuses_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_movie_statuses" */
+export type User_Movie_Statuses_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<User_Movie_Statuses_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "user_movie_statuses". All fields are combined with a logical 'AND'. */
+export type User_Movie_Statuses_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Movie_Statuses_Bool_Exp>>;
+  _not?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Movie_Statuses_Bool_Exp>>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_movie_statuses" */
+export type User_Movie_Statuses_Constraint =
+  /** unique or primary key constraint on columns "name" */
+  | 'user_movie_statuses_pkey';
+
+export type User_Movie_Statuses_Enum =
+  | 'DROPPED'
+  | 'WATCHED'
+  | 'WATCHING'
+  | 'WATCHLIST';
+
+/** Boolean expression to compare columns of type "user_movie_statuses_enum". All fields are combined with logical 'AND'. */
+export type User_Movie_Statuses_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<User_Movie_Statuses_Enum>;
+  _in?: InputMaybe<Array<User_Movie_Statuses_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<User_Movie_Statuses_Enum>;
+  _nin?: InputMaybe<Array<User_Movie_Statuses_Enum>>;
+};
+
+/** input type for inserting data into table "user_movie_statuses" */
+export type User_Movie_Statuses_Insert_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type User_Movie_Statuses_Max_Fields = {
+  __typename?: 'user_movie_statuses_max_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type User_Movie_Statuses_Min_Fields = {
+  __typename?: 'user_movie_statuses_min_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "user_movie_statuses" */
+export type User_Movie_Statuses_Mutation_Response = {
+  __typename?: 'user_movie_statuses_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Movie_Statuses>;
+};
+
+/** on_conflict condition type for table "user_movie_statuses" */
+export type User_Movie_Statuses_On_Conflict = {
+  constraint: User_Movie_Statuses_Constraint;
+  update_columns?: Array<User_Movie_Statuses_Update_Column>;
+  where?: InputMaybe<User_Movie_Statuses_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_movie_statuses". */
+export type User_Movie_Statuses_Order_By = {
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_movie_statuses */
+export type User_Movie_Statuses_Pk_Columns_Input = {
+  name: Scalars['String'];
+};
+
+/** select columns of table "user_movie_statuses" */
+export type User_Movie_Statuses_Select_Column =
+  /** column name */
+  | 'name';
+
+/** input type for updating data in table "user_movie_statuses" */
+export type User_Movie_Statuses_Set_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "user_movie_statuses" */
+export type User_Movie_Statuses_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Movie_Statuses_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Movie_Statuses_Stream_Cursor_Value_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "user_movie_statuses" */
+export type User_Movie_Statuses_Update_Column =
+  /** column name */
+  | 'name';
+
+export type User_Movie_Statuses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Movie_Statuses_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Movie_Statuses_Bool_Exp;
 };
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
@@ -36638,6 +37270,101 @@ export default {
               ]
             },
             {
+              "name": "delete_user_movie_activities",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_activities_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_user_movie_activities_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "user_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_user_movie_statuses",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_statuses_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_user_movie_statuses_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "insertAuthProvider",
               "type": {
                 "kind": "OBJECT",
@@ -38296,6 +39023,134 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "production_companies_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_user_movie_activities",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "user_movie_activities_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_user_movie_activities_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_activities_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_user_movie_statuses",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "user_movie_statuses_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_user_movie_statuses_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_statuses_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_on_conflict",
                     "ofType": null
                   }
                 }
@@ -41017,6 +41872,198 @@ export default {
                         "ofType": {
                           "kind": "INPUT_OBJECT",
                           "name": "production_companies_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_activities",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_activities_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_activities_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_inc",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_activities_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_activities_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_activities_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "user_movie_activities_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_statuses",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_statuses_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_statuses_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_statuses_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_statuses_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_statuses_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "user_movie_statuses_updates",
                           "ofType": null
                         }
                       }
@@ -46521,6 +47568,331 @@ export default {
               ]
             },
             {
+              "name": "user_movie_activities",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_activities",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_activities_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_activities_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_activities_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "user_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_statuses",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_statuses",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_statuses_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_statuses_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_statuses_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_statuses_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_statuses_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_statuses_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_statuses_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "users",
               "type": {
                 "kind": "NON_NULL",
@@ -51902,6 +53274,435 @@ export default {
               ]
             },
             {
+              "name": "user_movie_activities",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_activities",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_activities_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_activities_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_activities_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "movie_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "user_id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_activities_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_activities",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_statuses",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_statuses",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_statuses_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_statuses_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_statuses_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_statuses_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_statuses_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_statuses_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_statuses_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_statuses_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_statuses",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_statuses_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "users",
               "type": {
                 "kind": "NON_NULL",
@@ -52390,6 +54191,1442 @@ export default {
                     "name": "timestamptz",
                     "ofType": null
                   }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities",
+          "fields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "user_movie_statuses_enum",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_activities",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_aggregate_fields",
+          "fields": [
+            {
+              "name": "avg",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_avg_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_min_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_stddev_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_stddev_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "stddev_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_stddev_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "sum",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_sum_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_pop",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_var_pop_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "var_samp",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_var_samp_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "variance",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities_variance_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_avg_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "comment",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "Int_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_statuses_enum_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_activities_constraint",
+          "enumValues": [
+            {
+              "name": "user_movie_activities_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_inc_input",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_insert_input",
+          "inputFields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "user_movie_statuses_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_max_fields",
+          "fields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_min_fields",
+          "fields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_activities",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "user_movie_activities_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "user_movie_activities_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_order_by",
+          "inputFields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_activities_select_column",
+          "enumValues": [
+            {
+              "name": "comment"
+            },
+            {
+              "name": "movie_id"
+            },
+            {
+              "name": "rating"
+            },
+            {
+              "name": "status"
+            },
+            {
+              "name": "user_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_set_input",
+          "inputFields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "user_movie_statuses_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_stddev_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_stddev_pop_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_stddev_samp_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "user_movie_activities_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "kind": "ENUM",
+                "name": "user_movie_statuses_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_sum_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_activities_update_column",
+          "enumValues": [
+            {
+              "name": "comment"
+            },
+            {
+              "name": "movie_id"
+            },
+            {
+              "name": "rating"
+            },
+            {
+              "name": "status"
+            },
+            {
+              "name": "user_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_updates",
+          "inputFields": [
+            {
+              "name": "_inc",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_inc_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "user_movie_activities_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_var_pop_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_var_samp_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_activities_variance_fields",
+          "fields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_statuses",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_statuses_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_statuses",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_statuses_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_statuses_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_statuses_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_statuses_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_statuses_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_statuses_constraint",
+          "enumValues": [
+            {
+              "name": "user_movie_statuses_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_statuses_enum",
+          "enumValues": [
+            {
+              "name": "DROPPED"
+            },
+            {
+              "name": "WATCHED"
+            },
+            {
+              "name": "WATCHING"
+            },
+            {
+              "name": "WATCHLIST"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_enum_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "ENUM",
+                "name": "user_movie_statuses_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "user_movie_statuses_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "ENUM",
+                "name": "user_movie_statuses_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "user_movie_statuses_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_insert_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_statuses_max_fields",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_statuses_min_fields",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_statuses_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_statuses",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "user_movie_statuses_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "user_movie_statuses_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_statuses_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_order_by",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_statuses_select_column",
+          "enumValues": [
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_set_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "user_movie_statuses_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_statuses_update_column",
+          "enumValues": [
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_statuses_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_statuses_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "user_movie_statuses_bool_exp",
+                  "ofType": null
                 }
               }
             }
@@ -57712,6 +60949,10 @@ export default {
     Mutation_Root_Delete_People_By_PkArgs: Mutation_Root_Delete_People_By_PkArgs,
     Mutation_Root_Delete_Production_CompaniesArgs: Mutation_Root_Delete_Production_CompaniesArgs,
     Mutation_Root_Delete_Production_Companies_By_PkArgs: Mutation_Root_Delete_Production_Companies_By_PkArgs,
+    Mutation_Root_Delete_User_Movie_ActivitiesArgs: Mutation_Root_Delete_User_Movie_ActivitiesArgs,
+    Mutation_Root_Delete_User_Movie_Activities_By_PkArgs: Mutation_Root_Delete_User_Movie_Activities_By_PkArgs,
+    Mutation_Root_Delete_User_Movie_StatusesArgs: Mutation_Root_Delete_User_Movie_StatusesArgs,
+    Mutation_Root_Delete_User_Movie_Statuses_By_PkArgs: Mutation_Root_Delete_User_Movie_Statuses_By_PkArgs,
     Mutation_Root_InsertAuthProviderArgs: Mutation_Root_InsertAuthProviderArgs,
     Mutation_Root_InsertAuthProviderRequestArgs: Mutation_Root_InsertAuthProviderRequestArgs,
     Mutation_Root_InsertAuthProviderRequestsArgs: Mutation_Root_InsertAuthProviderRequestsArgs,
@@ -57764,6 +61005,10 @@ export default {
     Mutation_Root_Insert_People_OneArgs: Mutation_Root_Insert_People_OneArgs,
     Mutation_Root_Insert_Production_CompaniesArgs: Mutation_Root_Insert_Production_CompaniesArgs,
     Mutation_Root_Insert_Production_Companies_OneArgs: Mutation_Root_Insert_Production_Companies_OneArgs,
+    Mutation_Root_Insert_User_Movie_ActivitiesArgs: Mutation_Root_Insert_User_Movie_ActivitiesArgs,
+    Mutation_Root_Insert_User_Movie_Activities_OneArgs: Mutation_Root_Insert_User_Movie_Activities_OneArgs,
+    Mutation_Root_Insert_User_Movie_StatusesArgs: Mutation_Root_Insert_User_Movie_StatusesArgs,
+    Mutation_Root_Insert_User_Movie_Statuses_OneArgs: Mutation_Root_Insert_User_Movie_Statuses_OneArgs,
     Mutation_Root_UpdateAuthProviderArgs: Mutation_Root_UpdateAuthProviderArgs,
     Mutation_Root_UpdateAuthProviderRequestArgs: Mutation_Root_UpdateAuthProviderRequestArgs,
     Mutation_Root_UpdateAuthProviderRequestsArgs: Mutation_Root_UpdateAuthProviderRequestsArgs,
@@ -57840,6 +61085,12 @@ export default {
     Mutation_Root_Update_Production_CompaniesArgs: Mutation_Root_Update_Production_CompaniesArgs,
     Mutation_Root_Update_Production_Companies_By_PkArgs: Mutation_Root_Update_Production_Companies_By_PkArgs,
     Mutation_Root_Update_Production_Companies_ManyArgs: Mutation_Root_Update_Production_Companies_ManyArgs,
+    Mutation_Root_Update_User_Movie_ActivitiesArgs: Mutation_Root_Update_User_Movie_ActivitiesArgs,
+    Mutation_Root_Update_User_Movie_Activities_By_PkArgs: Mutation_Root_Update_User_Movie_Activities_By_PkArgs,
+    Mutation_Root_Update_User_Movie_Activities_ManyArgs: Mutation_Root_Update_User_Movie_Activities_ManyArgs,
+    Mutation_Root_Update_User_Movie_StatusesArgs: Mutation_Root_Update_User_Movie_StatusesArgs,
+    Mutation_Root_Update_User_Movie_Statuses_By_PkArgs: Mutation_Root_Update_User_Movie_Statuses_By_PkArgs,
+    Mutation_Root_Update_User_Movie_Statuses_ManyArgs: Mutation_Root_Update_User_Movie_Statuses_ManyArgs,
     Mutation_Root_Update_Users_ManyArgs: Mutation_Root_Update_Users_ManyArgs,
     Mutation_Root_Update_Virus_ManyArgs: Mutation_Root_Update_Virus_ManyArgs,
     People: People,
@@ -57957,6 +61208,12 @@ export default {
     Query_Root_Production_Companies_AggregateArgs: Query_Root_Production_Companies_AggregateArgs,
     Query_Root_Production_Companies_By_PkArgs: Query_Root_Production_Companies_By_PkArgs,
     Query_Root_UserArgs: Query_Root_UserArgs,
+    Query_Root_User_Movie_ActivitiesArgs: Query_Root_User_Movie_ActivitiesArgs,
+    Query_Root_User_Movie_Activities_AggregateArgs: Query_Root_User_Movie_Activities_AggregateArgs,
+    Query_Root_User_Movie_Activities_By_PkArgs: Query_Root_User_Movie_Activities_By_PkArgs,
+    Query_Root_User_Movie_StatusesArgs: Query_Root_User_Movie_StatusesArgs,
+    Query_Root_User_Movie_Statuses_AggregateArgs: Query_Root_User_Movie_Statuses_AggregateArgs,
+    Query_Root_User_Movie_Statuses_By_PkArgs: Query_Root_User_Movie_Statuses_By_PkArgs,
     Query_Root_UsersArgs: Query_Root_UsersArgs,
     Query_Root_UsersAggregateArgs: Query_Root_UsersAggregateArgs,
     Query_Root_VirusArgs: Query_Root_VirusArgs,
@@ -58060,6 +61317,14 @@ export default {
     Subscription_Root_Production_Companies_By_PkArgs: Subscription_Root_Production_Companies_By_PkArgs,
     Subscription_Root_Production_Companies_StreamArgs: Subscription_Root_Production_Companies_StreamArgs,
     Subscription_Root_UserArgs: Subscription_Root_UserArgs,
+    Subscription_Root_User_Movie_ActivitiesArgs: Subscription_Root_User_Movie_ActivitiesArgs,
+    Subscription_Root_User_Movie_Activities_AggregateArgs: Subscription_Root_User_Movie_Activities_AggregateArgs,
+    Subscription_Root_User_Movie_Activities_By_PkArgs: Subscription_Root_User_Movie_Activities_By_PkArgs,
+    Subscription_Root_User_Movie_Activities_StreamArgs: Subscription_Root_User_Movie_Activities_StreamArgs,
+    Subscription_Root_User_Movie_StatusesArgs: Subscription_Root_User_Movie_StatusesArgs,
+    Subscription_Root_User_Movie_Statuses_AggregateArgs: Subscription_Root_User_Movie_Statuses_AggregateArgs,
+    Subscription_Root_User_Movie_Statuses_By_PkArgs: Subscription_Root_User_Movie_Statuses_By_PkArgs,
+    Subscription_Root_User_Movie_Statuses_StreamArgs: Subscription_Root_User_Movie_Statuses_StreamArgs,
     Subscription_Root_UsersArgs: Subscription_Root_UsersArgs,
     Subscription_Root_UsersAggregateArgs: Subscription_Root_UsersAggregateArgs,
     Subscription_Root_Users_StreamArgs: Subscription_Root_Users_StreamArgs,
@@ -58068,6 +61333,48 @@ export default {
     Subscription_Root_VirusesArgs: Subscription_Root_VirusesArgs,
     Subscription_Root_VirusesAggregateArgs: Subscription_Root_VirusesAggregateArgs,
     Timestamptz_Comparison_Exp: Timestamptz_Comparison_Exp,
+    User_Movie_Activities: User_Movie_Activities,
+    User_Movie_Activities_Aggregate: User_Movie_Activities_Aggregate,
+    User_Movie_Activities_Aggregate_Fields: User_Movie_Activities_Aggregate_Fields,
+    User_Movie_Activities_Aggregate_Fields_CountArgs: User_Movie_Activities_Aggregate_Fields_CountArgs,
+    User_Movie_Activities_Avg_Fields: User_Movie_Activities_Avg_Fields,
+    User_Movie_Activities_Bool_Exp: User_Movie_Activities_Bool_Exp,
+    User_Movie_Activities_Inc_Input: User_Movie_Activities_Inc_Input,
+    User_Movie_Activities_Insert_Input: User_Movie_Activities_Insert_Input,
+    User_Movie_Activities_Max_Fields: User_Movie_Activities_Max_Fields,
+    User_Movie_Activities_Min_Fields: User_Movie_Activities_Min_Fields,
+    User_Movie_Activities_Mutation_Response: User_Movie_Activities_Mutation_Response,
+    User_Movie_Activities_On_Conflict: User_Movie_Activities_On_Conflict,
+    User_Movie_Activities_Order_By: User_Movie_Activities_Order_By,
+    User_Movie_Activities_Pk_Columns_Input: User_Movie_Activities_Pk_Columns_Input,
+    User_Movie_Activities_Set_Input: User_Movie_Activities_Set_Input,
+    User_Movie_Activities_Stddev_Fields: User_Movie_Activities_Stddev_Fields,
+    User_Movie_Activities_Stddev_Pop_Fields: User_Movie_Activities_Stddev_Pop_Fields,
+    User_Movie_Activities_Stddev_Samp_Fields: User_Movie_Activities_Stddev_Samp_Fields,
+    User_Movie_Activities_Stream_Cursor_Input: User_Movie_Activities_Stream_Cursor_Input,
+    User_Movie_Activities_Stream_Cursor_Value_Input: User_Movie_Activities_Stream_Cursor_Value_Input,
+    User_Movie_Activities_Sum_Fields: User_Movie_Activities_Sum_Fields,
+    User_Movie_Activities_Updates: User_Movie_Activities_Updates,
+    User_Movie_Activities_Var_Pop_Fields: User_Movie_Activities_Var_Pop_Fields,
+    User_Movie_Activities_Var_Samp_Fields: User_Movie_Activities_Var_Samp_Fields,
+    User_Movie_Activities_Variance_Fields: User_Movie_Activities_Variance_Fields,
+    User_Movie_Statuses: User_Movie_Statuses,
+    User_Movie_Statuses_Aggregate: User_Movie_Statuses_Aggregate,
+    User_Movie_Statuses_Aggregate_Fields: User_Movie_Statuses_Aggregate_Fields,
+    User_Movie_Statuses_Aggregate_Fields_CountArgs: User_Movie_Statuses_Aggregate_Fields_CountArgs,
+    User_Movie_Statuses_Bool_Exp: User_Movie_Statuses_Bool_Exp,
+    User_Movie_Statuses_Enum_Comparison_Exp: User_Movie_Statuses_Enum_Comparison_Exp,
+    User_Movie_Statuses_Insert_Input: User_Movie_Statuses_Insert_Input,
+    User_Movie_Statuses_Max_Fields: User_Movie_Statuses_Max_Fields,
+    User_Movie_Statuses_Min_Fields: User_Movie_Statuses_Min_Fields,
+    User_Movie_Statuses_Mutation_Response: User_Movie_Statuses_Mutation_Response,
+    User_Movie_Statuses_On_Conflict: User_Movie_Statuses_On_Conflict,
+    User_Movie_Statuses_Order_By: User_Movie_Statuses_Order_By,
+    User_Movie_Statuses_Pk_Columns_Input: User_Movie_Statuses_Pk_Columns_Input,
+    User_Movie_Statuses_Set_Input: User_Movie_Statuses_Set_Input,
+    User_Movie_Statuses_Stream_Cursor_Input: User_Movie_Statuses_Stream_Cursor_Input,
+    User_Movie_Statuses_Stream_Cursor_Value_Input: User_Movie_Statuses_Stream_Cursor_Value_Input,
+    User_Movie_Statuses_Updates: User_Movie_Statuses_Updates,
     Users: Users,
     Users_MetadataArgs: Users_MetadataArgs,
     Users_RefreshTokensArgs: Users_RefreshTokensArgs,
@@ -58141,6 +61448,13 @@ export const CreateMovieDocument = gql`
   }
 }
     `;
+export const GendersDocument = gql`
+    query Genders {
+  genders {
+    gender
+  }
+}
+    `;
 export const HealthDocument = gql`
     query Health {
   __typename
@@ -58158,8 +61472,10 @@ export const MovieDocument = gql`
     certification
     release_date
     runtime
+    vote_average
     genres {
       genre {
+        id
         name
       }
     }
@@ -58180,6 +61496,13 @@ export const RootDocument = gql`
   __typename
 }
     `;
+export const UserMovieStatusesDocument = gql`
+    query UserMovieStatuses {
+  user_movie_statuses {
+    name
+  }
+}
+    `;
 export const UsersDocument = gql`
     query Users {
   users {
@@ -58198,6 +61521,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
     },
+    Genders(variables?: GendersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GendersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GendersQuery>({ document: GendersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Genders', 'query', variables);
+    },
     Health(variables?: HealthQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<HealthQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HealthQuery>({ document: HealthDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Health', 'query', variables);
     },
@@ -58209,6 +61535,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Root(variables?: RootQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RootQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<RootQuery>({ document: RootDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Root', 'query', variables);
+    },
+    UserMovieStatuses(variables?: UserMovieStatusesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UserMovieStatusesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UserMovieStatusesQuery>({ document: UserMovieStatusesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UserMovieStatuses', 'query', variables);
     },
     Users(variables?: UsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UsersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<UsersQuery>({ document: UsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Users', 'query', variables);
