@@ -8,10 +8,10 @@ import { handleNhostMiddleware } from '@/lib/nhost/server'
 const unAuthenticatedRoutes = ['/login', '/register']
 
 // Define public routes (accessible by everyone)
-const publicRoutes = ['/', '/movies']
+const publicRoutes = ['/', '/movies', '/movies/:id']
 
 // Define protected routes (require authentication)
-const protectedRoutes = ['/movies/:id']
+const protectedRoutes = ['/movies/:id/edit']
 
 export async function proxy(request: NextRequest) {
     const response = NextResponse.next()
@@ -36,7 +36,7 @@ export async function proxy(request: NextRequest) {
 
         // Protected routes without session → redirect home
         case isProtected && !session:
-            return NextResponse.redirect(new URL('/', request.url))
+            return NextResponse.redirect(new URL('/login', request.url))
 
         // Default → allow
         default:
