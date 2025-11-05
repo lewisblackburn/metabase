@@ -8,14 +8,13 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuLabel,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useDeviceDetection } from '@/hooks/use-device-detection'
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
+import { StatusForm } from './status-form'
 
 interface DesktopStatusDropdownProps {
     open: boolean
@@ -23,8 +22,6 @@ interface DesktopStatusDropdownProps {
 }
 
 const DesktopStatusDropdown = ({ open, onOpenChange }: DesktopStatusDropdownProps) => {
-    const [position, setPosition] = useState('bottom')
-
     return (
         <DropdownMenu open={open} onOpenChange={onOpenChange}>
             <DropdownMenuTrigger asChild>
@@ -34,15 +31,9 @@ const DesktopStatusDropdown = ({ open, onOpenChange }: DesktopStatusDropdownProp
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+                <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-                    <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="right" disabled>
-                        Right
-                    </DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
+                <StatusForm onOpenChange={onOpenChange} />
             </DropdownMenuContent>
         </DropdownMenu>
     )
@@ -66,6 +57,9 @@ const MobileStatusSheet = ({ open, onOpenChange }: MobileStatusSheetProps) => {
                 <SheetHeader>
                     <SheetTitle>Update Status</SheetTitle>
                 </SheetHeader>
+                <div className="px-4 py-2">
+                    <StatusForm onOpenChange={onOpenChange} />
+                </div>
             </SheetContent>
         </Sheet>
     )

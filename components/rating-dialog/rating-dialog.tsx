@@ -1,12 +1,9 @@
 'use client'
 
-import { createFormHook, useForm } from '@tanstack/react-form'
 import { Star } from 'lucide-react'
 import { useState } from 'react'
-import { toast } from 'sonner'
 
 import { useDeviceDetection } from '@/hooks/use-device-detection'
-import { ratingSchema } from '@/lib/validations/ratings/rating.schema'
 
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
@@ -38,7 +35,7 @@ function DesktopRatingDialog({ open, onOpenChange }: RatingDialogContainerProps)
                 <DialogHeader>
                     <DialogTitle className="text-xl">Rating</DialogTitle>
                 </DialogHeader>
-                <RatingForm onOpenChange={onOpenChange} onCancel={() => onOpenChange(false)} />
+                <RatingForm onOpenChange={onOpenChange} />
             </DialogContent>
         </Dialog>
     )
@@ -59,7 +56,7 @@ function MobileRatingDialog({ open, onOpenChange }: RatingDialogContainerProps) 
                     <SheetDescription>How would you like to rate this?</SheetDescription>
                 </SheetHeader>
                 <div className="px-4 py-2">
-                    <RatingForm onOpenChange={onOpenChange} onCancel={() => onOpenChange(false)} />
+                    <RatingForm onOpenChange={onOpenChange} />
                 </div>
             </SheetContent>
         </Sheet>

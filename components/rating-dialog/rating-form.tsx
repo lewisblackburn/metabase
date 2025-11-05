@@ -13,10 +13,9 @@ import { RatingSelector } from './rating-selector'
 
 interface RatingFormProps {
     onOpenChange: (open: boolean) => void
-    onCancel: () => void
 }
 
-export function RatingForm({ onOpenChange, onCancel }: RatingFormProps) {
+export function RatingForm({ onOpenChange }: RatingFormProps) {
     const form = useForm({
         defaultValues: {
             rating: '5',
