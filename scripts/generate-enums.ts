@@ -1,5 +1,6 @@
 import 'dotenv/config'
 
+import graphql from '@/generated/graphql'
 import { logger } from '@/lib/helpers/logger'
 
 import { enumConfigs } from './enum-config'
@@ -19,14 +20,14 @@ async function main() {
 
     // 1. Initialize arrays for results
     const generatedEnums: string[] = []
-    const enumResults: Array<{ config: (typeof enumConfigs)[0]; values: string[] }> = []
+    const graphqlEnums: Record<string, string[]> = {}
 
     // 2. Fetch all enum values
     for (const config of enumConfigs) {
         try {
             logger.info(`Fetching ${config.typeName}...`)
             const values = await fetchEnumValues(config)
-            enumResults.push({ config, values })
+            graphqlEnums[config.typeName] = values
             logger.info(`Found ${values.length} value(s): ${values.join(', ')}`)
         } catch (error) {
             logger.error(`Failed to fetch ${config.typeName}: ${error}`)
@@ -35,7 +36,8 @@ async function main() {
     }
 
     // 3. Generate enum definitions
-    for (const { config, values } of enumResults) {
+    for (const config of enumConfigs) {
+        const values = graphqlEnums[config.typeName]
         const enumDef = generateEnumDefinition(config, values)
         generatedEnums.push(enumDef)
     }
@@ -47,7 +49,7 @@ async function main() {
     const outputPath = writeFile(fileContent, ['lib', 'enums.ts'])
 
     logger.info(`Successfully generated ${outputPath}`)
-    logger.info(`Generated ${enumResults.length} enum(s)`)
+    logger.info(`Generated ${generatedEnums.length} enum(s)`)
 }
 
 main().catch(err => {

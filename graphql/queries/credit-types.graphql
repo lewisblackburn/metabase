@@ -1,0 +1,5 @@
+query CreditTypes {
+    credit_types {
+        credit_type
+    }
+}

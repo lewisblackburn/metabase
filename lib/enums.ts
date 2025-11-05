@@ -6,15 +6,27 @@
  *
  * To add new enum types, edit scripts/enum-config.ts
  *
- * Last generated: 2025-11-05T07:57:57.166Z
+ * Last generated: 2025-11-05T18:08:39.422Z
  */
+
+/**
+ * Available credit types
+ *
+ * Generated from: credit_types.credit_type
+ * Values: CAST, CREW
+ * Last updated: 2025-11-05T18:08:39.421Z
+ */
+export enum CreditType {
+    CAST = 'CAST',
+    CREW = 'CREW',
+}
 
 /**
  * Status values for tracking user movie watch progress (WATCHED, WATCHING, WATCHLIST, DROPPED)
  *
  * Generated from: user_movie_statuses.name
  * Values: WATCHED, WATCHING, WATCHLIST, DROPPED
- * Last updated: 2025-11-05T07:57:57.165Z
+ * Last updated: 2025-11-05T18:08:39.422Z
  */
 export enum UserMovieStatus {
     WATCHED = 'WATCHED',
@@ -28,7 +40,7 @@ export enum UserMovieStatus {
  *
  * Generated from: genders.gender
  * Values: MALE, FEMALE, OTHER
- * Last updated: 2025-11-05T07:57:57.165Z
+ * Last updated: 2025-11-05T18:08:39.422Z
  */
 export enum Gender {
     MALE = 'MALE',

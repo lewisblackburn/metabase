@@ -1,6 +1,10 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core'
 
-import { GendersDocument, UserMovieStatusesDocument } from '@/generated/graphql'
+import {
+    CreditTypesDocument,
+    GendersDocument,
+    UserMovieStatusesDocument,
+} from '@/generated/graphql'
 
 /**
  * Configuration for generating enum types from database tables
@@ -51,6 +55,13 @@ export interface EnumConfig<TData = Record<string, unknown>> {
  * 5. Run 'pnpm run generate:enums' to generate the types
  */
 export const enumConfigs: EnumConfig[] = [
+    {
+        typeName: 'CreditType',
+        description: 'Available credit types',
+        document: CreditTypesDocument,
+        dataPath: 'credit_types',
+        valueField: 'credit_type',
+    },
     {
         typeName: 'UserMovieStatus',
         description:

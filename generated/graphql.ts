@@ -15,6 +15,11 @@ export type CreateMovieMutationVariables = Exact<{
 
 export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
+export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreditTypesQuery = { __typename?: 'query_root', credit_types: Array<{ __typename?: 'credit_types', credit_type: string }> };
+
 export type GendersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -61448,6 +61453,13 @@ export const CreateMovieDocument = gql`
   }
 }
     `;
+export const CreditTypesDocument = gql`
+    query CreditTypes {
+  credit_types {
+    credit_type
+  }
+}
+    `;
 export const GendersDocument = gql`
     query Genders {
   genders {
@@ -61520,6 +61532,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
+    },
+    CreditTypes(variables?: CreditTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreditTypesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreditTypesQuery>({ document: CreditTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreditTypes', 'query', variables);
     },
     Genders(variables?: GendersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GendersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GendersQuery>({ document: GendersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Genders', 'query', variables);
