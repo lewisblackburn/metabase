@@ -1,8 +1,6 @@
 import 'dotenv/config'
 
-import { env } from '@/env'
 import { logger } from '@/lib/helpers/logger'
-import { createAdminNhostClient } from '@/lib/nhost/admin-server'
 
 import { enumConfigs } from './enum-config'
 import { generateEnumDefinition, generateFileHeader } from './helpers/enum-generator'
@@ -19,18 +17,15 @@ import { fetchEnumValues } from './helpers/graphql-fetcher'
 async function main() {
     logger.info('Starting enum generation...')
 
-    // 1. Create Nhost client with admin secret
-    const nhost = createAdminNhostClient()
-
-    // 2. Initialize arrays for results
+    // 1. Initialize arrays for results
     const generatedEnums: string[] = []
     const enumResults: Array<{ config: (typeof enumConfigs)[0]; values: string[] }> = []
 
-    // 3. Fetch all enum values
+    // 2. Fetch all enum values
     for (const config of enumConfigs) {
         try {
             logger.info(`Fetching ${config.typeName}...`)
-            const values = await fetchEnumValues(nhost, config, env.NHOST_ADMIN_SECRET)
+            const values = await fetchEnumValues(config)
             enumResults.push({ config, values })
             logger.info(`Found ${values.length} value(s): ${values.join(', ')}`)
         } catch (error) {
@@ -39,16 +34,16 @@ async function main() {
         }
     }
 
-    // 4. Generate enum definitions
+    // 3. Generate enum definitions
     for (const { config, values } of enumResults) {
         const enumDef = generateEnumDefinition(config, values)
         generatedEnums.push(enumDef)
     }
 
-    // 5. Combine all enum definitions with header
+    // 4. Combine all enum definitions with header
     const fileContent = generateFileHeader() + generatedEnums.join('\n')
 
-    // 6. Write to the output file
+    // 5. Write to the output file
     const outputPath = writeFile(fileContent, ['lib', 'enums.ts'])
 
     logger.info(`Successfully generated ${outputPath}`)

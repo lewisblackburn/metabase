@@ -1,21 +1,18 @@
-import type { NhostClient } from '@nhost/nhost-js'
+import { env } from '@/env'
+import { createAdminNhostClient } from '@/lib/nhost/admin-server'
 
 import type { EnumConfig } from '../enum-config'
 
 /**
  * Fetches enum values from the database using the provided GraphQL document
  *
- * @param nhost - Configured Nhost client
  * @param config - Enum configuration object
- * @param adminSecret - Nhost admin secret for authentication
  * @returns Array of enum value strings
  * @throws {Error} If GraphQL query fails or no values are found
  */
-export async function fetchEnumValues(
-    nhost: NhostClient,
-    config: EnumConfig,
-    adminSecret: string,
-): Promise<string[]> {
+export async function fetchEnumValues(config: EnumConfig): Promise<string[]> {
+    const nhost = createAdminNhostClient()
+
     const {
         body: { data, errors },
     } = await nhost.graphql.request(
@@ -23,7 +20,7 @@ export async function fetchEnumValues(
         {},
         {
             headers: {
-                'x-hasura-admin-secret': adminSecret,
+                'x-hasura-admin-secret': env.NHOST_ADMIN_SECRET,
             },
         },
     )
