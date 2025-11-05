@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
-import SiteStatusButton from './site-system-status-button'
+import SiteSystemStatusButton from './site-system-status-button'
 
 type linkType = 'DROPDOWN' | 'LINK' | 'EXTERNAL_LINK'
 
@@ -413,7 +413,7 @@ export default function Footer() {
                         </a>
                     </div>
                     <div className="mt-8 flex w-full flex-wrap items-center justify-between gap-4">
-                        <SiteStatusButton />
+                        <SiteSystemStatusButton />
                         {mounted && (
                             <div>
                                 <ToggleGroup

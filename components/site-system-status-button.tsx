@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import type { SiteSystemStatus } from '@/lib/types/site-system-status'
 import { getSiteStatusIndicator } from '@/lib/utils/status'
 
-export default function SiteStatusButton() {
+export default function SiteSystemStatusButton() {
     const [data, setData] = useState<SiteSystemStatus | null>(null)
     const [isLoading, setIsLoading] = useState(true)
 

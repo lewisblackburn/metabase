@@ -6,7 +6,7 @@
  *
  * To add new enum types, edit scripts/enum-config.ts
  *
- * Last generated: 2025-11-05T07:53:28.726Z
+ * Last generated: 2025-11-05T07:55:57.328Z
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * Generated from: user_movie_statuses.name
  * Values: WATCHED, WATCHING, WATCHLIST, DROPPED
- * Last updated: 2025-11-05T07:53:28.725Z
+ * Last updated: 2025-11-05T07:55:57.327Z
  */
 export enum UserMovieStatus {
     WATCHED = 'WATCHED',
@@ -28,7 +28,7 @@ export enum UserMovieStatus {
  *
  * Generated from: genders.gender
  * Values: MALE, FEMALE, OTHER
- * Last updated: 2025-11-05T07:53:28.726Z
+ * Last updated: 2025-11-05T07:55:57.328Z
  */
 export enum Gender {
     MALE = 'MALE',
