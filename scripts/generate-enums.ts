@@ -1,66 +1,61 @@
 import 'dotenv/config'
 
+import { env } from '@/env'
+import { logger } from '@/lib/helpers/logger'
+import { createAdminNhostClient } from '@/lib/nhost/admin-server'
+
 import { enumConfigs } from './enum-config'
 import { generateEnumDefinition, generateFileHeader } from './helpers/enum-generator'
-import { validateEnvironment } from './helpers/env-validator'
 import { writeFile } from './helpers/file-writer'
 import { fetchEnumValues } from './helpers/graphql-fetcher'
-import { createScriptNhostClient } from './helpers/nhost-client'
 
 /**
- * Script to generate TypeScript enum types from database values
+ * Script to generate TypeScript enums from database GraphQL enum tables
  *
- * This script is configuration-driven - add new enum types in enum-config.ts
- * to automatically generate them alongside existing ones.
- *
- * Environment variables are loaded from .env file automatically.
+ * This script is configuration-driven - add new enum in enum-config.ts
+ * to automatically generate it alongside existing ones.
  */
 
-/**
- * Main execution function
- */
 async function main() {
-    console.log('🔍 Starting enum generation...\n')
+    logger.info('Starting enum generation...')
 
-    // Validate environment and create client
-    const envVars = validateEnvironment()
-    const nhost = createScriptNhostClient(envVars.NHOST_SUBDOMAIN, envVars.NHOST_REGION)
+    // 1. Create Nhost client with admin secret
+    const nhost = createAdminNhostClient()
 
-    const generatedTypes: string[] = []
-    const results: Array<{ config: (typeof enumConfigs)[0]; values: string[] }> = []
+    // 2. Initialize arrays for results
+    const generatedEnums: string[] = []
+    const enumResults: Array<{ config: (typeof enumConfigs)[0]; values: string[] }> = []
 
-    // Fetch all enum values
+    // 3. Fetch all enum values
     for (const config of enumConfigs) {
         try {
-            console.log(`📥 Fetching ${config.typeName}...`)
-            const values = await fetchEnumValues(nhost, config, envVars.NHOST_ADMIN_SECRET)
-            results.push({ config, values })
-            console.log(`   ✓ Found ${values.length} value(s): ${values.join(', ')}`)
+            logger.info(`Fetching ${config.typeName}...`)
+            const values = await fetchEnumValues(nhost, config, env.NHOST_ADMIN_SECRET)
+            enumResults.push({ config, values })
+            logger.info(`Found ${values.length} value(s): ${values.join(', ')}`)
         } catch (error) {
-            console.error(`   ✗ Failed to fetch ${config.typeName}:`, error)
+            logger.error(`Failed to fetch ${config.typeName}: ${error}`)
             throw error
         }
     }
 
-    console.log('')
-
-    // Generate type definitions
-    for (const { config, values } of results) {
-        const typeDef = generateEnumDefinition(config, values)
-        generatedTypes.push(typeDef)
+    // 4. Generate enum definitions
+    for (const { config, values } of enumResults) {
+        const enumDef = generateEnumDefinition(config, values)
+        generatedEnums.push(enumDef)
     }
 
-    // Combine all type definitions with a header
-    const fileContent = generateFileHeader() + generatedTypes.join('\n')
+    // 5. Combine all enum definitions with header
+    const fileContent = generateFileHeader() + generatedEnums.join('\n')
 
-    // Write to the output file
-    const outputPath = writeFile(fileContent, ['lib', 'types', 'enums.ts'])
+    // 6. Write to the output file
+    const outputPath = writeFile(fileContent, ['lib', 'enums.ts'])
 
-    console.log(`✅ Successfully generated ${outputPath}`)
-    console.log(`📝 Generated ${results.length} enum type(s)\n`)
+    logger.info(`Successfully generated ${outputPath}`)
+    logger.info(`Generated ${enumResults.length} enum(s)`)
 }
 
 main().catch(err => {
-    console.error('\n❌ Error generating enums:', err)
+    logger.error('Error generating enums:', err)
     process.exit(1)
 })

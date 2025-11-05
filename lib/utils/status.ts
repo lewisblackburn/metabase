@@ -1,4 +1,4 @@
-import type { SiteStatusIndicator } from '@/lib/types/status'
+import type { SiteStatusIndicator } from '@/lib/types/site-system-status'
 
 /**
  * Site system status utility functions and constants

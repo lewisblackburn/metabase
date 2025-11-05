@@ -8,10 +8,8 @@ import type { EnumConfig } from '../enum-config'
  * @returns TypeScript type definition as a string
  */
 export function generateEnumDefinition(config: EnumConfig, values: string[]): string {
-    const categoryComment = config.category ? `\n * Category: ${config.category}` : ''
-
     return `/**
- * ${config.description}${categoryComment}
+ * ${config.description}
  * 
  * Generated from: ${config.dataPath}.${config.valueField}
  * Values: ${values.join(', ')}

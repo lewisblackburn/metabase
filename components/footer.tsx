@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
-import SiteStatusButton from './site-status-button'
+import SiteStatusButton from './site-system-status-button'
 
 type linkType = 'DROPDOWN' | 'LINK' | 'EXTERNAL_LINK'
 

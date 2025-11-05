@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { HealthDocument, HealthQuery, HealthQueryVariables } from '@/generated/graphql'
 import { createNhostClient } from '@/lib/nhost/server'
-import type { SiteServiceName, SiteSystemStatus } from '@/lib/types/status'
+import type { SiteServiceName, SiteSystemStatus } from '@/lib/types/site-system-status'
 import { SITE_STATUS_REVALIDATE_TIME } from '@/lib/utils/status'
 
 /**

@@ -2,7 +2,7 @@ import { CheckCircle2, XCircle } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { SiteSystemStatus } from '@/lib/types/status'
+import type { SiteSystemStatus } from '@/lib/types/site-system-status'
 import { SITE_STATUS_REVALIDATE_TIME } from '@/lib/utils/status'
 
 async function getSiteSystemStatus(): Promise<SiteSystemStatus> {

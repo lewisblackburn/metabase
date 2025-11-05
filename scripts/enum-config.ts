@@ -38,12 +38,6 @@ export interface EnumConfig<TData = Record<string, unknown>> {
      * - (value) => value.replace(/_/g, '-')
      */
     transform?: (value: string) => string
-
-    /**
-     * Optional: Category for grouping related enums in documentation
-     * Example: 'User', 'Movie', 'System'
-     */
-    category?: string
 }
 
 /**
@@ -54,7 +48,7 @@ export interface EnumConfig<TData = Record<string, unknown>> {
  * 2. Run codegen to generate the TypeScript types
  * 3. Import the document here
  * 4. Add a new config object to this array
- * 5. Run 'npm run generate:enums' to generate the types
+ * 5. Run 'pnpm run generate:enums' to generate the types
  */
 export const enumConfigs: EnumConfig[] = [
     {
@@ -64,7 +58,6 @@ export const enumConfigs: EnumConfig[] = [
         document: UserMovieStatusesDocument,
         dataPath: 'user_movie_statuses',
         valueField: 'name',
-        category: 'User',
     },
     {
         typeName: 'Gender',
@@ -72,6 +65,5 @@ export const enumConfigs: EnumConfig[] = [
         document: GendersDocument,
         dataPath: 'genders',
         valueField: 'gender',
-        category: 'Person',
     },
 ]

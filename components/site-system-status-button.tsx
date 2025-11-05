@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import type { SiteSystemStatus } from '@/lib/types/status'
+import type { SiteSystemStatus } from '@/lib/types/site-system-status'
 import { getSiteStatusIndicator } from '@/lib/utils/status'
 
 export default function SiteStatusButton() {
@@ -15,7 +15,7 @@ export default function SiteStatusButton() {
     useEffect(() => {
         async function fetchStatus() {
             try {
-                const res = await fetch('/api/site-status')
+                const res = await fetch('/api/site-system-status')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch site status')
