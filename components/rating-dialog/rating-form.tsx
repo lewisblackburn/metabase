@@ -1,6 +1,7 @@
 'use client'
 
 import { useForm } from '@tanstack/react-form'
+import { TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 
 import LoadingButton from '@/components/loading-button'
@@ -21,9 +22,10 @@ interface RatingFormProps {
 
 export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
     const userMovieActivity = movie?.user_movie_activity?.[0]
+    const isRated = userMovieActivity?.rating && userMovieActivity.rating > 0
     const status = userMovieActivity?.status as UserMovieStatus
     const rating = userMovieActivity?.rating ?? 0
-    const comment = userMovieActivity?.comment ?? ''
+    const comment = userMovieActivity?.comment
 
     const form = useForm({
         defaultValues: {
@@ -87,7 +89,7 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                                 <Textarea
                                     id={field.name}
                                     name={field.name}
-                                    value={field.state.value}
+                                    value={field.state.value ?? ''}
                                     onBlur={field.handleBlur}
                                     onChange={e => field.handleChange(e.target.value)}
                                     aria-invalid={isInvalid}
@@ -96,7 +98,7 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                                 />
                                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
                                 <p className="text-muted-foreground text-sm">
-                                    {500 - field.state.value.length}/500 characters left
+                                    {500 - (field.state.value?.length ?? 0)}/500 characters left
                                 </p>
                             </Field>
                         )
@@ -106,6 +108,31 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
             <form.Subscribe selector={state => [state.isSubmitting]}>
                 {([isSubmitting]) => (
                     <div className="flex justify-end gap-2">
+                        {isRated && (
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                onClick={async () => {
+                                    await upsertUserMovieActivity({
+                                        id: movie?.id,
+                                        status,
+                                        rating: undefined,
+                                        comment: undefined,
+                                    })
+                                        .then(() => {
+                                            toast.success('Rating removed successfully')
+                                        })
+                                        .catch(error => {
+                                            toast.error('Failed to remove rating', {
+                                                description: error.message,
+                                            })
+                                        })
+                                    onOpenChange(false)
+                                }}
+                            >
+                                <TrashIcon className="size-4" />
+                            </Button>
+                        )}
                         <Button
                             type="button"
                             variant="outline"

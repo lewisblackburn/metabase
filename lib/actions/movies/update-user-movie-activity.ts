@@ -9,6 +9,7 @@ import {
 } from '@/generated/graphql'
 import { createNhostClient } from '@/lib/nhost/server'
 import { UserMovieActivity } from '@/lib/types/movies'
+import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 export async function upsertUserMovieActivity({
     id,
@@ -23,21 +24,25 @@ export async function upsertUserMovieActivity({
 }) {
     const nhost = await createNhostClient()
 
-    const result = await nhost.graphql.request<
-        UpsertUserMovieActivityMutation,
-        UpsertUserMovieActivityMutationVariables
-    >(UpsertUserMovieActivityDocument, {
-        object: {
-            movie_id: id,
-            rating,
-            status,
-            comment,
-        },
-        on_conflict: {
-            constraint: 'user_movie_activities_pkey',
-            update_columns: ['rating', 'status', 'comment'],
-        },
-    })
+    const result = await nhost.graphql
+        .request<UpsertUserMovieActivityMutation, UpsertUserMovieActivityMutationVariables>(
+            UpsertUserMovieActivityDocument,
+            {
+                object: {
+                    movie_id: id,
+                    rating,
+                    status,
+                    comment,
+                },
+                on_conflict: {
+                    constraint: 'user_movie_activities_pkey',
+                    update_columns: ['rating', 'status', 'comment'],
+                },
+            },
+        )
+        .catch(error => {
+            handleGraphQLError(error)
+        })
 
     // Revalidate the movie page to reflect the updated activity
     revalidatePath(`/movies/${id}`)

@@ -26,7 +26,7 @@ interface RatingDialogContainerProps {
 }
 
 function DesktopRatingDialog({ movie, open, onOpenChange }: RatingDialogContainerProps) {
-    const isRated = movie?.user_movie_activity?.[0]?.rating !== null
+    const isRated = movie?.user_movie_activity?.[0]?.rating && movie.user_movie_activity[0].rating
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -51,7 +51,7 @@ function DesktopRatingDialog({ movie, open, onOpenChange }: RatingDialogContaine
 }
 
 function MobileRatingDialog({ movie, open, onOpenChange }: RatingDialogContainerProps) {
-    const isRated = movie?.user_movie_activity?.[0]?.rating !== null
+    const isRated = movie?.user_movie_activity?.[0]?.rating && movie.user_movie_activity[0].rating
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
