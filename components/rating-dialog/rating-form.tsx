@@ -25,7 +25,6 @@ export function RatingForm({ onOpenChange }: RatingFormProps) {
             onSubmit: ratingSchema,
         },
         onSubmit: async ({ value }) => {
-            await new Promise(res => setTimeout(res, 1000))
             toast.success(`Submitted rating: ${value.rating}/5`)
             onOpenChange(false)
         },

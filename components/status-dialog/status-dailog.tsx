@@ -1,78 +1,107 @@
 'use client'
 
-import { Pen } from 'lucide-react'
+import { useForm } from '@tanstack/react-form'
+import { Bookmark, CheckCircleIcon, Play, XCircle } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
-import { Button } from '@/components/ui/button'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { useDeviceDetection } from '@/hooks/use-device-detection'
+import { upsertUserMovieActivity } from '@/lib/actions/movies/update-user-movie-activity'
+import { UserMovieStatus } from '@/lib/enums'
+import { userMovieStatusSchema } from '@/lib/validations/movies/user-movie-status.schema'
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
-import { StatusForm } from './status-form'
+import { Field, FieldError, FieldGroup } from '../ui/field'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
-interface DesktopStatusDropdownProps {
-    open: boolean
-    onOpenChange: (open: boolean) => void
+interface StatusDialogProps {
+    movieId: string
 }
 
-const DesktopStatusDropdown = ({ open, onOpenChange }: DesktopStatusDropdownProps) => {
-    return (
-        <DropdownMenu open={open} onOpenChange={onOpenChange}>
-            <DropdownMenuTrigger asChild>
-                <Button aria-label="Update Status" variant="outline" size="sm" className="text-xs">
-                    <Pen className="size-4" />
-                    Update Status
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Update Status</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <StatusForm onOpenChange={onOpenChange} />
-            </DropdownMenuContent>
-        </DropdownMenu>
-    )
-}
-
-interface MobileStatusSheetProps {
-    open: boolean
-    onOpenChange: (open: boolean) => void
-}
-
-const MobileStatusSheet = ({ open, onOpenChange }: MobileStatusSheetProps) => {
-    return (
-        <Sheet open={open} onOpenChange={onOpenChange}>
-            <SheetTrigger asChild>
-                <Button aria-label="Update Status" variant="outline" size="sm" className="text-xs">
-                    <Pen className="size-4" />
-                    Update Status
-                </Button>
-            </SheetTrigger>
-            <SheetContent side="bottom">
-                <SheetHeader>
-                    <SheetTitle>Update Status</SheetTitle>
-                </SheetHeader>
-                <div className="px-4 py-2">
-                    <StatusForm onOpenChange={onOpenChange} />
-                </div>
-            </SheetContent>
-        </Sheet>
-    )
-}
-
-function StatusDialog() {
-    const { device } = useDeviceDetection()
+function StatusDialog({ movieId }: StatusDialogProps) {
     const [open, setOpen] = useState(false)
+    const form = useForm({
+        defaultValues: {
+            status: UserMovieStatus.WATCHING,
+        },
+        validators: {
+            onChange: userMovieStatusSchema,
+        },
+        onSubmit: async ({ value }) => {
+            await upsertUserMovieActivity({
+                id: movieId,
+                status: value.status,
+            })
+                .then(() => {
+                    toast.success('status updated successfully')
+                })
+                .catch(error => {
+                    toast.error('failed to update status', {
+                        description: error.message,
+                    })
+                })
+        },
+    })
 
-    return device === 'mobile' ? (
-        <MobileStatusSheet open={open} onOpenChange={setOpen} />
-    ) : (
-        <DesktopStatusDropdown open={open} onOpenChange={setOpen} />
+    return (
+        <form id="status-form" className="max-w-40 w-full">
+            <FieldGroup>
+                <form.Field name="status">
+                    {field => {
+                        const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                        return (
+                            <Field data-invalid={isInvalid}>
+                                <Select
+                                    open={open}
+                                    onOpenChange={setOpen}
+                                    onValueChange={value => form.handleSubmit(value)}
+                                >
+                                    <SelectTrigger
+                                        className="w-full [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0"
+                                        size="sm"
+                                    >
+                                        <SelectValue placeholder="Update status" />
+                                    </SelectTrigger>
+                                    <SelectContent className="[&_*[role=option]>span>svg]:text-muted-foreground/80 [&_*[role=option]]:pr-8 [&_*[role=option]]:pl-2 [&_*[role=option]>span]:right-2 [&_*[role=option]>span]:left-auto [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2 [&_*[role=option]>span>svg]:shrink-0">
+                                        <SelectItem value={UserMovieStatus.WATCHED}>
+                                            <span className="flex items-center gap-2">
+                                                <CheckCircleIcon className="size-4 text-green-400" />
+                                                <span className="truncate capitalize">
+                                                    {UserMovieStatus.WATCHED.toLowerCase()}
+                                                </span>
+                                            </span>
+                                        </SelectItem>
+                                        <SelectItem value={UserMovieStatus.WATCHING}>
+                                            <span className="flex items-center gap-2">
+                                                <Play className="size-4 text-blue-400" />
+                                                <span className="truncate capitalize">
+                                                    {UserMovieStatus.WATCHING.toLowerCase()}
+                                                </span>
+                                            </span>
+                                        </SelectItem>
+                                        <SelectItem value={UserMovieStatus.WATCHLIST}>
+                                            <span className="flex items-center gap-2">
+                                                <Bookmark className="size-4 text-orange-400" />
+                                                <span className="truncate capitalize">
+                                                    {UserMovieStatus.WATCHLIST.toLowerCase()}
+                                                </span>
+                                            </span>
+                                        </SelectItem>
+                                        <SelectItem value={UserMovieStatus.DROPPED}>
+                                            <span className="flex items-center gap-2">
+                                                <XCircle className="size-4 text-red-400" />
+                                                <span className="truncate capitalize">
+                                                    {UserMovieStatus.DROPPED.toLowerCase()}
+                                                </span>
+                                            </span>
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                            </Field>
+                        )
+                    }}
+                </form.Field>
+            </FieldGroup>
+        </form>
     )
 }
 

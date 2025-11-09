@@ -15,6 +15,14 @@ export type CreateMovieMutationVariables = Exact<{
 
 export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
+export type UpsertUserMovieActivityMutationVariables = Exact<{
+  object: User_Movie_Activities_Insert_Input;
+  on_conflict?: InputMaybe<User_Movie_Activities_On_Conflict>;
+}>;
+
+
+export type UpsertUserMovieActivityMutation = { __typename?: 'mutation_root', insert_user_movie_activities_one?: { __typename?: 'user_movie_activities', rating?: number | null, status?: User_Movie_Statuses_Enum | null, comment?: string | null } | null };
+
 export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -61453,6 +61461,15 @@ export const CreateMovieDocument = gql`
   }
 }
     `;
+export const UpsertUserMovieActivityDocument = gql`
+    mutation UpsertUserMovieActivity($object: user_movie_activities_insert_input!, $on_conflict: user_movie_activities_on_conflict) {
+  insert_user_movie_activities_one(object: $object, on_conflict: $on_conflict) {
+    rating
+    status
+    comment
+  }
+}
+    `;
 export const CreditTypesDocument = gql`
     query CreditTypes {
   credit_types {
@@ -61532,6 +61549,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
+    },
+    UpsertUserMovieActivity(variables: UpsertUserMovieActivityMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpsertUserMovieActivityMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpsertUserMovieActivityMutation>({ document: UpsertUserMovieActivityDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpsertUserMovieActivity', 'mutation', variables);
     },
     CreditTypes(variables?: CreditTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreditTypesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreditTypesQuery>({ document: CreditTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreditTypes', 'query', variables);

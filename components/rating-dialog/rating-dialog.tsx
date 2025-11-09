@@ -67,9 +67,10 @@ export default function RatingDialog() {
     const { device } = useDeviceDetection()
     const [open, setOpen] = useState(false)
 
-    return device === 'mobile' ? (
-        <MobileRatingDialog open={open} onOpenChange={setOpen} />
-    ) : (
-        <DesktopRatingDialog open={open} onOpenChange={setOpen} />
-    )
+    switch (device) {
+        case 'mobile':
+            return <MobileRatingDialog open={open} onOpenChange={setOpen} />
+        default:
+            return <DesktopRatingDialog open={open} onOpenChange={setOpen} />
+    }
 }
