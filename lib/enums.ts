@@ -6,7 +6,7 @@
  *
  * To add new enum types, edit scripts/enum-config.ts
  *
- * Last generated: 2025-11-09T15:06:01.372Z
+ * Last generated: 2025-11-09T16:25:05.948Z
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * Generated from: credit_types.credit_type
  * Values: CAST, CREW
- * Last updated: 2025-11-09T15:06:01.371Z
+ * Last updated: 2025-11-09T16:25:05.947Z
  */
 export enum CreditType {
     CAST = 'CAST',
@@ -26,7 +26,7 @@ export enum CreditType {
  *
  * Generated from: user_movie_statuses.name
  * Values: WATCHED, WATCHING, WATCHLIST, DROPPED
- * Last updated: 2025-11-09T15:06:01.372Z
+ * Last updated: 2025-11-09T16:25:05.948Z
  */
 export enum UserMovieStatus {
     WATCHED = 'WATCHED',
@@ -40,7 +40,7 @@ export enum UserMovieStatus {
  *
  * Generated from: genders.gender
  * Values: MALE, FEMALE, OTHER
- * Last updated: 2025-11-09T15:06:01.372Z
+ * Last updated: 2025-11-09T16:25:05.948Z
  */
 export enum Gender {
     MALE = 'MALE',

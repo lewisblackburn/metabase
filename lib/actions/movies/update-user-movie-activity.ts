@@ -5,8 +5,8 @@ import {
     UpsertUserMovieActivityMutation,
     UpsertUserMovieActivityMutationVariables,
 } from '@/generated/graphql'
-import { UserMovieStatus } from '@/lib/enums'
 import { createNhostClient } from '@/lib/nhost/server'
+import { UserMovieActivity } from '@/lib/types/movies'
 
 export async function upsertUserMovieActivity({
     id,
@@ -15,9 +15,9 @@ export async function upsertUserMovieActivity({
     comment,
 }: {
     id: string
-    rating?: number
-    status?: UserMovieStatus
-    comment?: string
+    rating?: UserMovieActivity['rating']
+    status?: UserMovieActivity['status']
+    comment?: UserMovieActivity['comment']
 }) {
     const nhost = await createNhostClient()
 

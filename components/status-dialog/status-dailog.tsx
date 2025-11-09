@@ -5,6 +5,7 @@ import { Bookmark, CheckCircleIcon, Play, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
+import { MovieQuery } from '@/generated/graphql'
 import { upsertUserMovieActivity } from '@/lib/actions/movies/update-user-movie-activity'
 import { UserMovieStatus } from '@/lib/enums'
 import { userMovieStatusSchema } from '@/lib/validations/movies/user-movie-status.schema'
@@ -13,28 +14,36 @@ import { Field, FieldError, FieldGroup } from '../ui/field'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 interface StatusDialogProps {
-    movieId: string
+    movie: MovieQuery['movies_by_pk']
 }
 
-function StatusDialog({ movieId }: StatusDialogProps) {
+function StatusDialog({ movie }: StatusDialogProps) {
     const [open, setOpen] = useState(false)
+
+    const userMovieActivity = movie?.user_movie_activity?.[0]
+    const status = userMovieActivity?.status as UserMovieStatus
+    const comment = userMovieActivity?.comment
+    const rating = userMovieActivity?.rating
+
     const form = useForm({
         defaultValues: {
-            status: UserMovieStatus.WATCHING,
+            status,
         },
         validators: {
             onChange: userMovieStatusSchema,
         },
         onSubmit: async ({ value }) => {
             await upsertUserMovieActivity({
-                id: movieId,
+                id: movie?.id,
                 status: value.status,
+                comment,
+                rating,
             })
                 .then(() => {
-                    toast.success('status updated successfully')
+                    toast.success('Status updated successfully')
                 })
                 .catch(error => {
-                    toast.error('failed to update status', {
+                    toast.error('Failed to update status', {
                         description: error.message,
                     })
                 })
@@ -50,9 +59,13 @@ function StatusDialog({ movieId }: StatusDialogProps) {
                         return (
                             <Field data-invalid={isInvalid}>
                                 <Select
+                                    value={field.state.value}
                                     open={open}
                                     onOpenChange={setOpen}
-                                    onValueChange={value => form.handleSubmit(value)}
+                                    onValueChange={(value: UserMovieStatus) => {
+                                        field.handleChange(value)
+                                        form.handleSubmit()
+                                    }}
                                 >
                                     <SelectTrigger
                                         className="w-full [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0"

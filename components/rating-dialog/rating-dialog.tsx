@@ -3,7 +3,9 @@
 import { Star } from 'lucide-react'
 import { useState } from 'react'
 
+import { MovieQuery } from '@/generated/graphql'
 import { useDeviceDetection } from '@/hooks/use-device-detection'
+import { cn } from '@/lib/utils'
 
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
@@ -18,36 +20,49 @@ import {
 import { RatingForm } from './rating-form'
 
 interface RatingDialogContainerProps {
+    movie: MovieQuery['movies_by_pk']
     open: boolean
     onOpenChange: (open: boolean) => void
 }
 
-function DesktopRatingDialog({ open, onOpenChange }: RatingDialogContainerProps) {
+function DesktopRatingDialog({ movie, open, onOpenChange }: RatingDialogContainerProps) {
+    const isRated = movie?.user_movie_activity?.[0]?.rating !== null
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
                 <Button aria-label="Rating" variant="outline" size="sm" className="text-xs">
-                    <Star className="size-4" />
-                    Rate
+                    <Star
+                        className={cn('size-4', {
+                            'text-yellow-500 fill-yellow-500': isRated,
+                        })}
+                    />
+                    {isRated ? 'Rated' : 'Rate'}
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle className="text-xl">Rating</DialogTitle>
                 </DialogHeader>
-                <RatingForm onOpenChange={onOpenChange} />
+                <RatingForm movie={movie} onOpenChange={onOpenChange} />
             </DialogContent>
         </Dialog>
     )
 }
 
-function MobileRatingDialog({ open, onOpenChange }: RatingDialogContainerProps) {
+function MobileRatingDialog({ movie, open, onOpenChange }: RatingDialogContainerProps) {
+    const isRated = movie?.user_movie_activity?.[0]?.rating !== null
+
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
             <SheetTrigger asChild>
                 <Button aria-label="Rating" variant="outline" size="sm" className="text-xs">
-                    <Star className="size-4" />
-                    Rate
+                    <Star
+                        className={cn('size-4', {
+                            'text-yellow-500 fill-yellow-500': isRated,
+                        })}
+                    />
+                    {isRated ? 'Rated' : 'Rate'}
                 </Button>
             </SheetTrigger>
             <SheetContent side="bottom">
@@ -56,21 +71,25 @@ function MobileRatingDialog({ open, onOpenChange }: RatingDialogContainerProps) 
                     <SheetDescription>How would you like to rate this?</SheetDescription>
                 </SheetHeader>
                 <div className="px-4 py-2">
-                    <RatingForm onOpenChange={onOpenChange} />
+                    <RatingForm movie={movie} onOpenChange={onOpenChange} />
                 </div>
             </SheetContent>
         </Sheet>
     )
 }
 
-export default function RatingDialog() {
+interface RatingDialogProps {
+    movie: MovieQuery['movies_by_pk']
+}
+
+export default function RatingDialog({ movie }: RatingDialogProps) {
     const { device } = useDeviceDetection()
     const [open, setOpen] = useState(false)
 
     switch (device) {
         case 'mobile':
-            return <MobileRatingDialog open={open} onOpenChange={setOpen} />
+            return <MobileRatingDialog movie={movie} open={open} onOpenChange={setOpen} />
         default:
-            return <DesktopRatingDialog open={open} onOpenChange={setOpen} />
+            return <DesktopRatingDialog movie={movie} open={open} onOpenChange={setOpen} />
     }
 }

@@ -5,26 +5,27 @@ import { useId } from 'react'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 interface RatingSelectorProps {
-    value: string
-    onChange: (value: string) => void
+    value: number
+    onChange: (value: number) => void
 }
 
 export function RatingSelector({ value, onChange }: RatingSelectorProps) {
     const id = useId()
     const ratings = [
-        { value: '1', label: 'Angry', icon: '😡' },
-        { value: '2', label: 'Sad', icon: '🙁' },
-        { value: '3', label: 'Neutral', icon: '🙂' },
-        { value: '4', label: 'Happy', icon: '😁' },
-        { value: '5', label: 'Laughing', icon: '🤩' },
+        { value: 1, label: 'Angry', icon: '😡' },
+        { value: 2, label: 'Sad', icon: '🙁' },
+        { value: 3, label: 'Neutral', icon: '🙂' },
+        { value: 4, label: 'Happy', icon: '😁' },
+        { value: 5, label: 'Laughing', icon: '🤩' },
     ]
 
     return (
         <fieldset className="space-y-4">
-            <legend className="text-foreground text-sm leading-none font-medium">
-                How would you like to rate this?
-            </legend>
-            <RadioGroup className="flex gap-1.5" value={value} onValueChange={onChange}>
+            <RadioGroup
+                className="flex gap-1.5"
+                value={value.toString()}
+                onValueChange={(value: string) => onChange(Number(value))}
+            >
                 {ratings.map(rating => (
                     <label
                         key={`${id}-${rating.value}`}
@@ -32,7 +33,7 @@ export function RatingSelector({ value, onChange }: RatingSelectorProps) {
                     >
                         <RadioGroupItem
                             id={`${id}-${rating.value}`}
-                            value={rating.value}
+                            value={rating.value.toString()}
                             className="sr-only after:absolute after:inset-0"
                         />
                         {rating.icon}

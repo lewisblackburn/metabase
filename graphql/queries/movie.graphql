@@ -16,5 +16,10 @@ query Movie($id: uuid!) {
                 name
             }
         }
+        user_movie_activity {
+            comment
+            rating
+            status
+        }
     }
 }

@@ -43,7 +43,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }> } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }>, user_movie_activity?: Array<{ __typename?: 'user_movie_activities', comment?: string | null, rating?: number | null, status?: User_Movie_Statuses_Enum | null }> | null } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -80,7 +80,9 @@ export type Scalars = {
   bytea: any;
   citext: any;
   date: any;
+  json: any;
   jsonb: any;
+  movies_scalar: any;
   timestamptz: any;
   uuid: any;
 };
@@ -3590,6 +3592,11 @@ export type Genres_Updates = {
   where: Genres_Bool_Exp;
 };
 
+export type Get_User_Movie_Activity_Args = {
+  hasura_session?: InputMaybe<Scalars['json']>;
+  movie_row?: InputMaybe<Scalars['movies_scalar']>;
+};
+
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
 };
@@ -4828,6 +4835,8 @@ export type Movies = {
   title: Scalars['String'];
   tmdb_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+  /** A computed field, executes function "get_user_movie_activity" */
+  user_movie_activity?: Maybe<Array<User_Movie_Activities>>;
   vote_average?: Maybe<Scalars['Float']>;
   vote_count?: Maybe<Scalars['Int']>;
 };
@@ -4930,6 +4939,16 @@ export type Movies_Movie_Spoken_Languages_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Movie_Spoken_Languages_Order_By>>;
   where?: InputMaybe<Movie_Spoken_Languages_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_User_Movie_ActivityArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
 };
 
 /** aggregated selection of "movies" */
@@ -5056,6 +5075,7 @@ export type Movies_Bool_Exp = {
   title?: InputMaybe<String_Comparison_Exp>;
   tmdb_id?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user_movie_activity?: InputMaybe<User_Movie_Activities_Bool_Exp>;
   vote_average?: InputMaybe<Float_Comparison_Exp>;
   vote_count?: InputMaybe<Int_Comparison_Exp>;
 };
@@ -5277,6 +5297,7 @@ export type Movies_Order_By = {
   title?: InputMaybe<Order_By>;
   tmdb_id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user_movie_activity_aggregate?: InputMaybe<User_Movie_Activities_Aggregate_Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
 };
@@ -7854,6 +7875,10 @@ export type Query_Root = {
   genres_aggregate: Genres_Aggregate;
   /** fetch data from the table: "genres" using primary key columns */
   genres_by_pk?: Maybe<Genres>;
+  /** execute function "get_user_movie_activity" which returns "user_movie_activities" */
+  get_user_movie_activity?: Maybe<User_Movie_Activities>;
+  /** execute function "get_user_movie_activity" and query aggregates on result of table type "user_movie_activities" */
+  get_user_movie_activity_aggregate: User_Movie_Activities_Aggregate;
   /** fetch data from the table: "languages" */
   languages: Array<Languages>;
   /** fetch aggregated fields from the table: "languages" */
@@ -8277,6 +8302,26 @@ export type Query_Root_Genres_AggregateArgs = {
 
 export type Query_Root_Genres_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Query_Root_Get_User_Movie_ActivityArgs = {
+  args: Get_User_Movie_Activity_Args;
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+export type Query_Root_Get_User_Movie_Activity_AggregateArgs = {
+  args: Get_User_Movie_Activity_Args;
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
 };
 
 
@@ -8705,6 +8750,10 @@ export type Subscription_Root = {
   genres_by_pk?: Maybe<Genres>;
   /** fetch data from the table in a streaming manner: "genres" */
   genres_stream: Array<Genres>;
+  /** execute function "get_user_movie_activity" which returns "user_movie_activities" */
+  get_user_movie_activity?: Maybe<User_Movie_Activities>;
+  /** execute function "get_user_movie_activity" and query aggregates on result of table type "user_movie_activities" */
+  get_user_movie_activity_aggregate: User_Movie_Activities_Aggregate;
   /** fetch data from the table: "languages" */
   languages: Array<Languages>;
   /** fetch aggregated fields from the table: "languages" */
@@ -9262,6 +9311,26 @@ export type Subscription_Root_Genres_StreamArgs = {
 };
 
 
+export type Subscription_Root_Get_User_Movie_ActivityArgs = {
+  args: Get_User_Movie_Activity_Args;
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Get_User_Movie_Activity_AggregateArgs = {
+  args: Get_User_Movie_Activity_Args;
+  distinct_on?: InputMaybe<Array<User_Movie_Activities_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
+  where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
 export type Subscription_Root_LanguagesArgs = {
   distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -9679,7 +9748,6 @@ export type User_Movie_Activities = {
   user_id: Scalars['uuid'];
 };
 
-/** aggregated selection of "user_movie_activities" */
 export type User_Movie_Activities_Aggregate = {
   __typename?: 'user_movie_activities_aggregate';
   aggregate?: Maybe<User_Movie_Activities_Aggregate_Fields>;
@@ -9709,10 +9777,30 @@ export type User_Movie_Activities_Aggregate_Fields_CountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "user_movie_activities" */
+export type User_Movie_Activities_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Movie_Activities_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Movie_Activities_Max_Order_By>;
+  min?: InputMaybe<User_Movie_Activities_Min_Order_By>;
+  stddev?: InputMaybe<User_Movie_Activities_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Movie_Activities_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Movie_Activities_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Movie_Activities_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Movie_Activities_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Movie_Activities_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Movie_Activities_Variance_Order_By>;
+};
+
 /** aggregate avg on columns */
 export type User_Movie_Activities_Avg_Fields = {
   __typename?: 'user_movie_activities_avg_fields';
   rating?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Avg_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "user_movie_activities". All fields are combined with a logical 'AND'. */
@@ -9755,6 +9843,14 @@ export type User_Movie_Activities_Max_Fields = {
   user_id?: Maybe<Scalars['uuid']>;
 };
 
+/** order by max() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Max_Order_By = {
+  comment?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  rating?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type User_Movie_Activities_Min_Fields = {
   __typename?: 'user_movie_activities_min_fields';
@@ -9762,6 +9858,14 @@ export type User_Movie_Activities_Min_Fields = {
   movie_id?: Maybe<Scalars['uuid']>;
   rating?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Min_Order_By = {
+  comment?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  rating?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "user_movie_activities" */
@@ -9823,16 +9927,31 @@ export type User_Movie_Activities_Stddev_Fields = {
   rating?: Maybe<Scalars['Float']>;
 };
 
+/** order by stddev() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Stddev_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type User_Movie_Activities_Stddev_Pop_Fields = {
   __typename?: 'user_movie_activities_stddev_pop_fields';
   rating?: Maybe<Scalars['Float']>;
 };
 
+/** order by stddev_pop() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Stddev_Pop_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type User_Movie_Activities_Stddev_Samp_Fields = {
   __typename?: 'user_movie_activities_stddev_samp_fields';
   rating?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Stddev_Samp_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "user_movie_activities" */
@@ -9856,6 +9975,11 @@ export type User_Movie_Activities_Stream_Cursor_Value_Input = {
 export type User_Movie_Activities_Sum_Fields = {
   __typename?: 'user_movie_activities_sum_fields';
   rating?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Sum_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "user_movie_activities" */
@@ -9886,16 +10010,31 @@ export type User_Movie_Activities_Var_Pop_Fields = {
   rating?: Maybe<Scalars['Float']>;
 };
 
+/** order by var_pop() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Var_Pop_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type User_Movie_Activities_Var_Samp_Fields = {
   __typename?: 'user_movie_activities_var_samp_fields';
   rating?: Maybe<Scalars['Float']>;
 };
 
+/** order by var_samp() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Var_Samp_Order_By = {
+  rating?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type User_Movie_Activities_Variance_Fields = {
   __typename?: 'user_movie_activities_variance_fields';
   rating?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "user_movie_activities" */
+export type User_Movie_Activities_Variance_Order_By = {
+  rating?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "user_movie_statuses" */
@@ -26478,6 +26617,32 @@ export default {
           ]
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "get_user_movie_activity_args",
+          "inputFields": [
+            {
+              "name": "hasura_session",
+              "type": {
+                "kind": "SCALAR",
+                "name": "json",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_row",
+              "type": {
+                "kind": "SCALAR",
+                "name": "movies_scalar",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SCALAR",
+          "name": "json"
+        },
+        {
           "kind": "SCALAR",
           "name": "jsonb"
         },
@@ -32310,6 +32475,74 @@ export default {
               "args": []
             },
             {
+              "name": "user_movie_activity",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "user_movie_activities",
+                    "ofType": null
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "vote_average",
               "type": {
                 "kind": "SCALAR",
@@ -33114,6 +33347,14 @@ export default {
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "timestamptz_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_movie_activity",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_bool_exp",
                 "ofType": null
               }
             },
@@ -34669,6 +34910,14 @@ export default {
               }
             },
             {
+              "name": "user_movie_activity_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_aggregate_order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "vote_average",
               "type": {
                 "kind": "ENUM",
@@ -34702,6 +34951,10 @@ export default {
               }
             }
           ]
+        },
+        {
+          "kind": "SCALAR",
+          "name": "movies_scalar"
         },
         {
           "kind": "ENUM",
@@ -46103,6 +46356,155 @@ export default {
               ]
             },
             {
+              "name": "get_user_movie_activity",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "get_user_movie_activity_args",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "get_user_movie_activity_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_activities_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "get_user_movie_activity_args",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "languages",
               "type": {
                 "kind": "NON_NULL",
@@ -51341,6 +51743,155 @@ export default {
               ]
             },
             {
+              "name": "get_user_movie_activity",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_activities",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "get_user_movie_activity_args",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "get_user_movie_activity_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_activities_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "args",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "get_user_movie_activity_args",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_activities_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_activities_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "languages",
               "type": {
                 "kind": "NON_NULL",
@@ -54434,6 +54985,100 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "avg",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_avg_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_min_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_stddev_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev_pop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_stddev_pop_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "stddev_samp",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_stddev_samp_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "sum",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_sum_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "var_pop",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_var_pop_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "var_samp",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_var_samp_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "variance",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_variance_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "user_movie_activities_avg_fields",
           "fields": [
@@ -54448,6 +55093,20 @@ export default {
             }
           ],
           "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_avg_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
         },
         {
           "kind": "INPUT_OBJECT",
@@ -54644,6 +55303,44 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_max_order_by",
+          "inputFields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "user_movie_activities_min_fields",
           "fields": [
@@ -54685,6 +55382,44 @@ export default {
             }
           ],
           "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_min_order_by",
+          "inputFields": [
+            {
+              "name": "comment",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
         },
         {
           "kind": "OBJECT",
@@ -54924,6 +55659,20 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_stddev_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "user_movie_activities_stddev_pop_fields",
           "fields": [
@@ -54940,6 +55689,20 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_stddev_pop_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "user_movie_activities_stddev_samp_fields",
           "fields": [
@@ -54954,6 +55717,20 @@ export default {
             }
           ],
           "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_stddev_samp_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
         },
         {
           "kind": "INPUT_OBJECT",
@@ -55043,6 +55820,20 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_sum_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "ENUM",
           "name": "user_movie_activities_update_column",
           "enumValues": [
@@ -55113,6 +55904,20 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_var_pop_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "user_movie_activities_var_samp_fields",
           "fields": [
@@ -55129,6 +55934,20 @@ export default {
           "interfaces": []
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_var_samp_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "user_movie_activities_variance_fields",
           "fields": [
@@ -55143,6 +55962,20 @@ export default {
             }
           ],
           "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_variance_order_by",
+          "inputFields": [
+            {
+              "name": "rating",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
         },
         {
           "kind": "OBJECT",
@@ -60715,6 +61548,7 @@ export default {
     Genres_Stream_Cursor_Input: Genres_Stream_Cursor_Input,
     Genres_Stream_Cursor_Value_Input: Genres_Stream_Cursor_Value_Input,
     Genres_Updates: Genres_Updates,
+    Get_User_Movie_Activity_Args: Get_User_Movie_Activity_Args,
     Jsonb_Cast_Exp: Jsonb_Cast_Exp,
     Jsonb_Comparison_Exp: Jsonb_Comparison_Exp,
     Languages: Languages,
@@ -60871,6 +61705,7 @@ export default {
     Movies_Movie_Production_Countries_AggregateArgs: Movies_Movie_Production_Countries_AggregateArgs,
     Movies_Movie_Spoken_LanguagesArgs: Movies_Movie_Spoken_LanguagesArgs,
     Movies_Movie_Spoken_Languages_AggregateArgs: Movies_Movie_Spoken_Languages_AggregateArgs,
+    Movies_User_Movie_ActivityArgs: Movies_User_Movie_ActivityArgs,
     Movies_Aggregate: Movies_Aggregate,
     Movies_Aggregate_Bool_Exp: Movies_Aggregate_Bool_Exp,
     Movies_Aggregate_Bool_Exp_Count: Movies_Aggregate_Bool_Exp_Count,
@@ -61193,6 +62028,8 @@ export default {
     Query_Root_GenresArgs: Query_Root_GenresArgs,
     Query_Root_Genres_AggregateArgs: Query_Root_Genres_AggregateArgs,
     Query_Root_Genres_By_PkArgs: Query_Root_Genres_By_PkArgs,
+    Query_Root_Get_User_Movie_ActivityArgs: Query_Root_Get_User_Movie_ActivityArgs,
+    Query_Root_Get_User_Movie_Activity_AggregateArgs: Query_Root_Get_User_Movie_Activity_AggregateArgs,
     Query_Root_LanguagesArgs: Query_Root_LanguagesArgs,
     Query_Root_Languages_AggregateArgs: Query_Root_Languages_AggregateArgs,
     Query_Root_Languages_By_PkArgs: Query_Root_Languages_By_PkArgs,
@@ -61293,6 +62130,8 @@ export default {
     Subscription_Root_Genres_AggregateArgs: Subscription_Root_Genres_AggregateArgs,
     Subscription_Root_Genres_By_PkArgs: Subscription_Root_Genres_By_PkArgs,
     Subscription_Root_Genres_StreamArgs: Subscription_Root_Genres_StreamArgs,
+    Subscription_Root_Get_User_Movie_ActivityArgs: Subscription_Root_Get_User_Movie_ActivityArgs,
+    Subscription_Root_Get_User_Movie_Activity_AggregateArgs: Subscription_Root_Get_User_Movie_Activity_AggregateArgs,
     Subscription_Root_LanguagesArgs: Subscription_Root_LanguagesArgs,
     Subscription_Root_Languages_AggregateArgs: Subscription_Root_Languages_AggregateArgs,
     Subscription_Root_Languages_By_PkArgs: Subscription_Root_Languages_By_PkArgs,
@@ -61350,27 +62189,38 @@ export default {
     User_Movie_Activities_Aggregate: User_Movie_Activities_Aggregate,
     User_Movie_Activities_Aggregate_Fields: User_Movie_Activities_Aggregate_Fields,
     User_Movie_Activities_Aggregate_Fields_CountArgs: User_Movie_Activities_Aggregate_Fields_CountArgs,
+    User_Movie_Activities_Aggregate_Order_By: User_Movie_Activities_Aggregate_Order_By,
     User_Movie_Activities_Avg_Fields: User_Movie_Activities_Avg_Fields,
+    User_Movie_Activities_Avg_Order_By: User_Movie_Activities_Avg_Order_By,
     User_Movie_Activities_Bool_Exp: User_Movie_Activities_Bool_Exp,
     User_Movie_Activities_Inc_Input: User_Movie_Activities_Inc_Input,
     User_Movie_Activities_Insert_Input: User_Movie_Activities_Insert_Input,
     User_Movie_Activities_Max_Fields: User_Movie_Activities_Max_Fields,
+    User_Movie_Activities_Max_Order_By: User_Movie_Activities_Max_Order_By,
     User_Movie_Activities_Min_Fields: User_Movie_Activities_Min_Fields,
+    User_Movie_Activities_Min_Order_By: User_Movie_Activities_Min_Order_By,
     User_Movie_Activities_Mutation_Response: User_Movie_Activities_Mutation_Response,
     User_Movie_Activities_On_Conflict: User_Movie_Activities_On_Conflict,
     User_Movie_Activities_Order_By: User_Movie_Activities_Order_By,
     User_Movie_Activities_Pk_Columns_Input: User_Movie_Activities_Pk_Columns_Input,
     User_Movie_Activities_Set_Input: User_Movie_Activities_Set_Input,
     User_Movie_Activities_Stddev_Fields: User_Movie_Activities_Stddev_Fields,
+    User_Movie_Activities_Stddev_Order_By: User_Movie_Activities_Stddev_Order_By,
     User_Movie_Activities_Stddev_Pop_Fields: User_Movie_Activities_Stddev_Pop_Fields,
+    User_Movie_Activities_Stddev_Pop_Order_By: User_Movie_Activities_Stddev_Pop_Order_By,
     User_Movie_Activities_Stddev_Samp_Fields: User_Movie_Activities_Stddev_Samp_Fields,
+    User_Movie_Activities_Stddev_Samp_Order_By: User_Movie_Activities_Stddev_Samp_Order_By,
     User_Movie_Activities_Stream_Cursor_Input: User_Movie_Activities_Stream_Cursor_Input,
     User_Movie_Activities_Stream_Cursor_Value_Input: User_Movie_Activities_Stream_Cursor_Value_Input,
     User_Movie_Activities_Sum_Fields: User_Movie_Activities_Sum_Fields,
+    User_Movie_Activities_Sum_Order_By: User_Movie_Activities_Sum_Order_By,
     User_Movie_Activities_Updates: User_Movie_Activities_Updates,
     User_Movie_Activities_Var_Pop_Fields: User_Movie_Activities_Var_Pop_Fields,
+    User_Movie_Activities_Var_Pop_Order_By: User_Movie_Activities_Var_Pop_Order_By,
     User_Movie_Activities_Var_Samp_Fields: User_Movie_Activities_Var_Samp_Fields,
+    User_Movie_Activities_Var_Samp_Order_By: User_Movie_Activities_Var_Samp_Order_By,
     User_Movie_Activities_Variance_Fields: User_Movie_Activities_Variance_Fields,
+    User_Movie_Activities_Variance_Order_By: User_Movie_Activities_Variance_Order_By,
     User_Movie_Statuses: User_Movie_Statuses,
     User_Movie_Statuses_Aggregate: User_Movie_Statuses_Aggregate,
     User_Movie_Statuses_Aggregate_Fields: User_Movie_Statuses_Aggregate_Fields,
@@ -61507,6 +62357,11 @@ export const MovieDocument = gql`
         id
         name
       }
+    }
+    user_movie_activity {
+      comment
+      rating
+      status
     }
   }
 }

@@ -1,19 +1,20 @@
-import { useParams } from 'next/navigation'
-
 import { AddToListButton } from '@/components/buttons/add-to-list-button'
 import { PlayTrailerButton } from '@/components/buttons/play-trailer-button'
 import StatusDialog from '@/components/status-dialog/status-dailog'
+import { MovieQuery } from '@/generated/graphql'
 
 import RatingDialog from '../../../../components/rating-dialog/rating-dialog'
 
-export function MovieActions() {
-    const { id } = useParams<{ id: string }>()
+interface MovieActionsProps {
+    movie: MovieQuery['movies_by_pk']
+}
 
+export function MovieActions({ movie }: MovieActionsProps) {
     return (
         <div className="flex flex-wrap items-center gap-1">
-            <RatingDialog />
+            <RatingDialog movie={movie} />
             <AddToListButton />
-            <StatusDialog movieId={id} />
+            <StatusDialog movie={movie} />
             <PlayTrailerButton />
         </div>
     )

@@ -7,25 +7,47 @@ import LoadingButton from '@/components/loading-button'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Textarea } from '@/components/ui/textarea'
+import { MovieQuery } from '@/generated/graphql'
+import { upsertUserMovieActivity } from '@/lib/actions/movies/update-user-movie-activity'
+import { UserMovieStatus } from '@/lib/enums'
 import { ratingSchema } from '@/lib/validations/ratings/rating.schema'
 
 import { RatingSelector } from './rating-selector'
 
 interface RatingFormProps {
+    movie: MovieQuery['movies_by_pk']
     onOpenChange: (open: boolean) => void
 }
 
-export function RatingForm({ onOpenChange }: RatingFormProps) {
+export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
+    const userMovieActivity = movie?.user_movie_activity?.[0]
+    const status = userMovieActivity?.status as UserMovieStatus
+    const rating = userMovieActivity?.rating ?? 0
+    const comment = userMovieActivity?.comment ?? ''
+
     const form = useForm({
         defaultValues: {
-            rating: '5',
-            comment: '',
+            rating,
+            comment,
         },
         validators: {
             onSubmit: ratingSchema,
         },
         onSubmit: async ({ value }) => {
-            toast.success(`Submitted rating: ${value.rating}/5`)
+            await upsertUserMovieActivity({
+                id: movie?.id,
+                status,
+                rating: value.rating,
+                comment: value.comment,
+            })
+                .then(() => {
+                    toast.success('Rating updated successfully')
+                })
+                .catch(error => {
+                    toast.error('Failed to update rating', {
+                        description: error.message,
+                    })
+                })
             onOpenChange(false)
         },
     })
@@ -38,7 +60,7 @@ export function RatingForm({ onOpenChange }: RatingFormProps) {
                 e.stopPropagation()
                 form.handleSubmit()
             }}
-            className="flex flex-col gap-4 pt-4"
+            className="flex flex-col gap-4"
         >
             <FieldGroup>
                 <form.Field name="rating">
@@ -46,7 +68,6 @@ export function RatingForm({ onOpenChange }: RatingFormProps) {
                         const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                         return (
                             <Field data-invalid={isInvalid}>
-                                <FieldLabel>Rating</FieldLabel>
                                 <RatingSelector
                                     value={field.state.value}
                                     onChange={field.handleChange}

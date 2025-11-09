@@ -15,6 +15,8 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
         return null
     }
 
+    const userMovieActivity = movie.user_movie_activity?.[0]
+
     return (
         <>
             <MovieBackdrop backdropId={movie.backdrop_id} />
@@ -55,7 +57,7 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
 
                         {/* Action Buttons - Desktop Only */}
                         <div className="hidden md:block">
-                            <MovieActions />
+                            <MovieActions movie={movie} />
                         </div>
                     </article>
                 </div>
@@ -63,7 +65,7 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
                 {/* Mobile Content */}
                 <div className="space-y-3 md:hidden">
                     {/* Action Buttons - Mobile */}
-                    <MovieActions />
+                    <MovieActions movie={movie} />
 
                     {/* Overview - Mobile */}
                     <p className="text-sm leading-6 text-muted-foreground">{movie.overview}</p>
