@@ -38,6 +38,11 @@ export type HealthQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type HealthQuery = { __typename: 'query_root' };
 
+export type MediaTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MediaTypesQuery = { __typename?: 'query_root', media_types: Array<{ __typename?: 'media_types', name: string }> };
+
 export type MovieQueryVariables = Exact<{
   id: Scalars['uuid']['input'];
 }>;
@@ -3756,6 +3761,400 @@ export type Languages_Updates = {
   where: Languages_Bool_Exp;
 };
 
+/** columns and relationships of "lists" */
+export type Lists = {
+  __typename?: 'lists';
+  id: Scalars['uuid'];
+  title: Scalars['String'];
+};
+
+/** aggregated selection of "lists" */
+export type Lists_Aggregate = {
+  __typename?: 'lists_aggregate';
+  aggregate?: Maybe<Lists_Aggregate_Fields>;
+  nodes: Array<Lists>;
+};
+
+/** aggregate fields of "lists" */
+export type Lists_Aggregate_Fields = {
+  __typename?: 'lists_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Lists_Max_Fields>;
+  min?: Maybe<Lists_Min_Fields>;
+};
+
+
+/** aggregate fields of "lists" */
+export type Lists_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Lists_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "lists". All fields are combined with a logical 'AND'. */
+export type Lists_Bool_Exp = {
+  _and?: InputMaybe<Array<Lists_Bool_Exp>>;
+  _not?: InputMaybe<Lists_Bool_Exp>;
+  _or?: InputMaybe<Array<Lists_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "lists" */
+export type Lists_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'lists_pkey';
+
+/** input type for inserting data into table "lists" */
+export type Lists_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Lists_Max_Fields = {
+  __typename?: 'lists_max_fields';
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Lists_Min_Fields = {
+  __typename?: 'lists_min_fields';
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "lists" */
+export type Lists_Mutation_Response = {
+  __typename?: 'lists_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Lists>;
+};
+
+/** on_conflict condition type for table "lists" */
+export type Lists_On_Conflict = {
+  constraint: Lists_Constraint;
+  update_columns?: Array<Lists_Update_Column>;
+  where?: InputMaybe<Lists_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "lists". */
+export type Lists_Order_By = {
+  id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: lists */
+export type Lists_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "lists" */
+export type Lists_Select_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'title';
+
+/** input type for updating data in table "lists" */
+export type Lists_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "lists" */
+export type Lists_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Lists_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Lists_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "lists" */
+export type Lists_Update_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'title';
+
+export type Lists_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Lists_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Lists_Bool_Exp;
+};
+
+/** columns and relationships of "media_items" */
+export type Media_Items = {
+  __typename?: 'media_items';
+  id: Scalars['uuid'];
+  media_type: Scalars['String'];
+  title: Scalars['String'];
+};
+
+/** aggregated selection of "media_items" */
+export type Media_Items_Aggregate = {
+  __typename?: 'media_items_aggregate';
+  aggregate?: Maybe<Media_Items_Aggregate_Fields>;
+  nodes: Array<Media_Items>;
+};
+
+/** aggregate fields of "media_items" */
+export type Media_Items_Aggregate_Fields = {
+  __typename?: 'media_items_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Media_Items_Max_Fields>;
+  min?: Maybe<Media_Items_Min_Fields>;
+};
+
+
+/** aggregate fields of "media_items" */
+export type Media_Items_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Media_Items_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "media_items". All fields are combined with a logical 'AND'. */
+export type Media_Items_Bool_Exp = {
+  _and?: InputMaybe<Array<Media_Items_Bool_Exp>>;
+  _not?: InputMaybe<Media_Items_Bool_Exp>;
+  _or?: InputMaybe<Array<Media_Items_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  media_type?: InputMaybe<String_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "media_items" */
+export type Media_Items_Constraint =
+  /** unique or primary key constraint on columns "id", "media_type" */
+  | 'media_items_pkey';
+
+/** input type for inserting data into table "media_items" */
+export type Media_Items_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  media_type?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Media_Items_Max_Fields = {
+  __typename?: 'media_items_max_fields';
+  id?: Maybe<Scalars['uuid']>;
+  media_type?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Media_Items_Min_Fields = {
+  __typename?: 'media_items_min_fields';
+  id?: Maybe<Scalars['uuid']>;
+  media_type?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "media_items" */
+export type Media_Items_Mutation_Response = {
+  __typename?: 'media_items_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Media_Items>;
+};
+
+/** on_conflict condition type for table "media_items" */
+export type Media_Items_On_Conflict = {
+  constraint: Media_Items_Constraint;
+  update_columns?: Array<Media_Items_Update_Column>;
+  where?: InputMaybe<Media_Items_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "media_items". */
+export type Media_Items_Order_By = {
+  id?: InputMaybe<Order_By>;
+  media_type?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: media_items */
+export type Media_Items_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+  media_type: Scalars['String'];
+};
+
+/** select columns of table "media_items" */
+export type Media_Items_Select_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'media_type'
+  /** column name */
+  | 'title';
+
+/** input type for updating data in table "media_items" */
+export type Media_Items_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  media_type?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "media_items" */
+export type Media_Items_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Media_Items_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Media_Items_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  media_type?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "media_items" */
+export type Media_Items_Update_Column =
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'media_type'
+  /** column name */
+  | 'title';
+
+export type Media_Items_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Media_Items_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Media_Items_Bool_Exp;
+};
+
+/** columns and relationships of "media_types" */
+export type Media_Types = {
+  __typename?: 'media_types';
+  name: Scalars['String'];
+};
+
+/** aggregated selection of "media_types" */
+export type Media_Types_Aggregate = {
+  __typename?: 'media_types_aggregate';
+  aggregate?: Maybe<Media_Types_Aggregate_Fields>;
+  nodes: Array<Media_Types>;
+};
+
+/** aggregate fields of "media_types" */
+export type Media_Types_Aggregate_Fields = {
+  __typename?: 'media_types_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Media_Types_Max_Fields>;
+  min?: Maybe<Media_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "media_types" */
+export type Media_Types_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Media_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "media_types". All fields are combined with a logical 'AND'. */
+export type Media_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Media_Types_Bool_Exp>>;
+  _not?: InputMaybe<Media_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Media_Types_Bool_Exp>>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "media_types" */
+export type Media_Types_Constraint =
+  /** unique or primary key constraint on columns "name" */
+  | 'media_types_pkey';
+
+/** input type for inserting data into table "media_types" */
+export type Media_Types_Insert_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Media_Types_Max_Fields = {
+  __typename?: 'media_types_max_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Media_Types_Min_Fields = {
+  __typename?: 'media_types_min_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "media_types" */
+export type Media_Types_Mutation_Response = {
+  __typename?: 'media_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Media_Types>;
+};
+
+/** on_conflict condition type for table "media_types" */
+export type Media_Types_On_Conflict = {
+  constraint: Media_Types_Constraint;
+  update_columns?: Array<Media_Types_Update_Column>;
+  where?: InputMaybe<Media_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "media_types". */
+export type Media_Types_Order_By = {
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: media_types */
+export type Media_Types_Pk_Columns_Input = {
+  name: Scalars['String'];
+};
+
+/** select columns of table "media_types" */
+export type Media_Types_Select_Column =
+  /** column name */
+  | 'name';
+
+/** input type for updating data in table "media_types" */
+export type Media_Types_Set_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "media_types" */
+export type Media_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Media_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Media_Types_Stream_Cursor_Value_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "media_types" */
+export type Media_Types_Update_Column =
+  /** column name */
+  | 'name';
+
+export type Media_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Media_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Media_Types_Bool_Exp;
+};
+
 /** columns and relationships of "movie_credits" */
 export type Movie_Credits = {
   __typename?: 'movie_credits';
@@ -5704,6 +6103,18 @@ export type Mutation_Root = {
   delete_languages?: Maybe<Languages_Mutation_Response>;
   /** delete single row from the table: "languages" */
   delete_languages_by_pk?: Maybe<Languages>;
+  /** delete data from the table: "lists" */
+  delete_lists?: Maybe<Lists_Mutation_Response>;
+  /** delete single row from the table: "lists" */
+  delete_lists_by_pk?: Maybe<Lists>;
+  /** delete data from the table: "media_items" */
+  delete_media_items?: Maybe<Media_Items_Mutation_Response>;
+  /** delete single row from the table: "media_items" */
+  delete_media_items_by_pk?: Maybe<Media_Items>;
+  /** delete data from the table: "media_types" */
+  delete_media_types?: Maybe<Media_Types_Mutation_Response>;
+  /** delete single row from the table: "media_types" */
+  delete_media_types_by_pk?: Maybe<Media_Types>;
   /** delete data from the table: "movie_credits" */
   delete_movie_credits?: Maybe<Movie_Credits_Mutation_Response>;
   /** delete single row from the table: "movie_credits" */
@@ -5816,6 +6227,18 @@ export type Mutation_Root = {
   insert_languages?: Maybe<Languages_Mutation_Response>;
   /** insert a single row into the table: "languages" */
   insert_languages_one?: Maybe<Languages>;
+  /** insert data into the table: "lists" */
+  insert_lists?: Maybe<Lists_Mutation_Response>;
+  /** insert a single row into the table: "lists" */
+  insert_lists_one?: Maybe<Lists>;
+  /** insert data into the table: "media_items" */
+  insert_media_items?: Maybe<Media_Items_Mutation_Response>;
+  /** insert a single row into the table: "media_items" */
+  insert_media_items_one?: Maybe<Media_Items>;
+  /** insert data into the table: "media_types" */
+  insert_media_types?: Maybe<Media_Types_Mutation_Response>;
+  /** insert a single row into the table: "media_types" */
+  insert_media_types_one?: Maybe<Media_Types>;
   /** insert data into the table: "movie_credits" */
   insert_movie_credits?: Maybe<Movie_Credits_Mutation_Response>;
   /** insert a single row into the table: "movie_credits" */
@@ -5960,6 +6383,24 @@ export type Mutation_Root = {
   update_languages_by_pk?: Maybe<Languages>;
   /** update multiples rows of table: "languages" */
   update_languages_many?: Maybe<Array<Maybe<Languages_Mutation_Response>>>;
+  /** update data of the table: "lists" */
+  update_lists?: Maybe<Lists_Mutation_Response>;
+  /** update single row of the table: "lists" */
+  update_lists_by_pk?: Maybe<Lists>;
+  /** update multiples rows of table: "lists" */
+  update_lists_many?: Maybe<Array<Maybe<Lists_Mutation_Response>>>;
+  /** update data of the table: "media_items" */
+  update_media_items?: Maybe<Media_Items_Mutation_Response>;
+  /** update single row of the table: "media_items" */
+  update_media_items_by_pk?: Maybe<Media_Items>;
+  /** update multiples rows of table: "media_items" */
+  update_media_items_many?: Maybe<Array<Maybe<Media_Items_Mutation_Response>>>;
+  /** update data of the table: "media_types" */
+  update_media_types?: Maybe<Media_Types_Mutation_Response>;
+  /** update single row of the table: "media_types" */
+  update_media_types_by_pk?: Maybe<Media_Types>;
+  /** update multiples rows of table: "media_types" */
+  update_media_types_many?: Maybe<Array<Maybe<Media_Types_Mutation_Response>>>;
   /** update data of the table: "movie_credits" */
   update_movie_credits?: Maybe<Movie_Credits_Mutation_Response>;
   /** update single row of the table: "movie_credits" */
@@ -6240,6 +6681,43 @@ export type Mutation_Root_Delete_LanguagesArgs = {
 /** mutation root */
 export type Mutation_Root_Delete_Languages_By_PkArgs = {
   iso_639_1: Scalars['bpchar'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_ListsArgs = {
+  where: Lists_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Lists_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Media_ItemsArgs = {
+  where: Media_Items_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Media_Items_By_PkArgs = {
+  id: Scalars['uuid'];
+  media_type: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Media_TypesArgs = {
+  where: Media_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Media_Types_By_PkArgs = {
+  name: Scalars['String'];
 };
 
 
@@ -6617,6 +7095,48 @@ export type Mutation_Root_Insert_LanguagesArgs = {
 export type Mutation_Root_Insert_Languages_OneArgs = {
   object: Languages_Insert_Input;
   on_conflict?: InputMaybe<Languages_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_ListsArgs = {
+  objects: Array<Lists_Insert_Input>;
+  on_conflict?: InputMaybe<Lists_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Lists_OneArgs = {
+  object: Lists_Insert_Input;
+  on_conflict?: InputMaybe<Lists_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Media_ItemsArgs = {
+  objects: Array<Media_Items_Insert_Input>;
+  on_conflict?: InputMaybe<Media_Items_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Media_Items_OneArgs = {
+  object: Media_Items_Insert_Input;
+  on_conflict?: InputMaybe<Media_Items_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Media_TypesArgs = {
+  objects: Array<Media_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Media_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Media_Types_OneArgs = {
+  object: Media_Types_Insert_Input;
+  on_conflict?: InputMaybe<Media_Types_On_Conflict>;
 };
 
 
@@ -7161,6 +7681,66 @@ export type Mutation_Root_Update_Languages_By_PkArgs = {
 /** mutation root */
 export type Mutation_Root_Update_Languages_ManyArgs = {
   updates: Array<Languages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_ListsArgs = {
+  _set?: InputMaybe<Lists_Set_Input>;
+  where: Lists_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Lists_By_PkArgs = {
+  _set?: InputMaybe<Lists_Set_Input>;
+  pk_columns: Lists_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Lists_ManyArgs = {
+  updates: Array<Lists_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Media_ItemsArgs = {
+  _set?: InputMaybe<Media_Items_Set_Input>;
+  where: Media_Items_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Media_Items_By_PkArgs = {
+  _set?: InputMaybe<Media_Items_Set_Input>;
+  pk_columns: Media_Items_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Media_Items_ManyArgs = {
+  updates: Array<Media_Items_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Media_TypesArgs = {
+  _set?: InputMaybe<Media_Types_Set_Input>;
+  where: Media_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Media_Types_By_PkArgs = {
+  _set?: InputMaybe<Media_Types_Set_Input>;
+  pk_columns: Media_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Media_Types_ManyArgs = {
+  updates: Array<Media_Types_Updates>;
 };
 
 
@@ -7885,6 +8465,24 @@ export type Query_Root = {
   languages_aggregate: Languages_Aggregate;
   /** fetch data from the table: "languages" using primary key columns */
   languages_by_pk?: Maybe<Languages>;
+  /** fetch data from the table: "lists" */
+  lists: Array<Lists>;
+  /** fetch aggregated fields from the table: "lists" */
+  lists_aggregate: Lists_Aggregate;
+  /** fetch data from the table: "lists" using primary key columns */
+  lists_by_pk?: Maybe<Lists>;
+  /** fetch data from the table: "media_items" */
+  media_items: Array<Media_Items>;
+  /** fetch aggregated fields from the table: "media_items" */
+  media_items_aggregate: Media_Items_Aggregate;
+  /** fetch data from the table: "media_items" using primary key columns */
+  media_items_by_pk?: Maybe<Media_Items>;
+  /** fetch data from the table: "media_types" */
+  media_types: Array<Media_Types>;
+  /** fetch aggregated fields from the table: "media_types" */
+  media_types_aggregate: Media_Types_Aggregate;
+  /** fetch data from the table: "media_types" using primary key columns */
+  media_types_by_pk?: Maybe<Media_Types>;
   /** An array relationship */
   movie_credits: Array<Movie_Credits>;
   /** An aggregate relationship */
@@ -8348,6 +8946,76 @@ export type Query_Root_Languages_By_PkArgs = {
 };
 
 
+export type Query_Root_ListsArgs = {
+  distinct_on?: InputMaybe<Array<Lists_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Lists_Order_By>>;
+  where?: InputMaybe<Lists_Bool_Exp>;
+};
+
+
+export type Query_Root_Lists_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Lists_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Lists_Order_By>>;
+  where?: InputMaybe<Lists_Bool_Exp>;
+};
+
+
+export type Query_Root_Lists_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_Root_Media_ItemsArgs = {
+  distinct_on?: InputMaybe<Array<Media_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Items_Order_By>>;
+  where?: InputMaybe<Media_Items_Bool_Exp>;
+};
+
+
+export type Query_Root_Media_Items_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Media_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Items_Order_By>>;
+  where?: InputMaybe<Media_Items_Bool_Exp>;
+};
+
+
+export type Query_Root_Media_Items_By_PkArgs = {
+  id: Scalars['uuid'];
+  media_type: Scalars['String'];
+};
+
+
+export type Query_Root_Media_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Media_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Types_Order_By>>;
+  where?: InputMaybe<Media_Types_Bool_Exp>;
+};
+
+
+export type Query_Root_Media_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Media_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Types_Order_By>>;
+  where?: InputMaybe<Media_Types_Bool_Exp>;
+};
+
+
+export type Query_Root_Media_Types_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
 export type Query_Root_Movie_CreditsArgs = {
   distinct_on?: InputMaybe<Array<Movie_Credits_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -8762,6 +9430,30 @@ export type Subscription_Root = {
   languages_by_pk?: Maybe<Languages>;
   /** fetch data from the table in a streaming manner: "languages" */
   languages_stream: Array<Languages>;
+  /** fetch data from the table: "lists" */
+  lists: Array<Lists>;
+  /** fetch aggregated fields from the table: "lists" */
+  lists_aggregate: Lists_Aggregate;
+  /** fetch data from the table: "lists" using primary key columns */
+  lists_by_pk?: Maybe<Lists>;
+  /** fetch data from the table in a streaming manner: "lists" */
+  lists_stream: Array<Lists>;
+  /** fetch data from the table: "media_items" */
+  media_items: Array<Media_Items>;
+  /** fetch aggregated fields from the table: "media_items" */
+  media_items_aggregate: Media_Items_Aggregate;
+  /** fetch data from the table: "media_items" using primary key columns */
+  media_items_by_pk?: Maybe<Media_Items>;
+  /** fetch data from the table in a streaming manner: "media_items" */
+  media_items_stream: Array<Media_Items>;
+  /** fetch data from the table: "media_types" */
+  media_types: Array<Media_Types>;
+  /** fetch aggregated fields from the table: "media_types" */
+  media_types_aggregate: Media_Types_Aggregate;
+  /** fetch data from the table: "media_types" using primary key columns */
+  media_types_by_pk?: Maybe<Media_Types>;
+  /** fetch data from the table in a streaming manner: "media_types" */
+  media_types_stream: Array<Media_Types>;
   /** An array relationship */
   movie_credits: Array<Movie_Credits>;
   /** An aggregate relationship */
@@ -9358,6 +10050,97 @@ export type Subscription_Root_Languages_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Languages_Stream_Cursor_Input>>;
   where?: InputMaybe<Languages_Bool_Exp>;
+};
+
+
+export type Subscription_Root_ListsArgs = {
+  distinct_on?: InputMaybe<Array<Lists_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Lists_Order_By>>;
+  where?: InputMaybe<Lists_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Lists_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Lists_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Lists_Order_By>>;
+  where?: InputMaybe<Lists_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Lists_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_Lists_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Lists_Stream_Cursor_Input>>;
+  where?: InputMaybe<Lists_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Media_ItemsArgs = {
+  distinct_on?: InputMaybe<Array<Media_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Items_Order_By>>;
+  where?: InputMaybe<Media_Items_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Media_Items_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Media_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Items_Order_By>>;
+  where?: InputMaybe<Media_Items_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Media_Items_By_PkArgs = {
+  id: Scalars['uuid'];
+  media_type: Scalars['String'];
+};
+
+
+export type Subscription_Root_Media_Items_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Media_Items_Stream_Cursor_Input>>;
+  where?: InputMaybe<Media_Items_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Media_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Media_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Types_Order_By>>;
+  where?: InputMaybe<Media_Types_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Media_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Media_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Media_Types_Order_By>>;
+  where?: InputMaybe<Media_Types_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Media_Types_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
+export type Subscription_Root_Media_Types_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Media_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Media_Types_Bool_Exp>;
 };
 
 
@@ -27310,6 +28093,1520 @@ export default {
         },
         {
           "kind": "OBJECT",
+          "name": "lists",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "lists_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "lists",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "lists_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "lists_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "lists_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "lists_constraint",
+          "enumValues": [
+            {
+              "name": "lists_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_insert_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "lists_max_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "lists_min_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "lists_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "lists",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "lists_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "lists_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "lists_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_order_by",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "lists_select_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "title"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_set_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "lists_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "lists_update_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "title"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "lists_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "lists_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "lists_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_items",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_items_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_items",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_items_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_items_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "media_items_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "media_items_constraint",
+          "enumValues": [
+            {
+              "name": "media_items_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_insert_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_items_max_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_items_min_fields",
+          "fields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_items_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_items",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "media_items_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "media_items_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "media_items_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_order_by",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "media_items_select_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "media_type"
+            },
+            {
+              "name": "title"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_set_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "media_items_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "media_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "media_items_update_column",
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "media_type"
+            },
+            {
+              "name": "title"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_items_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "media_items_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "media_items_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_types",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_types_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_types_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "media_types_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "media_types_constraint",
+          "enumValues": [
+            {
+              "name": "media_types_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_insert_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_types_max_fields",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_types_min_fields",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "media_types_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "media_types_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "media_types_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "media_types_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_order_by",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "media_types_select_column",
+          "enumValues": [
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_set_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "media_types_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "media_types_update_column",
+          "enumValues": [
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "media_types_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "media_types_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "media_types_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
           "name": "movie_credits",
           "fields": [
             {
@@ -37156,6 +39453,143 @@ export default {
               ]
             },
             {
+              "name": "delete_lists",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "lists_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_lists_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_media_items",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_items_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_media_items_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "media_type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_media_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_types_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_media_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "delete_movie_credits",
               "type": {
                 "kind": "OBJECT",
@@ -38777,6 +41211,198 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "languages_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_lists",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "lists_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_lists_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "lists_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_media_items",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "media_items_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_media_items_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_items_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_media_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "media_types_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_media_types_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_types_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_on_conflict",
                     "ofType": null
                   }
                 }
@@ -41386,6 +44012,270 @@ export default {
                         "ofType": {
                           "kind": "INPUT_OBJECT",
                           "name": "languages_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_lists",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "lists_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_lists_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "lists_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_lists_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lists_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "lists_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_media_items",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_items_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_media_items_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_items_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_media_items_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "media_items_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "media_items_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_media_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_types_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_media_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "media_types_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_media_types_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "media_types_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "media_types_updates",
                           "ofType": null
                         }
                       }
@@ -46655,6 +49545,488 @@ export default {
                     "ofType": {
                       "kind": "SCALAR",
                       "name": "bpchar",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "lists",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "lists",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "lists_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "lists_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "lists_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lists_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "lists_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "lists_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "lists_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_items",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_items",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_items_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_items_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_items_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "media_items_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_items_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_items_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_items_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "media_type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_types",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_types_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "media_types_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   }
@@ -52095,6 +55467,644 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "languages_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "lists",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "lists",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "lists_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "lists_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "lists_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lists_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "lists_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "lists_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "lists_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "lists",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "lists_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "lists",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "lists_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "lists_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_items",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_items",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_items_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_items_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_items_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "media_items_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_items_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_items_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_items_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_items",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "media_type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_items_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_items",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_items_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_items_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_types",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_types_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "media_types_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "media_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "media_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "media_types_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "media_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "media_types_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "media_types_bool_exp",
                     "ofType": null
                   }
                 }
@@ -61567,6 +65577,54 @@ export default {
     Languages_Stream_Cursor_Input: Languages_Stream_Cursor_Input,
     Languages_Stream_Cursor_Value_Input: Languages_Stream_Cursor_Value_Input,
     Languages_Updates: Languages_Updates,
+    Lists: Lists,
+    Lists_Aggregate: Lists_Aggregate,
+    Lists_Aggregate_Fields: Lists_Aggregate_Fields,
+    Lists_Aggregate_Fields_CountArgs: Lists_Aggregate_Fields_CountArgs,
+    Lists_Bool_Exp: Lists_Bool_Exp,
+    Lists_Insert_Input: Lists_Insert_Input,
+    Lists_Max_Fields: Lists_Max_Fields,
+    Lists_Min_Fields: Lists_Min_Fields,
+    Lists_Mutation_Response: Lists_Mutation_Response,
+    Lists_On_Conflict: Lists_On_Conflict,
+    Lists_Order_By: Lists_Order_By,
+    Lists_Pk_Columns_Input: Lists_Pk_Columns_Input,
+    Lists_Set_Input: Lists_Set_Input,
+    Lists_Stream_Cursor_Input: Lists_Stream_Cursor_Input,
+    Lists_Stream_Cursor_Value_Input: Lists_Stream_Cursor_Value_Input,
+    Lists_Updates: Lists_Updates,
+    Media_Items: Media_Items,
+    Media_Items_Aggregate: Media_Items_Aggregate,
+    Media_Items_Aggregate_Fields: Media_Items_Aggregate_Fields,
+    Media_Items_Aggregate_Fields_CountArgs: Media_Items_Aggregate_Fields_CountArgs,
+    Media_Items_Bool_Exp: Media_Items_Bool_Exp,
+    Media_Items_Insert_Input: Media_Items_Insert_Input,
+    Media_Items_Max_Fields: Media_Items_Max_Fields,
+    Media_Items_Min_Fields: Media_Items_Min_Fields,
+    Media_Items_Mutation_Response: Media_Items_Mutation_Response,
+    Media_Items_On_Conflict: Media_Items_On_Conflict,
+    Media_Items_Order_By: Media_Items_Order_By,
+    Media_Items_Pk_Columns_Input: Media_Items_Pk_Columns_Input,
+    Media_Items_Set_Input: Media_Items_Set_Input,
+    Media_Items_Stream_Cursor_Input: Media_Items_Stream_Cursor_Input,
+    Media_Items_Stream_Cursor_Value_Input: Media_Items_Stream_Cursor_Value_Input,
+    Media_Items_Updates: Media_Items_Updates,
+    Media_Types: Media_Types,
+    Media_Types_Aggregate: Media_Types_Aggregate,
+    Media_Types_Aggregate_Fields: Media_Types_Aggregate_Fields,
+    Media_Types_Aggregate_Fields_CountArgs: Media_Types_Aggregate_Fields_CountArgs,
+    Media_Types_Bool_Exp: Media_Types_Bool_Exp,
+    Media_Types_Insert_Input: Media_Types_Insert_Input,
+    Media_Types_Max_Fields: Media_Types_Max_Fields,
+    Media_Types_Min_Fields: Media_Types_Min_Fields,
+    Media_Types_Mutation_Response: Media_Types_Mutation_Response,
+    Media_Types_On_Conflict: Media_Types_On_Conflict,
+    Media_Types_Order_By: Media_Types_Order_By,
+    Media_Types_Pk_Columns_Input: Media_Types_Pk_Columns_Input,
+    Media_Types_Set_Input: Media_Types_Set_Input,
+    Media_Types_Stream_Cursor_Input: Media_Types_Stream_Cursor_Input,
+    Media_Types_Stream_Cursor_Value_Input: Media_Types_Stream_Cursor_Value_Input,
+    Media_Types_Updates: Media_Types_Updates,
     Movie_Credits: Movie_Credits,
     Movie_Credits_Aggregate: Movie_Credits_Aggregate,
     Movie_Credits_Aggregate_Bool_Exp: Movie_Credits_Aggregate_Bool_Exp,
@@ -61781,6 +65839,12 @@ export default {
     Mutation_Root_Delete_Genres_By_PkArgs: Mutation_Root_Delete_Genres_By_PkArgs,
     Mutation_Root_Delete_LanguagesArgs: Mutation_Root_Delete_LanguagesArgs,
     Mutation_Root_Delete_Languages_By_PkArgs: Mutation_Root_Delete_Languages_By_PkArgs,
+    Mutation_Root_Delete_ListsArgs: Mutation_Root_Delete_ListsArgs,
+    Mutation_Root_Delete_Lists_By_PkArgs: Mutation_Root_Delete_Lists_By_PkArgs,
+    Mutation_Root_Delete_Media_ItemsArgs: Mutation_Root_Delete_Media_ItemsArgs,
+    Mutation_Root_Delete_Media_Items_By_PkArgs: Mutation_Root_Delete_Media_Items_By_PkArgs,
+    Mutation_Root_Delete_Media_TypesArgs: Mutation_Root_Delete_Media_TypesArgs,
+    Mutation_Root_Delete_Media_Types_By_PkArgs: Mutation_Root_Delete_Media_Types_By_PkArgs,
     Mutation_Root_Delete_Movie_CreditsArgs: Mutation_Root_Delete_Movie_CreditsArgs,
     Mutation_Root_Delete_Movie_Credits_By_PkArgs: Mutation_Root_Delete_Movie_Credits_By_PkArgs,
     Mutation_Root_Delete_Movie_GenresArgs: Mutation_Root_Delete_Movie_GenresArgs,
@@ -61837,6 +65901,12 @@ export default {
     Mutation_Root_Insert_Genres_OneArgs: Mutation_Root_Insert_Genres_OneArgs,
     Mutation_Root_Insert_LanguagesArgs: Mutation_Root_Insert_LanguagesArgs,
     Mutation_Root_Insert_Languages_OneArgs: Mutation_Root_Insert_Languages_OneArgs,
+    Mutation_Root_Insert_ListsArgs: Mutation_Root_Insert_ListsArgs,
+    Mutation_Root_Insert_Lists_OneArgs: Mutation_Root_Insert_Lists_OneArgs,
+    Mutation_Root_Insert_Media_ItemsArgs: Mutation_Root_Insert_Media_ItemsArgs,
+    Mutation_Root_Insert_Media_Items_OneArgs: Mutation_Root_Insert_Media_Items_OneArgs,
+    Mutation_Root_Insert_Media_TypesArgs: Mutation_Root_Insert_Media_TypesArgs,
+    Mutation_Root_Insert_Media_Types_OneArgs: Mutation_Root_Insert_Media_Types_OneArgs,
     Mutation_Root_Insert_Movie_CreditsArgs: Mutation_Root_Insert_Movie_CreditsArgs,
     Mutation_Root_Insert_Movie_Credits_OneArgs: Mutation_Root_Insert_Movie_Credits_OneArgs,
     Mutation_Root_Insert_Movie_GenresArgs: Mutation_Root_Insert_Movie_GenresArgs,
@@ -61909,6 +65979,15 @@ export default {
     Mutation_Root_Update_LanguagesArgs: Mutation_Root_Update_LanguagesArgs,
     Mutation_Root_Update_Languages_By_PkArgs: Mutation_Root_Update_Languages_By_PkArgs,
     Mutation_Root_Update_Languages_ManyArgs: Mutation_Root_Update_Languages_ManyArgs,
+    Mutation_Root_Update_ListsArgs: Mutation_Root_Update_ListsArgs,
+    Mutation_Root_Update_Lists_By_PkArgs: Mutation_Root_Update_Lists_By_PkArgs,
+    Mutation_Root_Update_Lists_ManyArgs: Mutation_Root_Update_Lists_ManyArgs,
+    Mutation_Root_Update_Media_ItemsArgs: Mutation_Root_Update_Media_ItemsArgs,
+    Mutation_Root_Update_Media_Items_By_PkArgs: Mutation_Root_Update_Media_Items_By_PkArgs,
+    Mutation_Root_Update_Media_Items_ManyArgs: Mutation_Root_Update_Media_Items_ManyArgs,
+    Mutation_Root_Update_Media_TypesArgs: Mutation_Root_Update_Media_TypesArgs,
+    Mutation_Root_Update_Media_Types_By_PkArgs: Mutation_Root_Update_Media_Types_By_PkArgs,
+    Mutation_Root_Update_Media_Types_ManyArgs: Mutation_Root_Update_Media_Types_ManyArgs,
     Mutation_Root_Update_Movie_CreditsArgs: Mutation_Root_Update_Movie_CreditsArgs,
     Mutation_Root_Update_Movie_Credits_By_PkArgs: Mutation_Root_Update_Movie_Credits_By_PkArgs,
     Mutation_Root_Update_Movie_Credits_ManyArgs: Mutation_Root_Update_Movie_Credits_ManyArgs,
@@ -62033,6 +66112,15 @@ export default {
     Query_Root_LanguagesArgs: Query_Root_LanguagesArgs,
     Query_Root_Languages_AggregateArgs: Query_Root_Languages_AggregateArgs,
     Query_Root_Languages_By_PkArgs: Query_Root_Languages_By_PkArgs,
+    Query_Root_ListsArgs: Query_Root_ListsArgs,
+    Query_Root_Lists_AggregateArgs: Query_Root_Lists_AggregateArgs,
+    Query_Root_Lists_By_PkArgs: Query_Root_Lists_By_PkArgs,
+    Query_Root_Media_ItemsArgs: Query_Root_Media_ItemsArgs,
+    Query_Root_Media_Items_AggregateArgs: Query_Root_Media_Items_AggregateArgs,
+    Query_Root_Media_Items_By_PkArgs: Query_Root_Media_Items_By_PkArgs,
+    Query_Root_Media_TypesArgs: Query_Root_Media_TypesArgs,
+    Query_Root_Media_Types_AggregateArgs: Query_Root_Media_Types_AggregateArgs,
+    Query_Root_Media_Types_By_PkArgs: Query_Root_Media_Types_By_PkArgs,
     Query_Root_Movie_CreditsArgs: Query_Root_Movie_CreditsArgs,
     Query_Root_Movie_Credits_AggregateArgs: Query_Root_Movie_Credits_AggregateArgs,
     Query_Root_Movie_Credits_By_PkArgs: Query_Root_Movie_Credits_By_PkArgs,
@@ -62136,6 +66224,18 @@ export default {
     Subscription_Root_Languages_AggregateArgs: Subscription_Root_Languages_AggregateArgs,
     Subscription_Root_Languages_By_PkArgs: Subscription_Root_Languages_By_PkArgs,
     Subscription_Root_Languages_StreamArgs: Subscription_Root_Languages_StreamArgs,
+    Subscription_Root_ListsArgs: Subscription_Root_ListsArgs,
+    Subscription_Root_Lists_AggregateArgs: Subscription_Root_Lists_AggregateArgs,
+    Subscription_Root_Lists_By_PkArgs: Subscription_Root_Lists_By_PkArgs,
+    Subscription_Root_Lists_StreamArgs: Subscription_Root_Lists_StreamArgs,
+    Subscription_Root_Media_ItemsArgs: Subscription_Root_Media_ItemsArgs,
+    Subscription_Root_Media_Items_AggregateArgs: Subscription_Root_Media_Items_AggregateArgs,
+    Subscription_Root_Media_Items_By_PkArgs: Subscription_Root_Media_Items_By_PkArgs,
+    Subscription_Root_Media_Items_StreamArgs: Subscription_Root_Media_Items_StreamArgs,
+    Subscription_Root_Media_TypesArgs: Subscription_Root_Media_TypesArgs,
+    Subscription_Root_Media_Types_AggregateArgs: Subscription_Root_Media_Types_AggregateArgs,
+    Subscription_Root_Media_Types_By_PkArgs: Subscription_Root_Media_Types_By_PkArgs,
+    Subscription_Root_Media_Types_StreamArgs: Subscription_Root_Media_Types_StreamArgs,
     Subscription_Root_Movie_CreditsArgs: Subscription_Root_Movie_CreditsArgs,
     Subscription_Root_Movie_Credits_AggregateArgs: Subscription_Root_Movie_Credits_AggregateArgs,
     Subscription_Root_Movie_Credits_By_PkArgs: Subscription_Root_Movie_Credits_By_PkArgs,
@@ -62339,6 +66439,13 @@ export const HealthDocument = gql`
   __typename
 }
     `;
+export const MediaTypesDocument = gql`
+    query MediaTypes {
+  media_types {
+    name
+  }
+}
+    `;
 export const MovieDocument = gql`
     query Movie($id: uuid!) {
   movies_by_pk(id: $id) {
@@ -62416,6 +66523,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Health(variables?: HealthQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<HealthQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HealthQuery>({ document: HealthDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Health', 'query', variables);
+    },
+    MediaTypes(variables?: MediaTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MediaTypesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MediaTypesQuery>({ document: MediaTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'MediaTypes', 'query', variables);
     },
     Movie(variables: MovieQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MovieQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MovieQuery>({ document: MovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Movie', 'query', variables);

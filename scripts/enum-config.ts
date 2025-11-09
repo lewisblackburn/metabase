@@ -3,6 +3,7 @@ import type { TypedDocumentNode } from '@graphql-typed-document-node/core'
 import {
     CreditTypesDocument,
     GendersDocument,
+    MediaTypesDocument,
     UserMovieStatusesDocument,
 } from '@/generated/graphql'
 
@@ -76,5 +77,12 @@ export const enumConfigs: EnumConfig[] = [
         document: GendersDocument,
         dataPath: 'genders',
         valueField: 'gender',
+    },
+    {
+        typeName: 'MediaType',
+        description: 'Available media types',
+        document: MediaTypesDocument,
+        dataPath: 'media_types',
+        valueField: 'name',
     },
 ]
