@@ -1,5 +1,4 @@
 import {
-    FilmIcon,
     ImageIcon,
     MessageSquareIcon,
     PlayCircleIcon,
@@ -90,30 +89,29 @@ const tabs = [
 
 export default function MovieTabs() {
     return (
-        <div className="w-full">
-            <Tabs defaultValue="reviews" className="gap-1">
-                <ScrollArea>
-                    <TabsList className="mb-3">
-                        {tabs.map(({ icon: Icon, name, value }) => (
-                            <TabsTrigger
-                                key={value}
-                                value={value}
-                                className="flex items-center gap-1 px-2.5 sm:px-3"
-                            >
-                                <Icon />
-                                {name}
-                            </TabsTrigger>
-                        ))}
-                    </TabsList>
-                    <ScrollBar orientation="horizontal" />
-                </ScrollArea>
+        <Tabs defaultValue="reviews" className="gap-1">
+            {/* // ! TODO: The width of the scroll area is not working as expected */}
+            <ScrollArea>
+                <TabsList className="mb-3">
+                    {tabs.map(({ icon: Icon, name, value }) => (
+                        <TabsTrigger
+                            key={value}
+                            value={value}
+                            className="flex items-center gap-1 px-2.5 sm:px-3"
+                        >
+                            <Icon />
+                            {name}
+                        </TabsTrigger>
+                    ))}
+                </TabsList>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
 
-                {tabs.map(tab => (
-                    <TabsContent key={tab.value} value={tab.value}>
-                        <p className="text-muted-foreground text-sm">{tab.content}</p>
-                    </TabsContent>
-                ))}
-            </Tabs>
-        </div>
+            {tabs.map(tab => (
+                <TabsContent key={tab.value} value={tab.value}>
+                    <p className="text-muted-foreground text-sm">{tab.content}</p>
+                </TabsContent>
+            ))}
+        </Tabs>
     )
 }

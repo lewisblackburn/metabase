@@ -10,8 +10,8 @@ import { upsertUserMovieActivity } from '@/lib/actions/movies/update-user-movie-
 import { UserMovieStatus } from '@/lib/enums'
 import { userMovieStatusSchema } from '@/lib/validations/movies/user-movie-status.schema'
 
-import { Field, FieldError, FieldGroup } from '../ui/field'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { Field, FieldError, FieldGroup } from './ui/field'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 
 interface StatusDialogProps {
     movie: MovieQuery['movies_by_pk']
@@ -51,7 +51,7 @@ function StatusDialog({ movie }: StatusDialogProps) {
     })
 
     return (
-        <form id="status-form" className="max-w-40 w-full">
+        <form id="status-form" className="max-w-36 w-full">
             <FieldGroup>
                 <form.Field name="status">
                     {field => {

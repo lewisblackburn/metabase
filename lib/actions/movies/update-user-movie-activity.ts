@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import {
     UpsertUserMovieActivityDocument,
     UpsertUserMovieActivityMutation,
@@ -21,7 +23,7 @@ export async function upsertUserMovieActivity({
 }) {
     const nhost = await createNhostClient()
 
-    return nhost.graphql.request<
+    const result = await nhost.graphql.request<
         UpsertUserMovieActivityMutation,
         UpsertUserMovieActivityMutationVariables
     >(UpsertUserMovieActivityDocument, {
@@ -36,4 +38,9 @@ export async function upsertUserMovieActivity({
             update_columns: ['rating', 'status', 'comment'],
         },
     })
+
+    // Revalidate the movie page to reflect the updated activity
+    revalidatePath(`/movies/${id}`)
+
+    return result
 }

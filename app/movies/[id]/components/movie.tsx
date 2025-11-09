@@ -15,8 +15,6 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
         return null
     }
 
-    const userMovieActivity = movie.user_movie_activity?.[0]
-
     return (
         <>
             <MovieBackdrop backdropId={movie.backdrop_id} />

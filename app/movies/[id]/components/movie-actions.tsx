@@ -1,6 +1,6 @@
 import { AddToListButton } from '@/components/buttons/add-to-list-button'
 import { PlayTrailerButton } from '@/components/buttons/play-trailer-button'
-import StatusDialog from '@/components/status-dialog/status-dailog'
+import StatusDialog from '@/components/status-dailog'
 import { MovieQuery } from '@/generated/graphql'
 
 import RatingDialog from '../../../../components/rating-dialog/rating-dialog'
