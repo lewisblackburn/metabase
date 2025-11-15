@@ -9,7 +9,7 @@ export function AuthHydration({ user }: { user: User | undefined }) {
     const setUser = useAuthStore(s => s.setUser)
 
     // use ref to store the previous user id from previous render
-    const prevUserIdRef = useRef<string | undefined>(user?.id)
+    const prevUserIdRef = useRef<string | undefined>(undefined)
 
     // only update the user when the user id changes to avoid unnecessary re-renders
     useEffect(() => {
