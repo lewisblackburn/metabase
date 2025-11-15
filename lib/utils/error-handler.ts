@@ -52,7 +52,6 @@ export function handleGraphQLError(error: unknown): never {
     const errorMessage = firstError.message || 'An error occurred'
 
     switch (errorCode) {
-        case GraphQLErrorCode.ValidationFailed:
         case GraphQLErrorCode.NotAuthorized:
         case GraphQLErrorCode.Unauthorized:
             throw new GraphQLError(

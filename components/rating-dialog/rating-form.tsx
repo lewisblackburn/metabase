@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Textarea } from '@/components/ui/textarea'
 import { MovieQuery } from '@/generated/graphql'
-import { upsertUserMovieActivity } from '@/lib/actions/movies/update-user-movie-activity'
+import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
 import { UserMovieStatus } from '@/lib/enums'
 import { ratingSchema } from '@/lib/validations/ratings/rating.schema'
 

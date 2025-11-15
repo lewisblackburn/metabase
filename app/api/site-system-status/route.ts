@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { HealthDocument, HealthQuery, HealthQueryVariables } from '@/generated/graphql'
+import { logger } from '@/lib/helpers/logger'
 import { createNhostClient } from '@/lib/nhost/server'
 import type { SiteServiceName, SiteSystemStatus } from '@/lib/types/site-system-status'
 import { SITE_STATUS_REVALIDATE_TIME } from '@/lib/utils/status'
@@ -46,7 +47,7 @@ export async function GET() {
             },
         })
     } catch (error) {
-        console.error('Site status check failed:', error)
+        logger.error('Site status check failed:', error)
 
         return NextResponse.json({ error: 'Failed to check site system status' }, { status: 500 })
     }

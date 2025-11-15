@@ -7,9 +7,12 @@ import {
     UpsertUserMovieActivityMutation,
     UpsertUserMovieActivityMutationVariables,
 } from '@/generated/graphql'
+import { UserMovieStatus } from '@/lib/enums'
 import { createNhostClient } from '@/lib/nhost/server'
 import { UserMovieActivity } from '@/lib/types/movies'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
+
+import { insertUserMovieWatches } from './insert-user-movie-watches'
 
 export async function upsertUserMovieActivity({
     id,

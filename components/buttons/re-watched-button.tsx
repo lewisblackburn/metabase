@@ -11,7 +11,15 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 
 const RESET_SPIN_DELAY = 250
 
-export function ReWatchedButton({ movie }: { movie: MovieQuery['movies_by_pk'] }) {
+export function ReWatchedButton({
+    timesWatched,
+    showButton,
+    onClick,
+}: {
+    timesWatched: number
+    showButton: boolean
+    onClick: () => void
+}) {
     const [spin, setSpin] = useState(false)
 
     const triggerSpin = () => {
@@ -19,10 +27,10 @@ export function ReWatchedButton({ movie }: { movie: MovieQuery['movies_by_pk'] }
         setTimeout(() => setSpin(false), RESET_SPIN_DELAY) // reset after animation
     }
 
-    const userMovieActivity = movie?.user_movie_activity?.[0]
-    const status = userMovieActivity?.status
-    const timesWatched = 1
-    const showButton = status === UserMovieStatus.WATCHED
+    const handleClick = () => {
+        triggerSpin()
+        onClick()
+    }
 
     if (!showButton) return null
 
@@ -35,11 +43,11 @@ export function ReWatchedButton({ movie }: { movie: MovieQuery['movies_by_pk'] }
                         variant="outline"
                         size="sm"
                         className="text-xs"
-                        onClick={triggerSpin}
+                        onClick={handleClick}
                     >
                         <RotateCcw className={cn('size-4', { 'animate-punchy-spin': spin })} />
                     </Button>
-                    <Badge className="absolute -top-2 -right-2 size-4 text-xs rounded-full px-1 tabular-nums">
+                    <Badge className="absolute -top-2.5 -right-2.5 size-5 text-xs rounded-full px-1 tabular-nums">
                         {timesWatched}
                     </Badge>
                 </div>

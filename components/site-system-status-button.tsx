@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { logger } from '@/lib/helpers/logger'
 import type { SiteSystemStatus } from '@/lib/types/site-system-status'
 import { getSiteStatusIndicator } from '@/lib/utils/status'
 
@@ -24,7 +25,7 @@ export default function SiteSystemStatusButton() {
                 const statusData: SiteSystemStatus = await res.json()
                 setData(statusData)
             } catch (error) {
-                console.error('Failed to fetch site system status:', error)
+                logger.error('Failed to fetch site system status:', error)
             } finally {
                 setIsLoading(false)
             }

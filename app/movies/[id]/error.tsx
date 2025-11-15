@@ -1,7 +1,9 @@
 'use client'
 
+import { logger } from '@/lib/helpers/logger'
+
 export default function Error({ error }: { error: Error }) {
-    console.error(error)
+    logger.error(error.message)
     return (
         <div className="flex flex-col items-center justify-center py-10">
             <p className="text-red-600 font-medium">Something went wrong loading movie.</p>

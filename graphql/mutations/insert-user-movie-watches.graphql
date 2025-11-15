@@ -1,0 +1,11 @@
+mutation InsertUserMovieWatches(
+    $object: user_movie_watches_insert_input!
+    $on_conflict: user_movie_watches_on_conflict
+) {
+    insert_user_movie_watches_one(object: $object, on_conflict: $on_conflict) {
+        id
+        movie_id
+        user_id
+        created_at
+    }
+}

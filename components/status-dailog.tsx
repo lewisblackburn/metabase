@@ -6,7 +6,8 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { MovieQuery } from '@/generated/graphql'
-import { upsertUserMovieActivity } from '@/lib/actions/movies/update-user-movie-activity'
+import { insertUserMovieWatches } from '@/lib/actions/movies/insert-user-movie-watches'
+import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
 import { UserMovieStatus } from '@/lib/enums'
 import { userMovieStatusSchema } from '@/lib/validations/movies/user-movie-status.schema'
 
@@ -33,7 +34,7 @@ function StatusDialog({ movie }: StatusDialogProps) {
             onChange: userMovieStatusSchema,
         },
         onSubmit: async ({ value }) => {
-            await upsertUserMovieActivity({
+            const result = await upsertUserMovieActivity({
                 id: movie?.id,
                 status: value.status,
                 comment,
@@ -42,7 +43,22 @@ function StatusDialog({ movie }: StatusDialogProps) {
                 toast.error('Failed to update status', {
                     description: error.message,
                 })
+                return null
             })
+
+            if (!result) return
+
+            const updatedStatus = result.body.data?.insert_user_movie_activities_one?.status
+            const currentWatches = movie?.user_movie_watches_aggregate?.aggregate?.count
+            const isFirstWatch = updatedStatus === UserMovieStatus.WATCHED && currentWatches === 0
+
+            if (isFirstWatch) {
+                await insertUserMovieWatches({ id: movie?.id }).catch(error => {
+                    toast.error('Failed to update user movie watched count', {
+                        description: error.message,
+                    })
+                })
+            }
         },
     })
 

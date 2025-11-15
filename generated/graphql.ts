@@ -15,6 +15,14 @@ export type CreateMovieMutationVariables = Exact<{
 
 export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
+export type InsertUserMovieWatchesMutationVariables = Exact<{
+  object: User_Movie_Watches_Insert_Input;
+  on_conflict?: InputMaybe<User_Movie_Watches_On_Conflict>;
+}>;
+
+
+export type InsertUserMovieWatchesMutation = { __typename?: 'mutation_root', insert_user_movie_watches_one?: { __typename?: 'user_movie_watches', id: any, movie_id: any, user_id: any, created_at: any } | null };
+
 export type UpsertUserMovieActivityMutationVariables = Exact<{
   object: User_Movie_Activities_Insert_Input;
   on_conflict?: InputMaybe<User_Movie_Activities_On_Conflict>;
@@ -48,7 +56,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }>, user_movie_activity?: Array<{ __typename?: 'user_movie_activities', comment?: string | null, rating?: number | null, status?: User_Movie_Statuses_Enum | null }> | null } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }>, user_movie_activity?: Array<{ __typename?: 'user_movie_activities', comment?: string | null, rating?: number | null, status?: User_Movie_Statuses_Enum | null }> | null, user_movie_watches_aggregate: { __typename?: 'user_movie_watches_aggregate', aggregate?: { __typename?: 'user_movie_watches_aggregate_fields', count: number } | null } } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5236,6 +5244,10 @@ export type Movies = {
   updated_at?: Maybe<Scalars['timestamptz']>;
   /** A computed field, executes function "get_user_movie_activity" */
   user_movie_activity?: Maybe<Array<User_Movie_Activities>>;
+  /** An array relationship */
+  user_movie_watches: Array<User_Movie_Watches>;
+  /** An aggregate relationship */
+  user_movie_watches_aggregate: User_Movie_Watches_Aggregate;
   vote_average?: Maybe<Scalars['Float']>;
   vote_count?: Maybe<Scalars['Int']>;
 };
@@ -5348,6 +5360,26 @@ export type Movies_User_Movie_ActivityArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<User_Movie_Activities_Order_By>>;
   where?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_User_Movie_WatchesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Watches_Order_By>>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+};
+
+
+/** columns and relationships of "movies" */
+export type Movies_User_Movie_Watches_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Watches_Order_By>>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
 };
 
 /** aggregated selection of "movies" */
@@ -5475,6 +5507,8 @@ export type Movies_Bool_Exp = {
   tmdb_id?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user_movie_activity?: InputMaybe<User_Movie_Activities_Bool_Exp>;
+  user_movie_watches?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+  user_movie_watches_aggregate?: InputMaybe<User_Movie_Watches_Aggregate_Bool_Exp>;
   vote_average?: InputMaybe<Float_Comparison_Exp>;
   vote_count?: InputMaybe<Int_Comparison_Exp>;
 };
@@ -5530,6 +5564,7 @@ export type Movies_Insert_Input = {
   title?: InputMaybe<Scalars['String']>;
   tmdb_id?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user_movie_watches?: InputMaybe<User_Movie_Watches_Arr_Rel_Insert_Input>;
   vote_average?: InputMaybe<Scalars['Float']>;
   vote_count?: InputMaybe<Scalars['Int']>;
 };
@@ -5697,6 +5732,7 @@ export type Movies_Order_By = {
   tmdb_id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_movie_activity_aggregate?: InputMaybe<User_Movie_Activities_Aggregate_Order_By>;
+  user_movie_watches_aggregate?: InputMaybe<User_Movie_Watches_Aggregate_Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
 };
@@ -6155,6 +6191,10 @@ export type Mutation_Root = {
   delete_user_movie_statuses?: Maybe<User_Movie_Statuses_Mutation_Response>;
   /** delete single row from the table: "user_movie_statuses" */
   delete_user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
+  /** delete data from the table: "user_movie_watches" */
+  delete_user_movie_watches?: Maybe<User_Movie_Watches_Mutation_Response>;
+  /** delete single row from the table: "user_movie_watches" */
+  delete_user_movie_watches_by_pk?: Maybe<User_Movie_Watches>;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
   /** insert a single row into the table: "auth.provider_requests" */
@@ -6279,6 +6319,10 @@ export type Mutation_Root = {
   insert_user_movie_statuses?: Maybe<User_Movie_Statuses_Mutation_Response>;
   /** insert a single row into the table: "user_movie_statuses" */
   insert_user_movie_statuses_one?: Maybe<User_Movie_Statuses>;
+  /** insert data into the table: "user_movie_watches" */
+  insert_user_movie_watches?: Maybe<User_Movie_Watches_Mutation_Response>;
+  /** insert a single row into the table: "user_movie_watches" */
+  insert_user_movie_watches_one?: Maybe<User_Movie_Watches>;
   /** update single row of the table: "auth.providers" */
   updateAuthProvider?: Maybe<AuthProviders>;
   /** update single row of the table: "auth.provider_requests" */
@@ -6461,6 +6505,12 @@ export type Mutation_Root = {
   update_user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
   /** update multiples rows of table: "user_movie_statuses" */
   update_user_movie_statuses_many?: Maybe<Array<Maybe<User_Movie_Statuses_Mutation_Response>>>;
+  /** update data of the table: "user_movie_watches" */
+  update_user_movie_watches?: Maybe<User_Movie_Watches_Mutation_Response>;
+  /** update single row of the table: "user_movie_watches" */
+  update_user_movie_watches_by_pk?: Maybe<User_Movie_Watches>;
+  /** update multiples rows of table: "user_movie_watches" */
+  update_user_movie_watches_many?: Maybe<Array<Maybe<User_Movie_Watches_Mutation_Response>>>;
   /** update multiples rows of table: "auth.users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
   /** update multiples rows of table: "storage.virus" */
@@ -6843,6 +6893,18 @@ export type Mutation_Root_Delete_User_Movie_StatusesArgs = {
 /** mutation root */
 export type Mutation_Root_Delete_User_Movie_Statuses_By_PkArgs = {
   name: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_User_Movie_WatchesArgs = {
+  where: User_Movie_Watches_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_User_Movie_Watches_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -7277,6 +7339,20 @@ export type Mutation_Root_Insert_User_Movie_StatusesArgs = {
 export type Mutation_Root_Insert_User_Movie_Statuses_OneArgs = {
   object: User_Movie_Statuses_Insert_Input;
   on_conflict?: InputMaybe<User_Movie_Statuses_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_User_Movie_WatchesArgs = {
+  objects: Array<User_Movie_Watches_Insert_Input>;
+  on_conflict?: InputMaybe<User_Movie_Watches_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_User_Movie_Watches_OneArgs = {
+  object: User_Movie_Watches_Insert_Input;
+  on_conflict?: InputMaybe<User_Movie_Watches_On_Conflict>;
 };
 
 
@@ -7953,6 +8029,26 @@ export type Mutation_Root_Update_User_Movie_Statuses_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_Root_Update_User_Movie_WatchesArgs = {
+  _set?: InputMaybe<User_Movie_Watches_Set_Input>;
+  where: User_Movie_Watches_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_User_Movie_Watches_By_PkArgs = {
+  _set?: InputMaybe<User_Movie_Watches_Set_Input>;
+  pk_columns: User_Movie_Watches_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_User_Movie_Watches_ManyArgs = {
+  updates: Array<User_Movie_Watches_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_Root_Update_Users_ManyArgs = {
   updates: Array<Users_Updates>;
 };
@@ -8545,6 +8641,12 @@ export type Query_Root = {
   user_movie_statuses_aggregate: User_Movie_Statuses_Aggregate;
   /** fetch data from the table: "user_movie_statuses" using primary key columns */
   user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
+  /** An array relationship */
+  user_movie_watches: Array<User_Movie_Watches>;
+  /** An aggregate relationship */
+  user_movie_watches_aggregate: User_Movie_Watches_Aggregate;
+  /** fetch data from the table: "user_movie_watches" using primary key columns */
+  user_movie_watches_by_pk?: Maybe<User_Movie_Watches>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -9256,6 +9358,29 @@ export type Query_Root_User_Movie_Statuses_By_PkArgs = {
 };
 
 
+export type Query_Root_User_Movie_WatchesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Watches_Order_By>>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+};
+
+
+export type Query_Root_User_Movie_Watches_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Watches_Order_By>>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+};
+
+
+export type Query_Root_User_Movie_Watches_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_Root_UsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -9536,6 +9661,14 @@ export type Subscription_Root = {
   user_movie_statuses_by_pk?: Maybe<User_Movie_Statuses>;
   /** fetch data from the table in a streaming manner: "user_movie_statuses" */
   user_movie_statuses_stream: Array<User_Movie_Statuses>;
+  /** An array relationship */
+  user_movie_watches: Array<User_Movie_Watches>;
+  /** An aggregate relationship */
+  user_movie_watches_aggregate: User_Movie_Watches_Aggregate;
+  /** fetch data from the table: "user_movie_watches" using primary key columns */
+  user_movie_watches_by_pk?: Maybe<User_Movie_Watches>;
+  /** fetch data from the table in a streaming manner: "user_movie_watches" */
+  user_movie_watches_stream: Array<User_Movie_Watches>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -10454,6 +10587,36 @@ export type Subscription_Root_User_Movie_Statuses_StreamArgs = {
 };
 
 
+export type Subscription_Root_User_Movie_WatchesArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Watches_Order_By>>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+};
+
+
+export type Subscription_Root_User_Movie_Watches_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Movie_Watches_Order_By>>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+};
+
+
+export type Subscription_Root_User_Movie_Watches_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_User_Movie_Watches_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Movie_Watches_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+};
+
+
 export type Subscription_Root_UsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10952,6 +11115,202 @@ export type User_Movie_Statuses_Updates = {
   _set?: InputMaybe<User_Movie_Statuses_Set_Input>;
   /** filter the rows which have to be updated */
   where: User_Movie_Statuses_Bool_Exp;
+};
+
+/** columns and relationships of "user_movie_watches" */
+export type User_Movie_Watches = {
+  __typename?: 'user_movie_watches';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  movie_id: Scalars['uuid'];
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "user_movie_watches" */
+export type User_Movie_Watches_Aggregate = {
+  __typename?: 'user_movie_watches_aggregate';
+  aggregate?: Maybe<User_Movie_Watches_Aggregate_Fields>;
+  nodes: Array<User_Movie_Watches>;
+};
+
+export type User_Movie_Watches_Aggregate_Bool_Exp = {
+  count?: InputMaybe<User_Movie_Watches_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Movie_Watches_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "user_movie_watches" */
+export type User_Movie_Watches_Aggregate_Fields = {
+  __typename?: 'user_movie_watches_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Movie_Watches_Max_Fields>;
+  min?: Maybe<User_Movie_Watches_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_movie_watches" */
+export type User_Movie_Watches_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<User_Movie_Watches_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "user_movie_watches" */
+export type User_Movie_Watches_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Movie_Watches_Max_Order_By>;
+  min?: InputMaybe<User_Movie_Watches_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_movie_watches" */
+export type User_Movie_Watches_Arr_Rel_Insert_Input = {
+  data: Array<User_Movie_Watches_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Movie_Watches_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "user_movie_watches". All fields are combined with a logical 'AND'. */
+export type User_Movie_Watches_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Movie_Watches_Bool_Exp>>;
+  _not?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Movie_Watches_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  movie_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_movie_watches" */
+export type User_Movie_Watches_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'user_movie_watches_pkey';
+
+/** input type for inserting data into table "user_movie_watches" */
+export type User_Movie_Watches_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Movie_Watches_Max_Fields = {
+  __typename?: 'user_movie_watches_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "user_movie_watches" */
+export type User_Movie_Watches_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Movie_Watches_Min_Fields = {
+  __typename?: 'user_movie_watches_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  movie_id?: Maybe<Scalars['uuid']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_movie_watches" */
+export type User_Movie_Watches_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_movie_watches" */
+export type User_Movie_Watches_Mutation_Response = {
+  __typename?: 'user_movie_watches_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Movie_Watches>;
+};
+
+/** on_conflict condition type for table "user_movie_watches" */
+export type User_Movie_Watches_On_Conflict = {
+  constraint: User_Movie_Watches_Constraint;
+  update_columns?: Array<User_Movie_Watches_Update_Column>;
+  where?: InputMaybe<User_Movie_Watches_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_movie_watches". */
+export type User_Movie_Watches_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  movie_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_movie_watches */
+export type User_Movie_Watches_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "user_movie_watches" */
+export type User_Movie_Watches_Select_Column =
+  /** column name */
+  | 'created_at'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'movie_id'
+  /** column name */
+  | 'user_id';
+
+/** input type for updating data in table "user_movie_watches" */
+export type User_Movie_Watches_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "user_movie_watches" */
+export type User_Movie_Watches_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Movie_Watches_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Movie_Watches_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  movie_id?: InputMaybe<Scalars['uuid']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "user_movie_watches" */
+export type User_Movie_Watches_Update_Column =
+  /** column name */
+  | 'created_at'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'movie_id'
+  /** column name */
+  | 'user_id';
+
+export type User_Movie_Watches_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Movie_Watches_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Movie_Watches_Bool_Exp;
 };
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
@@ -34840,6 +35199,142 @@ export default {
               ]
             },
             {
+              "name": "user_movie_watches",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_watches",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_watches_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_watches_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_watches_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_watches_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_watches_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_watches_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "vote_average",
               "type": {
                 "kind": "SCALAR",
@@ -35656,6 +36151,22 @@ export default {
               }
             },
             {
+              "name": "user_movie_watches",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_movie_watches_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_aggregate_bool_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "vote_average",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -35995,6 +36506,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_movie_watches",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_arr_rel_insert_input",
                 "ofType": null
               }
             },
@@ -37211,6 +37730,14 @@ export default {
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "user_movie_activities_aggregate_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_movie_watches_aggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_aggregate_order_by",
                 "ofType": null
               }
             },
@@ -40065,6 +40592,48 @@ export default {
               ]
             },
             {
+              "name": "delete_user_movie_watches",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_watches_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_user_movie_watches_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "insertAuthProvider",
               "type": {
                 "kind": "OBJECT",
@@ -42043,6 +42612,70 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "user_movie_statuses_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_user_movie_watches",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "user_movie_watches_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_user_movie_watches_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_watches_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_on_conflict",
                     "ofType": null
                   }
                 }
@@ -45220,6 +45853,94 @@ export default {
                         "ofType": {
                           "kind": "INPUT_OBJECT",
                           "name": "user_movie_statuses_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_watches",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_watches_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_watches_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_watches_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_user_movie_watches_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_watches_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "user_movie_watches_updates",
                           "ofType": null
                         }
                       }
@@ -51673,6 +52394,163 @@ export default {
                     "ofType": {
                       "kind": "SCALAR",
                       "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_watches",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_watches",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_watches_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_watches_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_watches_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_watches_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_watches_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_watches_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_watches_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
                       "ofType": null
                     }
                   }
@@ -58277,6 +59155,215 @@ export default {
               ]
             },
             {
+              "name": "user_movie_watches",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_watches",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_watches_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_watches_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_watches_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "user_movie_watches_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_watches_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_watches_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_watches_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user_movie_watches_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_watches",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "user_movie_watches_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "users",
               "type": {
                 "kind": "NON_NULL",
@@ -60482,6 +61569,857 @@ export default {
                 "ofType": {
                   "kind": "INPUT_OBJECT",
                   "name": "user_movie_statuses_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_watches",
+          "fields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "timestamptz",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_watches_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_watches",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_aggregate_bool_exp",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_aggregate_bool_exp_count",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_aggregate_bool_exp_count",
+          "inputFields": [
+            {
+              "name": "arguments",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "user_movie_watches_select_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "predicate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Int_comparison_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_watches_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "user_movie_watches_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "user_movie_watches_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_aggregate_order_by",
+          "inputFields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_max_order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_min_order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_arr_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "user_movie_watches_insert_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_watches_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "timestamptz_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_watches_constraint",
+          "enumValues": [
+            {
+              "name": "user_movie_watches_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_insert_input",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_watches_max_fields",
+          "fields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_max_order_by",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_watches_min_fields",
+          "fields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_min_order_by",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "user_movie_watches_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "user_movie_watches",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "user_movie_watches_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "user_movie_watches_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_order_by",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_watches_select_column",
+          "enumValues": [
+            {
+              "name": "created_at"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "movie_id"
+            },
+            {
+              "name": "user_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_set_input",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "user_movie_watches_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "movie_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "user_movie_watches_update_column",
+          "enumValues": [
+            {
+              "name": "created_at"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "movie_id"
+            },
+            {
+              "name": "user_id"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_watches_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_watches_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "user_movie_watches_bool_exp",
                   "ofType": null
                 }
               }
@@ -65764,6 +67702,8 @@ export default {
     Movies_Movie_Spoken_LanguagesArgs: Movies_Movie_Spoken_LanguagesArgs,
     Movies_Movie_Spoken_Languages_AggregateArgs: Movies_Movie_Spoken_Languages_AggregateArgs,
     Movies_User_Movie_ActivityArgs: Movies_User_Movie_ActivityArgs,
+    Movies_User_Movie_WatchesArgs: Movies_User_Movie_WatchesArgs,
+    Movies_User_Movie_Watches_AggregateArgs: Movies_User_Movie_Watches_AggregateArgs,
     Movies_Aggregate: Movies_Aggregate,
     Movies_Aggregate_Bool_Exp: Movies_Aggregate_Bool_Exp,
     Movies_Aggregate_Bool_Exp_Count: Movies_Aggregate_Bool_Exp_Count,
@@ -65865,6 +67805,8 @@ export default {
     Mutation_Root_Delete_User_Movie_Activities_By_PkArgs: Mutation_Root_Delete_User_Movie_Activities_By_PkArgs,
     Mutation_Root_Delete_User_Movie_StatusesArgs: Mutation_Root_Delete_User_Movie_StatusesArgs,
     Mutation_Root_Delete_User_Movie_Statuses_By_PkArgs: Mutation_Root_Delete_User_Movie_Statuses_By_PkArgs,
+    Mutation_Root_Delete_User_Movie_WatchesArgs: Mutation_Root_Delete_User_Movie_WatchesArgs,
+    Mutation_Root_Delete_User_Movie_Watches_By_PkArgs: Mutation_Root_Delete_User_Movie_Watches_By_PkArgs,
     Mutation_Root_InsertAuthProviderArgs: Mutation_Root_InsertAuthProviderArgs,
     Mutation_Root_InsertAuthProviderRequestArgs: Mutation_Root_InsertAuthProviderRequestArgs,
     Mutation_Root_InsertAuthProviderRequestsArgs: Mutation_Root_InsertAuthProviderRequestsArgs,
@@ -65927,6 +67869,8 @@ export default {
     Mutation_Root_Insert_User_Movie_Activities_OneArgs: Mutation_Root_Insert_User_Movie_Activities_OneArgs,
     Mutation_Root_Insert_User_Movie_StatusesArgs: Mutation_Root_Insert_User_Movie_StatusesArgs,
     Mutation_Root_Insert_User_Movie_Statuses_OneArgs: Mutation_Root_Insert_User_Movie_Statuses_OneArgs,
+    Mutation_Root_Insert_User_Movie_WatchesArgs: Mutation_Root_Insert_User_Movie_WatchesArgs,
+    Mutation_Root_Insert_User_Movie_Watches_OneArgs: Mutation_Root_Insert_User_Movie_Watches_OneArgs,
     Mutation_Root_UpdateAuthProviderArgs: Mutation_Root_UpdateAuthProviderArgs,
     Mutation_Root_UpdateAuthProviderRequestArgs: Mutation_Root_UpdateAuthProviderRequestArgs,
     Mutation_Root_UpdateAuthProviderRequestsArgs: Mutation_Root_UpdateAuthProviderRequestsArgs,
@@ -66018,6 +67962,9 @@ export default {
     Mutation_Root_Update_User_Movie_StatusesArgs: Mutation_Root_Update_User_Movie_StatusesArgs,
     Mutation_Root_Update_User_Movie_Statuses_By_PkArgs: Mutation_Root_Update_User_Movie_Statuses_By_PkArgs,
     Mutation_Root_Update_User_Movie_Statuses_ManyArgs: Mutation_Root_Update_User_Movie_Statuses_ManyArgs,
+    Mutation_Root_Update_User_Movie_WatchesArgs: Mutation_Root_Update_User_Movie_WatchesArgs,
+    Mutation_Root_Update_User_Movie_Watches_By_PkArgs: Mutation_Root_Update_User_Movie_Watches_By_PkArgs,
+    Mutation_Root_Update_User_Movie_Watches_ManyArgs: Mutation_Root_Update_User_Movie_Watches_ManyArgs,
     Mutation_Root_Update_Users_ManyArgs: Mutation_Root_Update_Users_ManyArgs,
     Mutation_Root_Update_Virus_ManyArgs: Mutation_Root_Update_Virus_ManyArgs,
     People: People,
@@ -66152,6 +68099,9 @@ export default {
     Query_Root_User_Movie_StatusesArgs: Query_Root_User_Movie_StatusesArgs,
     Query_Root_User_Movie_Statuses_AggregateArgs: Query_Root_User_Movie_Statuses_AggregateArgs,
     Query_Root_User_Movie_Statuses_By_PkArgs: Query_Root_User_Movie_Statuses_By_PkArgs,
+    Query_Root_User_Movie_WatchesArgs: Query_Root_User_Movie_WatchesArgs,
+    Query_Root_User_Movie_Watches_AggregateArgs: Query_Root_User_Movie_Watches_AggregateArgs,
+    Query_Root_User_Movie_Watches_By_PkArgs: Query_Root_User_Movie_Watches_By_PkArgs,
     Query_Root_UsersArgs: Query_Root_UsersArgs,
     Query_Root_UsersAggregateArgs: Query_Root_UsersAggregateArgs,
     Query_Root_VirusArgs: Query_Root_VirusArgs,
@@ -66277,6 +68227,10 @@ export default {
     Subscription_Root_User_Movie_Statuses_AggregateArgs: Subscription_Root_User_Movie_Statuses_AggregateArgs,
     Subscription_Root_User_Movie_Statuses_By_PkArgs: Subscription_Root_User_Movie_Statuses_By_PkArgs,
     Subscription_Root_User_Movie_Statuses_StreamArgs: Subscription_Root_User_Movie_Statuses_StreamArgs,
+    Subscription_Root_User_Movie_WatchesArgs: Subscription_Root_User_Movie_WatchesArgs,
+    Subscription_Root_User_Movie_Watches_AggregateArgs: Subscription_Root_User_Movie_Watches_AggregateArgs,
+    Subscription_Root_User_Movie_Watches_By_PkArgs: Subscription_Root_User_Movie_Watches_By_PkArgs,
+    Subscription_Root_User_Movie_Watches_StreamArgs: Subscription_Root_User_Movie_Watches_StreamArgs,
     Subscription_Root_UsersArgs: Subscription_Root_UsersArgs,
     Subscription_Root_UsersAggregateArgs: Subscription_Root_UsersAggregateArgs,
     Subscription_Root_Users_StreamArgs: Subscription_Root_Users_StreamArgs,
@@ -66338,6 +68292,28 @@ export default {
     User_Movie_Statuses_Stream_Cursor_Input: User_Movie_Statuses_Stream_Cursor_Input,
     User_Movie_Statuses_Stream_Cursor_Value_Input: User_Movie_Statuses_Stream_Cursor_Value_Input,
     User_Movie_Statuses_Updates: User_Movie_Statuses_Updates,
+    User_Movie_Watches: User_Movie_Watches,
+    User_Movie_Watches_Aggregate: User_Movie_Watches_Aggregate,
+    User_Movie_Watches_Aggregate_Bool_Exp: User_Movie_Watches_Aggregate_Bool_Exp,
+    User_Movie_Watches_Aggregate_Bool_Exp_Count: User_Movie_Watches_Aggregate_Bool_Exp_Count,
+    User_Movie_Watches_Aggregate_Fields: User_Movie_Watches_Aggregate_Fields,
+    User_Movie_Watches_Aggregate_Fields_CountArgs: User_Movie_Watches_Aggregate_Fields_CountArgs,
+    User_Movie_Watches_Aggregate_Order_By: User_Movie_Watches_Aggregate_Order_By,
+    User_Movie_Watches_Arr_Rel_Insert_Input: User_Movie_Watches_Arr_Rel_Insert_Input,
+    User_Movie_Watches_Bool_Exp: User_Movie_Watches_Bool_Exp,
+    User_Movie_Watches_Insert_Input: User_Movie_Watches_Insert_Input,
+    User_Movie_Watches_Max_Fields: User_Movie_Watches_Max_Fields,
+    User_Movie_Watches_Max_Order_By: User_Movie_Watches_Max_Order_By,
+    User_Movie_Watches_Min_Fields: User_Movie_Watches_Min_Fields,
+    User_Movie_Watches_Min_Order_By: User_Movie_Watches_Min_Order_By,
+    User_Movie_Watches_Mutation_Response: User_Movie_Watches_Mutation_Response,
+    User_Movie_Watches_On_Conflict: User_Movie_Watches_On_Conflict,
+    User_Movie_Watches_Order_By: User_Movie_Watches_Order_By,
+    User_Movie_Watches_Pk_Columns_Input: User_Movie_Watches_Pk_Columns_Input,
+    User_Movie_Watches_Set_Input: User_Movie_Watches_Set_Input,
+    User_Movie_Watches_Stream_Cursor_Input: User_Movie_Watches_Stream_Cursor_Input,
+    User_Movie_Watches_Stream_Cursor_Value_Input: User_Movie_Watches_Stream_Cursor_Value_Input,
+    User_Movie_Watches_Updates: User_Movie_Watches_Updates,
     Users: Users,
     Users_MetadataArgs: Users_MetadataArgs,
     Users_RefreshTokensArgs: Users_RefreshTokensArgs,
@@ -66411,6 +68387,16 @@ export const CreateMovieDocument = gql`
   }
 }
     `;
+export const InsertUserMovieWatchesDocument = gql`
+    mutation InsertUserMovieWatches($object: user_movie_watches_insert_input!, $on_conflict: user_movie_watches_on_conflict) {
+  insert_user_movie_watches_one(object: $object, on_conflict: $on_conflict) {
+    id
+    movie_id
+    user_id
+    created_at
+  }
+}
+    `;
 export const UpsertUserMovieActivityDocument = gql`
     mutation UpsertUserMovieActivity($object: user_movie_activities_insert_input!, $on_conflict: user_movie_activities_on_conflict) {
   insert_user_movie_activities_one(object: $object, on_conflict: $on_conflict) {
@@ -66470,6 +68456,11 @@ export const MovieDocument = gql`
       rating
       status
     }
+    user_movie_watches_aggregate(where: {movie_id: {_eq: $id}}) {
+      aggregate {
+        count
+      }
+    }
   }
 }
     `;
@@ -66511,6 +68502,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
+    },
+    InsertUserMovieWatches(variables: InsertUserMovieWatchesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<InsertUserMovieWatchesMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertUserMovieWatchesMutation>({ document: InsertUserMovieWatchesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'InsertUserMovieWatches', 'mutation', variables);
     },
     UpsertUserMovieActivity(variables: UpsertUserMovieActivityMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpsertUserMovieActivityMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpsertUserMovieActivityMutation>({ document: UpsertUserMovieActivityDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpsertUserMovieActivity', 'mutation', variables);

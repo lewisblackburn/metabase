@@ -21,5 +21,10 @@ query Movie($id: uuid!) {
             rating
             status
         }
+        user_movie_watches_aggregate(where: { movie_id: { _eq: $id } }) {
+            aggregate {
+                count
+            }
+        }
     }
 }

@@ -5,8 +5,6 @@ export const Users = async () => {
     const nhost = await createNhostClient()
     const users = await nhost.graphql.request<UsersQuery, UsersQueryVariables>(UsersDocument)
 
-    console.log(users)
-
     return (
         <div>
             <h1>Users</h1>
