@@ -1,5 +1,6 @@
 import { AddToListButton } from '@/components/buttons/add-to-list-button'
 import { PlayTrailerButton } from '@/components/buttons/play-trailer-button'
+import { ReWatchedButton } from '@/components/buttons/re-watched-button'
 import StatusDialog from '@/components/status-dailog'
 import { MovieQuery } from '@/generated/graphql'
 
@@ -15,6 +16,7 @@ export function MovieActions({ movie }: MovieActionsProps) {
             <RatingDialog movie={movie} />
             <AddToListButton />
             <StatusDialog movie={movie} />
+            <ReWatchedButton movie={movie} />
             <PlayTrailerButton />
         </div>
     )

@@ -41,15 +41,11 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                 status,
                 rating: value.rating,
                 comment: value.comment,
+            }).catch(error => {
+                toast.error('Failed to update rating', {
+                    description: error.message,
+                })
             })
-                .then(() => {
-                    toast.success('Rating updated successfully')
-                })
-                .catch(error => {
-                    toast.error('Failed to update rating', {
-                        description: error.message,
-                    })
-                })
             onOpenChange(false)
         },
     })
@@ -118,15 +114,11 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                                         status,
                                         rating: undefined,
                                         comment: undefined,
+                                    }).catch(error => {
+                                        toast.error('Failed to remove rating', {
+                                            description: error.message,
+                                        })
                                     })
-                                        .then(() => {
-                                            toast.success('Rating removed successfully')
-                                        })
-                                        .catch(error => {
-                                            toast.error('Failed to remove rating', {
-                                                description: error.message,
-                                            })
-                                        })
                                     onOpenChange(false)
                                 }}
                             >

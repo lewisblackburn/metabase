@@ -49,6 +49,45 @@ html {
     /* custom */
     --navbar-height: 4rem;
     --aspect-poster: 2 / 3;
+
+    /* custom animations */
+    --animate-punchy-spin: punchy-spin 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    --animate-slide-in-left: slide-in-left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) both;
+    --animate-slide-out-left: slide-out-left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) both;
+
+    @keyframes punchy-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        80% {
+            transform: rotate(-340deg);
+        } /* Overshoot */
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
+
+    @keyframes slide-in-left {
+        0% {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slide-out-left {
+        0% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+    }
 }
 
 :root {

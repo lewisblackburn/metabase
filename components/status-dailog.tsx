@@ -38,15 +38,11 @@ function StatusDialog({ movie }: StatusDialogProps) {
                 status: value.status,
                 comment,
                 rating,
+            }).catch(error => {
+                toast.error('Failed to update status', {
+                    description: error.message,
+                })
             })
-                .then(() => {
-                    toast.success('Status updated successfully')
-                })
-                .catch(error => {
-                    toast.error('Failed to update status', {
-                        description: error.message,
-                    })
-                })
         },
     })
 
