@@ -90,7 +90,6 @@ const tabs = [
 export default function MovieTabs() {
     return (
         <Tabs defaultValue="reviews" className="gap-1">
-            {/* // ! TODO: The width of the scroll area is not working as expected */}
             <ScrollArea>
                 <TabsList className="mb-3">
                     {tabs.map(({ icon: Icon, name, value }) => (
