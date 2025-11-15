@@ -1,6 +1,5 @@
 import 'dotenv/config'
 
-import graphql from '@/generated/graphql'
 import { logger } from '@/lib/helpers/logger'
 
 import { enumConfigs } from './enum-config'
