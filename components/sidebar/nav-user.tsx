@@ -26,7 +26,7 @@ import { useAuthStore } from '@/lib/stores/auth.store'
 
 export function NavUser() {
     const router = useRouter()
-    const { isMobile } = useSidebar()
+    const { isTablet } = useSidebar()
     const { user, isAuthenticated } = useAuthStore(s => s)
 
     const handleLogout = async () => {
@@ -74,7 +74,7 @@ export function NavUser() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                        side={isMobile ? 'bottom' : 'right'}
+                        side={isTablet ? 'bottom' : 'right'}
                         align="end"
                         sideOffset={4}
                     >
