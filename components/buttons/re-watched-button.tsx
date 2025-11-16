@@ -1,8 +1,6 @@
 import { RotateCcw } from 'lucide-react'
 import { useState } from 'react'
 
-import { MovieQuery } from '@/generated/graphql'
-import { UserMovieStatus } from '@/lib/enums'
 import { cn } from '@/lib/utils'
 
 import { Badge } from '../ui/badge'

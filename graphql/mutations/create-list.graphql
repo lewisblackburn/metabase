@@ -1,0 +1,6 @@
+mutation CreateList($object: lists_insert_input!, $on_conflict: lists_on_conflict) {
+    insert_lists_one(object: $object, on_conflict: $on_conflict) {
+        id
+        title
+    }
+}

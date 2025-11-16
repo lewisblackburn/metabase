@@ -1,21 +1,18 @@
-import { MovieDocument, MovieQuery, MovieQueryVariables } from '@/generated/graphql'
-import { createNhostClient } from '@/lib/nhost/server'
+import { getUserLists } from '@/lib/actions/lists/get-user-lists'
+import { getMovie } from '@/lib/actions/movies/get-movie'
 
 import Movie from './components/movie'
 import { MovieBreadcrumbs } from './components/movie-breadcrumbs'
 
 export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
-    const nhost = await createNhostClient()
-    const {
-        body: { data },
-    } = await nhost.graphql.request<MovieQuery, MovieQueryVariables>(MovieDocument, { id })
-    const movie = data?.movies_by_pk
+
+    const [movie, userLists] = await Promise.all([getMovie({ id }), getUserLists()])
 
     return (
         <>
             <MovieBreadcrumbs movieTitle={movie?.title ?? 'Unknown Movie'} />
-            <Movie movie={movie} />
+            <Movie movie={movie} lists={userLists} />
         </>
     )
 }

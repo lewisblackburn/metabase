@@ -42,5 +42,6 @@ export function getSiteStatusIndicator(services: boolean[]): SiteStatusIndicator
 
 /**
  * Site status revalidation time in seconds (5 minutes)
+ * @deprecated Use CACHE_TIMES.SITE_STATUS from lib/utils/cache instead
  */
 export const SITE_STATUS_REVALIDATE_TIME = 300

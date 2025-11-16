@@ -1,0 +1,6 @@
+mutation InsertListItem($object: list_items_insert_input!, $on_conflict: list_items_on_conflict) {
+    insert_list_items_one(object: $object, on_conflict: $on_conflict) {
+        id
+        list_id
+    }
+}

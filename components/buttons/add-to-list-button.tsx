@@ -1,9 +1,9 @@
 'use client'
 
-import { CheckIcon, ChevronsUpDownIcon, PlusIcon } from 'lucide-react'
-import { useId, useState } from 'react'
+import { ChevronsUpDownIcon, PlusIcon } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
     Command,
@@ -15,34 +15,43 @@ import {
     CommandSeparator,
 } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { ListsQuery, MovieQuery } from '@/generated/graphql'
+import { insertListItem } from '@/lib/actions/lists/insert-list-item'
+import { MediaType } from '@/lib/enums'
 
-const universities = [
-    {
-        value: 'harvard',
-        label: 'Harvard University',
-    },
-    {
-        value: 'cambridge',
-        label: 'University of Cambridge',
-    },
-    {
-        value: 'stanford',
-        label: 'Stanford University',
-    },
-    {
-        value: 'texas',
-        label: 'University of Texas',
-    },
-]
-
-export function AddToListButton() {
+export function AddToListButton({
+    movie,
+    lists = [],
+}: {
+    movie: MovieQuery['movies_by_pk']
+    lists: ListsQuery['lists']
+}) {
     const [open, setOpen] = useState<boolean>(false)
-    const [selectedValues, setSelectedValues] = useState<string[]>([])
 
-    const toggleSelection = (value: string) => {
-        setSelectedValues(prev =>
-            prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value],
-        )
+    const addToList = async (listId: string) => {
+        if (!movie) return
+
+        await insertListItem({
+            object: {
+                media_id: movie.id,
+                media_type: MediaType.MOVIE,
+                title: movie.title,
+                image: movie.poster_id,
+                list_id: listId,
+            },
+            on_conflict: {
+                constraint: 'list_items_pkey',
+                update_columns: [],
+            },
+        })
+            .then(() => {
+                toast.success('Added to list')
+            })
+            .catch(error => {
+                toast.error('Failed to add to list', {
+                    description: error.message,
+                })
+            })
     }
 
     return (
@@ -56,11 +65,7 @@ export function AddToListButton() {
                     size="sm"
                     className="text-xs max-w-40 bg-background hover:bg-background border-input w-full justify-between px-3 font-normal outline-offset-0 outline-none focus-visible:outline-[3px] h-auto min-h-8"
                 >
-                    {selectedValues.length > 0 ? (
-                        <span>Added to {selectedValues.length} lists</span>
-                    ) : (
-                        <span className="text-muted-foreground">Add to list</span>
-                    )}
+                    <span className="text-muted-foreground">Add to list</span>
                     <ChevronsUpDownIcon
                         size={16}
                         className="text-muted-foreground/80 shrink-0"
@@ -77,16 +82,13 @@ export function AddToListButton() {
                     <CommandList>
                         <CommandEmpty>No list found.</CommandEmpty>
                         <CommandGroup>
-                            {universities.map(university => (
+                            {lists.map(list => (
                                 <CommandItem
-                                    key={university.value}
-                                    value={university.value}
-                                    onSelect={() => toggleSelection(university.value)}
+                                    key={list.id}
+                                    value={list.title}
+                                    onSelect={() => addToList(list.id)}
                                 >
-                                    <span className="truncate">{university.label}</span>
-                                    {selectedValues.includes(university.value) && (
-                                        <CheckIcon size={16} className="ml-auto" />
-                                    )}
+                                    <span className="truncate">{list.title}</span>
                                 </CommandItem>
                             ))}
                         </CommandGroup>

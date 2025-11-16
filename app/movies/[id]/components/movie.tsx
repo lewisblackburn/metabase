@@ -2,7 +2,7 @@
 
 import { formatDate } from 'date-fns'
 
-import { MovieQuery } from '@/generated/graphql'
+import { ListsQuery, MovieQuery } from '@/generated/graphql'
 
 import MovieBackdrop from '../../components/movie-backdrop/movie-backdrop'
 import MoviePoster from '../../components/movie-poster/movie-poster'
@@ -10,7 +10,12 @@ import { MovieActions } from './movie-actions'
 import { MovieMetadata } from './movie-metadata'
 import MovieTabs from './movie-tabs'
 
-export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) {
+interface MovieProps {
+    movie: MovieQuery['movies_by_pk']
+    lists: ListsQuery['lists']
+}
+
+export default function Movie({ movie, lists }: MovieProps) {
     if (!movie) {
         return null
     }
@@ -55,7 +60,7 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
 
                         {/* Action Buttons - Desktop Only */}
                         <div className="hidden md:block">
-                            <MovieActions movie={movie} />
+                            <MovieActions movie={movie} lists={lists} />
                         </div>
                     </article>
                 </div>
@@ -63,7 +68,7 @@ export default function Movie({ movie }: { movie: MovieQuery['movies_by_pk'] }) 
                 {/* Mobile Content */}
                 <div className="space-y-3 md:hidden">
                     {/* Action Buttons - Mobile */}
-                    <MovieActions movie={movie} />
+                    <MovieActions movie={movie} lists={lists} />
 
                     {/* Overview - Mobile */}
                     <p className="text-sm leading-6 text-muted-foreground">{movie.overview}</p>

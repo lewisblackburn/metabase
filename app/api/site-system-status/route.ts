@@ -4,7 +4,7 @@ import { HealthDocument, HealthQuery, HealthQueryVariables } from '@/generated/g
 import { logger } from '@/lib/helpers/logger'
 import { createNhostClient } from '@/lib/nhost/server'
 import type { SiteServiceName, SiteSystemStatus } from '@/lib/types/site-system-status'
-import { SITE_STATUS_REVALIDATE_TIME } from '@/lib/utils/status'
+import { CACHE_TIMES } from '@/lib/utils/cache'
 
 /**
  * GET /api/site-status
@@ -43,7 +43,7 @@ export async function GET() {
 
         return NextResponse.json(response, {
             headers: {
-                'Cache-Control': `public, s-maxage=${SITE_STATUS_REVALIDATE_TIME}, stale-while-revalidate`,
+                'Cache-Control': `public, s-maxage=${CACHE_TIMES.SITE_STATUS}, stale-while-revalidate`,
             },
         })
     } catch (error) {

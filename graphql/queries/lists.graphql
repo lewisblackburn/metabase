@@ -1,0 +1,18 @@
+query Lists(
+    $where: lists_bool_exp
+    $distinct: [lists_select_column!]
+    $limit: Int
+    $offset: Int
+    $order_by: [lists_order_by!]
+) {
+    lists(
+        where: $where
+        distinct_on: $distinct
+        limit: $limit
+        offset: $offset
+        order_by: $order_by
+    ) {
+        id
+        title
+    }
+}

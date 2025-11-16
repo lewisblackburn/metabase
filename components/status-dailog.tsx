@@ -18,7 +18,7 @@ interface StatusDialogProps {
     movie: MovieQuery['movies_by_pk']
 }
 
-function StatusDialog({ movie }: StatusDialogProps) {
+export default function StatusDialog({ movie }: StatusDialogProps) {
     const [open, setOpen] = useState(false)
 
     const userMovieActivity = movie?.user_movie_activity?.[0]
@@ -129,5 +129,3 @@ function StatusDialog({ movie }: StatusDialogProps) {
         </form>
     )
 }
-
-export default StatusDialog

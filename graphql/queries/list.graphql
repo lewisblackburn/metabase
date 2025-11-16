@@ -1,0 +1,14 @@
+query List($id: uuid!) {
+    lists_by_pk(id: $id) {
+        id
+        title
+        list_items {
+            id
+            title
+            description
+            image
+            media_id
+            media_type
+        }
+    }
+}
