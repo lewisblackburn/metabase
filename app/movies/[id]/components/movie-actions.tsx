@@ -4,7 +4,6 @@ import { ReWatchedButton } from '@/components/buttons/re-watched-button'
 import StatusDialog from '@/components/status-dailog'
 import { ListsQuery, MovieQuery } from '@/generated/graphql'
 import { insertUserMovieWatches } from '@/lib/actions/movies/insert-user-movie-watches'
-import { UserMovieStatus } from '@/lib/enums'
 
 import RatingDialog from '../../../../components/rating-dialog/rating-dialog'
 
@@ -15,7 +14,7 @@ interface MovieActionsProps {
 
 export function MovieActions({ movie, lists }: MovieActionsProps) {
     const timesWatched = movie?.user_movie_watches_aggregate?.aggregate?.count ?? 1
-    const showButton = movie?.user_movie_activity?.[0]?.status === UserMovieStatus.WATCHED
+    const showButton = movie?.user_movie_activity?.[0]?.status === 'WATCHED'
 
     return (
         <div className="flex flex-wrap items-center gap-1">

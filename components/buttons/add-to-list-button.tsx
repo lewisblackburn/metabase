@@ -17,7 +17,6 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ListsQuery, MovieQuery } from '@/generated/graphql'
 import { insertListItem } from '@/lib/actions/lists/insert-list-item'
-import { MediaType } from '@/lib/enums'
 
 export function AddToListButton({
     movie,
@@ -34,7 +33,7 @@ export function AddToListButton({
         await insertListItem({
             object: {
                 media_id: movie.id,
-                media_type: MediaType.MOVIE,
+                media_type: 'MOVIE',
                 title: movie.title,
                 image: movie.poster_id,
                 list_id: listId,

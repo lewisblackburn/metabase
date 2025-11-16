@@ -13,9 +13,8 @@
         "test:ui": "vitest --ui",
         "test:coverage": "vitest run --coverage",
         "typecheck": "tsc --noEmit ",
-        "generate": "pnpm run generate:graphql && pnpm run generate:enums",
-        "generate:graphql": "graphql-codegen --require dotenv/config --config codegen.yml",
-        "generate:enums": "tsx scripts/generate-enums.ts && pnpm run format"
+        "generate": "pnpm run generate:graphql",
+        "generate:graphql": "graphql-codegen --require dotenv/config --config codegen.yml"
     },
     "lint-staged": {
         "*.{js,ts,jsx,tsx}": "eslint --fix"

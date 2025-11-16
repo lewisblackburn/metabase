@@ -1,7 +1,6 @@
 'use server'
 
-import { Entity_Types_Enum } from '@/generated/graphql'
-import { Action, EntityType } from '@/lib/enums'
+import { Actions_Enum, Entity_Types_Enum } from '@/generated/graphql'
 
 import { insertAuditLog } from './insert-audit-log'
 
@@ -22,7 +21,7 @@ export async function withAudit<TResult>({
     getMetadata,
 }: {
     entityType: Entity_Types_Enum
-    action: Action
+    action: Actions_Enum
     operation: () => Promise<TResult>
     getEntityId: (result: TResult) => string | undefined | null
     getMetadata?: (result: TResult) => Record<string, unknown>

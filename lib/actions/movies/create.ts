@@ -5,7 +5,7 @@ import {
     CreateMovieMutation,
     CreateMovieMutationVariables,
 } from '@/generated/graphql'
-import { Action, EntityType } from '@/lib/enums'
+import { Action, EntityType } from '@/lib/helpers/graphql-enums'
 import { createNhostClient } from '@/lib/nhost/server'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 

@@ -8,9 +8,8 @@ import LoadingButton from '@/components/loading-button'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Textarea } from '@/components/ui/textarea'
-import { MovieQuery } from '@/generated/graphql'
+import { MovieQuery, User_Movie_Statuses_Enum } from '@/generated/graphql'
 import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
-import { UserMovieStatus } from '@/lib/enums'
 import { ratingSchema } from '@/lib/validations/ratings/rating.schema'
 
 import { RatingSelector } from './rating-selector'
@@ -23,7 +22,7 @@ interface RatingFormProps {
 export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
     const userMovieActivity = movie?.user_movie_activity?.[0]
     const isRated = userMovieActivity?.rating && userMovieActivity.rating > 0
-    const status = userMovieActivity?.status as UserMovieStatus
+    const status = userMovieActivity?.status as User_Movie_Statuses_Enum
     const rating = userMovieActivity?.rating ?? 0
     const comment = userMovieActivity?.comment
 

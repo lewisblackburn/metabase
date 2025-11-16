@@ -3282,8 +3282,9 @@ export type Entity_Types_Constraint =
   | 'entity_types_pkey';
 
 export type Entity_Types_Enum =
+  | 'ACTIVITY'
   | 'MOVIE'
-  | 'REVIEW';
+  | 'PERSON';
 
 /** Boolean expression to compare columns of type "entity_types_enum". All fields are combined with logical 'AND'. */
 export type Entity_Types_Enum_Comparison_Exp = {
@@ -27173,10 +27174,13 @@ export default {
           "name": "entity_types_enum",
           "enumValues": [
             {
+              "name": "ACTIVITY"
+            },
+            {
               "name": "MOVIE"
             },
             {
-              "name": "REVIEW"
+              "name": "PERSON"
             }
           ]
         },
