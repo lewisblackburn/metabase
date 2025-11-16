@@ -53,7 +53,7 @@ export type UpsertUserMovieActivityMutationVariables = Exact<{
 }>;
 
 
-export type UpsertUserMovieActivityMutation = { __typename?: 'mutation_root', insert_user_movie_activities_one?: { __typename?: 'user_movie_activities', rating?: number | null, status?: User_Movie_Statuses_Enum | null, comment?: string | null } | null };
+export type UpsertUserMovieActivityMutation = { __typename?: 'mutation_root', insert_user_movie_activities_one?: { __typename?: 'user_movie_activities', movie_id: any, rating?: number | null, status?: User_Movie_Statuses_Enum | null, comment?: string | null } | null };
 
 export type ActionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -74193,6 +74193,7 @@ export const InsertUserMovieWatchesDocument = gql`
 export const UpsertUserMovieActivityDocument = gql`
     mutation UpsertUserMovieActivity($object: user_movie_activities_insert_input!, $on_conflict: user_movie_activities_on_conflict) {
   insert_user_movie_activities_one(object: $object, on_conflict: $on_conflict) {
+    movie_id
     rating
     status
     comment

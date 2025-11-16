@@ -3,6 +3,7 @@ mutation UpsertUserMovieActivity(
     $on_conflict: user_movie_activities_on_conflict
 ) {
     insert_user_movie_activities_one(object: $object, on_conflict: $on_conflict) {
+        movie_id
         rating
         status
         comment
