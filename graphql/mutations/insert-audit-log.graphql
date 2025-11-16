@@ -1,0 +1,5 @@
+mutation InsertAuditLog($object: audit_logs_insert_input!, $on_conflict: audit_logs_on_conflict) {
+    insert_audit_logs_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}

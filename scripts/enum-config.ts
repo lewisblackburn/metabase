@@ -1,7 +1,9 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core'
 
 import {
+    ActionsDocument,
     CreditTypesDocument,
+    EntityTypesDocument,
     GendersDocument,
     MediaTypesDocument,
     UserMovieStatusesDocument,
@@ -83,6 +85,20 @@ export const enumConfigs: EnumConfig[] = [
         description: 'Available media types',
         document: MediaTypesDocument,
         dataPath: 'media_types',
+        valueField: 'name',
+    },
+    {
+        typeName: 'EntityType',
+        description: 'Available entity types',
+        document: EntityTypesDocument,
+        dataPath: 'entity_types',
+        valueField: 'name',
+    },
+    {
+        typeName: 'Action',
+        description: 'Available actions',
+        document: ActionsDocument,
+        dataPath: 'actions',
         valueField: 'name',
     },
 ]
