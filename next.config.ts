@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: storageHostname,
             },
+            {
+                protocol: 'https',
+                hostname: 'www.gravatar.com',
+            },
         ],
     },
 }

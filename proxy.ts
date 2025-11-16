@@ -11,7 +11,7 @@ const unAuthenticatedRoutes = ['/login', '/register']
 const publicRoutes = ['/', '/movies', '/movies/:id']
 
 // Define protected routes (require authentication)
-const protectedRoutes = ['/movies/:id/edit']
+const protectedRoutes = ['/movies/:id/edit', '/profile']
 
 export async function proxy(request: NextRequest) {
     const response = NextResponse.next()

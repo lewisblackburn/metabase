@@ -4,11 +4,11 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { env } from '@/env'
 import type { SiteSystemStatus } from '@/lib/types/site-system-status'
-import { SITE_STATUS_REVALIDATE_TIME } from '@/lib/utils/status'
+import { CACHE_TIMES } from '@/lib/utils/cache'
 
 async function getSiteSystemStatus(): Promise<SiteSystemStatus> {
     const res = await fetch(`${env.NEXT_PUBLIC_BASE_URL}/api/site-system-status`, {
-        next: { revalidate: SITE_STATUS_REVALIDATE_TIME },
+        next: { revalidate: CACHE_TIMES.SITE_STATUS },
     })
 
     if (!res.ok) {
