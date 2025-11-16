@@ -60,6 +60,17 @@ export type ActionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ActionsQuery = { __typename?: 'query_root', actions: Array<{ __typename?: 'actions', name: string }> };
 
+export type AuditLogsQueryVariables = Exact<{
+  where?: InputMaybe<Audit_Logs_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column> | Audit_Logs_Select_Column>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Audit_Logs_Order_By> | Audit_Logs_Order_By>;
+}>;
+
+
+export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: Actions_Enum, entity_type: Entity_Types_Enum, entity_id: any, metadata: any, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }> };
+
 export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -384,6 +395,8 @@ export type Audit_Logs = {
   entity_type: Entity_Types_Enum;
   id: Scalars['uuid'];
   metadata: Scalars['jsonb'];
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
 };
 
@@ -431,6 +444,7 @@ export type Audit_Logs_Bool_Exp = {
   entity_type?: InputMaybe<Entity_Types_Enum_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   metadata?: InputMaybe<Jsonb_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
@@ -462,6 +476,7 @@ export type Audit_Logs_Insert_Input = {
   entity_type?: InputMaybe<Entity_Types_Enum>;
   id?: InputMaybe<Scalars['uuid']>;
   metadata?: InputMaybe<Scalars['jsonb']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -507,6 +522,7 @@ export type Audit_Logs_Order_By = {
   entity_type?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   metadata?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -14557,6 +14573,18 @@ export default {
               ]
             },
             {
+              "name": "user",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "users",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
               "name": "user_id",
               "type": {
                 "kind": "NON_NULL",
@@ -14768,6 +14796,14 @@ export default {
               }
             },
             {
+              "name": "user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "users_bool_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "user_id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -14883,6 +14919,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "jsonb",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "users_obj_rel_insert_input",
                 "ofType": null
               }
             },
@@ -15111,6 +15155,14 @@ export default {
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "users_order_by",
                 "ofType": null
               }
             },
@@ -74207,6 +74259,28 @@ export const ActionsDocument = gql`
   }
 }
     `;
+export const AuditLogsDocument = gql`
+    query AuditLogs($where: audit_logs_bool_exp, $distinct_on: [audit_logs_select_column!], $limit: Int, $offset: Int, $order_by: [audit_logs_order_by!]) {
+  audit_logs(
+    where: $where
+    distinct_on: $distinct_on
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+  ) {
+    id
+    action
+    entity_type
+    entity_id
+    metadata
+    user {
+      id
+      displayName
+      avatarUrl
+    }
+  }
+}
+    `;
 export const CreditTypesDocument = gql`
     query CreditTypes {
   credit_types {
@@ -74358,6 +74432,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Actions(variables?: ActionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ActionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ActionsQuery>({ document: ActionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Actions', 'query', variables);
+    },
+    AuditLogs(variables?: AuditLogsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AuditLogsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AuditLogsQuery>({ document: AuditLogsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'AuditLogs', 'query', variables);
     },
     CreditTypes(variables?: CreditTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreditTypesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreditTypesQuery>({ document: CreditTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreditTypes', 'query', variables);

@@ -28,7 +28,7 @@ export async function upsertUserMovieActivity({
 
     const result = await withAudit({
         entityType: EntityType.ACTIVITY,
-        action: Action.UPDATE,
+        action: Action.INSERT,
         operation: async () => {
             return nhost.graphql
                 .request<UpsertUserMovieActivityMutation>(UpsertUserMovieActivityDocument, {

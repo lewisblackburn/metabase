@@ -18,7 +18,7 @@ import { createEnum } from './enum-helpers'
  * Action enum for audit logging
  * Values: DELETE, INSERT, SELECT, UPDATE
  */
-export const Action = createEnum<Actions_Enum>(['DELETE', 'INSERT', 'SELECT', 'UPDATE'] as const)
+export const Action = createEnum<Actions_Enum>(['INSERT', 'SELECT', 'UPDATE', 'DELETE'] as const)
 
 /**
  * Entity type enum for audit logging

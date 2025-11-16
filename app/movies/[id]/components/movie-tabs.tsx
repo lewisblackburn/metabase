@@ -6,12 +6,16 @@ import {
     UsersIcon,
     VideoIcon,
 } from 'lucide-react'
+import { ReactNode } from 'react'
 
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { ScrollBar } from '@/components/ui/scroll-area'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import ScrollableTabs, { Tab } from '@/components/scrollable-tabs'
+import { TabsContent } from '@/components/ui/tabs'
 
-const tabs = [
+interface MovieTab extends Tab {
+    content: ReactNode
+}
+
+const tabs: MovieTab[] = [
     {
         name: 'Reviews',
         value: 'reviews',
@@ -89,28 +93,12 @@ const tabs = [
 
 export default function MovieTabs() {
     return (
-        <Tabs defaultValue="reviews" className="gap-1">
-            <ScrollArea>
-                <TabsList className="mb-3">
-                    {tabs.map(({ icon: Icon, name, value }) => (
-                        <TabsTrigger
-                            key={value}
-                            value={value}
-                            className="flex items-center gap-1 px-2.5 sm:px-3"
-                        >
-                            <Icon />
-                            {name}
-                        </TabsTrigger>
-                    ))}
-                </TabsList>
-                <ScrollBar orientation="horizontal" />
-            </ScrollArea>
-
+        <ScrollableTabs tabs={tabs} defaultValue="reviews">
             {tabs.map(tab => (
                 <TabsContent key={tab.value} value={tab.value}>
                     <p className="text-muted-foreground text-sm">{tab.content}</p>
                 </TabsContent>
             ))}
-        </Tabs>
+        </ScrollableTabs>
     )
 }

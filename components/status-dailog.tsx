@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { MovieQuery, User_Movie_Statuses_Enum } from '@/generated/graphql'
 import { insertUserMovieWatches } from '@/lib/actions/movies/insert-user-movie-watches'
 import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
+import { UserMovieStatus } from '@/lib/helpers/graphql-enums'
 import { userMovieStatusSchema } from '@/lib/validations/movies/user-movie-status.schema'
 
 import { Field, FieldError, FieldGroup } from './ui/field'
@@ -85,13 +86,13 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                                         <SelectValue placeholder="Update status" />
                                     </SelectTrigger>
                                     <SelectContent className="[&_*[role=option]>span>svg]:text-muted-foreground/80 [&_*[role=option]]:pr-8 [&_*[role=option]]:pl-2 [&_*[role=option]>span]:right-2 [&_*[role=option]>span]:left-auto [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2 [&_*[role=option]>span>svg]:shrink-0">
-                                        <SelectItem value="WATCHED">
+                                        <SelectItem value={UserMovieStatus.WATCHED}>
                                             <span className="flex items-center gap-2">
                                                 <CheckCircleIcon className="size-4 text-green-400" />
                                                 <span className="truncate capitalize">watched</span>
                                             </span>
                                         </SelectItem>
-                                        <SelectItem value="WATCHING">
+                                        <SelectItem value={UserMovieStatus.WATCHING}>
                                             <span className="flex items-center gap-2">
                                                 <Play className="size-4 text-blue-400" />
                                                 <span className="truncate capitalize">
@@ -99,7 +100,7 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                                                 </span>
                                             </span>
                                         </SelectItem>
-                                        <SelectItem value="WATCHLIST">
+                                        <SelectItem value={UserMovieStatus.WATCHLIST}>
                                             <span className="flex items-center gap-2">
                                                 <Bookmark className="size-4 text-orange-400" />
                                                 <span className="truncate capitalize">
@@ -107,7 +108,7 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                                                 </span>
                                             </span>
                                         </SelectItem>
-                                        <SelectItem value="DROPPED">
+                                        <SelectItem value={UserMovieStatus.DROPPED}>
                                             <span className="flex items-center gap-2">
                                                 <XCircle className="size-4 text-red-400" />
                                                 <span className="truncate capitalize">dropped</span>

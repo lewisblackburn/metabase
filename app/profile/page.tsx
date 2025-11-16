@@ -1,18 +1,19 @@
-'use client'
-
 import { User } from '@nhost/nhost-js/auth'
 import Image from 'next/image'
 
 import { Button } from '@/components/ui/button'
-import { useAuthStore } from '@/lib/stores/auth.store'
+import { createNhostClient } from '@/lib/nhost/server'
 
-import UserTabs from './components/user-tabs'
+import UserTabsContainer from './components/user-tabs-container'
 
-export default function ProfilePage() {
-    const { user } = useAuthStore()
-    const backgroundUrl = null
+export default async function ProfilePage() {
+    const nhost = await createNhostClient()
+    const session = nhost.getUserSession()
+    const user = session?.user
 
     if (!user) return null
+
+    const backgroundUrl = null
 
     return (
         <>
@@ -64,7 +65,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Tabs */}
-                <UserTabs />
+                <UserTabsContainer />
             </section>
         </>
     )
