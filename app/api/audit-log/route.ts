@@ -38,6 +38,7 @@ export async function POST(request: Request) {
         object: auditLogEntry,
         on_conflict: {
             constraint: 'audit_logs_pkey',
+            update_columns: [],
         },
     }).catch(error => {
         // Don't fail the webhook if audit log insertion fails

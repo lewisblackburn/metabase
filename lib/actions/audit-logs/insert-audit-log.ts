@@ -5,11 +5,11 @@ import {
     InsertAuditLogMutation,
     InsertAuditLogMutationVariables,
 } from '@/generated/graphql'
-import { createNhostClient } from '@/lib/nhost/server'
+import { createAdminNhostClient } from '@/lib/nhost/admin-server'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 export async function insertAuditLog(variables: InsertAuditLogMutationVariables) {
-    const nhost = await createNhostClient()
+    const nhost = await createAdminNhostClient()
 
     const result = await nhost.graphql
         .request<
