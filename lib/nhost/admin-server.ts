@@ -1,9 +1,11 @@
-import { createServerClient, type NhostClient } from '@nhost/nhost-js'
+import { createServerClient, type NhostClient, withAdminSession } from '@nhost/nhost-js'
 
 import { env } from '@/env'
 
 /**
  * Creates an Nhost client configured for admin server usage
+ * This client uses the admin secret to bypass Row Level Security (RLS)
+ * and perform operations with elevated privileges.
  */
 export function createAdminNhostClient(): NhostClient {
     return createServerClient({
@@ -14,5 +16,10 @@ export function createAdminNhostClient(): NhostClient {
             set: () => {},
             remove: () => {},
         },
+        configure: [
+            withAdminSession({
+                adminSecret: env.NHOST_ADMIN_SECRET,
+            }),
+        ],
     })
 }
