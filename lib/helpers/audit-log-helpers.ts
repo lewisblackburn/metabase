@@ -146,14 +146,11 @@ export function createAuditLogEntry({
     difference: Record<string, { old: unknown; new: unknown }>
     userId: string | null | undefined
 }) {
-    // Map operation to action name
-    const action = operation.toUpperCase()
-
     return {
-        action,
+        action: operation,
         table: tableName,
-        ...(rowId && { row_id: rowId }),
+        row_id: rowId,
         difference: Object.keys(difference).length > 0 ? difference : null,
-        ...(userId && { user_id: userId }),
+        user_id: userId,
     }
 }

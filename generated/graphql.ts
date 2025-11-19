@@ -64,7 +64,7 @@ export type AuditLogsQueryVariables = Exact<{
 }>;
 
 
-export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference: any, user?: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } | null }> };
+export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference?: any | null, created_at: any, user?: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } | null }> };
 
 export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -247,7 +247,7 @@ export type Audit_Logs = {
   __typename?: 'audit_logs';
   action: Scalars['String'];
   created_at: Scalars['timestamptz'];
-  difference: Scalars['jsonb'];
+  difference?: Maybe<Scalars['jsonb']>;
   id: Scalars['uuid'];
   row_id: Scalars['uuid'];
   table: Scalars['String'];
@@ -13490,12 +13490,9 @@ export default {
             {
               "name": "difference",
               "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "jsonb",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
               },
               "args": [
                 {
@@ -71593,6 +71590,7 @@ export const AuditLogsDocument = gql`
       displayName
       avatarUrl
     }
+    created_at
   }
 }
     `;

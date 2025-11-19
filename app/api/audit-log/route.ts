@@ -2,13 +2,13 @@ import { NextResponse } from 'next/server'
 
 import { insertAuditLog } from '@/lib/actions/audit-logs/insert-audit-log'
 import { computeDataDifference, createAuditLogEntry } from '@/lib/helpers/audit-log-helpers'
+import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 export async function POST(request: Request) {
     const body = await request.json()
 
     if (body === undefined || body === null) return NextResponse.json({ success: false })
 
-    // Handle nested payload structure from Hasura webhook
     const payload = body.payload || body
     const { table, event } = payload
     const { data, op, session_variables } = event || {}
@@ -22,10 +22,8 @@ export async function POST(request: Request) {
 
     if (!userId) return NextResponse.json({ success: false })
 
-    // Compute difference between old and new data
     const difference = computeDataDifference(old, newData)
 
-    // Create audit log entry
     const auditLogEntry = createAuditLogEntry({
         operation: op,
         tableName,
@@ -40,10 +38,7 @@ export async function POST(request: Request) {
             constraint: 'audit_logs_pkey',
             update_columns: [],
         },
-    }).catch(error => {
-        // Don't fail the webhook if audit log insertion fails
-        console.error('Failed to insert audit log:', error)
-    })
+    }).catch(handleGraphQLError)
 
     return NextResponse.json({ success: true })
 }

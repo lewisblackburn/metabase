@@ -22,5 +22,6 @@ query AuditLogs(
             displayName
             avatarUrl
         }
+        created_at
     }
 }

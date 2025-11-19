@@ -110,7 +110,7 @@ describe('computeDataDifference', () => {
 describe('createAuditLogEntry', () => {
     it('should create audit log entry with all fields', () => {
         const result = createAuditLogEntry({
-            operation: 'UPDATE',
+            operation: 'update',
             tableName: 'movies',
             rowId: '123e4567-e89b-12d3-a456-426614174000',
             difference: {
@@ -120,7 +120,7 @@ describe('createAuditLogEntry', () => {
         })
 
         expect(result).toEqual({
-            action: 'UPDATE',
+            action: 'update',
             table: 'movies',
             row_id: '123e4567-e89b-12d3-a456-426614174000',
             difference: {
@@ -132,7 +132,7 @@ describe('createAuditLogEntry', () => {
 
     it('should handle INSERT operation', () => {
         const result = createAuditLogEntry({
-            operation: 'INSERT',
+            operation: 'insert',
             tableName: 'movies',
             rowId: '123e4567-e89b-12d3-a456-426614174000',
             difference: {},
@@ -140,7 +140,7 @@ describe('createAuditLogEntry', () => {
         })
 
         expect(result).toEqual({
-            action: 'INSERT',
+            action: 'insert',
             table: 'movies',
             row_id: '123e4567-e89b-12d3-a456-426614174000',
             difference: null,
@@ -150,7 +150,7 @@ describe('createAuditLogEntry', () => {
 
     it('should handle DELETE operation', () => {
         const result = createAuditLogEntry({
-            operation: 'DELETE',
+            operation: 'delete',
             tableName: 'movies',
             rowId: '123e4567-e89b-12d3-a456-426614174000',
             difference: {
@@ -160,7 +160,7 @@ describe('createAuditLogEntry', () => {
         })
 
         expect(result).toEqual({
-            action: 'DELETE',
+            action: 'delete',
             table: 'movies',
             row_id: '123e4567-e89b-12d3-a456-426614174000',
             difference: {
@@ -172,26 +172,26 @@ describe('createAuditLogEntry', () => {
 
     it('should handle missing userId', () => {
         const result = createAuditLogEntry({
-            operation: 'UPDATE',
+            operation: 'update',
             tableName: 'movies',
             rowId: '123e4567-e89b-12d3-a456-426614174000',
             difference: { name: { old: 'Old', new: 'New' } },
             userId: null,
         })
 
-        expect(result.user_id).toBeUndefined()
+        expect(result.user_id).toBeNull()
     })
 
     it('should handle missing rowId', () => {
         const result = createAuditLogEntry({
-            operation: 'UPDATE',
+            operation: 'update',
             tableName: 'movies',
             rowId: null,
             difference: { name: { old: 'Old', new: 'New' } },
             userId: 'user-123',
         })
 
-        expect(result.row_id).toBeUndefined()
+        expect(result.row_id).toBeNull()
     })
 
     it('should convert operation to uppercase', () => {
@@ -203,6 +203,6 @@ describe('createAuditLogEntry', () => {
             userId: 'user-123',
         })
 
-        expect(result.action).toBe('UPDATE')
+        expect(result.action).toBe('update')
     })
 })
