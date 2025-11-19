@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     // const { old, new: newData } = data
     // const userId = session_variables['x-hasura-user-id']
 
-    console.log({ body })
+    console.log({ request })
 
     // const auditLog = await createAuditLog({ entityType, action, entityId, metadata })
 
