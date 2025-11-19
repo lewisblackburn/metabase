@@ -1,15 +1,9 @@
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
-    const { body } = await request.json()
-    // const { id, table, event, data, op, session_variables } = body
-    // const tableName = table.name
-    // const { old, new: newData } = data
-    // const userId = session_variables['x-hasura-user-id']
+    const body = await request.json()
 
-    console.log({ request })
-
-    // const auditLog = await createAuditLog({ entityType, action, entityId, metadata })
+    console.log('Received body:', body)
 
     return NextResponse.json({ body })
 }
