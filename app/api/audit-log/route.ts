@@ -8,11 +8,17 @@ export async function POST(request: Request) {
 
     if (body === undefined || body === null) return NextResponse.json({ success: false })
 
-    const { table, data, op, session_variables } = body
+    // Handle nested payload structure from Hasura webhook
+    const payload = body.payload || body
+    const { table, event } = payload
+    const { data, op, session_variables } = event || {}
+
+    if (!table || !event) return NextResponse.json({ success: false })
+
     const tableName = table.name
     const { old, new: newData } = data || {}
     const rowId = newData?.id || old?.id
-    const userId = session_variables['x-hasura-user-id']
+    const userId = session_variables?.['x-hasura-user-id']
 
     if (!userId) return NextResponse.json({ success: false })
 
