@@ -64,7 +64,7 @@ export type AuditLogsQueryVariables = Exact<{
 }>;
 
 
-export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference: any, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }> };
+export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference: any, user?: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } | null }> };
 
 export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -252,8 +252,8 @@ export type Audit_Logs = {
   row_id: Scalars['uuid'];
   table: Scalars['String'];
   /** An object relationship */
-  user: Users;
-  user_id: Scalars['uuid'];
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']>;
 };
 
 
@@ -13547,24 +13547,18 @@ export default {
             {
               "name": "user",
               "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "users",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "users",
+                "ofType": null
               },
               "args": []
             },
             {
               "name": "user_id",
               "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "uuid",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
               },
               "args": []
             }

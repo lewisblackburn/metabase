@@ -62,7 +62,7 @@ export function computeDataDifference(
             ) {
                 differences[key] = {
                     old: oldData[key],
-                    new: undefined,
+                    new: null,
                 }
             }
         }
@@ -92,14 +92,11 @@ export function createAuditLogEntry({
     // Map operation to action name
     const action = operation.toUpperCase()
 
-    // Get the row ID from either old or new data
-    const finalRowId = rowId || undefined
-
     return {
         action,
         table: tableName,
-        row_id: finalRowId,
+        ...(rowId && { row_id: rowId }),
         difference: Object.keys(difference).length > 0 ? difference : null,
-        user_id: userId || undefined,
+        ...(userId && { user_id: userId }),
     }
 }
