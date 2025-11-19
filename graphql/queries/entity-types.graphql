@@ -1,5 +1,0 @@
-query EntityTypes {
-    entity_types {
-        name
-    }
-}

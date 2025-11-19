@@ -55,11 +55,6 @@ export type UpsertUserMovieActivityMutationVariables = Exact<{
 
 export type UpsertUserMovieActivityMutation = { __typename?: 'mutation_root', insert_user_movie_activities_one?: { __typename?: 'user_movie_activities', movie_id: any, rating?: number | null, status?: User_Movie_Statuses_Enum | null, comment?: string | null } | null };
 
-export type ActionsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ActionsQuery = { __typename?: 'query_root', actions: Array<{ __typename?: 'actions', name: string }> };
-
 export type AuditLogsQueryVariables = Exact<{
   where?: InputMaybe<Audit_Logs_Bool_Exp>;
   distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column> | Audit_Logs_Select_Column>;
@@ -69,17 +64,12 @@ export type AuditLogsQueryVariables = Exact<{
 }>;
 
 
-export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: Actions_Enum, entity_type: Entity_Types_Enum, entity_id: any, metadata: any, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }> };
+export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference: any, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }> };
 
 export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CreditTypesQuery = { __typename?: 'query_root', credit_types: Array<{ __typename?: 'credit_types', credit_type: string }> };
-
-export type EntityTypesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type EntityTypesQuery = { __typename?: 'query_root', entity_types: Array<{ __typename?: 'entity_types', name: string }> };
 
 export type GendersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -252,149 +242,15 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']>;
 };
 
-/** columns and relationships of "actions" */
-export type Actions = {
-  __typename?: 'actions';
-  name: Scalars['String'];
-};
-
-/** aggregated selection of "actions" */
-export type Actions_Aggregate = {
-  __typename?: 'actions_aggregate';
-  aggregate?: Maybe<Actions_Aggregate_Fields>;
-  nodes: Array<Actions>;
-};
-
-/** aggregate fields of "actions" */
-export type Actions_Aggregate_Fields = {
-  __typename?: 'actions_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Actions_Max_Fields>;
-  min?: Maybe<Actions_Min_Fields>;
-};
-
-
-/** aggregate fields of "actions" */
-export type Actions_Aggregate_Fields_CountArgs = {
-  columns?: InputMaybe<Array<Actions_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
-};
-
-/** Boolean expression to filter rows from the table "actions". All fields are combined with a logical 'AND'. */
-export type Actions_Bool_Exp = {
-  _and?: InputMaybe<Array<Actions_Bool_Exp>>;
-  _not?: InputMaybe<Actions_Bool_Exp>;
-  _or?: InputMaybe<Array<Actions_Bool_Exp>>;
-  name?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "actions" */
-export type Actions_Constraint =
-  /** unique or primary key constraint on columns "name" */
-  | 'actions_pkey';
-
-export type Actions_Enum =
-  | 'DELETE'
-  | 'INSERT'
-  | 'SELECT'
-  | 'UPDATE';
-
-/** Boolean expression to compare columns of type "actions_enum". All fields are combined with logical 'AND'. */
-export type Actions_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Actions_Enum>;
-  _in?: InputMaybe<Array<Actions_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Actions_Enum>;
-  _nin?: InputMaybe<Array<Actions_Enum>>;
-};
-
-/** input type for inserting data into table "actions" */
-export type Actions_Insert_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** aggregate max on columns */
-export type Actions_Max_Fields = {
-  __typename?: 'actions_max_fields';
-  name?: Maybe<Scalars['String']>;
-};
-
-/** aggregate min on columns */
-export type Actions_Min_Fields = {
-  __typename?: 'actions_min_fields';
-  name?: Maybe<Scalars['String']>;
-};
-
-/** response of any mutation on the table "actions" */
-export type Actions_Mutation_Response = {
-  __typename?: 'actions_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Actions>;
-};
-
-/** on_conflict condition type for table "actions" */
-export type Actions_On_Conflict = {
-  constraint: Actions_Constraint;
-  update_columns?: Array<Actions_Update_Column>;
-  where?: InputMaybe<Actions_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "actions". */
-export type Actions_Order_By = {
-  name?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: actions */
-export type Actions_Pk_Columns_Input = {
-  name: Scalars['String'];
-};
-
-/** select columns of table "actions" */
-export type Actions_Select_Column =
-  /** column name */
-  | 'name';
-
-/** input type for updating data in table "actions" */
-export type Actions_Set_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** Streaming cursor of the table "actions" */
-export type Actions_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Actions_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Actions_Stream_Cursor_Value_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** update columns of table "actions" */
-export type Actions_Update_Column =
-  /** column name */
-  | 'name';
-
-export type Actions_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Actions_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Actions_Bool_Exp;
-};
-
 /** columns and relationships of "audit_logs" */
 export type Audit_Logs = {
   __typename?: 'audit_logs';
-  action: Actions_Enum;
+  action: Scalars['String'];
   created_at: Scalars['timestamptz'];
-  entity_id: Scalars['uuid'];
-  entity_type: Entity_Types_Enum;
+  difference: Scalars['jsonb'];
   id: Scalars['uuid'];
-  metadata: Scalars['jsonb'];
+  row_id: Scalars['uuid'];
+  table: Scalars['String'];
   /** An object relationship */
   user: Users;
   user_id: Scalars['uuid'];
@@ -402,7 +258,7 @@ export type Audit_Logs = {
 
 
 /** columns and relationships of "audit_logs" */
-export type Audit_Logs_MetadataArgs = {
+export type Audit_Logs_DifferenceArgs = {
   path?: InputMaybe<Scalars['String']>;
 };
 
@@ -430,7 +286,7 @@ export type Audit_Logs_Aggregate_Fields_CountArgs = {
 
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type Audit_Logs_Append_Input = {
-  metadata?: InputMaybe<Scalars['jsonb']>;
+  difference?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** Boolean expression to filter rows from the table "audit_logs". All fields are combined with a logical 'AND'. */
@@ -438,12 +294,12 @@ export type Audit_Logs_Bool_Exp = {
   _and?: InputMaybe<Array<Audit_Logs_Bool_Exp>>;
   _not?: InputMaybe<Audit_Logs_Bool_Exp>;
   _or?: InputMaybe<Array<Audit_Logs_Bool_Exp>>;
-  action?: InputMaybe<Actions_Enum_Comparison_Exp>;
+  action?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  entity_id?: InputMaybe<Uuid_Comparison_Exp>;
-  entity_type?: InputMaybe<Entity_Types_Enum_Comparison_Exp>;
+  difference?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  metadata?: InputMaybe<Jsonb_Comparison_Exp>;
+  row_id?: InputMaybe<Uuid_Comparison_Exp>;
+  table?: InputMaybe<String_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -455,27 +311,27 @@ export type Audit_Logs_Constraint =
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type Audit_Logs_Delete_At_Path_Input = {
-  metadata?: InputMaybe<Array<Scalars['String']>>;
+  difference?: InputMaybe<Array<Scalars['String']>>;
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
 export type Audit_Logs_Delete_Elem_Input = {
-  metadata?: InputMaybe<Scalars['Int']>;
+  difference?: InputMaybe<Scalars['Int']>;
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type Audit_Logs_Delete_Key_Input = {
-  metadata?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']>;
 };
 
 /** input type for inserting data into table "audit_logs" */
 export type Audit_Logs_Insert_Input = {
-  action?: InputMaybe<Actions_Enum>;
+  action?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
-  entity_id?: InputMaybe<Scalars['uuid']>;
-  entity_type?: InputMaybe<Entity_Types_Enum>;
+  difference?: InputMaybe<Scalars['jsonb']>;
   id?: InputMaybe<Scalars['uuid']>;
-  metadata?: InputMaybe<Scalars['jsonb']>;
+  row_id?: InputMaybe<Scalars['uuid']>;
+  table?: InputMaybe<Scalars['String']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -483,18 +339,22 @@ export type Audit_Logs_Insert_Input = {
 /** aggregate max on columns */
 export type Audit_Logs_Max_Fields = {
   __typename?: 'audit_logs_max_fields';
+  action?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  row_id?: Maybe<Scalars['uuid']>;
+  table?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate min on columns */
 export type Audit_Logs_Min_Fields = {
   __typename?: 'audit_logs_min_fields';
+  action?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  row_id?: Maybe<Scalars['uuid']>;
+  table?: Maybe<Scalars['String']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -518,10 +378,10 @@ export type Audit_Logs_On_Conflict = {
 export type Audit_Logs_Order_By = {
   action?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
-  entity_id?: InputMaybe<Order_By>;
-  entity_type?: InputMaybe<Order_By>;
+  difference?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  metadata?: InputMaybe<Order_By>;
+  row_id?: InputMaybe<Order_By>;
+  table?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -533,7 +393,7 @@ export type Audit_Logs_Pk_Columns_Input = {
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type Audit_Logs_Prepend_Input = {
-  metadata?: InputMaybe<Scalars['jsonb']>;
+  difference?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "audit_logs" */
@@ -543,24 +403,24 @@ export type Audit_Logs_Select_Column =
   /** column name */
   | 'created_at'
   /** column name */
-  | 'entity_id'
-  /** column name */
-  | 'entity_type'
+  | 'difference'
   /** column name */
   | 'id'
   /** column name */
-  | 'metadata'
+  | 'row_id'
+  /** column name */
+  | 'table'
   /** column name */
   | 'user_id';
 
 /** input type for updating data in table "audit_logs" */
 export type Audit_Logs_Set_Input = {
-  action?: InputMaybe<Actions_Enum>;
+  action?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
-  entity_id?: InputMaybe<Scalars['uuid']>;
-  entity_type?: InputMaybe<Entity_Types_Enum>;
+  difference?: InputMaybe<Scalars['jsonb']>;
   id?: InputMaybe<Scalars['uuid']>;
-  metadata?: InputMaybe<Scalars['jsonb']>;
+  row_id?: InputMaybe<Scalars['uuid']>;
+  table?: InputMaybe<Scalars['String']>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -574,12 +434,12 @@ export type Audit_Logs_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Audit_Logs_Stream_Cursor_Value_Input = {
-  action?: InputMaybe<Actions_Enum>;
+  action?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
-  entity_id?: InputMaybe<Scalars['uuid']>;
-  entity_type?: InputMaybe<Entity_Types_Enum>;
+  difference?: InputMaybe<Scalars['jsonb']>;
   id?: InputMaybe<Scalars['uuid']>;
-  metadata?: InputMaybe<Scalars['jsonb']>;
+  row_id?: InputMaybe<Scalars['uuid']>;
+  table?: InputMaybe<Scalars['String']>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -590,13 +450,13 @@ export type Audit_Logs_Update_Column =
   /** column name */
   | 'created_at'
   /** column name */
-  | 'entity_id'
-  /** column name */
-  | 'entity_type'
+  | 'difference'
   /** column name */
   | 'id'
   /** column name */
-  | 'metadata'
+  | 'row_id'
+  /** column name */
+  | 'table'
   /** column name */
   | 'user_id';
 
@@ -3254,139 +3114,6 @@ export type Date_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['date']>;
   _neq?: InputMaybe<Scalars['date']>;
   _nin?: InputMaybe<Array<Scalars['date']>>;
-};
-
-/** columns and relationships of "entity_types" */
-export type Entity_Types = {
-  __typename?: 'entity_types';
-  name: Scalars['String'];
-};
-
-/** aggregated selection of "entity_types" */
-export type Entity_Types_Aggregate = {
-  __typename?: 'entity_types_aggregate';
-  aggregate?: Maybe<Entity_Types_Aggregate_Fields>;
-  nodes: Array<Entity_Types>;
-};
-
-/** aggregate fields of "entity_types" */
-export type Entity_Types_Aggregate_Fields = {
-  __typename?: 'entity_types_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Entity_Types_Max_Fields>;
-  min?: Maybe<Entity_Types_Min_Fields>;
-};
-
-
-/** aggregate fields of "entity_types" */
-export type Entity_Types_Aggregate_Fields_CountArgs = {
-  columns?: InputMaybe<Array<Entity_Types_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
-};
-
-/** Boolean expression to filter rows from the table "entity_types". All fields are combined with a logical 'AND'. */
-export type Entity_Types_Bool_Exp = {
-  _and?: InputMaybe<Array<Entity_Types_Bool_Exp>>;
-  _not?: InputMaybe<Entity_Types_Bool_Exp>;
-  _or?: InputMaybe<Array<Entity_Types_Bool_Exp>>;
-  name?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "entity_types" */
-export type Entity_Types_Constraint =
-  /** unique or primary key constraint on columns "name" */
-  | 'entity_types_pkey';
-
-export type Entity_Types_Enum =
-  | 'ACTIVITY'
-  | 'MOVIE'
-  | 'PERSON';
-
-/** Boolean expression to compare columns of type "entity_types_enum". All fields are combined with logical 'AND'. */
-export type Entity_Types_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Entity_Types_Enum>;
-  _in?: InputMaybe<Array<Entity_Types_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Entity_Types_Enum>;
-  _nin?: InputMaybe<Array<Entity_Types_Enum>>;
-};
-
-/** input type for inserting data into table "entity_types" */
-export type Entity_Types_Insert_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** aggregate max on columns */
-export type Entity_Types_Max_Fields = {
-  __typename?: 'entity_types_max_fields';
-  name?: Maybe<Scalars['String']>;
-};
-
-/** aggregate min on columns */
-export type Entity_Types_Min_Fields = {
-  __typename?: 'entity_types_min_fields';
-  name?: Maybe<Scalars['String']>;
-};
-
-/** response of any mutation on the table "entity_types" */
-export type Entity_Types_Mutation_Response = {
-  __typename?: 'entity_types_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Entity_Types>;
-};
-
-/** on_conflict condition type for table "entity_types" */
-export type Entity_Types_On_Conflict = {
-  constraint: Entity_Types_Constraint;
-  update_columns?: Array<Entity_Types_Update_Column>;
-  where?: InputMaybe<Entity_Types_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "entity_types". */
-export type Entity_Types_Order_By = {
-  name?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: entity_types */
-export type Entity_Types_Pk_Columns_Input = {
-  name: Scalars['String'];
-};
-
-/** select columns of table "entity_types" */
-export type Entity_Types_Select_Column =
-  /** column name */
-  | 'name';
-
-/** input type for updating data in table "entity_types" */
-export type Entity_Types_Set_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** Streaming cursor of the table "entity_types" */
-export type Entity_Types_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Entity_Types_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Entity_Types_Stream_Cursor_Value_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** update columns of table "entity_types" */
-export type Entity_Types_Update_Column =
-  /** column name */
-  | 'name';
-
-export type Entity_Types_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Entity_Types_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Entity_Types_Bool_Exp;
 };
 
 /** columns and relationships of "storage.files" */
@@ -6836,10 +6563,6 @@ export type Mutation_Root = {
   deleteVirus?: Maybe<Virus>;
   /** delete data from the table: "storage.virus" */
   deleteViruses?: Maybe<Virus_Mutation_Response>;
-  /** delete data from the table: "actions" */
-  delete_actions?: Maybe<Actions_Mutation_Response>;
-  /** delete single row from the table: "actions" */
-  delete_actions_by_pk?: Maybe<Actions>;
   /** delete data from the table: "audit_logs" */
   delete_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
   /** delete single row from the table: "audit_logs" */
@@ -6856,10 +6579,6 @@ export type Mutation_Root = {
   delete_credit_types?: Maybe<Credit_Types_Mutation_Response>;
   /** delete single row from the table: "credit_types" */
   delete_credit_types_by_pk?: Maybe<Credit_Types>;
-  /** delete data from the table: "entity_types" */
-  delete_entity_types?: Maybe<Entity_Types_Mutation_Response>;
-  /** delete single row from the table: "entity_types" */
-  delete_entity_types_by_pk?: Maybe<Entity_Types>;
   /** delete data from the table: "genders" */
   delete_genders?: Maybe<Genders_Mutation_Response>;
   /** delete single row from the table: "genders" */
@@ -6976,10 +6695,6 @@ export type Mutation_Root = {
   insertVirus?: Maybe<Virus>;
   /** insert data into the table: "storage.virus" */
   insertViruses?: Maybe<Virus_Mutation_Response>;
-  /** insert data into the table: "actions" */
-  insert_actions?: Maybe<Actions_Mutation_Response>;
-  /** insert a single row into the table: "actions" */
-  insert_actions_one?: Maybe<Actions>;
   /** insert data into the table: "audit_logs" */
   insert_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
   /** insert a single row into the table: "audit_logs" */
@@ -6996,10 +6711,6 @@ export type Mutation_Root = {
   insert_credit_types?: Maybe<Credit_Types_Mutation_Response>;
   /** insert a single row into the table: "credit_types" */
   insert_credit_types_one?: Maybe<Credit_Types>;
-  /** insert data into the table: "entity_types" */
-  insert_entity_types?: Maybe<Entity_Types_Mutation_Response>;
-  /** insert a single row into the table: "entity_types" */
-  insert_entity_types_one?: Maybe<Entity_Types>;
   /** insert data into the table: "genders" */
   insert_genders?: Maybe<Genders_Mutation_Response>;
   /** insert a single row into the table: "genders" */
@@ -7116,12 +6827,6 @@ export type Mutation_Root = {
   updateVirus?: Maybe<Virus>;
   /** update data of the table: "storage.virus" */
   updateViruses?: Maybe<Virus_Mutation_Response>;
-  /** update data of the table: "actions" */
-  update_actions?: Maybe<Actions_Mutation_Response>;
-  /** update single row of the table: "actions" */
-  update_actions_by_pk?: Maybe<Actions>;
-  /** update multiples rows of table: "actions" */
-  update_actions_many?: Maybe<Array<Maybe<Actions_Mutation_Response>>>;
   /** update data of the table: "audit_logs" */
   update_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
   /** update single row of the table: "audit_logs" */
@@ -7164,12 +6869,6 @@ export type Mutation_Root = {
   update_credit_types_by_pk?: Maybe<Credit_Types>;
   /** update multiples rows of table: "credit_types" */
   update_credit_types_many?: Maybe<Array<Maybe<Credit_Types_Mutation_Response>>>;
-  /** update data of the table: "entity_types" */
-  update_entity_types?: Maybe<Entity_Types_Mutation_Response>;
-  /** update single row of the table: "entity_types" */
-  update_entity_types_by_pk?: Maybe<Entity_Types>;
-  /** update multiples rows of table: "entity_types" */
-  update_entity_types_many?: Maybe<Array<Maybe<Entity_Types_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
   /** update data of the table: "genders" */
@@ -7426,18 +7125,6 @@ export type Mutation_Root_DeleteVirusesArgs = {
 
 
 /** mutation root */
-export type Mutation_Root_Delete_ActionsArgs = {
-  where: Actions_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Delete_Actions_By_PkArgs = {
-  name: Scalars['String'];
-};
-
-
-/** mutation root */
 export type Mutation_Root_Delete_Audit_LogsArgs = {
   where: Audit_Logs_Bool_Exp;
 };
@@ -7482,18 +7169,6 @@ export type Mutation_Root_Delete_Credit_TypesArgs = {
 /** mutation root */
 export type Mutation_Root_Delete_Credit_Types_By_PkArgs = {
   credit_type: Scalars['String'];
-};
-
-
-/** mutation root */
-export type Mutation_Root_Delete_Entity_TypesArgs = {
-  where: Entity_Types_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Delete_Entity_Types_By_PkArgs = {
-  name: Scalars['String'];
 };
 
 
@@ -7875,20 +7550,6 @@ export type Mutation_Root_InsertVirusesArgs = {
 
 
 /** mutation root */
-export type Mutation_Root_Insert_ActionsArgs = {
-  objects: Array<Actions_Insert_Input>;
-  on_conflict?: InputMaybe<Actions_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Insert_Actions_OneArgs = {
-  object: Actions_Insert_Input;
-  on_conflict?: InputMaybe<Actions_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_Root_Insert_Audit_LogsArgs = {
   objects: Array<Audit_Logs_Insert_Input>;
   on_conflict?: InputMaybe<Audit_Logs_On_Conflict>;
@@ -7941,20 +7602,6 @@ export type Mutation_Root_Insert_Credit_TypesArgs = {
 export type Mutation_Root_Insert_Credit_Types_OneArgs = {
   object: Credit_Types_Insert_Input;
   on_conflict?: InputMaybe<Credit_Types_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Insert_Entity_TypesArgs = {
-  objects: Array<Entity_Types_Insert_Input>;
-  on_conflict?: InputMaybe<Entity_Types_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Insert_Entity_Types_OneArgs = {
-  object: Entity_Types_Insert_Input;
-  on_conflict?: InputMaybe<Entity_Types_On_Conflict>;
 };
 
 
@@ -8421,26 +8068,6 @@ export type Mutation_Root_UpdateVirusesArgs = {
 
 
 /** mutation root */
-export type Mutation_Root_Update_ActionsArgs = {
-  _set?: InputMaybe<Actions_Set_Input>;
-  where: Actions_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Update_Actions_By_PkArgs = {
-  _set?: InputMaybe<Actions_Set_Input>;
-  pk_columns: Actions_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Update_Actions_ManyArgs = {
-  updates: Array<Actions_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_Root_Update_Audit_LogsArgs = {
   _append?: InputMaybe<Audit_Logs_Append_Input>;
   _delete_at_path?: InputMaybe<Audit_Logs_Delete_At_Path_Input>;
@@ -8581,26 +8208,6 @@ export type Mutation_Root_Update_Credit_Types_By_PkArgs = {
 /** mutation root */
 export type Mutation_Root_Update_Credit_Types_ManyArgs = {
   updates: Array<Credit_Types_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Update_Entity_TypesArgs = {
-  _set?: InputMaybe<Entity_Types_Set_Input>;
-  where: Entity_Types_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Update_Entity_Types_By_PkArgs = {
-  _set?: InputMaybe<Entity_Types_Set_Input>;
-  pk_columns: Entity_Types_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_Root_Update_Entity_Types_ManyArgs = {
-  updates: Array<Entity_Types_Updates>;
 };
 
 
@@ -9371,12 +8978,6 @@ export type Production_Companies_Variance_Fields = {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "actions" */
-  actions: Array<Actions>;
-  /** fetch aggregated fields from the table: "actions" */
-  actions_aggregate: Actions_Aggregate;
-  /** fetch data from the table: "actions" using primary key columns */
-  actions_by_pk?: Maybe<Actions>;
   /** fetch data from the table: "audit_logs" */
   audit_logs: Array<Audit_Logs>;
   /** fetch aggregated fields from the table: "audit_logs" */
@@ -9455,12 +9056,6 @@ export type Query_Root = {
   credit_types_aggregate: Credit_Types_Aggregate;
   /** fetch data from the table: "credit_types" using primary key columns */
   credit_types_by_pk?: Maybe<Credit_Types>;
-  /** fetch data from the table: "entity_types" */
-  entity_types: Array<Entity_Types>;
-  /** fetch aggregated fields from the table: "entity_types" */
-  entity_types_aggregate: Entity_Types_Aggregate;
-  /** fetch data from the table: "entity_types" using primary key columns */
-  entity_types_by_pk?: Maybe<Entity_Types>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -9585,29 +9180,6 @@ export type Query_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
-};
-
-
-export type Query_Root_ActionsArgs = {
-  distinct_on?: InputMaybe<Array<Actions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Actions_Order_By>>;
-  where?: InputMaybe<Actions_Bool_Exp>;
-};
-
-
-export type Query_Root_Actions_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Actions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Actions_Order_By>>;
-  where?: InputMaybe<Actions_Bool_Exp>;
-};
-
-
-export type Query_Root_Actions_By_PkArgs = {
-  name: Scalars['String'];
 };
 
 
@@ -9907,29 +9479,6 @@ export type Query_Root_Credit_Types_AggregateArgs = {
 
 export type Query_Root_Credit_Types_By_PkArgs = {
   credit_type: Scalars['String'];
-};
-
-
-export type Query_Root_Entity_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Entity_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Entity_Types_Order_By>>;
-  where?: InputMaybe<Entity_Types_Bool_Exp>;
-};
-
-
-export type Query_Root_Entity_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Entity_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Entity_Types_Order_By>>;
-  where?: InputMaybe<Entity_Types_Bool_Exp>;
-};
-
-
-export type Query_Root_Entity_Types_By_PkArgs = {
-  name: Scalars['String'];
 };
 
 
@@ -10419,14 +9968,6 @@ export type Query_Root_VirusesAggregateArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "actions" */
-  actions: Array<Actions>;
-  /** fetch aggregated fields from the table: "actions" */
-  actions_aggregate: Actions_Aggregate;
-  /** fetch data from the table: "actions" using primary key columns */
-  actions_by_pk?: Maybe<Actions>;
-  /** fetch data from the table in a streaming manner: "actions" */
-  actions_stream: Array<Actions>;
   /** fetch data from the table: "audit_logs" */
   audit_logs: Array<Audit_Logs>;
   /** fetch aggregated fields from the table: "audit_logs" */
@@ -10531,14 +10072,6 @@ export type Subscription_Root = {
   credit_types_by_pk?: Maybe<Credit_Types>;
   /** fetch data from the table in a streaming manner: "credit_types" */
   credit_types_stream: Array<Credit_Types>;
-  /** fetch data from the table: "entity_types" */
-  entity_types: Array<Entity_Types>;
-  /** fetch aggregated fields from the table: "entity_types" */
-  entity_types_aggregate: Entity_Types_Aggregate;
-  /** fetch data from the table: "entity_types" using primary key columns */
-  entity_types_by_pk?: Maybe<Entity_Types>;
-  /** fetch data from the table in a streaming manner: "entity_types" */
-  entity_types_stream: Array<Entity_Types>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -10703,36 +10236,6 @@ export type Subscription_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
-};
-
-
-export type Subscription_Root_ActionsArgs = {
-  distinct_on?: InputMaybe<Array<Actions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Actions_Order_By>>;
-  where?: InputMaybe<Actions_Bool_Exp>;
-};
-
-
-export type Subscription_Root_Actions_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Actions_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Actions_Order_By>>;
-  where?: InputMaybe<Actions_Bool_Exp>;
-};
-
-
-export type Subscription_Root_Actions_By_PkArgs = {
-  name: Scalars['String'];
-};
-
-
-export type Subscription_Root_Actions_StreamArgs = {
-  batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Actions_Stream_Cursor_Input>>;
-  where?: InputMaybe<Actions_Bool_Exp>;
 };
 
 
@@ -11123,36 +10626,6 @@ export type Subscription_Root_Credit_Types_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Credit_Types_Stream_Cursor_Input>>;
   where?: InputMaybe<Credit_Types_Bool_Exp>;
-};
-
-
-export type Subscription_Root_Entity_TypesArgs = {
-  distinct_on?: InputMaybe<Array<Entity_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Entity_Types_Order_By>>;
-  where?: InputMaybe<Entity_Types_Bool_Exp>;
-};
-
-
-export type Subscription_Root_Entity_Types_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Entity_Types_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Entity_Types_Order_By>>;
-  where?: InputMaybe<Entity_Types_Bool_Exp>;
-};
-
-
-export type Subscription_Root_Entity_Types_By_PkArgs = {
-  name: Scalars['String'];
-};
-
-
-export type Subscription_Root_Entity_Types_StreamArgs = {
-  batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Entity_Types_Stream_Cursor_Input>>;
-  where?: InputMaybe<Entity_Types_Bool_Exp>;
 };
 
 
@@ -13988,507 +13461,6 @@ export default {
         },
         {
           "kind": "OBJECT",
-          "name": "actions",
-          "fields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "actions_aggregate",
-          "fields": [
-            {
-              "name": "aggregate",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions_aggregate_fields",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
-              "name": "nodes",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "actions",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "actions_aggregate_fields",
-          "fields": [
-            {
-              "name": "count",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "columns",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "actions_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "distinct",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "max",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions_max_fields",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
-              "name": "min",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions_min_fields",
-                "ofType": null
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_bool_exp",
-          "inputFields": [
-            {
-              "name": "_and",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_bool_exp",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            {
-              "name": "_not",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "actions_bool_exp",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_or",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_bool_exp",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            {
-              "name": "name",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "String_comparison_exp",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "actions_constraint",
-          "enumValues": [
-            {
-              "name": "actions_pkey"
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "actions_enum",
-          "enumValues": [
-            {
-              "name": "DELETE"
-            },
-            {
-              "name": "INSERT"
-            },
-            {
-              "name": "SELECT"
-            },
-            {
-              "name": "UPDATE"
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_enum_comparison_exp",
-          "inputFields": [
-            {
-              "name": "_eq",
-              "type": {
-                "kind": "ENUM",
-                "name": "actions_enum",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_in",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "actions_enum",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            {
-              "name": "_is_null",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_neq",
-              "type": {
-                "kind": "ENUM",
-                "name": "actions_enum",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_nin",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "actions_enum",
-                    "ofType": null
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_insert_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "OBJECT",
-          "name": "actions_max_fields",
-          "fields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "actions_min_fields",
-          "fields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "actions_mutation_response",
-          "fields": [
-            {
-              "name": "affected_rows",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "args": []
-            },
-            {
-              "name": "returning",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "actions",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_on_conflict",
-          "inputFields": [
-            {
-              "name": "constraint",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "actions_constraint",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "name": "update_columns",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "actions_update_column",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "defaultValue": "[]"
-            },
-            {
-              "name": "where",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "actions_bool_exp",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_order_by",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_pk_columns_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "actions_select_column",
-          "enumValues": [
-            {
-              "name": "name"
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_set_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_stream_cursor_input",
-          "inputFields": [
-            {
-              "name": "initial_value",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "actions_stream_cursor_value_input",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "name": "ordering",
-              "type": {
-                "kind": "ENUM",
-                "name": "cursor_ordering",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_stream_cursor_value_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "actions_update_column",
-          "enumValues": [
-            {
-              "name": "name"
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "actions_updates",
-          "inputFields": [
-            {
-              "name": "_set",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "actions_set_input",
-                "ofType": null
-              }
-            },
-            {
-              "name": "where",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "actions_bool_exp",
-                  "ofType": null
-                }
-              }
-            }
-          ]
-        },
-        {
-          "kind": "OBJECT",
           "name": "audit_logs",
           "fields": [
             {
@@ -14496,8 +13468,8 @@ export default {
               "type": {
                 "kind": "NON_NULL",
                 "ofType": {
-                  "kind": "ENUM",
-                  "name": "actions_enum",
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 }
               },
@@ -14516,43 +13488,7 @@ export default {
               "args": []
             },
             {
-              "name": "entity_id",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "uuid",
-                  "ofType": null
-                }
-              },
-              "args": []
-            },
-            {
-              "name": "entity_type",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "entity_types_enum",
-                  "ofType": null
-                }
-              },
-              "args": []
-            },
-            {
-              "name": "id",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "uuid",
-                  "ofType": null
-                }
-              },
-              "args": []
-            },
-            {
-              "name": "metadata",
+              "name": "difference",
               "type": {
                 "kind": "NON_NULL",
                 "ofType": {
@@ -14571,6 +13507,42 @@ export default {
                   }
                 }
               ]
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "row_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "table",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
             },
             {
               "name": "user",
@@ -14698,7 +13670,7 @@ export default {
           "name": "audit_logs_append_input",
           "inputFields": [
             {
-              "name": "metadata",
+              "name": "difference",
               "type": {
                 "kind": "SCALAR",
                 "name": "jsonb",
@@ -14751,7 +13723,7 @@ export default {
               "name": "action",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "actions_enum_comparison_exp",
+                "name": "String_comparison_exp",
                 "ofType": null
               }
             },
@@ -14764,18 +13736,10 @@ export default {
               }
             },
             {
-              "name": "entity_id",
+              "name": "difference",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "uuid_comparison_exp",
-                "ofType": null
-              }
-            },
-            {
-              "name": "entity_type",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "entity_types_enum_comparison_exp",
+                "name": "jsonb_comparison_exp",
                 "ofType": null
               }
             },
@@ -14788,10 +13752,18 @@ export default {
               }
             },
             {
-              "name": "metadata",
+              "name": "row_id",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "jsonb_comparison_exp",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "table",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
                 "ofType": null
               }
             },
@@ -14827,7 +13799,7 @@ export default {
           "name": "audit_logs_delete_at_path_input",
           "inputFields": [
             {
-              "name": "metadata",
+              "name": "difference",
               "type": {
                 "kind": "LIST",
                 "ofType": {
@@ -14847,7 +13819,7 @@ export default {
           "name": "audit_logs_delete_elem_input",
           "inputFields": [
             {
-              "name": "metadata",
+              "name": "difference",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
@@ -14861,7 +13833,7 @@ export default {
           "name": "audit_logs_delete_key_input",
           "inputFields": [
             {
-              "name": "metadata",
+              "name": "difference",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -14877,8 +13849,8 @@ export default {
             {
               "name": "action",
               "type": {
-                "kind": "ENUM",
-                "name": "actions_enum",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -14891,18 +13863,10 @@ export default {
               }
             },
             {
-              "name": "entity_id",
+              "name": "difference",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
-                "ofType": null
-              }
-            },
-            {
-              "name": "entity_type",
-              "type": {
-                "kind": "ENUM",
-                "name": "entity_types_enum",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -14915,10 +13879,18 @@ export default {
               }
             },
             {
-              "name": "metadata",
+              "name": "row_id",
               "type": {
                 "kind": "SCALAR",
-                "name": "jsonb",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "table",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -14945,6 +13917,15 @@ export default {
           "name": "audit_logs_max_fields",
           "fields": [
             {
+              "name": "action",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "created_at",
               "type": {
                 "kind": "SCALAR",
@@ -14954,7 +13935,7 @@ export default {
               "args": []
             },
             {
-              "name": "entity_id",
+              "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -14963,10 +13944,19 @@ export default {
               "args": []
             },
             {
-              "name": "id",
+              "name": "row_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "table",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "args": []
@@ -14988,6 +13978,15 @@ export default {
           "name": "audit_logs_min_fields",
           "fields": [
             {
+              "name": "action",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "created_at",
               "type": {
                 "kind": "SCALAR",
@@ -14997,7 +13996,7 @@ export default {
               "args": []
             },
             {
-              "name": "entity_id",
+              "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -15006,10 +14005,19 @@ export default {
               "args": []
             },
             {
-              "name": "id",
+              "name": "row_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "table",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "args": []
@@ -15127,15 +14135,7 @@ export default {
               }
             },
             {
-              "name": "entity_id",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
-              "name": "entity_type",
+              "name": "difference",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -15151,7 +14151,15 @@ export default {
               }
             },
             {
-              "name": "metadata",
+              "name": "row_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "table",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -15198,7 +14206,7 @@ export default {
           "name": "audit_logs_prepend_input",
           "inputFields": [
             {
-              "name": "metadata",
+              "name": "difference",
               "type": {
                 "kind": "SCALAR",
                 "name": "jsonb",
@@ -15218,16 +14226,16 @@ export default {
               "name": "created_at"
             },
             {
-              "name": "entity_id"
-            },
-            {
-              "name": "entity_type"
+              "name": "difference"
             },
             {
               "name": "id"
             },
             {
-              "name": "metadata"
+              "name": "row_id"
+            },
+            {
+              "name": "table"
             },
             {
               "name": "user_id"
@@ -15241,8 +14249,8 @@ export default {
             {
               "name": "action",
               "type": {
-                "kind": "ENUM",
-                "name": "actions_enum",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -15255,18 +14263,10 @@ export default {
               }
             },
             {
-              "name": "entity_id",
+              "name": "difference",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
-                "ofType": null
-              }
-            },
-            {
-              "name": "entity_type",
-              "type": {
-                "kind": "ENUM",
-                "name": "entity_types_enum",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -15279,10 +14279,18 @@ export default {
               }
             },
             {
-              "name": "metadata",
+              "name": "row_id",
               "type": {
                 "kind": "SCALAR",
-                "name": "jsonb",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "table",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -15328,8 +14336,8 @@ export default {
             {
               "name": "action",
               "type": {
-                "kind": "ENUM",
-                "name": "actions_enum",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -15342,18 +14350,10 @@ export default {
               }
             },
             {
-              "name": "entity_id",
+              "name": "difference",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
-                "ofType": null
-              }
-            },
-            {
-              "name": "entity_type",
-              "type": {
-                "kind": "ENUM",
-                "name": "entity_types_enum",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -15366,10 +14366,18 @@ export default {
               }
             },
             {
-              "name": "metadata",
+              "name": "row_id",
               "type": {
                 "kind": "SCALAR",
-                "name": "jsonb",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "table",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -15394,16 +14402,16 @@ export default {
               "name": "created_at"
             },
             {
-              "name": "entity_id"
-            },
-            {
-              "name": "entity_type"
+              "name": "difference"
             },
             {
               "name": "id"
             },
             {
-              "name": "metadata"
+              "name": "row_id"
+            },
+            {
+              "name": "table"
             },
             {
               "name": "user_id"
@@ -27044,504 +26052,6 @@ export default {
                     "name": "date",
                     "ofType": null
                   }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "kind": "OBJECT",
-          "name": "entity_types",
-          "fields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "entity_types_aggregate",
-          "fields": [
-            {
-              "name": "aggregate",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types_aggregate_fields",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
-              "name": "nodes",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "entity_types",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "entity_types_aggregate_fields",
-          "fields": [
-            {
-              "name": "count",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "columns",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "entity_types_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "distinct",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "max",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types_max_fields",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
-              "name": "min",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types_min_fields",
-                "ofType": null
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_bool_exp",
-          "inputFields": [
-            {
-              "name": "_and",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_bool_exp",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            {
-              "name": "_not",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "entity_types_bool_exp",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_or",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_bool_exp",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            {
-              "name": "name",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "String_comparison_exp",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "entity_types_constraint",
-          "enumValues": [
-            {
-              "name": "entity_types_pkey"
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "entity_types_enum",
-          "enumValues": [
-            {
-              "name": "ACTIVITY"
-            },
-            {
-              "name": "MOVIE"
-            },
-            {
-              "name": "PERSON"
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_enum_comparison_exp",
-          "inputFields": [
-            {
-              "name": "_eq",
-              "type": {
-                "kind": "ENUM",
-                "name": "entity_types_enum",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_in",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "entity_types_enum",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            {
-              "name": "_is_null",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_neq",
-              "type": {
-                "kind": "ENUM",
-                "name": "entity_types_enum",
-                "ofType": null
-              }
-            },
-            {
-              "name": "_nin",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "entity_types_enum",
-                    "ofType": null
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_insert_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "OBJECT",
-          "name": "entity_types_max_fields",
-          "fields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "entity_types_min_fields",
-          "fields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "entity_types_mutation_response",
-          "fields": [
-            {
-              "name": "affected_rows",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "args": []
-            },
-            {
-              "name": "returning",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "entity_types",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": []
-            }
-          ],
-          "interfaces": []
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_on_conflict",
-          "inputFields": [
-            {
-              "name": "constraint",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "entity_types_constraint",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "name": "update_columns",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "entity_types_update_column",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "defaultValue": "[]"
-            },
-            {
-              "name": "where",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "entity_types_bool_exp",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_order_by",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_pk_columns_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "entity_types_select_column",
-          "enumValues": [
-            {
-              "name": "name"
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_set_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_stream_cursor_input",
-          "inputFields": [
-            {
-              "name": "initial_value",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "entity_types_stream_cursor_value_input",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "name": "ordering",
-              "type": {
-                "kind": "ENUM",
-                "name": "cursor_ordering",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_stream_cursor_value_input",
-          "inputFields": [
-            {
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ]
-        },
-        {
-          "kind": "ENUM",
-          "name": "entity_types_update_column",
-          "enumValues": [
-            {
-              "name": "name"
-            }
-          ]
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "entity_types_updates",
-          "inputFields": [
-            {
-              "name": "_set",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "entity_types_set_input",
-                "ofType": null
-              }
-            },
-            {
-              "name": "where",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "entity_types_bool_exp",
-                  "ofType": null
                 }
               }
             }
@@ -43716,48 +42226,6 @@ export default {
               ]
             },
             {
-              "name": "delete_actions",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions_mutation_response",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "actions_bool_exp",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "delete_actions_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "name",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
               "name": "delete_audit_logs",
               "type": {
                 "kind": "OBJECT",
@@ -43914,48 +42382,6 @@ export default {
               "args": [
                 {
                   "name": "credit_type",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "delete_entity_types",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types_mutation_response",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "entity_types_bool_exp",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "delete_entity_types_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "name",
                   "type": {
                     "kind": "NON_NULL",
                     "ofType": {
@@ -45505,70 +43931,6 @@ export default {
               ]
             },
             {
-              "name": "insert_actions",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions_mutation_response",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "objects",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "LIST",
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "ofType": {
-                          "kind": "INPUT_OBJECT",
-                          "name": "actions_insert_input",
-                          "ofType": null
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "on_conflict",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_on_conflict",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "insert_actions_one",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "object",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "actions_insert_input",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "name": "on_conflict",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_on_conflict",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
               "name": "insert_audit_logs",
               "type": {
                 "kind": "OBJECT",
@@ -45819,70 +44181,6 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "credit_types_on_conflict",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "insert_entity_types",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types_mutation_response",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "objects",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "LIST",
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "ofType": {
-                          "kind": "INPUT_OBJECT",
-                          "name": "entity_types_insert_input",
-                          "ofType": null
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "on_conflict",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_on_conflict",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "insert_entity_types_one",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "object",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "entity_types_insert_input",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "name": "on_conflict",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_on_conflict",
                     "ofType": null
                   }
                 }
@@ -48121,94 +46419,6 @@ export default {
               ]
             },
             {
-              "name": "update_actions",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions_mutation_response",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "_set",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_set_input",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "actions_bool_exp",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "update_actions_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "_set",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_set_input",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "pk_columns",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "actions_pk_columns_input",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "update_actions_many",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "actions_mutation_response",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "updates",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "LIST",
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "ofType": {
-                          "kind": "INPUT_OBJECT",
-                          "name": "actions_updates",
-                          "ofType": null
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            },
-            {
               "name": "update_audit_logs",
               "type": {
                 "kind": "OBJECT",
@@ -48902,94 +47112,6 @@ export default {
                         "ofType": {
                           "kind": "INPUT_OBJECT",
                           "name": "credit_types_updates",
-                          "ofType": null
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "update_entity_types",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types_mutation_response",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "_set",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_set_input",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "entity_types_bool_exp",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "update_entity_types_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "_set",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_set_input",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "pk_columns",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "entity_types_pk_columns_input",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "update_entity_types_many",
-              "type": {
-                "kind": "LIST",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "entity_types_mutation_response",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "updates",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "LIST",
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "ofType": {
-                          "kind": "INPUT_OBJECT",
-                          "name": "entity_types_updates",
                           "ofType": null
                         }
                       }
@@ -52251,163 +50373,6 @@ export default {
           "name": "query_root",
           "fields": [
             {
-              "name": "actions",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "actions",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "actions_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "actions_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "actions_aggregate",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "actions_aggregate",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "actions_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "actions_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "actions_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "name",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
               "name": "audit_logs",
               "type": {
                 "kind": "NON_NULL",
@@ -54437,163 +52402,6 @@ export default {
               "args": [
                 {
                   "name": "credit_type",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "entity_types",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "entity_types",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "entity_types_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "entity_types_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "entity_types_aggregate",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "entity_types_aggregate",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "entity_types_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "entity_types_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "entity_types_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "name",
                   "type": {
                     "kind": "NON_NULL",
                     "ofType": {
@@ -57957,215 +55765,6 @@ export default {
           "name": "subscription_root",
           "fields": [
             {
-              "name": "actions",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "actions",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "actions_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "actions_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "actions_aggregate",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "actions_aggregate",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "actions_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "actions_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "actions_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "actions",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "name",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "actions_stream",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "actions",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": [
-                {
-                  "name": "batch_size",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Int",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "name": "cursor",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "LIST",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "actions_stream_cursor_input",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "actions_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
               "name": "audit_logs",
               "type": {
                 "kind": "NON_NULL",
@@ -60877,215 +58476,6 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "credit_types_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "entity_types",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "entity_types",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "entity_types_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "entity_types_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "entity_types_aggregate",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "entity_types_aggregate",
-                  "ofType": null
-                }
-              },
-              "args": [
-                {
-                  "name": "distinct_on",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "ENUM",
-                        "name": "entity_types_select_column",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "limit",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "offset",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                {
-                  "name": "order_by",
-                  "type": {
-                    "kind": "LIST",
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "entity_types_order_by",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_bool_exp",
-                    "ofType": null
-                  }
-                }
-              ]
-            },
-            {
-              "name": "entity_types_by_pk",
-              "type": {
-                "kind": "OBJECT",
-                "name": "entity_types",
-                "ofType": null
-              },
-              "args": [
-                {
-                  "name": "name",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "name": "entity_types_stream",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "entity_types",
-                      "ofType": null
-                    }
-                  }
-                }
-              },
-              "args": [
-                {
-                  "name": "batch_size",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Int",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "name": "cursor",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "ofType": {
-                      "kind": "LIST",
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "entity_types_stream_cursor_input",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                {
-                  "name": "where",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "entity_types_bool_exp",
                     "ofType": null
                   }
                 }
@@ -72851,25 +70241,8 @@ export default {
     Int_Comparison_Exp: Int_Comparison_Exp,
     String_Array_Comparison_Exp: String_Array_Comparison_Exp,
     String_Comparison_Exp: String_Comparison_Exp,
-    Actions: Actions,
-    Actions_Aggregate: Actions_Aggregate,
-    Actions_Aggregate_Fields: Actions_Aggregate_Fields,
-    Actions_Aggregate_Fields_CountArgs: Actions_Aggregate_Fields_CountArgs,
-    Actions_Bool_Exp: Actions_Bool_Exp,
-    Actions_Enum_Comparison_Exp: Actions_Enum_Comparison_Exp,
-    Actions_Insert_Input: Actions_Insert_Input,
-    Actions_Max_Fields: Actions_Max_Fields,
-    Actions_Min_Fields: Actions_Min_Fields,
-    Actions_Mutation_Response: Actions_Mutation_Response,
-    Actions_On_Conflict: Actions_On_Conflict,
-    Actions_Order_By: Actions_Order_By,
-    Actions_Pk_Columns_Input: Actions_Pk_Columns_Input,
-    Actions_Set_Input: Actions_Set_Input,
-    Actions_Stream_Cursor_Input: Actions_Stream_Cursor_Input,
-    Actions_Stream_Cursor_Value_Input: Actions_Stream_Cursor_Value_Input,
-    Actions_Updates: Actions_Updates,
     Audit_Logs: Audit_Logs,
-    Audit_Logs_MetadataArgs: Audit_Logs_MetadataArgs,
+    Audit_Logs_DifferenceArgs: Audit_Logs_DifferenceArgs,
     Audit_Logs_Aggregate: Audit_Logs_Aggregate,
     Audit_Logs_Aggregate_Fields: Audit_Logs_Aggregate_Fields,
     Audit_Logs_Aggregate_Fields_CountArgs: Audit_Logs_Aggregate_Fields_CountArgs,
@@ -73166,23 +70539,6 @@ export default {
     Credit_Types_Stream_Cursor_Value_Input: Credit_Types_Stream_Cursor_Value_Input,
     Credit_Types_Updates: Credit_Types_Updates,
     Date_Comparison_Exp: Date_Comparison_Exp,
-    Entity_Types: Entity_Types,
-    Entity_Types_Aggregate: Entity_Types_Aggregate,
-    Entity_Types_Aggregate_Fields: Entity_Types_Aggregate_Fields,
-    Entity_Types_Aggregate_Fields_CountArgs: Entity_Types_Aggregate_Fields_CountArgs,
-    Entity_Types_Bool_Exp: Entity_Types_Bool_Exp,
-    Entity_Types_Enum_Comparison_Exp: Entity_Types_Enum_Comparison_Exp,
-    Entity_Types_Insert_Input: Entity_Types_Insert_Input,
-    Entity_Types_Max_Fields: Entity_Types_Max_Fields,
-    Entity_Types_Min_Fields: Entity_Types_Min_Fields,
-    Entity_Types_Mutation_Response: Entity_Types_Mutation_Response,
-    Entity_Types_On_Conflict: Entity_Types_On_Conflict,
-    Entity_Types_Order_By: Entity_Types_Order_By,
-    Entity_Types_Pk_Columns_Input: Entity_Types_Pk_Columns_Input,
-    Entity_Types_Set_Input: Entity_Types_Set_Input,
-    Entity_Types_Stream_Cursor_Input: Entity_Types_Stream_Cursor_Input,
-    Entity_Types_Stream_Cursor_Value_Input: Entity_Types_Stream_Cursor_Value_Input,
-    Entity_Types_Updates: Entity_Types_Updates,
     Files: Files,
     Files_MetadataArgs: Files_MetadataArgs,
     Files_MoviesArgs: Files_MoviesArgs,
@@ -73547,8 +70903,6 @@ export default {
     Mutation_Root_DeleteUsersArgs: Mutation_Root_DeleteUsersArgs,
     Mutation_Root_DeleteVirusArgs: Mutation_Root_DeleteVirusArgs,
     Mutation_Root_DeleteVirusesArgs: Mutation_Root_DeleteVirusesArgs,
-    Mutation_Root_Delete_ActionsArgs: Mutation_Root_Delete_ActionsArgs,
-    Mutation_Root_Delete_Actions_By_PkArgs: Mutation_Root_Delete_Actions_By_PkArgs,
     Mutation_Root_Delete_Audit_LogsArgs: Mutation_Root_Delete_Audit_LogsArgs,
     Mutation_Root_Delete_Audit_Logs_By_PkArgs: Mutation_Root_Delete_Audit_Logs_By_PkArgs,
     Mutation_Root_Delete_CollectionsArgs: Mutation_Root_Delete_CollectionsArgs,
@@ -73557,8 +70911,6 @@ export default {
     Mutation_Root_Delete_Countries_By_PkArgs: Mutation_Root_Delete_Countries_By_PkArgs,
     Mutation_Root_Delete_Credit_TypesArgs: Mutation_Root_Delete_Credit_TypesArgs,
     Mutation_Root_Delete_Credit_Types_By_PkArgs: Mutation_Root_Delete_Credit_Types_By_PkArgs,
-    Mutation_Root_Delete_Entity_TypesArgs: Mutation_Root_Delete_Entity_TypesArgs,
-    Mutation_Root_Delete_Entity_Types_By_PkArgs: Mutation_Root_Delete_Entity_Types_By_PkArgs,
     Mutation_Root_Delete_GendersArgs: Mutation_Root_Delete_GendersArgs,
     Mutation_Root_Delete_Genders_By_PkArgs: Mutation_Root_Delete_Genders_By_PkArgs,
     Mutation_Root_Delete_GenresArgs: Mutation_Root_Delete_GenresArgs,
@@ -73617,8 +70969,6 @@ export default {
     Mutation_Root_InsertUsersArgs: Mutation_Root_InsertUsersArgs,
     Mutation_Root_InsertVirusArgs: Mutation_Root_InsertVirusArgs,
     Mutation_Root_InsertVirusesArgs: Mutation_Root_InsertVirusesArgs,
-    Mutation_Root_Insert_ActionsArgs: Mutation_Root_Insert_ActionsArgs,
-    Mutation_Root_Insert_Actions_OneArgs: Mutation_Root_Insert_Actions_OneArgs,
     Mutation_Root_Insert_Audit_LogsArgs: Mutation_Root_Insert_Audit_LogsArgs,
     Mutation_Root_Insert_Audit_Logs_OneArgs: Mutation_Root_Insert_Audit_Logs_OneArgs,
     Mutation_Root_Insert_CollectionsArgs: Mutation_Root_Insert_CollectionsArgs,
@@ -73627,8 +70977,6 @@ export default {
     Mutation_Root_Insert_Countries_OneArgs: Mutation_Root_Insert_Countries_OneArgs,
     Mutation_Root_Insert_Credit_TypesArgs: Mutation_Root_Insert_Credit_TypesArgs,
     Mutation_Root_Insert_Credit_Types_OneArgs: Mutation_Root_Insert_Credit_Types_OneArgs,
-    Mutation_Root_Insert_Entity_TypesArgs: Mutation_Root_Insert_Entity_TypesArgs,
-    Mutation_Root_Insert_Entity_Types_OneArgs: Mutation_Root_Insert_Entity_Types_OneArgs,
     Mutation_Root_Insert_GendersArgs: Mutation_Root_Insert_GendersArgs,
     Mutation_Root_Insert_Genders_OneArgs: Mutation_Root_Insert_Genders_OneArgs,
     Mutation_Root_Insert_GenresArgs: Mutation_Root_Insert_GenresArgs,
@@ -73687,9 +71035,6 @@ export default {
     Mutation_Root_UpdateUsersArgs: Mutation_Root_UpdateUsersArgs,
     Mutation_Root_UpdateVirusArgs: Mutation_Root_UpdateVirusArgs,
     Mutation_Root_UpdateVirusesArgs: Mutation_Root_UpdateVirusesArgs,
-    Mutation_Root_Update_ActionsArgs: Mutation_Root_Update_ActionsArgs,
-    Mutation_Root_Update_Actions_By_PkArgs: Mutation_Root_Update_Actions_By_PkArgs,
-    Mutation_Root_Update_Actions_ManyArgs: Mutation_Root_Update_Actions_ManyArgs,
     Mutation_Root_Update_Audit_LogsArgs: Mutation_Root_Update_Audit_LogsArgs,
     Mutation_Root_Update_Audit_Logs_By_PkArgs: Mutation_Root_Update_Audit_Logs_By_PkArgs,
     Mutation_Root_Update_Audit_Logs_ManyArgs: Mutation_Root_Update_Audit_Logs_ManyArgs,
@@ -73711,9 +71056,6 @@ export default {
     Mutation_Root_Update_Credit_TypesArgs: Mutation_Root_Update_Credit_TypesArgs,
     Mutation_Root_Update_Credit_Types_By_PkArgs: Mutation_Root_Update_Credit_Types_By_PkArgs,
     Mutation_Root_Update_Credit_Types_ManyArgs: Mutation_Root_Update_Credit_Types_ManyArgs,
-    Mutation_Root_Update_Entity_TypesArgs: Mutation_Root_Update_Entity_TypesArgs,
-    Mutation_Root_Update_Entity_Types_By_PkArgs: Mutation_Root_Update_Entity_Types_By_PkArgs,
-    Mutation_Root_Update_Entity_Types_ManyArgs: Mutation_Root_Update_Entity_Types_ManyArgs,
     Mutation_Root_Update_Files_ManyArgs: Mutation_Root_Update_Files_ManyArgs,
     Mutation_Root_Update_GendersArgs: Mutation_Root_Update_GendersArgs,
     Mutation_Root_Update_Genders_By_PkArgs: Mutation_Root_Update_Genders_By_PkArgs,
@@ -73810,9 +71152,6 @@ export default {
     Production_Companies_Var_Samp_Fields: Production_Companies_Var_Samp_Fields,
     Production_Companies_Variance_Fields: Production_Companies_Variance_Fields,
     Query_Root: Query_Root,
-    Query_Root_ActionsArgs: Query_Root_ActionsArgs,
-    Query_Root_Actions_AggregateArgs: Query_Root_Actions_AggregateArgs,
-    Query_Root_Actions_By_PkArgs: Query_Root_Actions_By_PkArgs,
     Query_Root_Audit_LogsArgs: Query_Root_Audit_LogsArgs,
     Query_Root_Audit_Logs_AggregateArgs: Query_Root_Audit_Logs_AggregateArgs,
     Query_Root_Audit_Logs_By_PkArgs: Query_Root_Audit_Logs_By_PkArgs,
@@ -73852,9 +71191,6 @@ export default {
     Query_Root_Credit_TypesArgs: Query_Root_Credit_TypesArgs,
     Query_Root_Credit_Types_AggregateArgs: Query_Root_Credit_Types_AggregateArgs,
     Query_Root_Credit_Types_By_PkArgs: Query_Root_Credit_Types_By_PkArgs,
-    Query_Root_Entity_TypesArgs: Query_Root_Entity_TypesArgs,
-    Query_Root_Entity_Types_AggregateArgs: Query_Root_Entity_Types_AggregateArgs,
-    Query_Root_Entity_Types_By_PkArgs: Query_Root_Entity_Types_By_PkArgs,
     Query_Root_FileArgs: Query_Root_FileArgs,
     Query_Root_FilesArgs: Query_Root_FilesArgs,
     Query_Root_FilesAggregateArgs: Query_Root_FilesAggregateArgs,
@@ -73918,10 +71254,6 @@ export default {
     Query_Root_VirusesArgs: Query_Root_VirusesArgs,
     Query_Root_VirusesAggregateArgs: Query_Root_VirusesAggregateArgs,
     Subscription_Root: Subscription_Root,
-    Subscription_Root_ActionsArgs: Subscription_Root_ActionsArgs,
-    Subscription_Root_Actions_AggregateArgs: Subscription_Root_Actions_AggregateArgs,
-    Subscription_Root_Actions_By_PkArgs: Subscription_Root_Actions_By_PkArgs,
-    Subscription_Root_Actions_StreamArgs: Subscription_Root_Actions_StreamArgs,
     Subscription_Root_Audit_LogsArgs: Subscription_Root_Audit_LogsArgs,
     Subscription_Root_Audit_Logs_AggregateArgs: Subscription_Root_Audit_Logs_AggregateArgs,
     Subscription_Root_Audit_Logs_By_PkArgs: Subscription_Root_Audit_Logs_By_PkArgs,
@@ -73974,10 +71306,6 @@ export default {
     Subscription_Root_Credit_Types_AggregateArgs: Subscription_Root_Credit_Types_AggregateArgs,
     Subscription_Root_Credit_Types_By_PkArgs: Subscription_Root_Credit_Types_By_PkArgs,
     Subscription_Root_Credit_Types_StreamArgs: Subscription_Root_Credit_Types_StreamArgs,
-    Subscription_Root_Entity_TypesArgs: Subscription_Root_Entity_TypesArgs,
-    Subscription_Root_Entity_Types_AggregateArgs: Subscription_Root_Entity_Types_AggregateArgs,
-    Subscription_Root_Entity_Types_By_PkArgs: Subscription_Root_Entity_Types_By_PkArgs,
-    Subscription_Root_Entity_Types_StreamArgs: Subscription_Root_Entity_Types_StreamArgs,
     Subscription_Root_FileArgs: Subscription_Root_FileArgs,
     Subscription_Root_FilesArgs: Subscription_Root_FilesArgs,
     Subscription_Root_FilesAggregateArgs: Subscription_Root_FilesAggregateArgs,
@@ -74252,13 +71580,6 @@ export const UpsertUserMovieActivityDocument = gql`
   }
 }
     `;
-export const ActionsDocument = gql`
-    query Actions {
-  actions {
-    name
-  }
-}
-    `;
 export const AuditLogsDocument = gql`
     query AuditLogs($where: audit_logs_bool_exp, $distinct_on: [audit_logs_select_column!], $limit: Int, $offset: Int, $order_by: [audit_logs_order_by!]) {
   audit_logs(
@@ -74270,9 +71591,9 @@ export const AuditLogsDocument = gql`
   ) {
     id
     action
-    entity_type
-    entity_id
-    metadata
+    table
+    row_id
+    difference
     user {
       id
       displayName
@@ -74285,13 +71606,6 @@ export const CreditTypesDocument = gql`
     query CreditTypes {
   credit_types {
     credit_type
-  }
-}
-    `;
-export const EntityTypesDocument = gql`
-    query EntityTypes {
-  entity_types {
-    name
   }
 }
     `;
@@ -74430,17 +71744,11 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     UpsertUserMovieActivity(variables: UpsertUserMovieActivityMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpsertUserMovieActivityMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpsertUserMovieActivityMutation>({ document: UpsertUserMovieActivityDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpsertUserMovieActivity', 'mutation', variables);
     },
-    Actions(variables?: ActionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ActionsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ActionsQuery>({ document: ActionsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Actions', 'query', variables);
-    },
     AuditLogs(variables?: AuditLogsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AuditLogsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<AuditLogsQuery>({ document: AuditLogsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'AuditLogs', 'query', variables);
     },
     CreditTypes(variables?: CreditTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreditTypesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreditTypesQuery>({ document: CreditTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreditTypes', 'query', variables);
-    },
-    EntityTypes(variables?: EntityTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<EntityTypesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<EntityTypesQuery>({ document: EntityTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'EntityTypes', 'query', variables);
     },
     Genders(variables?: GendersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GendersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GendersQuery>({ document: GendersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Genders', 'query', variables);

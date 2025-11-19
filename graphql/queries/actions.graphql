@@ -1,5 +1,0 @@
-query Actions {
-    actions {
-        name
-    }
-}
