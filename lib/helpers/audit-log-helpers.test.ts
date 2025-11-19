@@ -3,10 +3,14 @@ import { describe, expect, it } from 'vitest'
 import { computeDataDifference, createAuditLogEntry } from './audit-log-helpers'
 
 describe('computeDataDifference', () => {
-    it('should return empty object for INSERT operations (no old data)', () => {
+    it('should return all new data for INSERT operations (old: null, new: object)', () => {
         const newData = { id: '123', name: 'Test', value: 100 }
         const result = computeDataDifference(null, newData)
-        expect(result).toEqual({})
+        expect(result).toEqual({
+            id: { old: null, new: '123' },
+            name: { old: null, new: 'Test' },
+            value: { old: null, new: 100 },
+        })
     })
 
     it('should return all fields for DELETE operations (no new data)', () => {
@@ -64,7 +68,7 @@ describe('computeDataDifference', () => {
         const newData = { id: '123', name: 'Test' }
         const result = computeDataDifference(oldData, newData)
         expect(result).toEqual({
-            value: { old: 100, new: undefined },
+            value: { old: 100, new: null },
         })
     })
 
@@ -73,7 +77,7 @@ describe('computeDataDifference', () => {
         const newData = { id: '123', name: 'Test', value: 100 }
         const result = computeDataDifference(oldData, newData)
         expect(result).toEqual({
-            value: { old: undefined, new: 100 },
+            value: { old: null, new: 100 },
         })
     })
 
@@ -89,7 +93,7 @@ describe('computeDataDifference', () => {
         const newData = { id: '123', name: 'Test', value: 100 }
         const result = computeDataDifference(oldData, newData)
         expect(result).toEqual({
-            value: { old: undefined, new: 100 },
+            value: { old: null, new: 100 },
         })
     })
 
