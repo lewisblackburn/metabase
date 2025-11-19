@@ -8,9 +8,10 @@ export async function POST(request: Request) {
 
     if (body === undefined || body === null) return NextResponse.json({ success: false })
 
-    const { id, table, data, op, session_variables } = body
+    const { table, data, op, session_variables } = body
     const tableName = table.name
-    const { old, new: newData } = data
+    const { old, new: newData } = data || {}
+    const rowId = newData?.id || old?.id
     const userId = session_variables['x-hasura-user-id']
 
     if (!userId) return NextResponse.json({ success: false })
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
     const auditLogEntry = createAuditLogEntry({
         operation: op,
         tableName,
-        rowId: id,
+        rowId,
         difference,
         userId,
     })
