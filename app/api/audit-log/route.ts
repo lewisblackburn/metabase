@@ -5,6 +5,9 @@ import { computeDataDifference, createAuditLogEntry } from '@/lib/helpers/audit-
 
 export async function POST(request: Request) {
     const body = await request.json()
+
+    if (body === undefined || body === null) return NextResponse.json({ success: false })
+
     const { id, table, data, op, session_variables } = body
     const tableName = table.name
     const { old, new: newData } = data
