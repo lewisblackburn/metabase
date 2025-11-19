@@ -14,7 +14,10 @@ export async function createMovie({ title }: { title: string }) {
     return nhost.graphql
         .request<CreateMovieMutation, CreateMovieMutationVariables>(CreateMovieDocument, {
             object: { title },
-            on_conflict: { constraint: 'movies_pkey' },
+            on_conflict: {
+                constraint: 'movies_pkey',
+                update_columns: [],
+            },
         })
         .catch(handleGraphQLError)
 }

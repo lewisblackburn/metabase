@@ -13,6 +13,8 @@ export async function POST(request: Request) {
     const { old, new: newData } = data
     const userId = session_variables['x-hasura-user-id']
 
+    if (!userId) return NextResponse.json({ success: false })
+
     // Compute difference between old and new data
     const difference = computeDataDifference(old, newData)
 
@@ -25,18 +27,15 @@ export async function POST(request: Request) {
         userId,
     })
 
-    // Insert audit log
-    try {
-        await insertAuditLog({
-            object: auditLogEntry,
-            on_conflict: {
-                constraint: 'audit_logs_pkey',
-            },
-        })
-    } catch (error) {
-        console.error('Failed to insert audit log:', error)
+    await insertAuditLog({
+        object: auditLogEntry,
+        on_conflict: {
+            constraint: 'audit_logs_pkey',
+        },
+    }).catch(error => {
         // Don't fail the webhook if audit log insertion fails
-    }
+        console.error('Failed to insert audit log:', error)
+    })
 
     return NextResponse.json({ success: true })
 }
