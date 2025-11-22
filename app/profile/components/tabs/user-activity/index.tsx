@@ -1,5 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { AuditLogsDocument, AuditLogsQuery, AuditLogsQueryVariables } from '@/generated/graphql'
+import {
+    Audit_Logs,
+    AuditLogsDocument,
+    AuditLogsQuery,
+    AuditLogsQueryVariables,
+} from '@/generated/graphql'
 import type { AuditLogDifference } from '@/lib/helpers/audit-log-helpers'
 import { createNhostClient } from '@/lib/nhost/server'
 
@@ -48,6 +53,7 @@ export default async function UserActivity() {
 const ActivityItem = ({ auditLog }: { auditLog: AuditLogsQuery['audit_logs'][number] }) => {
     if (!auditLog.user || !auditLog.difference) return null
     const differenceRecord = auditLog.difference as AuditLogDifference
+    const user = auditLog.user
 
     return (
         <>
@@ -57,8 +63,9 @@ const ActivityItem = ({ auditLog }: { auditLog: AuditLogsQuery['audit_logs'][num
                     <ActivityFieldItem
                         key={key}
                         field={key as ActivityField}
+                        meta={auditLog.meta}
                         change={change}
-                        user={auditLog.user!}
+                        user={user}
                     />
                 ))}
         </>
@@ -67,19 +74,18 @@ const ActivityItem = ({ auditLog }: { auditLog: AuditLogsQuery['audit_logs'][num
 
 const ActivityFieldItem = ({
     field,
+    meta,
     change,
     user,
 }: {
     field: ActivityField
-    change: { old: unknown; new: unknown }
+    meta: Audit_Logs['meta']
+    change: AuditLogDifference[string]
     user: NonNullable<AuditLogsQuery['audit_logs'][number]['user']>
 }) => {
-    const formatValue = (value: unknown) => (value !== null ? String(value) : 'N/A')
-    const label = field.charAt(0).toUpperCase() + field.slice(1)
-
     switch (field) {
         case ActivityField.RATING:
-            return <ActivityRatingItem change={change} user={user} />
+            return <ActivityRatingItem meta={meta} change={change} user={user} />
         case ActivityField.COMMENT:
             return null
         case ActivityField.STATUS:
@@ -94,6 +100,8 @@ const ActivityUser = ({
 }: {
     user: NonNullable<AuditLogsQuery['audit_logs'][number]['user']>
 }) => {
+    if (!user) return null
+
     return (
         <div className="flex items-center gap-2">
             <Avatar className="size-5">
@@ -104,24 +112,23 @@ const ActivityUser = ({
         </div>
     )
 }
-
 const ActivityRatingItem = ({
+    meta,
     change,
     user,
 }: {
+    meta: Audit_Logs['meta']
     change: AuditLogDifference[string]
     user: NonNullable<AuditLogsQuery['audit_logs'][number]['user']>
 }) => {
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
             <ActivityUser user={user} />
-            <div className="flex items-center gap-1">
-                <span>Rated</span>
-                {/* <span>{JSON.stringify(meta.title)}</span> */}
-                <span>{JSON.stringify(change.new)}</span>
-                {/* TODO: Create a stars component to render stars from number */}
-                <span>stars</span>
-            </div>
+            <span>Rated</span>
+            <span>{meta.title}</span>
+            <span>{JSON.stringify(change.new)}</span>
+            {/* TODO: Create a stars component to render stars from number */}
+            <span>stars</span>
         </div>
     )
 }
