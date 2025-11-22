@@ -1,7 +1,9 @@
 import { MinusIcon, PlusIcon } from 'lucide-react'
 
+import type { AuditLogDifference } from '@/lib/helpers/audit-log-helpers'
+
 interface AuditLogDifferenceProps {
-    difference: Record<string, { old: unknown; new: unknown }>
+    difference: AuditLogDifference
 }
 
 export default function AuditLogDifference({ difference }: AuditLogDifferenceProps) {

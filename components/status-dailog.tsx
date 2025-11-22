@@ -39,6 +39,7 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                 status: value.status,
                 comment,
                 rating,
+                ...(movie?.title && { meta: { title: movie.title } }),
             }).catch(error => {
                 toast.error('Failed to update status', {
                     description: error.message,

@@ -24,7 +24,7 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
     const isRated = userMovieActivity?.rating && userMovieActivity.rating > 0
     const status = userMovieActivity?.status as User_Movie_Statuses_Enum
     const rating = userMovieActivity?.rating ?? 0
-    const comment = userMovieActivity?.comment
+    const comment = userMovieActivity?.comment ?? null
 
     const form = useForm({
         defaultValues: {
@@ -40,6 +40,7 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                 status,
                 rating: value.rating,
                 comment: value.comment,
+                meta: { title: movie?.title },
             }).catch(error => {
                 toast.error('Failed to update rating', {
                     description: error.message,

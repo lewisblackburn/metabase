@@ -1,3 +1,5 @@
+import { logger } from '@/lib/helpers/logger'
+
 import { formatConstraintError } from './constraint-handler'
 import { GraphQLError, GraphQLErrorCode } from './types'
 
@@ -36,6 +38,7 @@ export function handleGraphQLError(error: unknown): never {
             )
 
         case GraphQLErrorCode.ValidationFailed:
+            logger.error(message)
             throw new GraphQLError('The data you provided is invalid.', code, firstError.extensions)
 
         default:

@@ -17,6 +17,7 @@ query AuditLogs(
         table
         row_id
         difference
+        meta
         user {
             id
             displayName

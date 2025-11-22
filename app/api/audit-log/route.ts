@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 
+import { Audit_Logs_Constraint } from '@/generated/graphql'
 import { insertAuditLog } from '@/lib/actions/audit-logs/insert-audit-log'
 import { computeDataDifference, createAuditLogEntry } from '@/lib/helpers/audit-log-helpers'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
@@ -18,6 +19,7 @@ export async function POST(request: Request) {
     const tableName = table.name
     const { old, new: newData } = data || {}
     const rowId = newData?.id || old?.id
+    const meta = newData?.meta || old?.meta || {}
     const userId = session_variables?.['x-hasura-user-id']
 
     if (!userId) return NextResponse.json({ success: false })
@@ -30,12 +32,13 @@ export async function POST(request: Request) {
         rowId,
         difference,
         userId,
+        meta,
     })
 
     await insertAuditLog({
         object: auditLogEntry,
         on_conflict: {
-            constraint: 'audit_logs_pkey',
+            constraint: 'audit_logs_pkey' satisfies Audit_Logs_Constraint,
             update_columns: [],
         },
     }).catch(handleGraphQLError)

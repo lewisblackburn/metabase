@@ -2,6 +2,20 @@
  * Helper functions for audit log operations
  */
 
+import { Audit_Logs } from '@/generated/graphql'
+
+/**
+ * Type representing the structure of an audit log difference field
+ * This matches the structure returned by computeDataDifference
+ */
+export type AuditLogDifference = Record<string, { old: unknown; new: unknown }>
+
+/**
+ * Type for the difference field from Audit_Logs
+ * The difference field is stored as JSONB, but we know its structure
+ */
+export type AuditLogDifferenceField = AuditLogDifference | null
+
 /**
  * Operation type determined by the presence of old and new data
  */
@@ -18,6 +32,15 @@ function determineOperationType(
     if (oldData && !newData) return 'DELETE'
     if (oldData && newData) return 'UPDATE'
     return 'UPDATE' // fallback, though this shouldn't happen
+}
+
+/**
+ * Removes "meta" field from data object since it's stored separately
+ */
+function removeMetaField(data: Record<string, unknown>): Record<string, unknown> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { meta, ...rest } = data
+    return rest
 }
 
 /**
@@ -46,6 +69,8 @@ function areValuesEqual(oldValue: unknown, newValue: unknown): boolean {
  * - UPDATE: old: object, new: object (stores only differences)
  * - DELETE: old: object, new: null (stores all old data)
  *
+ * NOTE: The "meta" field is excluded from difference calculation since it's stored separately
+ *
  * @param oldData - The old data object (can be null/undefined for INSERT operations)
  * @param newData - The new data object (can be null/undefined for DELETE operations)
  * @returns An object containing changed fields with old and new values
@@ -53,20 +78,24 @@ function areValuesEqual(oldValue: unknown, newValue: unknown): boolean {
 export function computeDataDifference(
     oldData: Record<string, unknown> | null | undefined,
     newData: Record<string, unknown> | null | undefined,
-): Record<string, { old: unknown; new: unknown }> {
+): AuditLogDifference {
+    // NOTE: Remove "meta" from difference data since it's stored separately
+    const oldWithoutMeta = oldData ? removeMetaField(oldData) : oldData
+    const newWithoutMeta = newData ? removeMetaField(newData) : newData
+
     const differences: Record<string, { old: unknown; new: unknown }> = {}
-    const operationType = determineOperationType(oldData, newData)
+    const operationType = determineOperationType(oldWithoutMeta, newWithoutMeta)
 
     switch (operationType) {
         case 'INSERT': {
             // INSERT: old: null, new: object (store all new data)
-            if (!newData) break
+            if (!newWithoutMeta) break
 
-            for (const key in newData) {
-                if (Object.prototype.hasOwnProperty.call(newData, key)) {
+            for (const key in newWithoutMeta) {
+                if (Object.prototype.hasOwnProperty.call(newWithoutMeta, key)) {
                     differences[key] = {
                         old: null,
-                        new: newData[key],
+                        new: newWithoutMeta[key],
                     }
                 }
             }
@@ -75,13 +104,13 @@ export function computeDataDifference(
 
         case 'UPDATE': {
             // UPDATE: old: object, new: object (store only differences)
-            if (!oldData || !newData) break
+            if (!oldWithoutMeta || !newWithoutMeta) break
 
             // Check all keys in newData for changes
-            for (const key in newData) {
-                if (Object.prototype.hasOwnProperty.call(newData, key)) {
-                    const oldValue = oldData[key]
-                    const newValue = newData[key]
+            for (const key in newWithoutMeta) {
+                if (Object.prototype.hasOwnProperty.call(newWithoutMeta, key)) {
+                    const oldValue = oldWithoutMeta[key]
+                    const newValue = newWithoutMeta[key]
 
                     // Only include if values are different
                     if (!areValuesEqual(oldValue, newValue)) {
@@ -95,13 +124,13 @@ export function computeDataDifference(
             }
 
             // Check for keys that were removed (exist in oldData but not in newData)
-            for (const key in oldData) {
+            for (const key in oldWithoutMeta) {
                 if (
-                    Object.prototype.hasOwnProperty.call(oldData, key) &&
-                    !Object.prototype.hasOwnProperty.call(newData, key)
+                    Object.prototype.hasOwnProperty.call(oldWithoutMeta, key) &&
+                    !Object.prototype.hasOwnProperty.call(newWithoutMeta, key)
                 ) {
                     differences[key] = {
-                        old: oldData[key],
+                        old: oldWithoutMeta[key],
                         new: null,
                     }
                 }
@@ -111,12 +140,12 @@ export function computeDataDifference(
 
         case 'DELETE': {
             // DELETE: old: object, new: null (store all old data)
-            if (!oldData) break
+            if (!oldWithoutMeta) break
 
-            for (const key in oldData) {
-                if (Object.prototype.hasOwnProperty.call(oldData, key)) {
+            for (const key in oldWithoutMeta) {
+                if (Object.prototype.hasOwnProperty.call(oldWithoutMeta, key)) {
                     differences[key] = {
-                        old: oldData[key],
+                        old: oldWithoutMeta[key],
                         new: null,
                     }
                 }
@@ -139,18 +168,28 @@ export function createAuditLogEntry({
     rowId,
     difference,
     userId,
+    meta,
 }: {
-    operation: string
-    tableName: string
-    rowId: string | null | undefined
-    difference: Record<string, { old: unknown; new: unknown }>
-    userId: string | null | undefined
-}) {
+    operation: Audit_Logs['action']
+    tableName: Audit_Logs['table']
+    rowId: Audit_Logs['row_id']
+    difference: AuditLogDifference
+    userId: Audit_Logs['user_id']
+    meta: Audit_Logs['meta']
+}): {
+    action: Audit_Logs['action']
+    table: Audit_Logs['table']
+    row_id: Audit_Logs['row_id']
+    difference: AuditLogDifferenceField
+    user_id: Audit_Logs['user_id']
+    meta: Audit_Logs['meta']
+} {
     return {
         action: operation,
         table: tableName,
         row_id: rowId,
         difference: Object.keys(difference).length > 0 ? difference : null,
         user_id: userId,
+        meta,
     }
 }

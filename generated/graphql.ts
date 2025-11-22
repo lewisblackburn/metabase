@@ -53,7 +53,7 @@ export type UpsertUserMovieActivityMutationVariables = Exact<{
 }>;
 
 
-export type UpsertUserMovieActivityMutation = { __typename?: 'mutation_root', insert_user_movie_activities_one?: { __typename?: 'user_movie_activities', movie_id: any, rating?: number | null, status?: User_Movie_Statuses_Enum | null, comment?: string | null } | null };
+export type UpsertUserMovieActivityMutation = { __typename?: 'mutation_root', insert_user_movie_activities_one?: { __typename?: 'user_movie_activities', movie_id: any, rating?: number | null, status?: User_Movie_Statuses_Enum | null, comment?: string | null, meta?: any | null } | null };
 
 export type AuditLogsQueryVariables = Exact<{
   where?: InputMaybe<Audit_Logs_Bool_Exp>;
@@ -64,7 +64,7 @@ export type AuditLogsQueryVariables = Exact<{
 }>;
 
 
-export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference?: any | null, created_at: any, user?: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } | null }> };
+export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference?: any | null, meta?: any | null, created_at: any, user?: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } | null }> };
 
 export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -249,6 +249,7 @@ export type Audit_Logs = {
   created_at: Scalars['timestamptz'];
   difference?: Maybe<Scalars['jsonb']>;
   id: Scalars['uuid'];
+  meta?: Maybe<Scalars['jsonb']>;
   row_id: Scalars['uuid'];
   table: Scalars['String'];
   /** An object relationship */
@@ -259,6 +260,12 @@ export type Audit_Logs = {
 
 /** columns and relationships of "audit_logs" */
 export type Audit_Logs_DifferenceArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "audit_logs" */
+export type Audit_Logs_MetaArgs = {
   path?: InputMaybe<Scalars['String']>;
 };
 
@@ -287,6 +294,7 @@ export type Audit_Logs_Aggregate_Fields_CountArgs = {
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type Audit_Logs_Append_Input = {
   difference?: InputMaybe<Scalars['jsonb']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** Boolean expression to filter rows from the table "audit_logs". All fields are combined with a logical 'AND'. */
@@ -298,6 +306,7 @@ export type Audit_Logs_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   difference?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  meta?: InputMaybe<Jsonb_Comparison_Exp>;
   row_id?: InputMaybe<Uuid_Comparison_Exp>;
   table?: InputMaybe<String_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
@@ -312,16 +321,19 @@ export type Audit_Logs_Constraint =
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type Audit_Logs_Delete_At_Path_Input = {
   difference?: InputMaybe<Array<Scalars['String']>>;
+  meta?: InputMaybe<Array<Scalars['String']>>;
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
 export type Audit_Logs_Delete_Elem_Input = {
   difference?: InputMaybe<Scalars['Int']>;
+  meta?: InputMaybe<Scalars['Int']>;
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type Audit_Logs_Delete_Key_Input = {
   difference?: InputMaybe<Scalars['String']>;
+  meta?: InputMaybe<Scalars['String']>;
 };
 
 /** input type for inserting data into table "audit_logs" */
@@ -330,6 +342,7 @@ export type Audit_Logs_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   difference?: InputMaybe<Scalars['jsonb']>;
   id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   row_id?: InputMaybe<Scalars['uuid']>;
   table?: InputMaybe<Scalars['String']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -380,6 +393,7 @@ export type Audit_Logs_Order_By = {
   created_at?: InputMaybe<Order_By>;
   difference?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  meta?: InputMaybe<Order_By>;
   row_id?: InputMaybe<Order_By>;
   table?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
@@ -394,6 +408,7 @@ export type Audit_Logs_Pk_Columns_Input = {
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type Audit_Logs_Prepend_Input = {
   difference?: InputMaybe<Scalars['jsonb']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "audit_logs" */
@@ -407,6 +422,8 @@ export type Audit_Logs_Select_Column =
   /** column name */
   | 'id'
   /** column name */
+  | 'meta'
+  /** column name */
   | 'row_id'
   /** column name */
   | 'table'
@@ -419,6 +436,7 @@ export type Audit_Logs_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   difference?: InputMaybe<Scalars['jsonb']>;
   id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   row_id?: InputMaybe<Scalars['uuid']>;
   table?: InputMaybe<Scalars['String']>;
   user_id?: InputMaybe<Scalars['uuid']>;
@@ -438,6 +456,7 @@ export type Audit_Logs_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   difference?: InputMaybe<Scalars['jsonb']>;
   id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   row_id?: InputMaybe<Scalars['uuid']>;
   table?: InputMaybe<Scalars['String']>;
   user_id?: InputMaybe<Scalars['uuid']>;
@@ -453,6 +472,8 @@ export type Audit_Logs_Update_Column =
   | 'difference'
   /** column name */
   | 'id'
+  /** column name */
+  | 'meta'
   /** column name */
   | 'row_id'
   /** column name */
@@ -8505,7 +8526,12 @@ export type Mutation_Root_Update_Production_Companies_ManyArgs = {
 
 /** mutation root */
 export type Mutation_Root_Update_User_Movie_ActivitiesArgs = {
+  _append?: InputMaybe<User_Movie_Activities_Append_Input>;
+  _delete_at_path?: InputMaybe<User_Movie_Activities_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<User_Movie_Activities_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<User_Movie_Activities_Delete_Key_Input>;
   _inc?: InputMaybe<User_Movie_Activities_Inc_Input>;
+  _prepend?: InputMaybe<User_Movie_Activities_Prepend_Input>;
   _set?: InputMaybe<User_Movie_Activities_Set_Input>;
   where: User_Movie_Activities_Bool_Exp;
 };
@@ -8513,7 +8539,12 @@ export type Mutation_Root_Update_User_Movie_ActivitiesArgs = {
 
 /** mutation root */
 export type Mutation_Root_Update_User_Movie_Activities_By_PkArgs = {
+  _append?: InputMaybe<User_Movie_Activities_Append_Input>;
+  _delete_at_path?: InputMaybe<User_Movie_Activities_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<User_Movie_Activities_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<User_Movie_Activities_Delete_Key_Input>;
   _inc?: InputMaybe<User_Movie_Activities_Inc_Input>;
+  _prepend?: InputMaybe<User_Movie_Activities_Prepend_Input>;
   _set?: InputMaybe<User_Movie_Activities_Set_Input>;
   pk_columns: User_Movie_Activities_Pk_Columns_Input;
 };
@@ -11270,10 +11301,18 @@ export type Timestamptz_Comparison_Exp = {
 export type User_Movie_Activities = {
   __typename?: 'user_movie_activities';
   comment?: Maybe<Scalars['String']>;
+  id: Scalars['uuid'];
+  meta?: Maybe<Scalars['jsonb']>;
   movie_id: Scalars['uuid'];
   rating?: Maybe<Scalars['Int']>;
   status?: Maybe<User_Movie_Statuses_Enum>;
   user_id: Scalars['uuid'];
+};
+
+
+/** columns and relationships of "user_movie_activities" */
+export type User_Movie_Activities_MetaArgs = {
+  path?: InputMaybe<Scalars['String']>;
 };
 
 export type User_Movie_Activities_Aggregate = {
@@ -11320,6 +11359,11 @@ export type User_Movie_Activities_Aggregate_Order_By = {
   variance?: InputMaybe<User_Movie_Activities_Variance_Order_By>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type User_Movie_Activities_Append_Input = {
+  meta?: InputMaybe<Scalars['jsonb']>;
+};
+
 /** aggregate avg on columns */
 export type User_Movie_Activities_Avg_Fields = {
   __typename?: 'user_movie_activities_avg_fields';
@@ -11337,6 +11381,8 @@ export type User_Movie_Activities_Bool_Exp = {
   _not?: InputMaybe<User_Movie_Activities_Bool_Exp>;
   _or?: InputMaybe<Array<User_Movie_Activities_Bool_Exp>>;
   comment?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  meta?: InputMaybe<Jsonb_Comparison_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
   rating?: InputMaybe<Int_Comparison_Exp>;
   status?: InputMaybe<User_Movie_Statuses_Enum_Comparison_Exp>;
@@ -11345,8 +11391,25 @@ export type User_Movie_Activities_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_movie_activities" */
 export type User_Movie_Activities_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'user_movie_activities_id_key'
   /** unique or primary key constraint on columns "user_id", "movie_id" */
   | 'user_movie_activities_pkey';
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type User_Movie_Activities_Delete_At_Path_Input = {
+  meta?: InputMaybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type User_Movie_Activities_Delete_Elem_Input = {
+  meta?: InputMaybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type User_Movie_Activities_Delete_Key_Input = {
+  meta?: InputMaybe<Scalars['String']>;
+};
 
 /** input type for incrementing numeric columns in table "user_movie_activities" */
 export type User_Movie_Activities_Inc_Input = {
@@ -11356,6 +11419,8 @@ export type User_Movie_Activities_Inc_Input = {
 /** input type for inserting data into table "user_movie_activities" */
 export type User_Movie_Activities_Insert_Input = {
   comment?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   rating?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<User_Movie_Statuses_Enum>;
@@ -11366,6 +11431,7 @@ export type User_Movie_Activities_Insert_Input = {
 export type User_Movie_Activities_Max_Fields = {
   __typename?: 'user_movie_activities_max_fields';
   comment?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
   movie_id?: Maybe<Scalars['uuid']>;
   rating?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['uuid']>;
@@ -11374,6 +11440,7 @@ export type User_Movie_Activities_Max_Fields = {
 /** order by max() on columns of table "user_movie_activities" */
 export type User_Movie_Activities_Max_Order_By = {
   comment?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -11383,6 +11450,7 @@ export type User_Movie_Activities_Max_Order_By = {
 export type User_Movie_Activities_Min_Fields = {
   __typename?: 'user_movie_activities_min_fields';
   comment?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
   movie_id?: Maybe<Scalars['uuid']>;
   rating?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['uuid']>;
@@ -11391,6 +11459,7 @@ export type User_Movie_Activities_Min_Fields = {
 /** order by min() on columns of table "user_movie_activities" */
 export type User_Movie_Activities_Min_Order_By = {
   comment?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -11415,6 +11484,8 @@ export type User_Movie_Activities_On_Conflict = {
 /** Ordering options when selecting data from "user_movie_activities". */
 export type User_Movie_Activities_Order_By = {
   comment?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  meta?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
@@ -11427,10 +11498,19 @@ export type User_Movie_Activities_Pk_Columns_Input = {
   user_id: Scalars['uuid'];
 };
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type User_Movie_Activities_Prepend_Input = {
+  meta?: InputMaybe<Scalars['jsonb']>;
+};
+
 /** select columns of table "user_movie_activities" */
 export type User_Movie_Activities_Select_Column =
   /** column name */
   | 'comment'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'meta'
   /** column name */
   | 'movie_id'
   /** column name */
@@ -11443,6 +11523,8 @@ export type User_Movie_Activities_Select_Column =
 /** input type for updating data in table "user_movie_activities" */
 export type User_Movie_Activities_Set_Input = {
   comment?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   rating?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<User_Movie_Statuses_Enum>;
@@ -11493,6 +11575,8 @@ export type User_Movie_Activities_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type User_Movie_Activities_Stream_Cursor_Value_Input = {
   comment?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   rating?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<User_Movie_Statuses_Enum>;
@@ -11515,6 +11599,10 @@ export type User_Movie_Activities_Update_Column =
   /** column name */
   | 'comment'
   /** column name */
+  | 'id'
+  /** column name */
+  | 'meta'
+  /** column name */
   | 'movie_id'
   /** column name */
   | 'rating'
@@ -11524,8 +11612,18 @@ export type User_Movie_Activities_Update_Column =
   | 'user_id';
 
 export type User_Movie_Activities_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<User_Movie_Activities_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<User_Movie_Activities_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<User_Movie_Activities_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<User_Movie_Activities_Delete_Key_Input>;
   /** increments the numeric columns with given value of the filtered values */
   _inc?: InputMaybe<User_Movie_Activities_Inc_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<User_Movie_Activities_Prepend_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<User_Movie_Activities_Set_Input>;
   /** filter the rows which have to be updated */
@@ -13518,6 +13616,24 @@ export default {
               "args": []
             },
             {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "row_id",
               "type": {
                 "kind": "NON_NULL",
@@ -13667,6 +13783,14 @@ export default {
                 "name": "jsonb",
                 "ofType": null
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
             }
           ]
         },
@@ -13743,6 +13867,14 @@ export default {
               }
             },
             {
+              "name": "meta",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "jsonb_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "row_id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -13802,6 +13934,20 @@ export default {
                   }
                 }
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
             }
           ]
         },
@@ -13816,6 +13962,14 @@ export default {
                 "name": "Int",
                 "ofType": null
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             }
           ]
         },
@@ -13825,6 +13979,14 @@ export default {
           "inputFields": [
             {
               "name": "difference",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -13866,6 +14028,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -14142,6 +14312,14 @@ export default {
               }
             },
             {
+              "name": "meta",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "row_id",
               "type": {
                 "kind": "ENUM",
@@ -14203,6 +14381,14 @@ export default {
                 "name": "jsonb",
                 "ofType": null
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
             }
           ]
         },
@@ -14221,6 +14407,9 @@ export default {
             },
             {
               "name": "id"
+            },
+            {
+              "name": "meta"
             },
             {
               "name": "row_id"
@@ -14266,6 +14455,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -14357,6 +14554,14 @@ export default {
               }
             },
             {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            },
+            {
               "name": "row_id",
               "type": {
                 "kind": "SCALAR",
@@ -14397,6 +14602,9 @@ export default {
             },
             {
               "name": "id"
+            },
+            {
+              "name": "meta"
             },
             {
               "name": "row_id"
@@ -48430,10 +48638,50 @@ export default {
               },
               "args": [
                 {
+                  "name": "_append",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_append_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_at_path",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_delete_at_path_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_elem",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_delete_elem_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_key",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_delete_key_input",
+                    "ofType": null
+                  }
+                },
+                {
                   "name": "_inc",
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "user_movie_activities_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_prepend",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_prepend_input",
                     "ofType": null
                   }
                 },
@@ -48467,10 +48715,50 @@ export default {
               },
               "args": [
                 {
+                  "name": "_append",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_append_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_at_path",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_delete_at_path_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_elem",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_delete_elem_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_key",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_delete_key_input",
+                    "ofType": null
+                  }
+                },
+                {
                   "name": "_inc",
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "user_movie_activities_inc_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_prepend",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "user_movie_activities_prepend_input",
                     "ofType": null
                   }
                 },
@@ -62967,6 +63255,36 @@ export default {
               "args": []
             },
             {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "movie_id",
               "type": {
                 "kind": "NON_NULL",
@@ -63272,6 +63590,20 @@ export default {
           ]
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_append_input",
+          "inputFields": [
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "user_movie_activities_avg_fields",
           "fields": [
@@ -63350,6 +63682,22 @@ export default {
               }
             },
             {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "jsonb_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "movie_id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -63388,7 +63736,58 @@ export default {
           "name": "user_movie_activities_constraint",
           "enumValues": [
             {
+              "name": "user_movie_activities_id_key"
+            },
+            {
               "name": "user_movie_activities_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_delete_at_path_input",
+          "inputFields": [
+            {
+              "name": "meta",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_delete_elem_input",
+          "inputFields": [
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_delete_key_input",
+          "inputFields": [
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             }
           ]
         },
@@ -63415,6 +63814,22 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -63466,6 +63881,15 @@ export default {
               "args": []
             },
             {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "movie_id",
               "type": {
                 "kind": "SCALAR",
@@ -63501,6 +63925,14 @@ export default {
           "inputFields": [
             {
               "name": "comment",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -63547,6 +63979,15 @@ export default {
               "args": []
             },
             {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "movie_id",
               "type": {
                 "kind": "SCALAR",
@@ -63582,6 +64023,14 @@ export default {
           "inputFields": [
             {
               "name": "comment",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -63707,6 +64156,22 @@ export default {
               }
             },
             {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "movie_id",
               "type": {
                 "kind": "ENUM",
@@ -63769,11 +64234,31 @@ export default {
           ]
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "user_movie_activities_prepend_input",
+          "inputFields": [
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
           "kind": "ENUM",
           "name": "user_movie_activities_select_column",
           "enumValues": [
             {
               "name": "comment"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "meta"
             },
             {
               "name": "movie_id"
@@ -63798,6 +64283,22 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -63963,6 +64464,22 @@ export default {
               }
             },
             {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            },
+            {
               "name": "movie_id",
               "type": {
                 "kind": "SCALAR",
@@ -64034,6 +64551,12 @@ export default {
               "name": "comment"
             },
             {
+              "name": "id"
+            },
+            {
+              "name": "meta"
+            },
+            {
               "name": "movie_id"
             },
             {
@@ -64052,10 +64575,50 @@ export default {
           "name": "user_movie_activities_updates",
           "inputFields": [
             {
+              "name": "_append",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_append_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_delete_at_path",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_delete_at_path_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_delete_elem",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_delete_elem_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_delete_key",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_delete_key_input",
+                "ofType": null
+              }
+            },
+            {
               "name": "_inc",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "user_movie_activities_inc_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_prepend",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "user_movie_activities_prepend_input",
                 "ofType": null
               }
             },
@@ -70234,6 +70797,7 @@ export default {
     String_Comparison_Exp: String_Comparison_Exp,
     Audit_Logs: Audit_Logs,
     Audit_Logs_DifferenceArgs: Audit_Logs_DifferenceArgs,
+    Audit_Logs_MetaArgs: Audit_Logs_MetaArgs,
     Audit_Logs_Aggregate: Audit_Logs_Aggregate,
     Audit_Logs_Aggregate_Fields: Audit_Logs_Aggregate_Fields,
     Audit_Logs_Aggregate_Fields_CountArgs: Audit_Logs_Aggregate_Fields_CountArgs,
@@ -71381,13 +71945,18 @@ export default {
     Subscription_Root_VirusesAggregateArgs: Subscription_Root_VirusesAggregateArgs,
     Timestamptz_Comparison_Exp: Timestamptz_Comparison_Exp,
     User_Movie_Activities: User_Movie_Activities,
+    User_Movie_Activities_MetaArgs: User_Movie_Activities_MetaArgs,
     User_Movie_Activities_Aggregate: User_Movie_Activities_Aggregate,
     User_Movie_Activities_Aggregate_Fields: User_Movie_Activities_Aggregate_Fields,
     User_Movie_Activities_Aggregate_Fields_CountArgs: User_Movie_Activities_Aggregate_Fields_CountArgs,
     User_Movie_Activities_Aggregate_Order_By: User_Movie_Activities_Aggregate_Order_By,
+    User_Movie_Activities_Append_Input: User_Movie_Activities_Append_Input,
     User_Movie_Activities_Avg_Fields: User_Movie_Activities_Avg_Fields,
     User_Movie_Activities_Avg_Order_By: User_Movie_Activities_Avg_Order_By,
     User_Movie_Activities_Bool_Exp: User_Movie_Activities_Bool_Exp,
+    User_Movie_Activities_Delete_At_Path_Input: User_Movie_Activities_Delete_At_Path_Input,
+    User_Movie_Activities_Delete_Elem_Input: User_Movie_Activities_Delete_Elem_Input,
+    User_Movie_Activities_Delete_Key_Input: User_Movie_Activities_Delete_Key_Input,
     User_Movie_Activities_Inc_Input: User_Movie_Activities_Inc_Input,
     User_Movie_Activities_Insert_Input: User_Movie_Activities_Insert_Input,
     User_Movie_Activities_Max_Fields: User_Movie_Activities_Max_Fields,
@@ -71398,6 +71967,7 @@ export default {
     User_Movie_Activities_On_Conflict: User_Movie_Activities_On_Conflict,
     User_Movie_Activities_Order_By: User_Movie_Activities_Order_By,
     User_Movie_Activities_Pk_Columns_Input: User_Movie_Activities_Pk_Columns_Input,
+    User_Movie_Activities_Prepend_Input: User_Movie_Activities_Prepend_Input,
     User_Movie_Activities_Set_Input: User_Movie_Activities_Set_Input,
     User_Movie_Activities_Stddev_Fields: User_Movie_Activities_Stddev_Fields,
     User_Movie_Activities_Stddev_Order_By: User_Movie_Activities_Stddev_Order_By,
@@ -71568,6 +72138,7 @@ export const UpsertUserMovieActivityDocument = gql`
     rating
     status
     comment
+    meta
   }
 }
     `;
@@ -71585,6 +72156,7 @@ export const AuditLogsDocument = gql`
     table
     row_id
     difference
+    meta
     user {
       id
       displayName

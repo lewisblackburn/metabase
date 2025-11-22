@@ -1,8 +1,7 @@
-import { notFound } from 'next/navigation'
-
 import AuditLogDifference from '@/components/audit-log-difference'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { AuditLogsDocument, AuditLogsQuery, AuditLogsQueryVariables } from '@/generated/graphql'
+import type { AuditLogDifference as AuditLogDifferenceType } from '@/lib/helpers/audit-log-helpers'
 import { formatDate } from '@/lib/helpers/strings/date'
 import { createNhostClient } from '@/lib/nhost/server'
 
@@ -48,12 +47,7 @@ export default async function MovieAuditLogsTab({ movieId }: { movieId: string }
                     </div>
                     {auditLog.difference && (
                         <AuditLogDifference
-                            difference={
-                                auditLog.difference as Record<
-                                    string,
-                                    { old: unknown; new: unknown }
-                                >
-                            }
+                            difference={auditLog.difference as AuditLogDifferenceType}
                         />
                     )}
                 </div>
