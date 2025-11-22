@@ -175,15 +175,8 @@ export function createAuditLogEntry({
     rowId: Audit_Logs['row_id']
     difference: AuditLogDifference
     userId: Audit_Logs['user_id']
-    meta: Audit_Logs['meta']
-}): {
-    action: Audit_Logs['action']
-    table: Audit_Logs['table']
-    row_id: Audit_Logs['row_id']
-    difference: AuditLogDifferenceField
-    user_id: Audit_Logs['user_id']
-    meta: Audit_Logs['meta']
-} {
+    meta?: Audit_Logs['meta']
+}) {
     return {
         action: operation,
         table: tableName,
