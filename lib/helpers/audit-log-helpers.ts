@@ -35,15 +35,6 @@ function determineOperationType(
 }
 
 /**
- * Removes "meta" field from data object since it's stored separately
- */
-function removeMetaField(data: Record<string, unknown>): Record<string, unknown> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { meta, ...rest } = data
-    return rest
-}
-
-/**
  * Deep equality check for values
  */
 function areValuesEqual(oldValue: unknown, newValue: unknown): boolean {
@@ -69,8 +60,6 @@ function areValuesEqual(oldValue: unknown, newValue: unknown): boolean {
  * - UPDATE: old: object, new: object (stores only differences)
  * - DELETE: old: object, new: null (stores all old data)
  *
- * NOTE: The "meta" field is excluded from difference calculation since it's stored separately
- *
  * @param oldData - The old data object (can be null/undefined for INSERT operations)
  * @param newData - The new data object (can be null/undefined for DELETE operations)
  * @returns An object containing changed fields with old and new values
@@ -79,23 +68,19 @@ export function computeDataDifference(
     oldData: Record<string, unknown> | null | undefined,
     newData: Record<string, unknown> | null | undefined,
 ): AuditLogDifference {
-    // NOTE: Remove "meta" from difference data since it's stored separately
-    const oldWithoutMeta = oldData ? removeMetaField(oldData) : oldData
-    const newWithoutMeta = newData ? removeMetaField(newData) : newData
-
     const differences: Record<string, { old: unknown; new: unknown }> = {}
-    const operationType = determineOperationType(oldWithoutMeta, newWithoutMeta)
+    const operationType = determineOperationType(oldData, newData)
 
     switch (operationType) {
         case 'INSERT': {
             // INSERT: old: null, new: object (store all new data)
-            if (!newWithoutMeta) break
+            if (!newData) break
 
-            for (const key in newWithoutMeta) {
-                if (Object.prototype.hasOwnProperty.call(newWithoutMeta, key)) {
+            for (const key in newData) {
+                if (Object.prototype.hasOwnProperty.call(newData, key)) {
                     differences[key] = {
                         old: null,
-                        new: newWithoutMeta[key],
+                        new: newData[key],
                     }
                 }
             }
@@ -104,13 +89,13 @@ export function computeDataDifference(
 
         case 'UPDATE': {
             // UPDATE: old: object, new: object (store only differences)
-            if (!oldWithoutMeta || !newWithoutMeta) break
+            if (!oldData || !newData) break
 
             // Check all keys in newData for changes
-            for (const key in newWithoutMeta) {
-                if (Object.prototype.hasOwnProperty.call(newWithoutMeta, key)) {
-                    const oldValue = oldWithoutMeta[key]
-                    const newValue = newWithoutMeta[key]
+            for (const key in newData) {
+                if (Object.prototype.hasOwnProperty.call(newData, key)) {
+                    const oldValue = oldData[key]
+                    const newValue = newData[key]
 
                     // Only include if values are different
                     if (!areValuesEqual(oldValue, newValue)) {
@@ -124,13 +109,13 @@ export function computeDataDifference(
             }
 
             // Check for keys that were removed (exist in oldData but not in newData)
-            for (const key in oldWithoutMeta) {
+            for (const key in oldData) {
                 if (
-                    Object.prototype.hasOwnProperty.call(oldWithoutMeta, key) &&
-                    !Object.prototype.hasOwnProperty.call(newWithoutMeta, key)
+                    Object.prototype.hasOwnProperty.call(oldData, key) &&
+                    !Object.prototype.hasOwnProperty.call(newData, key)
                 ) {
                     differences[key] = {
-                        old: oldWithoutMeta[key],
+                        old: oldData[key],
                         new: null,
                     }
                 }
@@ -140,12 +125,12 @@ export function computeDataDifference(
 
         case 'DELETE': {
             // DELETE: old: object, new: null (store all old data)
-            if (!oldWithoutMeta) break
+            if (!oldData) break
 
-            for (const key in oldWithoutMeta) {
-                if (Object.prototype.hasOwnProperty.call(oldWithoutMeta, key)) {
+            for (const key in oldData) {
+                if (Object.prototype.hasOwnProperty.call(oldData, key)) {
                     differences[key] = {
-                        old: oldWithoutMeta[key],
+                        old: oldData[key],
                         new: null,
                     }
                 }
