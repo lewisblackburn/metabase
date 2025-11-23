@@ -89,9 +89,9 @@ const ActivityFieldItem = ({
         case ActivityField.RATING:
             return <ActivityRatingItem meta={meta} change={change} user={user} />
         case ActivityField.COMMENT:
-            return null
+            return <ActivityCommentItem meta={meta} change={change} user={user} />
         case ActivityField.STATUS:
-            return null
+            return <ActivityStatusItem meta={meta} change={change} user={user} />
         default:
             return null
     }
@@ -114,6 +114,7 @@ const ActivityUser = ({
         </div>
     )
 }
+
 const ActivityRatingItem = ({
     meta,
     change,
@@ -131,6 +132,65 @@ const ActivityRatingItem = ({
             <span>{JSON.stringify(change.new)}</span>
             {/* TODO: Create a stars component to render stars from number */}
             <span>stars</span>
+        </div>
+    )
+}
+
+const ActivityCommentItem = ({
+    meta,
+    change,
+    user,
+}: {
+    meta: Audit_Logs['meta']
+    change: AuditLogDifference[string]
+    user: NonNullable<AuditLogsQuery['audit_logs'][number]['user']>
+}) => {
+    if (change.old == null) {
+        return (
+            <div className="flex items-center gap-1">
+                <ActivityUser user={user} />
+                <span>Added a review for </span>
+                <span>{meta.title}</span>
+            </div>
+        )
+    }
+
+    return (
+        <div className="flex items-center gap-1">
+            <ActivityUser user={user} />
+            <span>Updated a review for </span>
+            <span>{meta.title}</span>
+        </div>
+    )
+}
+
+const ActivityStatusItem = ({
+    meta,
+    change,
+    user,
+}: {
+    meta: Audit_Logs['meta']
+    change: AuditLogDifference[string]
+    user: NonNullable<AuditLogsQuery['audit_logs'][number]['user']>
+}) => {
+    if (change.old == null) {
+        return (
+            <div className="flex items-center gap-1">
+                <ActivityUser user={user} />
+                <span>Added status {JSON.stringify(change.new)} to </span>
+                <span>{meta.title}</span>
+            </div>
+        )
+    }
+
+    return (
+        <div className="flex items-center gap-1">
+            <ActivityUser user={user} />
+            <span>Changed status of</span>
+            <span>{meta.title}</span>
+            <span>
+                from {JSON.stringify(change.old)} to {JSON.stringify(change.new)}
+            </span>
         </div>
     )
 }

@@ -7,7 +7,16 @@ import { AuditLogTypes } from '@/lib/helpers/graphql-enums'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 // TODO: There is probably a better way of doing this
-const ACTIVITY_TABLES = ['user_movie_activity']
+// ERROR: When a rating is created (i think), old and new of status and comment are both null?
+// "status": {
+//     "new": null,
+//     "old": null
+// },
+// "comment": {
+//     "new": null,
+//     "old": null
+// },
+const ACTIVITY_TABLES = ['user_movie_activities']
 
 export async function POST(request: Request) {
     const body = await request.json()
