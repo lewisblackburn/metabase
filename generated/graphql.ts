@@ -64,7 +64,7 @@ export type AuditLogsQueryVariables = Exact<{
 }>;
 
 
-export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference?: any | null, meta?: any | null, created_at: any, user?: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } | null }> };
+export type AuditLogsQuery = { __typename?: 'query_root', audit_logs: Array<{ __typename?: 'audit_logs', id: any, action: string, table: string, row_id: any, difference?: any | null, meta?: any | null, type: Audit_Log_Types_Enum, created_at: any, user?: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } | null }> };
 
 export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -242,6 +242,138 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']>;
 };
 
+/** columns and relationships of "audit_log_types" */
+export type Audit_Log_Types = {
+  __typename?: 'audit_log_types';
+  name: Scalars['String'];
+};
+
+/** aggregated selection of "audit_log_types" */
+export type Audit_Log_Types_Aggregate = {
+  __typename?: 'audit_log_types_aggregate';
+  aggregate?: Maybe<Audit_Log_Types_Aggregate_Fields>;
+  nodes: Array<Audit_Log_Types>;
+};
+
+/** aggregate fields of "audit_log_types" */
+export type Audit_Log_Types_Aggregate_Fields = {
+  __typename?: 'audit_log_types_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Audit_Log_Types_Max_Fields>;
+  min?: Maybe<Audit_Log_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "audit_log_types" */
+export type Audit_Log_Types_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<Audit_Log_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "audit_log_types". All fields are combined with a logical 'AND'. */
+export type Audit_Log_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Audit_Log_Types_Bool_Exp>>;
+  _not?: InputMaybe<Audit_Log_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Audit_Log_Types_Bool_Exp>>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "audit_log_types" */
+export type Audit_Log_Types_Constraint =
+  /** unique or primary key constraint on columns "name" */
+  | 'audit_log_types_pkey';
+
+export type Audit_Log_Types_Enum =
+  | 'ACTIVITY'
+  | 'AUDIT';
+
+/** Boolean expression to compare columns of type "audit_log_types_enum". All fields are combined with logical 'AND'. */
+export type Audit_Log_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Audit_Log_Types_Enum>;
+  _in?: InputMaybe<Array<Audit_Log_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<Audit_Log_Types_Enum>;
+  _nin?: InputMaybe<Array<Audit_Log_Types_Enum>>;
+};
+
+/** input type for inserting data into table "audit_log_types" */
+export type Audit_Log_Types_Insert_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Audit_Log_Types_Max_Fields = {
+  __typename?: 'audit_log_types_max_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Audit_Log_Types_Min_Fields = {
+  __typename?: 'audit_log_types_min_fields';
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "audit_log_types" */
+export type Audit_Log_Types_Mutation_Response = {
+  __typename?: 'audit_log_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Audit_Log_Types>;
+};
+
+/** on_conflict condition type for table "audit_log_types" */
+export type Audit_Log_Types_On_Conflict = {
+  constraint: Audit_Log_Types_Constraint;
+  update_columns?: Array<Audit_Log_Types_Update_Column>;
+  where?: InputMaybe<Audit_Log_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "audit_log_types". */
+export type Audit_Log_Types_Order_By = {
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: audit_log_types */
+export type Audit_Log_Types_Pk_Columns_Input = {
+  name: Scalars['String'];
+};
+
+/** select columns of table "audit_log_types" */
+export type Audit_Log_Types_Select_Column =
+  /** column name */
+  | 'name';
+
+/** input type for updating data in table "audit_log_types" */
+export type Audit_Log_Types_Set_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "audit_log_types" */
+export type Audit_Log_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Audit_Log_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Audit_Log_Types_Stream_Cursor_Value_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "audit_log_types" */
+export type Audit_Log_Types_Update_Column =
+  /** column name */
+  | 'name';
+
+export type Audit_Log_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Audit_Log_Types_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Audit_Log_Types_Bool_Exp;
+};
+
 /** columns and relationships of "audit_logs" */
 export type Audit_Logs = {
   __typename?: 'audit_logs';
@@ -252,6 +384,7 @@ export type Audit_Logs = {
   meta?: Maybe<Scalars['jsonb']>;
   row_id: Scalars['uuid'];
   table: Scalars['String'];
+  type: Audit_Log_Types_Enum;
   /** An object relationship */
   user?: Maybe<Users>;
   user_id?: Maybe<Scalars['uuid']>;
@@ -309,6 +442,7 @@ export type Audit_Logs_Bool_Exp = {
   meta?: InputMaybe<Jsonb_Comparison_Exp>;
   row_id?: InputMaybe<Uuid_Comparison_Exp>;
   table?: InputMaybe<String_Comparison_Exp>;
+  type?: InputMaybe<Audit_Log_Types_Enum_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -345,6 +479,7 @@ export type Audit_Logs_Insert_Input = {
   meta?: InputMaybe<Scalars['jsonb']>;
   row_id?: InputMaybe<Scalars['uuid']>;
   table?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Audit_Log_Types_Enum>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -396,6 +531,7 @@ export type Audit_Logs_Order_By = {
   meta?: InputMaybe<Order_By>;
   row_id?: InputMaybe<Order_By>;
   table?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -428,6 +564,8 @@ export type Audit_Logs_Select_Column =
   /** column name */
   | 'table'
   /** column name */
+  | 'type'
+  /** column name */
   | 'user_id';
 
 /** input type for updating data in table "audit_logs" */
@@ -439,6 +577,7 @@ export type Audit_Logs_Set_Input = {
   meta?: InputMaybe<Scalars['jsonb']>;
   row_id?: InputMaybe<Scalars['uuid']>;
   table?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Audit_Log_Types_Enum>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -459,6 +598,7 @@ export type Audit_Logs_Stream_Cursor_Value_Input = {
   meta?: InputMaybe<Scalars['jsonb']>;
   row_id?: InputMaybe<Scalars['uuid']>;
   table?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Audit_Log_Types_Enum>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -478,6 +618,8 @@ export type Audit_Logs_Update_Column =
   | 'row_id'
   /** column name */
   | 'table'
+  /** column name */
+  | 'type'
   /** column name */
   | 'user_id';
 
@@ -6584,6 +6726,10 @@ export type Mutation_Root = {
   deleteVirus?: Maybe<Virus>;
   /** delete data from the table: "storage.virus" */
   deleteViruses?: Maybe<Virus_Mutation_Response>;
+  /** delete data from the table: "audit_log_types" */
+  delete_audit_log_types?: Maybe<Audit_Log_Types_Mutation_Response>;
+  /** delete single row from the table: "audit_log_types" */
+  delete_audit_log_types_by_pk?: Maybe<Audit_Log_Types>;
   /** delete data from the table: "audit_logs" */
   delete_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
   /** delete single row from the table: "audit_logs" */
@@ -6716,6 +6862,10 @@ export type Mutation_Root = {
   insertVirus?: Maybe<Virus>;
   /** insert data into the table: "storage.virus" */
   insertViruses?: Maybe<Virus_Mutation_Response>;
+  /** insert data into the table: "audit_log_types" */
+  insert_audit_log_types?: Maybe<Audit_Log_Types_Mutation_Response>;
+  /** insert a single row into the table: "audit_log_types" */
+  insert_audit_log_types_one?: Maybe<Audit_Log_Types>;
   /** insert data into the table: "audit_logs" */
   insert_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
   /** insert a single row into the table: "audit_logs" */
@@ -6848,6 +6998,12 @@ export type Mutation_Root = {
   updateVirus?: Maybe<Virus>;
   /** update data of the table: "storage.virus" */
   updateViruses?: Maybe<Virus_Mutation_Response>;
+  /** update data of the table: "audit_log_types" */
+  update_audit_log_types?: Maybe<Audit_Log_Types_Mutation_Response>;
+  /** update single row of the table: "audit_log_types" */
+  update_audit_log_types_by_pk?: Maybe<Audit_Log_Types>;
+  /** update multiples rows of table: "audit_log_types" */
+  update_audit_log_types_many?: Maybe<Array<Maybe<Audit_Log_Types_Mutation_Response>>>;
   /** update data of the table: "audit_logs" */
   update_audit_logs?: Maybe<Audit_Logs_Mutation_Response>;
   /** update single row of the table: "audit_logs" */
@@ -7142,6 +7298,18 @@ export type Mutation_Root_DeleteVirusArgs = {
 /** mutation root */
 export type Mutation_Root_DeleteVirusesArgs = {
   where: Virus_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Audit_Log_TypesArgs = {
+  where: Audit_Log_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_Audit_Log_Types_By_PkArgs = {
+  name: Scalars['String'];
 };
 
 
@@ -7567,6 +7735,20 @@ export type Mutation_Root_InsertVirusArgs = {
 export type Mutation_Root_InsertVirusesArgs = {
   objects: Array<Virus_Insert_Input>;
   on_conflict?: InputMaybe<Virus_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Audit_Log_TypesArgs = {
+  objects: Array<Audit_Log_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Audit_Log_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_Audit_Log_Types_OneArgs = {
+  object: Audit_Log_Types_Insert_Input;
+  on_conflict?: InputMaybe<Audit_Log_Types_On_Conflict>;
 };
 
 
@@ -8085,6 +8267,26 @@ export type Mutation_Root_UpdateVirusesArgs = {
   _prepend?: InputMaybe<Virus_Prepend_Input>;
   _set?: InputMaybe<Virus_Set_Input>;
   where: Virus_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Audit_Log_TypesArgs = {
+  _set?: InputMaybe<Audit_Log_Types_Set_Input>;
+  where: Audit_Log_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Audit_Log_Types_By_PkArgs = {
+  _set?: InputMaybe<Audit_Log_Types_Set_Input>;
+  pk_columns: Audit_Log_Types_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_Audit_Log_Types_ManyArgs = {
+  updates: Array<Audit_Log_Types_Updates>;
 };
 
 
@@ -9009,6 +9211,12 @@ export type Production_Companies_Variance_Fields = {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "audit_log_types" */
+  audit_log_types: Array<Audit_Log_Types>;
+  /** fetch aggregated fields from the table: "audit_log_types" */
+  audit_log_types_aggregate: Audit_Log_Types_Aggregate;
+  /** fetch data from the table: "audit_log_types" using primary key columns */
+  audit_log_types_by_pk?: Maybe<Audit_Log_Types>;
   /** fetch data from the table: "audit_logs" */
   audit_logs: Array<Audit_Logs>;
   /** fetch aggregated fields from the table: "audit_logs" */
@@ -9211,6 +9419,29 @@ export type Query_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
+};
+
+
+export type Query_Root_Audit_Log_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Log_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Audit_Log_Types_Order_By>>;
+  where?: InputMaybe<Audit_Log_Types_Bool_Exp>;
+};
+
+
+export type Query_Root_Audit_Log_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Log_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Audit_Log_Types_Order_By>>;
+  where?: InputMaybe<Audit_Log_Types_Bool_Exp>;
+};
+
+
+export type Query_Root_Audit_Log_Types_By_PkArgs = {
+  name: Scalars['String'];
 };
 
 
@@ -9999,6 +10230,14 @@ export type Query_Root_VirusesAggregateArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "audit_log_types" */
+  audit_log_types: Array<Audit_Log_Types>;
+  /** fetch aggregated fields from the table: "audit_log_types" */
+  audit_log_types_aggregate: Audit_Log_Types_Aggregate;
+  /** fetch data from the table: "audit_log_types" using primary key columns */
+  audit_log_types_by_pk?: Maybe<Audit_Log_Types>;
+  /** fetch data from the table in a streaming manner: "audit_log_types" */
+  audit_log_types_stream: Array<Audit_Log_Types>;
   /** fetch data from the table: "audit_logs" */
   audit_logs: Array<Audit_Logs>;
   /** fetch aggregated fields from the table: "audit_logs" */
@@ -10267,6 +10506,36 @@ export type Subscription_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
+};
+
+
+export type Subscription_Root_Audit_Log_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Log_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Audit_Log_Types_Order_By>>;
+  where?: InputMaybe<Audit_Log_Types_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Audit_Log_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Audit_Log_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Audit_Log_Types_Order_By>>;
+  where?: InputMaybe<Audit_Log_Types_Bool_Exp>;
+};
+
+
+export type Subscription_Root_Audit_Log_Types_By_PkArgs = {
+  name: Scalars['String'];
+};
+
+
+export type Subscription_Root_Audit_Log_Types_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Audit_Log_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Audit_Log_Types_Bool_Exp>;
 };
 
 
@@ -13559,6 +13828,501 @@ export default {
         },
         {
           "kind": "OBJECT",
+          "name": "audit_log_types",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "audit_log_types_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "audit_log_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "audit_log_types_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "audit_log_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "audit_log_types_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "name",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "audit_log_types_constraint",
+          "enumValues": [
+            {
+              "name": "audit_log_types_pkey"
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "audit_log_types_enum",
+          "enumValues": [
+            {
+              "name": "ACTIVITY"
+            },
+            {
+              "name": "AUDIT"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_enum_comparison_exp",
+          "inputFields": [
+            {
+              "name": "_eq",
+              "type": {
+                "kind": "ENUM",
+                "name": "audit_log_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_in",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "audit_log_types_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_is_null",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_neq",
+              "type": {
+                "kind": "ENUM",
+                "name": "audit_log_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_nin",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "audit_log_types_enum",
+                    "ofType": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_insert_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "audit_log_types_max_fields",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "audit_log_types_min_fields",
+          "fields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "audit_log_types_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "audit_log_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "audit_log_types_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "audit_log_types_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "audit_log_types_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_order_by",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "audit_log_types_select_column",
+          "enumValues": [
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_set_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "audit_log_types_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "audit_log_types_update_column",
+          "enumValues": [
+            {
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "audit_log_types_updates",
+          "inputFields": [
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "audit_log_types_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "audit_log_types_bool_exp",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
           "name": "audit_logs",
           "fields": [
             {
@@ -13652,6 +14416,18 @@ export default {
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "type",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "audit_log_types_enum",
                   "ofType": null
                 }
               },
@@ -13891,6 +14667,14 @@ export default {
               }
             },
             {
+              "name": "type",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "audit_log_types_enum_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "user",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -14052,6 +14836,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "type",
+              "type": {
+                "kind": "ENUM",
+                "name": "audit_log_types_enum",
                 "ofType": null
               }
             },
@@ -14336,6 +15128,14 @@ export default {
               }
             },
             {
+              "name": "type",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "user",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -14418,6 +15218,9 @@ export default {
               "name": "table"
             },
             {
+              "name": "type"
+            },
+            {
               "name": "user_id"
             }
           ]
@@ -14479,6 +15282,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "type",
+              "type": {
+                "kind": "ENUM",
+                "name": "audit_log_types_enum",
                 "ofType": null
               }
             },
@@ -14578,6 +15389,14 @@ export default {
               }
             },
             {
+              "name": "type",
+              "type": {
+                "kind": "ENUM",
+                "name": "audit_log_types_enum",
+                "ofType": null
+              }
+            },
+            {
               "name": "user_id",
               "type": {
                 "kind": "SCALAR",
@@ -14611,6 +15430,9 @@ export default {
             },
             {
               "name": "table"
+            },
+            {
+              "name": "type"
             },
             {
               "name": "user_id"
@@ -42425,6 +43247,48 @@ export default {
               ]
             },
             {
+              "name": "delete_audit_log_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "audit_log_types_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_audit_log_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "delete_audit_logs",
               "type": {
                 "kind": "OBJECT",
@@ -44124,6 +44988,70 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "virus_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_audit_log_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "audit_log_types_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_audit_log_types_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "audit_log_types_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_on_conflict",
                     "ofType": null
                   }
                 }
@@ -46612,6 +47540,94 @@ export default {
                       "kind": "INPUT_OBJECT",
                       "name": "virus_bool_exp",
                       "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_audit_log_types",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "audit_log_types_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_audit_log_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "audit_log_types_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_audit_log_types_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "audit_log_types_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "audit_log_types_updates",
+                          "ofType": null
+                        }
+                      }
                     }
                   }
                 }
@@ -50651,6 +51667,163 @@ export default {
           "kind": "OBJECT",
           "name": "query_root",
           "fields": [
+            {
+              "name": "audit_log_types",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "audit_log_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "audit_log_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "audit_log_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "audit_log_types_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "audit_log_types_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "audit_log_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "audit_log_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "audit_log_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
             {
               "name": "audit_logs",
               "type": {
@@ -56043,6 +57216,215 @@ export default {
           "kind": "OBJECT",
           "name": "subscription_root",
           "fields": [
+            {
+              "name": "audit_log_types",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "audit_log_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "audit_log_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "audit_log_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "audit_log_types_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "audit_log_types_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "audit_log_types_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "audit_log_types_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "audit_log_types_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "audit_log_types",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "audit_log_types_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "audit_log_types",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "audit_log_types_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "audit_log_types_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
             {
               "name": "audit_logs",
               "type": {
@@ -70795,6 +72177,23 @@ export default {
     Int_Comparison_Exp: Int_Comparison_Exp,
     String_Array_Comparison_Exp: String_Array_Comparison_Exp,
     String_Comparison_Exp: String_Comparison_Exp,
+    Audit_Log_Types: Audit_Log_Types,
+    Audit_Log_Types_Aggregate: Audit_Log_Types_Aggregate,
+    Audit_Log_Types_Aggregate_Fields: Audit_Log_Types_Aggregate_Fields,
+    Audit_Log_Types_Aggregate_Fields_CountArgs: Audit_Log_Types_Aggregate_Fields_CountArgs,
+    Audit_Log_Types_Bool_Exp: Audit_Log_Types_Bool_Exp,
+    Audit_Log_Types_Enum_Comparison_Exp: Audit_Log_Types_Enum_Comparison_Exp,
+    Audit_Log_Types_Insert_Input: Audit_Log_Types_Insert_Input,
+    Audit_Log_Types_Max_Fields: Audit_Log_Types_Max_Fields,
+    Audit_Log_Types_Min_Fields: Audit_Log_Types_Min_Fields,
+    Audit_Log_Types_Mutation_Response: Audit_Log_Types_Mutation_Response,
+    Audit_Log_Types_On_Conflict: Audit_Log_Types_On_Conflict,
+    Audit_Log_Types_Order_By: Audit_Log_Types_Order_By,
+    Audit_Log_Types_Pk_Columns_Input: Audit_Log_Types_Pk_Columns_Input,
+    Audit_Log_Types_Set_Input: Audit_Log_Types_Set_Input,
+    Audit_Log_Types_Stream_Cursor_Input: Audit_Log_Types_Stream_Cursor_Input,
+    Audit_Log_Types_Stream_Cursor_Value_Input: Audit_Log_Types_Stream_Cursor_Value_Input,
+    Audit_Log_Types_Updates: Audit_Log_Types_Updates,
     Audit_Logs: Audit_Logs,
     Audit_Logs_DifferenceArgs: Audit_Logs_DifferenceArgs,
     Audit_Logs_MetaArgs: Audit_Logs_MetaArgs,
@@ -71458,6 +72857,8 @@ export default {
     Mutation_Root_DeleteUsersArgs: Mutation_Root_DeleteUsersArgs,
     Mutation_Root_DeleteVirusArgs: Mutation_Root_DeleteVirusArgs,
     Mutation_Root_DeleteVirusesArgs: Mutation_Root_DeleteVirusesArgs,
+    Mutation_Root_Delete_Audit_Log_TypesArgs: Mutation_Root_Delete_Audit_Log_TypesArgs,
+    Mutation_Root_Delete_Audit_Log_Types_By_PkArgs: Mutation_Root_Delete_Audit_Log_Types_By_PkArgs,
     Mutation_Root_Delete_Audit_LogsArgs: Mutation_Root_Delete_Audit_LogsArgs,
     Mutation_Root_Delete_Audit_Logs_By_PkArgs: Mutation_Root_Delete_Audit_Logs_By_PkArgs,
     Mutation_Root_Delete_CollectionsArgs: Mutation_Root_Delete_CollectionsArgs,
@@ -71524,6 +72925,8 @@ export default {
     Mutation_Root_InsertUsersArgs: Mutation_Root_InsertUsersArgs,
     Mutation_Root_InsertVirusArgs: Mutation_Root_InsertVirusArgs,
     Mutation_Root_InsertVirusesArgs: Mutation_Root_InsertVirusesArgs,
+    Mutation_Root_Insert_Audit_Log_TypesArgs: Mutation_Root_Insert_Audit_Log_TypesArgs,
+    Mutation_Root_Insert_Audit_Log_Types_OneArgs: Mutation_Root_Insert_Audit_Log_Types_OneArgs,
     Mutation_Root_Insert_Audit_LogsArgs: Mutation_Root_Insert_Audit_LogsArgs,
     Mutation_Root_Insert_Audit_Logs_OneArgs: Mutation_Root_Insert_Audit_Logs_OneArgs,
     Mutation_Root_Insert_CollectionsArgs: Mutation_Root_Insert_CollectionsArgs,
@@ -71590,6 +72993,9 @@ export default {
     Mutation_Root_UpdateUsersArgs: Mutation_Root_UpdateUsersArgs,
     Mutation_Root_UpdateVirusArgs: Mutation_Root_UpdateVirusArgs,
     Mutation_Root_UpdateVirusesArgs: Mutation_Root_UpdateVirusesArgs,
+    Mutation_Root_Update_Audit_Log_TypesArgs: Mutation_Root_Update_Audit_Log_TypesArgs,
+    Mutation_Root_Update_Audit_Log_Types_By_PkArgs: Mutation_Root_Update_Audit_Log_Types_By_PkArgs,
+    Mutation_Root_Update_Audit_Log_Types_ManyArgs: Mutation_Root_Update_Audit_Log_Types_ManyArgs,
     Mutation_Root_Update_Audit_LogsArgs: Mutation_Root_Update_Audit_LogsArgs,
     Mutation_Root_Update_Audit_Logs_By_PkArgs: Mutation_Root_Update_Audit_Logs_By_PkArgs,
     Mutation_Root_Update_Audit_Logs_ManyArgs: Mutation_Root_Update_Audit_Logs_ManyArgs,
@@ -71707,6 +73113,9 @@ export default {
     Production_Companies_Var_Samp_Fields: Production_Companies_Var_Samp_Fields,
     Production_Companies_Variance_Fields: Production_Companies_Variance_Fields,
     Query_Root: Query_Root,
+    Query_Root_Audit_Log_TypesArgs: Query_Root_Audit_Log_TypesArgs,
+    Query_Root_Audit_Log_Types_AggregateArgs: Query_Root_Audit_Log_Types_AggregateArgs,
+    Query_Root_Audit_Log_Types_By_PkArgs: Query_Root_Audit_Log_Types_By_PkArgs,
     Query_Root_Audit_LogsArgs: Query_Root_Audit_LogsArgs,
     Query_Root_Audit_Logs_AggregateArgs: Query_Root_Audit_Logs_AggregateArgs,
     Query_Root_Audit_Logs_By_PkArgs: Query_Root_Audit_Logs_By_PkArgs,
@@ -71809,6 +73218,10 @@ export default {
     Query_Root_VirusesArgs: Query_Root_VirusesArgs,
     Query_Root_VirusesAggregateArgs: Query_Root_VirusesAggregateArgs,
     Subscription_Root: Subscription_Root,
+    Subscription_Root_Audit_Log_TypesArgs: Subscription_Root_Audit_Log_TypesArgs,
+    Subscription_Root_Audit_Log_Types_AggregateArgs: Subscription_Root_Audit_Log_Types_AggregateArgs,
+    Subscription_Root_Audit_Log_Types_By_PkArgs: Subscription_Root_Audit_Log_Types_By_PkArgs,
+    Subscription_Root_Audit_Log_Types_StreamArgs: Subscription_Root_Audit_Log_Types_StreamArgs,
     Subscription_Root_Audit_LogsArgs: Subscription_Root_Audit_LogsArgs,
     Subscription_Root_Audit_Logs_AggregateArgs: Subscription_Root_Audit_Logs_AggregateArgs,
     Subscription_Root_Audit_Logs_By_PkArgs: Subscription_Root_Audit_Logs_By_PkArgs,
@@ -72157,6 +73570,7 @@ export const AuditLogsDocument = gql`
     row_id
     difference
     meta
+    type
     user {
       id
       displayName

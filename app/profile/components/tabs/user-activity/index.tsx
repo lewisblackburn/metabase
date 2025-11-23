@@ -6,8 +6,10 @@ import {
     AuditLogsQueryVariables,
 } from '@/generated/graphql'
 import type { AuditLogDifference } from '@/lib/helpers/audit-log-helpers'
+import { AuditLogTypes } from '@/lib/helpers/graphql-enums'
 import { createNhostClient } from '@/lib/nhost/server'
 
+// TODO: Make this a table in hasura
 enum ActivityField {
     RATING = 'rating',
     COMMENT = 'comment',
@@ -29,8 +31,8 @@ export default async function UserActivity() {
                         user_id: { _eq: userId },
                     },
                     {
-                        table: {
-                            _eq: 'user_movie_activities',
+                        type: {
+                            _eq: AuditLogTypes.ACTIVITY,
                         },
                     },
                 ],

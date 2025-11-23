@@ -154,6 +154,7 @@ export function createAuditLogEntry({
     difference,
     userId,
     meta,
+    type,
 }: {
     operation: Audit_Logs['action']
     tableName: Audit_Logs['table']
@@ -161,6 +162,7 @@ export function createAuditLogEntry({
     difference: AuditLogDifference
     userId: Audit_Logs['user_id']
     meta?: Audit_Logs['meta']
+    type?: Audit_Logs['type']
 }) {
     return {
         action: operation,
@@ -169,5 +171,6 @@ export function createAuditLogEntry({
         difference: Object.keys(difference).length > 0 ? difference : null,
         user_id: userId,
         meta,
+        type,
     }
 }

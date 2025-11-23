@@ -4,6 +4,7 @@
  */
 
 import {
+    Audit_Log_Types_Enum,
     Credit_Types_Enum,
     Genders_Enum,
     Media_Types_Enum,
@@ -11,6 +12,8 @@ import {
 } from '@/generated/graphql'
 
 import { createEnum } from './enum-helpers'
+
+// TODO: Make this a more automated process so I can just add new enums on hasura and these enums update automatically
 
 /**
  * Credit type enum
@@ -48,3 +51,9 @@ export const UserMovieStatus = createEnum<User_Movie_Statuses_Enum>([
     'WATCHING',
     'WATCHLIST',
 ] as const)
+
+/**
+ * Audit log types enum
+ * Values: AUDIT, ACTIVITY
+ */
+export const AuditLogTypes = createEnum<Audit_Log_Types_Enum>(['AUDIT', 'ACTIVITY'])
