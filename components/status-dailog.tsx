@@ -22,7 +22,7 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
     const [open, setOpen] = useState(false)
 
     const userMovieActivity = movie?.user_movie_activity?.[0]
-    const status = userMovieActivity?.status as User_Movie_Statuses_Enum
+    const status = userMovieActivity?.status
     const comment = userMovieActivity?.comment
     const rating = userMovieActivity?.rating
 
@@ -72,7 +72,7 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                         return (
                             <Field data-invalid={isInvalid}>
                                 <Select
-                                    value={field.state.value}
+                                    value={field.state.value ?? undefined}
                                     open={open}
                                     onOpenChange={setOpen}
                                     onValueChange={(value: User_Movie_Statuses_Enum) => {
