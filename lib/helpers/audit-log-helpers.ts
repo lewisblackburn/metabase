@@ -78,9 +78,13 @@ export function computeDataDifference(
 
             for (const key in newData) {
                 if (Object.prototype.hasOwnProperty.call(newData, key)) {
+                    const newValue = newData[key]
+                    // Skip fields where both old and new are null (no meaningful change)
+                    if (newValue === null || newValue === undefined) continue
+
                     differences[key] = {
                         old: null,
-                        new: newData[key],
+                        new: newValue,
                     }
                 }
             }
@@ -99,10 +103,16 @@ export function computeDataDifference(
 
                     // Only include if values are different
                     if (!areValuesEqual(oldValue, newValue)) {
+                        const normalizedOld = oldValue === undefined ? null : oldValue
+                        const normalizedNew = newValue === undefined ? null : newValue
+
+                        // Skip fields where both old and new are null (no meaningful change)
+                        if (normalizedOld === null && normalizedNew === null) continue
+
                         differences[key] = {
                             // Convert undefined to null for JSONB compatibility
-                            old: oldValue === undefined ? null : oldValue,
-                            new: newValue === undefined ? null : newValue,
+                            old: normalizedOld,
+                            new: normalizedNew,
                         }
                     }
                 }
