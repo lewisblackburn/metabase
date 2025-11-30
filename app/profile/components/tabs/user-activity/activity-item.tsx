@@ -1,3 +1,6 @@
+import Link from 'next/link'
+
+import Stars from '@/components/stars'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { ActivityLogsQuery } from '@/generated/graphql'
 
@@ -18,9 +21,12 @@ export default async function ActivityItem({
             return (
                 <div className="flex items-center gap-1">
                     <ActivityUser user={user} />
-                    <div>
+                    <div className="flex items-center gap-1">
                         <span className="text-muted-foreground">rated</span>{' '}
-                        <span className="font-semibold">{name}</span> {rating}
+                        <Link href={meta.slug ?? ''} className="font-semibold">
+                            {name}
+                        </Link>
+                        <Stars stars={rating} />
                     </div>
                 </div>
             )
@@ -28,9 +34,11 @@ export default async function ActivityItem({
             return (
                 <div className="flex items-center gap-1">
                     <ActivityUser user={user} />
-                    <div>
+                    <div className="flex items-center gap-1">
                         <span className="text-muted-foreground">commented</span> on{' '}
-                        <span className="font-semibold">{name}</span>
+                        <Link href={meta.slug ?? ''} className="font-semibold">
+                            {name}
+                        </Link>
                     </div>
                 </div>
             )
@@ -38,9 +46,11 @@ export default async function ActivityItem({
             return (
                 <div className="flex items-center gap-1">
                     <ActivityUser user={user} />
-                    <div>
+                    <div className="flex items-center gap-1">
                         <span className="text-muted-foreground">marked</span>{' '}
-                        <span className="font-semibold">{name}</span> as{' '}
+                        <Link href={meta.slug ?? ''} className="font-semibold">
+                            {name}
+                        </Link>
                         <span className="font-semibold">{status}</span>
                     </div>
                 </div>

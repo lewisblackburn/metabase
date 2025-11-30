@@ -57,6 +57,7 @@ export async function upsertUserMovieActivity({
             return {
                 id: result.body.data?.insert_user_movie_activities_one?.movie_id,
                 title: movieTitle,
+                slug: `/movies/${result.body.data?.insert_user_movie_activities_one?.movie_id}`,
             }
         },
         getChanges: result => {
