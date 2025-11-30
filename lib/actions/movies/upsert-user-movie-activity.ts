@@ -25,29 +25,44 @@ export async function upsertUserMovieActivity({
 }) {
     const nhost = await createNhostClient()
 
+    // Build object with only provided fields
+    const activityObject: Record<string, unknown> = { movie_id: id }
+    if (rating !== undefined) activityObject.rating = rating
+    if (status !== undefined) activityObject.status = status
+    if (comment !== undefined) activityObject.comment = comment
+
+    // Build update_columns array with only provided fields
+    const updateColumns = [
+        rating !== undefined && 'rating',
+        status !== undefined && 'status',
+        comment !== undefined && 'comment',
+    ].filter(Boolean) as string[]
+
     const result = await withActivityLog({
         operation: async () => {
             return nhost.graphql
                 .request<UpsertUserMovieActivityMutation>(UpsertUserMovieActivityDocument, {
-                    object: { movie_id: id, rating, status, comment },
+                    object: activityObject,
                     on_conflict: {
                         constraint: 'user_movie_activities_pkey',
-                        update_columns: ['rating', 'status', 'comment'],
+                        update_columns: updateColumns,
                     },
                 })
                 .catch(handleGraphQLError)
         },
         getEntityId: result => result?.body.data?.insert_user_movie_activities_one?.movie_id,
         getMetadata: result => {
-            return {
-                ...(rating ? { rating: result.body.data?.insert_user_movie_activities_one?.rating } : {}),
-                ...(status ? { status: result.body.data?.insert_user_movie_activities_one?.status } : {}),
-                ...(comment ? { comment: result.body.data?.insert_user_movie_activities_one?.comment } : {})
-            }
+            const activity = result.body.data?.insert_user_movie_activities_one
+            const metadata: Record<string, unknown> = {}
+
+            if (rating !== undefined && activity?.rating) metadata.rating = activity.rating
+            if (status !== undefined && activity?.status) metadata.status = activity.status
+            if (comment !== undefined && activity?.comment) metadata.comment = activity.comment
+
+            return metadata
         },
     })
 
-    // Revalidate the movie page to reflect the updated activity
     revalidatePath(`/movies/${id}`)
 
     return result

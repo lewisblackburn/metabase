@@ -12,6 +12,8 @@ export function handleGraphQLError(error: unknown): never {
         message?: string
     }
 
+    logger.error(JSON.stringify(errorObj))
+
     const firstError = errorObj.body?.errors?.[0]
 
     if (!firstError) {
@@ -38,7 +40,6 @@ export function handleGraphQLError(error: unknown): never {
             )
 
         case GraphQLErrorCode.ValidationFailed:
-            logger.error(message)
             throw new GraphQLError('The data you provided is invalid.', code, firstError.extensions)
 
         default:

@@ -8,7 +8,7 @@ import LoadingButton from '@/components/loading-button'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Textarea } from '@/components/ui/textarea'
-import { MovieQuery, User_Movie_Statuses_Enum } from '@/generated/graphql'
+import { MovieQuery } from '@/generated/graphql'
 import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
 import { ratingSchema } from '@/lib/validations/ratings/rating.schema'
 
@@ -22,7 +22,6 @@ interface RatingFormProps {
 export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
     const userMovieActivity = movie?.user_movie_activity?.[0]
     const isRated = userMovieActivity?.rating && userMovieActivity.rating > 0
-    const status = userMovieActivity?.status as User_Movie_Statuses_Enum
     const rating = userMovieActivity?.rating ?? 0
     const comment = userMovieActivity?.comment ?? null
 
@@ -37,7 +36,6 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
         onSubmit: async ({ value }) => {
             await upsertUserMovieActivity({
                 id: movie?.id,
-                status,
                 rating: value.rating,
                 comment: value.comment,
             }).catch(error => {
@@ -48,6 +46,20 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
             onOpenChange(false)
         },
     })
+
+    const handleDeleteRating = async () => {
+        await upsertUserMovieActivity({
+            id: movie?.id,
+            rating: null,
+            comment: null,
+        }).catch(error => {
+            toast.error('Failed to remove rating', {
+                description: error.message,
+            })
+        })
+        onOpenChange(false)
+    }
+
 
     return (
         <form
@@ -107,19 +119,7 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                             <Button
                                 type="button"
                                 variant="destructive"
-                                onClick={async () => {
-                                    await upsertUserMovieActivity({
-                                        id: movie?.id,
-                                        status,
-                                        rating: undefined,
-                                        comment: undefined,
-                                    }).catch(error => {
-                                        toast.error('Failed to remove rating', {
-                                            description: error.message,
-                                        })
-                                    })
-                                    onOpenChange(false)
-                                }}
+                                onClick={handleDeleteRating}
                             >
                                 <TrashIcon className="size-4" />
                             </Button>

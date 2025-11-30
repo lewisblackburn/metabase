@@ -23,8 +23,6 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
 
     const userMovieActivity = movie?.user_movie_activity?.[0]
     const status = userMovieActivity?.status
-    const comment = userMovieActivity?.comment
-    const rating = userMovieActivity?.rating
 
     const form = useForm({
         defaultValues: {
@@ -37,8 +35,6 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
             const result = await upsertUserMovieActivity({
                 id: movie?.id,
                 status: value.status,
-                comment,
-                rating,
                 ...(movie?.title && { meta: { title: movie.title } }),
             }).catch(error => {
                 toast.error('Failed to update status', {

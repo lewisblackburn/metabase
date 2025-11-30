@@ -1,5 +1,4 @@
 'use server'
-
 import { insertActivityLog } from './insert-activity-log'
 
 /**
@@ -19,19 +18,23 @@ export async function withActivityLog<TResult>({
     getMetadata?: (result: TResult) => Record<string, unknown>
 }): Promise<TResult> {
     const result = await operation()
-
     const entityId = getEntityId(result)
-    if (entityId) {
+    const metadata = getMetadata?.(result)
+
+    // Skip logging if metadata exists and all values are null (deletion scenario)
+    const isDeletion = metadata && Object.values(metadata).every(value => value === null)
+
+    if (entityId && !isDeletion) {
         void insertActivityLog({
             object: {
                 row_id: entityId,
-                changes: getMetadata?.(result),
+                changes: metadata,
             },
             on_conflict: {
                 constraint: 'activity_logs_pkey',
                 update_columns: [],
             },
-        }).catch(() => { })
+        })
     }
 
     return result
