@@ -36,6 +36,7 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
         onSubmit: async ({ value }) => {
             await upsertUserMovieActivity({
                 id: movie?.id,
+                movieTitle: movie?.title,
                 rating: value.rating,
                 comment: value.comment,
             }).catch(error => {
@@ -50,6 +51,7 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
     const handleDeleteRating = async () => {
         await upsertUserMovieActivity({
             id: movie?.id,
+            movieTitle: movie?.title,
             rating: null,
             comment: null,
         }).catch(error => {
@@ -59,7 +61,6 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
         })
         onOpenChange(false)
     }
-
 
     return (
         <form

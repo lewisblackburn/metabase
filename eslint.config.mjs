@@ -7,6 +7,7 @@ import pluginPrettier from 'eslint-plugin-prettier'
 // import tailwindcss from "eslint-plugin-tailwindcss"
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import testingLibrary from 'eslint-plugin-testing-library'
+import unusedImports from 'eslint-plugin-unused-imports'
 import vitest from 'eslint-plugin-vitest'
 
 // ! TODO: tailwind eslint plugin not supported on tailwind v4
@@ -23,6 +24,7 @@ export default defineConfig([
             vitest,
             // tailwindcss,
             'simple-import-sort': simpleImportSort,
+            'unused-imports': unusedImports,
         },
         rules: {
             ...prettierConfig.rules,
@@ -31,6 +33,7 @@ export default defineConfig([
             // 🧹 Import sorting
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
+            'unused-imports/no-unused-imports': 'error',
 
             // 🎨 Tailwind rules
             // "tailwindcss/classnames-order": "warn",

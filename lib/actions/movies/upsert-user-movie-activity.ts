@@ -14,11 +14,13 @@ import { withActivityLog } from '../activity-logs/with-activity-log'
 
 export async function upsertUserMovieActivity({
     id,
+    movieTitle,
     rating,
     status,
     comment,
 }: {
     id: string
+    movieTitle?: string
     rating?: User_Movie_Activities['rating']
     status?: User_Movie_Activities['status']
     comment?: User_Movie_Activities['comment']
@@ -52,14 +54,20 @@ export async function upsertUserMovieActivity({
         },
         getEntityId: result => result?.body.data?.insert_user_movie_activities_one?.movie_id,
         getMetadata: result => {
+            return {
+                id: result.body.data?.insert_user_movie_activities_one?.movie_id,
+                title: movieTitle,
+            }
+        },
+        getChanges: result => {
             const activity = result.body.data?.insert_user_movie_activities_one
-            const metadata: Record<string, unknown> = {}
+            const changes: Record<string, unknown> = {}
 
-            if (rating !== undefined && activity?.rating) metadata.rating = activity.rating
-            if (status !== undefined && activity?.status) metadata.status = activity.status
-            if (comment !== undefined && activity?.comment) metadata.comment = activity.comment
+            if (rating !== undefined && activity?.rating) changes.rating = activity.rating
+            if (status !== undefined && activity?.status) changes.status = activity.status
+            if (comment !== undefined && activity?.comment) changes.comment = activity.comment
 
-            return metadata
+            return changes
         },
     })
 

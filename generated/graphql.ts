@@ -63,6 +63,17 @@ export type UpsertUserMovieActivityMutationVariables = Exact<{
 
 export type UpsertUserMovieActivityMutation = { __typename?: 'mutation_root', insert_user_movie_activities_one?: { __typename?: 'user_movie_activities', movie_id: any, rating?: number | null, status?: User_Movie_Statuses_Enum | null, comment?: string | null } | null };
 
+export type ActivityLogsQueryVariables = Exact<{
+  where?: InputMaybe<Activity_Logs_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Activity_Logs_Select_Column> | Activity_Logs_Select_Column>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Activity_Logs_Order_By> | Activity_Logs_Order_By>;
+}>;
+
+
+export type ActivityLogsQuery = { __typename?: 'query_root', activity_logs: Array<{ __typename?: 'activity_logs', id: any, changes: any, meta?: any | null, created_at?: any | null, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string } }> };
+
 export type AuditLogsQueryVariables = Exact<{
   where?: InputMaybe<Audit_Logs_Bool_Exp>;
   distinct_on?: InputMaybe<Array<Audit_Logs_Select_Column> | Audit_Logs_Select_Column>;
@@ -254,14 +265,23 @@ export type String_Comparison_Exp = {
 export type Activity_Logs = {
   __typename?: 'activity_logs';
   changes: Scalars['jsonb'];
+  created_at?: Maybe<Scalars['timestamptz']>;
   id: Scalars['uuid'];
-  row_id: Scalars['uuid'];
+  meta?: Maybe<Scalars['jsonb']>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
 };
 
 
 /** columns and relationships of "activity_logs" */
 export type Activity_Logs_ChangesArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "activity_logs" */
+export type Activity_Logs_MetaArgs = {
   path?: InputMaybe<Scalars['String']>;
 };
 
@@ -290,6 +310,7 @@ export type Activity_Logs_Aggregate_Fields_CountArgs = {
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type Activity_Logs_Append_Input = {
   changes?: InputMaybe<Scalars['jsonb']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** Boolean expression to filter rows from the table "activity_logs". All fields are combined with a logical 'AND'. */
@@ -298,8 +319,10 @@ export type Activity_Logs_Bool_Exp = {
   _not?: InputMaybe<Activity_Logs_Bool_Exp>;
   _or?: InputMaybe<Array<Activity_Logs_Bool_Exp>>;
   changes?: InputMaybe<Jsonb_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  row_id?: InputMaybe<Uuid_Comparison_Exp>;
+  meta?: InputMaybe<Jsonb_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
@@ -311,39 +334,44 @@ export type Activity_Logs_Constraint =
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type Activity_Logs_Delete_At_Path_Input = {
   changes?: InputMaybe<Array<Scalars['String']>>;
+  meta?: InputMaybe<Array<Scalars['String']>>;
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
 export type Activity_Logs_Delete_Elem_Input = {
   changes?: InputMaybe<Scalars['Int']>;
+  meta?: InputMaybe<Scalars['Int']>;
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type Activity_Logs_Delete_Key_Input = {
   changes?: InputMaybe<Scalars['String']>;
+  meta?: InputMaybe<Scalars['String']>;
 };
 
 /** input type for inserting data into table "activity_logs" */
 export type Activity_Logs_Insert_Input = {
   changes?: InputMaybe<Scalars['jsonb']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
-  row_id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
 export type Activity_Logs_Max_Fields = {
   __typename?: 'activity_logs_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
-  row_id?: Maybe<Scalars['uuid']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate min on columns */
 export type Activity_Logs_Min_Fields = {
   __typename?: 'activity_logs_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
-  row_id?: Maybe<Scalars['uuid']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -366,8 +394,10 @@ export type Activity_Logs_On_Conflict = {
 /** Ordering options when selecting data from "activity_logs". */
 export type Activity_Logs_Order_By = {
   changes?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  row_id?: InputMaybe<Order_By>;
+  meta?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -379,6 +409,7 @@ export type Activity_Logs_Pk_Columns_Input = {
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type Activity_Logs_Prepend_Input = {
   changes?: InputMaybe<Scalars['jsonb']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "activity_logs" */
@@ -386,17 +417,20 @@ export type Activity_Logs_Select_Column =
   /** column name */
   | 'changes'
   /** column name */
+  | 'created_at'
+  /** column name */
   | 'id'
   /** column name */
-  | 'row_id'
+  | 'meta'
   /** column name */
   | 'user_id';
 
 /** input type for updating data in table "activity_logs" */
 export type Activity_Logs_Set_Input = {
   changes?: InputMaybe<Scalars['jsonb']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
-  row_id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -411,8 +445,9 @@ export type Activity_Logs_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Activity_Logs_Stream_Cursor_Value_Input = {
   changes?: InputMaybe<Scalars['jsonb']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
-  row_id?: InputMaybe<Scalars['uuid']>;
+  meta?: InputMaybe<Scalars['jsonb']>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -421,9 +456,11 @@ export type Activity_Logs_Update_Column =
   /** column name */
   | 'changes'
   /** column name */
+  | 'created_at'
+  /** column name */
   | 'id'
   /** column name */
-  | 'row_id'
+  | 'meta'
   /** column name */
   | 'user_id';
 
@@ -13833,6 +13870,15 @@ export default {
               ]
             },
             {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "NON_NULL",
@@ -13845,12 +13891,30 @@ export default {
               "args": []
             },
             {
-              "name": "row_id",
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "user",
               "type": {
                 "kind": "NON_NULL",
                 "ofType": {
-                  "kind": "SCALAR",
-                  "name": "uuid",
+                  "kind": "OBJECT",
+                  "name": "users",
                   "ofType": null
                 }
               },
@@ -13976,6 +14040,14 @@ export default {
                 "name": "jsonb",
                 "ofType": null
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
             }
           ]
         },
@@ -14028,6 +14100,14 @@ export default {
               }
             },
             {
+              "name": "created_at",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "timestamptz_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -14036,10 +14116,18 @@ export default {
               }
             },
             {
-              "name": "row_id",
+              "name": "meta",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "uuid_comparison_exp",
+                "name": "jsonb_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "users_bool_exp",
                 "ofType": null
               }
             },
@@ -14079,6 +14167,20 @@ export default {
                   }
                 }
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
             }
           ]
         },
@@ -14093,6 +14195,14 @@ export default {
                 "name": "Int",
                 "ofType": null
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             }
           ]
         },
@@ -14102,6 +14212,14 @@ export default {
           "inputFields": [
             {
               "name": "changes",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "meta",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -14123,6 +14241,14 @@ export default {
               }
             },
             {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -14131,10 +14257,18 @@ export default {
               }
             },
             {
-              "name": "row_id",
+              "name": "meta",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
+                "name": "jsonb",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "users_obj_rel_insert_input",
                 "ofType": null
               }
             },
@@ -14153,16 +14287,16 @@ export default {
           "name": "activity_logs_max_fields",
           "fields": [
             {
-              "name": "id",
+              "name": "created_at",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
+                "name": "timestamptz",
                 "ofType": null
               },
               "args": []
             },
             {
-              "name": "row_id",
+              "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -14187,16 +14321,16 @@ export default {
           "name": "activity_logs_min_fields",
           "fields": [
             {
-              "name": "id",
+              "name": "created_at",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
+                "name": "timestamptz",
                 "ofType": null
               },
               "args": []
             },
             {
-              "name": "row_id",
+              "name": "id",
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
@@ -14309,6 +14443,14 @@ export default {
               }
             },
             {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "ENUM",
@@ -14317,10 +14459,18 @@ export default {
               }
             },
             {
-              "name": "row_id",
+              "name": "meta",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "user",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "users_order_by",
                 "ofType": null
               }
             },
@@ -14362,6 +14512,14 @@ export default {
                 "name": "jsonb",
                 "ofType": null
               }
+            },
+            {
+              "name": "meta",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
             }
           ]
         },
@@ -14373,10 +14531,13 @@ export default {
               "name": "changes"
             },
             {
+              "name": "created_at"
+            },
+            {
               "name": "id"
             },
             {
-              "name": "row_id"
+              "name": "meta"
             },
             {
               "name": "user_id"
@@ -14396,6 +14557,14 @@ export default {
               }
             },
             {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -14404,10 +14573,10 @@ export default {
               }
             },
             {
-              "name": "row_id",
+              "name": "meta",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -14459,6 +14628,14 @@ export default {
               }
             },
             {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -14467,10 +14644,10 @@ export default {
               }
             },
             {
-              "name": "row_id",
+              "name": "meta",
               "type": {
                 "kind": "SCALAR",
-                "name": "uuid",
+                "name": "jsonb",
                 "ofType": null
               }
             },
@@ -14492,10 +14669,13 @@ export default {
               "name": "changes"
             },
             {
+              "name": "created_at"
+            },
+            {
               "name": "id"
             },
             {
-              "name": "row_id"
+              "name": "meta"
             },
             {
               "name": "user_id"
@@ -72019,6 +72199,7 @@ export default {
     String_Comparison_Exp: String_Comparison_Exp,
     Activity_Logs: Activity_Logs,
     Activity_Logs_ChangesArgs: Activity_Logs_ChangesArgs,
+    Activity_Logs_MetaArgs: Activity_Logs_MetaArgs,
     Activity_Logs_Aggregate: Activity_Logs_Aggregate,
     Activity_Logs_Aggregate_Fields: Activity_Logs_Aggregate_Fields,
     Activity_Logs_Aggregate_Fields_CountArgs: Activity_Logs_Aggregate_Fields_CountArgs,
@@ -73398,6 +73579,27 @@ export const UpsertUserMovieActivityDocument = gql`
   }
 }
     `;
+export const ActivityLogsDocument = gql`
+    query ActivityLogs($where: activity_logs_bool_exp, $distinct_on: [activity_logs_select_column!], $limit: Int, $offset: Int, $order_by: [activity_logs_order_by!]) {
+  activity_logs(
+    where: $where
+    distinct_on: $distinct_on
+    limit: $limit
+    offset: $offset
+    order_by: $order_by
+  ) {
+    id
+    changes
+    meta
+    user {
+      id
+      displayName
+      avatarUrl
+    }
+    created_at
+  }
+}
+    `;
 export const AuditLogsDocument = gql`
     query AuditLogs($where: audit_logs_bool_exp, $distinct_on: [audit_logs_select_column!], $limit: Int, $offset: Int, $order_by: [audit_logs_order_by!]) {
   audit_logs(
@@ -73566,6 +73768,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     UpsertUserMovieActivity(variables: UpsertUserMovieActivityMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpsertUserMovieActivityMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpsertUserMovieActivityMutation>({ document: UpsertUserMovieActivityDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpsertUserMovieActivity', 'mutation', variables);
+    },
+    ActivityLogs(variables?: ActivityLogsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ActivityLogsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ActivityLogsQuery>({ document: ActivityLogsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ActivityLogs', 'query', variables);
     },
     AuditLogs(variables?: AuditLogsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AuditLogsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<AuditLogsQuery>({ document: AuditLogsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'AuditLogs', 'query', variables);

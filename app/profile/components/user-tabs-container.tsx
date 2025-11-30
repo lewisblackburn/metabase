@@ -1,12 +1,17 @@
 import { TabsContent } from '@radix-ui/react-tabs'
+import { Suspense } from 'react'
 
+import UserActivity from './tabs/user-activity'
+import UserActivityLoading from './tabs/user-activity/loading'
 import UserTabs from './user-tabs'
 
 export default function UserTabsContainer() {
     return (
         <UserTabs>
             <TabsContent value="activity">
-                <div>Activity</div>
+                <Suspense fallback={<UserActivityLoading />}>
+                    <UserActivity />
+                </Suspense>
             </TabsContent>
 
             <TabsContent value="collection">
