@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server'
 import { Audit_Logs_Constraint } from '@/generated/graphql'
 import { insertAuditLog } from '@/lib/actions/audit-logs/insert-audit-log'
 import { computeDataDifference, createAuditLogEntry } from '@/lib/helpers/audit-log-helpers'
-import { AuditLogTypes } from '@/lib/helpers/graphql-enums'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 export async function POST(request: Request) {
