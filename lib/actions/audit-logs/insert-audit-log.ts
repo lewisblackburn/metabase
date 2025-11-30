@@ -9,7 +9,7 @@ import { createAdminNhostClient } from '@/lib/nhost/admin-server'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 export async function insertAuditLog(variables: InsertAuditLogMutationVariables) {
-    const nhost = await createAdminNhostClient()
+    const nhost = createAdminNhostClient()
 
     const result = await nhost.graphql
         .request<

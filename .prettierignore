@@ -1,22 +1,24 @@
-# Dependencies
-node_modules
+# # Dependencies
+# node_modules
+#
+# # Build outputs
+# .next
+# out
+# build
+# dist
+# coverage
+#
+# # Generated files
+# generated
+#
+# # Lock files
+# pnpm-lock.yaml
+# package-lock.json
+# yarn.lock
+#
+# # Misc
+# .DS_Store
+# *.log
+#
 
-# Build outputs
-.next
-out
-build
-dist
-coverage
-
-# Generated files
-generated
-
-# Lock files
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
-
-# Misc
-.DS_Store
-*.log
-
+*

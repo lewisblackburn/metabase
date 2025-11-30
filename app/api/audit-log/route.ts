@@ -6,15 +6,6 @@ import { computeDataDifference, createAuditLogEntry } from '@/lib/helpers/audit-
 import { AuditLogTypes } from '@/lib/helpers/graphql-enums'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
-/**
- * Determines if a table name represents an activity table
- * Activity tables follow the pattern: user_*_activities
- */
-// TODO: Move this to a helper file and create tests for it
-function isActivityTable(tableName: string): boolean {
-    return /^user_.*_activities$/.test(tableName)
-}
-
 export async function POST(request: Request) {
     const body = await request.json()
 
@@ -36,8 +27,6 @@ export async function POST(request: Request) {
 
     const difference = computeDataDifference(old, newData)
 
-    const isActivity = isActivityTable(tableName)
-
     const auditLogEntry = createAuditLogEntry({
         operation: op,
         tableName,
@@ -45,7 +34,6 @@ export async function POST(request: Request) {
         difference,
         userId,
         meta,
-        type: isActivity ? AuditLogTypes.ACTIVITY : AuditLogTypes.AUDIT,
     })
 
     await insertAuditLog({

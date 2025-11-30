@@ -40,7 +40,6 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                 status,
                 rating: value.rating,
                 comment: value.comment,
-                meta: { title: movie?.title },
             }).catch(error => {
                 toast.error('Failed to update rating', {
                     description: error.message,

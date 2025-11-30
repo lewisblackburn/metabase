@@ -1,0 +1,8 @@
+mutation InsertActivityLog(
+    $object: activity_logs_insert_input!
+    $on_conflict: activity_logs_on_conflict
+) {
+    insert_activity_logs_one(object: $object, on_conflict: $on_conflict) {
+        id
+    }
+}
