@@ -4,4 +4,3 @@ mutation CreatePerson($object: people_insert_input!, $on_conflict: people_on_con
         name
     }
 }
-

@@ -11,4 +11,3 @@ query FindEntityByExternalId($source: String!, $externalId: String!, $entityType
         entity_type
     }
 }
-

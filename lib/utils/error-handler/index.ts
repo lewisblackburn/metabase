@@ -49,4 +49,4 @@ export function handleGraphQLError(error: unknown): never {
 
 // Re-export types and classes for convenience
 export type { ConstraintType, ErrorPattern } from './types'
-export { DatabaseConstraint, GraphQLError, GraphQLErrorCode } from './types'
+export { GraphQLError, GraphQLErrorCode } from './types'
