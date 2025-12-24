@@ -4,13 +4,10 @@ import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 import prettierConfig from 'eslint-config-prettier'
 import pluginPrettier from 'eslint-plugin-prettier'
-// import tailwindcss from "eslint-plugin-tailwindcss"
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import testingLibrary from 'eslint-plugin-testing-library'
 import unusedImports from 'eslint-plugin-unused-imports'
 import vitest from 'eslint-plugin-vitest'
-
-// ! TODO: tailwind eslint plugin not supported on tailwind v4
 
 export default defineConfig([
     ...nextVitals,
@@ -22,7 +19,6 @@ export default defineConfig([
             prettier: pluginPrettier,
             'testing-library': testingLibrary,
             vitest,
-            // tailwindcss,
             'simple-import-sort': simpleImportSort,
             'unused-imports': unusedImports,
         },
@@ -34,16 +30,6 @@ export default defineConfig([
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
             'unused-imports/no-unused-imports': 'error',
-
-            // 🎨 Tailwind rules
-            // "tailwindcss/classnames-order": "warn",
-            // "tailwindcss/no-custom-classname": "off", // disable if you mix custom + utility classes
-        },
-        settings: {
-            // tailwindcss: {
-            //   callees: ["classnames", "clsx", "ctl"], // if you use any of these helpers
-            //   config: "tailwind.config.ts", // adjust path if needed
-            // },
         },
     },
 
