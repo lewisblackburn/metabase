@@ -64,6 +64,7 @@ export abstract class TMDBImporter extends BaseImporter {
                         entity_type: this.entityType,
                         source: this.source,
                         external_id: externalId,
+                        // TODO: I don't want to store the raw data doesn't make any sense
                         data: rawData,
                     },
                     on_conflict: {
