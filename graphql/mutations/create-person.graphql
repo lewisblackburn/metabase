@@ -1,0 +1,7 @@
+mutation CreatePerson($object: people_insert_input!, $on_conflict: people_on_conflict) {
+    insert_people_one(object: $object, on_conflict: $on_conflict) {
+        id
+        name
+    }
+}
+

@@ -1,0 +1,14 @@
+query FindEntityByExternalId($source: String!, $externalId: String!, $entityType: String!) {
+    external_ids(
+        where: {
+            source: { _eq: $source }
+            external_id: { _eq: $externalId }
+            entity_type: { _eq: $entityType }
+        }
+        limit: 1
+    ) {
+        entity_id
+        entity_type
+    }
+}
+

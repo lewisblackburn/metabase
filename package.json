@@ -17,7 +17,7 @@
         "generate:graphql": "graphql-codegen --require dotenv/config --config codegen.yml"
     },
     "lint-staged": {
-        "*.{js,ts,jsx,tsx}": "eslint --fix"
+        "*.{js,ts,jsx,tsx}": ["prettier --write", "eslint --fix"]
     },
     "dependencies": {
         "@hookform/resolvers": "^5.2.2",

@@ -23,6 +23,14 @@ export type CreateMovieMutationVariables = Exact<{
 
 export type CreateMovieMutation = { __typename?: 'mutation_root', insert_movies_one?: { __typename?: 'movies', id: any, title: string } | null };
 
+export type CreatePersonMutationVariables = Exact<{
+  object: People_Insert_Input;
+  on_conflict?: InputMaybe<People_On_Conflict>;
+}>;
+
+
+export type CreatePersonMutation = { __typename?: 'mutation_root', insert_people_one?: { __typename?: 'people', id: any, name: string } | null };
+
 export type InsertActivityLogMutationVariables = Exact<{
   object: Activity_Logs_Insert_Input;
   on_conflict?: InputMaybe<Activity_Logs_On_Conflict>;
@@ -38,6 +46,14 @@ export type InsertAuditLogMutationVariables = Exact<{
 
 
 export type InsertAuditLogMutation = { __typename?: 'mutation_root', insert_audit_logs_one?: { __typename?: 'audit_logs', id: any } | null };
+
+export type InsertExternalIdMutationVariables = Exact<{
+  object: External_Ids_Insert_Input;
+  on_conflict?: InputMaybe<External_Ids_On_Conflict>;
+}>;
+
+
+export type InsertExternalIdMutation = { __typename?: 'mutation_root', insert_external_ids_one?: { __typename?: 'external_ids', id: any, entity_id: any, entity_type: string, source: string, external_id: string } | null };
 
 export type InsertListItemMutationVariables = Exact<{
   object: List_Items_Insert_Input;
@@ -89,6 +105,15 @@ export type CreditTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CreditTypesQuery = { __typename?: 'query_root', credit_types: Array<{ __typename?: 'credit_types', credit_type: string }> };
+
+export type FindEntityByExternalIdQueryVariables = Exact<{
+  source: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
+  entityType: Scalars['String']['input'];
+}>;
+
+
+export type FindEntityByExternalIdQuery = { __typename?: 'query_root', external_ids: Array<{ __typename?: 'external_ids', entity_id: any, entity_type: string }> };
 
 export type GendersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3374,6 +3399,238 @@ export type Date_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['date']>;
   _neq?: InputMaybe<Scalars['date']>;
   _nin?: InputMaybe<Array<Scalars['date']>>;
+};
+
+/** columns and relationships of "external_ids" */
+export type External_Ids = {
+  __typename?: 'external_ids';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  data?: Maybe<Scalars['jsonb']>;
+  entity_id: Scalars['uuid'];
+  entity_type: Scalars['String'];
+  external_id: Scalars['String'];
+  id: Scalars['uuid'];
+  source: Scalars['String'];
+};
+
+
+/** columns and relationships of "external_ids" */
+export type External_Ids_DataArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregated selection of "external_ids" */
+export type External_Ids_Aggregate = {
+  __typename?: 'external_ids_aggregate';
+  aggregate?: Maybe<External_Ids_Aggregate_Fields>;
+  nodes: Array<External_Ids>;
+};
+
+/** aggregate fields of "external_ids" */
+export type External_Ids_Aggregate_Fields = {
+  __typename?: 'external_ids_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<External_Ids_Max_Fields>;
+  min?: Maybe<External_Ids_Min_Fields>;
+};
+
+
+/** aggregate fields of "external_ids" */
+export type External_Ids_Aggregate_Fields_CountArgs = {
+  columns?: InputMaybe<Array<External_Ids_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type External_Ids_Append_Input = {
+  data?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** Boolean expression to filter rows from the table "external_ids". All fields are combined with a logical 'AND'. */
+export type External_Ids_Bool_Exp = {
+  _and?: InputMaybe<Array<External_Ids_Bool_Exp>>;
+  _not?: InputMaybe<External_Ids_Bool_Exp>;
+  _or?: InputMaybe<Array<External_Ids_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  data?: InputMaybe<Jsonb_Comparison_Exp>;
+  entity_id?: InputMaybe<Uuid_Comparison_Exp>;
+  entity_type?: InputMaybe<String_Comparison_Exp>;
+  external_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  source?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "external_ids" */
+export type External_Ids_Constraint =
+  /** unique or primary key constraint on columns "id" */
+  | 'external_ids_pkey'
+  /** unique or primary key constraint on columns "entity_type", "external_id", "entity_id", "source" */
+  | 'external_ids_unique';
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type External_Ids_Delete_At_Path_Input = {
+  data?: InputMaybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type External_Ids_Delete_Elem_Input = {
+  data?: InputMaybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type External_Ids_Delete_Key_Input = {
+  data?: InputMaybe<Scalars['String']>;
+};
+
+/** input type for inserting data into table "external_ids" */
+export type External_Ids_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  data?: InputMaybe<Scalars['jsonb']>;
+  entity_id?: InputMaybe<Scalars['uuid']>;
+  entity_type?: InputMaybe<Scalars['String']>;
+  external_id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  source?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type External_Ids_Max_Fields = {
+  __typename?: 'external_ids_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
+  entity_type?: Maybe<Scalars['String']>;
+  external_id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  source?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type External_Ids_Min_Fields = {
+  __typename?: 'external_ids_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
+  entity_type?: Maybe<Scalars['String']>;
+  external_id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  source?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "external_ids" */
+export type External_Ids_Mutation_Response = {
+  __typename?: 'external_ids_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<External_Ids>;
+};
+
+/** on_conflict condition type for table "external_ids" */
+export type External_Ids_On_Conflict = {
+  constraint: External_Ids_Constraint;
+  update_columns?: Array<External_Ids_Update_Column>;
+  where?: InputMaybe<External_Ids_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "external_ids". */
+export type External_Ids_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  data?: InputMaybe<Order_By>;
+  entity_id?: InputMaybe<Order_By>;
+  entity_type?: InputMaybe<Order_By>;
+  external_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  source?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: external_ids */
+export type External_Ids_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type External_Ids_Prepend_Input = {
+  data?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** select columns of table "external_ids" */
+export type External_Ids_Select_Column =
+  /** column name */
+  | 'created_at'
+  /** column name */
+  | 'data'
+  /** column name */
+  | 'entity_id'
+  /** column name */
+  | 'entity_type'
+  /** column name */
+  | 'external_id'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'source';
+
+/** input type for updating data in table "external_ids" */
+export type External_Ids_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  data?: InputMaybe<Scalars['jsonb']>;
+  entity_id?: InputMaybe<Scalars['uuid']>;
+  entity_type?: InputMaybe<Scalars['String']>;
+  external_id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  source?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "external_ids" */
+export type External_Ids_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: External_Ids_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type External_Ids_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  data?: InputMaybe<Scalars['jsonb']>;
+  entity_id?: InputMaybe<Scalars['uuid']>;
+  entity_type?: InputMaybe<Scalars['String']>;
+  external_id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  source?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "external_ids" */
+export type External_Ids_Update_Column =
+  /** column name */
+  | 'created_at'
+  /** column name */
+  | 'data'
+  /** column name */
+  | 'entity_id'
+  /** column name */
+  | 'entity_type'
+  /** column name */
+  | 'external_id'
+  /** column name */
+  | 'id'
+  /** column name */
+  | 'source';
+
+export type External_Ids_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<External_Ids_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<External_Ids_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<External_Ids_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<External_Ids_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<External_Ids_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<External_Ids_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: External_Ids_Bool_Exp;
 };
 
 /** columns and relationships of "storage.files" */
@@ -6815,6 +7072,10 @@ export type Mutation_Root = {
   delete_credit_types?: Maybe<Credit_Types_Mutation_Response>;
   /** delete single row from the table: "credit_types" */
   delete_credit_types_by_pk?: Maybe<Credit_Types>;
+  /** delete data from the table: "external_ids" */
+  delete_external_ids?: Maybe<External_Ids_Mutation_Response>;
+  /** delete single row from the table: "external_ids" */
+  delete_external_ids_by_pk?: Maybe<External_Ids>;
   /** delete data from the table: "genders" */
   delete_genders?: Maybe<Genders_Mutation_Response>;
   /** delete single row from the table: "genders" */
@@ -6951,6 +7212,10 @@ export type Mutation_Root = {
   insert_credit_types?: Maybe<Credit_Types_Mutation_Response>;
   /** insert a single row into the table: "credit_types" */
   insert_credit_types_one?: Maybe<Credit_Types>;
+  /** insert data into the table: "external_ids" */
+  insert_external_ids?: Maybe<External_Ids_Mutation_Response>;
+  /** insert a single row into the table: "external_ids" */
+  insert_external_ids_one?: Maybe<External_Ids>;
   /** insert data into the table: "genders" */
   insert_genders?: Maybe<Genders_Mutation_Response>;
   /** insert a single row into the table: "genders" */
@@ -7115,6 +7380,12 @@ export type Mutation_Root = {
   update_credit_types_by_pk?: Maybe<Credit_Types>;
   /** update multiples rows of table: "credit_types" */
   update_credit_types_many?: Maybe<Array<Maybe<Credit_Types_Mutation_Response>>>;
+  /** update data of the table: "external_ids" */
+  update_external_ids?: Maybe<External_Ids_Mutation_Response>;
+  /** update single row of the table: "external_ids" */
+  update_external_ids_by_pk?: Maybe<External_Ids>;
+  /** update multiples rows of table: "external_ids" */
+  update_external_ids_many?: Maybe<Array<Maybe<External_Ids_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
   /** update data of the table: "genders" */
@@ -7427,6 +7698,18 @@ export type Mutation_Root_Delete_Credit_TypesArgs = {
 /** mutation root */
 export type Mutation_Root_Delete_Credit_Types_By_PkArgs = {
   credit_type: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_External_IdsArgs = {
+  where: External_Ids_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Delete_External_Ids_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -7874,6 +8157,20 @@ export type Mutation_Root_Insert_Credit_TypesArgs = {
 export type Mutation_Root_Insert_Credit_Types_OneArgs = {
   object: Credit_Types_Insert_Input;
   on_conflict?: InputMaybe<Credit_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_External_IdsArgs = {
+  objects: Array<External_Ids_Insert_Input>;
+  on_conflict?: InputMaybe<External_Ids_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Insert_External_Ids_OneArgs = {
+  object: External_Ids_Insert_Input;
+  on_conflict?: InputMaybe<External_Ids_On_Conflict>;
 };
 
 
@@ -8510,6 +8807,36 @@ export type Mutation_Root_Update_Credit_Types_By_PkArgs = {
 /** mutation root */
 export type Mutation_Root_Update_Credit_Types_ManyArgs = {
   updates: Array<Credit_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_External_IdsArgs = {
+  _append?: InputMaybe<External_Ids_Append_Input>;
+  _delete_at_path?: InputMaybe<External_Ids_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<External_Ids_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<External_Ids_Delete_Key_Input>;
+  _prepend?: InputMaybe<External_Ids_Prepend_Input>;
+  _set?: InputMaybe<External_Ids_Set_Input>;
+  where: External_Ids_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_External_Ids_By_PkArgs = {
+  _append?: InputMaybe<External_Ids_Append_Input>;
+  _delete_at_path?: InputMaybe<External_Ids_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<External_Ids_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<External_Ids_Delete_Key_Input>;
+  _prepend?: InputMaybe<External_Ids_Prepend_Input>;
+  _set?: InputMaybe<External_Ids_Set_Input>;
+  pk_columns: External_Ids_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_Root_Update_External_Ids_ManyArgs = {
+  updates: Array<External_Ids_Updates>;
 };
 
 
@@ -9364,6 +9691,12 @@ export type Query_Root = {
   credit_types_aggregate: Credit_Types_Aggregate;
   /** fetch data from the table: "credit_types" using primary key columns */
   credit_types_by_pk?: Maybe<Credit_Types>;
+  /** fetch data from the table: "external_ids" */
+  external_ids: Array<External_Ids>;
+  /** fetch aggregated fields from the table: "external_ids" */
+  external_ids_aggregate: External_Ids_Aggregate;
+  /** fetch data from the table: "external_ids" using primary key columns */
+  external_ids_by_pk?: Maybe<External_Ids>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -9810,6 +10143,29 @@ export type Query_Root_Credit_Types_AggregateArgs = {
 
 export type Query_Root_Credit_Types_By_PkArgs = {
   credit_type: Scalars['String'];
+};
+
+
+export type Query_Root_External_IdsArgs = {
+  distinct_on?: InputMaybe<Array<External_Ids_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<External_Ids_Order_By>>;
+  where?: InputMaybe<External_Ids_Bool_Exp>;
+};
+
+
+export type Query_Root_External_Ids_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<External_Ids_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<External_Ids_Order_By>>;
+  where?: InputMaybe<External_Ids_Bool_Exp>;
+};
+
+
+export type Query_Root_External_Ids_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -10411,6 +10767,14 @@ export type Subscription_Root = {
   credit_types_by_pk?: Maybe<Credit_Types>;
   /** fetch data from the table in a streaming manner: "credit_types" */
   credit_types_stream: Array<Credit_Types>;
+  /** fetch data from the table: "external_ids" */
+  external_ids: Array<External_Ids>;
+  /** fetch aggregated fields from the table: "external_ids" */
+  external_ids_aggregate: External_Ids_Aggregate;
+  /** fetch data from the table: "external_ids" using primary key columns */
+  external_ids_by_pk?: Maybe<External_Ids>;
+  /** fetch data from the table in a streaming manner: "external_ids" */
+  external_ids_stream: Array<External_Ids>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -10995,6 +11359,36 @@ export type Subscription_Root_Credit_Types_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Credit_Types_Stream_Cursor_Input>>;
   where?: InputMaybe<Credit_Types_Bool_Exp>;
+};
+
+
+export type Subscription_Root_External_IdsArgs = {
+  distinct_on?: InputMaybe<Array<External_Ids_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<External_Ids_Order_By>>;
+  where?: InputMaybe<External_Ids_Bool_Exp>;
+};
+
+
+export type Subscription_Root_External_Ids_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<External_Ids_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<External_Ids_Order_By>>;
+  where?: InputMaybe<External_Ids_Bool_Exp>;
+};
+
+
+export type Subscription_Root_External_Ids_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_Root_External_Ids_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<External_Ids_Stream_Cursor_Input>>;
+  where?: InputMaybe<External_Ids_Bool_Exp>;
 };
 
 
@@ -11639,7 +12033,6 @@ export type Timestamptz_Comparison_Exp = {
 export type User_Movie_Activities = {
   __typename?: 'user_movie_activities';
   comment?: Maybe<Scalars['String']>;
-  id: Scalars['uuid'];
   movie_id: Scalars['uuid'];
   rating?: Maybe<Scalars['Int']>;
   status?: Maybe<User_Movie_Statuses_Enum>;
@@ -11707,7 +12100,6 @@ export type User_Movie_Activities_Bool_Exp = {
   _not?: InputMaybe<User_Movie_Activities_Bool_Exp>;
   _or?: InputMaybe<Array<User_Movie_Activities_Bool_Exp>>;
   comment?: InputMaybe<String_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
   rating?: InputMaybe<Int_Comparison_Exp>;
   status?: InputMaybe<User_Movie_Statuses_Enum_Comparison_Exp>;
@@ -11716,8 +12108,6 @@ export type User_Movie_Activities_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_movie_activities" */
 export type User_Movie_Activities_Constraint =
-  /** unique or primary key constraint on columns "id" */
-  | 'user_movie_activities_id_key'
   /** unique or primary key constraint on columns "user_id", "movie_id" */
   | 'user_movie_activities_pkey';
 
@@ -11729,7 +12119,6 @@ export type User_Movie_Activities_Inc_Input = {
 /** input type for inserting data into table "user_movie_activities" */
 export type User_Movie_Activities_Insert_Input = {
   comment?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   rating?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<User_Movie_Statuses_Enum>;
@@ -11740,7 +12129,6 @@ export type User_Movie_Activities_Insert_Input = {
 export type User_Movie_Activities_Max_Fields = {
   __typename?: 'user_movie_activities_max_fields';
   comment?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   movie_id?: Maybe<Scalars['uuid']>;
   rating?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['uuid']>;
@@ -11749,7 +12137,6 @@ export type User_Movie_Activities_Max_Fields = {
 /** order by max() on columns of table "user_movie_activities" */
 export type User_Movie_Activities_Max_Order_By = {
   comment?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -11759,7 +12146,6 @@ export type User_Movie_Activities_Max_Order_By = {
 export type User_Movie_Activities_Min_Fields = {
   __typename?: 'user_movie_activities_min_fields';
   comment?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   movie_id?: Maybe<Scalars['uuid']>;
   rating?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['uuid']>;
@@ -11768,7 +12154,6 @@ export type User_Movie_Activities_Min_Fields = {
 /** order by min() on columns of table "user_movie_activities" */
 export type User_Movie_Activities_Min_Order_By = {
   comment?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -11793,7 +12178,6 @@ export type User_Movie_Activities_On_Conflict = {
 /** Ordering options when selecting data from "user_movie_activities". */
 export type User_Movie_Activities_Order_By = {
   comment?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   rating?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
@@ -11811,8 +12195,6 @@ export type User_Movie_Activities_Select_Column =
   /** column name */
   | 'comment'
   /** column name */
-  | 'id'
-  /** column name */
   | 'movie_id'
   /** column name */
   | 'rating'
@@ -11824,7 +12206,6 @@ export type User_Movie_Activities_Select_Column =
 /** input type for updating data in table "user_movie_activities" */
 export type User_Movie_Activities_Set_Input = {
   comment?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   rating?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<User_Movie_Statuses_Enum>;
@@ -11875,7 +12256,6 @@ export type User_Movie_Activities_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type User_Movie_Activities_Stream_Cursor_Value_Input = {
   comment?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   rating?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<User_Movie_Statuses_Enum>;
@@ -11897,8 +12277,6 @@ export type User_Movie_Activities_Sum_Order_By = {
 export type User_Movie_Activities_Update_Column =
   /** column name */
   | 'comment'
-  /** column name */
-  | 'id'
   /** column name */
   | 'movie_id'
   /** column name */
@@ -27441,6 +27819,991 @@ export default {
                     "name": "date",
                     "ofType": null
                   }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "external_ids",
+          "fields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "path",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "external_ids_aggregate",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids_aggregate_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "nodes",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "external_ids",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "external_ids_aggregate_fields",
+          "fields": [
+            {
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "columns",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "external_ids_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "distinct",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "max",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids_max_fields",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "min",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids_min_fields",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_append_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_bool_exp",
+          "inputFields": [
+            {
+              "name": "_and",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "_not",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_bool_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_or",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_bool_exp",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "timestamptz_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "data",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "jsonb_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "uuid_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "external_ids_constraint",
+          "enumValues": [
+            {
+              "name": "external_ids_pkey"
+            },
+            {
+              "name": "external_ids_unique"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_delete_at_path_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_delete_elem_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_delete_key_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_insert_input",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "external_ids_max_fields",
+          "fields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "external_ids_min_fields",
+          "fields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              },
+              "args": []
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "external_ids_mutation_response",
+          "fields": [
+            {
+              "name": "affected_rows",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "returning",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "external_ids",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": []
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_on_conflict",
+          "inputFields": [
+            {
+              "name": "constraint",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "external_ids_constraint",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "update_columns",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "external_ids_update_column",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_bool_exp",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_order_by",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "data",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "ENUM",
+                "name": "order_by",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_pk_columns_input",
+          "inputFields": [
+            {
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "uuid",
+                  "ofType": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_prepend_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "external_ids_select_column",
+          "enumValues": [
+            {
+              "name": "created_at"
+            },
+            {
+              "name": "data"
+            },
+            {
+              "name": "entity_id"
+            },
+            {
+              "name": "entity_type"
+            },
+            {
+              "name": "external_id"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "source"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_set_input",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_stream_cursor_input",
+          "inputFields": [
+            {
+              "name": "initial_value",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "external_ids_stream_cursor_value_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "ordering",
+              "type": {
+                "kind": "ENUM",
+                "name": "cursor_ordering",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_stream_cursor_value_input",
+          "inputFields": [
+            {
+              "name": "created_at",
+              "type": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            {
+              "name": "data",
+              "type": {
+                "kind": "SCALAR",
+                "name": "jsonb",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "entity_type",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "external_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            {
+              "name": "source",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ]
+        },
+        {
+          "kind": "ENUM",
+          "name": "external_ids_update_column",
+          "enumValues": [
+            {
+              "name": "created_at"
+            },
+            {
+              "name": "data"
+            },
+            {
+              "name": "entity_id"
+            },
+            {
+              "name": "entity_type"
+            },
+            {
+              "name": "external_id"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "source"
+            }
+          ]
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "external_ids_updates",
+          "inputFields": [
+            {
+              "name": "_append",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_append_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_delete_at_path",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_delete_at_path_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_delete_elem",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_delete_elem_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_delete_key",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_delete_key_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_prepend",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_prepend_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "_set",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "external_ids_set_input",
+                "ofType": null
+              }
+            },
+            {
+              "name": "where",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "external_ids_bool_exp",
+                  "ofType": null
                 }
               }
             }
@@ -43657,6 +45020,48 @@ export default {
               ]
             },
             {
+              "name": "delete_external_ids",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "external_ids_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "delete_external_ids_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "name": "delete_genders",
               "type": {
                 "kind": "OBJECT",
@@ -45508,6 +46913,70 @@ export default {
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "credit_types_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_external_ids",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "objects",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "external_ids_insert_input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_on_conflict",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "insert_external_ids_one",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "object",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "external_ids_insert_input",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "on_conflict",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_on_conflict",
                     "ofType": null
                   }
                 }
@@ -48607,6 +50076,174 @@ export default {
                         "ofType": {
                           "kind": "INPUT_OBJECT",
                           "name": "credit_types_updates",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_external_ids",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids_mutation_response",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_append",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_append_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_at_path",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_delete_at_path_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_elem",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_delete_elem_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_key",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_delete_key_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_prepend",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_prepend_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "external_ids_bool_exp",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_external_ids_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "_append",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_append_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_at_path",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_delete_at_path_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_elem",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_delete_elem_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_delete_key",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_delete_key_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_prepend",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_prepend_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "_set",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_set_input",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "pk_columns",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "external_ids_pk_columns_input",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "update_external_ids_many",
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "external_ids_mutation_response",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "updates",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "external_ids_updates",
                           "ofType": null
                         }
                       }
@@ -54059,6 +55696,163 @@ export default {
                     "ofType": {
                       "kind": "SCALAR",
                       "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "external_ids",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "external_ids",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "external_ids_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "external_ids_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "external_ids_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "external_ids_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "external_ids_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "external_ids_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "external_ids_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
                       "ofType": null
                     }
                   }
@@ -60343,6 +62137,215 @@ export default {
               ]
             },
             {
+              "name": "external_ids",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "external_ids",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "external_ids_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "external_ids_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "external_ids_aggregate",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "external_ids_aggregate",
+                  "ofType": null
+                }
+              },
+              "args": [
+                {
+                  "name": "distinct_on",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "external_ids_select_column",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "limit",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "offset",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "order_by",
+                  "type": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "external_ids_order_by",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
+              "name": "external_ids_by_pk",
+              "type": {
+                "kind": "OBJECT",
+                "name": "external_ids",
+                "ofType": null
+              },
+              "args": [
+                {
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "uuid",
+                      "ofType": null
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "external_ids_stream",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "external_ids",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "args": [
+                {
+                  "name": "batch_size",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "name": "cursor",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "LIST",
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "external_ids_stream_cursor_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "name": "where",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "external_ids_bool_exp",
+                    "ofType": null
+                  }
+                }
+              ]
+            },
+            {
               "name": "file",
               "type": {
                 "kind": "OBJECT",
@@ -64837,18 +66840,6 @@ export default {
               "args": []
             },
             {
-              "name": "id",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "uuid",
-                  "ofType": null
-                }
-              },
-              "args": []
-            },
-            {
               "name": "movie_id",
               "type": {
                 "kind": "NON_NULL",
@@ -65232,14 +67223,6 @@ export default {
               }
             },
             {
-              "name": "id",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "uuid_comparison_exp",
-                "ofType": null
-              }
-            },
-            {
               "name": "movie_id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -65278,9 +67261,6 @@ export default {
           "name": "user_movie_activities_constraint",
           "enumValues": [
             {
-              "name": "user_movie_activities_id_key"
-            },
-            {
               "name": "user_movie_activities_pkey"
             }
           ]
@@ -65308,14 +67288,6 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "uuid",
                 "ofType": null
               }
             },
@@ -65367,15 +67339,6 @@ export default {
               "args": []
             },
             {
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "uuid",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "movie_id",
               "type": {
                 "kind": "SCALAR",
@@ -65411,14 +67374,6 @@ export default {
           "inputFields": [
             {
               "name": "comment",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
-              "name": "id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -65465,15 +67420,6 @@ export default {
               "args": []
             },
             {
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "uuid",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "movie_id",
               "type": {
                 "kind": "SCALAR",
@@ -65509,14 +67455,6 @@ export default {
           "inputFields": [
             {
               "name": "comment",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
-              "name": "id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -65642,14 +67580,6 @@ export default {
               }
             },
             {
-              "name": "id",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
               "name": "movie_id",
               "type": {
                 "kind": "ENUM",
@@ -65719,9 +67649,6 @@ export default {
               "name": "comment"
             },
             {
-              "name": "id"
-            },
-            {
               "name": "movie_id"
             },
             {
@@ -65744,14 +67671,6 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "uuid",
                 "ofType": null
               }
             },
@@ -65917,14 +67836,6 @@ export default {
               }
             },
             {
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "uuid",
-                "ofType": null
-              }
-            },
-            {
               "name": "movie_id",
               "type": {
                 "kind": "SCALAR",
@@ -65994,9 +67905,6 @@ export default {
           "enumValues": [
             {
               "name": "comment"
-            },
-            {
-              "name": "id"
             },
             {
               "name": "movie_id"
@@ -72519,6 +74427,28 @@ export default {
     Credit_Types_Stream_Cursor_Value_Input: Credit_Types_Stream_Cursor_Value_Input,
     Credit_Types_Updates: Credit_Types_Updates,
     Date_Comparison_Exp: Date_Comparison_Exp,
+    External_Ids: External_Ids,
+    External_Ids_DataArgs: External_Ids_DataArgs,
+    External_Ids_Aggregate: External_Ids_Aggregate,
+    External_Ids_Aggregate_Fields: External_Ids_Aggregate_Fields,
+    External_Ids_Aggregate_Fields_CountArgs: External_Ids_Aggregate_Fields_CountArgs,
+    External_Ids_Append_Input: External_Ids_Append_Input,
+    External_Ids_Bool_Exp: External_Ids_Bool_Exp,
+    External_Ids_Delete_At_Path_Input: External_Ids_Delete_At_Path_Input,
+    External_Ids_Delete_Elem_Input: External_Ids_Delete_Elem_Input,
+    External_Ids_Delete_Key_Input: External_Ids_Delete_Key_Input,
+    External_Ids_Insert_Input: External_Ids_Insert_Input,
+    External_Ids_Max_Fields: External_Ids_Max_Fields,
+    External_Ids_Min_Fields: External_Ids_Min_Fields,
+    External_Ids_Mutation_Response: External_Ids_Mutation_Response,
+    External_Ids_On_Conflict: External_Ids_On_Conflict,
+    External_Ids_Order_By: External_Ids_Order_By,
+    External_Ids_Pk_Columns_Input: External_Ids_Pk_Columns_Input,
+    External_Ids_Prepend_Input: External_Ids_Prepend_Input,
+    External_Ids_Set_Input: External_Ids_Set_Input,
+    External_Ids_Stream_Cursor_Input: External_Ids_Stream_Cursor_Input,
+    External_Ids_Stream_Cursor_Value_Input: External_Ids_Stream_Cursor_Value_Input,
+    External_Ids_Updates: External_Ids_Updates,
     Files: Files,
     Files_MetadataArgs: Files_MetadataArgs,
     Files_Aggregate: Files_Aggregate,
@@ -72891,6 +74821,8 @@ export default {
     Mutation_Root_Delete_Countries_By_PkArgs: Mutation_Root_Delete_Countries_By_PkArgs,
     Mutation_Root_Delete_Credit_TypesArgs: Mutation_Root_Delete_Credit_TypesArgs,
     Mutation_Root_Delete_Credit_Types_By_PkArgs: Mutation_Root_Delete_Credit_Types_By_PkArgs,
+    Mutation_Root_Delete_External_IdsArgs: Mutation_Root_Delete_External_IdsArgs,
+    Mutation_Root_Delete_External_Ids_By_PkArgs: Mutation_Root_Delete_External_Ids_By_PkArgs,
     Mutation_Root_Delete_GendersArgs: Mutation_Root_Delete_GendersArgs,
     Mutation_Root_Delete_Genders_By_PkArgs: Mutation_Root_Delete_Genders_By_PkArgs,
     Mutation_Root_Delete_GenresArgs: Mutation_Root_Delete_GenresArgs,
@@ -72959,6 +74891,8 @@ export default {
     Mutation_Root_Insert_Countries_OneArgs: Mutation_Root_Insert_Countries_OneArgs,
     Mutation_Root_Insert_Credit_TypesArgs: Mutation_Root_Insert_Credit_TypesArgs,
     Mutation_Root_Insert_Credit_Types_OneArgs: Mutation_Root_Insert_Credit_Types_OneArgs,
+    Mutation_Root_Insert_External_IdsArgs: Mutation_Root_Insert_External_IdsArgs,
+    Mutation_Root_Insert_External_Ids_OneArgs: Mutation_Root_Insert_External_Ids_OneArgs,
     Mutation_Root_Insert_GendersArgs: Mutation_Root_Insert_GendersArgs,
     Mutation_Root_Insert_Genders_OneArgs: Mutation_Root_Insert_Genders_OneArgs,
     Mutation_Root_Insert_GenresArgs: Mutation_Root_Insert_GenresArgs,
@@ -73041,6 +74975,9 @@ export default {
     Mutation_Root_Update_Credit_TypesArgs: Mutation_Root_Update_Credit_TypesArgs,
     Mutation_Root_Update_Credit_Types_By_PkArgs: Mutation_Root_Update_Credit_Types_By_PkArgs,
     Mutation_Root_Update_Credit_Types_ManyArgs: Mutation_Root_Update_Credit_Types_ManyArgs,
+    Mutation_Root_Update_External_IdsArgs: Mutation_Root_Update_External_IdsArgs,
+    Mutation_Root_Update_External_Ids_By_PkArgs: Mutation_Root_Update_External_Ids_By_PkArgs,
+    Mutation_Root_Update_External_Ids_ManyArgs: Mutation_Root_Update_External_Ids_ManyArgs,
     Mutation_Root_Update_Files_ManyArgs: Mutation_Root_Update_Files_ManyArgs,
     Mutation_Root_Update_GendersArgs: Mutation_Root_Update_GendersArgs,
     Mutation_Root_Update_Genders_By_PkArgs: Mutation_Root_Update_Genders_By_PkArgs,
@@ -73179,6 +75116,9 @@ export default {
     Query_Root_Credit_TypesArgs: Query_Root_Credit_TypesArgs,
     Query_Root_Credit_Types_AggregateArgs: Query_Root_Credit_Types_AggregateArgs,
     Query_Root_Credit_Types_By_PkArgs: Query_Root_Credit_Types_By_PkArgs,
+    Query_Root_External_IdsArgs: Query_Root_External_IdsArgs,
+    Query_Root_External_Ids_AggregateArgs: Query_Root_External_Ids_AggregateArgs,
+    Query_Root_External_Ids_By_PkArgs: Query_Root_External_Ids_By_PkArgs,
     Query_Root_FileArgs: Query_Root_FileArgs,
     Query_Root_FilesArgs: Query_Root_FilesArgs,
     Query_Root_FilesAggregateArgs: Query_Root_FilesAggregateArgs,
@@ -73298,6 +75238,10 @@ export default {
     Subscription_Root_Credit_Types_AggregateArgs: Subscription_Root_Credit_Types_AggregateArgs,
     Subscription_Root_Credit_Types_By_PkArgs: Subscription_Root_Credit_Types_By_PkArgs,
     Subscription_Root_Credit_Types_StreamArgs: Subscription_Root_Credit_Types_StreamArgs,
+    Subscription_Root_External_IdsArgs: Subscription_Root_External_IdsArgs,
+    Subscription_Root_External_Ids_AggregateArgs: Subscription_Root_External_Ids_AggregateArgs,
+    Subscription_Root_External_Ids_By_PkArgs: Subscription_Root_External_Ids_By_PkArgs,
+    Subscription_Root_External_Ids_StreamArgs: Subscription_Root_External_Ids_StreamArgs,
     Subscription_Root_FileArgs: Subscription_Root_FileArgs,
     Subscription_Root_FilesArgs: Subscription_Root_FilesArgs,
     Subscription_Root_FilesAggregateArgs: Subscription_Root_FilesAggregateArgs,
@@ -73537,6 +75481,14 @@ export const CreateMovieDocument = gql`
   }
 }
     `;
+export const CreatePersonDocument = gql`
+    mutation CreatePerson($object: people_insert_input!, $on_conflict: people_on_conflict) {
+  insert_people_one(object: $object, on_conflict: $on_conflict) {
+    id
+    name
+  }
+}
+    `;
 export const InsertActivityLogDocument = gql`
     mutation InsertActivityLog($object: activity_logs_insert_input!, $on_conflict: activity_logs_on_conflict) {
   insert_activity_logs_one(object: $object, on_conflict: $on_conflict) {
@@ -73548,6 +75500,17 @@ export const InsertAuditLogDocument = gql`
     mutation InsertAuditLog($object: audit_logs_insert_input!, $on_conflict: audit_logs_on_conflict) {
   insert_audit_logs_one(object: $object, on_conflict: $on_conflict) {
     id
+  }
+}
+    `;
+export const InsertExternalIdDocument = gql`
+    mutation InsertExternalId($object: external_ids_insert_input!, $on_conflict: external_ids_on_conflict) {
+  insert_external_ids_one(object: $object, on_conflict: $on_conflict) {
+    id
+    entity_id
+    entity_type
+    source
+    external_id
   }
 }
     `;
@@ -73628,6 +75591,17 @@ export const CreditTypesDocument = gql`
     query CreditTypes {
   credit_types {
     credit_type
+  }
+}
+    `;
+export const FindEntityByExternalIdDocument = gql`
+    query FindEntityByExternalId($source: String!, $externalId: String!, $entityType: String!) {
+  external_ids(
+    where: {source: {_eq: $source}, external_id: {_eq: $externalId}, entity_type: {_eq: $entityType}}
+    limit: 1
+  ) {
+    entity_id
+    entity_type
   }
 }
     `;
@@ -73754,11 +75728,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     CreateMovie(variables: CreateMovieMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMovieMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMovieMutation>({ document: CreateMovieDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateMovie', 'mutation', variables);
     },
+    CreatePerson(variables: CreatePersonMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreatePersonMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreatePersonMutation>({ document: CreatePersonDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreatePerson', 'mutation', variables);
+    },
     InsertActivityLog(variables: InsertActivityLogMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<InsertActivityLogMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<InsertActivityLogMutation>({ document: InsertActivityLogDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'InsertActivityLog', 'mutation', variables);
     },
     InsertAuditLog(variables: InsertAuditLogMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<InsertAuditLogMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<InsertAuditLogMutation>({ document: InsertAuditLogDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'InsertAuditLog', 'mutation', variables);
+    },
+    InsertExternalId(variables: InsertExternalIdMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<InsertExternalIdMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertExternalIdMutation>({ document: InsertExternalIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'InsertExternalId', 'mutation', variables);
     },
     InsertListItem(variables: InsertListItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<InsertListItemMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<InsertListItemMutation>({ document: InsertListItemDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'InsertListItem', 'mutation', variables);
@@ -73777,6 +75757,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     CreditTypes(variables?: CreditTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreditTypesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreditTypesQuery>({ document: CreditTypesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreditTypes', 'query', variables);
+    },
+    FindEntityByExternalId(variables: FindEntityByExternalIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FindEntityByExternalIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<FindEntityByExternalIdQuery>({ document: FindEntityByExternalIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'FindEntityByExternalId', 'query', variables);
     },
     Genders(variables?: GendersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GendersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GendersQuery>({ document: GendersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Genders', 'query', variables);

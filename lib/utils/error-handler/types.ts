@@ -10,16 +10,6 @@ export enum GraphQLErrorCode {
 }
 
 /**
- * Database constraint names
- */
-export enum DatabaseConstraint {
-    // List items
-    ListItemsUnique = 'list_items_list_id_media_id_key',
-    ListItemsPrimaryKey = 'list_items_pkey',
-    // Add more constraints as needed
-}
-
-/**
  * Constraint type patterns for pattern matching
  */
 export enum ConstraintType {

@@ -23,7 +23,7 @@ export default defineConfig([
             'unused-imports': unusedImports,
         },
         rules: {
-            ...prettierConfig.rules,
+            // Prettier will automatically use .prettierrc file
             'prettier/prettier': 'error',
 
             // 🧹 Import sorting
@@ -42,6 +42,20 @@ export default defineConfig([
             },
         },
         extends: [testingLibrary.configs['flat/react'], vitest.configs.recommended],
+    },
+
+    // ⚠️ Prettier config must come LAST to disable conflicting ESLint rules
+    // This disables all formatting-related ESLint rules so Prettier handles formatting
+    {
+        rules: {
+            ...prettierConfig.rules,
+            // Explicitly disable indentation rules that conflict with Prettier
+            indent: 'off',
+            '@typescript-eslint/indent': 'off',
+            '@stylistic/indent': 'off',
+            '@stylistic/js/indent': 'off',
+            '@stylistic/ts/indent': 'off',
+        },
     },
 
     globalIgnores([

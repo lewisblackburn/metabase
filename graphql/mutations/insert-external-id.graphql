@@ -1,0 +1,13 @@
+mutation InsertExternalId(
+    $object: external_ids_insert_input!
+    $on_conflict: external_ids_on_conflict
+) {
+    insert_external_ids_one(object: $object, on_conflict: $on_conflict) {
+        id
+        entity_id
+        entity_type
+        source
+        external_id
+    }
+}
+

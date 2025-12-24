@@ -1,4 +1,6 @@
-import { ConstraintType, DatabaseConstraint, ErrorPattern } from './types'
+import { List_Items_Constraint } from '@/generated/graphql'
+
+import { ConstraintType, ErrorPattern } from './types'
 
 /**
  * Determines constraint type and returns user-friendly message
@@ -6,8 +8,8 @@ import { ConstraintType, DatabaseConstraint, ErrorPattern } from './types'
 export function getConstraintMessage(constraintName: string): string {
     // Check for specific known constraints
     switch (constraintName) {
-        case DatabaseConstraint.ListItemsUnique:
-        case DatabaseConstraint.ListItemsPrimaryKey:
+        case 'list_items_list_id_media_id_key' satisfies List_Items_Constraint:
+        case 'list_items_pkey' satisfies List_Items_Constraint:
             return 'This item is already in the selected list.'
 
         // Add more specific constraint cases here
