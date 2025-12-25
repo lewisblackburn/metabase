@@ -3,12 +3,12 @@ import {
     CreateMovieMutation,
     CreateMovieMutationVariables,
     MovieQuery,
-    Movies_Constraint,
 } from '@/generated/graphql'
 import { NormalisedData } from '@/lib/types/importer'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 import { MediaType } from '../helpers/graphql-enums'
+import { TMDBMovie } from '../types/tmdb'
 import { TMDBImporter } from './tmdb.importer'
 
 export class TMDBMovieImporter extends TMDBImporter {
@@ -18,33 +18,63 @@ export class TMDBMovieImporter extends TMDBImporter {
         return this.fetchFromTMDB(`movie/${tmdbId}`)
     }
 
-    // TODO: Fix the any type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    normalise(raw: any): NormalisedData<MovieQuery['movies_by_pk']> {
+    normalise(raw: TMDBMovie): NormalisedData<MovieQuery['movies_by_pk']> {
         return {
             entity: {
                 title: raw.title,
+                tagline: raw.tagline,
+                overview: raw.overview,
+                runtime: raw.runtime,
+                release_date: raw.release_date,
+                genres: raw.genres.map(genre => ({
+                    genre: {
+                        id: genre.id,
+                        name: genre.name,
+                    },
+                })),
+                poster_id: raw.poster_path,
+                backdrop_id: raw.backdrop_path,
             },
         }
     }
 
     protected async createEntity(data: Partial<MovieQuery['movies_by_pk']>): Promise<string> {
+        const variables: CreateMovieMutationVariables = {
+            object: {
+                title: data?.title,
+                tagline: data?.tagline,
+                overview: data?.overview,
+                runtime: data?.runtime,
+                release_date: data?.release_date,
+                genres: {
+                    data:
+                        data?.genres?.map(genre => ({
+                            genre: {
+                                data: {
+                                    name: genre.genre!.name,
+                                },
+                                on_conflict: {
+                                    constraint: 'genres_name_key',
+                                    update_columns: ['name'],
+                                },
+                            },
+                        })) ?? [],
+                    on_conflict: {
+                        constraint: 'movie_genres_pkey',
+                        update_columns: [],
+                    },
+                },
+            },
+            on_conflict: {
+                constraint: 'movies_pkey',
+                update_columns: [],
+            },
+        }
         const result = await this.nhost.graphql
-            .request<CreateMovieMutation, CreateMovieMutationVariables>(CreateMovieDocument, {
-                object: {
-                    title: data?.title,
-                    overview: data?.overview ?? undefined,
-                    release_date: data?.release_date ?? undefined,
-                    runtime: data?.runtime ?? undefined,
-                    tagline: data?.tagline ?? undefined,
-                    certification: data?.certification ?? undefined,
-                    vote_average: data?.vote_average ?? undefined,
-                },
-                on_conflict: {
-                    constraint: 'movies_pkey' satisfies Movies_Constraint,
-                    update_columns: [],
-                },
-            })
+            .request<
+                CreateMovieMutation,
+                CreateMovieMutationVariables
+            >(CreateMovieDocument, variables)
             .catch(handleGraphQLError)
 
         const movieId = result?.body.data?.insert_movies_one?.id

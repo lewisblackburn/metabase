@@ -1,7 +1,6 @@
 import { NhostClient } from '@nhost/nhost-js'
 
 import {
-    External_Ids_Constraint,
     FindEntityByExternalIdDocument,
     FindEntityByExternalIdQuery,
     FindEntityByExternalIdQueryVariables,
@@ -26,14 +25,11 @@ export abstract class BaseImporter<TEntity = unknown> {
     abstract merge(raw: unknown, existing: unknown): Promise<unknown>
 
     async import(externalId: string): Promise<ImportResult> {
-        const disable = false
         // 1. Check if already imported
         const existing = await this.findByExternalId(externalId)
         if (existing) {
             return { entityId: existing, action: Action.LINKED }
         }
-
-        if (disable) return { entityId: '', action: Action.LINKED }
 
         // 2. Fetch and normalise
         const raw = await this.fetch(externalId)
@@ -88,7 +84,7 @@ export abstract class BaseImporter<TEntity = unknown> {
                         source: this.source,
                     },
                     on_conflict: {
-                        constraint: 'external_ids_unique' satisfies External_Ids_Constraint,
+                        constraint: 'external_ids_unique',
                         update_columns: [],
                     },
                 },

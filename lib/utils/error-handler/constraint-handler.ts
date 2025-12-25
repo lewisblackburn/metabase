@@ -1,5 +1,3 @@
-import { List_Items_Constraint } from '@/generated/graphql'
-
 import { ConstraintType, ErrorPattern } from './types'
 
 /**
@@ -8,8 +6,8 @@ import { ConstraintType, ErrorPattern } from './types'
 export function getConstraintMessage(constraintName: string): string {
     // Check for specific known constraints
     switch (constraintName) {
-        case 'list_items_list_id_media_id_key' satisfies List_Items_Constraint:
-        case 'list_items_pkey' satisfies List_Items_Constraint:
+        case 'list_items_list_id_media_id_key':
+        case 'list_items_pkey':
             return 'This item is already in the selected list.'
 
         // Add more specific constraint cases here

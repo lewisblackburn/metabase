@@ -2,7 +2,6 @@ import {
     CreatePersonDocument,
     CreatePersonMutation,
     CreatePersonMutationVariables,
-    People_Constraint,
 } from '@/generated/graphql'
 import { Gender, MediaType } from '@/lib/helpers/graphql-enums'
 import { NormalisedData } from '@/lib/types/importer'
@@ -28,7 +27,6 @@ export class TMDBPersonImporter extends TMDBImporter {
                 // Note: gender is required but not available from TMDB
                 // Default to Gender.OTHER during entity creation
             },
-            externalId: raw.id.toString(),
         }
     }
 
@@ -41,7 +39,7 @@ export class TMDBPersonImporter extends TMDBImporter {
                     gender: data.gender || Gender.OTHER,
                 },
                 on_conflict: {
-                    constraint: 'people_pkey' satisfies People_Constraint,
+                    constraint: 'people_pkey',
                     update_columns: [],
                 },
             })
