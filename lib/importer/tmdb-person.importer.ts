@@ -5,7 +5,6 @@ import {
     People_Constraint,
 } from '@/generated/graphql'
 import { Gender, MediaType } from '@/lib/helpers/graphql-enums'
-import { createNhostClient } from '@/lib/nhost/server'
 import { NormalisedData } from '@/lib/types/importer'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 import { Person } from '@/lib/validations/people/person.schema'
@@ -34,8 +33,7 @@ export class TMDBPersonImporter extends TMDBImporter {
     }
 
     protected async createEntity(data: Partial<Person>): Promise<string> {
-        const nhost = await createNhostClient()
-        const result = await nhost.graphql
+        const result = await this.nhost.graphql
             .request<CreatePersonMutation, CreatePersonMutationVariables>(CreatePersonDocument, {
                 object: {
                     name: data.name,

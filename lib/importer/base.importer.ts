@@ -13,7 +13,6 @@ import {
 } from '@/generated/graphql'
 import { Action, ImportResult, NormalisedData } from '@/lib/types/importer'
 
-import { createNhostClient } from '../nhost/server'
 import { handleGraphQLError } from '../utils/error-handler'
 
 export abstract class BaseImporter<TEntity = unknown> {
@@ -27,11 +26,14 @@ export abstract class BaseImporter<TEntity = unknown> {
     abstract merge(raw: unknown, existing: unknown): Promise<unknown>
 
     async import(externalId: string): Promise<ImportResult> {
+        const disable = false
         // 1. Check if already imported
         const existing = await this.findByExternalId(externalId)
         if (existing) {
             return { entityId: existing, action: Action.LINKED }
         }
+
+        if (disable) return { entityId: '', action: Action.LINKED }
 
         // 2. Fetch and normalise
         const raw = await this.fetch(externalId)
@@ -52,7 +54,7 @@ export abstract class BaseImporter<TEntity = unknown> {
         const entityId = await this.createEntity(normalised.entity)
 
         // 5. Link external ID
-        await this.linkExternalId(entityId, normalised.externalId)
+        await this.linkExternalId(entityId, externalId)
 
         return { entityId, action: Action.CREATED }
     }
@@ -60,8 +62,7 @@ export abstract class BaseImporter<TEntity = unknown> {
     protected abstract createEntity(data: Partial<TEntity>): Promise<string>
 
     protected async findByExternalId(externalId: string): Promise<string | null> {
-        const nhost = await createNhostClient()
-        const result = await nhost.graphql
+        const result = await this.nhost.graphql
             .request<FindEntityByExternalIdQuery, FindEntityByExternalIdQueryVariables>(
                 FindEntityByExternalIdDocument,
                 {
@@ -76,8 +77,7 @@ export abstract class BaseImporter<TEntity = unknown> {
     }
 
     protected async linkExternalId(entityId: string, externalId: string): Promise<void> {
-        const nhost = await createNhostClient()
-        await nhost.graphql
+        await this.nhost.graphql
             .request<InsertExternalIdMutation, InsertExternalIdMutationVariables>(
                 InsertExternalIdDocument,
                 {

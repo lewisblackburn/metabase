@@ -5,7 +5,6 @@ import {
     MovieQuery,
     Movies_Constraint,
 } from '@/generated/graphql'
-import { createNhostClient } from '@/lib/nhost/server'
 import { NormalisedData } from '@/lib/types/importer'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
@@ -25,21 +24,12 @@ export class TMDBMovieImporter extends TMDBImporter {
         return {
             entity: {
                 title: raw.title,
-                overview: raw.overview ?? undefined,
-                release_date: raw.release_date ?? undefined,
-                runtime: raw.runtime ?? undefined,
-                tagline: raw.tagline ?? undefined,
-                certification:
-                    raw.release_dates?.results?.[0]?.release_dates?.[0]?.certification ?? undefined,
-                vote_average: raw.vote_average ?? undefined,
             },
-            externalId: raw.id.toString(),
         }
     }
 
     protected async createEntity(data: Partial<MovieQuery['movies_by_pk']>): Promise<string> {
-        const nhost = await createNhostClient()
-        const result = await nhost.graphql
+        const result = await this.nhost.graphql
             .request<CreateMovieMutation, CreateMovieMutationVariables>(CreateMovieDocument, {
                 object: {
                     title: data?.title,

@@ -15,5 +15,4 @@ export type ImportResult<TEntityId = string> = {
 
 export type NormalisedData<TEntity = unknown> = {
     entity: Partial<TEntity>
-    externalId: string
 }

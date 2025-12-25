@@ -15,14 +15,12 @@ import {
 import { matchRoute } from '@/lib/helpers/strings/strings'
 import { useAuthStore } from '@/lib/stores/auth.store'
 
-const ENABLED_ROUTES = ['/:route/:id']
-
 export default function ActionsPanel() {
     const pathname = usePathname()
     const user = useAuthStore(s => s.user)
     const isAdmin = user?.roles.includes('admin')
 
-    if (!matchRoute(pathname, ENABLED_ROUTES)) return null
+    const isMediaPage = matchRoute(pathname, ['/:route/:id'])
 
     return (
         <DropdownMenu>
@@ -34,10 +32,17 @@ export default function ActionsPanel() {
             <DropdownMenuContent align="end" className="w-66">
                 <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
-                        <Link href={`${pathname}/edit`}>
-                            Edit<DropdownMenuShortcut>⌘ + E</DropdownMenuShortcut>
+                        <Link href="/import">
+                            Import<DropdownMenuShortcut>⌘ + I</DropdownMenuShortcut>
                         </Link>
                     </DropdownMenuItem>
+                    {isMediaPage && (
+                        <DropdownMenuItem asChild>
+                            <Link href={`${pathname}/edit`}>
+                                Edit<DropdownMenuShortcut>⌘ + E</DropdownMenuShortcut>
+                            </Link>
+                        </DropdownMenuItem>
+                    )}
                     {isAdmin && (
                         <>
                             <DropdownMenuSeparator />
