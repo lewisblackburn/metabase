@@ -7,6 +7,7 @@ import {
     Credit_Types_Enum,
     Genders_Enum,
     Media_Types_Enum,
+    Sources_Enum,
     User_Movie_Statuses_Enum,
 } from '@/generated/graphql'
 
@@ -48,3 +49,9 @@ export const UserMovieStatus = createEnum<User_Movie_Statuses_Enum>([
     'WATCHING',
     'WATCHLIST',
 ] as const)
+
+/**
+ * Source enum
+ * Values: TMDB, IMDB
+ */
+export const Source = createEnum<Sources_Enum>(['TMDB', 'IMDB'] as const)

@@ -6,13 +6,14 @@ import {
     Movies_Constraint,
 } from '@/generated/graphql'
 import { createNhostClient } from '@/lib/nhost/server'
-import { EntityType, NormalisedData } from '@/lib/types/importer'
+import { NormalisedData } from '@/lib/types/importer'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
+import { MediaType } from '../helpers/graphql-enums'
 import { TMDBImporter } from './tmdb.importer'
 
 export class TMDBMovieImporter extends TMDBImporter {
-    entityType = EntityType.MOVIE
+    mediaType = MediaType.MOVIE
 
     async fetch(tmdbId: string) {
         return this.fetchFromTMDB(`movie/${tmdbId}`)
@@ -33,18 +34,15 @@ export class TMDBMovieImporter extends TMDBImporter {
                 vote_average: raw.vote_average ?? undefined,
             },
             externalId: raw.id.toString(),
-            rawData: raw,
         }
     }
 
     protected async createEntity(data: Partial<MovieQuery['movies_by_pk']>): Promise<string> {
-        if (!data?.title) throw new Error('Title is required to create a movie')
-
         const nhost = await createNhostClient()
         const result = await nhost.graphql
             .request<CreateMovieMutation, CreateMovieMutationVariables>(CreateMovieDocument, {
                 object: {
-                    title: data.title,
+                    title: data?.title,
                     overview: data?.overview ?? undefined,
                     release_date: data?.release_date ?? undefined,
                     runtime: data?.runtime ?? undefined,
@@ -62,6 +60,16 @@ export class TMDBMovieImporter extends TMDBImporter {
         const movieId = result?.body.data?.insert_movies_one?.id
         if (!movieId) throw new Error('Failed to create movie')
         return movieId
+    }
+
+    // TODO: Implement
+    async findSimilar(raw: unknown): Promise<unknown[]> {
+        return []
+    }
+
+    // TODO: Implement
+    async merge(raw: unknown, existing: unknown): Promise<unknown> {
+        return existing
     }
 
     async search(query: string) {

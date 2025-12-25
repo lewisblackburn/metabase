@@ -4,16 +4,16 @@ import {
     CreatePersonMutationVariables,
     People_Constraint,
 } from '@/generated/graphql'
-import { Gender } from '@/lib/helpers/graphql-enums'
+import { Gender, MediaType } from '@/lib/helpers/graphql-enums'
 import { createNhostClient } from '@/lib/nhost/server'
-import { EntityType, NormalisedData } from '@/lib/types/importer'
+import { NormalisedData } from '@/lib/types/importer'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 import { Person } from '@/lib/validations/people/person.schema'
 
 import { TMDBImporter } from './tmdb.importer'
 
 export class TMDBPersonImporter extends TMDBImporter {
-    entityType = EntityType.PERSON
+    mediaType = MediaType.PERSON
 
     async fetch(tmdbId: string) {
         return this.fetchFromTMDB(`person/${tmdbId}`)
@@ -30,13 +30,10 @@ export class TMDBPersonImporter extends TMDBImporter {
                 // Default to Gender.OTHER during entity creation
             },
             externalId: raw.id.toString(),
-            rawData: raw,
         }
     }
 
     protected async createEntity(data: Partial<Person>): Promise<string> {
-        if (!data?.name) throw new Error('Name is required to create a person')
-
         const nhost = await createNhostClient()
         const result = await nhost.graphql
             .request<CreatePersonMutation, CreatePersonMutationVariables>(CreatePersonDocument, {
@@ -55,6 +52,16 @@ export class TMDBPersonImporter extends TMDBImporter {
         const personId = result?.body.data?.insert_people_one?.id
         if (!personId) throw new Error('Failed to create person')
         return personId
+    }
+
+    // TODO: Implement
+    async findSimilar(raw: unknown): Promise<unknown[]> {
+        return []
+    }
+
+    // TODO: Implement
+    async merge(raw: unknown, existing: unknown): Promise<unknown> {
+        return existing
     }
 
     async search(query: string) {

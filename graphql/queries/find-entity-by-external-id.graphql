@@ -1,13 +1,13 @@
-query FindEntityByExternalId($source: String!, $externalId: String!, $entityType: String!) {
+query FindEntityByExternalId($source: sources_enum!, $externalId: String!, $mediaType: media_types_enum!) {
     external_ids(
         where: {
             source: { _eq: $source }
             external_id: { _eq: $externalId }
-            entity_type: { _eq: $entityType }
+            media_type: { _eq: $mediaType }
         }
         limit: 1
     ) {
         entity_id
-        entity_type
+        media_type
     }
 }

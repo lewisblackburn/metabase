@@ -1,14 +1,30 @@
 import { NhostClient } from '@nhost/nhost-js'
 
-import { Action, EntityType, ImportResult, NormalisedData, Source } from '@/lib/types/importer'
+import {
+    External_Ids_Constraint,
+    FindEntityByExternalIdDocument,
+    FindEntityByExternalIdQuery,
+    FindEntityByExternalIdQueryVariables,
+    InsertExternalIdDocument,
+    InsertExternalIdMutation,
+    InsertExternalIdMutationVariables,
+    Media_Types_Enum,
+    Sources_Enum,
+} from '@/generated/graphql'
+import { Action, ImportResult, NormalisedData } from '@/lib/types/importer'
+
+import { createNhostClient } from '../nhost/server'
+import { handleGraphQLError } from '../utils/error-handler'
 
 export abstract class BaseImporter<TEntity = unknown> {
     constructor(protected nhost: NhostClient) {}
 
-    abstract source: Source
-    abstract entityType: EntityType
+    abstract source: Sources_Enum
+    abstract mediaType: Media_Types_Enum
     abstract fetch(externalId: string): Promise<unknown>
     abstract normalise(raw: unknown): NormalisedData<TEntity>
+    abstract findSimilar(raw: unknown): Promise<unknown[]>
+    abstract merge(raw: unknown, existing: unknown): Promise<unknown>
 
     async import(externalId: string): Promise<ImportResult> {
         // 1. Check if already imported
@@ -21,20 +37,62 @@ export abstract class BaseImporter<TEntity = unknown> {
         const raw = await this.fetch(externalId)
         const normalised = this.normalise(raw)
 
-        // 3. Create entity
+        // TODO: implement fuzzy search and merge
+        // 3. Find similar entities
+        const similar = await this.findSimilar(normalised.entity)
+
+        if (similar.length > 0) {
+            // 3.1 If similar entities found, merge them
+            // if score is above threshold, merge
+            // const merged = await this.merge(normalised.entity, similar[0])
+            // return { entityId: merged.id, action: Action.MERGED }
+        }
+
+        // 4. Create entity
         const entityId = await this.createEntity(normalised.entity)
 
-        // 4. Link external ID
-        await this.linkExternalId(entityId, normalised.externalId, normalised.rawData)
+        // 5. Link external ID
+        await this.linkExternalId(entityId, normalised.externalId)
 
         return { entityId, action: Action.CREATED }
     }
 
-    protected abstract findByExternalId(externalId: string): Promise<string | null>
     protected abstract createEntity(data: Partial<TEntity>): Promise<string>
-    protected abstract linkExternalId(
-        entityId: string,
-        externalId: string,
-        rawData: unknown,
-    ): Promise<void>
+
+    protected async findByExternalId(externalId: string): Promise<string | null> {
+        const nhost = await createNhostClient()
+        const result = await nhost.graphql
+            .request<FindEntityByExternalIdQuery, FindEntityByExternalIdQueryVariables>(
+                FindEntityByExternalIdDocument,
+                {
+                    externalId,
+                    mediaType: this.mediaType,
+                    source: this.source,
+                },
+            )
+            .catch(handleGraphQLError)
+
+        return result?.body.data?.external_ids?.[0]?.entity_id || null
+    }
+
+    protected async linkExternalId(entityId: string, externalId: string): Promise<void> {
+        const nhost = await createNhostClient()
+        await nhost.graphql
+            .request<InsertExternalIdMutation, InsertExternalIdMutationVariables>(
+                InsertExternalIdDocument,
+                {
+                    object: {
+                        external_id: externalId,
+                        entity_id: entityId,
+                        media_type: this.mediaType,
+                        source: this.source,
+                    },
+                    on_conflict: {
+                        constraint: 'external_ids_unique' satisfies External_Ids_Constraint,
+                        update_columns: [],
+                    },
+                },
+            )
+            .catch(handleGraphQLError)
+    }
 }

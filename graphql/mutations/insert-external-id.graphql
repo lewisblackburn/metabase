@@ -5,7 +5,7 @@ mutation InsertExternalId(
     insert_external_ids_one(object: $object, on_conflict: $on_conflict) {
         id
         entity_id
-        entity_type
+        media_type
         source
         external_id
     }
