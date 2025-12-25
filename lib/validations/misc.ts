@@ -1,10 +1,10 @@
 import z from 'zod'
 
-import { EntityType, Source } from '../types/importer'
+import { MediaType, Source } from '../helpers/graphql-enums'
 
 export const ExternalIdSchema = z.object({
     entity_id: z.string().uuid(),
-    entity_type: z.nativeEnum(EntityType),
+    mediia_type: z.nativeEnum(MediaType),
     source: z.nativeEnum(Source),
     external_id: z.string(),
     data: z.record(z.any(), z.any()).optional(),
