@@ -90,12 +90,12 @@ export class TMDBMovieImporter extends TMDBImporter {
     }
 
     // TODO: Implement
-    async findSimilar(raw: unknown): Promise<unknown[]> {
+    async findSimilar(data: unknown): Promise<unknown[]> {
         return []
     }
 
     // TODO: Implement
-    async merge(raw: unknown, existing: unknown): Promise<unknown> {
+    async merge(data: unknown, existing: unknown): Promise<unknown> {
         return existing
     }
 
