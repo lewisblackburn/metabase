@@ -58,6 +58,32 @@ export interface TMDBSpokenLanguage {
 }
 
 /**
+ * TMDB Movie Search Result (partial movie data from search endpoint)
+ */
+export interface TMDBMovieSearchResult {
+    id: number
+    title: string
+    overview: string
+    release_date: string
+    poster_path: string | null
+    backdrop_path: string | null
+    popularity: number
+    vote_average: number
+    vote_count: number
+}
+
+/**
+ * TMDB Person Search Result (partial person data from search endpoint)
+ */
+export interface TMDBPersonSearchResult {
+    id: number
+    name: string
+    known_for_department: string
+    profile_path: string | null
+    popularity: number
+}
+
+/**
  * TMDB image size options
  */
 export enum TMDBImageSize {

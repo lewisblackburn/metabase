@@ -8,12 +8,20 @@ import { useDeviceDetection } from '@/hooks/use-device-detection'
 import { cn } from '@/lib/utils'
 
 import { Button } from '../ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import {
+    Dialog,
+    DialogHeader,
+    DialogPanel,
+    DialogPopup,
+    DialogTitle,
+    DialogTrigger,
+} from '../ui/dialog'
 import {
     Sheet,
-    SheetContent,
     SheetDescription,
     SheetHeader,
+    SheetPanel,
+    SheetPopup,
     SheetTitle,
     SheetTrigger,
 } from '../ui/sheet'
@@ -27,53 +35,55 @@ interface RatingDialogContainerProps {
 
 function DesktopRatingDialog({ movie, open, onOpenChange }: RatingDialogContainerProps) {
     const isRated = movie?.user_movie_activity?.[0]?.rating && movie.user_movie_activity[0].rating
-
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogTrigger asChild>
-                <Button aria-label="Rating" variant="outline" size="sm" className="text-xs">
-                    <Star
-                        className={cn('size-4', {
-                            'text-yellow-500 fill-yellow-500': isRated,
-                        })}
-                    />
-                    {isRated ? 'Rated' : 'Rate'}
-                </Button>
+            <DialogTrigger
+                render={<Button aria-label="Rating" variant="outline" className="text-xs" />}
+            >
+                <Star
+                    className={cn('size-4', {
+                        'text-yellow-500 fill-yellow-500': isRated,
+                    })}
+                />
+                {isRated ? 'Rated' : 'Rate'}
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogPopup className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle className="text-xl">Rating</DialogTitle>
                 </DialogHeader>
-                <RatingForm movie={movie} onOpenChange={onOpenChange} />
-            </DialogContent>
+                <DialogPanel>
+                    <RatingForm movie={movie} onOpenChange={onOpenChange} />
+                </DialogPanel>
+            </DialogPopup>
         </Dialog>
     )
 }
 
 function MobileRatingDialog({ movie, open, onOpenChange }: RatingDialogContainerProps) {
     const isRated = movie?.user_movie_activity?.[0]?.rating && movie.user_movie_activity[0].rating
-
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
-            <SheetTrigger asChild>
-                <Button aria-label="Rating" variant="outline" size="sm" className="text-xs">
-                    <Star
-                        className={cn('size-4', {
-                            'text-yellow-500 fill-yellow-500': isRated,
-                        })}
-                    />
-                    {isRated ? 'Rated' : 'Rate'}
-                </Button>
+            <SheetTrigger
+                render={
+                    <Button aria-label="Rating" variant="outline" size="sm" className="text-xs" />
+                }
+            >
+                <Star
+                    className={cn('size-4', {
+                        'text-yellow-500 fill-yellow-500': isRated,
+                    })}
+                />
+                {isRated ? 'Rated' : 'Rate'}
             </SheetTrigger>
-            <SheetContent side="bottom">
+            <SheetPopup side="bottom">
                 <SheetHeader>
                     <SheetTitle className="text-xl">Rating</SheetTitle>
                     <SheetDescription>How would you like to rate this?</SheetDescription>
                 </SheetHeader>
-                <div className="px-4 py-2">
+                <SheetPanel>
                     <RatingForm movie={movie} onOpenChange={onOpenChange} />
-                </div>
-            </SheetContent>
+                </SheetPanel>
+            </SheetPopup>
         </Sheet>
     )
 }

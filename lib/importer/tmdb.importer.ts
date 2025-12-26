@@ -24,7 +24,10 @@ export abstract class TMDBImporter extends BaseImporter {
         const separator = endpoint.includes('?') ? '&' : '?'
         const url = `https://api.themoviedb.org/3/${endpoint}${separator}api_key=${this.apiKey}`
         const res = await fetch(url)
-        if (!res.ok) throw new Error(`TMDB fetch failed: ${res.status}`)
+        if (!res.ok) {
+            const errorText = await res.text().catch(() => 'Unknown error')
+            throw new Error(`TMDB fetch failed: ${res.status} - ${errorText}`)
+        }
         return res.json()
     }
 }

@@ -9,11 +9,11 @@ interface PlayTrailerButtonProps {
 
 export function PlayTrailerButton({ href = '#' }: PlayTrailerButtonProps) {
     return (
-        <Button aria-label="Rating" variant="outline" size="sm" className="text-xs" asChild>
-            <Link href={href}>
+        <Link href={href}>
+            <Button aria-label="Play Trailer" variant="outline" className="text-xs">
                 <Play className="size-4" />
                 Play Trailer
-            </Link>
-        </Button>
+            </Button>
+        </Link>
     )
 }

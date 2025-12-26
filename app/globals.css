@@ -54,6 +54,7 @@ html {
     --animate-punchy-spin: punchy-spin 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     --animate-slide-in-left: slide-in-left 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
     --animate-slide-out-left: slide-out-left 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+    --color-destructive-foreground: var(--destructive-foreground);
 
     @keyframes punchy-spin {
         0% {
@@ -123,6 +124,7 @@ html {
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+    --destructive-foreground: var(--color-red-700);
 }
 
 .dark {
@@ -157,6 +159,7 @@ html {
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+    --destructive-foreground: var(--color-red-400);
 }
 
 @layer base {

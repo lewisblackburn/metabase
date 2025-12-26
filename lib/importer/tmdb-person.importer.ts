@@ -64,6 +64,10 @@ export class TMDBPersonImporter extends TMDBImporter {
         const data = (await this.fetchFromTMDB(
             `search/person?query=${encodeURIComponent(query)}`,
         )) as { results?: unknown[] }
-        return data.results ?? []
+        const results = data.results ?? []
+        if (!Array.isArray(results)) {
+            return []
+        }
+        return results
     }
 }

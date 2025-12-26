@@ -22,9 +22,9 @@ export function RatingSelector({ value, onChange }: RatingSelectorProps) {
     return (
         <fieldset className="space-y-4">
             <RadioGroup
-                className="flex gap-1.5"
+                className="flex flex-row gap-1.5"
                 value={value.toString()}
-                onValueChange={(value: string) => onChange(Number(value))}
+                onValueChange={val => onChange(Number(val as string))}
             >
                 {ratings.map(rating => (
                     <label
