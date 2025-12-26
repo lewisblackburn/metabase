@@ -21,8 +21,11 @@ export default async function downloadAndUploadFile(
     // Extract filename from URL
     const filename = url.split('/').pop() || 'downloaded-file'
 
-    // Create File object from buffer
-    const file = new File([buffer], filename)
+    // Convert Buffer to Uint8Array (browser-compatible)
+    const uint8Array = new Uint8Array(buffer)
+
+    // Create File object from Uint8Array
+    const file = new File([uint8Array], filename)
 
     // Upload the file
     return await uploadFile(nhost, file)

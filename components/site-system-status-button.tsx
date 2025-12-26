@@ -40,7 +40,6 @@ export default function SiteSystemStatusButton() {
 
     return (
         <Button
-            asChild
             variant="secondary"
             className="bg-secondary/40 flex items-center gap-2 text-sm sm:text-base"
             disabled={isLoading}
