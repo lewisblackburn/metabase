@@ -24,20 +24,26 @@ export function RatingSelector({ value, onChange }: RatingSelectorProps) {
             <RadioGroup
                 className="flex flex-row gap-1.5"
                 value={value.toString()}
-                onValueChange={val => onChange(Number(val as string))}
+                onValueChange={val => onChange(Number(val))}
             >
                 {ratings.map(rating => (
-                    <label
-                        key={`${id}-${rating.value}`}
-                        className="border-input relative flex size-9 cursor-pointer flex-col items-center justify-center rounded-full border text-center text-xl shadow-xs transition-[color,box-shadow] outline-none has-focus-visible:border-sky-600 has-focus-visible:ring-[3px] has-focus-visible:ring-sky-600/50 has-data-disabled:cursor-not-allowed has-data-disabled:opacity-50 has-data-[state=checked]:border-sky-600 has-data-[state=checked]:bg-sky-600/10 dark:has-focus-visible:border-sky-400 dark:has-focus-visible:ring-sky-600/50 dark:has-data-[state=checked]:border-sky-400 dark:has-data-[state=checked]:bg-sky-400/10"
-                    >
+                    <div key={`${id}-${rating.value}`} className="relative">
                         <RadioGroupItem
                             id={`${id}-${rating.value}`}
                             value={rating.value.toString()}
-                            className="sr-only after:absolute after:inset-0"
+                            className="sr-only peer"
                         />
-                        {rating.icon}
-                    </label>
+                        <label
+                            htmlFor={`${id}-${rating.value}`}
+                            className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border text-xl transition-all ${
+                                value === rating.value
+                                    ? 'border-sky-600 bg-sky-600/10 dark:border-sky-400 dark:bg-sky-400/10'
+                                    : 'border-input hover:border-sky-600/50'
+                            }`}
+                        >
+                            {rating.icon}
+                        </label>
+                    </div>
                 ))}
             </RadioGroup>
         </fieldset>
