@@ -6,10 +6,10 @@ import { TMDBImageSize } from '@/lib/types/tmdb'
  * @param {TMDBImageSize} size - Image size
  * @returns {string} TMDB image URL
  */
-export default async function getTMDBFile(
+export default function getTMDBFile(
     imagePath: string | null | undefined,
     size: TMDBImageSize = TMDBImageSize.ORIGINAL,
-): Promise<string | null> {
+): string | null {
     if (!imagePath) return null
 
     // Construct TMDB image URL

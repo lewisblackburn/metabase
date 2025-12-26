@@ -7,6 +7,7 @@ import {
 import { NormalisedData } from '@/lib/types/importer'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
+import downloadAndUploadFile from '../helpers/files/download-and-upload-file'
 import getTMDBFile from '../helpers/files/get-tmdb-file'
 import { MediaType } from '../helpers/graphql-enums'
 import { TMDBMovie } from '../types/tmdb'
@@ -47,11 +48,8 @@ export class TMDBMovieImporter extends TMDBImporter {
                 overview: data?.overview,
                 runtime: data?.runtime,
                 release_date: data?.release_date,
-                poster_id: await downloadAndUploadTMDBImage(
-                    this.nhost,
-                    getTMDBFile(data?.poster_id),
-                ),
-                backdrop_id: await downloadAndUploadTMDBImage(
+                poster_id: await downloadAndUploadFile(this.nhost, getTMDBFile(data?.poster_id)),
+                backdrop_id: await downloadAndUploadFile(
                     this.nhost,
                     getTMDBFile(data?.backdrop_id),
                 ),
