@@ -153,7 +153,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }>, user_movie_activity?: Array<{ __typename?: 'user_movie_activities', comment?: string | null, rating?: number | null, status?: User_Movie_Statuses_Enum | null }> | null, user_movie_watches_aggregate: { __typename?: 'user_movie_watches_aggregate', aggregate?: { __typename?: 'user_movie_watches_aggregate_fields', count: number } | null } } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, keywords?: Array<string> | null, movie_credits: Array<{ __typename?: 'movie_credits', id: any, character: string, role: string, credit_type: Credit_Types_Enum, order: number, person: { __typename?: 'people', name: string } }>, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }>, user_movie_activity?: Array<{ __typename?: 'user_movie_activities', comment?: string | null, rating?: number | null, status?: User_Movie_Statuses_Enum | null }> | null, user_movie_watches_aggregate: { __typename?: 'user_movie_watches_aggregate', aggregate?: { __typename?: 'user_movie_watches_aggregate_fields', count: number } | null } } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5053,6 +5053,8 @@ export type Movie_Credits = {
   id: Scalars['uuid'];
   movie_id: Scalars['uuid'];
   order: Scalars['Int'];
+  /** An object relationship */
+  person: People;
   person_id: Scalars['uuid'];
   role: Scalars['String'];
 };
@@ -5141,6 +5143,7 @@ export type Movie_Credits_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
   order?: InputMaybe<Int_Comparison_Exp>;
+  person?: InputMaybe<People_Bool_Exp>;
   person_id?: InputMaybe<Uuid_Comparison_Exp>;
   role?: InputMaybe<String_Comparison_Exp>;
 };
@@ -5164,6 +5167,7 @@ export type Movie_Credits_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   order?: InputMaybe<Scalars['Int']>;
+  person?: InputMaybe<People_Obj_Rel_Insert_Input>;
   person_id?: InputMaybe<Scalars['uuid']>;
   role?: InputMaybe<Scalars['String']>;
 };
@@ -5233,6 +5237,7 @@ export type Movie_Credits_Order_By = {
   id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
+  person?: InputMaybe<People_Order_By>;
   person_id?: InputMaybe<Order_By>;
   role?: InputMaybe<Order_By>;
 };
@@ -6091,7 +6096,6 @@ export type Movies = {
   genres_aggregate: Movie_Genres_Aggregate;
   homepage?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
-  imdb_id?: Maybe<Scalars['String']>;
   keywords?: Maybe<Array<Scalars['String']>>;
   language?: Maybe<Scalars['String']>;
   /** An array relationship */
@@ -6122,7 +6126,6 @@ export type Movies = {
   status?: Maybe<Scalars['String']>;
   tagline?: Maybe<Scalars['String']>;
   title: Scalars['String'];
-  tmdb_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   /** A computed field, executes function "get_user_movie_activity" */
   user_movie_activity?: Maybe<Array<User_Movie_Activities>>;
@@ -6364,7 +6367,6 @@ export type Movies_Bool_Exp = {
   genres_aggregate?: InputMaybe<Movie_Genres_Aggregate_Bool_Exp>;
   homepage?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  imdb_id?: InputMaybe<String_Comparison_Exp>;
   keywords?: InputMaybe<String_Array_Comparison_Exp>;
   language?: InputMaybe<String_Comparison_Exp>;
   movie_credits?: InputMaybe<Movie_Credits_Bool_Exp>;
@@ -6386,7 +6388,6 @@ export type Movies_Bool_Exp = {
   status?: InputMaybe<String_Comparison_Exp>;
   tagline?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
-  tmdb_id?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user_movie_activity?: InputMaybe<User_Movie_Activities_Bool_Exp>;
   user_movie_watches?: InputMaybe<User_Movie_Watches_Bool_Exp>;
@@ -6397,12 +6398,8 @@ export type Movies_Bool_Exp = {
 
 /** unique or primary key constraints on table "movies" */
 export type Movies_Constraint =
-  /** unique or primary key constraint on columns "imdb_id" */
-  | 'movies_imdb_id_key'
   /** unique or primary key constraint on columns "id" */
-  | 'movies_pkey'
-  /** unique or primary key constraint on columns "tmdb_id" */
-  | 'movies_tmdb_id_key';
+  | 'movies_pkey';
 
 /** input type for incrementing numeric columns in table "movies" */
 export type Movies_Inc_Input = {
@@ -6426,7 +6423,6 @@ export type Movies_Insert_Input = {
   genres?: InputMaybe<Movie_Genres_Arr_Rel_Insert_Input>;
   homepage?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
-  imdb_id?: InputMaybe<Scalars['String']>;
   keywords?: InputMaybe<Array<Scalars['String']>>;
   language?: InputMaybe<Scalars['String']>;
   movie_credits?: InputMaybe<Movie_Credits_Arr_Rel_Insert_Input>;
@@ -6444,7 +6440,6 @@ export type Movies_Insert_Input = {
   status?: InputMaybe<Scalars['String']>;
   tagline?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
-  tmdb_id?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   user_movie_watches?: InputMaybe<User_Movie_Watches_Arr_Rel_Insert_Input>;
   vote_average?: InputMaybe<Scalars['Float']>;
@@ -6461,7 +6456,6 @@ export type Movies_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   homepage?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  imdb_id?: Maybe<Scalars['String']>;
   keywords?: Maybe<Array<Scalars['String']>>;
   language?: Maybe<Scalars['String']>;
   overview?: Maybe<Scalars['String']>;
@@ -6474,7 +6468,6 @@ export type Movies_Max_Fields = {
   status?: Maybe<Scalars['String']>;
   tagline?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
-  tmdb_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   vote_average?: Maybe<Scalars['Float']>;
   vote_count?: Maybe<Scalars['Int']>;
@@ -6489,7 +6482,6 @@ export type Movies_Max_Order_By = {
   created_at?: InputMaybe<Order_By>;
   homepage?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  imdb_id?: InputMaybe<Order_By>;
   keywords?: InputMaybe<Order_By>;
   language?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
@@ -6502,7 +6494,6 @@ export type Movies_Max_Order_By = {
   status?: InputMaybe<Order_By>;
   tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  tmdb_id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -6518,7 +6509,6 @@ export type Movies_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   homepage?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  imdb_id?: Maybe<Scalars['String']>;
   keywords?: Maybe<Array<Scalars['String']>>;
   language?: Maybe<Scalars['String']>;
   overview?: Maybe<Scalars['String']>;
@@ -6531,7 +6521,6 @@ export type Movies_Min_Fields = {
   status?: Maybe<Scalars['String']>;
   tagline?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
-  tmdb_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   vote_average?: Maybe<Scalars['Float']>;
   vote_count?: Maybe<Scalars['Int']>;
@@ -6546,7 +6535,6 @@ export type Movies_Min_Order_By = {
   created_at?: InputMaybe<Order_By>;
   homepage?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  imdb_id?: InputMaybe<Order_By>;
   keywords?: InputMaybe<Order_By>;
   language?: InputMaybe<Order_By>;
   overview?: InputMaybe<Order_By>;
@@ -6559,7 +6547,6 @@ export type Movies_Min_Order_By = {
   status?: InputMaybe<Order_By>;
   tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  tmdb_id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   vote_average?: InputMaybe<Order_By>;
   vote_count?: InputMaybe<Order_By>;
@@ -6593,7 +6580,6 @@ export type Movies_Order_By = {
   genres_aggregate?: InputMaybe<Movie_Genres_Aggregate_Order_By>;
   homepage?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  imdb_id?: InputMaybe<Order_By>;
   keywords?: InputMaybe<Order_By>;
   language?: InputMaybe<Order_By>;
   movie_credits_aggregate?: InputMaybe<Movie_Credits_Aggregate_Order_By>;
@@ -6611,7 +6597,6 @@ export type Movies_Order_By = {
   status?: InputMaybe<Order_By>;
   tagline?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  tmdb_id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_movie_activity_aggregate?: InputMaybe<User_Movie_Activities_Aggregate_Order_By>;
   user_movie_watches_aggregate?: InputMaybe<User_Movie_Watches_Aggregate_Order_By>;
@@ -6641,8 +6626,6 @@ export type Movies_Select_Column =
   /** column name */
   | 'id'
   /** column name */
-  | 'imdb_id'
-  /** column name */
   | 'keywords'
   /** column name */
   | 'language'
@@ -6667,8 +6650,6 @@ export type Movies_Select_Column =
   /** column name */
   | 'title'
   /** column name */
-  | 'tmdb_id'
-  /** column name */
   | 'updated_at'
   /** column name */
   | 'vote_average'
@@ -6684,7 +6665,6 @@ export type Movies_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   homepage?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
-  imdb_id?: InputMaybe<Scalars['String']>;
   keywords?: InputMaybe<Array<Scalars['String']>>;
   language?: InputMaybe<Scalars['String']>;
   overview?: InputMaybe<Scalars['String']>;
@@ -6697,7 +6677,6 @@ export type Movies_Set_Input = {
   status?: InputMaybe<Scalars['String']>;
   tagline?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
-  tmdb_id?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   vote_average?: InputMaybe<Scalars['Float']>;
   vote_count?: InputMaybe<Scalars['Int']>;
@@ -6783,7 +6762,6 @@ export type Movies_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   homepage?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
-  imdb_id?: InputMaybe<Scalars['String']>;
   keywords?: InputMaybe<Array<Scalars['String']>>;
   language?: InputMaybe<Scalars['String']>;
   overview?: InputMaybe<Scalars['String']>;
@@ -6796,7 +6774,6 @@ export type Movies_Stream_Cursor_Value_Input = {
   status?: InputMaybe<Scalars['String']>;
   tagline?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
-  tmdb_id?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   vote_average?: InputMaybe<Scalars['Float']>;
   vote_count?: InputMaybe<Scalars['Int']>;
@@ -6840,8 +6817,6 @@ export type Movies_Update_Column =
   /** column name */
   | 'id'
   /** column name */
-  | 'imdb_id'
-  /** column name */
   | 'keywords'
   /** column name */
   | 'language'
@@ -6865,8 +6840,6 @@ export type Movies_Update_Column =
   | 'tagline'
   /** column name */
   | 'title'
-  /** column name */
-  | 'tmdb_id'
   /** column name */
   | 'updated_at'
   /** column name */
@@ -9293,6 +9266,13 @@ export type People_Mutation_Response = {
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<People>;
+};
+
+/** input type for inserting object relation for remote table "people" */
+export type People_Obj_Rel_Insert_Input = {
+  data: People_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<People_On_Conflict>;
 };
 
 /** on_conflict condition type for table "people" */
@@ -35089,6 +35069,18 @@ export default {
               "args": []
             },
             {
+              "name": "person",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "people",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
               "name": "person_id",
               "type": {
                 "kind": "NON_NULL",
@@ -35578,6 +35570,14 @@ export default {
               }
             },
             {
+              "name": "person",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "people_bool_exp",
+                "ofType": null
+              }
+            },
+            {
               "name": "person_id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -35662,6 +35662,14 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "people_obj_rel_insert_input",
                 "ofType": null
               }
             },
@@ -36034,6 +36042,14 @@ export default {
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
+                "ofType": null
+              }
+            },
+            {
+              "name": "person",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "people_order_by",
                 "ofType": null
               }
             },
@@ -39488,15 +39504,6 @@ export default {
               "args": []
             },
             {
-              "name": "imdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "keywords",
               "type": {
                 "kind": "LIST",
@@ -40169,15 +40176,6 @@ export default {
                   "name": "String",
                   "ofType": null
                 }
-              },
-              "args": []
-            },
-            {
-              "name": "tmdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
               },
               "args": []
             },
@@ -41011,14 +41009,6 @@ export default {
               }
             },
             {
-              "name": "imdb_id",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "String_comparison_exp",
-                "ofType": null
-              }
-            },
-            {
               "name": "keywords",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -41187,14 +41177,6 @@ export default {
               }
             },
             {
-              "name": "tmdb_id",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "String_comparison_exp",
-                "ofType": null
-              }
-            },
-            {
               "name": "updated_at",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -41249,13 +41231,7 @@ export default {
           "name": "movies_constraint",
           "enumValues": [
             {
-              "name": "movies_imdb_id_key"
-            },
-            {
               "name": "movies_pkey"
-            },
-            {
-              "name": "movies_tmdb_id_key"
             }
           ]
         },
@@ -41394,14 +41370,6 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
-                "ofType": null
-              }
-            },
-            {
-              "name": "imdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               }
             },
@@ -41554,14 +41522,6 @@ export default {
               }
             },
             {
-              "name": "tmdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
               "name": "updated_at",
               "type": {
                 "kind": "SCALAR",
@@ -41663,15 +41623,6 @@ export default {
               "args": []
             },
             {
-              "name": "imdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "keywords",
               "type": {
                 "kind": "LIST",
@@ -41792,15 +41743,6 @@ export default {
               "args": []
             },
             {
-              "name": "tmdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "updated_at",
               "type": {
                 "kind": "SCALAR",
@@ -41884,14 +41826,6 @@ export default {
             },
             {
               "name": "id",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
-              "name": "imdb_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -41988,14 +41922,6 @@ export default {
             },
             {
               "name": "title",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
-              "name": "tmdb_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -42096,15 +42022,6 @@ export default {
               "args": []
             },
             {
-              "name": "imdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "keywords",
               "type": {
                 "kind": "LIST",
@@ -42225,15 +42142,6 @@ export default {
               "args": []
             },
             {
-              "name": "tmdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "args": []
-            },
-            {
               "name": "updated_at",
               "type": {
                 "kind": "SCALAR",
@@ -42317,14 +42225,6 @@ export default {
             },
             {
               "name": "id",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
-              "name": "imdb_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -42421,14 +42321,6 @@ export default {
             },
             {
               "name": "title",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
-              "name": "tmdb_id",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -42626,14 +42518,6 @@ export default {
               }
             },
             {
-              "name": "imdb_id",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
               "name": "keywords",
               "type": {
                 "kind": "ENUM",
@@ -42770,14 +42654,6 @@ export default {
               }
             },
             {
-              "name": "tmdb_id",
-              "type": {
-                "kind": "ENUM",
-                "name": "order_by",
-                "ofType": null
-              }
-            },
-            {
               "name": "updated_at",
               "type": {
                 "kind": "ENUM",
@@ -42866,9 +42742,6 @@ export default {
               "name": "id"
             },
             {
-              "name": "imdb_id"
-            },
-            {
               "name": "keywords"
             },
             {
@@ -42903,9 +42776,6 @@ export default {
             },
             {
               "name": "title"
-            },
-            {
-              "name": "tmdb_id"
             },
             {
               "name": "updated_at"
@@ -42975,14 +42845,6 @@ export default {
               "type": {
                 "kind": "SCALAR",
                 "name": "uuid",
-                "ofType": null
-              }
-            },
-            {
-              "name": "imdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               }
             },
@@ -43088,14 +42950,6 @@ export default {
             },
             {
               "name": "title",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "name": "tmdb_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -43559,14 +43413,6 @@ export default {
               }
             },
             {
-              "name": "imdb_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
               "name": "keywords",
               "type": {
                 "kind": "LIST",
@@ -43668,14 +43514,6 @@ export default {
             },
             {
               "name": "title",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "name": "tmdb_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -43849,9 +43687,6 @@ export default {
               "name": "id"
             },
             {
-              "name": "imdb_id"
-            },
-            {
               "name": "keywords"
             },
             {
@@ -43886,9 +43721,6 @@ export default {
             },
             {
               "name": "title"
-            },
-            {
-              "name": "tmdb_id"
             },
             {
               "name": "updated_at"
@@ -52389,6 +52221,31 @@ export default {
             }
           ],
           "interfaces": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "people_obj_rel_insert_input",
+          "inputFields": [
+            {
+              "name": "data",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "people_insert_input",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "name": "on_conflict",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "people_on_conflict",
+                "ofType": null
+              }
+            }
+          ]
         },
         {
           "kind": "INPUT_OBJECT",
@@ -75995,6 +75852,7 @@ export default {
     People_Max_Fields: People_Max_Fields,
     People_Min_Fields: People_Min_Fields,
     People_Mutation_Response: People_Mutation_Response,
+    People_Obj_Rel_Insert_Input: People_Obj_Rel_Insert_Input,
     People_On_Conflict: People_On_Conflict,
     People_Order_By: People_Order_By,
     People_Pk_Columns_Input: People_Pk_Columns_Input,
@@ -76645,12 +76503,23 @@ export const MovieDocument = gql`
     release_date
     runtime
     vote_average
+    movie_credits {
+      id
+      character
+      role
+      credit_type
+      order
+      person {
+        name
+      }
+    }
     genres {
       genre {
         id
         name
       }
     }
+    keywords
     user_movie_activity {
       comment
       rating

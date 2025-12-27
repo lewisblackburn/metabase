@@ -25,6 +25,8 @@ export interface TMDBMovie {
     video: boolean
     vote_average: number
     vote_count: number
+    keywords: TMDBKeywords
+    credits: TMDBCredits
 }
 
 export interface TMDBBelongsToCollection {
@@ -55,6 +57,49 @@ export interface TMDBSpokenLanguage {
     english_name: string
     iso_639_1: string
     name: string
+}
+
+export interface TMDBKeywords {
+    keywords: TMDBKeyword[]
+}
+
+export interface TMDBKeyword {
+    id: number
+    name: string
+}
+
+export interface TMDBCredits {
+    cast: TMDBCast[]
+    crew: TMDBCrew[]
+}
+
+export interface TMDBCast {
+    adult: boolean
+    gender: number
+    id: number
+    known_for_department: string
+    name: string
+    original_name: string
+    popularity: number
+    profile_path?: string
+    cast_id: number
+    character: string
+    credit_id: string
+    order: number
+}
+
+export interface TMDBCrew {
+    adult: boolean
+    gender: number
+    id: number
+    known_for_department: string
+    name: string
+    original_name: string
+    popularity: number
+    profile_path?: string
+    credit_id: string
+    department: string
+    job: string
 }
 
 /**

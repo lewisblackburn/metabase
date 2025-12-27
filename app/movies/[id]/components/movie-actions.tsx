@@ -6,7 +6,7 @@ import { ListsQuery, MovieQuery } from '@/generated/graphql'
 import { insertUserMovieWatches } from '@/lib/actions/movies/insert-user-movie-watches'
 import { UserMovieStatus } from '@/lib/helpers/graphql-enums'
 
-import RatingDialog from '../../../../components/rating-dialog/rating-dialog'
+import RatingDialog from '../../../../components/rating-dialog'
 
 interface MovieActionsProps {
     movie: MovieQuery['movies_by_pk']

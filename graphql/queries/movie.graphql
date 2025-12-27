@@ -1,30 +1,41 @@
 query Movie($id: uuid!) {
-    movies_by_pk(id: $id) {
-        id
-        poster_id
-        backdrop_id
-        title
-        tagline
-        overview
-        certification
-        release_date
-        runtime
-        vote_average
-        genres {
-            genre {
-                id
-                name
-            }
-        }
-        user_movie_activity {
-            comment
-            rating
-            status
-        }
-        user_movie_watches_aggregate(where: { movie_id: { _eq: $id } }) {
-            aggregate {
-                count
-            }
-        }
+  movies_by_pk(id: $id) {
+    id
+    poster_id
+    backdrop_id
+    title
+    tagline
+    overview
+    certification
+    release_date
+    runtime
+    vote_average
+    movie_credits {
+      id
+      character
+      role
+      credit_type
+      order
+      person {
+        name
+      }
     }
+    genres {
+      genre {
+        id
+        name
+      }
+    }
+    keywords
+    user_movie_activity {
+      comment
+      rating
+      status
+    }
+    user_movie_watches_aggregate(where: {movie_id: {_eq: $id}}) {
+      aggregate {
+        count
+      }
+    }
+  }
 }

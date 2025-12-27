@@ -12,6 +12,8 @@ import {
 } from '@/generated/graphql'
 import { Action, ImportResult, NormalisedData } from '@/lib/types/importer'
 
+import downloadAndUploadFile from '../helpers/files/download-and-upload-file'
+import getTMDBFile from '../helpers/files/get-tmdb-file'
 import { handleGraphQLError } from '../utils/error-handler'
 
 export abstract class BaseImporter<TEntity = unknown> {
@@ -90,5 +92,10 @@ export abstract class BaseImporter<TEntity = unknown> {
                 },
             )
             .catch(handleGraphQLError)
+    }
+
+    protected async uploadImage(imageId?: string | null) {
+        if (!imageId) return undefined
+        return downloadAndUploadFile(this.nhost, getTMDBFile(imageId))
     }
 }
