@@ -5,7 +5,7 @@ import { Bookmark, CheckCircleIcon, Play, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { MovieQuery, User_Movie_Statuses_Enum } from '@/generated/graphql'
+import { MovieQuery } from '@/generated/graphql'
 import { insertUserMovieWatches } from '@/lib/actions/movies/insert-user-movie-watches'
 import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
 import { UserMovieStatus } from '@/lib/helpers/graphql-enums'
@@ -70,12 +70,13 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                     {field => {
                         const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                         return (
+                            // TODO: Update this to use the coss ui format
                             <Field data-invalid={isInvalid}>
                                 <Select
                                     value={field.state.value ?? undefined}
                                     open={open}
                                     onOpenChange={setOpen}
-                                    onValueChange={(value: User_Movie_Statuses_Enum) => {
+                                    onValueChange={value => {
                                         field.handleChange(value)
                                         form.handleSubmit()
                                     }}
@@ -84,7 +85,7 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                                         className="w-full [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0"
                                         size="sm"
                                     >
-                                        <SelectValue placeholder="Update status" />
+                                        <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="[&_*[role=option]>span>svg]:text-muted-foreground/80 [&_*[role=option]]:pr-8 [&_*[role=option]]:pl-2 [&_*[role=option]>span]:right-2 [&_*[role=option]>span]:left-auto [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2 [&_*[role=option]>span>svg]:shrink-0">
                                         <SelectItem value={UserMovieStatus.WATCHED}>
