@@ -19,11 +19,6 @@ import { NavSecondary } from './nav-secondary'
 import { NavUser } from './nav-user'
 
 const data = {
-    user: {
-        name: 'shadcn',
-        email: 'm@example.com',
-        avatar: '/avatars/shadcn.jpg',
-    },
     navMain: [
         {
             title: 'Explore',
