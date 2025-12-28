@@ -1,22 +1,22 @@
 'use client'
 
-import { ChevronsUpDownIcon, PlusIcon } from 'lucide-react'
-import { useState } from 'react'
+import { ChevronsUpDownIcon, SearchIcon } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-    CommandSeparator,
-} from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ListsQuery, MovieQuery } from '@/generated/graphql'
 import { insertListItem } from '@/lib/actions/lists/insert-list-item'
+
+import {
+    Combobox,
+    ComboboxEmpty,
+    ComboboxInput,
+    ComboboxItem,
+    ComboboxList,
+    ComboboxPopup,
+    ComboboxTrigger,
+    ComboboxValue,
+} from '../ui/combobox'
 
 export function AddToListButton({
     movie,
@@ -25,8 +25,6 @@ export function AddToListButton({
     movie: MovieQuery['movies_by_pk']
     lists: ListsQuery['lists']
 }) {
-    const [open, setOpen] = useState<boolean>(false)
-
     const addToList = async (listId: string) => {
         if (!movie) return
 
@@ -54,57 +52,44 @@ export function AddToListButton({
     }
 
     return (
-        <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    aria-label="Add to list"
-                    size="sm"
-                    className="text-xs max-w-40 bg-background hover:bg-background border-input w-full justify-between px-3 font-normal outline-offset-0 outline-none focus-visible:outline-[3px] h-auto min-h-8"
-                >
-                    <span className="text-muted-foreground">Add to list</span>
-                    <ChevronsUpDownIcon
-                        size={16}
-                        className="text-muted-foreground/80 shrink-0"
-                        aria-hidden="true"
+        <Combobox items={lists}>
+            <ComboboxTrigger
+                render={
+                    <Button
+                        className="w-fit min-w-60 justify-between font-normal"
+                        variant="outline"
                     />
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent
-                className="border-input w-[--radix-popper-anchor-width] p-0"
-                align="start"
+                }
             >
-                <Command>
-                    <CommandInput placeholder="Find list..." />
-                    <CommandList>
-                        <CommandEmpty>No list found.</CommandEmpty>
-                        <CommandGroup>
-                            {lists.map(list => (
-                                <CommandItem
-                                    key={list.id}
-                                    value={list.title}
-                                    onSelect={() => addToList(list.id)}
-                                >
-                                    <span className="truncate">{list.title}</span>
-                                </CommandItem>
-                            ))}
-                        </CommandGroup>
-                        <CommandSeparator />
-                        <CommandGroup>
-                            <Button variant="ghost" className="w-full justify-start font-normal">
-                                <PlusIcon
-                                    size={16}
-                                    className="-ms-2 opacity-60"
-                                    aria-hidden="true"
-                                />
-                                New list
-                            </Button>
-                        </CommandGroup>
-                    </CommandList>
-                </Command>
-            </PopoverContent>
-        </Popover>
+                <ComboboxValue>
+                    {list =>
+                        list?.title ?? <span className="text-muted-foreground">Select list</span>
+                    }
+                </ComboboxValue>
+                <ChevronsUpDownIcon className="-me-1!" />
+            </ComboboxTrigger>
+            <ComboboxPopup aria-label="Select country">
+                <div className="border-b p-2">
+                    <ComboboxInput
+                        className="rounded-md before:rounded-[calc(var(--radius-md)-1px)]"
+                        placeholder="e.g. Marvel Films"
+                        showTrigger={false}
+                        startAddon={<SearchIcon />}
+                    />
+                </div>
+                <ComboboxEmpty>No list found.</ComboboxEmpty>
+                <ComboboxList>
+                    {(list: ListsQuery['lists'][0]) => (
+                        <ComboboxItem
+                            key={list.id}
+                            value={list.id}
+                            onClick={() => addToList(list.id)}
+                        >
+                            {list.title}
+                        </ComboboxItem>
+                    )}
+                </ComboboxList>
+            </ComboboxPopup>
+        </Combobox>
     )
 }

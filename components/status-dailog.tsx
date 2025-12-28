@@ -1,26 +1,36 @@
 'use client'
 
 import { useForm } from '@tanstack/react-form'
-import { Bookmark, CheckCircleIcon, Play, XCircle } from 'lucide-react'
-import { useState } from 'react'
+import { Bookmark, CheckCircleIcon, LucideIcon, Play, XCircle } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { MovieQuery } from '@/generated/graphql'
+import { MovieQuery, User_Movie_Statuses_Enum } from '@/generated/graphql'
 import { insertUserMovieWatches } from '@/lib/actions/movies/insert-user-movie-watches'
 import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
 import { UserMovieStatus } from '@/lib/helpers/graphql-enums'
 import { userMovieStatusSchema } from '@/lib/validations/movies/user-movie-status.schema'
 
-import { Field, FieldError, FieldGroup } from './ui/field'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { FieldError, FieldGroup } from './ui/field'
+import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from './ui/select'
 
 interface StatusDialogProps {
     movie: MovieQuery['movies_by_pk']
 }
 
-export default function StatusDialog({ movie }: StatusDialogProps) {
-    const [open, setOpen] = useState(false)
+type StatusItem = {
+    value: User_Movie_Statuses_Enum
+    label: string
+    icon: LucideIcon
+}
 
+const statusItems: StatusItem[] = [
+    { value: UserMovieStatus.WATCHED, label: 'Watched', icon: CheckCircleIcon },
+    { value: UserMovieStatus.WATCHING, label: 'Watching', icon: Play },
+    { value: UserMovieStatus.WATCHLIST, label: 'Watchlist', icon: Bookmark },
+    { value: UserMovieStatus.DROPPED, label: 'Dropped', icon: XCircle },
+]
+
+export default function StatusDialog({ movie }: StatusDialogProps) {
     const userMovieActivity = movie?.user_movie_activity?.[0]
     const status = userMovieActivity?.status
     const comment = userMovieActivity?.comment
@@ -64,66 +74,56 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
     })
 
     return (
-        <form id="status-form" className="max-w-36 w-full">
-            <FieldGroup>
-                <form.Field name="status">
-                    {field => {
-                        const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                        return (
-                            // TODO: Update this to use the coss ui format
-                            <Field data-invalid={isInvalid}>
-                                <Select
-                                    value={field.state.value ?? undefined}
-                                    open={open}
-                                    onOpenChange={setOpen}
-                                    onValueChange={value => {
-                                        field.handleChange(value)
-                                        form.handleSubmit()
-                                    }}
-                                >
-                                    <SelectTrigger
-                                        className="w-full [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0"
-                                        size="sm"
-                                    >
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="[&_*[role=option]>span>svg]:text-muted-foreground/80 [&_*[role=option]]:pr-8 [&_*[role=option]]:pl-2 [&_*[role=option]>span]:right-2 [&_*[role=option]>span]:left-auto [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2 [&_*[role=option]>span>svg]:shrink-0">
-                                        <SelectItem value={UserMovieStatus.WATCHED}>
+        <form.Field name="status">
+            {field => {
+                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                const selectedItem = field.state.value
+                    ? statusItems.find(item => item.value === field.state.value)
+                    : null
+
+                return (
+                    <FieldGroup data-invalid={isInvalid} className="max-w-40">
+                        <Select<StatusItem>
+                            value={selectedItem ?? null}
+                            itemToStringValue={item => item?.value ?? ''}
+                            onValueChange={item => {
+                                if (item) {
+                                    field.handleChange(item.value)
+                                    form.handleSubmit()
+                                }
+                            }}
+                        >
+                            <SelectTrigger>
+                                <SelectValue>
+                                    {item =>
+                                        item ? (
                                             <span className="flex items-center gap-2">
-                                                <CheckCircleIcon className="size-4 text-green-400" />
-                                                <span className="truncate capitalize">watched</span>
+                                                <item.icon className="h-4 w-4" />
+                                                <span className="truncate">{item.label}</span>
                                             </span>
-                                        </SelectItem>
-                                        <SelectItem value={UserMovieStatus.WATCHING}>
-                                            <span className="flex items-center gap-2">
-                                                <Play className="size-4 text-blue-400" />
-                                                <span className="truncate capitalize">
-                                                    watching
-                                                </span>
+                                        ) : (
+                                            <span className="text-muted-foreground">
+                                                Select status
                                             </span>
-                                        </SelectItem>
-                                        <SelectItem value={UserMovieStatus.WATCHLIST}>
-                                            <span className="flex items-center gap-2">
-                                                <Bookmark className="size-4 text-orange-400" />
-                                                <span className="truncate capitalize">
-                                                    watchlist
-                                                </span>
-                                            </span>
-                                        </SelectItem>
-                                        <SelectItem value={UserMovieStatus.DROPPED}>
-                                            <span className="flex items-center gap-2">
-                                                <XCircle className="size-4 text-red-400" />
-                                                <span className="truncate capitalize">dropped</span>
-                                            </span>
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                            </Field>
-                        )
-                    }}
-                </form.Field>
-            </FieldGroup>
-        </form>
+                                        )
+                                    }
+                                </SelectValue>
+                            </SelectTrigger>
+                            <SelectPopup>
+                                {statusItems.map(item => (
+                                    <SelectItem key={item.value} value={item}>
+                                        <span className="flex items-center gap-2">
+                                            <item.icon className="h-4 w-4" />
+                                            <span className="truncate">{item.label}</span>
+                                        </span>
+                                    </SelectItem>
+                                ))}
+                            </SelectPopup>
+                        </Select>
+                        {isInvalid && <FieldError>{field.state.meta.errors.join(', ')}</FieldError>}
+                    </FieldGroup>
+                )
+            }}
+        </form.Field>
     )
 }
