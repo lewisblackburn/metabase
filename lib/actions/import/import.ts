@@ -12,10 +12,6 @@ export async function importMedia(values: ImportValues) {
         throw new Error('External ID is required')
     }
 
-    if (values.source !== Source.TMDB) {
-        throw new Error(`Import not yet implemented for ${values.source}`)
-    }
-
     const nhost = await createNhostClient()
     switch (values.mediaType) {
         case MediaType.MOVIE: {
@@ -24,7 +20,7 @@ export async function importMedia(values: ImportValues) {
             revalidatePath('/movies')
             return {
                 success: true,
-                message: `Successfully imported ${values.mediaType} from ${values.source}`,
+                message: `Successfully imported ${values.mediaType} from ${Source.TMDB}`,
                 entityId: result.entityId,
                 action: result.action,
             }
@@ -35,14 +31,12 @@ export async function importMedia(values: ImportValues) {
             revalidatePath('/people')
             return {
                 success: true,
-                message: `Successfully imported ${values.mediaType} from ${values.source}`,
+                message: `Successfully imported ${values.mediaType} from ${Source.TMDB}`,
                 entityId: result.entityId,
                 action: result.action,
             }
         }
         default:
-            throw new Error(
-                `Import not yet implemented for ${values.mediaType} from ${values.source}`,
-            )
+            throw new Error(`Import not yet implemented for ${values.mediaType}`)
     }
 }

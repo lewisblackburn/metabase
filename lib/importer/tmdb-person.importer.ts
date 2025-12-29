@@ -4,9 +4,7 @@ import {
     CreatePersonMutationVariables,
 } from '@/generated/graphql'
 import { Gender, MediaType } from '@/lib/helpers/graphql-enums'
-import { NormalisedData } from '@/lib/types/importer'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
-import { Person } from '@/lib/validations/people/person.schema'
 
 import { TMDBImporter } from './tmdb.importer'
 
@@ -17,20 +15,8 @@ export class TMDBPersonImporter extends TMDBImporter {
         return this.fetchFromTMDB(`person/${tmdbId}`)
     }
 
-    // TODO: Fix the any type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    normalise(raw: any): NormalisedData<Person> {
-        return {
-            entity: {
-                name: raw.name,
-                birthdate: raw.birthday ? new Date(raw.birthday).toISOString() : undefined,
-                // Note: gender is required but not available from TMDB
-                // Default to Gender.OTHER during entity creation
-            },
-        }
-    }
-
-    protected async createEntity(data: Partial<Person>): Promise<string> {
+    protected async createEntity(data: any): Promise<string> {
         const result = await this.nhost.graphql
             .request<CreatePersonMutation, CreatePersonMutationVariables>(CreatePersonDocument, {
                 object: {

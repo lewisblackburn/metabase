@@ -104,10 +104,10 @@ export function RatingForm({ movie, onOpenChange }: RatingFormProps) {
                                     placeholder="Type your message here."
                                     maxLength={500}
                                 />
-                                {isInvalid && <FieldError errors={field.state.meta.errors} />}
                                 <p className="text-muted-foreground text-sm">
                                     {500 - (field.state.value?.length ?? 0)}/500 characters left
                                 </p>
+                                {isInvalid && <FieldError errors={field.state.meta.errors} />}
                             </Field>
                         )
                     }}

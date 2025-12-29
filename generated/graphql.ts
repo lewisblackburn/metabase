@@ -153,7 +153,7 @@ export type MovieQueryVariables = Exact<{
 }>;
 
 
-export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, keywords?: Array<string> | null, movie_credits: Array<{ __typename?: 'movie_credits', id: any, character: string, role: string, credit_type: Credit_Types_Enum, order: number, person: { __typename?: 'people', name: string } }>, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }>, user_movie_activity?: Array<{ __typename?: 'user_movie_activities', comment?: string | null, rating?: number | null, status?: User_Movie_Statuses_Enum | null }> | null, user_movie_watches_aggregate: { __typename?: 'user_movie_watches_aggregate', aggregate?: { __typename?: 'user_movie_watches_aggregate_fields', count: number } | null } } | null };
+export type MovieQuery = { __typename?: 'query_root', movies_by_pk?: { __typename?: 'movies', id: any, poster_id?: any | null, backdrop_id?: any | null, title: string, tagline?: string | null, overview?: string | null, certification?: string | null, release_date?: any | null, runtime?: number | null, vote_average?: number | null, keywords?: Array<string> | null, movie_credits: Array<{ __typename?: 'movie_credits', id: any, role: string, department: string, credit_type: Credit_Types_Enum, order: number, person: { __typename?: 'people', name: string } }>, genres: Array<{ __typename?: 'movie_genres', genre?: { __typename?: 'genres', id: any, name: string } | null }>, user_movie_activity?: Array<{ __typename?: 'user_movie_activities', comment?: string | null, rating?: number | null, status?: User_Movie_Statuses_Enum | null }> | null, user_movie_watches_aggregate: { __typename?: 'user_movie_watches_aggregate', aggregate?: { __typename?: 'user_movie_watches_aggregate_fields', count: number } | null } } | null };
 
 export type MoviesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5048,8 +5048,8 @@ export type Media_Types_Updates = {
 /** columns and relationships of "movie_credits" */
 export type Movie_Credits = {
   __typename?: 'movie_credits';
-  character: Scalars['String'];
   credit_type: Credit_Types_Enum;
+  department: Scalars['String'];
   id: Scalars['uuid'];
   movie_id: Scalars['uuid'];
   order: Scalars['Int'];
@@ -5138,8 +5138,8 @@ export type Movie_Credits_Bool_Exp = {
   _and?: InputMaybe<Array<Movie_Credits_Bool_Exp>>;
   _not?: InputMaybe<Movie_Credits_Bool_Exp>;
   _or?: InputMaybe<Array<Movie_Credits_Bool_Exp>>;
-  character?: InputMaybe<String_Comparison_Exp>;
   credit_type?: InputMaybe<Credit_Types_Enum_Comparison_Exp>;
+  department?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   movie_id?: InputMaybe<Uuid_Comparison_Exp>;
   order?: InputMaybe<Int_Comparison_Exp>;
@@ -5162,8 +5162,8 @@ export type Movie_Credits_Inc_Input = {
 
 /** input type for inserting data into table "movie_credits" */
 export type Movie_Credits_Insert_Input = {
-  character?: InputMaybe<Scalars['String']>;
   credit_type?: InputMaybe<Credit_Types_Enum>;
+  department?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   order?: InputMaybe<Scalars['Int']>;
@@ -5175,7 +5175,7 @@ export type Movie_Credits_Insert_Input = {
 /** aggregate max on columns */
 export type Movie_Credits_Max_Fields = {
   __typename?: 'movie_credits_max_fields';
-  character?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   movie_id?: Maybe<Scalars['uuid']>;
   order?: Maybe<Scalars['Int']>;
@@ -5185,7 +5185,7 @@ export type Movie_Credits_Max_Fields = {
 
 /** order by max() on columns of table "movie_credits" */
 export type Movie_Credits_Max_Order_By = {
-  character?: InputMaybe<Order_By>;
+  department?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -5196,7 +5196,7 @@ export type Movie_Credits_Max_Order_By = {
 /** aggregate min on columns */
 export type Movie_Credits_Min_Fields = {
   __typename?: 'movie_credits_min_fields';
-  character?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   movie_id?: Maybe<Scalars['uuid']>;
   order?: Maybe<Scalars['Int']>;
@@ -5206,7 +5206,7 @@ export type Movie_Credits_Min_Fields = {
 
 /** order by min() on columns of table "movie_credits" */
 export type Movie_Credits_Min_Order_By = {
-  character?: InputMaybe<Order_By>;
+  department?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -5232,8 +5232,8 @@ export type Movie_Credits_On_Conflict = {
 
 /** Ordering options when selecting data from "movie_credits". */
 export type Movie_Credits_Order_By = {
-  character?: InputMaybe<Order_By>;
   credit_type?: InputMaybe<Order_By>;
+  department?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   movie_id?: InputMaybe<Order_By>;
   order?: InputMaybe<Order_By>;
@@ -5250,9 +5250,9 @@ export type Movie_Credits_Pk_Columns_Input = {
 /** select columns of table "movie_credits" */
 export type Movie_Credits_Select_Column =
   /** column name */
-  | 'character'
-  /** column name */
   | 'credit_type'
+  /** column name */
+  | 'department'
   /** column name */
   | 'id'
   /** column name */
@@ -5266,8 +5266,8 @@ export type Movie_Credits_Select_Column =
 
 /** input type for updating data in table "movie_credits" */
 export type Movie_Credits_Set_Input = {
-  character?: InputMaybe<Scalars['String']>;
   credit_type?: InputMaybe<Credit_Types_Enum>;
+  department?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   order?: InputMaybe<Scalars['Int']>;
@@ -5318,8 +5318,8 @@ export type Movie_Credits_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Movie_Credits_Stream_Cursor_Value_Input = {
-  character?: InputMaybe<Scalars['String']>;
   credit_type?: InputMaybe<Credit_Types_Enum>;
+  department?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   movie_id?: InputMaybe<Scalars['uuid']>;
   order?: InputMaybe<Scalars['Int']>;
@@ -5341,9 +5341,9 @@ export type Movie_Credits_Sum_Order_By = {
 /** update columns of table "movie_credits" */
 export type Movie_Credits_Update_Column =
   /** column name */
-  | 'character'
-  /** column name */
   | 'credit_type'
+  /** column name */
+  | 'department'
   /** column name */
   | 'id'
   /** column name */
@@ -35009,24 +35009,24 @@ export default {
           "name": "movie_credits",
           "fields": [
             {
-              "name": "character",
-              "type": {
-                "kind": "NON_NULL",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "args": []
-            },
-            {
               "name": "credit_type",
               "type": {
                 "kind": "NON_NULL",
                 "ofType": {
                   "kind": "ENUM",
                   "name": "credit_types_enum",
+                  "ofType": null
+                }
+              },
+              "args": []
+            },
+            {
+              "name": "department",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 }
               },
@@ -35530,18 +35530,18 @@ export default {
               }
             },
             {
-              "name": "character",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "String_comparison_exp",
-                "ofType": null
-              }
-            },
-            {
               "name": "credit_type",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "credit_types_enum_comparison_exp",
+                "ofType": null
+              }
+            },
+            {
+              "name": "department",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "String_comparison_exp",
                 "ofType": null
               }
             },
@@ -35626,18 +35626,18 @@ export default {
           "name": "movie_credits_insert_input",
           "inputFields": [
             {
-              "name": "character",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
               "name": "credit_type",
               "type": {
                 "kind": "ENUM",
                 "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "department",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -35696,7 +35696,7 @@ export default {
           "name": "movie_credits_max_fields",
           "fields": [
             {
-              "name": "character",
+              "name": "department",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -35757,7 +35757,7 @@ export default {
           "name": "movie_credits_max_order_by",
           "inputFields": [
             {
-              "name": "character",
+              "name": "department",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -35811,7 +35811,7 @@ export default {
           "name": "movie_credits_min_fields",
           "fields": [
             {
-              "name": "character",
+              "name": "department",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -35872,7 +35872,7 @@ export default {
           "name": "movie_credits_min_order_by",
           "inputFields": [
             {
-              "name": "character",
+              "name": "department",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -36006,7 +36006,7 @@ export default {
           "name": "movie_credits_order_by",
           "inputFields": [
             {
-              "name": "character",
+              "name": "credit_type",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -36014,7 +36014,7 @@ export default {
               }
             },
             {
-              "name": "credit_type",
+              "name": "department",
               "type": {
                 "kind": "ENUM",
                 "name": "order_by",
@@ -36093,10 +36093,10 @@ export default {
           "name": "movie_credits_select_column",
           "enumValues": [
             {
-              "name": "character"
+              "name": "credit_type"
             },
             {
-              "name": "credit_type"
+              "name": "department"
             },
             {
               "name": "id"
@@ -36120,18 +36120,18 @@ export default {
           "name": "movie_credits_set_input",
           "inputFields": [
             {
-              "name": "character",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
               "name": "credit_type",
               "type": {
                 "kind": "ENUM",
                 "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "department",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -36297,18 +36297,18 @@ export default {
           "name": "movie_credits_stream_cursor_value_input",
           "inputFields": [
             {
-              "name": "character",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
               "name": "credit_type",
               "type": {
                 "kind": "ENUM",
                 "name": "credit_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "name": "department",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -36389,10 +36389,10 @@ export default {
           "name": "movie_credits_update_column",
           "enumValues": [
             {
-              "name": "character"
+              "name": "credit_type"
             },
             {
-              "name": "credit_type"
+              "name": "department"
             },
             {
               "name": "id"
@@ -76505,8 +76505,8 @@ export const MovieDocument = gql`
     vote_average
     movie_credits {
       id
-      character
       role
+      department
       credit_type
       order
       person {

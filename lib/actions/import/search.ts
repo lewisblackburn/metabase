@@ -1,7 +1,7 @@
 'use server'
 
-import { Media_Types_Enum, Sources_Enum } from '@/generated/graphql'
-import { MediaType, Source } from '@/lib/helpers/graphql-enums'
+import { Media_Types_Enum } from '@/generated/graphql'
+import { MediaType } from '@/lib/helpers/graphql-enums'
 import { TMDBMovieImporter, TMDBPersonImporter } from '@/lib/importer'
 import { createNhostClient } from '@/lib/nhost/server'
 import { TMDBMovieSearchResult, TMDBPersonSearchResult } from '@/lib/types/tmdb'
@@ -10,14 +10,11 @@ export type SearchResult = TMDBMovieSearchResult | TMDBPersonSearchResult
 
 export async function searchMedia(
     query: string,
-    source: Sources_Enum,
     mediaType: Media_Types_Enum,
 ): Promise<SearchResult[]> {
     if (!query.trim()) return []
 
     const nhost = await createNhostClient()
-
-    if (source !== Source.TMDB) return []
 
     switch (mediaType) {
         case MediaType.MOVIE: {

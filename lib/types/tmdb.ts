@@ -27,6 +27,7 @@ export interface TMDBMovie {
     vote_count: number
     keywords: TMDBKeywords
     credits: TMDBCredits
+    release_dates?: TMDBReleaseDates
 }
 
 export interface TMDBBelongsToCollection {
@@ -100,6 +101,24 @@ export interface TMDBCrew {
     credit_id: string
     department: string
     job: string
+}
+
+export interface TMDBReleaseDateResult {
+    iso_3166_1: string // Country code (e.g., "US", "GB")
+    release_dates: TMDBReleaseDate[]
+}
+
+export interface TMDBReleaseDate {
+    certification: string // Rating (e.g., "PG-13", "R", "15")
+    descriptors: string[] // Additional descriptors
+    iso_639_1: string // Language code (e.g., "en")
+    note: string // Additional notes
+    release_date: string // ISO 8601 date string
+    type: number // Release type (1=Premiere, 2=Theatrical (limited), 3=Theatrical, 4=Digital, 5=Physical, 6=TV)
+}
+
+export interface TMDBReleaseDates {
+    results: TMDBReleaseDateResult[]
 }
 
 /**

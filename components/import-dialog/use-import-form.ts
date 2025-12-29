@@ -2,10 +2,10 @@ import { useForm } from '@tanstack/react-form'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { Media_Types_Enum, Sources_Enum } from '@/generated/graphql'
+import { Media_Types_Enum } from '@/generated/graphql'
 import { importMedia } from '@/lib/actions/import/import'
 import { searchMedia, SearchResult } from '@/lib/actions/import/search'
-import { MediaType, Source } from '@/lib/helpers/graphql-enums'
+import { MediaType } from '@/lib/helpers/graphql-enums'
 import { importSchema } from '@/lib/validations/import.schema'
 
 export default function useImportForm(onSuccess: () => void) {
@@ -15,7 +15,6 @@ export default function useImportForm(onSuccess: () => void) {
 
     const form = useForm({
         defaultValues: {
-            source: Source.TMDB as Sources_Enum,
             mediaType: MediaType.MOVIE as Media_Types_Enum,
             searchQuery: '',
             externalId: '',
@@ -25,9 +24,9 @@ export default function useImportForm(onSuccess: () => void) {
         },
         onSubmit: async ({ value }) => {
             await importMedia(value)
-                .then(() => {
+                .then(result => {
                     toast.success('Import successful', {
-                        description: `Successfully imported ${value.mediaType} from ${value.source}`,
+                        description: result.message,
                     })
                     onSuccess()
                 })
@@ -39,11 +38,7 @@ export default function useImportForm(onSuccess: () => void) {
         },
     })
 
-    const performSearch = async (
-        searchQuery: string,
-        source: Sources_Enum,
-        mediaType: Media_Types_Enum,
-    ) => {
+    const performSearch = async (searchQuery: string, mediaType: Media_Types_Enum) => {
         if (debounceTimeoutRef.current) {
             clearTimeout(debounceTimeoutRef.current)
         }
@@ -57,7 +52,7 @@ export default function useImportForm(onSuccess: () => void) {
         setIsSearching(true)
         debounceTimeoutRef.current = setTimeout(async () => {
             try {
-                const results = await searchMedia(searchQuery.trim(), source, mediaType)
+                const results = await searchMedia(searchQuery.trim(), mediaType)
                 setSearchResults(Array.isArray(results) ? results : [])
             } catch (error) {
                 toast.error('Search failed', {

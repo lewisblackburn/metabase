@@ -12,8 +12,8 @@ query Movie($id: uuid!) {
     vote_average
     movie_credits {
       id
-      character
       role
+      department
       credit_type
       order
       person {

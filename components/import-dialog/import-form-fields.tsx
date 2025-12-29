@@ -12,7 +12,6 @@ import {
 } from '../ui/combobox'
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field'
 import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from '../ui/select'
-import { SourceRadioGroup } from './source-radio-group'
 import useImportForm from './use-import-form'
 
 interface ImportFormFieldsProps {
@@ -34,29 +33,6 @@ export default function ImportFormFields({
 }: ImportFormFieldsProps) {
     return (
         <FieldGroup>
-            <form.Field name="source">
-                {field => {
-                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                    return (
-                        <SourceRadioGroup
-                            value={field.state.value}
-                            onChange={value => {
-                                field.handleChange(value)
-                                if (form.state.values.searchQuery?.trim().length >= 2) {
-                                    performSearch(
-                                        form.state.values.searchQuery,
-                                        value,
-                                        form.state.values.mediaType,
-                                    )
-                                }
-                            }}
-                            errors={field.state.meta.errors}
-                            isInvalid={isInvalid}
-                        />
-                    )
-                }}
-            </form.Field>
-
             <form.Field name="mediaType">
                 {field => {
                     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -79,11 +55,7 @@ export default function ImportFormFields({
                                     if (!value) return
                                     field.handleChange(value)
                                     if (form.state.values.searchQuery?.trim().length >= 2) {
-                                        performSearch(
-                                            form.state.values.searchQuery,
-                                            form.state.values.source,
-                                            value,
-                                        )
+                                        performSearch(form.state.values.searchQuery, value)
                                     }
                                 }}
                             >
@@ -147,11 +119,7 @@ export default function ImportFormFields({
                                         const value = e.target.value
                                         field.handleChange(value)
                                         if (value?.trim().length >= 2) {
-                                            performSearch(
-                                                value,
-                                                form.state.values.source,
-                                                form.state.values.mediaType,
-                                            )
+                                            performSearch(value, form.state.values.mediaType)
                                         }
                                     }}
                                 />

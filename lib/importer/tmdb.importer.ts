@@ -2,6 +2,8 @@ import { NhostClient } from '@nhost/nhost-js'
 
 import { env } from '@/env'
 
+import downloadAndUploadFile from '../helpers/files/download-and-upload-file'
+import getTMDBFile from '../helpers/files/get-tmdb-file'
 import { Source } from '../helpers/graphql-enums'
 import { BaseImporter } from './base.importer'
 
@@ -29,5 +31,10 @@ export abstract class TMDBImporter extends BaseImporter {
             throw new Error(`TMDB fetch failed: ${res.status} - ${errorText}`)
         }
         return res.json()
+    }
+
+    protected async uploadImage(imageId?: string | null) {
+        if (!imageId) return undefined
+        return downloadAndUploadFile(this.nhost, getTMDBFile(imageId))
     }
 }

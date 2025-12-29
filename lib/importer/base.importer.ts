@@ -10,10 +10,8 @@ import {
     Media_Types_Enum,
     Sources_Enum,
 } from '@/generated/graphql'
-import { Action, ImportResult, NormalisedData } from '@/lib/types/importer'
+import { Action, ImportResult } from '@/lib/types/importer'
 
-import downloadAndUploadFile from '../helpers/files/download-and-upload-file'
-import getTMDBFile from '../helpers/files/get-tmdb-file'
 import { handleGraphQLError } from '../utils/error-handler'
 
 export abstract class BaseImporter<TEntity = unknown> {
@@ -22,7 +20,6 @@ export abstract class BaseImporter<TEntity = unknown> {
     abstract source: Sources_Enum
     abstract mediaType: Media_Types_Enum
     abstract fetch(externalId: string): Promise<unknown>
-    abstract normalise(raw: unknown): NormalisedData<TEntity>
     abstract findSimilar(raw: unknown): Promise<unknown[]>
     abstract merge(raw: unknown, existing: unknown): Promise<unknown>
 
@@ -33,13 +30,12 @@ export abstract class BaseImporter<TEntity = unknown> {
             return { entityId: existing, action: Action.LINKED }
         }
 
-        // 2. Fetch and normalise
+        // 2. Fetch
         const raw = await this.fetch(externalId)
-        const normalised = this.normalise(raw)
 
         // TODO: implement fuzzy search and merge
         // 3. Find similar entities
-        const similar = await this.findSimilar(normalised.entity)
+        const similar = await this.findSimilar(raw)
 
         if (similar.length > 0) {
             // 3.1 If similar entities found, merge them
@@ -49,7 +45,7 @@ export abstract class BaseImporter<TEntity = unknown> {
         }
 
         // 4. Create entity
-        const entityId = await this.createEntity(normalised.entity)
+        const entityId = await this.createEntity(raw)
 
         // 5. Link external ID
         await this.linkExternalId(entityId, externalId)
@@ -57,7 +53,7 @@ export abstract class BaseImporter<TEntity = unknown> {
         return { entityId, action: Action.CREATED }
     }
 
-    protected abstract createEntity(data: Partial<TEntity>): Promise<string>
+    protected abstract createEntity(data: unknown): Promise<string>
 
     protected async findByExternalId(externalId: string): Promise<string | null> {
         const result = await this.nhost.graphql
@@ -92,10 +88,5 @@ export abstract class BaseImporter<TEntity = unknown> {
                 },
             )
             .catch(handleGraphQLError)
-    }
-
-    protected async uploadImage(imageId?: string | null) {
-        if (!imageId) return undefined
-        return downloadAndUploadFile(this.nhost, getTMDBFile(imageId))
     }
 }
