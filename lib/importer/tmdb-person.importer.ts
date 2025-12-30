@@ -1,9 +1,12 @@
+import gql from 'graphql-tag'
+
 import {
     CreatePersonDocument,
     CreatePersonMutation,
     CreatePersonMutationVariables,
     Genders_Enum,
     Media_Types_Enum,
+    People_Constraint,
 } from '@/generated/graphql'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
@@ -19,17 +22,20 @@ export class TMDBPersonImporter extends TMDBImporter {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected async createEntity(data: any): Promise<string> {
         const result = await this.nhost.graphql
-            .request<CreatePersonMutation, CreatePersonMutationVariables>(CreatePersonDocument, {
-                object: {
-                    name: data.name,
-                    birthdate: data.birthdate ?? undefined,
-                    gender: data.gender || Genders_Enum.Other,
+            .request<CreatePersonMutation, CreatePersonMutationVariables>(
+                gql(CreatePersonDocument),
+                {
+                    object: {
+                        name: data.name,
+                        birthdate: data.birthdate ?? undefined,
+                        gender: data.gender || Genders_Enum.Other,
+                    },
+                    on_conflict: {
+                        constraint: People_Constraint.PeoplePkey,
+                        update_columns: [],
+                    },
                 },
-                on_conflict: {
-                    constraint: 'people_pkey',
-                    update_columns: [],
-                },
-            })
+            )
             .catch(handleGraphQLError)
 
         const personId = result?.body.data?.insert_people_one?.id

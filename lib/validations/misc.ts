@@ -1,11 +1,11 @@
 import z from 'zod'
 
-import { MediaType, Source } from '../helpers/graphql-enums'
+import { Media_Types_Enum, Sources_Enum } from '@/generated/graphql'
 
 export const ExternalIdSchema = z.object({
     entity_id: z.string().uuid(),
-    mediia_type: z.nativeEnum(MediaType),
-    source: z.nativeEnum(Source),
+    mediia_type: z.nativeEnum(Media_Types_Enum),
+    source: z.nativeEnum(Sources_Enum),
     external_id: z.string(),
     data: z.record(z.any(), z.any()).optional(),
 })

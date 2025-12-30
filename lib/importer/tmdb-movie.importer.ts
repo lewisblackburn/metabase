@@ -1,3 +1,5 @@
+import gql from 'graphql-tag'
+
 import {
     Certifications_Enum,
     CreateMovieDocument,
@@ -63,7 +65,7 @@ export class TMDBMovieImporter extends TMDBImporter {
             .request<
                 CreateMovieMutation,
                 CreateMovieMutationVariables
-            >(CreateMovieDocument, variables)
+            >(gql(CreateMovieDocument), variables)
             .catch(handleGraphQLError)
 
         const movieId = result?.body.data?.insert_movies_one?.id
