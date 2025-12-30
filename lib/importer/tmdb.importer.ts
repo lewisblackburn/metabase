@@ -1,14 +1,14 @@
 import { NhostClient } from '@nhost/nhost-js'
 
 import { env } from '@/env'
+import { Sources_Enum } from '@/generated/graphql'
 
 import downloadAndUploadFile from '../helpers/files/download-and-upload-file'
 import getTMDBFile from '../helpers/files/get-tmdb-file'
-import { Source } from '../helpers/graphql-enums'
 import { BaseImporter } from './base.importer'
 
 export abstract class TMDBImporter extends BaseImporter {
-    source = Source.TMDB
+    source = Sources_Enum.Tmdb
 
     constructor(
         nhost: NhostClient,

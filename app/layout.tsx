@@ -1,5 +1,6 @@
 import './globals.css'
 
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
@@ -58,6 +59,7 @@ export default async function RootLayout({
                             </div>
                             <Toaster />
                         </BreadcrumbsProvider>
+                        <ReactQueryDevtools initialIsOpen={false} />
                     </QueryProvider>
                 </ThemeProvider>
             </body>

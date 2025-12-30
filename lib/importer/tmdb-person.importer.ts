@@ -2,14 +2,15 @@ import {
     CreatePersonDocument,
     CreatePersonMutation,
     CreatePersonMutationVariables,
+    Genders_Enum,
+    Media_Types_Enum,
 } from '@/generated/graphql'
-import { Gender, MediaType } from '@/lib/helpers/graphql-enums'
 import { handleGraphQLError } from '@/lib/utils/error-handler'
 
 import { TMDBImporter } from './tmdb.importer'
 
 export class TMDBPersonImporter extends TMDBImporter {
-    mediaType = MediaType.PERSON
+    mediaType = Media_Types_Enum.Person
 
     async fetch(tmdbId: string) {
         return this.fetchFromTMDB(`person/${tmdbId}`)
@@ -22,7 +23,7 @@ export class TMDBPersonImporter extends TMDBImporter {
                 object: {
                     name: data.name,
                     birthdate: data.birthdate ?? undefined,
-                    gender: data.gender || Gender.OTHER,
+                    gender: data.gender || Genders_Enum.Other,
                 },
                 on_conflict: {
                     constraint: 'people_pkey',

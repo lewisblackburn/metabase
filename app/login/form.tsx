@@ -8,7 +8,7 @@ import LoadingButton from '@/components/loading-button'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { login } from '@/lib/actions/auth/login'
+import { login } from '@/lib/actions/login'
 import { loginSchema } from '@/lib/validations/auth/login.schema'
 
 export default function LoginForm() {

@@ -1,3 +1,5 @@
+'use server'
+
 import { User } from '@nhost/nhost-js/auth'
 import Image from 'next/image'
 

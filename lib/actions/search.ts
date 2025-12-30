@@ -1,7 +1,6 @@
 'use server'
 
 import { Media_Types_Enum } from '@/generated/graphql'
-import { MediaType } from '@/lib/helpers/graphql-enums'
 import { TMDBMovieImporter, TMDBPersonImporter } from '@/lib/importer'
 import { createNhostClient } from '@/lib/nhost/server'
 import { TMDBMovieSearchResult, TMDBPersonSearchResult } from '@/lib/types/tmdb'
@@ -17,7 +16,7 @@ export async function searchMedia(
     const nhost = await createNhostClient()
 
     switch (mediaType) {
-        case MediaType.MOVIE: {
+        case Media_Types_Enum.Movie: {
             const importer = new TMDBMovieImporter(nhost)
             const rawResults = await importer.search(query)
             if (!Array.isArray(rawResults)) {
@@ -25,7 +24,7 @@ export async function searchMedia(
             }
             return rawResults as TMDBMovieSearchResult[]
         }
-        case MediaType.PERSON: {
+        case Media_Types_Enum.Person: {
             const importer = new TMDBPersonImporter(nhost)
             const rawResults = await importer.search(query)
             if (!Array.isArray(rawResults)) {

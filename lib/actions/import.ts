@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 
-import { MediaType, Source } from '@/lib/helpers/graphql-enums'
+import { Media_Types_Enum, Sources_Enum } from '@/generated/graphql'
 import { TMDBMovieImporter, TMDBPersonImporter } from '@/lib/importer'
 import { createNhostClient } from '@/lib/nhost/server'
 import { ImportValues } from '@/lib/validations/import.schema'
@@ -14,24 +14,24 @@ export async function importMedia(values: ImportValues) {
 
     const nhost = await createNhostClient()
     switch (values.mediaType) {
-        case MediaType.MOVIE: {
+        case Media_Types_Enum.Movie: {
             const importer = new TMDBMovieImporter(nhost)
             const result = await importer.import(values.externalId)
             revalidatePath('/movies')
             return {
                 success: true,
-                message: `Successfully imported ${values.mediaType} from ${Source.TMDB}`,
+                message: `Successfully imported ${values.mediaType} from ${Sources_Enum.Tmdb}`,
                 entityId: result.entityId,
                 action: result.action,
             }
         }
-        case MediaType.PERSON: {
+        case Media_Types_Enum.Person: {
             const importer = new TMDBPersonImporter(nhost)
             const result = await importer.import(values.externalId)
             revalidatePath('/people')
             return {
                 success: true,
-                message: `Successfully imported ${values.mediaType} from ${Source.TMDB}`,
+                message: `Successfully imported ${values.mediaType} from ${Sources_Enum.Tmdb}`,
                 entityId: result.entityId,
                 action: result.action,
             }

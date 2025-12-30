@@ -2,7 +2,7 @@
 
 import { formatDate } from 'date-fns'
 
-import { ListsQuery, MovieQuery } from '@/generated/graphql'
+import { MovieQuery } from '@/generated/graphql'
 
 import MoviePoster from '../../components/movie-poster/movie-poster'
 import { MovieActions } from './movie-actions'
@@ -10,10 +10,9 @@ import { MovieMetadata } from './movie-metadata'
 
 interface MovieContentProps {
     movie: MovieQuery['movies_by_pk']
-    lists: ListsQuery['lists']
 }
 
-export default function MovieContent({ movie, lists }: MovieContentProps) {
+export default function MovieContent({ movie }: MovieContentProps) {
     if (!movie) {
         return null
     }
@@ -56,7 +55,7 @@ export default function MovieContent({ movie, lists }: MovieContentProps) {
 
                     {/* Action Buttons - Desktop Only */}
                     <div className="hidden md:block">
-                        <MovieActions movie={movie} lists={lists} />
+                        <MovieActions movie={movie} />
                     </div>
                 </article>
             </div>
@@ -64,7 +63,7 @@ export default function MovieContent({ movie, lists }: MovieContentProps) {
             {/* Mobile Content */}
             <div className="space-y-3 md:hidden">
                 {/* Action Buttons - Mobile */}
-                <MovieActions movie={movie} lists={lists} />
+                <MovieActions movie={movie} />
 
                 {/* Overview - Mobile */}
                 <p className="text-sm leading-6 text-muted-foreground">{movie.overview}</p>

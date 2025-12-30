@@ -39,12 +39,13 @@ export default function SiteSystemStatusButton() {
         : { color: 'bg-gray-500', glow: 'bg-gray-400/50', text: 'Loading status...' }
 
     return (
-        <Button
-            variant="secondary"
-            className="bg-secondary/40 flex items-center gap-2 text-sm sm:text-base"
-            disabled={isLoading}
-        >
-            <Link href="/status">
+        <Link href="/status">
+            <Button
+                variant="secondary"
+                className="bg-secondary/40 flex items-center gap-2 text-sm sm:text-base"
+                size="xl"
+                disabled={isLoading}
+            >
                 <div className="relative size-1.75">
                     {!isLoading && (
                         <span
@@ -62,7 +63,7 @@ export default function SiteSystemStatusButton() {
                     />
                 </div>
                 {indicator.text}
-            </Link>
-        </Button>
+            </Button>
+        </Link>
     )
 }

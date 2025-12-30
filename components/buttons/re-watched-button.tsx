@@ -13,10 +13,12 @@ export function ReWatchedButton({
     timesWatched,
     showButton,
     onClick,
+    disabled,
 }: {
     timesWatched: number
     showButton: boolean
     onClick: () => void
+    disabled?: boolean
 }) {
     const [spin, setSpin] = useState(false)
 
@@ -42,6 +44,7 @@ export function ReWatchedButton({
                         size="sm"
                         className="text-xs"
                         onClick={handleClick}
+                        disabled={disabled}
                     >
                         <RotateCcw className={cn('size-4', { 'animate-punchy-spin': spin })} />
                     </Button>

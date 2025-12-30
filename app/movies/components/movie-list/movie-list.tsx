@@ -3,19 +3,39 @@
 import { Fragment } from 'react/jsx-runtime'
 
 import MediaGrid from '@/components/media-grid'
-import { useInfiniteMovies } from '@/hooks/use-infinite-movies'
+import { useInfiniteMoviesQuery } from '@/generated/graphql'
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll'
 
 import { MovieCard } from '../movie-card/movie-card'
 import MovieListError from './movie-list-error'
 import MovieListSkeleton from './movie-list-skeleton'
 
-const ITEMS_PER_PAGE = 50
+const PAGE_SIZE = 50
 
 export default function MovieList() {
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } = useInfiniteMovies({
-        itemsPerPage: ITEMS_PER_PAGE,
-    })
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError, error } =
+        useInfiniteMoviesQuery(
+            {
+                limit: PAGE_SIZE,
+            },
+            {
+                initialPageParam: {
+                    offset: 0,
+                    limit: PAGE_SIZE,
+                },
+                getNextPageParam: (lastPage, allPages) => {
+                    const totalFetched = allPages.length * PAGE_SIZE
+                    const total = lastPage.movies.length ?? 0
+
+                    if (totalFetched >= total) return undefined
+
+                    return {
+                        offset: totalFetched,
+                        limit: PAGE_SIZE,
+                    }
+                },
+            },
+        )
 
     const loadMoreRef = useInfiniteScroll({
         enabled: hasNextPage && !isFetchingNextPage,
@@ -24,7 +44,7 @@ export default function MovieList() {
 
     if (isError) return <MovieListError />
 
-    const movies = data?.pages.flat() || []
+    const movies = data?.pages.flatMap(page => page.movies) || []
 
     return (
         <Fragment>
@@ -34,7 +54,7 @@ export default function MovieList() {
                 ))}
             </MediaGrid>
             <div ref={loadMoreRef}>
-                {isFetchingNextPage && <MovieListSkeleton itemsPerPage={ITEMS_PER_PAGE} />}
+                {isFetchingNextPage && <MovieListSkeleton itemsPerPage={PAGE_SIZE} />}
             </div>
         </Fragment>
     )

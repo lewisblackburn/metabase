@@ -3,9 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { Media_Types_Enum } from '@/generated/graphql'
-import { importMedia } from '@/lib/actions/import/import'
-import { searchMedia, SearchResult } from '@/lib/actions/import/search'
-import { MediaType } from '@/lib/helpers/graphql-enums'
+import { importMedia } from '@/lib/actions/import'
+import { searchMedia, SearchResult } from '@/lib/actions/search'
 import { importSchema } from '@/lib/validations/import.schema'
 
 export default function useImportForm(onSuccess: () => void) {
@@ -15,7 +14,7 @@ export default function useImportForm(onSuccess: () => void) {
 
     const form = useForm({
         defaultValues: {
-            mediaType: MediaType.MOVIE as Media_Types_Enum,
+            mediaType: Media_Types_Enum.Movie,
             searchQuery: '',
             externalId: '',
         },

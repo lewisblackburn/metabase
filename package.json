@@ -24,6 +24,8 @@
     },
     "dependencies": {
         "@base-ui/react": "^1.0.0",
+        "@graphql-codegen/typescript-react-query": "^6.1.1",
+        "@graphql-typed-document-node/core": "^3.2.0",
         "@hookform/resolvers": "^5.2.2",
         "@nhost/nhost-js": "^4.2.1",
         "@radix-ui/react-accordion": "^1.2.12",
@@ -46,6 +48,7 @@
         "@radix-ui/react-tooltip": "^1.2.8",
         "@tanstack/react-form": "^1.27.6",
         "@tanstack/react-query": "^5.90.12",
+        "@tanstack/react-query-devtools": "^5.91.2",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "cmdk": "^1.1.1",
@@ -68,6 +71,7 @@
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^6.1.0",
+        "@graphql-codegen/typed-document-node": "^6.1.5",
         "@graphql-codegen/typescript": "^5.0.7",
         "@graphql-codegen/typescript-graphql-request": "^6.3.0",
         "@graphql-codegen/typescript-nhost": "^0.0.3",

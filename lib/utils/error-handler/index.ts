@@ -1,5 +1,3 @@
-import { logger } from '@/lib/helpers/logger'
-
 import { formatConstraintError } from './constraint-handler'
 import { GraphQLError, GraphQLErrorCode } from './types'
 
@@ -11,8 +9,6 @@ export function handleGraphQLError(error: unknown): never {
         body?: { errors?: Array<{ message?: string; extensions?: Record<string, unknown> }> }
         message?: string
     }
-
-    logger.error(JSON.stringify(errorObj))
 
     const firstError = errorObj.body?.errors?.[0]
 

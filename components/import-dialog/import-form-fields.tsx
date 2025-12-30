@@ -1,5 +1,5 @@
-import { SearchResult } from '@/lib/actions/import/search'
-import { MediaType } from '@/lib/helpers/graphql-enums'
+import { Media_Types_Enum } from '@/generated/graphql'
+import { SearchResult } from '@/lib/actions/search'
 import { TMDBMovieSearchResult } from '@/lib/types/tmdb'
 
 import {
@@ -36,7 +36,7 @@ export default function ImportFormFields({
             <form.Field name="mediaType">
                 {field => {
                     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                    const mediaTypeValues = Object.values(MediaType).map(mediaType => ({
+                    const mediaTypeValues = Object.values(Media_Types_Enum).map(mediaType => ({
                         label: mediaType,
                         value: mediaType,
                     }))

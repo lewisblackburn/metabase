@@ -10,9 +10,17 @@ generates:
             exposeQueryKeys: true
             addInfiniteQuery: true
             suspense: true
+            fetcher:
+                func: '../lib/fetcher#fetcher'
+                isReactHook: false
+            exposeFetcher: true
+            exposeDocument: true
         plugins:
             - add:
                   content: '// @ts-nocheck'
+            - typescript
             - typescript-operations
-            - typescript-nhost
-            - typescript-graphql-request
+            - typescript-react-query
+            # I think these two are causing conflicts
+            # - typescript-nhost
+            # - typescript-graphql-request

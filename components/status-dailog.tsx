@@ -1,13 +1,20 @@
 'use client'
 
 import { useForm } from '@tanstack/react-form'
+import { useQueryClient } from '@tanstack/react-query'
 import { Bookmark, CheckCircleIcon, LucideIcon, Play, XCircle } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { MovieQuery, User_Movie_Statuses_Enum } from '@/generated/graphql'
-import { insertUserMovieWatches } from '@/lib/actions/movies/insert-user-movie-watches'
-import { upsertUserMovieActivity } from '@/lib/actions/movies/upsert-user-movie-activity'
-import { UserMovieStatus } from '@/lib/helpers/graphql-enums'
+import {
+    MovieQuery,
+    useInsertUserMovieWatchesMutation,
+    User_Movie_Activities_Constraint,
+    User_Movie_Activities_Update_Column,
+    User_Movie_Statuses_Enum,
+    User_Movie_Watches_Constraint,
+    useUpsertUserMovieActivityMutation,
+} from '@/generated/graphql'
+import { CACHE_TAGS } from '@/lib/utils/cache'
 import { userMovieStatusSchema } from '@/lib/validations/movies/user-movie-status.schema'
 
 import { FieldError, FieldGroup } from './ui/field'
@@ -24,17 +31,42 @@ type StatusItem = {
 }
 
 const statusItems: StatusItem[] = [
-    { value: UserMovieStatus.WATCHED, label: 'Watched', icon: CheckCircleIcon },
-    { value: UserMovieStatus.WATCHING, label: 'Watching', icon: Play },
-    { value: UserMovieStatus.WATCHLIST, label: 'Watchlist', icon: Bookmark },
-    { value: UserMovieStatus.DROPPED, label: 'Dropped', icon: XCircle },
+    { value: User_Movie_Statuses_Enum.Watched, label: 'Watched', icon: CheckCircleIcon },
+    { value: User_Movie_Statuses_Enum.Watching, label: 'Watching', icon: Play },
+    { value: User_Movie_Statuses_Enum.Watchlist, label: 'Watchlist', icon: Bookmark },
+    { value: User_Movie_Statuses_Enum.Dropped, label: 'Dropped', icon: XCircle },
 ]
 
 export default function StatusDialog({ movie }: StatusDialogProps) {
+    const queryClient = useQueryClient()
     const userMovieActivity = movie?.user_movie_activity?.[0]
     const status = userMovieActivity?.status
     const comment = userMovieActivity?.comment
     const rating = userMovieActivity?.rating
+
+    const { mutateAsync: upsertUserMovieActivity, isPending } = useUpsertUserMovieActivityMutation({
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [CACHE_TAGS.MOVIE, { id: movie?.id }] })
+            toast.success('Status updated')
+        },
+        onError: (error: Error) => {
+            toast.error('Failed to update status', {
+                description: error.message,
+            })
+        },
+    })
+
+    const { mutateAsync: insertUserMovieWatches } = useInsertUserMovieWatchesMutation({
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [CACHE_TAGS.MOVIE, { id: movie?.id }] })
+            toast.success('Watched')
+        },
+        onError: (error: Error) => {
+            toast.error('Failed to mark as watched', {
+                description: error.message,
+            })
+        },
+    })
 
     const form = useForm({
         defaultValues: {
@@ -44,31 +76,44 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
             onChange: userMovieStatusSchema,
         },
         onSubmit: async ({ value }) => {
-            const result = await upsertUserMovieActivity({
-                id: movie?.id,
-                status: value.status,
-                comment,
-                rating,
-                ...(movie?.title && { meta: { title: movie.title } }),
-            }).catch(error => {
-                toast.error('Failed to update status', {
-                    description: error.message,
+            if (!movie?.id) return
+
+            try {
+                const result = await upsertUserMovieActivity({
+                    object: {
+                        movie_id: movie.id,
+                        status: value.status,
+                        comment: comment ?? null,
+                        rating: rating ?? null,
+                    },
+                    on_conflict: {
+                        constraint: User_Movie_Activities_Constraint.UserMovieActivitiesPkey,
+                        update_columns: [
+                            User_Movie_Activities_Update_Column.Rating,
+                            User_Movie_Activities_Update_Column.Comment,
+                            User_Movie_Activities_Update_Column.Status,
+                        ],
+                    },
                 })
-                return null
-            })
 
-            if (!result) return
+                const updatedStatus = result.insert_user_movie_activities_one?.status
+                const currentWatches = movie?.user_movie_watches_aggregate?.aggregate?.count
+                const isFirstWatch = updatedStatus === 'WATCHED' && currentWatches === 0
 
-            const updatedStatus = result.body.data?.insert_user_movie_activities_one?.status
-            const currentWatches = movie?.user_movie_watches_aggregate?.aggregate?.count
-            const isFirstWatch = updatedStatus === 'WATCHED' && currentWatches === 0
-
-            if (isFirstWatch) {
-                await insertUserMovieWatches({ id: movie?.id }).catch(error => {
-                    toast.error('Failed to update user movie watched count', {
-                        description: error.message,
+                if (isFirstWatch) {
+                    await insertUserMovieWatches({
+                        object: {
+                            movie_id: movie.id,
+                        },
+                        on_conflict: {
+                            constraint: User_Movie_Watches_Constraint.UserMovieWatchesPkey,
+                            update_columns: [],
+                        },
                     })
-                })
+                }
+            } catch (error) {
+                // Error already handled in onError
+                console.error(error)
             }
         },
     })
@@ -92,6 +137,7 @@ export default function StatusDialog({ movie }: StatusDialogProps) {
                                     form.handleSubmit()
                                 }
                             }}
+                            disabled={isPending}
                         >
                             <SelectTrigger>
                                 <SelectValue>

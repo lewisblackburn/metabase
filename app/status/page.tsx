@@ -3,6 +3,7 @@ import { CheckCircle2, XCircle } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { env } from '@/env'
+import { formatDate } from '@/lib/helpers/strings/date'
 import type { SiteSystemStatus } from '@/lib/types/site-system-status'
 import { CACHE_TIMES } from '@/lib/utils/cache'
 
@@ -29,7 +30,7 @@ export default async function StatusPage() {
                     <CardTitle className="flex items-center justify-between text-2xl font-semibold">
                         System Status
                         <Badge variant="outline" className="text-xs font-medium">
-                            Updated {new Date(updatedAt).toLocaleTimeString()}
+                            Updated {formatDate(new Date(updatedAt), 'PPPp')}
                         </Badge>
                     </CardTitle>
                 </CardHeader>

@@ -1,3 +1,4 @@
+import { gql } from 'graphql-tag'
 import { NextResponse } from 'next/server'
 
 import { HealthDocument, HealthQuery, HealthQueryVariables } from '@/generated/graphql'
@@ -25,7 +26,7 @@ export async function GET() {
         const [authVersion, graphqlHealth, storageVersion, functionsHealth] = await Promise.all([
             nhost.auth.getVersion().catch(() => ({ status: 500 })),
             nhost.graphql
-                .request<HealthQuery, HealthQueryVariables>(HealthDocument)
+                .request<HealthQuery, HealthQueryVariables>(gql(HealthDocument))
                 .catch(() => ({ body: { data: null } })),
             nhost.storage.getVersion().catch(() => ({ status: 500 })),
             fetch(nhost.functions.baseURL + '/healthz').catch(() => ({ ok: false })),

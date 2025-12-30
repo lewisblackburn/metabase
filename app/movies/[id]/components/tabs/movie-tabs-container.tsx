@@ -1,9 +1,9 @@
 import { TabsContent } from '@radix-ui/react-tabs'
 import { Suspense } from 'react'
 
+import MovieAuditLogsTab from './audit-logs'
+import MovieAuditLogsLoading from './audit-logs/loading'
 import MovieTabs from './movie-tabs'
-import MovieAuditLogsTab from './tabs/audit-logs'
-import MovieAuditLogsLoading from './tabs/audit-logs/loading'
 
 export default function MovieTabsContainer({ movieId }: { movieId: string }) {
     return (
