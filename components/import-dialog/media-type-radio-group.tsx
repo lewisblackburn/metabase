@@ -1,7 +1,6 @@
 'use client'
 
 import { Media_Types_Enum } from '@/generated/graphql'
-import { MediaType } from '@/lib/helpers/graphql-enums'
 
 import { Field, FieldError, FieldTitle } from '../ui/field'
 import { Radio, RadioGroup } from '../ui/radio-group'
@@ -40,7 +39,7 @@ export function MediaTypeRadioGroup({
     errors,
     isInvalid,
 }: MediaTypeRadioGroupProps) {
-    const mediaTypeValues = Object.values(MediaType) as string[]
+    const mediaTypeValues = Object.values(Media_Types_Enum) as string[]
     const orderedMediaTypes = mediaTypeOrder.filter(type => mediaTypeValues.includes(type))
 
     return (

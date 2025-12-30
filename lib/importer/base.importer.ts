@@ -1,6 +1,8 @@
 import { NhostClient } from '@nhost/nhost-js'
+import gql from 'graphql-tag'
 
 import {
+    External_Ids_Constraint,
     FindEntityByExternalIdDocument,
     FindEntityByExternalIdQuery,
     FindEntityByExternalIdQueryVariables,
@@ -14,7 +16,7 @@ import { Action, ImportResult } from '@/lib/types/importer'
 
 import { handleGraphQLError } from '../utils/error-handler'
 
-export abstract class BaseImporter<TEntity = unknown> {
+export abstract class BaseImporter {
     constructor(protected nhost: NhostClient) {}
 
     abstract source: Sources_Enum
@@ -58,7 +60,7 @@ export abstract class BaseImporter<TEntity = unknown> {
     protected async findByExternalId(externalId: string): Promise<string | null> {
         const result = await this.nhost.graphql
             .request<FindEntityByExternalIdQuery, FindEntityByExternalIdQueryVariables>(
-                FindEntityByExternalIdDocument,
+                gql(FindEntityByExternalIdDocument),
                 {
                     externalId,
                     mediaType: this.mediaType,
@@ -73,7 +75,7 @@ export abstract class BaseImporter<TEntity = unknown> {
     protected async linkExternalId(entityId: string, externalId: string): Promise<void> {
         await this.nhost.graphql
             .request<InsertExternalIdMutation, InsertExternalIdMutationVariables>(
-                InsertExternalIdDocument,
+                gql(InsertExternalIdDocument),
                 {
                     object: {
                         external_id: externalId,
@@ -82,7 +84,8 @@ export abstract class BaseImporter<TEntity = unknown> {
                         source: this.source,
                     },
                     on_conflict: {
-                        constraint: 'external_ids_unique',
+                        // TODO: why is there two keys that look the same?
+                        constraint: External_Ids_Constraint.ExternalIdsPkey,
                         update_columns: [],
                     },
                 },

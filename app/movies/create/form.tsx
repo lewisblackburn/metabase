@@ -8,10 +8,25 @@ import LoadingButton from '@/components/loading-button'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { createMovie } from '@/lib/actions/movies/create'
+import { Movies_Constraint, useCreateMovieMutation } from '@/generated/graphql'
 import { createMovieSchema } from '@/lib/validations/movies/create.schema'
 
 export default function CreateMovieForm() {
+    const { mutateAsync: createMovie } = useCreateMovieMutation({
+        onSuccess: body => {
+            const resolvedTitle = body.insert_movies_one?.title
+            const resolvedId = body?.insert_movies_one?.id
+
+            toast.success(`Movie "${resolvedTitle}" created successfully`)
+            router.push(`/movies/${resolvedId}`)
+        },
+        onError: (error: Error) => {
+            toast.error('Failed to create movie', {
+                description: error.message,
+            })
+        },
+    })
+
     const router = useRouter()
     const form = useForm({
         defaultValues: {
@@ -21,15 +36,13 @@ export default function CreateMovieForm() {
             onSubmit: createMovieSchema,
         },
         onSubmit: async ({ value: { title } }) => {
-            await createMovie({ title })
-                .then(({ body }) => {
-                    const resolvedTitle = body.data?.insert_movies_one?.title
-                    const resolvedId = body.data?.insert_movies_one?.id
-
-                    toast.success(`Movie "${resolvedTitle}" created successfully`)
-                    router.push(`/movies/${resolvedId}`)
-                })
-                .catch(error => toast.error(error.message))
+            await createMovie({
+                object: { title },
+                on_conflict: {
+                    constraint: Movies_Constraint.MoviesPkey,
+                    update_columns: [],
+                },
+            })
         },
     })
 
